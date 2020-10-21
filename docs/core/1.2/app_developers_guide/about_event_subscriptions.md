@@ -1,4 +1,4 @@
-# **About Event Subscriptions ** #
+# **About Event Subscriptions** #
 
 An application can use event subscriptions to tell the validator to supply information about changes to the blockchain.
 
@@ -18,20 +18,20 @@ The filter type can either be `SIMPLE` (an exact match to the specified string) 
 
 - `SIMPLE_ANY`: The filter's "match string" must match at least one of the event's attribute values. For example, this filter type with the match string "`abc`" would succeed for a single event with the following attributes, because it matches the attribute value `abc`.
 
-`
+```
 Attribute(key="address",value="abc")
 Attribute(key="address",value="def")
-`
+```
 
 - `SIMPLE_ALL`: The filter's "match string" must match all of the event's attribute values. This filter type with the match string "`abc`" would fail with the previous example, because it does not match all the attribute values.
 
 - `REGEX_ANY`: The filter's regular expression must evaluate to a match for at least one of the event's attribute values. For example, this filter type with the match string "`ab.`" would succeed for a single event with the following attributes, because it matches the attribute value `abc`.
 
-`
+```
 Attribute(key="address",value="abc")
 Attribute(key="address",value="abbbc")
 Attribute(key="address",value="def")
-`
+```
 
 - `REGEX_ALL`: The filter's regular expression must evaluate to a match for all of the event's attribute values. This filter type with the match string "`ab.`" would fail with the previous example, because it doesn't match all three attribute values above. The match string `[ad][be]*[cf]` would succeed.
 
