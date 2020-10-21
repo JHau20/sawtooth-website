@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawnet &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="sawset" href="sawset.html" />
+    <link rel="prev" title="sawadm" href="sawadm.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../cli.html">CLI Command Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sawtooth.html">sawtooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawtooth-validator.html">sawtooth-validator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawtooth-rest-api.html">sawtooth-rest-api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawadm.html">sawadm</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">sawnet</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sawnet-compare-chains">sawnet compare-chains</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawnet-peers">sawnet peers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawnet-peers-list">sawnet peers list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawnet-peers-graph">sawnet peers graph</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sawset.html">sawset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity-tp.html">identity-tp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intkey.html">intkey</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings-tp.html">settings-tp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xo.html">xo</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../cli.html">CLI Command Reference</a> &raquo;</li>
+        
+      <li>sawnet</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cli/sawnet.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sawnet">
+<span id="sawnet-reference-label"></span><h1>sawnet<a class="headerlink" href="#sawnet" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawnet</span></code> command is used to interact with an entire
+network of Sawtooth nodes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawnet [-h] [-v] [-V] {compare-chains,list-blocks,peers} ...</span>
+
+<span class="go">Inspect status of a sawtooth network</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {compare-chains,list-blocks,peers}</span>
+<span class="go">    compare-chains      Compare chains from different nodes.</span>
+<span class="go">    list-blocks         List blocks from different nodes.</span>
+<span class="go">    peers               Shows the peering arrangment of a network</span>
+</pre></div>
+</div>
+<div class="section" id="sawnet-compare-chains">
+<h2>sawnet compare-chains<a class="headerlink" href="#sawnet-compare-chains" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawnet</span> <span class="pre">compare-chains</span></code> subcommand compares chains across the specified
+nodes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawnet compare-chains [-h] [-v] [-V] [--users USERNAME[:PASSWORD]]</span>
+<span class="go">                             [-l LIMIT] [--table] [--tree]</span>
+<span class="go">                             urls [urls ...]</span>
+
+<span class="go">Compute and display information about how the chains at different nodes differ.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  urls                  The URLs of the validator&#39;s REST APIs of interest,</span>
+<span class="go">                        separated by commas or spaces. (no default)</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+<span class="go">  --users USERNAME[:PASSWORD]</span>
+<span class="go">                        Specify the users to authorize requests, in the same</span>
+<span class="go">                        order as the URLs, separate by commas. Passing empty</span>
+<span class="go">                        strings between commas is supported.</span>
+<span class="go">  -l LIMIT, --limit LIMIT</span>
+<span class="go">                        the number of blocks to request at a time</span>
+<span class="go">  --table               Print out a fork table for all nodes since the common</span>
+<span class="go">                        ancestor.</span>
+<span class="go">  --tree                Print out a fork tree for all nodes since the common</span>
+<span class="go">                        ancestor.</span>
+
+<span class="go">By default, prints a table of summary data and a table of per-node data with</span>
+<span class="go">the following fields. Pass --tree for a fork graph.</span>
+
+<span class="go">COMMON ANCESTOR</span>
+<span class="go">    The most recent block that all chains have in common.</span>
+
+<span class="go">COMMON HEIGHT</span>
+<span class="go">    Let min_height := the minimum height of any chain across all nodes passed</span>
+<span class="go">    in. COMMON HEIGHT = min_height.</span>
+
+<span class="go">HEAD</span>
+<span class="go">    The block id of the most recent block on a given chain.</span>
+
+<span class="go">HEIGHT</span>
+<span class="go">    The block number of the most recent block on a given chain.</span>
+
+<span class="go">LAG</span>
+<span class="go">    Let max_height := the maximum height of any chain across all nodes passed</span>
+<span class="go">    in. LAG = max_height - HEIGHT for a given chain.</span>
+
+<span class="go">DIVERG</span>
+<span class="go">    Let common_ancestor_height := the height of the COMMON ANCESTOR.</span>
+<span class="go">    DIVERG = HEIGHT - common_ancestor_height</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawnet-peers">
+<h2>sawnet peers<a class="headerlink" href="#sawnet-peers" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawnet peers [-h] {list,graph} ...</span>
+
+<span class="go">Shows the peering arrangment of a network.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help    show this help message and exit</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {list,graph}</span>
+<span class="go">    list        Lists peers for validators with given URLs</span>
+<span class="go">    graph       Generates a file to graph a network&#39;s peering arrangement</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawnet-peers-list">
+<h2>sawnet peers list<a class="headerlink" href="#sawnet-peers-list" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawnet</span> <span class="pre">peers</span> <span class="pre">list</span></code> subcommand displays the peers of the specified nodes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawnet peers list [-h] [-v] [-V] [--users USERNAME[:PASSWORD]]</span>
+<span class="go">                         [--pretty]</span>
+<span class="go">                         urls [urls ...]</span>
+
+<span class="go">Lists peers for validators with given URLs.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  urls                  The URLs of the validator&#39;s REST APIs of interest,</span>
+<span class="go">                        separated by commas or spaces. (no default)</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+<span class="go">  --users USERNAME[:PASSWORD]</span>
+<span class="go">                        Specify the users to authorize requests, in the same</span>
+<span class="go">                        order as the URLs, separate by commas. Passing empty</span>
+<span class="go">                        strings between commas is supported.</span>
+<span class="go">  --pretty, -p          Pretty-print the results</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawnet-peers-graph">
+<h2>sawnet peers graph<a class="headerlink" href="#sawnet-peers-graph" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawnet</span> <span class="pre">peers</span> <span class="pre">graph</span></code> subcommand displays a file called <code class="docutils literal notranslate"><span class="pre">peers.dot</span></code>
+that describes the peering arrangement of the specified nodes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawnet peers graph [-h] [-v] [-V] [--users USERNAME[:PASSWORD]]</span>
+<span class="go">                          [-o OUTPUT] [--force]</span>
+<span class="go">                          urls [urls ...]</span>
+
+<span class="go">Generates a file to graph a network&#39;s peering arrangement.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  urls                  The URLs of the validator&#39;s REST APIs of interest,</span>
+<span class="go">                        separated by commas or spaces. (no default)</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+<span class="go">  --users USERNAME[:PASSWORD]</span>
+<span class="go">                        Specify the users to authorize requests, in the same</span>
+<span class="go">                        order as the URLs, separate by commas. Passing empty</span>
+<span class="go">                        strings between commas is supported.</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        The path of the dot file to be produced (defaults to</span>
+<span class="go">                        peers.dot)</span>
+<span class="go">  --force               TODO</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sawset.html" class="btn btn-neutral float-right" title="sawset" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sawadm.html" class="btn btn-neutral float-left" title="sawadm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

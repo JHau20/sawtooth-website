@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Network Configuration &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="System Administrator’s Guide" href="../sysadmin_guide.html"/>
+        <link rel="next" title="Community" href="../community.html"/>
+        <link rel="prev" title="Installation on Windows" href="installation_windows.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="packaging_ubuntu.html">Creating Packages for Ubuntu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging_sles.html">Creating Packages for SLES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging_windows.html">Creating Packages for Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_ubuntu.html">Installation on Ubuntu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_sles.html">Installation on SLES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_windows.html">Installation on Windows</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Network Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#validators">Validators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clients">Clients</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Network Configuration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/network_configuration.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="network-configuration">
+<h1>Network Configuration<a class="headerlink" href="#network-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="validators">
+<h2>Validators<a class="headerlink" href="#validators" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth Lake uses two ports, one TCP, one UDP, to communicate with other
+members of a validator network. You may need to modify some firewall rules
+to facilitate this traffic. Because the validator software assumes complete
+connectivity to the other nodes in the network, if you intend to participate
+in a Sawtooth Lake network over the internet, each validator will need a
+publically routable IP address. NAT is not currently supported.</p>
+<p>Primarily, traffic between validator nodes takes place over UDP. By default
+Sawtooth Lake selects a random high UDP port for communication. You can choose
+a static port to use by changing the &#8220;Port&#8221; value from &#8220;0&#8221; to any unused UDP
+port. We recommend using 5500. Your firewall rules should be configured to
+allow both ingress and egress from all networks for this port.</p>
+<p>The validator nodes listen on TCP port 8800 for communication from clients.
+This port is adjustable via the config file value &#8220;HttpPort&#8221;, though changing
+this requires additional client configuration. Firewall rules should be
+configured to allow both ingress and egress from all networks for this port.</p>
+<p>Required Validator ports:</p>
+<ul class="simple">
+<li>UDP/5500: ingress and egress</li>
+<li>TCP/8800: ingress and egress</li>
+</ul>
+<p>These values are configurable by editing
+<code class="docutils literal"><span class="pre">/etc/sawtooth-validator/txnvalidator.js</span></code> on Linux or
+<code class="docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files(x86)\Intel\sawtooth-validator\conf\txnvalidator.js</span></code> on
+Windows.</p>
+</div>
+<div class="section" id="clients">
+<h2>Clients<a class="headerlink" href="#clients" title="Permalink to this headline">¶</a></h2>
+<p>The Sawtooth Lake client communicates with validators via TCP port 8800.
+Firewall rules should be adjusted to allow egress traffic on port 8800
+from each machine running the Sawtooth Lake client software to each validator
+you will be working with. If you&#8217;ve altered the &#8220;HttpPort&#8221; value of your
+validator&#8217;s configuration file, this port will need to be allowed instead
+of the default 8800.</p>
+<p>Required Client ports:</p>
+<ul class="simple">
+<li>TCP/8800: egress</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../community.html" class="btn btn-neutral float-right" title="Community" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installation_windows.html" class="btn btn-neutral" title="Installation on Windows" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+mktplace package
+================
+
+.. automodule:: mktplace
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    mktplace.transactions
+
+Submodules
+----------
+
+.. toctree::
+
+   mktplace.mktplace_client
+   mktplace.mktplace_communication
+   mktplace.mktplace_config
+   mktplace.mktplace_state
+   mktplace.mktplace_token_store
+

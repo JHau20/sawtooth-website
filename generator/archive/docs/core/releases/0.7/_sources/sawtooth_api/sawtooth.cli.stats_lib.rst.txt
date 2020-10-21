@@ -1,0 +1,23 @@
+sawtooth\.cli\.stats\_lib package
+=================================
+
+.. automodule:: sawtooth.cli.stats_lib
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   sawtooth.cli.stats_lib.endpoint_manager
+   sawtooth.cli.stats_lib.fork_detect
+   sawtooth.cli.stats_lib.platform_stats
+   sawtooth.cli.stats_lib.print_views
+   sawtooth.cli.stats_lib.stats_print
+   sawtooth.cli.stats_lib.stats_utils
+   sawtooth.cli.stats_lib.stats_writers
+   sawtooth.cli.stats_lib.topology_stats
+   sawtooth.cli.stats_lib.validator_stats
+

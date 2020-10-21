@@ -1,0 +1,1290 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sawtooth CLI &mdash; Sawtooth v0.8.13 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.13 documentation" href="../index.html"/>
+        <link rel="up" title="CLI Reference" href="../cli.html"/>
+        <link rel="next" title="Seth CLI" href="seth.html"/>
+        <link rel="prev" title="CLI Reference" href="../cli.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.13
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../solidity_developers_guide.html">Solidity Developers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../cli.html">CLI Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Sawtooth CLI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth">sawtooth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-admin">sawtooth admin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-admin-genesis">sawtooth admin genesis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-admin-keygen">sawtooth admin keygen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-batch">sawtooth batch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-batch-list">sawtooth batch list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-batch-show">sawtooth batch show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-batch-status">sawtooth batch status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-batch-submit">sawtooth batch submit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-block">sawtooth block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-block-list">sawtooth block list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-block-show">sawtooth block show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-config">sawtooth config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-config-genesis">sawtooth config genesis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-config-proposal">sawtooth config proposal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-config-proposal-create">sawtooth config proposal create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-config-proposal-list">sawtooth config proposal list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-config-proposal-vote">sawtooth config proposal vote</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-config-settings">sawtooth config settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-config-settings-list">sawtooth config settings list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-identity">sawtooth identity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-identity-policy">sawtooth identity policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-identity-policy-create">sawtooth identity policy create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-identity-policy-list">sawtooth identity policy list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-identity-role-create">sawtooth identity role create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-identity-role-list">sawtooth identity role list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-state">sawtooth state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-state-list">sawtooth state list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-state-show">sawtooth state show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-transaction">sawtooth transaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-transaction-list">sawtooth transaction list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-transaction-show">sawtooth transaction show</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="seth.html">Seth CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poet.html">PoET CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator.html">Validator CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intkey.html">intkey Family CLIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xo.html">xo Family CLIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../cli.html">CLI Reference</a> &raquo;</li>
+        
+      <li>Sawtooth CLI</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cli/sawtooth.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sawtooth-cli">
+<span id="sawtooth-cli-reference-label"></span><h1>Sawtooth CLI<a class="headerlink" href="#sawtooth-cli" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="sawtooth">
+<h2>sawtooth<a class="headerlink" href="#sawtooth" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth [-h] [-v] [-V]</span>
+<span class="go">                {keygen,admin,config,block,batch,transaction,state,identity}</span>
+<span class="go">                ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         print version information</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {keygen,admin,config,block,batch,transaction,state,identity}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-admin">
+<h2>sawtooth admin<a class="headerlink" href="#sawtooth-admin" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth admin [-h] [-v] [-V] {genesis,keygen} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help        show this help message and exit</span>
+<span class="go">  -v, --verbose     enable more verbose output</span>
+<span class="go">  -V, --version     print version information</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {genesis,keygen}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-admin-genesis">
+<h2>sawtooth admin genesis<a class="headerlink" href="#sawtooth-admin-genesis" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<p>The genesis CLI tool produces a file for use during initialization of a
+validator.  A network requires an initial block (known as the genesis block)
+whose signature will determine the block chain id.  This initial block is
+produced from a list of batches, which will be applied at genesis time.  The
+input to the command is a set of zero or more files containing serialized
+<code class="docutils literal"><span class="pre">BatchList</span></code> protobuf messages. The output is a file containing a serialized
+<code class="docutils literal"><span class="pre">GenesisData</span></code> protobuf message.  This file, when placed at
+<code class="docutils literal"><span class="pre">&lt;sawtooth_data&gt;/genesis.batch</span></code>, will trigger the genesis process.</p>
+<p>The location <code class="docutils literal"><span class="pre">sawtooth_data</span></code> depends on whether or not the environment
+variable <code class="docutils literal"><span class="pre">SAWTOOTH_HOME</span></code> is set.  If it is, then <code class="docutils literal"><span class="pre">sawtooth_data</span></code> is located
+at <code class="docutils literal"><span class="pre">&lt;SAWTOOTH_HOME&gt;/data</span></code>.  If it is not, then <code class="docutils literal"><span class="pre">sawtooth_data</span></code> is located
+at <code class="docutils literal"><span class="pre">/var/lib/sawtooth</span></code>.</p>
+</div>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth admin genesis [-h] [-v] [-V] [-o OUTPUT]</span>
+<span class="go">                              [input_file [input_file ...]]</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  input_file            input files of batches to add to the resulting</span>
+<span class="go">                        GenesisData</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         print version information</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        the name of the file to ouput the GenesisData</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="arguments">
+<h4>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">input_batch_file</span></code> - a repeated list of files containing a serialized
+<code class="docutils literal"><span class="pre">BatchList</span></code> message.  This may be empty, which will produce an empty
+genesis block.</li>
+<li><code class="docutils literal"><span class="pre">--output</span> <span class="pre">&lt;filename&gt;</span></code> - a target file where the serialized <code class="docutils literal"><span class="pre">GenesisData</span></code>
+will be written. Defaults to <code class="docutils literal"><span class="pre">&lt;sawtooth_data&gt;/genesis.batch</span></code>.</li>
+</ul>
+</div>
+<div class="section" id="output">
+<h4>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h4>
+<p>The output of the command displays a message where the output <code class="docutils literal"><span class="pre">GenesisData</span></code> is
+written.</p>
+</div>
+<div class="section" id="example">
+<h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">&gt;</span> sawtooth admin genesis config.batch mktplace.batch
+<span class="go">Generating /var/lib/sawtooth/genesis.batch</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="sawtooth-admin-keygen">
+<h2>sawtooth admin keygen<a class="headerlink" href="#sawtooth-admin-keygen" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth admin keygen [-h] [-v] [-V] [--force] [-q] [key_name]</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  key_name       name of the key to create</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  enable more verbose output</span>
+<span class="go">  -V, --version  print version information</span>
+<span class="go">  --force        overwrite files if they exist</span>
+<span class="go">  -q, --quiet    print no output</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-batch">
+<h2>sawtooth batch<a class="headerlink" href="#sawtooth-batch" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth batch [-h] {list,show,status,submit} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+
+<span class="go">grandchildcommands:</span>
+<span class="go">  {list,show,status,submit}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-batch-list">
+<h2>sawtooth batch list<a class="headerlink" href="#sawtooth-batch-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth batch list [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                           [-F {csv,json,yaml,default}]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             the URL of the validator&#39;s REST API</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        user login info to authorize request</span>
+<span class="go">  -F {csv,json,yaml,default}, --format {csv,json,yaml,default}</span>
+<span class="go">                        the format to use when printing the output</span>
+
+<span class="go">details:</span>
+<span class="go">        Lists committed batches from newest to oldest, including their id (i.e.</span>
+<span class="go">    header signature), transaction count, and their signer&#39;s public key.</span>
+<span class="go">    </span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-batch-show">
+<h2>sawtooth batch show<a class="headerlink" href="#sawtooth-batch-show" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth batch show [-h] [--url URL] [-u USERNAME[:PASSWORD]] [-k KEY]</span>
+<span class="go">                           [-F {yaml,json}]</span>
+<span class="go">                           batch_id</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  batch_id              the id (i.e. header_signature) of the batch</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             the URL of the validator&#39;s REST API</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        user login info to authorize request</span>
+<span class="go">  -k KEY, --key KEY     specify to show a single property from the block or</span>
+<span class="go">                        header</span>
+<span class="go">  -F {yaml,json}, --format {yaml,json}</span>
+<span class="go">                        the format to use for printing the output (defaults to</span>
+<span class="go">                        yaml)</span>
+
+<span class="go">details:</span>
+<span class="go">        Shows the data for a single batch, or for a particular property within</span>
+<span class="go">    that batch or its header. Displays data in YAML (default), or JSON formats.</span>
+<span class="go">    </span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-batch-status">
+<h2>sawtooth batch status<a class="headerlink" href="#sawtooth-batch-status" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth batch status [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                             [--wait [WAIT]] [-F {yaml,json}]</span>
+<span class="go">                             batch_ids</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  batch_ids             a comma-separated list of batch ids</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             the URL of the validator&#39;s REST API</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        user login info to authorize request</span>
+<span class="go">  --wait [WAIT]         a time in seconds to wait for commit</span>
+<span class="go">  -F {yaml,json}, --format {yaml,json}</span>
+<span class="go">                        the format to use for printing the output (defaults to</span>
+<span class="go">                        yaml)</span>
+
+<span class="go">details: Fetches the statuses for a set of batches.</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-batch-submit">
+<h2>sawtooth batch submit<a class="headerlink" href="#sawtooth-batch-submit" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth batch submit [-h] [--url URL] [-u USERNAME[:PASSWORD]] [-v]</span>
+<span class="go">                             [-V] [--wait [WAIT]] [-f FILENAME]</span>
+<span class="go">                             [--batch-size-limit BATCH_SIZE_LIMIT]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             the URL of the validator&#39;s REST API</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        user login info to authorize request</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         print version information</span>
+<span class="go">  --wait [WAIT]         wait for batches to commit, set an integer to specify</span>
+<span class="go">                        a timeout</span>
+<span class="go">  -f FILENAME, --filename FILENAME</span>
+<span class="go">                        location of input file</span>
+<span class="go">  --batch-size-limit BATCH_SIZE_LIMIT</span>
+<span class="go">                        batches are split for processing if they exceed this</span>
+<span class="go">                        size</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-block">
+<h2>sawtooth block<a class="headerlink" href="#sawtooth-block" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth block [-h] {list,show} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help   show this help message and exit</span>
+
+<span class="go">grandchildcommands:</span>
+<span class="go">  {list,show}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-block-list">
+<h2>sawtooth block list<a class="headerlink" href="#sawtooth-block-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth block list [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                           [-F {csv,json,yaml,default}]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             the URL of the validator&#39;s REST API</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        user login info to authorize request</span>
+<span class="go">  -F {csv,json,yaml,default}, --format {csv,json,yaml,default}</span>
+<span class="go">                        the format to use when printing the output</span>
+
+<span class="go">details:</span>
+<span class="go">        Lists committed blocks from the newest to the oldest, including</span>
+<span class="go">    their id (i.e. header signature), batch and transaction count, and</span>
+<span class="go">    their signer&#39;s public key.</span>
+<span class="go">    </span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-block-show">
+<h2>sawtooth block show<a class="headerlink" href="#sawtooth-block-show" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth block show [-h] [--url URL] [-u USERNAME[:PASSWORD]] [-k KEY]</span>
+<span class="go">                           [-F {yaml,json}]</span>
+<span class="go">                           block_id</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  block_id              the id (i.e. header_signature) of the block</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             the URL of the validator&#39;s REST API</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        user login info to authorize request</span>
+<span class="go">  -k KEY, --key KEY     specify to show a single property from the block or</span>
+<span class="go">                        header</span>
+<span class="go">  -F {yaml,json}, --format {yaml,json}</span>
+<span class="go">                        the format to use for printing the output (defaults to</span>
+<span class="go">                        yaml)</span>
+
+<span class="go">details:</span>
+<span class="go">        Shows the data for a single block, or for a particular property within</span>
+<span class="go">    that block or its header. Displays data in YAML (default), or JSON formats.</span>
+<span class="go">    </span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-config">
+<h2>sawtooth config<a class="headerlink" href="#sawtooth-config" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth config [-h] {genesis,proposal,settings} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {genesis,proposal,settings}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-config-genesis">
+<h2>sawtooth config genesis<a class="headerlink" href="#sawtooth-config-genesis" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth config genesis [-h] [-k KEY] [-o OUTPUT]</span>
+<span class="go">                               [-T APPROVAL_THRESHOLD] [-A AUTHORIZED_KEY]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -k KEY, --key KEY     the signing key for the resulting batches and initial</span>
+<span class="go">                        authorized key</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        the name of the file to output the resulting batches</span>
+<span class="go">  -T APPROVAL_THRESHOLD, --approval-threshold APPROVAL_THRESHOLD</span>
+<span class="go">                        the required number of votes to enable a setting</span>
+<span class="go">                        change</span>
+<span class="go">  -A AUTHORIZED_KEY, --authorized-key AUTHORIZED_KEY</span>
+<span class="go">                        a public key for an user authorized to submit config</span>
+<span class="go">                        transactions</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-config-proposal">
+<h2>sawtooth config proposal<a class="headerlink" href="#sawtooth-config-proposal" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth config proposal [-h] {create,list,vote} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help          show this help message and exit</span>
+
+<span class="go">proposals:</span>
+<span class="go">  {create,list,vote}</span>
+<span class="go">    create            creates batches of sawtooth-config transactions</span>
+<span class="go">    list              lists the current proposed, but not active, settings</span>
+<span class="go">    vote              votes for specific setting change proposals</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-config-proposal-create">
+<h2>sawtooth config proposal create<a class="headerlink" href="#sawtooth-config-proposal-create" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth config proposal create [-h] [-k KEY] [-o OUTPUT | --url URL]</span>
+<span class="go">                                       setting [setting ...]</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  setting               configuration setting, as a key/value pair:</span>
+<span class="go">                        &lt;key&gt;=&lt;value&gt;</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -k KEY, --key KEY     the signing key for the resulting batches</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        the name of the file to ouput the resulting batches</span>
+<span class="go">  --url URL             the URL of a validator&#39;s REST API</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-config-proposal-list">
+<h2>sawtooth config proposal list<a class="headerlink" href="#sawtooth-config-proposal-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth config proposal list [-h] [--url URL]</span>
+<span class="go">                                     [--public-key PUBLIC_KEY]</span>
+<span class="go">                                     [--filter FILTER]</span>
+<span class="go">                                     [--format {default,csv,json,yaml}]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             the URL of a validator&#39;s REST API</span>
+<span class="go">  --public-key PUBLIC_KEY</span>
+<span class="go">                        filters proposals from a particular public key.</span>
+<span class="go">  --filter FILTER       filters keys that begin with this value</span>
+<span class="go">  --format {default,csv,json,yaml}</span>
+<span class="go">                        the format of the output</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-config-proposal-vote">
+<h2>sawtooth config proposal vote<a class="headerlink" href="#sawtooth-config-proposal-vote" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth config proposal vote [-h] [--url URL] [-k KEY]</span>
+<span class="go">                                     proposal_id {accept,reject}</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  proposal_id        the proposal to vote on</span>
+<span class="go">  {accept,reject}    the value of the vote</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help         show this help message and exit</span>
+<span class="go">  --url URL          the URL of a validator&#39;s REST API</span>
+<span class="go">  -k KEY, --key KEY  the signing key for the resulting transaction batch</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-config-settings">
+<h2>sawtooth config settings<a class="headerlink" href="#sawtooth-config-settings" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth config settings [-h] {list} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help  show this help message and exit</span>
+
+<span class="go">settings:</span>
+<span class="go">  {list}</span>
+<span class="go">    list      list the current keys and values of sawtooth-config settings</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-config-settings-list">
+<h2>sawtooth config settings list<a class="headerlink" href="#sawtooth-config-settings-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth config settings list [-h] [--url URL] [--filter FILTER]</span>
+<span class="go">                                     [--format {default,csv,json,yaml}]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             the URL of a validator&#39;s REST API</span>
+<span class="go">  --filter FILTER       filters keys that begin with this value</span>
+<span class="go">  --format {default,csv,json,yaml}</span>
+<span class="go">                        the format of the output</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-identity">
+<h2>sawtooth identity<a class="headerlink" href="#sawtooth-identity" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity [-h] {policy,role} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {policy,role}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-identity-policy">
+<h2>sawtooth identity policy<a class="headerlink" href="#sawtooth-identity-policy" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity policy [-h] {create,list} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+
+<span class="go">policy:</span>
+<span class="go">  {create,list}</span>
+<span class="go">    create       creates batches of sawtooth-identity transactions for setting</span>
+<span class="go">                 a policy</span>
+<span class="go">    list         list the current policies</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-identity-policy-create">
+<h2>sawtooth identity policy create<a class="headerlink" href="#sawtooth-identity-policy-create" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity policy create [-h] [-k KEY] [-o OUTPUT | --url URL]</span>
+<span class="go">                                       [--wait WAIT]</span>
+<span class="go">                                       name rule [rule ...]</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name                  The name of the new policy</span>
+<span class="go">  rule                  Each rule should be in the following format</span>
+<span class="go">                        &quot;PERMIT_KEY &lt;key&gt;&quot; or &quot;DENY_KEY &lt;key&gt;&quot;. Multiple</span>
+<span class="go">                        &quot;rule&quot; arguments can be added.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -k KEY, --key KEY     the signing key for the resulting batches</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        the name of the file to output the resulting batches</span>
+<span class="go">  --url URL             the URL of a validator&#39;s REST API</span>
+<span class="go">  --wait WAIT           time to wait for the policy to commit when submitting</span>
+<span class="go">                        to the rest api.</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-identity-policy-list">
+<h2>sawtooth identity policy list<a class="headerlink" href="#sawtooth-identity-policy-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity policy list [-h] [--url URL]</span>
+<span class="go">                                     [--format {default,csv,json,yaml}]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             the URL of a validator&#39;s REST API</span>
+<span class="go">  --format {default,csv,json,yaml}</span>
+<span class="go">                        the format of the output</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-identity-role-create">
+<h2>sawtooth identity role create<a class="headerlink" href="#sawtooth-identity-role-create" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity policy create [-h] [-k KEY] [-o OUTPUT | --url URL]</span>
+<span class="go">                                       [--wait WAIT]</span>
+<span class="go">                                       name rule [rule ...]</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name                  The name of the new policy</span>
+<span class="go">  rule                  Each rule should be in the following format</span>
+<span class="go">                        &quot;PERMIT_KEY &lt;key&gt;&quot; or &quot;DENY_KEY &lt;key&gt;&quot;. Multiple</span>
+<span class="go">                        &quot;rule&quot; arguments can be added.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -k KEY, --key KEY     the signing key for the resulting batches</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        the name of the file to output the resulting batches</span>
+<span class="go">  --url URL             the URL of a validator&#39;s REST API</span>
+<span class="go">  --wait WAIT           time to wait for the policy to commit when submitting</span>
+<span class="go">                        to the rest api.</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-identity-role-list">
+<h2>sawtooth identity role list<a class="headerlink" href="#sawtooth-identity-role-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity role list [-h] [--url URL]</span>
+<span class="go">                                   [--format {default,csv,json,yaml}]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             the URL of a validator&#39;s REST API</span>
+<span class="go">  --format {default,csv,json,yaml}</span>
+<span class="go">                        the format of the output</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-state">
+<h2>sawtooth state<a class="headerlink" href="#sawtooth-state" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth state [-h] {list,show} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help   show this help message and exit</span>
+
+<span class="go">grandchildcommands:</span>
+<span class="go">  {list,show}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-state-list">
+<h2>sawtooth state list<a class="headerlink" href="#sawtooth-state-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth state list [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                           [-F {csv,json,yaml,default}] [--head HEAD]</span>
+<span class="go">                           [subtree]</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  subtree               the address of a subtree to filter list by</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             the URL of the validator&#39;s REST API</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        user login info to authorize request</span>
+<span class="go">  -F {csv,json,yaml,default}, --format {csv,json,yaml,default}</span>
+<span class="go">                        the format to use when printing the output</span>
+<span class="go">  --head HEAD           the id of the block to set as the chain head</span>
+
+<span class="go">details:</span>
+<span class="go">        Lists state in the form of leaves from the merkle tree. List can be</span>
+<span class="go">    narrowed using the address of a subtree.</span>
+<span class="go">    </span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-state-show">
+<h2>sawtooth state show<a class="headerlink" href="#sawtooth-state-show" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth state show [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                           [--head HEAD]</span>
+<span class="go">                           address</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  address               the address of the leaf</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             the URL of the validator&#39;s REST API</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        user login info to authorize request</span>
+<span class="go">  --head HEAD           the id of the block to set as the chain head</span>
+
+<span class="go">details:</span>
+<span class="go">        Shows the data for a single leaf on the merkle tree.</span>
+<span class="go">    </span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-transaction">
+<h2>sawtooth transaction<a class="headerlink" href="#sawtooth-transaction" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth transaction [-h] {list,show} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help   show this help message and exit</span>
+
+<span class="go">grandchildcommands:</span>
+<span class="go">  {list,show}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-transaction-list">
+<h2>sawtooth transaction list<a class="headerlink" href="#sawtooth-transaction-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth transaction list [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                                 [-F {csv,json,yaml,default}]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             the URL of the validator&#39;s REST API</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        user login info to authorize request</span>
+<span class="go">  -F {csv,json,yaml,default}, --format {csv,json,yaml,default}</span>
+<span class="go">                        the format to use when printing the output</span>
+
+<span class="go">details:</span>
+<span class="go">        Lists committed transactions from newest to oldest, including their id</span>
+<span class="go">    (i.e. header_signature), transaction family and version, and their payload.</span>
+<span class="go">    </span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawtooth-transaction-show">
+<h2>sawtooth transaction show<a class="headerlink" href="#sawtooth-transaction-show" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth transaction show [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                                 [-k KEY] [-F {yaml,json}]</span>
+<span class="go">                                 transaction_id</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  transaction_id        the id (i.e. header_signature) of the transaction</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             the URL of the validator&#39;s REST API</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        user login info to authorize request</span>
+<span class="go">  -k KEY, --key KEY     specify to show a single property from the block or</span>
+<span class="go">                        header</span>
+<span class="go">  -F {yaml,json}, --format {yaml,json}</span>
+<span class="go">                        the format to use for printing the output (defaults to</span>
+<span class="go">                        yaml)</span>
+
+<span class="go">details:</span>
+<span class="go">        Shows the data for a single transaction, or for a particular property</span>
+<span class="go">    within that transaction or its header. Displays data in YAML (default),</span>
+<span class="go">    or JSON formats.</span>
+<span class="go">    </span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="seth.html" class="btn btn-neutral float-right" title="Seth CLI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../cli.html" class="btn btn-neutral" title="CLI Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.13',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

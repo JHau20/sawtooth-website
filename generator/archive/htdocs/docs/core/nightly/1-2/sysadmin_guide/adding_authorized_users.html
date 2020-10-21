@@ -1,0 +1,301 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Adding Authorized Users for Settings Proposals &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using a Proxy Server to Authorize the REST API" href="rest_auth_proxy.html" />
+    <link rel="prev" title="Setting the Allowed Transaction Types (Optional)" href="setting_allowed_txns.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="setting_up_sawtooth_network.html">Setting Up a Sawtooth Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setting_allowed_txns.html">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Adding Authorized Users for Settings Proposals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_permissions.html">Configuring Validator and Transactor Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grafana_configuration.html">Using Grafana to Display Sawtooth Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_dynamic_consensus.html">About Dynamic Consensus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pbft_adding_removing_node.html">Adding or Removing a PBFT Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_sawtooth.html">About Sawtooth Configuration Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator’s Guide</a> &raquo;</li>
+        
+      <li>Adding Authorized Users for Settings Proposals</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/adding_authorized_users.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="adding-authorized-users-for-settings-proposals">
+<h1>Adding Authorized Users for Settings Proposals<a class="headerlink" href="#adding-authorized-users-for-settings-proposals" title="Permalink to this headline">¶</a></h1>
+<p>Sawtooth supports on-chain settings to configure validator behavior, consensus,
+permissions, and more. The Settings transaction processor (or an equivalent)
+handles these on-chain settings.
+The on-chain setting <code class="docutils literal notranslate"><span class="pre">sawtooth.settings.vote.authorized_keys</span></code> contains the
+public keys of validators and users who are allowed to propose and vote on
+settings changes.</p>
+<p>By default, settings changes are restricted to the owner of the private key used
+to create the genesis block, as specified by the <code class="docutils literal notranslate"><span class="pre">--key</span> <span class="pre">privatekeyfile</span></code> option
+for the <code class="docutils literal notranslate"><span class="pre">sawswet</span> <span class="pre">genesis</span></code> command. The associated public key is stored in
+<code class="docutils literal notranslate"><span class="pre">sawtooth.settings.vote.authorized_keys</span></code> when the genesis block is created.</p>
+<p>If the validator key was used to create the genesis block, we <strong>strongly</strong>
+recommend adding one or more user keys to this setting. Otherwise, if the first
+node becomes unavailable, no settings changes can be made.</p>
+<p>This procedure describes how to add a user key to
+<code class="docutils literal notranslate"><span class="pre">sawtooth.settings.vote.authorized_keys</span></code>.</p>
+<ol class="arabic">
+<li><p>Log into the Sawtooth node that has your private key file.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If the genesis block was created with the first validator’s key, and
+no user keys are authorized to change settings, you <strong>must</strong> run this
+procedure on the same node that created the genesis block. The
+<code class="docutils literal notranslate"><span class="pre">sawset</span> <span class="pre">proposal</span> <span class="pre">create</span></code> command requires the private validator key
+that was generated on that node.</p>
+</div>
+</li>
+<li><p>Make sure that the Settings transaction processor (or an equivalent) and the
+REST API are running, as described in <a class="reference internal" href="systemd.html"><span class="doc">Running Sawtooth as a Service</span></a>.</p></li>
+<li><p>Display the existing setting.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth settings list sawtooth.settings.vote.authorized_keys
+</pre></div>
+</div>
+<p>The output will resemble this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sawtooth.settings.vote.authorized_keys: 0276023d4f7323103db8d8683a4b7bc1eae1f66...</span>
+</pre></div>
+</div>
+<p>If you want to add a key to the existing list, copy the key strings for the
+next step.</p>
+</li>
+<li><p>Add the new user’s public key to the list of those allowed to change
+settings.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sawset proposal create --key {PRIVATE-KEY} \
+sawtooth.settings.vote.authorized_keys=&#39;{OLDLIST},{NEWKEY}&#39;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>For <code class="docutils literal notranslate"><span class="pre">{PRIVATE-KEY}</span></code>, specify the path to your private key file (or the
+validator’s private key file, if it was used to create the genesis
+block).</p></li>
+<li><p>For <code class="docutils literal notranslate"><span class="pre">{OLDLIST}</span></code>, use the list of existing keys from step 2.
+To delete a key, omit it from this list.</p></li>
+<li><p>For <code class="docutils literal notranslate"><span class="pre">{NEWKEY}</span></code>, use the public key of the user you want to add.</p></li>
+</ul>
+</div>
+</li>
+<li><p>To see the changed setting, run <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">settings</span> <span class="pre">list</span></code> again.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth settings list sawtooth.settings.vote.authorized_keys
+</pre></div>
+</div>
+<p>Check that the new user key appears on the list.</p>
+</li>
+</ol>
+<p><strong>About proposal voting</strong></p>
+<p>Each settings change must receive a certain amount of votes in order to be
+accepted. By default, only one vote is required, and the settings proposal
+contains an automatic “yes” vote from the user (or validator) who submitted
+the proposal. For information on configuring more complex voting schemes,
+see <a class="reference internal" href="../transaction_family_specifications/settings_transaction_family.html"><span class="doc">Settings Transaction Family</span></a>.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rest_auth_proxy.html" class="btn btn-neutral float-right" title="Using a Proxy Server to Authorize the REST API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="setting_allowed_txns.html" class="btn btn-neutral float-left" title="Setting the Allowed Transaction Types (Optional)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+sawtooth\.client module
+=======================
+
+.. automodule:: sawtooth.client
+    :members:
+    :undoc-members:
+    :show-inheritance:

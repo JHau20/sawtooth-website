@@ -1,0 +1,636 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using Docker for a Sawtooth Test Network &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using Kubernetes for a Sawtooth Test Network" href="kubernetes_test_network.html" />
+    <link rel="prev" title="About Sawtooth Networks" href="about_sawtooth_networks.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Transaction Family Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_sawtooth.html">Setting Up a Sawtooth Node for Testing</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="creating_sawtooth_network.html">Creating a Sawtooth Test Network</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="about_sawtooth_networks.html">About Sawtooth Networks</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Using Docker for a Sawtooth Test Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#about-the-docker-sawtooth-network-environment">About the Docker Sawtooth Network Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-download-the-docker-compose-file">Step 1: Download the Docker Compose File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-start-the-sawtooth-network">Step 2: Start the Sawtooth Network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-check-the-rest-api-process">Step 3: Check the REST API Process</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-4-confirm-network-functionality">Step 4: Confirm Network Functionality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-5-configure-the-allowed-transaction-types-optional">Step 5. Configure the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-6-stop-the-sawtooth-network-optional">Step 6: Stop the Sawtooth Network (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kubernetes_test_network.html">Using Kubernetes for a Sawtooth Test Network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ubuntu_test_network.html">Using Ubuntu for a Sawtooth Test Network</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Playing with the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_the_sdks.html">Using the Sawtooth SDKs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_restriction.html">Namespace Restriction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_subscriptions.html">Subscribing to Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="creating_sawtooth_network.html">Creating a Sawtooth Test Network</a> &raquo;</li>
+        
+      <li>Using Docker for a Sawtooth Test Network</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/docker_test_network.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-docker-for-a-sawtooth-test-network">
+<span id="proc-multi-docker-label"></span><h1>Using Docker for a Sawtooth Test Network<a class="headerlink" href="#using-docker-for-a-sawtooth-test-network" title="Permalink to this headline">¶</a></h1>
+<p>This procedure describes how to use Docker to create a network of five Sawtooth
+nodes for an application development environment. Each node is a set of Docker
+containers that runs a validator and related Sawtooth components.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For a single-node environment, see <a class="reference internal" href="docker.html"><span class="doc">Using Docker for a Single Sawtooth Node</span></a>.</p>
+</div>
+<p>This procedure guides you through the following tasks:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Downloading the Sawtooth Docker Compose file</p></li>
+<li><p>Starting the Sawtooth network with <cite>docker-compose</cite></p></li>
+<li><p>Checking process status</p></li>
+<li><p>Configuring the allowed transaction types (optional)</p></li>
+<li><p>Connecting to the Sawtooth shell container and confirming network
+functionality</p></li>
+<li><p>Stopping Sawtooth and resetting the Docker environment</p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="about-the-docker-sawtooth-network-environment">
+<span id="about-sawtooth-nw-env-docker-label"></span><h2>About the Docker Sawtooth Network Environment<a class="headerlink" href="#about-the-docker-sawtooth-network-environment" title="Permalink to this headline">¶</a></h2>
+<p>This test environment is a network of five Sawtooth nodes.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/appdev-environment-multi-node.svg"><img alt="Docker: Sawtooth network with five nodes" src="../_images/appdev-environment-multi-node.svg" width="100%" /></a>
+</div>
+<p>Each node in this Sawtooth network runs a <a class="reference internal" href="../glossary.html#term-validator"><span class="xref std std-term">validator</span></a>, a <a class="reference internal" href="../glossary.html#term-REST-API"><span class="xref std std-term">REST API</span></a>,
+a consensus engine, and the following
+<a class="reference internal" href="../glossary.html#term-transaction-processor"><span class="xref std std-term">transaction processors</span></a>:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../transaction_family_specifications/settings_transaction_family.html"><span class="doc">Settings</span></a>
+(<code class="docutils literal notranslate"><span class="pre">settings-tp</span></code>): Handles Sawtooth’s on-chain configuration settings. The
+Settings transaction processor (or an equivalent) is required for all Sawtooth
+networks.</p></li>
+<li><p><a class="reference internal" href="../transaction_family_specifications/integerkey_transaction_family.html"><span class="doc">IntegerKey</span></a>
+(<code class="docutils literal notranslate"><span class="pre">intkey-tp-python</span></code>): Demonstrates basic Sawtooth functionality. The
+associated <code class="docutils literal notranslate"><span class="pre">intkey</span></code> client includes shell commands to perform integer-based
+transactions.</p></li>
+<li><p><a class="reference internal" href="../transaction_family_specifications/xo_transaction_family.html"><span class="doc">XO</span></a>
+(<code class="docutils literal notranslate"><span class="pre">sawtooth-xo-tp-python</span></code>: Simple application for playing a game of
+tic-tac-toe on the blockchain. The assocated <code class="docutils literal notranslate"><span class="pre">xo</span></code> client provides shell
+commands to define players and play a game. XO is described in a later
+section, <a class="reference internal" href="intro_xo_transaction_family.html"><span class="doc">Playing with the XO Transaction Family</span></a>.</p></li>
+<li><p>(PoET only) <a class="reference internal" href="../transaction_family_specifications/validator_registry_transaction_family.html"><span class="doc">PoET Validator Registry</span></a>
+(<code class="docutils literal notranslate"><span class="pre">poet-validator-registry-tp</span></code>): Configures PoET consensus and handles a
+network with multiple nodes.</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Each node in a Sawtooth network must run the same set of transaction
+processors.</p>
+</div>
+<p>Like the <a class="reference internal" href="docker.html"><span class="doc">single-node test environment</span></a>, this environment uses
+parallel transaction processing and static peering. However, it uses a different
+consensus algorithm (Devmode consensus is not recommended for a network). You
+can choose either PBFT or PoET consensus.</p>
+<ul>
+<li><p><a class="reference internal" href="../glossary.html#term-PBFT-consensus"><span class="xref std std-term">PBFT consensus</span></a> provides a voting-based consensus algorithm with
+Byzantine fault tolerance (BFT) that has finality (does not fork).</p></li>
+<li><p><a class="reference internal" href="../glossary.html#term-PoET-consensus"><span class="xref std std-term">PoET consensus</span></a> provides a leader-election lottery system that can
+fork.  This network uses PoET simulator consensus, which is also called <cite>PoET
+CFT</cite> because it is crash fault tolerant.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The other type of PoET consensus, PoET-SGX, relies on Intel Software Guard
+Extensions (SGX) that is Byzantine fault tolerant (BFT). PoET CFT provides
+the same consensus algorithm on an SGX simulator.</p>
+</div>
+</li>
+</ul>
+<p>The first node creates the <cite>genesis block</cite>, which specifies the on-chain
+settings for the network configuration. The other nodes access those settings
+when they join the network.</p>
+</div>
+<div class="section" id="prerequisites">
+<span id="prereqs-multi-docker-label"></span><h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>This application development environment requires Docker Engine and Docker
+Compose.</p>
+<ul>
+<li><p>Windows: Install the latest version of
+<a class="reference external" href="https://docs.docker.com/docker-for-windows/install/">Docker Engine for Windows</a>
+(also installs Docker Compose).</p></li>
+<li><p>macOS: Install the latest version of
+<a class="reference external" href="https://docs.docker.com/docker-for-mac/install/">Docker Engine for macOS</a>
+(also installs Docker Compose).</p></li>
+<li><p>Linux: Install the latest versions of
+<a class="reference external" href="https://docs.docker.com/engine/installation/linux/ubuntu">Docker Engine</a>
+and
+<a class="reference external" href="https://docs.docker.com/compose/install/#install-compose">Docker Compose</a>.
+Then follow
+<a class="reference external" href="https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user">Post-Install steps</a>.</p></li>
+</ul>
+</li>
+<li><p>If you created a <a class="reference internal" href="docker.html"><span class="doc">single-node Docker environment</span></a> that is
+still running, shut it down and delete the existing blockchain data and logs.
+For more information, see <a class="reference internal" href="docker.html#stop-sawtooth-docker-label"><span class="std std-ref">Step 9: Stop the Sawtooth Environment</span></a>.</p></li>
+</ul>
+</div>
+<div class="section" id="step-1-download-the-docker-compose-file">
+<h2>Step 1: Download the Docker Compose File<a class="headerlink" href="#step-1-download-the-docker-compose-file" title="Permalink to this headline">¶</a></h2>
+<p>Download the Docker Compose file for a multiple-node network.</p>
+<ul class="simple">
+<li><p>For PBFT, download
+<a class="reference external" href="./sawtooth-default-pbft.yaml">sawtooth-default-pbft.yaml</a></p></li>
+<li><p>For PoET, download
+<a class="reference external" href="./sawtooth-default-poet.yaml">sawtooth-default-poet.yaml</a></p></li>
+</ul>
+</div>
+<div class="section" id="step-2-start-the-sawtooth-network">
+<h2>Step 2: Start the Sawtooth Network<a class="headerlink" href="#step-2-start-the-sawtooth-network" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Docker Compose file for Sawtooth handles environment setup steps such as
+generating keys and creating a genesis block. To learn how the typical
+network startup process works, see <a class="reference internal" href="ubuntu_test_network.html"><span class="doc">Using Ubuntu for a Sawtooth Test Network</span></a>.</p>
+</div>
+<ol class="arabic">
+<li><p>Open a terminal window.</p></li>
+<li><p>Change to the directory where you saved the Docker Compose file.</p></li>
+<li><p>Start the Sawtooth network.</p>
+<ul>
+<li><p>For PBFT:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker-compose -f sawtooth-default-pbft.yaml up
+</pre></div>
+</div>
+</li>
+<li><p>For PoET:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker-compose -f sawtooth-default-poet.yaml up
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>This Compose file creates five Sawtooth nodes named <code class="docutils literal notranslate"><span class="pre">validator-#</span></code>
+(numbered from 0 to 4). Note the container names for the Sawtooth components
+on each node:</p>
+<p><code class="docutils literal notranslate"><span class="pre">validator-0</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth-validator-default-0</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth-rest-api-default-0</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth-pbft-engine-default-0</span></code> or <code class="docutils literal notranslate"><span class="pre">sawtooth-poet-engine-0</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth-settings-tp-default-0</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth-intkey-tp-python-default-0</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth-xo-tp-python-default-0</span></code></p></li>
+<li><p>(PoET only) <code class="docutils literal notranslate"><span class="pre">sawtooth-poet-validator-registry-tp-0</span></code></p></li>
+</ul>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">validator-1</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth-validator-default-1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth-rest-api-default-1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth-pbft-engine-default-1</span></code> or <code class="docutils literal notranslate"><span class="pre">sawtooth-poet-engine-1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth-settings-tp-default-1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth-intkey-tp-python-default-1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth-xo-tp-python-default-1</span></code></p></li>
+<li><p>(PoET only) <code class="docutils literal notranslate"><span class="pre">sawtooth-poet-validator-registry-tp-1</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>… and so on.</p>
+</li>
+<li><p>Note that there is only one shell container for this Docker environment:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth-shell-default</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="step-3-check-the-rest-api-process">
+<h2>Step 3: Check the REST API Process<a class="headerlink" href="#step-3-check-the-rest-api-process" title="Permalink to this headline">¶</a></h2>
+<p>Use these commands on one or more nodes to confirm that the REST API is
+running.</p>
+<ol class="arabic">
+<li><p>Connect to the REST API container on a node, such as
+<code class="docutils literal notranslate"><span class="pre">sawtooth-poet-rest-api-default-0</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker <span class="nb">exec</span> -it sawtooth-rest-api-default-0 bash
+<span class="gp">root@b1adcfe0#</span>
+</pre></div>
+</div>
+</li>
+<li><p>Use the following command to verify that this component is running.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@b1adcfe0#</span> ps --pid <span class="m">1</span> fw
+<span class="go">PID TTY      STAT   TIME COMMAND</span>
+<span class="go">  1 ?        Ssl    0:00 /usr/bin/python3 /usr/bin/sawtooth-rest-api</span>
+<span class="go">  --connect tcp://validator-0:4004 --bind rest-api-0:8008</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="step-4-confirm-network-functionality">
+<span id="confirm-nw-funct-docker-label"></span><h2>Step 4: Confirm Network Functionality<a class="headerlink" href="#step-4-confirm-network-functionality" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>Connect to the shell container.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker <span class="nb">exec</span> -it sawtooth-shell-default bash
+<span class="gp">root@0e0fdc1ab#</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>To check whether peering has occurred on the network, submit a peers query
+to the REST API on the first node. This command specifies the container name
+and port for the first node’s REST API.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@0e0fdc1ab#</span> curl http://sawtooth-rest-api-default-0:8008/peers
+</pre></div>
+</div>
+</div></blockquote>
+<p>If this query returns a 503 error, the nodes have not yet peered with the
+Sawtooth network. Repeat the query until you see output that resembles the
+following example:</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">{</span>
+<span class="go">  &quot;data&quot;: [</span>
+<span class="go">    &quot;tcp://validator-4:8800&quot;,</span>
+<span class="go">    &quot;tcp://validator-3:8800&quot;,</span>
+<span class="go">    ...</span>
+<span class="go">    &quot;tcp://validator-2:8800&quot;,</span>
+<span class="go">    &quot;tcp://validator-1:8800&quot;</span>
+<span class="go">  ],</span>
+<span class="go">  &quot;link&quot;: &quot;http://sawtooth-rest-api-default-0:8008/peers&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>(Optional) You can run the following Sawtooth commands to show the other
+nodes on the network.</p>
+<ol class="loweralpha">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">peer</span> <span class="pre">list</span></code> to show the peers of a particular node. For
+example, the following command specifies the REST API on the first node,
+so it displays the first node’s peers.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@0e0fdc1ab#</span> sawtooth peer list --url http://sawtooth-rest-api-default-0:8008
+<span class="go">tcp://validator-1:8800,tcp://validator-1:8800,tcp://validator-2:8800,tcp://validator-3:8800</span>
+</pre></div>
+</div>
+</li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">sawnet</span> <span class="pre">peers</span> <span class="pre">list</span></code> to display a complete graph of peers on the
+network (available in Sawtooth release 1.1 and later).</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@0e0fdc1ab#</span> sawnet peers list http://sawtooth-rest-api-default-0:8008
+<span class="go">{</span>
+<span class="go">&quot;tcp://validator-0:8800&quot;: [</span>
+<span class="go">&quot;tcp://validator-1:8800&quot;,</span>
+<span class="go">&quot;tcp://validator-1:8800&quot;,</span>
+<span class="go">&quot;tcp://validator-2:8800&quot;,</span>
+<span class="go">&quot;tcp://validator-3:8800&quot;</span>
+<span class="go">]</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p>Submit a transaction to the REST API on the first node. This
+example sets a key named <code class="docutils literal notranslate"><span class="pre">MyKey</span></code> to the value 999.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@0e0fdc1ab#</span> intkey <span class="nb">set</span> --url http://sawtooth-rest-api-default-0:8008 MyKey <span class="m">999</span>
+</pre></div>
+</div>
+<p>The output should resemble this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">{</span>
+<span class="go">  &quot;link&quot;: &quot;http://sawtooth-rest-api-default-0:8008/batch_statuses?id=dacefc7c9fe2c8510803f8340...</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Watch for this transaction to appear on a different node. The following
+command requests the value of <code class="docutils literal notranslate"><span class="pre">MyKey</span></code> from the REST API on the second node.</p>
+<p>You can run this command from the first node’s shell container by specifying
+the URL of the other node’s REST API, as in this example.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@0e0fdc1ab#</span> intkey show --url http://sawtooth-rest-api-default-1:8008 MyKey
+</pre></div>
+</div>
+<p>The output should show the key name and current value:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">MyKey: 999</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div>
+<div class="section" id="step-5-configure-the-allowed-transaction-types-optional">
+<span id="configure-txn-procs-docker-label"></span><h2>Step 5. Configure the Allowed Transaction Types (Optional)<a class="headerlink" href="#step-5-configure-the-allowed-transaction-types-optional" title="Permalink to this headline">¶</a></h2>
+<p>By default, a validator accepts transactions from any transaction processor.
+However, Sawtooth allows you to limit the types of transactions that can be
+submitted.</p>
+<p>In this step, you will configure the Sawtooth network to accept transactions
+only from the transaction processors running in the example environment.
+Transaction-type restrictions are an on-chain setting, so this configuration
+change is made on one node, then applied to all other nodes.</p>
+<p>The <a class="reference internal" href="../transaction_family_specifications/settings_transaction_family.html"><span class="doc">Settings transaction processor</span></a>
+handles on-chain configuration settings. You will use the <code class="docutils literal notranslate"><span class="pre">sawset</span></code> command to
+create and submit a batch of transactions containing the configuration change.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>You <strong>must</strong> run this procedure from the first validator container, because
+the example Docker Compose file uses the first validator’s key to create and
+sign the genesis block. (At this point, only the key used to create the
+genesis block can change on-chain settings.) For more information, see
+<a class="reference internal" href="../sysadmin_guide/adding_authorized_users.html"><span class="doc">Adding Authorized Users for Settings Proposals</span></a>.</p>
+</div>
+<ol class="arabic">
+<li><p>Connect to the first validator container (<code class="docutils literal notranslate"><span class="pre">sawtooth-validator-default-0</span></code>).
+The next command requires the validator key that was generated in that
+container.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker <span class="nb">exec</span> -it sawtooth-validator-default-0 bash
+<span class="gp">root@c0c0ab33#</span>
+</pre></div>
+</div>
+</li>
+<li><p>Run the following command from the validator container to specify the
+allowed transaction families.</p>
+<ul>
+<li><p>For PBFT:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@c0c0ab33#</span> sawset proposal create --url http://sawtooth-rest-api-default-0:8008 --key /etc/sawtooth/keys/validator.priv <span class="se">\</span>
+sawtooth.validator.transaction_families<span class="o">=</span><span class="s1">&#39;[{&quot;family&quot;: &quot;intkey&quot;, &quot;version&quot;: &quot;1.0&quot;}, {&quot;family&quot;:&quot;sawtooth_settings&quot;, &quot;version&quot;:&quot;1.0&quot;}, {&quot;family&quot;:&quot;xo&quot;, &quot;version&quot;:&quot;1.0&quot;}]&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><p>For PoET:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@c0c0ab33#</span> sawset proposal create --url http://sawtooth-rest-api-default-0:8008 --key /etc/sawtooth/keys/validator.priv <span class="se">\</span>
+sawtooth.validator.transaction_families<span class="o">=</span><span class="s1">&#39;[{&quot;family&quot;: &quot;intkey&quot;, &quot;version&quot;: &quot;1.0&quot;}, {&quot;family&quot;:&quot;sawtooth_settings&quot;, &quot;version&quot;:&quot;1.0&quot;}, {&quot;family&quot;:&quot;xo&quot;, &quot;version&quot;:&quot;1.0&quot;}, {&quot;family&quot;:&quot;sawtooth_validator_registry&quot;, &quot;version&quot;:&quot;1.0&quot;}]&#39;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>This command sets <code class="docutils literal notranslate"><span class="pre">sawtooth.validator.transaction_families</span></code> to a JSON array
+that specifies the family name and version of each allowed transaction
+processor (defined in the transaction header of each family’s
+<a class="reference internal" href="../transaction_family_specifications.html"><span class="doc">transaction family specification</span></a>).</p>
+</li>
+<li><p>After this command runs, a <code class="docutils literal notranslate"><span class="pre">TP_PROCESS_REQUEST</span></code> message appears in the
+docker-compose output.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">.</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">sawtooth-settings-tp-default-0  | INFO  | settings_tp::handler | Setting &quot;sawtooth.validator.transaction_families&quot; changed to &quot;[{\&quot;family\&quot;: \&quot;intkey\&quot;, \&quot;version\&quot;: \&quot;1.0\&quot;}, {\&quot;family\&quot;:\&quot;sawtooth_settings\&quot;, \&quot;version\&quot;:\&quot;1.0\&quot;}, {\&quot;family\&quot;:\&quot;xo\&quot;, \&quot;version\&quot;:\&quot;1.0\&quot;}, {\&quot;family\&quot;:\&quot;sawtooth_validator_registry\&quot;, \&quot;version\&quot;:\&quot;1.0\&quot;}]&quot;</span>
+<span class="go">sawtooth-settings-tp-default-0  | INFO  | sawtooth_sdk::proces | TP_PROCESS_REQUEST sending TpProcessResponse: OK</span>
+</pre></div>
+</div>
+</li>
+<li><p>Run the following command to check the setting change on the shell container
+or any validator container. You can specify any REST API on the network;
+this example uses the REST API on the first node.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@0e0fdc1ab#</span> sawtooth settings list --url http://sawtooth-rest-api-default-0:8008
+</pre></div>
+</div>
+<p>The output should be similar to this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sawtooth.consensus.algorithm.name: {name}</span>
+<span class="go">sawtooth.consensus.algorithm.version: {version}</span>
+<span class="go">...</span>
+<span class="go">sawtooth.publisher.max_batches_per_block=1200</span>
+<span class="go">sawtooth.settings.vote.authorized_keys: 0242fcde86373d0aa376...</span>
+<span class="go">sawtooth.validator.transaction_families: [{&quot;family&quot;: &quot;intkey...</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="step-6-stop-the-sawtooth-network-optional">
+<h2>Step 6: Stop the Sawtooth Network (Optional)<a class="headerlink" href="#step-6-stop-the-sawtooth-network-optional" title="Permalink to this headline">¶</a></h2>
+<p>Use this procedure to stop or reset the multiple-node Sawtooth environment.</p>
+<ol class="arabic">
+<li><p>Exit from all open containers (such as the shell, REST-API, validator, and
+settings containers used in this procedure).</p></li>
+<li><p>Enter CTRL-c in the window where you ran <code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">up</span></code>.</p></li>
+<li><p>After all containers have shut down, you can reset the environment (remove
+all containers and data) with the following command:</p>
+<ul>
+<li><p>For PBFT:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker-compose -f sawtooth-default-pbft.yaml down
+</pre></div>
+</div>
+</li>
+<li><p>For PoET:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker-compose -f sawtooth-default-poet.yaml down
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kubernetes_test_network.html" class="btn btn-neutral float-right" title="Using Kubernetes for a Sawtooth Test Network" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="about_sawtooth_networks.html" class="btn btn-neutral float-left" title="About Sawtooth Networks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

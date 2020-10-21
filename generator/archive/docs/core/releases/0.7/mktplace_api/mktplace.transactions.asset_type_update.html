@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mktplace.transactions.asset_type_update module &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="mktplace.transactions package" href="mktplace.transactions.html"/>
+        <link rel="next" title="mktplace.transactions.asset_update module" href="mktplace.transactions.asset_update.html"/>
+        <link rel="prev" title="mktplace.transactions.account_update module" href="mktplace.transactions.account_update.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_data_model.html">MarketPlace Data Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_messages.html">MarketPlace Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_transactions.html">MarketPlace Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_transactions.html#marketplace-transaction-updates">MarketPlace Transaction Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_initial_state.html">MarketPlace Initial State</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">MarketPlace Python API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="mktintegration.html">mktintegration package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mktmain.html">mktmain package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="mktplace.html">mktplace package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="mktplace.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mktplace.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktclient.html">MarketPlace Client Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="modules.html">MarketPlace Python API</a> &raquo;</li>
+        
+          <li><a href="mktplace.html">mktplace package</a> &raquo;</li>
+        
+          <li><a href="mktplace.transactions.html">mktplace.transactions package</a> &raquo;</li>
+        
+      <li>mktplace.transactions.asset_type_update module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/mktplace_api/mktplace.transactions.asset_type_update.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-mktplace.transactions.asset_type_update">
+<span id="mktplace-transactions-asset-type-update-module"></span><h1>mktplace.transactions.asset_type_update module<a class="headerlink" href="#module-mktplace.transactions.asset_type_update" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="mktplace.transactions.asset_type_update.AssetTypeObject">
+<em class="property">class </em><code class="descclassname">mktplace.transactions.asset_type_update.</code><code class="descname">AssetTypeObject</code><span class="sig-paren">(</span><em>objectid=None</em>, <em>minfo=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/transactions/asset_type_update.html#AssetTypeObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.transactions.asset_type_update.AssetTypeObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mktplace.transactions.market_place_object_update.html#mktplace.transactions.market_place_object_update.MarketPlaceObject" title="mktplace.transactions.market_place_object_update.MarketPlaceObject"><code class="xref py py-class docutils literal"><span class="pre">mktplace.transactions.market_place_object_update.MarketPlaceObject</span></code></a></p>
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.AssetTypeObject.ObjectTypeName">
+<code class="descname">ObjectTypeName</code><em class="property"> = 'AssetType'</em><a class="headerlink" href="#mktplace.transactions.asset_type_update.AssetTypeObject.ObjectTypeName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="mktplace.transactions.asset_type_update.AssetTypeObject.is_valid_object">
+<em class="property">classmethod </em><code class="descname">is_valid_object</code><span class="sig-paren">(</span><em>store</em>, <em>objectid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/transactions/asset_type_update.html#AssetTypeObject.is_valid_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.transactions.asset_type_update.AssetTypeObject.is_valid_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.transactions.asset_type_update.AssetTypeObject.dump">
+<code class="descname">dump</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/transactions/asset_type_update.html#AssetTypeObject.dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.transactions.asset_type_update.AssetTypeObject.dump" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="mktplace.transactions.asset_type_update.Register">
+<em class="property">class </em><code class="descclassname">mktplace.transactions.asset_type_update.</code><code class="descname">Register</code><span class="sig-paren">(</span><em>update_type</em>, <em>creator_id=None</em>, <em>restricted=True</em>, <em>description=None</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/transactions/asset_type_update.html#Register"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.transactions.asset_type_update.Register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">journal.transaction.Update</span></code></p>
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.Register.UpdateType">
+<code class="descname">UpdateType</code><em class="property"> = 'RegisterAssetType'</em><a class="headerlink" href="#mktplace.transactions.asset_type_update.Register.UpdateType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.Register.ObjectType">
+<code class="descname">ObjectType</code><a class="headerlink" href="#mktplace.transactions.asset_type_update.Register.ObjectType" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#mktplace.transactions.asset_type_update.AssetTypeObject" title="mktplace.transactions.asset_type_update.AssetTypeObject"><code class="xref py py-class docutils literal"><span class="pre">AssetTypeObject</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.Register.CreatorType">
+<code class="descname">CreatorType</code><a class="headerlink" href="#mktplace.transactions.asset_type_update.Register.CreatorType" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">ParticipantObject</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.Register.References">
+<code class="descname">References</code><a class="headerlink" href="#mktplace.transactions.asset_type_update.Register.References" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.transactions.asset_type_update.Register.check_valid">
+<code class="descname">check_valid</code><span class="sig-paren">(</span><em>store</em>, <em>txn</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/transactions/asset_type_update.html#Register.check_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.transactions.asset_type_update.Register.check_valid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.transactions.asset_type_update.Register.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>store</em>, <em>txn</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/transactions/asset_type_update.html#Register.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.transactions.asset_type_update.Register.apply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="mktplace.transactions.asset_type_update.Unregister">
+<em class="property">class </em><code class="descclassname">mktplace.transactions.asset_type_update.</code><code class="descname">Unregister</code><span class="sig-paren">(</span><em>update_type</em>, <em>object_id=None</em>, <em>creator_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/transactions/asset_type_update.html#Unregister"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.transactions.asset_type_update.Unregister" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">journal.transaction.Update</span></code></p>
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.Unregister.UpdateType">
+<code class="descname">UpdateType</code><em class="property"> = 'UnregisterAssetType'</em><a class="headerlink" href="#mktplace.transactions.asset_type_update.Unregister.UpdateType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.Unregister.ObjectType">
+<code class="descname">ObjectType</code><a class="headerlink" href="#mktplace.transactions.asset_type_update.Unregister.ObjectType" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#mktplace.transactions.asset_type_update.AssetTypeObject" title="mktplace.transactions.asset_type_update.AssetTypeObject"><code class="xref py py-class docutils literal"><span class="pre">AssetTypeObject</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.Unregister.CreatorType">
+<code class="descname">CreatorType</code><a class="headerlink" href="#mktplace.transactions.asset_type_update.Unregister.CreatorType" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">ParticipantObject</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.Unregister.References">
+<code class="descname">References</code><a class="headerlink" href="#mktplace.transactions.asset_type_update.Unregister.References" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.transactions.asset_type_update.Unregister.check_valid">
+<code class="descname">check_valid</code><span class="sig-paren">(</span><em>store</em>, <em>txn</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/transactions/asset_type_update.html#Unregister.check_valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.transactions.asset_type_update.Unregister.check_valid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.transactions.asset_type_update.Unregister.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>store</em>, <em>txn</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/transactions/asset_type_update.html#Unregister.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.transactions.asset_type_update.Unregister.apply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="mktplace.transactions.asset_type_update.UpdateDescription">
+<em class="property">class </em><code class="descclassname">mktplace.transactions.asset_type_update.</code><code class="descname">UpdateDescription</code><span class="sig-paren">(</span><em>update_type</em>, <em>creator_id</em>, <em>description</em>, <em>object_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/transactions/asset_type_update.html#UpdateDescription"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.transactions.asset_type_update.UpdateDescription" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mktplace.transactions.market_place_object_update.html#mktplace.transactions.market_place_object_update.UpdateDescription" title="mktplace.transactions.market_place_object_update.UpdateDescription"><code class="xref py py-class docutils literal"><span class="pre">mktplace.transactions.market_place_object_update.UpdateDescription</span></code></a></p>
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.UpdateDescription.UpdateType">
+<code class="descname">UpdateType</code><em class="property"> = 'UpdateAssetTypeDescription'</em><a class="headerlink" href="#mktplace.transactions.asset_type_update.UpdateDescription.UpdateType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.UpdateDescription.ObjectType">
+<code class="descname">ObjectType</code><a class="headerlink" href="#mktplace.transactions.asset_type_update.UpdateDescription.ObjectType" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#mktplace.transactions.asset_type_update.AssetTypeObject" title="mktplace.transactions.asset_type_update.AssetTypeObject"><code class="xref py py-class docutils literal"><span class="pre">AssetTypeObject</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.UpdateDescription.CreatorType">
+<code class="descname">CreatorType</code><a class="headerlink" href="#mktplace.transactions.asset_type_update.UpdateDescription.CreatorType" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">ParticipantObject</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="mktplace.transactions.asset_type_update.UpdateName">
+<em class="property">class </em><code class="descclassname">mktplace.transactions.asset_type_update.</code><code class="descname">UpdateName</code><span class="sig-paren">(</span><em>update_type</em>, <em>object_id</em>, <em>creator_id</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/transactions/asset_type_update.html#UpdateName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.transactions.asset_type_update.UpdateName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mktplace.transactions.market_place_object_update.html#mktplace.transactions.market_place_object_update.UpdateName" title="mktplace.transactions.market_place_object_update.UpdateName"><code class="xref py py-class docutils literal"><span class="pre">mktplace.transactions.market_place_object_update.UpdateName</span></code></a></p>
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.UpdateName.UpdateType">
+<code class="descname">UpdateType</code><em class="property"> = 'UpdateAssetTypeName'</em><a class="headerlink" href="#mktplace.transactions.asset_type_update.UpdateName.UpdateType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.UpdateName.ObjectType">
+<code class="descname">ObjectType</code><a class="headerlink" href="#mktplace.transactions.asset_type_update.UpdateName.ObjectType" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#mktplace.transactions.asset_type_update.AssetTypeObject" title="mktplace.transactions.asset_type_update.AssetTypeObject"><code class="xref py py-class docutils literal"><span class="pre">AssetTypeObject</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mktplace.transactions.asset_type_update.UpdateName.CreatorType">
+<code class="descname">CreatorType</code><a class="headerlink" href="#mktplace.transactions.asset_type_update.UpdateName.CreatorType" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">ParticipantObject</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mktplace.transactions.asset_update.html" class="btn btn-neutral float-right" title="mktplace.transactions.asset_update module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mktplace.transactions.account_update.html" class="btn btn-neutral" title="mktplace.transactions.account_update module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

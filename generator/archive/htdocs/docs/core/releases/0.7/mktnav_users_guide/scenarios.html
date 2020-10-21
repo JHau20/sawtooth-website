@@ -1,0 +1,458 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Scenarios &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="Marketplace Navigator User’s Guide" href="../mktnav_users_guide.html"/>
+        <link rel="next" title="Reference" href="reference.html"/>
+        <link rel="prev" title="Tutorial" href="tutorial.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Scenarios</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-cookie-market">Basic Cookie Market</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#building-the-market">Building the Market</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#making-a-baker">Making a Baker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#making-a-buyer">Making a Buyer</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#international-cookie-arbitrage">International Cookie Arbitrage</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#expanding-the-market">Expanding the Market</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#baking-biscotti">Baking Biscotti</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#buying-biscotti">Buying Biscotti</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Scenarios</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/mktnav_users_guide/scenarios.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scenarios">
+<h1>Scenarios<a class="headerlink" href="#scenarios" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li><p class="first"><a class="reference internal" href="#basic-cookie-market">Basic Cookie Market</a></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#building-the-market">Building the Market</a></li>
+<li><a class="reference internal" href="#making-a-baker">Making a Baker</a></li>
+<li><a class="reference internal" href="#making-a-buyer">Making a Buyer</a></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><a class="reference internal" href="#international-cookie-arbitrage">International Cookie Arbitrage</a></p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#expanding-the-market">Expanding the Market</a></li>
+<li><a class="reference internal" href="#baking-biscotti">Baking Biscotti</a></li>
+<li><a class="reference internal" href="#buying-biscotti">Buying Biscotti</a></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="section" id="basic-cookie-market">
+<h2>Basic Cookie Market<a class="headerlink" href="#basic-cookie-market" title="Permalink to this headline">¶</a></h2>
+<p>This scenario mirrors the one in the <a class="reference internal" href="../tutorial.html"><span class="doc">CLI tutorial</span></a>, and is a good way to both explore the basics of Marketplace Navigator and to compare how to do similar tasks between the CLI and GUI. It walks through the creation of a controlled market, participants, and goods, as well as the exchange of those goods.</p>
+<div class="section" id="building-the-market">
+<h3>Building the Market<a class="headerlink" href="#building-the-market" title="Permalink to this headline">¶</a></h3>
+<p>In most markets, you will want the creation of <em>Assets</em> to be centrally controlled so that everyone can&#8217;t just make infinite goods, similar to how the Federal Reserve controls how and when money is printed. Let&#8217;s build that Market authority now.</p>
+<ol class="arabic">
+<li><p class="first">The Market works like any other <em>Participant</em>, so we will start by generating a new WIF key.</p>
+<img alt="../_images/market_wif.png" src="../_images/market_wif.png" />
+</li>
+<li><p class="first">Download the key, and then click <strong>Create Participant</strong>. You may want to rename the file something meaningful, like <em>&#8220;market.wif&#8221;</em>.</p>
+<img alt="../_images/market_save.png" src="../_images/market_save.png" />
+</li>
+<li><p class="first">Name the market &#8220;Market&#8221;, write a short description, and then click <strong>Submit</strong>.</p>
+<img alt="../_images/market_create.png" src="../_images/market_create.png" />
+</li>
+<li><p class="first">The first thing a market needs is a currency, so click on the <strong>+</strong> button next to the <strong>Assets</strong> list.</p>
+<img alt="../_images/asset_button.png" src="../_images/asset_button.png" />
+</li>
+<li><p class="first">We&#8217;re going to make both a new <em>AssetType</em> (currency), and a new <em>Asset</em> (usd). We will make both <em>&#8220;restricted&#8221;</em>, since we do not want other participants making counterfeit currency. USD will also be <em>&#8220;divisible&#8221;</em>, since it is possible to trade fractions of a dollar.</p>
+<img alt="../_images/usd_create.png" src="../_images/usd_create.png" />
+</li>
+<li><p class="first">Now that dollars exist as a concept, we need to create some for the market. Wait for the transation to be committed to the blockchain, and once USD appears on the sidebar, click the <strong>+</strong> next to the <strong>Holdings</strong> list.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Waiting for the blockchain to commit will be a common experience throughout this scenario and won&#8217;t be explicitly mentioned again. If you feel the need to check the status of recent transactions, you can do so by clicking on the <strong>Block</strong> name in the menu bar.</p>
+</div>
+</li>
+<li><p class="first">We&#8217;re going to create a strategic reserve of $1,000,000, which we will later distribute to the other participants in our market.</p>
+<img alt="../_images/reserve_create.png" src="../_images/reserve_create.png" />
+</li>
+<li><p class="first">We&#8217;re going to use the pre-made reusable <em>&#8220;token&#8221;</em> asset to create our distribution offer, but first we&#8217;ll need a <em>Holding</em> for that too.</p>
+<img alt="../_images/verification_create.png" src="../_images/verification_create.png" />
+</li>
+<li><p class="first">Finally, we&#8217;ll create our offer to provision each participant with $1,000. Click the <strong>+ Create Offer</strong> button in the menu bar.</p>
+</li>
+<li><p class="first">Set the offer to take in tokens and payout usd at a 1:1000 ratio. We only want this exchange to be possible once per person, so set both the minimum and maximum input to 1, and limit it to <strong>Execute Once per Participant</strong>.</p>
+<img alt="../_images/provision_create.png" src="../_images/provision_create.png" />
+</li>
+<li><p class="first">Our market is all set and ready to go! Select <strong>Sign Out</strong> from the <strong>Hi, Market</strong> dropdown, and let&#8217;s make a new participant.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="making-a-baker">
+<h3>Making a Baker<a class="headerlink" href="#making-a-baker" title="Permalink to this headline">¶</a></h3>
+<p>Now we&#8217;re going to create Abby, an entrepeneur who will bake some cookies to sell on the market.</p>
+<ol class="arabic">
+<li><p class="first">Follow the same steps as above to generate and save a new WIF key. Then fill out Abby&#8217;s info and click <strong>Submit</strong>.</p>
+<img alt="../_images/abby_create.png" src="../_images/abby_create.png" />
+</li>
+<li><p class="first">You can see that USD already exists in the list of <em>Assets</em>. Let&#8217;s add cookies. Click the <strong>+</strong> next to <strong>Assets</strong>.</p>
+</li>
+<li><p class="first">We&#8217;ll make the cookie <em>AssetType</em> and chocolate chip cookie <em>Asset</em> similar to how we made USD, but this time they will not be <em>&#8220;restricted&#8221;</em>, since almost anyone can come up with new recipes for cookies, or physically bake new chocolate chip cookies.</p>
+<img alt="../_images/cookie_create.png" src="../_images/cookie_create.png" />
+</li>
+<li><p class="first">Now that chocolate chip cookies are a thing, let&#8217;s bake a batch. Click the <strong>+</strong> next to <strong>Holdings</strong>, and make a holding with 24 cookies.</p>
+<img alt="../_images/batch_create.png" src="../_images/batch_create.png" />
+</li>
+<li><p class="first">The last thing we need to do before we can create a sell offer is to make a holding of US dollars to send our payments to. We could create an empty one, but why not take advantage of that market provision? Start by creating an authorization token by clicking the <strong>+</strong> next to <strong>Holdings</strong>.</p>
+</li>
+<li><p class="first">Tokens are unrestricted, so we can create a holding prepopulated with one, and since they are not consumable, one is all we need.</p>
+<img alt="../_images/token_create.png" src="../_images/token_create.png" />
+</li>
+<li><p class="first">Select <strong>Dashboard</strong> from the <strong>Hi, Abby</strong> dropdown menu.</p>
+</li>
+<li><p class="first">Click on <strong>Latest Open Offers</strong></p>
+</li>
+<li><p class="first">Click the <strong>Accept</strong> button to the right of the provisioning offer.</p>
+</li>
+<li><p class="first">We can create a new savings account in the process of accepting the Market&#8217;s provisioning offer. We just have to select <strong>New Holding</strong> from the <strong>Output Holding</strong> dropdown, and we&#8217;re good to go.</p>
+<img alt="../_images/provision_accept.png" src="../_images/provision_accept.png" />
+</li>
+<li><p class="first">Finally we can create our offer to sell cookies. This will look similar to the provisioning offer the Market created earlier, but we won&#8217;t limit how many times it can be executed. Let&#8217;s sell the cookies for $2 each.</p>
+<img alt="../_images/cookie_offer.png" src="../_images/cookie_offer.png" />
+</li>
+<li><p class="first">We&#8217;re done with our baker Abby, so go ahead and <strong>Sign out</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="making-a-buyer">
+<h3>Making a Buyer<a class="headerlink" href="#making-a-buyer" title="Permalink to this headline">¶</a></h3>
+<p>Finally we will create Ben, a discerning cookiehead looking for the absolute best chocolate chip. He will take the Market&#8217;s USD provision, and use it to purchase Abby&#8217;s cookies. You should be familiar with all the steps by now.</p>
+<ol class="arabic">
+<li><p class="first">Generate and save a WIF key, and then create Ben&#8217;s account.</p>
+<img alt="../_images/ben_create.png" src="../_images/ben_create.png" />
+</li>
+<li><p class="first">Create a token holding.</p>
+<img alt="../_images/token_create.png" src="../_images/token_create.png" />
+</li>
+<li><p class="first">Use that token to accept the Market&#8217;s USD provisioning offer and create a USD holding (get there by clicking on <strong>Dashboard</strong> &gt; <strong>Latest Open Offers</strong> &gt; <strong>Accept</strong>).</p>
+<img alt="../_images/provision_accept.png" src="../_images/provision_accept.png" />
+</li>
+<li><p class="first">We&#8217;re ready buy some cookies! Return to the <strong>Dashboard</strong> and click on <strong>Latest Open Offers</strong> one more time. This time though the offer we will be accepting is Abby&#8217;s.</p>
+<img alt="../_images/abby_offer.png" src="../_images/abby_offer.png" />
+</li>
+<li><p class="first">Let&#8217;s get a dozen cookies! We&#8217;ve earned it.</p>
+<img alt="../_images/get_cookies.png" src="../_images/get_cookies.png" />
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="international-cookie-arbitrage">
+<h2>International Cookie Arbitrage<a class="headerlink" href="#international-cookie-arbitrage" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s build off our previous scenario to showcase one of the more powerful features of of the Navigator UI: <em>arbitrage</em>. Say we have a new baker cooking some authentic Italian biscotti, but they only accept Euros. So long as a <em>USD -&gt; Euro</em> exchange exists, there is no need to force American buyers to tediously create new holdings and manually execute a long series of exchanges.</p>
+<div class="section" id="expanding-the-market">
+<h3>Expanding the Market<a class="headerlink" href="#expanding-the-market" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">First we need to log our Market back in. If you are still signed in as Ben, sign out and this time click <strong>Import WIF</strong>, instead of generating a new one.</p>
+<img alt="../_images/market_wif.png" src="../_images/market_wif.png" />
+</li>
+<li><p class="first">The easiest way to enter Market&#8217;s WIF key is to upload the <em>market.wif</em> file we generated earlier (you still have that right?). Click <strong>Upload WIF File</strong>, select the file, and then click <strong>Submit</strong>.</p>
+<img alt="../_images/upload_wif.png" src="../_images/upload_wif.png" />
+</li>
+<li><p class="first">Now that you are logged back in as Market, let&#8217;s create a new currency asset: Euros. Click the <strong>+</strong> to the right of <strong>Assets</strong>, and fill out the form.</p>
+<img alt="../_images/euro_create.png" src="../_images/euro_create.png" />
+</li>
+<li><p class="first">We&#8217;ll need a holding with a strategic reserve of €1,000,000 as well. Add the holding with the <strong>+</strong> to the right of <strong>Holdings</strong>.</p>
+<img alt="../_images/euro_reserve.png" src="../_images/euro_reserve.png" />
+</li>
+<li><p class="first">Finally we&#8217;ll create an offer to exchange USD for Euros. Click <strong>+ Create Offer</strong> in the menu bar above. As of this writing, the exchange rate was €0.96 to $1. A quirk of this UI is you can only enter whole integer amounts even if the asset is divisible, but we can get around that by making our offer $100 for €96.</p>
+<img alt="../_images/exchange_create.png" src="../_images/exchange_create.png" />
+</li>
+<li><p class="first">Now that we&#8217;ve expanded our Market to handle foreign currency, all that&#8217;s left to do is <strong>Sign out</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="baking-biscotti">
+<h3>Baking Biscotti<a class="headerlink" href="#baking-biscotti" title="Permalink to this headline">¶</a></h3>
+<p>We&#8217;re going to create a new participant, Claudio, who will bake some biscotti and put them on sale in our newly international market.</p>
+<ol class="arabic">
+<li><p class="first">Go through the steps to generate a new WIF key and create a new participant detailed above.</p>
+<img alt="../_images/claudio_create.png" src="../_images/claudio_create.png" />
+</li>
+<li><p class="first">Once Claudio is provisioned, create a new biscotti asset just like we did Euros.</p>
+<img alt="../_images/biscotti_create.png" src="../_images/biscotti_create.png" />
+</li>
+<li><p class="first">And just like Abby in the previous scenario, we will bake our first batch by creating a holding.</p>
+<img alt="../_images/biscotti_batch.png" src="../_images/biscotti_batch.png" />
+</li>
+<li><p class="first">We&#8217;ll also create an empty savings account for Claudio to keep the Euros that are sure to be pouring in soon.</p>
+<img alt="../_images/claudio_savings.png" src="../_images/claudio_savings.png" />
+</li>
+<li><p class="first">Finally, we&#8217;ll put the biscotti up for sale by creating an offer that will take €3 for 2 biscotti.</p>
+<img alt="../_images/biscotti_offer.png" src="../_images/biscotti_offer.png" />
+</li>
+<li><p class="first">Claudio is all set, so let&#8217;s go ahead and <strong>Sign out</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="buying-biscotti">
+<h3>Buying Biscotti<a class="headerlink" href="#buying-biscotti" title="Permalink to this headline">¶</a></h3>
+<p>Almost finished. We&#8217;ll log back in as Ben who, always craving new cookie experiences, will purchase some biscotti from Claudio.</p>
+<ol class="arabic">
+<li><p class="first">Log Ben in by importing his WIF key just like we did with Market above.</p>
+</li>
+<li><p class="first">Click on <strong>Latest Open Offers</strong>.</p>
+</li>
+<li><p class="first">Click the <strong>Accept</strong> button to the right of Claudio&#8217;s biscotti offer.</p>
+</li>
+<li><p class="first">Now we could have a problem. Claudio is asking for Euros, and we can see if we click on <strong>Initial Holding</strong> that we don&#8217;t have any of those. But fear not, <em>arbitrage</em> to the rescue! Click on the <strong>+ Offer</strong> button to right of the initial holding dropdown. From the pop-up that appears, you can select the Market&#8217;s USD for Euro exchange offer.</p>
+<img alt="../_images/add_offer.png" src="../_images/add_offer.png" />
+</li>
+<li><p class="first">Now we are free to select our USD savings account as the initial holding, and route those dollars through the Market&#8217;s exchange to our intended biscotti target, which we will keep in a new <em>/jar</em> holding.</p>
+<img alt="../_images/execute_arbitrage.png" src="../_images/execute_arbitrage.png" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This exchange exposes some of the quirks of the <strong>Quantity</strong> field that may not be immediately obvious. It represents the number of times the <em>smallest possible integer representation</em> of the initial exchange is going to be executed. So for example, in this case our <em>$100 -&gt; €96</em> exchange has been reduced to <em>$25 -&gt; €24</em> (the smallest integer representation). That €24 buys you 16 biscotti, so by entering a 2 into the <strong>Quantity</strong> field, we will spend $50, and receive 32 biscotti. It is generally best when making exchanges to double check the calculated holding amounts before clicking <strong>Accept</strong>.</p>
+</div>
+</li>
+<li><p class="first">Click <strong>Accept</strong> and enjoy those sweet sweet digital biscotti.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="reference.html" class="btn btn-neutral float-right" title="Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tutorial.html" class="btn btn-neutral" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

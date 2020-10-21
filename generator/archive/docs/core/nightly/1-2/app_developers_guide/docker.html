@@ -1,0 +1,827 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using Docker for a Single Sawtooth Node &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using Kubernetes for a Single Sawtooth Node" href="kubernetes.html" />
+    <link rel="prev" title="Setting Up a Sawtooth Node for Testing" href="installing_sawtooth.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Transaction Family Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="installing_sawtooth.html">Setting Up a Sawtooth Node for Testing</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Using Docker for a Single Sawtooth Node</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#about-the-docker-test-node-environment">About the Docker Test Node Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-download-the-sawtooth-docker-compose-file">Step 1: Download the Sawtooth Docker Compose File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-configure-proxy-settings-optional">Step 2: Configure Proxy Settings (Optional)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-start-the-sawtooth-docker-environment">Step 3: Start the Sawtooth Docker Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-4-log-into-the-docker-client-container">Step 4: Log Into the Docker Client Container</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-5-confirm-connectivity-to-the-rest-api-for-docker">Step 5: Confirm Connectivity to the REST API (for Docker)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-6-use-sawtooth-commands-as-a-client">Step 6: Use Sawtooth Commands as a Client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-7-connect-to-each-container-optional">Step 7: Connect to Each Container (Optional)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-8-examine-sawtooth-logs">Step 8: Examine Sawtooth Logs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-9-stop-the-sawtooth-environment">Step 9: Stop the Sawtooth Environment</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="kubernetes.html">Using Kubernetes for a Single Sawtooth Node</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ubuntu.html">Using Ubuntu for a Single Sawtooth Node</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="creating_sawtooth_network.html">Creating a Sawtooth Test Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Playing with the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_the_sdks.html">Using the Sawtooth SDKs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_restriction.html">Namespace Restriction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_subscriptions.html">Subscribing to Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="installing_sawtooth.html">Setting Up a Sawtooth Node for Testing</a> &raquo;</li>
+        
+      <li>Using Docker for a Single Sawtooth Node</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/docker.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-docker-for-a-single-sawtooth-node">
+<h1>Using Docker for a Single Sawtooth Node<a class="headerlink" href="#using-docker-for-a-single-sawtooth-node" title="Permalink to this headline">¶</a></h1>
+<p>This procedure explains how to set up Hyperledger Sawtooth for application
+development using a multi-container Docker environment. It shows you how to
+start Sawtooth and connect to the necessary Docker containers, then walks you
+through the following tasks:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Checking the status of Sawtooth components</p></li>
+<li><p>Using Sawtooth commands to submit transactions, display block data, and view
+global state</p></li>
+<li><p>Examining Sawtooth logs</p></li>
+<li><p>Stopping Sawtooth and resetting the Docker environment</p></li>
+</ul>
+</div></blockquote>
+<p>After completing this tutorial, you will have the application development
+environment that is required for the other tutorials in this guide. The next
+tutorial introduces the XO transaction family by using the <code class="docutils literal notranslate"><span class="pre">xo</span></code> client
+commands to play a game of tic-tac-toe. The final set of tutorials describe how
+to use an SDK to create a transaction family that implements your application’s
+business logic.</p>
+<div class="section" id="about-the-docker-test-node-environment">
+<h2>About the Docker Test Node Environment<a class="headerlink" href="#about-the-docker-test-node-environment" title="Permalink to this headline">¶</a></h2>
+<p>This Docker environment is a single Sawtooth node that is running a
+validator, a REST API, the Devmode consensus engine, and three transaction
+processors. The environment uses
+<a class="reference internal" href="../introduction.html#dynamic-consensus-label"><span class="std std-ref">Devmode consensus</span></a> and
+<a class="reference internal" href="../architecture/scheduling.html"><span class="doc">parallel transaction processing</span></a>.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/appdev-environment-one-node-3TPs.svg"><img alt="Docker: Sawtooth application environment with one node" src="../_images/appdev-environment-one-node-3TPs.svg" width="100%" /></a>
+</div>
+<p>This environment introduces basic Sawtooth functionality with the
+<a class="reference external" href="../transaction_family_specifications/integerkey_transaction_family">IntegerKey</a>
+and
+<a class="reference external" href="../transaction_family_specifications/settings_transaction_family">Settings</a>
+transaction processors for the business logic and Sawtooth commands as a client.
+It also includes the
+<a class="reference external" href="../transaction_family_specifications/xo_transaction_family">XO</a>
+transaction processor, which is used in later tutorials.</p>
+<p>The IntegerKey and XO families are simple examples of a transaction family, but
+Settings is a reference implementation. In a production environment, you should
+always run a transaction processor that supports the Settings transaction
+family.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Docker environment includes a Docker Compose file that
+handles environment setup steps such as generating keys and creating a
+genesis block. To learn how the typical startup process works, see
+<a class="reference internal" href="ubuntu.html"><span class="doc">Using Ubuntu for a Single Sawtooth Node</span></a>.</p>
+</div>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This application development environment requires Docker Engine and Docker
+Compose.</p>
+<ul class="simple">
+<li><p>Windows: Install the latest version of
+<a class="reference external" href="https://docs.docker.com/docker-for-windows/install/">Docker Engine for Windows</a>
+(also installs Docker Compose).</p></li>
+<li><p>macOS: Install the latest version of
+<a class="reference external" href="https://docs.docker.com/docker-for-mac/install/">Docker Engine for macOS</a>
+(also installs Docker Compose).</p></li>
+<li><p>Linux: Install the latest versions of
+<a class="reference external" href="https://docs.docker.com/engine/installation/linux/ubuntu">Docker Engine</a>
+and
+<a class="reference external" href="https://docs.docker.com/compose/install/#install-compose">Docker Compose</a>.
+Then follow
+<a class="reference external" href="https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user">Post-Install steps</a>.</p></li>
+</ul>
+<p>In this procedure, you will open six terminal windows to connect to the Docker
+containers: one for each Sawtooth component and one to use for client commands.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Docker Compose file for Sawtooth handles environment setup steps such as
+generating keys and creating a genesis block. To learn how the typical
+startup process works, see <a class="reference internal" href="ubuntu.html"><span class="doc">Using Ubuntu for a Single Sawtooth Node</span></a>.</p>
+</div>
+</div>
+<div class="section" id="step-1-download-the-sawtooth-docker-compose-file">
+<h2>Step 1: Download the Sawtooth Docker Compose File<a class="headerlink" href="#step-1-download-the-sawtooth-docker-compose-file" title="Permalink to this headline">¶</a></h2>
+<p>Download the Docker Compose file for the Sawtooth environment,
+<a class="reference external" href="./sawtooth-default.yaml">sawtooth-default.yaml</a>.</p>
+<p>This example Compose file defines the process for constructing a simple
+Sawtooth environment with following containers:</p>
+<ul class="simple">
+<li><p>A single validator using Devmode consensus</p></li>
+<li><p>A REST API connected to the validator</p></li>
+<li><p>The Settings transaction processor (<code class="docutils literal notranslate"><span class="pre">sawtooth-settings</span></code>)</p></li>
+<li><p>The IntegerKey transaction processor (<code class="docutils literal notranslate"><span class="pre">intkey-tp-python</span></code>)</p></li>
+<li><p>The XO transaction processor (<code class="docutils literal notranslate"><span class="pre">xo-tp-python</span></code>)</p></li>
+<li><p>A client (shell) container for running Sawtooth commands</p></li>
+</ul>
+<p>The Compose file also specifies the container images to download from Docker Hub
+and the network settings needed for all the containers to communicate correctly.</p>
+<p>After completing the tutorials in this guide, you can use this Compose file as
+the basis for your own multi-container Sawtooth development environment or
+application.</p>
+</div>
+<div class="section" id="step-2-configure-proxy-settings-optional">
+<h2>Step 2: Configure Proxy Settings (Optional)<a class="headerlink" href="#step-2-configure-proxy-settings-optional" title="Permalink to this headline">¶</a></h2>
+<p>To configure Docker to work with an HTTP or HTTPS proxy server, follow the
+instructions for proxy configuration in the documentation for your operating
+system:</p>
+<ul class="simple">
+<li><p>Windows - See “<a class="reference external" href="https://docs.docker.com/docker-for-windows/#proxies">Get Started with Docker for Windows</a>”.</p></li>
+<li><p>macOS - See “<a class="reference external" href="https://docs.docker.com/docker-for-mac/">Get Started with Docker for Mac</a>”.</p></li>
+<li><p>Linux - See “<a class="reference external" href="https://docs.docker.com/engine/admin/systemd/#httphttps-proxy">Control and configure Docker with Systemd</a>”.</p></li>
+</ul>
+</div>
+<div class="section" id="step-3-start-the-sawtooth-docker-environment">
+<h2>Step 3: Start the Sawtooth Docker Environment<a class="headerlink" href="#step-3-start-the-sawtooth-docker-environment" title="Permalink to this headline">¶</a></h2>
+<p>To start the Sawtooth Docker environment, perform the following tasks:</p>
+<ol class="arabic">
+<li><p>Open a terminal window.</p></li>
+<li><p>Change your working directory to the same directory where you saved the
+Docker Compose file.</p></li>
+<li><p>Run the following command:</p>
+<div class="highlight-console notranslate" id="restart"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker-compose -f sawtooth-default.yaml up
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you previously ran <code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">...</span> <span class="pre">up</span></code> without a clean shut down,
+run the following command first:</p>
+<p><code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">-f</span> <span class="pre">sawtooth-default.yaml</span> <span class="pre">down</span></code></p>
+</div>
+</li>
+<li><p>Downloading the Docker images for the Sawtooth environment can take
+several minutes. Wait until you see output that shows the containers
+registering and creating initial blocks.  Once you see output that resembles
+the following example, you can move on to the next step.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">...</span>
+<span class="go">sawtooth-settings-tp-default | [2018-03-08 22:55:10.537 INFO     core] register attempt: OK</span>
+<span class="go">sawtooth-settings-tp-default | [2018-03-08 22:55:10.538 DEBUG    core] received message of type: TP_PROCESS_REQUEST</span>
+<span class="go">sawtooth-settings-tp-default | [2018-03-08 22:55:10.550 INFO     handler] Setting setting sawtooth.settings.vote.authorized_keys changed from None to 039fa17f2962706aae83f3cc1f7d0c51dda7ffe15f5811fefd4ea5fdd3e84d0755</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 22:55:10.557 DEBUG    genesis] Produced state hash 53d38378e8c61f42112c39f9c84d42d339320515ef44f50d6b4dd52f3f1b9054 for genesis block.</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 22:55:10.560 INFO     genesis] Genesis block created: 60e79c91757c73185b36802661833f586f4dd5ef3c4cb889f37c287921af8ad01a8b95e9d81af698e6c3f3eb7b65bfd6f6b834ffc9bc36317d8a1ae7ecc45668 (block_num:0, state:53d38378e8c61f42112c39f9c84d42d339320515ef44f50d6b4dd52f3f1b9054, previous_block_id:0000000000000000)</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 22:55:10.561 DEBUG    chain_id_manager] writing block chain id</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 22:55:10.562 DEBUG    genesis] Deleting genesis data.</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 22:55:10.564 DEBUG    selector_events] Using selector: ZMQSelector</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 22:55:10.565 INFO     interconnect] Listening on tcp://eth0:8800</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 22:55:10.566 DEBUG    dispatch] Added send_message function for connection ServerThread</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 22:55:10.566 DEBUG    dispatch] Added send_last_message function for connection ServerThread</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 22:55:10.568 INFO     chain] Chain controller initialized with chain head: 60e79c91757c73185b36802661833f586f4dd5ef3c4cb889f37c287921af8ad01a8b95e9d81af698e6c3f3eb7b65bfd6f6b834ffc9bc36317d8a1ae7ecc45668 (block_num:0, state:53d38378e8c61f42112c39f9c84d42d339320515ef44f50d6b4dd52f3f1b9054, previous_block_id:0000000000000000)</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 22:55:10.569 INFO     publisher] Now building on top of block: 60e79c91757c73185b36802661833f586f4dd5ef3c4cb889f37c287921af8ad01a8b95e9d81af698e6c3f3eb7b65bfd6f6b834ffc9bc36317d8a1ae7ecc45668 (block_num:0, state:53d38378e8c61f42112c39f9c84d42d339320515ef44f50d6b4dd52f3f1b9054, previous_block_id:0000000000000000)</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>This terminal window will continue to display log messages as you run commands
+in other containers.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you need to reset the environment for any reason, see
+<a class="reference internal" href="#stop-sawtooth-docker-label"><span class="std std-ref">Step 9: Stop the Sawtooth Environment</span></a>.</p>
+</div>
+</div>
+<div class="section" id="step-4-log-into-the-docker-client-container">
+<span id="log-into-client-container-docker"></span><h2>Step 4: Log Into the Docker Client Container<a class="headerlink" href="#step-4-log-into-the-docker-client-container" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth includes commands that act as a client application. The client
+container is used to run these Sawtooth commands, which interact with the
+validator through the REST API.</p>
+<p>To log into the client container, open a new terminal window and run the
+following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker <span class="nb">exec</span> -it sawtooth-shell-default bash
+<span class="gp">root@client#</span>
+</pre></div>
+</div>
+<p>In this procedure, the prompt <code class="docutils literal notranslate"><span class="pre">root&#64;client#</span></code> is used for commands that should
+be run in the terminal window for the client container.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Your environment is ready for experimenting with Sawtooth. However, any work
+done in this environment will be lost once the container in which you ran
+<code class="docutils literal notranslate"><span class="pre">docker-compose</span></code> exits. In order to use this application development
+environment for application development, you would need to take additional
+steps, such as mounting a host directory into the container. See the <a class="reference external" href="https://docs.docker.com/">Docker
+documentation</a> for more information.</p>
+</div>
+</div>
+<div class="section" id="step-5-confirm-connectivity-to-the-rest-api-for-docker">
+<span id="confirming-connectivity-docker-label"></span><h2>Step 5: Confirm Connectivity to the REST API (for Docker)<a class="headerlink" href="#step-5-confirm-connectivity-to-the-rest-api-for-docker" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>To confirm that the REST API and validator are running and reachable from
+the client container, run this <code class="docutils literal notranslate"><span class="pre">curl</span></code> command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@client#</span> curl http://rest-api:8008/blocks
+</pre></div>
+</div>
+</li>
+<li><p>To check connectivity from the host computer, open a new terminal window on
+your host system and run this <code class="docutils literal notranslate"><span class="pre">curl</span></code> command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> curl http://localhost:8008/blocks
+</pre></div>
+</div>
+<p>If the validator and REST API are running and reachable, the output for each
+command should be similar to this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">{</span>
+<span class="go">  &quot;data&quot;: [</span>
+<span class="go">    {</span>
+<span class="go">      &quot;batches&quot;: [],</span>
+<span class="go">      &quot;header&quot;: {</span>
+<span class="go">        &quot;batch_ids&quot;: [],</span>
+<span class="go">        &quot;block_num&quot;: 0,</span>
+<span class="go">        &quot;mconsensus&quot;: &quot;R2VuZXNpcw==&quot;,</span>
+<span class="go">        &quot;previous_block_id&quot;: &quot;0000000000000000&quot;,</span>
+<span class="go">        &quot;signer_public_key&quot;: &quot;03061436bef428626d11c17782f9e9bd8bea55ce767eb7349f633d4bfea4dd4ae9&quot;,</span>
+<span class="go">        &quot;state_root_hash&quot;: &quot;708ca7fbb701799bb387f2e50deaca402e8502abe229f705693d2d4f350e1ad6&quot;</span>
+<span class="go">      },</span>
+<span class="go">      &quot;header_signature&quot;: &quot;119f076815af8b2c024b59998e2fab29b6ae6edf3e28b19de91302bd13662e6e43784263626b72b1c1ac120a491142ca25393d55ac7b9f3c3bf15d1fdeefeb3b&quot;</span>
+<span class="go">    }</span>
+<span class="go">  ],</span>
+<span class="go">  &quot;head&quot;: &quot;119f076815af8b2c024b59998e2fab29b6ae6edf3e28b19de91302bd13662e6e43784263626b72b1c1ac120a491142ca25393d55ac7b9f3c3bf15d1fdeefeb3b&quot;,</span>
+<span class="go">  &quot;link&quot;: &quot;http://rest-api:8008/blocks?head=119f076815af8b2c024b59998e2fab29b6ae6edf3e28b19de91302bd13662e6e43784263626b72b1c1ac120a491142ca25393d55ac7b9f3c3bf15d1fdeefeb3b&quot;,</span>
+<span class="go">  &quot;paging&quot;: {</span>
+<span class="go">    &quot;start_index&quot;: 0,</span>
+<span class="go">    &quot;total_count&quot;: 1</span>
+<span class="go">  }</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>If the validator process or the validator container is not running, the
+<code class="docutils literal notranslate"><span class="pre">curl</span></code> command will time out or return nothing.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="step-6-use-sawtooth-commands-as-a-client">
+<span id="configure-tf-settings-docker-label"></span><h2>Step 6: Use Sawtooth Commands as a Client<a class="headerlink" href="#step-6-use-sawtooth-commands-as-a-client" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth includes commands that act as a client application. This step describes
+how to use the <code class="docutils literal notranslate"><span class="pre">intkey</span></code> and <code class="docutils literal notranslate"><span class="pre">sawtooth</span></code> commands to create and submit
+transactions, display blockchain and block data, and examine global state data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">--help</span></code> option with any Sawtooth command to display the available
+options and subcommands.</p>
+</div>
+<p>To run the commands in this section, use the terminal window for the client
+container.</p>
+<div class="section" id="creating-and-submitting-transactions-with-intkey">
+<h3>Creating and Submitting Transactions with intkey<a class="headerlink" href="#creating-and-submitting-transactions-with-intkey" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">intkey</span></code> command creates and submits IntegerKey transactions for testing
+purposes.</p>
+<ol class="arabic">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">intkey</span> <span class="pre">create_batch</span></code> to prepare batches of transactions that set
+a few keys to random values, then randomly increment and decrement those
+values. These batches are saved locally in the file <code class="docutils literal notranslate"><span class="pre">batches.intkey</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@client#</span> intkey create_batch --count <span class="m">10</span> --key-count <span class="m">5</span>
+<span class="go">Writing to batches.intkey...</span>
+</pre></div>
+</div>
+</li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">intkey</span> <span class="pre">load</span></code> to submit the batches to the validator.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@client#</span> intkey load -f batches.intkey --url http://rest-api:8008
+<span class="go">batches: 11 batch/sec: 141.7800162868952</span>
+</pre></div>
+</div>
+</li>
+<li><p>The terminal window in which you ran the <code class="docutils literal notranslate"><span class="pre">docker-compose</span></code> command displays
+log messages showing that the validator is handling the submitted
+transactions and that values are being incremented and decremented, as in
+this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sawtooth-intkey-tp-python-default | [2018-03-08 21:26:20.334 DEBUG    core] received message of type: TP_PROCESS_REQUEST</span>
+<span class="go">sawtooth-intkey-tp-python-default | [2018-03-08 21:26:20.339 DEBUG    handler] Decrementing &quot;GEJTiZ&quot; by 10</span>
+<span class="go">sawtooth-intkey-tp-python-default | [2018-03-08 21:26:20.347 DEBUG    core] received message of type: TP_PROCESS_REQUEST</span>
+<span class="go">sawtooth-intkey-tp-python-default | [2018-03-08 21:26:20.352 DEBUG    handler] Decrementing &quot;lrAYjm&quot; by 8</span>
+<span class="go">...</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 21:26:20.397 INFO     chain] Fork comparison at height 50 is between - and 3d4d952d</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 21:26:20.397 INFO     chain] Chain head updated to: 3d4d952d4774988bd67a4deb85830155a5f505c68bea11d832a6ddbdd5eeebc34f5a63a9e59a426376cd2e215e19c0dfa679fe016be26307c3ee698cce171d51 (block_num:50, state:e18c2ce54859d1e9a6e4fb949f8d861e483d330b363b4060b069f53d7e6c6380, previous_block_id:e05737151717eb8787a2db46279fedf9d331a501c12cd8059df379996d9a34577cf605e95f531514558b200a386dc73e11de3fa17d6c00882acf6f9d9c387e82)</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 21:26:20.398 INFO     publisher] Now building on top of block: 3d4d952d4774988bd67a4deb85830155a5f505c68bea11d832a6ddbdd5eeebc34f5a63a9e59a426376cd2e215e19c0dfa679fe016be26307c3ee698cce171d51 (block_num:50, state:e18c2ce54859d1e9a6e4fb949f8d861e483d330b363b4060b069f53d7e6c6380, previous_block_id:e05737151717eb8787a2db46279fedf9d331a501c12cd8059df379996d9a34577cf605e95f531514558b200a386dc73e11de3fa17d6c00882acf6f9d9c387e82)</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 21:26:20.401 DEBUG    chain] Verify descendant blocks: 3d4d952d4774988bd67a4deb85830155a5f505c68bea11d832a6ddbdd5eeebc34f5a63a9e59a426376cd2e215e19c0dfa679fe016be26307c3ee698cce171d51 (block_num:50, state:e18c2ce54859d1e9a6e4fb949f8d861e483d330b363b4060b069f53d7e6c6380, previous_block_id:e05737151717eb8787a2db46279fedf9d331a501c12cd8059df379996d9a34577cf605e95f531514558b200a386dc73e11de3fa17d6c00882acf6f9d9c387e82) ([])</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 21:26:20.402 INFO     chain] Finished block validation of: 3d4d952d4774988bd67a4deb85830155a5f505c68bea11d832a6ddbdd5eeebc34f5a63a9e59a426376cd2e215e19c0dfa679fe016be26307c3ee698cce171d51 (block_num:50, state:e18c2ce54859d1e9a6e4fb949f8d861e483d330b363b4060b069f53d7e6c6380, previous_block_id:e05737151717eb8787a2db46279fedf9d331a501c12cd8059df379996d9a34577cf605e95f531514558b200a386dc73e11de3fa17d6c00882acf6f9d9c387e82)</span>
+</pre></div>
+</div>
+</li>
+<li><p>You can also use <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">logs</span></code> to examine at the Sawtooth log messages
+from your host system. For example, this command displays the last five
+entries in the log:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker logs --tail <span class="m">5</span> sawtooth-validator-default
+<span class="go">sawtooth-validator-default | [2018-03-08 21:26:20.397 INFO     chain] Fork comparison at height 50 is between - and 3d4d952d</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 21:26:20.397 INFO     chain] Chain head updated to: 3d4d952d4774988bd67a4deb85830155a5f505c68bea11d832a6ddbdd5eeebc34f5a63a9e59a426376cd2e215e19c0dfa679fe016be26307c3ee698cce171d51 (block_num:50, state:e18c2ce54859d1e9a6e4fb949f8d861e483d330b363b4060b069f53d7e6c6380, previous_block_id:e05737151717eb8787a2db46279fedf9d331a501c12cd8059df379996d9a34577cf605e95f531514558b200a386dc73e11de3fa17d6c00882acf6f9d9c387e82)</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 21:26:20.398 INFO     publisher] Now building on top of block: 3d4d952d4774988bd67a4deb85830155a5f505c68bea11d832a6ddbdd5eeebc34f5a63a9e59a426376cd2e215e19c0dfa679fe016be26307c3ee698cce171d51 (block_num:50, state:e18c2ce54859d1e9a6e4fb949f8d861e483d330b363b4060b069f53d7e6c6380, previous_block_id:e05737151717eb8787a2db46279fedf9d331a501c12cd8059df379996d9a34577cf605e95f531514558b200a386dc73e11de3fa17d6c00882acf6f9d9c387e82)</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 21:26:20.401 DEBUG    chain] Verify descendant blocks: 3d4d952d4774988bd67a4deb85830155a5f505c68bea11d832a6ddbdd5eeebc34f5a63a9e59a426376cd2e215e19c0dfa679fe016be26307c3ee698cce171d51 (block_num:50, state:e18c2ce54859d1e9a6e4fb949f8d861e483d330b363b4060b069f53d7e6c6380, previous_block_id:e05737151717eb8787a2db46279fedf9d331a501c12cd8059df379996d9a34577cf605e95f531514558b200a386dc73e11de3fa17d6c00882acf6f9d9c387e82) ([])</span>
+<span class="go">sawtooth-validator-default | [2018-03-08 21:26:20.402 INFO     chain] Finished block validation of: 3d4d952d4774988bd67a4deb85830155a5f505c68bea11d832a6ddbdd5eeebc34f5a63a9e59a426376cd2e215e19c0dfa679fe016be26307c3ee698cce171d51 (block_num:50, state:e18c2ce54859d1e9a6e4fb949f8d861e483d330b363b4060b069f53d7e6c6380, previous_block_id:e05737151717eb8787a2db46279fedf9d331a501c12cd8059df379996d9a34577cf605e95f531514558b200a386dc73e11de3fa17d6c00882acf6f9d9c387e82)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="submitting-transactions-with-sawtooth-batch-submit">
+<h3>Submitting Transactions with sawtooth batch submit<a class="headerlink" href="#submitting-transactions-with-sawtooth-batch-submit" title="Permalink to this headline">¶</a></h3>
+<p>In the example above, the <code class="docutils literal notranslate"><span class="pre">intkey</span> <span class="pre">create_batch</span></code> command created the file
+<code class="docutils literal notranslate"><span class="pre">batches.intkey</span></code>.  Rather than using <code class="docutils literal notranslate"><span class="pre">intkey</span> <span class="pre">load</span></code> to submit these
+transactions, you could use <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">batch</span> <span class="pre">submit</span></code> to submit them.</p>
+<ol class="arabic">
+<li><p>As before, create a batch of transactions:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@client#</span> intkey create_batch --count <span class="m">10</span> --key-count <span class="m">5</span>
+<span class="go">Writing to batches.intkey...</span>
+</pre></div>
+</div>
+</li>
+<li><p>Submit the batch file with <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">batch</span> <span class="pre">submit</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@client#</span> sawtooth batch submit -f batches.intkey --url http://rest-api:8008
+<span class="go">batches: 11,  batch/sec: 216.80369536716367</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="viewing-blockchain-and-block-data-with-sawtooth-block">
+<h3>Viewing Blockchain and Block Data with sawtooth block<a class="headerlink" href="#viewing-blockchain-and-block-data-with-sawtooth-block" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">block</span></code> command displays information about the blocks stored on
+the blockchain.</p>
+<ol class="arabic">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">block</span> <span class="pre">list</span></code> to display the list of blocks stored in state.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@client#</span> sawtooth block list --url http://rest-api:8008
+</pre></div>
+</div>
+<p>The output shows the block number and block ID, as in this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">NUM  BLOCK_ID                                                                                                                          BATS  TXNS  SIGNER</span>
+<span class="go">61   9566426220751691b7463e3c1ec1d8c4f158c98e89722672721d457182cb3b3d48e734ddceabf706b41fc3e1f8d739451f7d70bd5a8708bc4085b6fb33b40bef  1     4     020d21...</span>
+<span class="go">60   309c0707b95609d4ebc2fad0afd590ec40db41680a3edbbeb0875720ed59f4d775e1160a2c6cbe2e9ccb34c4671f4cd7db1e5ed35a2ed9a0f2a2c99aa981f83c  1     5     020d21...</span>
+<span class="go">59   e0c6c29a9f3d1436e4837c96587ae3fa60274991efa9d0c9000d53694cd2a0841914b2f362aa05c2385126288f060f524bac3a05850edb1ac1c86f0c237afdba  1     3     020d21...</span>
+<span class="go">58   8c67a1ec68bfdd5b07bb02919019b917ed26dbc6ec0fc3de15d539538bd30f8a1aa58795578970d2e607cd63cf1f5ef921476cbc0564cbe37469e5e50b72ecf2  1     3     020d21...</span>
+<span class="go">57   879c6cb43e244fb7c1676cf5d9e51ace25ad8e670f37e81b81e5d9e133aebba80282913677821c14fe2ccb2aae631229bdd044222e6a8927f4f5dabb6d62c409  1     4     020d21...</span>
+<span class="go">...</span>
+<span class="go">5    dce0921531472a8f9840e256c585917dfc22b78c5045a3416ed76faf57232b065b8be5a34023e8a8cdab74ab24cf029a5c1051f742b9b5280b8edab5a80d805d  2     4     020d21...</span>
+<span class="go">4    0007380e98fc6d63de1d47261b83186bce9722023f2e6ab6849916766e9be29f4903d76a642dfc27579b8a8bf9adba5f077c1f1457b2cad8f52a28d7079333a6  1     8     020d21...</span>
+<span class="go">3    515c827b9e84c22c24838130d4e0f6af07ab271c138a61c555a830c4118a75815f54340ef3f04de009c94c3531f3202690708cf16fcfee04303972cb91e3b87a  1     10    020d21...</span>
+<span class="go">2    9067bcb093bb095ca436d8868914ecf2630215d36bfd78b0b167554c544b9842193dd309f135e6959a664fe34b06b4f16a297528249550821cda9273291ebe70  1     5     020d21...</span>
+<span class="go">1    3ab950b2cd370f26e188d95ee97268965732768080ca1adb71759e3c1f22d1ea19945b48fc81f5f821387fde355349f87096da00a4e356408b630ab80576d3ae  1     5     020d21...</span>
+<span class="go">0    51a704e1a83086372a3c0823533881ffac9479995289902a311fd5d99ff6a32216cd1fb9883a421449c943cad8604ce1447b0f6080c8892e334b14dc082f91d3  1     1     020d21...</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>From the output generated by <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">block</span> <span class="pre">list</span></code>, copy the ID of a block
+you want to view, then paste it in place of <code class="docutils literal notranslate"><span class="pre">{BLOCK_ID}</span></code> in the following
+command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@client#</span> sawtooth block show --url http://rest-api:8008 <span class="o">{</span>BLOCK_ID<span class="o">}</span>
+</pre></div>
+</div>
+<p>The output of this command can be quite long, because it includes all data
+stored under that block. This is a truncated example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">batches:</span>
+<span class="go">- header:</span>
+<span class="go">    signer_public_key: 0276023d4f7323103db8d8683a4b7bc1eae1f66fbbf79c20a51185f589e2d304ce</span>
+<span class="go">    transaction_ids:</span>
+<span class="go">    - 24b168aaf5ea4a76a6c316924a1c26df0878908682ea5740dd70814e7c400d56354dee788191be8e28393c70398906fb467fac8db6279e90e4e61619589d42bf</span>
+<span class="go">  header_signature: a93731646a8fd2bce03b3a17bc2cb3192d8597da93ce735950dccbf0e3cf0b005468fadb94732e013be0bc2afb320be159b452cf835b35870db5fa953220fb35</span>
+<span class="go">  transactions:</span>
+<span class="go">  - header:</span>
+<span class="go">      batcher_public_key: 0276023d4f7323103db8d8683a4b7bc1eae1f66fbbf79c20a51185f589e2d304ce</span>
+<span class="go">      dependencies: []</span>
+<span class="go">      family_name: sawtooth_settings</span>
+<span class="go">      family_version: &#39;1.0&#39;</span>
+<span class="go">...</span>
+<span class="go">header:</span>
+<span class="go">  batch_ids:</span>
+<span class="go">  - a93731646a8fd2bce03b3a17bc2cb3192d8597da93ce735950dccbf0e3cf0b005468fadb94732e013be0bc2afb320be159b452cf835b35870db5fa953220fb35</span>
+<span class="go">  block_num: 3</span>
+<span class="go">  consensus: RGV2bW9kZQ==</span>
+<span class="go">  previous_block_id: 042f08e1ff49bbf16914a53dc9056fb6e522ca0e2cff872547eac9555c1de2a6200e67fb9daae6dfb90f02bef6a9088e94e5bdece04f622bce67ccecd678d56e</span>
+<span class="go">  signer_public_key: 033fbed13b51eafaca8d1a27abc0d4daf14aab8c0cbc1bb4735c01ff80d6581c52</span>
+<span class="go">  state_root_hash: 5d5ea37cbbf8fe793b6ea4c1ba6738f5eee8fc4c73cdca797736f5afeb41fbef</span>
+<span class="go">header_signature: ff4f6705bf57e2a1498dc1b649cc9b6a4da2cc8367f1b70c02bc6e7f648a28b53b5f6ad7c2aa639673d873959f5d3fcc11129858ecfcb4d22c79b6845f96c5e3</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="viewing-state-data-with-sawtooth-state">
+<h3>Viewing State Data with sawtooth state<a class="headerlink" href="#viewing-state-data-with-sawtooth-state" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">state</span></code> command lets you display state data. Sawtooth stores
+state data in a <a class="reference internal" href="../glossary.html#term-Merkle-Radix-tree"><span class="xref std std-term">Merkle-Radix tree</span></a>; for more information, see
+<a class="reference internal" href="../architecture/global_state.html"><span class="doc">Global State</span></a>.</p>
+<ol class="arabic">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">state</span> <span class="pre">list</span></code> to list the nodes (addresses) in state:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@client#</span> sawtooth state list --url http://rest-api:8008
+</pre></div>
+</div>
+<p>The output will be similar to this truncated example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ADDRESS                                                                                                                                SIZE DATA</span>
+<span class="go">1cf126ddb507c936e4ee2ed07aa253c2f4e7487af3a0425f0dc7321f94be02950a081ab7058bf046c788dbaf0f10a980763e023cde0ee282585b9855e6e5f3715bf1fe 11   b&#39;\xa1fcCTdcH\x...</span>
+<span class="go">1cf1260cd1c2492b6e700d5ef65f136051251502e5d4579827dc303f7ed76ddb7185a19be0c6443503594c3734141d2bdcf5748a2d8c75541a8e568bae063983ea27b9 11   b&#39;\xa1frdLONu\x...</span>
+<span class="go">1cf126ed7d0ac4f755be5dd040e2dfcd71c616e697943f542682a2feb14d5f146538c643b19bcfc8c4554c9012e56209f94efe580b6a94fb326be9bf5bc9e177d6af52 11   b&#39;\xa1fAUZZqk\x...</span>
+<span class="go">1cf126c46ff13fcd55713bcfcf7b66eba515a51965e9afa8b4ff3743dc6713f4c40b4254df1a2265d64d58afa14a0051d3e38999704f6e25c80bed29ef9b80aee15c65 11   b&#39;\xa1fLvUYLk\x...</span>
+<span class="go">1cf126c4b1b09ebf28775b4923e5273c4c01ba89b961e6a9984632612ec9b5af82a0f7c8fc1a44b9ae33bb88f4ed39b590d4774dc43c04c9a9bd89654bbee68c8166f0 13   b&#39;\xa1fXHonWY\x...</span>
+<span class="go">1cf126e924a506fb2c4bb8d167d20f07d653de2447df2754de9eb61826176c7896205a17e363e457c36ccd2b7c124516a9b573d9a6142f031499b18c127df47798131a 13   b&#39;\xa1foWZXEz\x...</span>
+<span class="go">1cf126c295a476acf935cd65909ed5ead2ec0168f3ee761dc6f37ea9558fc4e32b71504bf0ad56342a6671db82cb8682d64689838731da34c157fa045c236c97f1dd80 13   b&#39;\xa1fadKGve\x...</span>
+</pre></div>
+</div>
+</li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">state</span> <span class="pre">show</span></code> to view state data at a specific address (a node
+in the Merkle-Radix database). Copy the address from the output of
+<code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">state</span> <span class="pre">list</span></code>, then paste it in place of <code class="docutils literal notranslate"><span class="pre">{STATE_ADDRESS}</span></code> in
+the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@client#</span> sawtooth state show --url http://rest-api:8008 <span class="o">{</span>STATE_ADDRESS<span class="o">}</span>
+</pre></div>
+</div>
+<p>The output shows the bytes stored at that address and the block ID of the
+“chain head” that the current state is tied to, as in this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">DATA: &quot;b&#39;\xa1fcCTdcH\x192B&#39;&quot;</span>
+<span class="go">HEAD: &quot;0c4364c6d5181282a1c7653038ec9515cb0530c6bfcb46f16e79b77cb524491676638339e8ff8e3cc57155c6d920e6a4d1f53947a31dc02908bcf68a91315ad5&quot;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="step-7-connect-to-each-container-optional">
+<span id="container-names-label"></span><h2>Step 7: Connect to Each Container (Optional)<a class="headerlink" href="#step-7-connect-to-each-container-optional" title="Permalink to this headline">¶</a></h2>
+<p>Use this information when you need to connect to any container in the Sawtooth
+application development environment. For example, you can examine the log files
+or check the status of Sawtooth components in any container.</p>
+<ol class="arabic">
+<li><p>Use the following <code class="docutils literal notranslate"><span class="pre">docker</span></code> command to list all running Docker containers</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker ps
+</pre></div>
+</div>
+<p>The output should resemble the following example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">CONTAINER ID IMAGE                                     COMMAND               CREATED       STATUS       PORTS                            NAMES</span>
+<span class="go">76f6731c43a9 hyperledger/sawtooth-all:chime              &quot;bash -c &#39;sawtooth k&quot; 7 minutes ago Up 7 minutes 4004/tcp, 8008/tcp               sawtooth-shell-default</span>
+<span class="go">9844faed9e9d hyperledger/sawtooth-intkey-tp-python:chime &quot;intkey-tp-python -v&quot; 7 minutes ago Up 7 minutes 4004/tcp                         sawtooth-intkey-tp-python-default</span>
+<span class="go">44db125c2dca hyperledger/sawtooth-settings-tp:chime      &quot;settings-tp -vv -C &quot; 7 minutes ago Up 7 minutes 4004/tcp                         sawtooth-settings-tp-default</span>
+<span class="go">875df9d022d6 hyperledger/sawtooth-xo-tp-python:chime     &quot;xo-tp-python -vv -C&quot; 7 minutes ago Up 7 minutes 4004/tcp                         sawtooth-xo-tp-python-default</span>
+<span class="go">93d048c01d30 hyperledger/sawtooth-rest-api:chime         &quot;sawtooth-rest-api -&quot; 7 minutes ago Up 7 minutes 4004/tcp, 0.0.0.0:8008-&gt;8008/tcp sawtooth-rest-api-default</span>
+<span class="go">6bbcda66a5aa hyperledger/sawtooth-validator:chime        &quot;bash -c &#39;sawadm key&quot; 7 minutes ago Up 7 minutes 0.0.0.0:4004-&gt;4004/tcp           sawtooth-validator-default</span>
+</pre></div>
+</div>
+<p>The Docker Compose file defines the name of each container. It also
+specifies the TCP port and host name, if applicable. The following table
+shows the values in the example Compose file, <code class="docutils literal notranslate"><span class="pre">sawtooth-default.yaml</span></code>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 45%" />
+<col style="width: 12%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Component</strong></p></th>
+<th class="head"><p><strong>Container Name</strong></p></th>
+<th class="head"><p><strong>Port</strong></p></th>
+<th class="head"><p><strong>Host Name</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Validator</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sawtooth-validator-default</span></code></p></td>
+<td><p>4004</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">validator</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>REST API</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sawtooth-rest-api-default</span></code></p></td>
+<td><p>8008</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rest-api</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Settings TP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sawtooth-settings-tp-default</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">settings-tp</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>IntegerKey TP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sawtooth-intkey-tp-python-default</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">intkey-tp-python</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>XO TP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sawtooth-xo-tp-python-default</span></code></p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">xo-tp-python</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Shell</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sawtooth-shell-default</span></code></p></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Note that the validator and REST API ports are exposed to other containers
+and forwarded (published) for external connections, such as from your host
+system.</p>
+</li>
+<li><p>Use the following <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">exec</span></code> command from your host system to connect
+to a Sawtooth Docker container.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker <span class="nb">exec</span> -it <span class="o">{</span>ContainerName<span class="o">}</span> bash
+</pre></div>
+</div>
+<p>For example, you can use the following command from your host system to
+connect to the validator container:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker <span class="nb">exec</span> -it sawtooth-validator-default bash
+</pre></div>
+</div>
+</li>
+<li><p>After connecting to the container, you can use <code class="docutils literal notranslate"><span class="pre">ps</span></code> to verify that the
+Sawtooth component is running.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> ps --pid <span class="m">1</span> fw
+</pre></div>
+</div>
+<p>In the validator container, the output resembles the following example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">PID TTY      STAT   TIME COMMAND</span>
+<span class="go"> 1 ?        Ss     0:00 bash -c sawadm keygen &amp;&amp; sawtooth keygen my_key</span>
+<span class="go">&amp;&amp; sawset genesis -k /root/.sawtooth/keys/my_key.priv &amp;&amp; sawadm genesis</span>
+<span class="go">config-genesis.batch &amp;&amp; sawtooth-validator -vv --endpoint</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="step-8-examine-sawtooth-logs">
+<span id="examine-logs-docker-label"></span><h2>Step 8: Examine Sawtooth Logs<a class="headerlink" href="#step-8-examine-sawtooth-logs" title="Permalink to this headline">¶</a></h2>
+<p>As described above, you can display Sawtooth log messages by using the
+<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">logs</span></code> command from your host system:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker logs <span class="o">{</span>OPTIONS<span class="o">}</span> <span class="o">{</span>ContainerName<span class="o">}</span>
+</pre></div>
+</div>
+<p>In each container, the Sawtooth log files for that component are stored in the
+directory <code class="docutils literal notranslate"><span class="pre">/var/log/sawtooth</span></code>. Each component (validator, REST API, and
+transaction processors) has both a debug log and an error log.</p>
+<p>For example, the validator container has these log files:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@validator#</span> ls -1 /var/log/sawtooth
+<span class="go">validator-debug.log</span>
+<span class="go">validator-error.log</span>
+</pre></div>
+</div>
+<p>The IntegerKey container has these log files:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@intkey-tp#</span> ls -1 /var/log/sawtooth
+<span class="go">intkey-ae98c3726f9743c4-debug.log</span>
+<span class="go">intkey-ae98c3726f9743c4-error.log</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By convention, the transaction processors use a random string to make the log
+file names unique. The names on your system may be different than these
+examples.</p>
+</div>
+<p>For more information on log files, see
+<a class="reference internal" href="../sysadmin_guide/log_configuration.html"><span class="doc">Log Configuration File</span></a>.</p>
+</div>
+<div class="section" id="step-9-stop-the-sawtooth-environment">
+<span id="stop-sawtooth-docker-label"></span><h2>Step 9: Stop the Sawtooth Environment<a class="headerlink" href="#step-9-stop-the-sawtooth-environment" title="Permalink to this headline">¶</a></h2>
+<p>Use this procedure if you need to stop or reset the Sawtooth environment for any
+reason.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Any work done in this environment will be lost once the container exits.
+To keep your work, you would need to take additional steps, such as
+mounting a host directory into the container. See the <a class="reference external" href="https://docs.docker.com/">Docker documentation</a> for more information.</p>
+</div>
+<ol class="arabic">
+<li><p>Log out of the client container.</p></li>
+<li><p>Enter CTRL-c from the window where you originally ran <code class="docutils literal notranslate"><span class="pre">docker-compose</span></code>. The
+output will resemble this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">^CGracefully stopping... (press Ctrl+C again to force)</span>
+<span class="go">Stopping sawtooth-shell-default            ... done</span>
+<span class="go">Stopping sawtooth-rest-api-default         ... done</span>
+<span class="go">Stopping sawtooth-intkey-tp-python-default ... done</span>
+<span class="go">Stopping sawtooth-xo-tp-python-default     ... done</span>
+<span class="go">Stopping sawtooth-settings-tp-default      ... done</span>
+<span class="go">Stopping sawtooth-validator-default        ... done</span>
+</pre></div>
+</div>
+</li>
+<li><p>After all containers have shut down, run this <code class="docutils literal notranslate"><span class="pre">docker-compose</span></code> command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">user@host$</span> docker-compose -f sawtooth-default.yaml down
+<span class="go">Removing sawtooth-shell-default            ... done</span>
+<span class="go">Removing sawtooth-intkey-tp-python-default ... done</span>
+<span class="go">Removing sawtooth-xo-tp-python-default     ... done</span>
+<span class="go">Removing sawtooth-settings-tp-default      ... done</span>
+<span class="go">Removing sawtooth-rest-api-default         ... done</span>
+<span class="go">Removing sawtooth-validator-default        ... done</span>
+<span class="go">Removing network testsawtooth_default</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="kubernetes.html" class="btn btn-neutral float-right" title="Using Kubernetes for a Single Sawtooth Node" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installing_sawtooth.html" class="btn btn-neutral float-left" title="Setting Up a Sawtooth Node for Testing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

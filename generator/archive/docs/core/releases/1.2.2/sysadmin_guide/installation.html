@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installing Hyperledger Sawtooth &mdash; Sawtooth v1.2.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Generating User and Validator Keys" href="generating_keys.html" />
+    <link rel="prev" title="Setting Up a Sawtooth Network" href="setting_up_sawtooth_network.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="setting_up_sawtooth_network.html">Setting Up a Sawtooth Network</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Installing Hyperledger Sawtooth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generating_keys.html">Generating User and Validator Keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="creating_genesis_block.html">Creating the Genesis Block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="off_chain_settings.html">Changing Off-chain Settings with Configuration Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="systemd.html">Running Sawtooth as a Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing_sawtooth.html">Testing Sawtooth Functionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pbft_updating_member_list.html">PBFT Only: Updating the PBFT Member List</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setting_allowed_txns.html">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_authorized_users.html">Adding Authorized Users for Settings Proposals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_permissions.html">Configuring Validator and Transactor Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grafana_configuration.html">Using Grafana to Display Sawtooth Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_dynamic_consensus.html">About Dynamic Consensus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pbft_adding_removing_node.html">Adding or Removing a PBFT Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_sawtooth.html">About Sawtooth Configuration Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator’s Guide</a> &raquo;</li>
+        
+          <li><a href="setting_up_sawtooth_network.html">Setting Up a Sawtooth Network</a> &raquo;</li>
+        
+      <li>Installing Hyperledger Sawtooth</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/installation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installing-hyperledger-sawtooth">
+<h1>Installing Hyperledger Sawtooth<a class="headerlink" href="#installing-hyperledger-sawtooth" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These instructions have been tested on Ubuntu 18.04 (Bionic) only.</p>
+</div>
+<p>This procedure describes how to install Hyperledger Sawtooth on a Ubuntu system
+for proof-of-concept or production use in a Sawtooth network.</p>
+<ol class="arabic">
+<li><p>Choose whether you want the stable version (recommended) or the most recent
+nightly build (for testing purposes only).</p>
+<ul>
+<li><p>(Release 1.2 and later) To add the stable repository, run these commands in
+a terminal window on your host system.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD
+<span class="gp">$</span> sudo add-apt-repository <span class="s1">&#39;deb [arch=amd64] http://repo.sawtooth.me/ubuntu/chime/stable bionic universe&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">chime</span></code> metapackage includes the Sawtooth core software and
+associated items such as separate consensus software.</p>
+</div>
+</li>
+<li><p>The v1.2.2 version of Sawtooth is available in a repository of nightly
+builds. These builds may incorporate undocumented features and should be
+used for testing purposes only.</p>
+<p>To use the nightly repository, run the following commands in a terminal
+window on your host system.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 44FC67F19B2466EA
+<span class="gp">$</span> sudo apt-add-repository <span class="s1">&#39;deb [arch=amd64] http://repo.sawtooth.me/ubuntu/nightly bionic universe&#39;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>Update your package lists.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get update
+</pre></div>
+</div>
+</li>
+<li><p>Install the Sawtooth packages. Sawtooth consists of several Ubuntu packages
+that can be installed together using the <code class="docutils literal notranslate"><span class="pre">sawtooth</span></code> meta-package. Run the
+following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get install -y sawtooth
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><ol class="arabic">
+<li><p>(PBFT only) Install the PBFT consensus engine package.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get install -y sawtooth sawtooth-pbft-engine
+</pre></div>
+</div>
+</li>
+<li><p>(PoET only) Install the PoET consensus engine, transaction processor, and CLI packages.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get install -y sawtooth <span class="se">\</span>
+python3-sawtooth-poet-cli <span class="se">\</span>
+python3-sawtooth-poet-engine <span class="se">\</span>
+python3-sawtooth-poet-families
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Any time after installation, you can view the installed Sawtooth packages
+with the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> dpkg -l <span class="s1">&#39;*sawtooth*&#39;</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+</div></blockquote>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="generating_keys.html" class="btn btn-neutral float-right" title="Generating User and Validator Keys" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="setting_up_sawtooth_network.html" class="btn btn-neutral float-left" title="Setting Up a Sawtooth Network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

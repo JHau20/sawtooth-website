@@ -1,0 +1,509 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>intkey Family CLIs &mdash; Sawtooth v0.8.12 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.12 documentation" href="../index.html"/>
+        <link rel="up" title="CLI Reference" href="../cli.html"/>
+        <link rel="next" title="xo Family CLIs" href="xo.html"/>
+        <link rel="prev" title="REST API CLI" href="rest_api.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.12
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../solidity_developers_guide.html">Solidity Developers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../cli.html">CLI Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sawtooth.html">Sawtooth CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="seth.html">Seth CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poet.html">PoET CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator.html">Validator CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API CLI</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">intkey Family CLIs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#intkey">intkey</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intkey-generate">intkey generate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intkey-load">intkey load</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intkey-populate">intkey populate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intkey-create-batch">intkey create_batch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intkey-workload">intkey workload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intkey-tp-python">intkey-tp-python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="xo.html">xo Family CLIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../cli.html">CLI Reference</a> &raquo;</li>
+        
+      <li>intkey Family CLIs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cli/intkey.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="intkey-family-clis">
+<span id="intkey-cli-reference-label"></span><h1>intkey Family CLIs<a class="headerlink" href="#intkey-family-clis" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="intkey">
+<h2>intkey<a class="headerlink" href="#intkey" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: intkey [-h] [-v] [-V]</span>
+<span class="go">              {generate,load,populate,create_batch,workload} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         print version information</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {generate,load,populate,create_batch,workload}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="intkey-generate">
+<h2>intkey generate<a class="headerlink" href="#intkey-generate" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: intkey generate [-h] [-v] [-V] [-o OUTPUT] [-c COUNT]</span>
+<span class="go">                       [-B BATCH_MAX_SIZE] [-P POOL_SIZE]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         print version information</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        location of output file</span>
+<span class="go">  -c COUNT, --count COUNT</span>
+<span class="go">                        number of batches</span>
+<span class="go">  -B BATCH_MAX_SIZE, --batch-max-size BATCH_MAX_SIZE</span>
+<span class="go">                        max size of the batch</span>
+<span class="go">  -P POOL_SIZE, --pool-size POOL_SIZE</span>
+<span class="go">                        size of the word pool</span>
+
+<span class="go">    deprecated:</span>
+<span class="go">     use create_batch, which combines</span>
+<span class="go">     the populate and generate commands.</span>
+<span class="go">    </span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="intkey-load">
+<h2>intkey load<a class="headerlink" href="#intkey-load" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: intkey load [-h] [-v] [-V] [-f FILENAME] [-U URL]</span>
+<span class="go">                   [--auth-user AUTH_USER] [--auth-password AUTH_PASSWORD]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         print version information</span>
+<span class="go">  -f FILENAME, --filename FILENAME</span>
+<span class="go">                        location of input file</span>
+<span class="go">  -U URL, --url URL     url for the REST API</span>
+<span class="go">  --auth-user AUTH_USER</span>
+<span class="go">                        username for authentication if REST API is using Basic</span>
+<span class="go">                        Auth</span>
+<span class="go">  --auth-password AUTH_PASSWORD</span>
+<span class="go">                        password for authentication if REST API is using Basic</span>
+<span class="go">                        Auth</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="intkey-populate">
+<h2>intkey populate<a class="headerlink" href="#intkey-populate" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: intkey populate [-h] [-v] [-V] [-o OUTPUT] [-P POOL_SIZE]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         print version information</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        location of output file</span>
+<span class="go">  -P POOL_SIZE, --pool-size POOL_SIZE</span>
+<span class="go">                        size of the word pool</span>
+
+<span class="go">    deprecated:</span>
+<span class="go">     use create_batch, which combines</span>
+<span class="go">     the populate and generate commands.</span>
+<span class="go">    </span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="intkey-create-batch">
+<h2>intkey create_batch<a class="headerlink" href="#intkey-create-batch" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: intkey create_batch [-h] [-v] [-V] [-o] [-c] [-B] [-K]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         print version information</span>
+<span class="go">  -o , --output         location of output file</span>
+<span class="go">  -c , --count          number of batches modifying random keys</span>
+<span class="go">  -B , --max-batch-size </span>
+<span class="go">                        max transactions per batch</span>
+<span class="go">  -K , --key-count      number of keys to set initially</span>
+
+<span class="go">    details:</span>
+<span class="go">     create sample batch(es) of intkey transactions.</span>
+<span class="go">     populates state with intkey key/value pairs</span>
+<span class="go">     then generates batches with inc and dec transactions.</span>
+<span class="go">    </span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="intkey-workload">
+<h2>intkey workload<a class="headerlink" href="#intkey-workload" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: intkey workload [-h] [-v] [-V] [--rate RATE] [-d DISPLAY_FREQUENCY]</span>
+<span class="go">                       [-u URLS] [--auth-user AUTH_USER]</span>
+<span class="go">                       [--auth-password AUTH_PASSWORD]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         print version information</span>
+<span class="go">  --rate RATE           Batch rate in batches per second. Should be greater</span>
+<span class="go">                        then 0.</span>
+<span class="go">  -d DISPLAY_FREQUENCY, --display-frequency DISPLAY_FREQUENCY</span>
+<span class="go">                        time in seconds between display of batches rate</span>
+<span class="go">                        updates.</span>
+<span class="go">  -u URLS, --urls URLS  comma separated urls of the REST API to connect to.</span>
+<span class="go">  --auth-user AUTH_USER</span>
+<span class="go">                        username for authentication if REST API is using Basic</span>
+<span class="go">                        Auth</span>
+<span class="go">  --auth-password AUTH_PASSWORD</span>
+<span class="go">                        password for authentication if REST API is using Basic</span>
+<span class="go">                        Auth</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="intkey-tp-python">
+<h2>intkey-tp-python<a class="headerlink" href="#intkey-tp-python" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: intkey-tp-python [-h] [-v] [-V] [endpoint]</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  endpoint       Endpoint for the validator connection</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  Increase output sent to stderr</span>
+<span class="go">  -V, --version  print version information</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="xo.html" class="btn btn-neutral float-right" title="xo Family CLIs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rest_api.html" class="btn btn-neutral" title="REST API CLI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.12',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

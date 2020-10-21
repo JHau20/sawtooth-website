@@ -1,0 +1,673 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="index.html"/>
+        <link rel="next" title="Transaction Family Tutorial" href="txn_family_tutorial.html"/>
+        <link rel="prev" title="Introduction" href="introduction.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clone-repository">Clone Repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#environment-startup">Environment Startup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resetting-the-environment">Resetting the Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-sawtooth-core">Building sawtooth-core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-txnvalidator">Running txnvalidator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#working-with-the-marketplace-transaction-family">Working with the MarketPlace Transaction Family</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#start-txnvalidator">Start txnvalidator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#key-generation">Key Generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#object-names">Object Names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#market-initialization">Market Initialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#registering-accounts">Registering Accounts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-an-exchange-offer">Create an Exchange Offer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#accept-the-exchange-offer">Accept the Exchange Offer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="contents.html">Docs</a> &raquo;</li>
+        
+      <li>Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial">
+<span id="id1"></span><h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial walks through the process of setting up a virtual development
+environment for the Distributed Ledger using Vagrant and VirtualBox. At the
+end, you will have a running validator network and be able to use client
+commands to interact with it.</p>
+<p>Commands in this tutorial can be run via Terminal.app on MacOS, Git Bash on
+Windows, etc.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>The following tools are required:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.vagrantup.com/downloads.html">Vagrant</a> (1.9.0 or later)</li>
+<li><a class="reference external" href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a> (5.0.10 r104061
+or later)</li>
+</ul>
+<p>On Windows, you will also need to install:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://git-scm.com/download/win">Git for Windows</a></li>
+</ul>
+<p>Git for Windows will provide not only git to clone the repositories, but also
+ssh which is required by Vagrant. During installation, accept all defaults.</p>
+</div>
+<div class="section" id="clone-repository">
+<h2>Clone Repository<a class="headerlink" href="#clone-repository" title="Permalink to this headline">¶</a></h2>
+<p>Open up a terminal and run the following:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp"> %</span> <span class="nb">cd</span> <span class="nv">$HOME</span>
+<span class="gp"> %</span> mkdir project
+<span class="gp"> %</span> <span class="nb">cd</span> project
+<span class="gp"> %</span> git clone https://github.com/IntelLedger/sawtooth-core.git
+<span class="gp"> %</span> <span class="nb">cd</span> sawtooth-core
+<span class="gp"> %</span> git checkout <span class="m">0</span>-7
+
+<span class="go">Note that the last command switches to the 0.7 branch, which is the version</span>
+<span class="go">covered by this tutorial.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="environment-startup">
+<h2>Environment Startup<a class="headerlink" href="#environment-startup" title="Permalink to this headline">¶</a></h2>
+<p>In order to start the vagrant VM, change the current working directory to
+sawtooth-core/tools on the host and run:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> <span class="nb">cd</span> sawtooth-core/tools
+<span class="gp">%</span> vagrant up
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We have encountered an intermittent problem on Windows hosts which
+presents as an &#8216;Operation not permitted&#8217; error in the vagrant startup
+output.  If you encounter this error, perform a &#8216;vagrant destroy&#8217; and
+then run &#8216;vagrant up&#8217; again.</p>
+</div>
+<p>Downloading the Vagrant box file, booting the VM, and running through
+the bootstrap scripts will take several minutes.</p>
+<p>Once the &#8216;vagrant up&#8217; command has finished executing, run:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> vagrant ssh
+</pre></div>
+</div>
+<p>By default, Vagrant sets up ssh keys so that users can log into the VM
+without setting up additional accounts or credentials. The logged in user,
+vagrant (uid 1000), also has permissions to execute sudo with no password
+required. Any number of <cite>vagrant ssh</cite> sessions can be established from the
+host.</p>
+</div>
+<div class="section" id="resetting-the-environment">
+<h2>Resetting the Environment<a class="headerlink" href="#resetting-the-environment" title="Permalink to this headline">¶</a></h2>
+<p>If the VM needs to be reset for any reason, it can be returned to the default
+state by running the following commands from the sawtooth-core/tools directory
+on the host:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> vagrant destroy
+<span class="gp">%</span> vagrant up
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">vagrant destroy will delete all contents within the VM. However,
+/vagrant and /project are shared with the host and will be preserved.</p>
+</div>
+</div>
+<div class="section" id="building-sawtooth-core">
+<h2>Building sawtooth-core<a class="headerlink" href="#building-sawtooth-core" title="Permalink to this headline">¶</a></h2>
+<p>The vagrant environment is setup in such a way that installation of the
+software is not required.  However, the C++/swig code must be built.  To
+build, run the following inside vagrant:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> /project/sawtooth-core/bin/build_all
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-txnvalidator">
+<h2>Running txnvalidator<a class="headerlink" href="#running-txnvalidator" title="Permalink to this headline">¶</a></h2>
+<p>To start txnvalidator, log in to the development environment with &#8216;vagrant ssh&#8217;
+and run the following commands:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> /project/sawtooth-core/docs/source/tutorial/genesis.sh
+<span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./bin/txnvalidator -v -F ledger.transaction.integer_key
+</pre></div>
+</div>
+<p>This will start txnvalidator and logging output will be printed to the
+terminal window.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Note on genesis block creation and clearing validator state</strong></p>
+<blockquote class="last">
+<div>The script <em>genesis.sh</em> should be run whenever you want to start a
+validator as part of the tutorial. The script clears existing data
+files and keys, which would otherwise be loaded when starting the
+validator. The script also runs a utility that creates a genesis
+block. This utility is part of the sawtooth CLI. To view the available
+subcommands, run the command <strong>sawtooth -h</strong>. The genesis creation
+utility used in this tutorial is: <strong>sawtooth admin poet0-genesis</strong>
+(see script <em>genesis.sh</em> for the command line options used in the
+tutorial).</div></blockquote>
+</div>
+<p>To stop the validator, press CTRL-c.</p>
+</div>
+<div class="section" id="working-with-the-marketplace-transaction-family">
+<span id="mktplace-transaction-family-tutorial-label"></span><h2>Working with the MarketPlace Transaction Family<a class="headerlink" href="#working-with-the-marketplace-transaction-family" title="Permalink to this headline">¶</a></h2>
+<p>In this section of the tutorial, we will walk though the process of starting
+a single validator node and working with mktclient to create users, accounts,
+and perform an exchange.</p>
+<p>We will setup a couple participants, Alice and Bob, who will exchange goods
+(in this case, cookies) for currency (US Dollars).</p>
+<div class="section" id="start-txnvalidator">
+<h3>Start txnvalidator<a class="headerlink" href="#start-txnvalidator" title="Permalink to this headline">¶</a></h3>
+<p>By default, the validator is not configured to support the MarketPlace
+transaction family or operate efficiently as a single node network.
+The default validator config is in: sawtooth-core/validator/etc/.</p>
+<p>Although you can create a configuration file specifically for the tutorial,
+it is easier to specify the needed options on the command line when starting
+the validator.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>A configuration file with the MarketPlace transaction family added to the
+default configuration file would like like this:</p>
+<blockquote class="last">
+<div><div class="highlight-none"><div class="highlight"><pre><span></span>&quot;TransactionFamilies&quot; : [
+    &quot;ledger.transaction.integer_key&quot;,
+    &quot;mktplace.transactions.market_place&quot;
+],
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<p>To test the txnvalidator with the MarketPlace transaction family loaded, run
+the following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> /project/sawtooth-core/docs/source/tutorial/genesis.sh
+<span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./bin/txnvalidator -v -F mktplace.transactions.market_place
+</pre></div>
+</div>
+<p>Keep txnvalidator running while we interact with it using mktclient below.
+Open a new terminal in your <strong>host</strong> OS and type:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> <span class="nv">$HOME</span>/project/sawtooth-core/tools
+<span class="gp">$</span> vagrant ssh
+</pre></div>
+</div>
+</div>
+<div class="section" id="key-generation">
+<h3>Key Generation<a class="headerlink" href="#key-generation" title="Permalink to this headline">¶</a></h3>
+<p>First, we need to create key files for each participant that we are going
+to use:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The Marketplace</li>
+<li>Alice</li>
+<li>Bob</li>
+</ul>
+</div></blockquote>
+<p>Normally these participants may be on different machines talking to different
+validators, but for this tutorial we control all the participants, so we
+generate a key for each of them:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./bin/sawtooth keygen --key-dir validator/keys mkt
+<span class="gp">$</span> ./bin/sawtooth keygen --key-dir validator/keys alice
+<span class="gp">$</span> ./bin/sawtooth keygen --key-dir validator/keys bob
+</pre></div>
+</div>
+</div>
+<div class="section" id="object-names">
+<span id="mktplace-object-names-label"></span><h3>Object Names<a class="headerlink" href="#object-names" title="Permalink to this headline">¶</a></h3>
+<p>Objects within MarketPlace are referenced (named) using paths separated by a
+slash (/).  The number of leading slashes determines whether the reference
+is an absolute path, a relative path, or an identifier.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="25%" />
+<col width="59%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Count</th>
+<th class="head">Format</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Single (/)</td>
+<td>/&lt;PATH&gt;</td>
+<td>Relative to the current key in use</td>
+</tr>
+<tr class="row-odd"><td>Double (//)</td>
+<td>//&lt;CREATOR&gt;/&lt;PATH&gt;</td>
+<td>Fully qualified name</td>
+</tr>
+<tr class="row-even"><td>Triple (///)</td>
+<td>///&lt;IDENTIFIER&gt;</td>
+<td>The object identifier</td>
+</tr>
+</tbody>
+</table>
+<p>In this tutorial, we will stick to the relative paths when possible and specify
+absolute paths when referencing objects created by another key (another user).</p>
+<p>For example, both Alice and Bob will end up with &#8220;/USD&#8221; (a relative path), and
+the associated absolute paths will be &#8220;//bob/USD&#8221; and &#8220;//alice/USD&#8221;.</p>
+</div>
+<div class="section" id="market-initialization">
+<h3>Market Initialization<a class="headerlink" href="#market-initialization" title="Permalink to this headline">¶</a></h3>
+<p>We will use The Marketplace participant (mkt) to setup our example market
+so that Alice and Bob can exchange cookies for USD (US dollars).  Bob will
+start with a lot of freshly baked cookies and sell them to Alice.</p>
+<p>Start mktclient as The Marketplace participant:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./bin/mktclient --name mkt --keyfile validator/keys/mkt.wif
+</pre></div>
+</div>
+<p>Now execute commands as The Marketplace participant (mkt) using the
+mktclient shell you just opened.  As you perform these commands, you will
+see activity in the txnvalidator output.</p>
+<p>To start, let&#8217;s register the mkt participant, create mkt&#8217;s account, and
+a holding for tokens (a special asset only covered briefly below).</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//UNKNOWN&gt; participant reg --name mkt --description &quot;The Marketplace&quot;
+//mkt&gt; account reg --name /market/account
+//mkt&gt; holding reg --name /market/holding/token --count 1 --account /market/account --asset //marketplace/asset/token
+</pre></div>
+</div>
+<p>The special token asset is useful for bootstrapping purposes.  Tokens are
+non-consumable, in that they are never deducted from a holding even when
+exchanged for another asset.  The /market/holding/token as defined has 1 token,
+but since it will never be deducted during an exchange, it really has an
+infinite number of tokens in practice.  We use it below to create an inital
+one-time offer of USD to new participants (an offer which Bob and Alice will
+accept later).</p>
+<p>Now let&#8217;s add the currency asset type and USD asset.  Note the count of USD
+below is a fixed amount.  By default, asset types are restricted and only the
+creator of the asset type can create assets of that type; so here, USD can only
+be created by the mkt participant.  The holding will initially contain 20000000
+USD.  The sell offer allows new participants to do a one-time exchange for 1000
+USD, for the purposes of new participant initialization.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//mkt&gt; assettype reg --name /asset-type/currency
+//mkt&gt; asset reg --name /asset/currency/USD --type /asset-type/currency
+//mkt&gt; holding reg --name /market/holding/currency/USD --count 20000000 --account /market/account --asset /asset/currency/USD
+//mkt&gt; selloffer reg --name /offer/provision/USD --minimum 1 --maximum 1 --modifier ExecuteOncePerParticipant --output /market/holding/currency/USD --input /market/holding/token --ratio 1 1000
+</pre></div>
+</div>
+<p>Now that we have USD setup, we need to add the concept of cookies, and
+specifically Chocolate Chip cookies, into our blockchain.  To do this, let&#8217;s
+create a cookie asset-type and a Chocolate Chip asset.  If we had different
+type of cookies, such as Peanut Butter, we could create additional assets
+to represent them.  The cookie asset type is unrestricted, so anyone in the
+market place can create cookies.  (Later, Bob will bake a batch.)</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//mkt&gt; assettype reg --name /asset-type/cookie --no-restricted
+//mkt&gt; asset reg --name /asset/cookie/choc_chip --type /asset-type/cookie --no-restricted
+</pre></div>
+</div>
+<p>The commands above are sent to the validator and applied to the network
+asynchronously and may not yet be committed.  You can use the &#8216;waitforcommit&#8217;
+to have the client block until the changes have been committed:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//mkt&gt; waitforcommit
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><strong class="command">waitforcommit</strong> can potentially take several minutes with a small
+number of validators.  For this section of the tutorial, we are running with
+a single validator and have updated the configuration such that it will
+usually return within a reasonable amount of time.  PoET (the consensus
+mechanism) is optimized for more realistic use cases (not a single
+validator).  The amount of time to wait is related to several factors,
+including a random number mapped to an exponential distribution.  So, if you
+get unlucky, <strong class="command">waitforcommit</strong> might take a while.  As the number of
+validators increases, the average wait time becomes more stable and
+predictable.</p>
+</div>
+<p>Market initialization is complete, so you can now exit mktclient:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//mkt&gt; exit
+</pre></div>
+</div>
+</div>
+<div class="section" id="registering-accounts">
+<h3>Registering Accounts<a class="headerlink" href="#registering-accounts" title="Permalink to this headline">¶</a></h3>
+<p>In the previous section, we registered the mkt account.  In this section, we
+will register, create accounts, and create initial holdings for both Bob and
+Alice.</p>
+<p>First, let&#8217;s register Bob.  Startup mktclient using the name of Bob&#8217;s key file
+(bob):</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./bin/mktclient --name bob --keyfile validator/keys/bob.wif
+</pre></div>
+</div>
+<p>Register Bob as a participant and create his account:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//UNKNOWN&gt; participant reg --name bob
+//bob&gt; account reg --name /account
+</pre></div>
+</div>
+<p>Now we initialize Bob&#8217;s USD holding.  We create the USD holding, which will
+be empty (Bob can&#8217;t create USD), and then accept the once-per-particiant
+offer from the mkt participant to receive 1000 USD.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; holding reg --name /USD --account /account --asset //mkt/asset/currency/USD
+//bob&gt; holding reg --name /holding/token --count 1 --account /account --asset //marketplace/asset/token
+//bob&gt; waitforcommit
+//bob&gt; exchange --type SellOffer --src /holding/token --dst /USD --offers //mkt/offer/provision/USD --count 1
+</pre></div>
+</div>
+<p>Next, let&#8217;s create an empty cookie jar for Chocolate Chip cookies:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; holding reg --name /jars/choc_chip --account /account --asset //mkt/asset/cookie/choc_chip
+</pre></div>
+</div>
+<p>That is it for Bob&#8217;s setup, so waitforcommit and exit:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; waitforcommit
+//bob&gt; exit
+</pre></div>
+</div>
+<p>Now, let&#8217;s register Alice in the same way.  Startup mktclient using the name of
+Alice&#8217;s key file (alice):</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./bin/mktclient --name alice --keyfile validator/keys/alice.wif
+</pre></div>
+</div>
+<p>Alice&#8217;s initalization is the same as Bob&#8217;s:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//UNKNOWN&gt; participant reg --name alice
+//alice&gt; account reg --name /account
+//alice&gt; holding reg --name /USD --account /account --asset //mkt/asset/currency/USD
+//alice&gt; holding reg --name /holding/token --count 1 --account /account --asset //marketplace/asset/token
+//alice&gt; waitforcommit
+//alice&gt; exchange --type SellOffer --src /holding/token --dst /USD --offers //mkt/offer/provision/USD --count 1
+//alice&gt; holding reg --name /jars/choc_chip --account /account --asset //mkt/asset/cookie/choc_chip
+//alice&gt; waitforcommit
+//alice&gt; exit
+</pre></div>
+</div>
+<p>Now we have both Alice and Bob&#8217;s account and holdings initialized.</p>
+</div>
+<div class="section" id="create-an-exchange-offer">
+<h3>Create an Exchange Offer<a class="headerlink" href="#create-an-exchange-offer" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s assume Bob has baked two dozen Chocolate Chip cookies and wants to create
+an exchange offer of $2 per cookie.</p>
+<p>Start mktclient with Bob&#8217;s key:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./bin/mktclient --name bob --keyfile validator/keys/bob.wif
+</pre></div>
+</div>
+<p>Let&#8217;s create a new holding representing Bob&#8217;s batch of cookies and initialize
+it with 24 cookies.  Then create an exchange offer:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; holding reg --name /batches/choc_chip001 --account /account --asset //mkt/asset/cookie/choc_chip --count 24
+//bob&gt; exchangeoffer reg --output /batches/choc_chip001 --input /USD --ratio 2 1 --name /choc_chip_sale
+//bob&gt; waitforcommit
+</pre></div>
+</div>
+<p>Now Bob has two dozen cookies on the market for $2 each.  The ratio argument
+says &#8220;2 USD for 1 cookie&#8221;.</p>
+<p>View the Bob&#8217;s current holdings:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; holdings --creator //bob
+1000     //bob/USD
+24       //bob/batches/choc_chip001
+1        //bob/holding/token
+0        //bob/jars/choc_chip
+</pre></div>
+</div>
+<p>We can also view Bob&#8217;s current offers:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; offers --creator //bob
+Ratio    Input Asset (What You Pay)          Output Asset (What You Get)         Name
+0.5      //mkt/asset/currency/USD            //mkt/asset/cookie/choc_chip        //bob/choc_chip_sale
+</pre></div>
+</div>
+<p>Great!  Now Bob waits for someone to accept his offer, so we can exit
+mktclient:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; exit
+</pre></div>
+</div>
+</div>
+<div class="section" id="accept-the-exchange-offer">
+<h3>Accept the Exchange Offer<a class="headerlink" href="#accept-the-exchange-offer" title="Permalink to this headline">¶</a></h3>
+<p>Alice has decided to purchase some cookies and has decided to accept Bob&#8217;s
+exchange offer.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./bin/mktclient --name alice --keyfile validator/keys/alice.wif
+</pre></div>
+</div>
+<p>Execute an exchange (accepting Bob&#8217;s offer):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//alice&gt; exchange --type ExchangeOffer --src /USD --dst /jars/choc_chip --offers //bob/choc_chip_sale --count 24
+//alice&gt; waitforcommit
+</pre></div>
+</div>
+<p>The count above is related to the &#8211;src argument, so 24 USD for a dozen
+cookies.  Let&#8217;s see what the resulting holdings look like:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//alice&gt; holdings --creator //bob
+1024     //bob/USD
+12       //bob/batches/choc_chip001
+1        //bob/holding/token
+0        //bob/jars/choc_chip
+//alice&gt; holdings --creator //alice
+976      //alice/USD
+1        //alice/holding/token
+12       //alice/jars/choc_chip
+</pre></div>
+</div>
+<p>Fantastic!  Bob has more USD and fewer cookies.  Alice has less USD and more
+cookies.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="txn_family_tutorial.html" class="btn btn-neutral float-right" title="Transaction Family Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="introduction.html" class="btn btn-neutral" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

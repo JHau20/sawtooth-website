@@ -1,0 +1,578 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Events and Transaction Receipts &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PoET 1.0 Specification" href="poet.html" />
+    <link rel="prev" title="Injecting Batches and On-Chain Block Validation Rules" href="injecting_batches_block_validation_rules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../architecture.html">Architecture Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="global_state.html">Global State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transactions_and_batches.html">Transactions and Batches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="journal.html">Journal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html">Transaction Scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_network.html">Validator Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="permissioning_requirement.html">Permissioning Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="injecting_batches_block_validation_rules.html">Injecting Batches and On-Chain Block Validation Rules</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Events and Transaction Receipts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#events">Events</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#event-extractors">Event Extractors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#transaction-receipts">Transaction Receipts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#transaction-receipt-store">Transaction Receipt Store</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#message-handlers">Message Handlers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="poet.html">PoET 1.0 Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../architecture.html">Architecture Guide</a> &raquo;</li>
+        
+      <li>Events and Transaction Receipts</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/architecture/events_and_transactions_receipts.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="events-and-transaction-receipts">
+<h1>Events and Transaction Receipts<a class="headerlink" href="#events-and-transaction-receipts" title="Permalink to this headline">¶</a></h1>
+<p>Hyperledger Sawtooth supports creating and broadcasting events.
+This allows applications to do the following:</p>
+<ul class="simple">
+<li><p>Subscribe to events that occur related to the blockchain, such
+as a new block being committed or switching to a new fork.</p></li>
+<li><p>Subscribe to application specific events defined by a transaction family.</p></li>
+<li><p>Relay information about the execution of a transaction back to
+clients without storing that data in state.</p></li>
+</ul>
+<a class="reference internal image-reference" href="../_images/event_subsystem.svg"><div align="center" class="align-center"><img alt="Event Subsystem" src="../_images/event_subsystem.svg" width="80%" /></div>
+</a>
+<div class="section" id="events">
+<span id="events-reference-label"></span><h2>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h2>
+<p>Events are represented with the following protobuf message:</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">Event</span> <span class="p">{</span>
+  <span class="c1">// Used to subscribe to events and servers as a hint for how to deserialize</span>
+  <span class="c1">// event_data and what pairs to expect in attributes.</span>
+  <span class="kt">string</span> <span class="na">event_type</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// Transparent data defined by the event_type.</span>
+  <span class="kd">message</span> <span class="nc">Attribute</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">key</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">string</span> <span class="na">value</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">repeated</span> <span class="n">Attribute</span> <span class="na">attributes</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="c1">// Opaque data defined by the event_type.</span>
+  <span class="kt">bytes</span>  <span class="na">data</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Events are extracted from other data structures such as blocks or
+transaction receipts. In order to treat this extraction uniformly, an
+EventExtractor interface is implemented for each event source. The
+EventExtractor interface takes a list of EventSubscriptions and will only
+generate events that are in the union of all subscriptions. An event is “in a
+subscription” if the event’s event_type field matches the subscription’s
+event_type field and the filter’s key-value pair (if the subscription has
+any filters) matches a key-value pair in the event’s attribute field.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">interface</span> <span class="n">EventExtractor</span><span class="p">:</span>
+  <span class="o">//</span> <span class="n">Construct</span> <span class="nb">all</span> <span class="n">the</span> <span class="n">events</span> <span class="n">of</span> <span class="n">interest</span> <span class="n">by</span> <span class="n">taking</span> <span class="n">the</span> <span class="n">union</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">subscriptions</span><span class="o">.</span>
+  <span class="o">//</span> <span class="n">One</span> <span class="n">extractor</span> <span class="n">should</span> <span class="n">be</span> <span class="n">created</span> <span class="k">for</span> <span class="n">each</span> <span class="nb">input</span> <span class="n">source</span> <span class="n">that</span> <span class="n">events</span> <span class="n">can</span> <span class="n">be</span>
+  <span class="o">//</span> <span class="n">extracted</span> <span class="n">from</span><span class="o">.</span> <span class="n">This</span> <span class="nb">input</span> <span class="n">source</span> <span class="n">should</span> <span class="n">be</span> <span class="n">passed</span> <span class="n">to</span> <span class="n">the</span> <span class="n">implementation</span> <span class="n">through</span>
+  <span class="o">//</span> <span class="n">the</span> <span class="n">constructor</span><span class="o">.</span>
+  <span class="n">extract</span><span class="p">(</span><span class="nb">list</span><span class="o">&lt;</span><span class="n">EventSubscription</span><span class="o">&gt;</span> <span class="n">subscriptions</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="o">&lt;</span><span class="n">Event</span><span class="o">&gt;</span>
+
+<span class="o">//</span> <span class="n">If</span> <span class="n">no</span> <span class="n">subscriptions</span> <span class="n">of</span> <span class="n">a</span> <span class="n">given</span> <span class="n">event_type</span> <span class="n">are</span> <span class="n">passed</span> <span class="n">to</span> <span class="n">EventExtractor</span><span class="o">.</span><span class="n">extract</span><span class="p">,</span>
+<span class="o">//</span> <span class="n">the</span> <span class="n">extractor</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">need</span> <span class="n">to</span> <span class="k">return</span> <span class="n">events</span> <span class="n">of</span> <span class="n">that</span> <span class="nb">type</span><span class="o">.</span>
+<span class="k">class</span> <span class="nc">EventSubscription</span><span class="p">:</span>
+  <span class="n">string</span> <span class="n">event_type</span>
+  <span class="nb">list</span><span class="o">&lt;</span><span class="n">EventFilter</span><span class="o">&gt;</span> <span class="n">filters</span>
+</pre></div>
+</div>
+<p>The following filters are implemented:</p>
+<dl>
+<dt>SIMPLE_ANY</dt><dd><p>Represents a subset of events within an event type.</p>
+<p>Since multiple event attributes with the same key can be present in an
+event, an event is considered part of this filter if its match string matches
+the value of ANY attribute with the filter’s key.</p>
+<p>For example, if an event has the following attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Attribute(key=”address”, value=”abc”)</p></li>
+<li><p>Attribute(key=”address”, value=”def”)</p></li>
+</ul>
+</div></blockquote>
+<p>it will pass the following filter:</p>
+<blockquote>
+<div><p>SimpleAnyFilter(key=”address”, match_string=”abc”)</p>
+</div></blockquote>
+<p>Because it matches one of the two attributes with the key “address”.</p>
+</dd>
+<dt>SIMPLE_ALL</dt><dd><p>Represents a subset of events within an event type.</p>
+<p>Since multiple event attributes with the same key can be present in an
+event, an event is considered part of this filter if its match string matches
+the value of ALL attribute with the filter’s key.</p>
+<p>For example, if an event has the following attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Attribute(key=”address”, value=”abc”)</p></li>
+<li><p>Attribute(key=”address”, value=”def”)</p></li>
+</ul>
+</div></blockquote>
+<p>it will NOT pass this filter:</p>
+<blockquote>
+<div><p>SimpleAllFilter(key=”address”, value=”abc”)</p>
+</div></blockquote>
+<p>Because it does not match all attributes with the key “address”.</p>
+</dd>
+<dt>REGEX_ANY</dt><dd><p>Represents a subset of events within an event type. Pattern must be a
+valid regular expression that can be compiled by the re module.</p>
+<p>Since multiple event attributes with the same key can be present in an
+event, an event is considered part of this filter if its pattern matches
+the value of ANY attribute with the filter’s key.</p>
+<p>For example, if an event has the following attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Attribute(key=”address”, value=”abc”)</p></li>
+<li><p>Attribute(key=”address”, value=”def”)</p></li>
+</ul>
+</div></blockquote>
+<p>it will pass the following filter:</p>
+<blockquote>
+<div><p>AnyRegexFilter(key=”address”, value=”abc”)</p>
+</div></blockquote>
+<p>Because it matches one of the two attributes with the key “address”.</p>
+</dd>
+<dt>REGEX_ALL</dt><dd><p>Represents a subset of events within an event type. Pattern must be a
+valid regular expression that can be compiled by the re module.</p>
+<p>Since multiple event attributes with the same key can be present in an
+event, an event is considered part of this filter if its pattern matches
+the value of ALL attribute with the filter’s key.</p>
+<p>For example, if an event has the following attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Attribute(key=”address”, value=”abc”)</p></li>
+<li><p>Attribute(key=”address”, value=”def”)</p></li>
+</ul>
+</div></blockquote>
+<p>it will NOT pass this filter:</p>
+<blockquote>
+<div><p>AllRegexFilter(key=”address”, value=”abc”)</p>
+</div></blockquote>
+<p>Because it does not match all attributes with the key “address”.</p>
+</dd>
+</dl>
+<p>An EventBroadcaster manages external event subscriptions and forwards events to
+subscribers as they occur. In order for the EventBroadcaster to learn about
+events, the ChainController class implements the Observer pattern. The
+ChainController acts as the subject and observers of the ChainController
+implement the ChainObserver interface.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">interface</span> <span class="n">ChainObserver</span><span class="p">:</span>
+  <span class="o">//</span> <span class="n">This</span> <span class="n">method</span> <span class="ow">is</span> <span class="n">called</span> <span class="n">by</span> <span class="n">the</span> <span class="n">ChainController</span> <span class="n">on</span> <span class="n">block</span> <span class="n">boundaries</span><span class="o">.</span>
+  <span class="n">chain_update</span><span class="p">(</span><span class="n">Block</span> <span class="n">block</span><span class="p">,</span> <span class="nb">list</span><span class="o">&lt;</span><span class="n">TransactionReceipt</span><span class="o">&gt;</span> <span class="n">receipts</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">EventBroadcaster</span><span class="p">:</span>
+  <span class="o">//</span> <span class="n">Register</span> <span class="n">the</span> <span class="n">subscriber</span> <span class="k">for</span> <span class="n">the</span> <span class="n">given</span> <span class="n">event</span> <span class="n">subscriptions</span> <span class="ow">and</span> <span class="n">begin</span> <span class="n">sending</span> <span class="n">it</span>
+  <span class="o">//</span> <span class="n">events</span> <span class="n">on</span> <span class="n">block</span> <span class="n">boundaries</span><span class="o">.</span>
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="n">If</span> <span class="nb">any</span> <span class="n">of</span> <span class="n">the</span> <span class="n">block</span> <span class="n">ids</span> <span class="ow">in</span> <span class="n">last_known_block_ids</span> <span class="n">are</span> <span class="n">part</span> <span class="n">of</span> <span class="n">the</span> <span class="n">current</span> <span class="n">chain</span><span class="p">,</span>
+  <span class="o">//</span> <span class="n">the</span> <span class="n">observer</span> <span class="n">will</span> <span class="n">be</span> <span class="n">notified</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">events</span> <span class="n">that</span> <span class="n">it</span> <span class="n">would</span> <span class="n">have</span> <span class="n">received</span> <span class="n">based</span> <span class="n">on</span>
+  <span class="o">//</span> <span class="n">its</span> <span class="n">subscriptions</span> <span class="k">for</span> <span class="n">each</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">chain</span> <span class="n">since</span> <span class="n">the</span> <span class="n">most</span> <span class="n">recent</span>
+  <span class="o">//</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">last_known_block_ids</span><span class="o">.</span>
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="n">Raises</span> <span class="n">an</span> <span class="n">exception</span> <span class="k">if</span><span class="p">:</span>
+  <span class="o">//</span> <span class="mf">1.</span> <span class="n">The</span> <span class="n">subscription</span> <span class="ow">is</span> <span class="n">unsuccessful</span><span class="o">.</span>
+  <span class="o">//</span> <span class="mf">2.</span> <span class="kc">None</span> <span class="n">of</span> <span class="n">the</span> <span class="n">block</span> <span class="n">ids</span> <span class="ow">in</span> <span class="n">last_known_block_ids</span> <span class="n">are</span> <span class="n">part</span> <span class="n">of</span> <span class="n">the</span> <span class="n">current</span> <span class="n">chain</span><span class="o">.</span>
+  <span class="n">add_subscriber</span><span class="p">(</span><span class="n">string</span> <span class="n">connection_id</span><span class="p">,</span> <span class="nb">list</span><span class="o">&lt;</span><span class="n">EventSubscription</span><span class="o">&gt;</span> <span class="n">subscriptions</span><span class="p">,</span>
+                 <span class="nb">list</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">last_known_block_ids</span><span class="p">)</span>
+
+  <span class="o">//</span> <span class="n">Stop</span> <span class="n">sending</span> <span class="n">events</span> <span class="n">to</span> <span class="n">the</span> <span class="n">subscriber</span>
+  <span class="n">remove_subscriber</span><span class="p">(</span><span class="n">string</span> <span class="n">connection_id</span><span class="p">)</span>
+
+  <span class="o">//</span> <span class="n">Notify</span> <span class="nb">all</span> <span class="n">observers</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">events</span> <span class="n">they</span> <span class="n">are</span> <span class="n">subscribed</span> <span class="n">to</span><span class="o">.</span>
+  <span class="n">chain_update</span><span class="p">(</span><span class="n">Block</span> <span class="n">block</span><span class="p">,</span> <span class="nb">list</span><span class="o">&lt;</span><span class="n">TransactionReceipt</span><span class="o">&gt;</span> <span class="n">receipts</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>On receiving a chain_update() notification from the ChainController, the
+EventBroadcaster instantiates a new EventExtractor, passes each extractor all
+the EventSubscriptions for all subscribers, and receives the list of events
+that is the union of the events that all subscribers are interested in. The
+EventBroadcaster then distributes the events to each subscriber based on
+the subscriber’s list of subscriptions.</p>
+<p>To reduce the number of messages sent to subscribers, multiple Event messages
+are wrapped in an EventList message when possible:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">EventList</span> <span class="p">{</span>
+  <span class="n">repeated</span> <span class="n">Event</span> <span class="n">events</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>ClientEventSubscribeRequest messages are sent by external clients to the
+validator in order to subscribe to events. ClientEventSubscribeResponse messages
+are sent by the validator to the client in response to notify the client whether
+their subscription was successful. When an external client subscribes to events,
+they may optionally send a list of block ids along with their subscriptions. If
+any of the blocks sent are in the current chain, the EventBroadcaster will bring
+the client up to date by sending it events for all blocks since the most recent
+block sent with the subscribe request.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">ClientEventsSubscribeRequest</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">EventSubscription</span> <span class="na">subscriptions</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="c1">// The block id (or ids, if trying to walk back a fork) the subscriber last</span>
+    <span class="c1">// received events on. It can be set to empty if it has not yet received the</span>
+    <span class="c1">// genesis block.</span>
+    <span class="k">repeated</span> <span class="kt">string</span> <span class="na">last_known_block_ids</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">ClientEventsSubscribeResponse</span> <span class="p">{</span>
+    <span class="kd">enum</span> <span class="n">Status</span> <span class="p">{</span>
+         <span class="na">OK</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+         <span class="na">INVALID_FILTER</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+         <span class="na">UNKNOWN_BLOCK</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Status</span> <span class="na">status</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="c1">// Additional information about the response status</span>
+    <span class="kt">string</span> <span class="na">response_message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="event-extractors">
+<h3>Event Extractors<a class="headerlink" href="#event-extractors" title="Permalink to this headline">¶</a></h3>
+<p>Two event extractors are created to extract events from blocks and
+transaction receipts: BlockEventExtractor and ReceiptEventExtractor. The
+BlockEventExtractor will extract events of type “sawtooth/block-commit”. The
+ReceiptEventExtractor will extract events of type “sawtooth/state-delta” and
+events defined by transaction families.</p>
+<p>Example events generated by BlockEventExtractor:</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="c1">// Example sawtooth/block-commit event</span>
+<span class="n">Event</span> <span class="p">{</span>
+  <span class="na">event_type</span> <span class="o">=</span> <span class="s">&quot;sawtooth/block-commit&quot;</span><span class="p">,</span>
+  <span class="na">attributes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Attribute</span> <span class="p">{</span> <span class="na">key</span> <span class="o">=</span> <span class="s">&quot;block_id&quot;</span><span class="p">,</span> <span class="na">value</span> <span class="o">=</span> <span class="s">&quot;abc...123&quot;</span> <span class="p">},</span>
+    <span class="n">Attribute</span> <span class="p">{</span> <span class="na">key</span> <span class="o">=</span> <span class="s">&quot;block_num&quot;</span><span class="p">,</span> <span class="na">value</span> <span class="o">=</span> <span class="s">&quot;523&quot;</span> <span class="p">},</span>
+    <span class="n">Attribute</span> <span class="p">{</span> <span class="na">key</span> <span class="o">=</span> <span class="s">&quot;state_root_hash&quot;</span><span class="p">,</span> <span class="na">value</span> <span class="o">=</span> <span class="s">&quot;def...456&quot;</span> <span class="p">},</span>
+    <span class="n">Attribute</span> <span class="p">{</span> <span class="na">key</span> <span class="o">=</span> <span class="s">&quot;previous_block_id&quot;</span><span class="p">,</span> <span class="na">value</span> <span class="o">=</span> <span class="s">&quot;acf...146&quot;</span> <span class="p">},</span>
+  <span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example events generated by ReceiptEventExtractor:</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="c1">// Example transaction family specific event</span>
+<span class="n">Event</span> <span class="p">{</span>
+  <span class="na">event_type</span> <span class="o">=</span> <span class="s">&quot;xo/create&quot;</span><span class="p">,</span>
+  <span class="na">attributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">Attribute</span> <span class="p">{</span> <span class="na">key</span> <span class="o">=</span> <span class="s">&quot;game_name&quot;</span><span class="p">,</span> <span class="na">value</span> <span class="o">=</span> <span class="s">&quot;game0&quot;</span> <span class="p">}],</span>
+<span class="p">}</span>
+
+<span class="c1">// Example sawtooth/block-commit event</span>
+<span class="n">Event</span> <span class="p">{</span>
+  <span class="na">event_type</span> <span class="o">=</span> <span class="s">&quot;sawtooth/state-delta&quot;</span><span class="p">,</span>
+  <span class="na">attributes</span> <span class="o">=</span> <span class="p">[</span><span class="n">Attribute</span> <span class="p">{</span> <span class="na">key</span> <span class="o">=</span> <span class="s">&quot;address&quot;</span><span class="p">,</span> <span class="na">value</span> <span class="o">=</span> <span class="s">&quot;abc...def&quot;</span> <span class="p">}],</span>
+  <span class="na">event_data</span> <span class="o">=</span> <span class="p">&lt;</span><span class="kt">bytes</span><span class="p">&gt;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="transaction-receipts">
+<h2>Transaction Receipts<a class="headerlink" href="#transaction-receipts" title="Permalink to this headline">¶</a></h2>
+<p>Transaction receipts provide clients with information that is related to the
+execution of a transaction but should not be stored in state, such as:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Whether the transaction was valid</p></li>
+<li><p>How the transaction changed state</p></li>
+<li><p>Events of interest that occurred during execution of the transaction</p></li>
+<li><p>Other transaction-family-specific execution information</p></li>
+</ul>
+</div></blockquote>
+<p>Transaction receipts can also provide the validator with information about
+transaction execution without re-executing the transaction.</p>
+<p>Sawtooth transaction receipts are represented as a protobuf message when exposed
+to clients. A transaction receipt contains a list of StateChange messages, a
+list of Event messages, and a list of TransactionReceipt.Data messages:</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">TransactionReceipt</span> <span class="p">{</span>
+  <span class="c1">// State changes made by this transaction</span>
+  <span class="c1">// StateChange is already defined in protos/state_delta.proto</span>
+  <span class="k">repeated</span> <span class="n">StateChange</span> <span class="na">state_changes</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="c1">// Events fired by this transaction</span>
+  <span class="k">repeated</span> <span class="n">Event</span> <span class="na">events</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="c1">// Transaction family defined data</span>
+  <span class="k">repeated</span> <span class="kt">bytes</span> <span class="na">data</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+  <span class="kt">string</span> <span class="na">transaction_id</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The fields in the TransactionReceipt.Data are opaque to Sawtooth and their
+interpretation is left up to the transaction family. TransactionReceipt.Data
+can be requested for a transaction that has been committed and should only be
+used to store information about a transaction’s execution that should not be
+kept in state.  Clients can use the event system described above to subscribe to
+events produced by transaction processors.</p>
+<div class="section" id="transaction-receipt-store">
+<h3>Transaction Receipt Store<a class="headerlink" href="#transaction-receipt-store" title="Permalink to this headline">¶</a></h3>
+<p>The TransactionReceiptStore class stores receipts. New receipts are written to
+the TransactionReceiptStore after a block is validated.</p>
+<p>Transaction receipts will only be stored in this off-chain store and will not
+be included in the block. Note that because a transaction may exist in multiple
+blocks at a time, the transaction receipt is stored by both transaction id and
+block state root hash.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TransactionReceiptStore</span><span class="p">:</span>
+      <span class="k">def</span> <span class="nf">put_receipt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txn_id</span><span class="p">,</span> <span class="n">receipt</span><span class="p">):</span>
+      <span class="sd">&quot;&quot;&quot;Add the given transaction receipt to the store. Does not guarantee</span>
+<span class="sd">              it has been written to the backing store.</span>
+
+<span class="sd">      Args:</span>
+<span class="sd">              txn_id (str): the id of the transaction being stored.</span>
+<span class="sd">              state_root_hash: the state root of the block this transaction was</span>
+<span class="sd">          executed in.</span>
+<span class="sd">              receipt (TransactionReceipt): the receipt object to store.</span>
+<span class="sd">      &quot;&quot;&quot;</span>
+
+      <span class="k">def</span> <span class="nf">get_receipt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txn_id</span><span class="p">):</span>
+      <span class="sd">&quot;&quot;&quot;Returns the TransactionReceipt</span>
+
+<span class="sd">      Args:</span>
+<span class="sd">              txn_id (str): the id of the transaction for which the receipt</span>
+<span class="sd">          should be retrieved.</span>
+<span class="sd">              state_root_hash: the state root of the block this transaction was</span>
+<span class="sd">          executed in.</span>
+
+<span class="sd">      Returns:</span>
+<span class="sd">              TransactionReceipt: The receipt for the given transaction id.</span>
+
+<span class="sd">      Raises:</span>
+<span class="sd">              KeyError: if the transaction id is unknown.</span>
+<span class="sd">      &quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="message-handlers">
+<h3>Message Handlers<a class="headerlink" href="#message-handlers" title="Permalink to this headline">¶</a></h3>
+<p>Once transaction receipts are stored in the TransactionReceiptStore, clients
+can request a transaction receipt for a given transaction id.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="c1">// Fetches a specific txn by its id (header_signature) from the blockchain.</span>
+<span class="kd">message</span> <span class="nc">ClientReceiptGetRequest</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="kt">string</span> <span class="na">transaction_ids</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// A response that returns the txn receipt specified by a</span>
+<span class="c1">// ClientReceiptGetRequest.</span>
+<span class="c1">//</span>
+<span class="c1">// Statuses:</span>
+<span class="c1">//   * OK - everything worked as expected, txn receipt has been fetched</span>
+<span class="c1">//   * INTERNAL_ERROR - general error, such as protobuf failing to deserialize</span>
+<span class="c1">//   * NO_RESOURCE - no receipt exists for the transaction id specified</span>
+<span class="kd">message</span> <span class="nc">ClientReceiptGetResponse</span> <span class="p">{</span>
+    <span class="kd">enum</span> <span class="n">Status</span> <span class="p">{</span>
+        <span class="na">OK</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="na">INTERNAL_ERROR</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="na">NO_RESOURCE</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Status</span> <span class="na">status</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">repeated</span> <span class="n">TransactionReceipt</span> <span class="na">receipts</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>To request a transaction receipt from the REST API, pass the transaction ID in the form
+<code class="docutils literal notranslate"><span class="pre">http://rest-api:8008/receipts/?id=TRANSACTION-ID</span></code> where <code class="docutils literal notranslate"><span class="pre">TRANSACTION-ID</span></code> is your 128-character transaction ID.  Use <code class="docutils literal notranslate"><span class="pre">localhost:8008</span></code> if the Validator is running on Ubuntu instead of Docker.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="poet.html" class="btn btn-neutral float-right" title="PoET 1.0 Specification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="injecting_batches_block_validation_rules.html" class="btn btn-neutral float-left" title="Injecting Batches and On-Chain Block Validation Rules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

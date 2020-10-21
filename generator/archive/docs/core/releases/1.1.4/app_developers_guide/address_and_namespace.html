@@ -1,0 +1,335 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Address and Namespace Design &mdash; Sawtooth v1.1.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Namespace Restriction" href="namespace_restriction.html" />
+    <link rel="prev" title="Building and Submitting Transactions" href="../_autogen/txn_submit_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.1.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Transaction Family Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_sawtooth.html">Setting Up a Sawtooth Application Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creating_sawtooth_network.html">Creating a Sawtooth Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Playing with the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_the_sdks.html">Using the Sawtooth SDKs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Address and Namespace Design</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#address-components">Address Components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#namespace-prefix">Namespace Prefix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#address-construction">Address Construction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#simple-example-integerkey">Simple Example - IntegerKey</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#more-complex-addressing-schemes">More Complex Addressing Schemes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Address construction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#settings-transaction-family-example">Settings Transaction Family Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_restriction.html">Namespace Restriction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_subscriptions.html">Subscribing to Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer’s Guide</a> &raquo;</li>
+        
+      <li>Address and Namespace Design</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/address_and_namespace.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="address-and-namespace-design">
+<h1>Address and Namespace Design<a class="headerlink" href="#address-and-namespace-design" title="Permalink to this headline">¶</a></h1>
+<p>Hyperledger Sawtooth stores data in a Merkle-Radix tree. Data is stored in leaf
+nodes, and each node is accessed using an addressing scheme that is composed of
+35 bytes, represented as 70 hex characters. The recommended way to construct an
+address is to use the hex-encoded hash values of the string or strings that
+make up the address elements. However, the encoding of the address is
+completely up to the transaction family defining the namespace, and does not
+need to involve hashing. Hashing is a useful way to deterministically generate
+likely non-colliding byte arrays of a fixed length.</p>
+<div class="section" id="address-components">
+<h2>Address Components<a class="headerlink" href="#address-components" title="Permalink to this headline">¶</a></h2>
+<p>An address begins with a namespace prefix of six hex characters representing
+three bytes. The rest of the address, 32 bytes represented as 64 hex
+characters, can be calculated in various ways. However, certain guidelines
+should be followed when creating addresses, and specific requirements must be
+met.</p>
+<a class="reference internal image-reference" href="../_images/address_namespace.png"><img alt="Address and Namespace Design" class="align-center" src="../_images/address_namespace.png" style="width: 100%;" /></a>
+<p>The address must be deterministic: that is, any validator or client that needs
+to calculate the address must be able to calculate the same address, every
+time, when given the same inputs.</p>
+</div>
+<div class="section" id="namespace-prefix">
+<h2>Namespace Prefix<a class="headerlink" href="#namespace-prefix" title="Permalink to this headline">¶</a></h2>
+<p>All data under a namespace prefix follows a consistent address and data
+encoding/serialization scheme that is determined by the transaction family
+which defines the namespace.</p>
+<p>The namespace prefix consists of six hex characters, or three bytes.  An
+example namespace prefix that utilizes the string making up the transaction
+family namespace name to calculate the prefix is demonstrated by the following
+Python code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prefix</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="s2">&quot;example_txn_family_namespace&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Alternatively, a namespace prefix can utilize an arbitrary scheme. The current
+Settings transaction family uses a prefix of ‘000000’, for example.</p>
+</div>
+<div class="section" id="address-construction">
+<h2>Address Construction<a class="headerlink" href="#address-construction" title="Permalink to this headline">¶</a></h2>
+<p>The rest of the address, or remaining 32 bytes (64 hex characters), must be
+calculated using a defined deterministic encoding format. Each address within
+a namespace should be unique, or the namespace consumers must be able to deal
+with collisions in a deterministic way.</p>
+<p>The addressing schema can be as simple or as complex as necessary, based on
+the requirements of the transaction family.</p>
+<div class="section" id="simple-example-integerkey">
+<h3>Simple Example - IntegerKey<a class="headerlink" href="#simple-example-integerkey" title="Permalink to this headline">¶</a></h3>
+<p>For a description of the IntegerKey Transaction family,
+see <a class="reference internal" href="../transaction_family_specifications/integerkey_transaction_family.html"><span class="doc">IntegerKey Transaction Family</span></a>.</p>
+<p>The transaction family prefix is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">(</span><span class="s1">&#39;intkey&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This resolves to ‘1cf126’.</p>
+<p>To store a value in the entry <em>Name</em>, the address would be
+calculated like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">address</span> <span class="o">=</span> <span class="s2">&quot;1cf126&quot;</span> <span class="o">+</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[</span><span class="o">-</span><span class="mi">64</span><span class="p">:]</span>
+</pre></div>
+</div>
+<p>A value could then be stored at this address, by constructing and sending a
+transaction to a validator, where the transaction will be processed and
+included in a block.</p>
+<p>This address would also be used to retrieve the data.</p>
+</div>
+</div>
+<div class="section" id="more-complex-addressing-schemes">
+<h2>More Complex Addressing Schemes<a class="headerlink" href="#more-complex-addressing-schemes" title="Permalink to this headline">¶</a></h2>
+<p>For a more complex example, let’s use a hypothetical transaction family which
+stores information on different object types for a widget. The data on each
+object type is keyed to  a unique object identifier.</p>
+<ul class="simple">
+<li>prefix = “my-transaction-family-namespace-example”</li>
+<li>object-type = “widget-type”</li>
+<li>unique-object-identifier = ”unique-widget-identifier”</li>
+</ul>
+<div class="section" id="id1">
+<h3>Address construction<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Code Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="s2">&quot;my-transaction-family-namespace-example&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">6</span><span class="p">]</span> <span class="o">+</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="s2">&quot;widget-type&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="s2">&quot;unique-widget-identifier&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">60</span><span class="p">]</span>
+<span class="go">&#39;4ae1df0ad3ac05fdc7342c50d909d2331e296badb661416896f727131207db276a908e&#39;</span>
+</pre></div>
+</div>
+<p>In this case, the address is composed partly of a hexdigest made of the
+widget-type, and partly made up of the unique-widget-identifier. This encoding
+scheme choice prevents collisions between data objects that have identical
+identifiers, but which have different object types.</p>
+<p>Since the addressing scheme is not mandated beyond the basic requirements,
+there is a lot of flexibility. The example above is just an example. Your own
+addressing schema should be designed with your transaction family’s
+requirements in mind.</p>
+</div>
+<div class="section" id="settings-transaction-family-example">
+<h3>Settings Transaction Family Example<a class="headerlink" href="#settings-transaction-family-example" title="Permalink to this headline">¶</a></h3>
+<p>See the <a class="reference internal" href="../transaction_family_specifications/settings_transaction_family.html"><span class="doc">Settings Transaction Family</span></a>
+for another more complex addressing scheme.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="namespace_restriction.html" class="btn btn-neutral float-right" title="Namespace Restriction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../_autogen/txn_submit_tutorial.html" class="btn btn-neutral float-left" title="Building and Submitting Transactions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>CLI Command Reference &mdash; Sawtooth v1.0.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="sawtooth" href="cli/sawtooth.html" />
+    <link rel="prev" title="State Delta Subscriptions via Web Sockets" href="rest_api/state_delta_websockets.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_references.html">API References</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CLI Command Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html">sawtooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth-validator.html">sawtooth-validator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth-rest-api.html">sawtooth-rest-api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawadm.html">sawadm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawnet.html">sawnet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawset.html">sawset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/poet.html">poet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/identity-tp.html">identity-tp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/intkey.html">intkey</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/settings-tp.html">settings-tp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/xo.html">xo</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="contents.html">Docs</a> &raquo;</li>
+        
+      <li>CLI Command Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/cli.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cli-command-reference">
+<span id="cli-reference-label"></span><h1>CLI Command Reference<a class="headerlink" href="#cli-command-reference" title="Permalink to this headline">¶</a></h1>
+<p>The Sawtooth command-line interface (CLI) provides a set of commands to interact
+with Sawtooth services.</p>
+<p>This chapter shows the available options and arguments for each command and
+subcommand. The synopsis for each command shows its parameters and their usage.</p>
+<ul class="simple">
+<li>Optional parameters are shown in square brackets</li>
+<li>Choices are shown in curly braces.</li>
+<li>User-supplied values are shown in angle brackets.</li>
+</ul>
+<p>This usage information is also available on the command line by using the
+<code class="docutils literal"><span class="pre">-h</span></code> or <code class="docutils literal"><span class="pre">--help</span></code> option.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cli/sawtooth.html">sawtooth</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-batch">sawtooth batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-batch-list">sawtooth batch list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-batch-show">sawtooth batch show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-batch-status">sawtooth batch status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-batch-submit">sawtooth batch submit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-block">sawtooth block</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-block-list">sawtooth block list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-block-show">sawtooth block show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-identity">sawtooth identity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-identity-policy">sawtooth identity policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-identity-policy-create">sawtooth identity policy create</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-identity-policy-list">sawtooth identity policy list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-identity-role">sawtooth identity role</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-identity-role-create">sawtooth identity role create</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-identity-role-list">sawtooth identity role list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-keygen">sawtooth keygen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-peer">sawtooth peer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-peer-list">sawtooth peer list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-settings">sawtooth settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-settings-list">sawtooth settings list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-state">sawtooth state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-state-list">sawtooth state list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-state-show">sawtooth state show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-transaction">sawtooth transaction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-transaction-list">sawtooth transaction list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html#sawtooth-transaction-show">sawtooth transaction show</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cli/sawtooth-validator.html">sawtooth-validator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli/sawtooth-rest-api.html">sawtooth-rest-api</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli/sawadm.html">sawadm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawadm.html#sawadm-genesis">sawadm genesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawadm.html#sawadm-keygen">sawadm keygen</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cli/sawnet.html">sawnet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawnet.html#sawnet-compare-chains">sawnet compare-chains</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cli/sawset.html">sawset</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawset.html#sawset-genesis">sawset genesis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawset.html#sawset-proposal">sawset proposal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawset.html#sawset-proposal-create">sawset proposal create</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawset.html#sawset-proposal-list">sawset proposal list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawset.html#sawset-proposal-vote">sawset proposal vote</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cli/poet.html">poet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli/poet.html#poet-registration">poet registration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/poet.html#poet-registration-create">poet registration create</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/poet.html#poet-enclave">poet enclave</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cli/identity-tp.html">identity-tp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli/intkey.html">intkey</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli/intkey.html#intkey-set">intkey set</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/intkey.html#intkey-inc">intkey inc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/intkey.html#intkey-dec">intkey dec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/intkey.html#intkey-show">intkey show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/intkey.html#intkey-list">intkey list</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cli/settings-tp.html">settings-tp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli/xo.html">xo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli/xo.html#xo-create">xo create</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/xo.html#xo-list">xo list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/xo.html#xo-show">xo show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/xo.html#xo-take">xo take</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cli/xo.html#xo-delete">xo delete</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="cli/sawtooth.html" class="btn btn-neutral float-right" title="sawtooth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rest_api/state_delta_websockets.html" class="btn btn-neutral" title="State Delta Subscriptions via Web Sockets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'v1.0.5',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

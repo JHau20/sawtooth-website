@@ -1,0 +1,361 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>object-type: bond &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../index.html"/>
+        <link rel="up" title="Object Model" href="../object_model.html"/>
+        <link rel="next" title="object-type: holding" href="holding.html"/>
+        <link rel="prev" title="Object Model" href="../object_model.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../bond_family_guide.html">Bond Family Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../users_guide.html">Sawtooth Lake Bond Family User&#8217;s Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sysadmin_guide.html">Sawtooth Lake Bond Family System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../design.html">Sawtooth Lake Bond Family Design</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../updates.html">Transaction Updates</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../object_model.html">Object Model</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../object_model.html#objectstore">ObjectStore</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../object_model.html#common-attributes">Common Attributes</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../object_model.html#object-types">Object Types</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../libor.html">Sawtooth LIBOR</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bond_workload_simulator.html">Sawtooth Lake Bond Family Workload Simulator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../bond_family_guide.html">Bond Family Guide</a> &raquo;</li>
+        
+          <li><a href="../../design.html">Sawtooth Lake Bond Family Design</a> &raquo;</li>
+        
+          <li><a href="../object_model.html">Object Model</a> &raquo;</li>
+        
+      <li>object-type: bond</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/bond_family_guide/design/object_model/bond.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="object-type-bond">
+<span id="id1"></span><h1>object-type: bond<a class="headerlink" href="#object-type-bond" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="docutils">
+<dt>object-id</dt>
+<dd>See <a class="reference internal" href="../object_model.html#common-attributes"><span class="std std-ref">Common Attributes</span></a>.</dd>
+<dt>object-type</dt>
+<dd>The string &#8216;bond&#8217;.</dd>
+<dt>creator-id</dt>
+<dd>See <a class="reference internal" href="../object_model.html#common-attributes"><span class="std std-ref">Common Attributes</span></a>.</dd>
+<dt>ref-count</dt>
+<dd>See <a class="reference internal" href="../object_model.html#common-attributes"><span class="std std-ref">Common Attributes</span></a>.</dd>
+<dt>issuer</dt>
+<dd>The ticker symbol of the organization which issued the bond.</dd>
+<dt>cusip</dt>
+<dd><p class="first">An identifier for this bond.  Used for US Treasury bonds.</p>
+<p>See: <a class="reference external" href="https://en.wikipedia.org/wiki/CUSIP">https://en.wikipedia.org/wiki/CUSIP</a></p>
+<p class="last">Indexed, Unique, Optional (one of isin or cusip must be set)</p>
+</dd>
+<dt>isin</dt>
+<dd><p class="first">And identifier for this bond.  Used for corporate bonds.</p>
+<p>See: <a class="reference external" href="https://en.wikipedia.org/wiki/International_Securities_Identification_Number">https://en.wikipedia.org/wiki/International_Securities_Identification_Number</a></p>
+<p class="last">Indexed, Unique, Optional (one of isin or cusip must be set)</p>
+</dd>
+<dt>corporate-debt-ratings</dt>
+<dd>A key/value map of rating agency to rating.  This is used for
+display purposes only.</dd>
+<dt>coupon-benchmark</dt>
+<dd><p class="first">The benchmark interest rate index to use to determine the rate which
+will be added to coupon-rate.  If set, must be the string &#8216;Libor&#8217;.</p>
+<p class="last">Required if coupon-type is &#8216;Floating&#8217;</p>
+</dd>
+<dt>coupon-rate</dt>
+<dd><p class="first">The yearly rate of interest paid in coupons.</p>
+<p class="last">See: <a class="reference external" href="https://en.wikipedia.org/wiki/Coupon_(bond">https://en.wikipedia.org/wiki/Coupon_(bond</a>)</p>
+</dd>
+<dt>coupon-type</dt>
+<dd>Either &#8216;Fixed&#8217; or &#8216;Floating&#8217;.  If fixed, the coupon-rate is used as-is.
+If floating, the interest rate is calculated by adding coupon-rate to
+the rate looked up using the benchmark index (Libor).</dd>
+<dt>coupon-frequency</dt>
+<dd>Options are limited to &#8216;Quarterly&#8217;, &#8216;Monthly&#8217;, or &#8216;Daily&#8217; for the purposes of
+this PoC. There is significant complexity to coupon frequency and day
+counting in the real market. We will simplify this to first of the quarter,
+first of the month, or days.</dd>
+<dt>first-coupon-date</dt>
+<dd>The date the first coupon can be paid for the bond. This should align
+with the start of a quarter for coupon-frequency of &#8216;Quarterly&#8217;, the
+start of a month for coupon-frequency of &#8216;Monthly&#8217;, or any day for
+&#8216;Daily&#8217;. Format: MM/DD/YYYY.</dd>
+<dt>maturity-date</dt>
+<dd>The date on which the bond becomes worth it&#8217;s face value and can be
+redeemed.  Format: MM/DD/YYYY.</dd>
+<dt>face-value</dt>
+<dd>The par-value of the bond, to be paid upon maturity.</dd>
+<dt>first-settlement-date</dt>
+<dd><p class="first">For display only.</p>
+<p class="last">Optional</p>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="example-json">
+<h2>Example JSON<a class="headerlink" href="#example-json" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;object-id&quot;</span> <span class="p">:</span> <span class="s2">&quot;&lt;OBJECT_ID&gt;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;object-type&quot;</span> <span class="p">:</span> <span class="s2">&quot;bond&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;creator-id&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;OBJECT_ID&gt;&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;ref-count&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;issuer&quot;</span> <span class="p">:</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;isin&quot;</span> <span class="p">:</span> <span class="s2">&quot;US00206RDA77&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;cusip&quot;</span> <span class="p">:</span> <span class="s2">&quot;00206RDA7&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;amount-outstanding&quot;</span> <span class="p">:</span> <span class="mi">2250000000</span><span class="p">,</span>
+    <span class="nt">&quot;corporate-debt-ratings&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;Fitch&quot;</span> <span class="p">:</span> <span class="s2">&quot;BBB&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;Moodys&quot;</span> <span class="p">:</span> <span class="s2">&quot;Ba3&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;S&amp;P&quot;</span> <span class="p">:</span> <span class="s2">&quot;BBB-&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;coupon-benchmark&quot;</span> <span class="p">:</span> <span class="s2">&quot;ThreeMonth&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;coupon-rate&quot;</span> <span class="p">:</span> <span class="mf">0.015</span><span class="p">,</span>
+    <span class="nt">&quot;coupon-type&quot;</span> <span class="p">:</span> <span class="s2">&quot;Floating&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;coupon-frequency&quot;</span> <span class="p">:</span> <span class="s2">&quot;Quarterly&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;first-settlement-date&quot;</span> <span class="p">:</span> <span class="s2">&quot;01/11/2012&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;first-coupon-date&quot;</span> <span class="p">:</span> <span class="s2">&quot;03/31/2012&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;maturity-date&quot;</span> <span class="p">:</span> <span class="s2">&quot;01/11/2022&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;face-value&quot;</span><span class="p">:</span> <span class="mi">1000</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="related-transaction-updates">
+<h2>Related Transaction Updates<a class="headerlink" href="#related-transaction-updates" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="../updates/create_bond.html#update-create-bond"><span class="std std-ref">CreateBond</span></a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="holding.html" class="btn btn-neutral float-right" title="object-type: holding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../object_model.html" class="btn btn-neutral" title="Object Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

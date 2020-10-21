@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Path Configuration File &mdash; Sawtooth v1.1.5 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="API References" href="../../api_references.html" />
+    <link rel="prev" title="Log Configuration File" href="../log_configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.1.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../setting_up_sawtooth_poet-sim.html">Setting Up a Sawtooth Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../setting_allowed_txns.html">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuring_permissions.html">Configuring Validator and Transactor Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../grafana_configuration.html">Using Grafana to Display Sawtooth Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../configuring_sawtooth.html">About Sawtooth Configuration Files</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="validator_configuration_file.html">Validator Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rest_api_configuration_file.html">REST API Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli_configuration.html">Sawtooth CLI Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="poet_sgx_enclave_configuration_file.html">PoET SGX Enclave Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="identity_tp_configuration.html">Identity Transaction Processor Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings_tp_configuration.html">Settings Transaction Processor Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xo_tp_configuration.html">XO Transaction Processor Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../log_configuration.html">Log Configuration File</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Path Configuration File</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../sysadmin_guide.html">System Administrator’s Guide</a> &raquo;</li>
+        
+          <li><a href="../configuring_sawtooth.html">About Sawtooth Configuration Files</a> &raquo;</li>
+        
+      <li>Path Configuration File</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/sysadmin_guide/configuring_sawtooth/path_configuration_file.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="path-configuration-file">
+<h1>Path Configuration File<a class="headerlink" href="#path-configuration-file" title="Permalink to this headline">¶</a></h1>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Changing the path settings in this file is usually unnecessary.
+For non-standard directory paths, use the <code class="docutils literal notranslate"><span class="pre">SAWTOOTH_HOME</span></code> environment
+variable instead of this configuration file.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">path.toml</span></code> configuration changes the Sawtooth <code class="docutils literal notranslate"><span class="pre">data_dir</span></code> directory.
+This file should be used only when installing on an operating system
+distribution where the  default paths are not appropriate. For example, some
+Unix-based operating systems do not use <code class="docutils literal notranslate"><span class="pre">/var/lib</span></code>, so it would be appropriate
+to use this file to set <code class="docutils literal notranslate"><span class="pre">data_dir</span></code> to the natural operating system default
+path for application data.</p>
+<p>An example file is in <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/path.toml.example</span></code>. To create a path
+configuration file, copy the example file to the config directory and name it
+<code class="docutils literal notranslate"><span class="pre">path.toml</span></code>. Then edit the file to change the example configuration options as
+necessary for your system.</p>
+<p>This file configures the following settings:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">key_dir</span></code> = <cite>path</cite></p>
+<p>Directory path to use when loading key files</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data_dir</span></code> = <cite>path</cite></p>
+<p>Directory path for storing data files such as the block store</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">log_dir</span></code> = <cite>path</cite></p>
+<p>Directory path to use to write log files
+(by default, an error log and a debug log; see <a class="reference internal" href="../log_configuration.html"><span class="doc">Log Configuration File</span></a>).</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">policy_dir</span></code> = <cite>path</cite></p>
+<p>Directory path for storing policies</p>
+</li>
+</ul>
+<p>The default directory paths depend on whether the <code class="docutils literal notranslate"><span class="pre">SAWTOOTH_HOME</span></code> environment
+variable is set. When <code class="docutils literal notranslate"><span class="pre">SAWTOOTH_HOME</span></code> is set, the default paths are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">key_dir</span></code> = <code class="docutils literal notranslate"><span class="pre">SAWTOOTH_HOME/keys/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data_dir</span></code> = <code class="docutils literal notranslate"><span class="pre">SAWTOOTH_HOME/data/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">log_dir</span></code> = <code class="docutils literal notranslate"><span class="pre">SAWTOOTH_HOME/logs/</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">policy_dir</span></code> = <code class="docutils literal notranslate"><span class="pre">SAWTOOTH_HOME/policy/</span></code></p></li>
+</ul>
+<p>For example, if <code class="docutils literal notranslate"><span class="pre">SAWTOOTH_HOME</span></code> is set to <code class="docutils literal notranslate"><span class="pre">/tmp/testing</span></code>, the default path
+for <code class="docutils literal notranslate"><span class="pre">data_dir</span></code> is <code class="docutils literal notranslate"><span class="pre">/tmp/testing/data/</span></code>.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">SAWTOOTH_HOME</span></code> is not set, the operating system defaults are used.
+On Linux, the default path settings are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">key_dir</span></code> = <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/keys</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data_dir</span></code> = <code class="docutils literal notranslate"><span class="pre">/var/lib/sawtooth</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">log_dir</span></code> = <code class="docutils literal notranslate"><span class="pre">/var/log/sawtooth</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">policy_dir</span></code> = <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/policy</span></code></p></li>
+</ul>
+<p>Sawtooth also uses <code class="docutils literal notranslate"><span class="pre">config_dir</span></code> to determine the directory path containing the
+configuration files. Note that this directory is fixed; it cannot be changed in
+the <code class="docutils literal notranslate"><span class="pre">path.toml</span></code> configuration file.</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">SAWTOOTH_HOME</span></code> is set, <code class="docutils literal notranslate"><span class="pre">conf_dir</span></code> = <code class="docutils literal notranslate"><span class="pre">SAWTOOTH_HOME/etc/</span></code></p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">SAWTOOTH_HOME</span></code> is not set, <code class="docutils literal notranslate"><span class="pre">conf_dir</span></code> = <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth</span></code></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../api_references.html" class="btn btn-neutral float-right" title="API References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../log_configuration.html" class="btn btn-neutral float-left" title="Log Configuration File" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

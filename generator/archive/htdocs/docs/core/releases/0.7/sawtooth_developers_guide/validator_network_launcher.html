@@ -1,0 +1,498 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Validator Network Launcher &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="Sawtooth Lake Developer’s Guide" href="../sawtooth_developers_guide.html"/>
+        <link rel="next" title="The Workload Simulator" href="workload_simulator.html"/>
+        <link rel="prev" title="/echo" href="web_api/echo.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="architecture_overview.html">Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawtooth_vagrant.html">Vagrant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_api/modules.html">Distributed Ledger Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_api/index.html">Distributed Ledger Web API</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The Validator Network Launcher</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-options">Command-Line Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#obtaining-help-about-available-commands">Obtaining Help About Available Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#retrieving-the-status-of-the-validator-network">Retrieving the Status of the Validator Network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-a-validator-to-the-validator-network">Adding a Validator to the Validator Network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#retrieving-a-validator-s-configuration">Retrieving a Validator&#8217;s Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#viewing-a-validator-s-log-file">Viewing a Validator&#8217;s Log File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#removing-a-validator-from-the-validator-network">Removing a Validator from the Validator Network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tearing-down-the-validator-network">Tearing Down the Validator Network</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="workload_simulator.html">The Workload Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signing_transactions.html">Signing Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a> &raquo;</li>
+        
+      <li>The Validator Network Launcher</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sawtooth_developers_guide/validator_network_launcher.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-validator-network-launcher">
+<h1>The Validator Network Launcher<a class="headerlink" href="#the-validator-network-launcher" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>If you wish to start up a validator network with multiple instances of
+txnvalidator, but do not want to either bring up multiple virtual machine
+instances or use separate physical machines, there is a script that simplifies
+the process for running multiple instances of txnvalidator on a single virtual
+machine instance.  As in the single txnvalidator case, you will need to log in
+to the development environment (i.e., <code class="docutils literal"><span class="pre">vagrant</span> <span class="pre">ssh</span></code>).  In its simplest form,
+the script is executed as follows:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-validator
+<span class="gp">$</span> ./bin/launcher
+<span class="go">No config file specified, loading  /project/sawtooth-core/validator/etc/txnvalidator.js</span>
+<span class="go">Overriding the following keys from validator configuration file: /project/sawtooth-core/validator/etc/txnvalidator.js</span>
+<span class="go">        NodeName</span>
+<span class="go">        Host</span>
+<span class="go">        HttpPort</span>
+<span class="go">        Port</span>
+<span class="go">        LogFile</span>
+<span class="go">        LogLevel</span>
+<span class="go">        KeyFile</span>
+<span class="go">        GenesisLedger</span>
+<span class="go">Configuration:</span>
+<span class="go">{   &#39;config&#39;: &#39;/project/sawtooth-validator/etc/txnvalidator.js&#39;,</span>
+<span class="go">    &#39;count&#39;: 1,</span>
+<span class="go">    &#39;data_dir&#39;: &#39;/tmp/tmpohtWIM&#39;,</span>
+<span class="go">    &#39;data_dir_is_tmp&#39;: True,</span>
+<span class="go">    &#39;load_blockchain&#39;: None,</span>
+<span class="go">    &#39;log_level&#39;: &#39;WARNING&#39;,</span>
+<span class="go">    &#39;save_blockchain&#39;: None,</span>
+<span class="go">    &#39;validator&#39;: &#39;/project/sawtooth-validator/bin/txnvalidator&#39;,</span>
+<span class="go">    &#39;validator_config&#39;: {   u&#39;CertificateSampleLength&#39;: 30,</span>
+<span class="go">                            u&#39;InitialWaitTime&#39;: 750.0,</span>
+<span class="go">                            u&#39;LedgerType&#39;: u&#39;poet0&#39;,</span>
+<span class="go">                            u&#39;LedgerURL&#39;: u&#39;http://localhost:8800/&#39;,</span>
+<span class="go">                            &#39;LogLevel&#39;: &#39;WARNING&#39;,</span>
+<span class="go">                            u&#39;MaxTransactionsPerBlock&#39;: 1000,</span>
+<span class="go">                            u&#39;MinTransactionsPerBlock&#39;: 1,</span>
+<span class="go">                            u&#39;NetworkBurstRate&#39;: 128000,</span>
+<span class="go">                            u&#39;NetworkDelayRange&#39;: [0.0, 0.1],</span>
+<span class="go">                            u&#39;NetworkFlowRate&#39;: 96000,</span>
+<span class="go">                            u&#39;TargetConnectivity&#39;: 3,</span>
+<span class="go">                            u&#39;TargetWaitTime&#39;: 30.0,</span>
+<span class="go">                            u&#39;TopologyAlgorithm&#39;: u&#39;RandomWalk&#39;,</span>
+<span class="go">                            u&#39;TransactionFamilies&#39;: [   u&#39;ledger.transaction.integer_key&#39;,</span>
+<span class="go">                                                        u&#39;sawtooth_xo&#39;],</span>
+<span class="go">                            u&#39;UseFixedDelay&#39;: True}}</span>
+<span class="go">Launching initial validator: .......... 10.08S</span>
+<span class="go">Launching validator network:  0.00S</span>
+<span class="go">Waiting for validator registration: . 1.12S</span>
+</pre></div>
+</div>
+<p>Without any command-line options, the script launches a single txnvalidator
+instance.  As can be seen from the output above, the launcher reports the
+configuration file used, usually
+/project/sawtooth-core/validator/etc/txnvalidator.js, as well as any configuration
+settings that it has overridden.</p>
+<p>After the script launches the txnvalidator instance(s), it presents an
+interactive shell command-line interface:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">Welcome to the sawtooth txnvalidator network manager interactive console</span>
+<span class="go">launcher_cli.py&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="command-line-options">
+<h2>Command-Line Options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h2>
+<p>The launcher has numerous command-line options, all of which can be seen by
+executing the command with the <code class="docutils literal"><span class="pre">--help</span></code> (or <code class="docutils literal"><span class="pre">-h</span></code>) command-line option.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ./bin/launcher --help
+
+<span class="go">usage: launcher [-h] [--validator VALIDATOR] [--config CONFIG] [--count COUNT]</span>
+<span class="go">            [--save-blockchain SAVE_BLOCKCHAIN]</span>
+<span class="go">            [--load-blockchain LOAD_BLOCKCHAIN] [--data-dir DATA_DIR]</span>
+<span class="go">            [--log-level LOG_LEVEL]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --validator VALIDATOR</span>
+<span class="go">                        Fully qualified path to the txnvalidator to run</span>
+<span class="go">  --config CONFIG       Base validator config file</span>
+<span class="go">  --count COUNT         Number of validators to launch</span>
+<span class="go">  --save-blockchain SAVE_BLOCKCHAIN</span>
+<span class="go">                        Save the blockchain to a file when the network is</span>
+<span class="go">                        shutdown. This is the name of the tar.gz file that the</span>
+<span class="go">                        blockchain will be saved in.</span>
+<span class="go">  --load-blockchain LOAD_BLOCKCHAIN</span>
+<span class="go">                        load an existing blockchain from file. This is a file</span>
+<span class="go">                        name that points to a tar.gz that was generated from a</span>
+<span class="go">                        previous run using the --save-blockchain option.</span>
+<span class="go">  --data-dir DATA_DIR   Where to store the logs, data, etc for the network</span>
+<span class="go">  --log-level LOG_LEVEL</span>
+<span class="go">                        LogLevel to run the validators at.</span>
+</pre></div>
+</div>
+<p>To initially launch, for example, two txnvalidator instances and have the
+logging level set to DEBUG, execute the following:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ./bin/launcher --count <span class="m">2</span> --log-level DEBUG
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">By default, the log files will be located in a temporary directory in /tmp,
+with each txnvalidator instance having its own log file.</p>
+</div>
+</div>
+<div class="section" id="obtaining-help-about-available-commands">
+<h2>Obtaining Help About Available Commands<a class="headerlink" href="#obtaining-help-about-available-commands" title="Permalink to this headline">¶</a></h2>
+<p>Execute the <code class="docutils literal"><span class="pre">help</span></code> command to learn about the commands available via the
+command-line interface.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">launcher_cli.py&gt; help</span>
+
+<span class="go">Documented commands (type help &lt;topic&gt;):</span>
+<span class="go">========================================</span>
+<span class="go">config  exit  help  launch  launch_cmd  status</span>
+
+<span class="go">Undocumented commands:</span>
+<span class="go">======================</span>
+<span class="go">EOF  err  kill  log  out</span>
+</pre></div>
+</div>
+<p>As the help command indicates, you can learn more about a specific command by
+executing <code class="docutils literal"><span class="pre">help</span> <span class="pre">&lt;command_name&gt;</span></code>.</p>
+</div>
+<div class="section" id="retrieving-the-status-of-the-validator-network">
+<h2>Retrieving the Status of the Validator Network<a class="headerlink" href="#retrieving-the-status-of-the-validator-network" title="Permalink to this headline">¶</a></h2>
+<p>Execute the <code class="docutils literal"><span class="pre">status</span></code> command to get information about the running
+txnvalidator instances.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">launcher_cli.py&gt; status</span>
+<span class="go">0:  pid:8827   log: 18.77 KB</span>
+<span class="go">1:  pid:8831   log: 19.23 KB</span>
+</pre></div>
+</div>
+<p>Based upon the initial execution of the script with an instance count of two
+and the log level set to DEBUG, the <code class="docutils literal"><span class="pre">status</span></code> command, as expected, presents
+information about two txnvalidator instances.  For each txnvalidator instance,
+the following information is presented:</p>
+<ul class="simple">
+<li>Instance ID, which is used for all commands that are specific to a txnvalidator instance</li>
+<li>Process ID</li>
+<li>Log file size</li>
+</ul>
+</div>
+<div class="section" id="adding-a-validator-to-the-validator-network">
+<h2>Adding a Validator to the Validator Network<a class="headerlink" href="#adding-a-validator-to-the-validator-network" title="Permalink to this headline">¶</a></h2>
+<p>To add another txnvalidator instance to the existing validator network, execute
+the <code class="docutils literal"><span class="pre">launch</span></code> command.  When the status command is run, there are now three
+txnvalidator instances.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">launcher_cli.py&gt; launch</span>
+<span class="go">Validator validator-2 launched.</span>
+<span class="go">launcher_cli.py&gt; status</span>
+<span class="go">0:  pid:8827   log: 31.71 KB</span>
+<span class="go">1:  pid:8831   log: 30.31 KB</span>
+<span class="go">2:  pid:8959   log: 16.76 KB</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="retrieving-a-validator-s-configuration">
+<h2>Retrieving a Validator&#8217;s Configuration<a class="headerlink" href="#retrieving-a-validator-s-configuration" title="Permalink to this headline">¶</a></h2>
+<p>To see the configuration information for the txnvalidator instance that was
+just launched to, for example, get the HTTP port it is listening on, execute
+the <code class="docutils literal"><span class="pre">config</span></code> command, providing the txnvalidator instance ID.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">launcher_cli.py&gt; config 2</span>
+<span class="go">{</span>
+<span class="go">    &quot;NodeName&quot;: &quot;validator-2&quot;,</span>
+<span class="go">    &quot;TransactionFamilies&quot;: [&quot;ledger.transaction.integer_key&quot;, &quot;sawtooth_xo&quot;],</span>
+<span class="go">    &quot;TargetConnectivity&quot;: 3,</span>
+<span class="go">    &quot;TargetWaitTime&quot;: 30.0,</span>
+<span class="go">    &quot;GenesisLedger&quot;: false,</span>
+<span class="go">    &quot;HttpPort&quot;: 8802,</span>
+<span class="go">    &quot;id&quot;: 2,</span>
+<span class="go">    &quot;LogFile&quot;: &quot;/tmp/tmpylbmp_/validator-2.log&quot;,</span>
+<span class="go">    &quot;MaxTransactionsPerBlock&quot;: 1000,</span>
+<span class="go">    &quot;NetworkFlowRate&quot;: 96000,</span>
+<span class="go">    &quot;CertificateSampleLength&quot;: 30,</span>
+<span class="go">    &quot;InitialWaitTime&quot;: 750.0,</span>
+<span class="go">    &quot;DataDirectory&quot;: &quot;/tmp/tmpylbmp_&quot;,</span>
+<span class="go">    &quot;LogLevel&quot;: &quot;DEBUG&quot;,</span>
+<span class="go">    &quot;LedgerType&quot;: &quot;poet0&quot;,</span>
+<span class="go">    &quot;UseFixedDelay&quot;: true,</span>
+<span class="go">    &quot;Host&quot;: &quot;localhost&quot;,</span>
+<span class="go">    &quot;LedgerURL&quot;: &quot;http://localhost:8800&quot;,</span>
+<span class="go">    &quot;NetworkBurstRate&quot;: 128000,</span>
+<span class="go">    &quot;NetworkDelayRange&quot;: [0.0, 0.1],</span>
+<span class="go">    &quot;AdministrationNode&quot;: &quot;1EQFYqvMRLpjTjL5Bv3vSAMrZdnRY6e5uk&quot;,</span>
+<span class="go">    &quot;MinTransactionsPerBlock&quot;: 1,</span>
+<span class="go">    &quot;KeyFile&quot;: &quot;/tmp/tmp4K9qEd/validator-2.wif&quot;,</span>
+<span class="go">    &quot;Port&quot;: 8902,</span>
+<span class="go">    &quot;TopologyAlgorithm&quot;: &quot;RandomWalk&quot;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>As can be seen from the configuration information above, the newly-launched
+txnvalidator instance is listening on port 8802.</p>
+</div>
+<div class="section" id="viewing-a-validator-s-log-file">
+<h2>Viewing a Validator&#8217;s Log File<a class="headerlink" href="#viewing-a-validator-s-log-file" title="Permalink to this headline">¶</a></h2>
+<p>To view the log file for a txnvalidator instance, navigate to the data
+directory, which can either be specified as a command-line parameter to the
+script, or can be obtained by executing the config command for a particular
+txnvalidator instance.  Alternatively, execute the <code class="docutils literal"><span class="pre">log</span></code> command for a
+particular txnvalidator instance:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">launcher_cli.py&gt; log 2</span>
+<span class="go">[21:10:14, 10, validator_cli] CONFIG: TransactionFamilies = [&#39;ledger.transaction.integer_key&#39;, &#39;sawtooth_xo&#39;]</span>
+<span class="go">[21:10:14, 10, validator_cli] CONFIG: TargetConnectivity = 3</span>
+<span class="go">&lt;numerous lines removed&gt;</span>
+<span class="go">[21:10:14, 20, connect_message] received connect confirmation from node validator-0</span>
+<span class="go">[21:10:14, 20, node] enabling node 16rgLPPvsGdbCkanmfWnXo8RQxjKVYyHoQ</span>
+<span class="go">[21:10:15, 10, gossip_core] clean up processing 1 unacked packets</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="removing-a-validator-from-the-validator-network">
+<h2>Removing a Validator from the Validator Network<a class="headerlink" href="#removing-a-validator-from-the-validator-network" title="Permalink to this headline">¶</a></h2>
+<p>To remove a txnvalidator instance from the validator network, execute the
+<code class="docutils literal"><span class="pre">kill</span></code> command, providing its instance ID.  For example, to remove the
+txnvalidator instance that was just launched, execute the following:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">launcher_cli.py&gt; kill 2</span>
+<span class="go">Validator validator-2 killed.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tearing-down-the-validator-network">
+<h2>Tearing Down the Validator Network<a class="headerlink" href="#tearing-down-the-validator-network" title="Permalink to this headline">¶</a></h2>
+<p>To tear down the validator network, execute the <code class="docutils literal"><span class="pre">exit</span></code> command.  It will take
+care of stopping each of the txnvalidator instances as well as cleaning up any
+temporary files/directories that were created.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">launcher_cli.py&gt; exit</span>
+<span class="go">Sending shutdown message to validators: : ... 0.04S</span>
+<span class="go">Giving validators time to shutdown: : .......... 10.02S</span>
+<span class="go">Killing 2 intransigent validators: : ... 0.00S</span>
+<span class="go">Cleaning temp data store /tmp/tmpylbmp_</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="workload_simulator.html" class="btn btn-neutral float-right" title="The Workload Simulator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="web_api/echo.html" class="btn btn-neutral" title="/echo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

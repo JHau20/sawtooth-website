@@ -1,0 +1,436 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.manage.subproc &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>sawtooth.manage.subproc</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sawtooth.manage.subproc</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth.manage.node</span> <span class="k">import</span> <span class="n">NodeController</span>
+<span class="kn">from</span> <span class="nn">sawtooth.manage.utils</span> <span class="k">import</span> <span class="n">get_executable_script</span>
+<span class="kn">from</span> <span class="nn">sawtooth.validator_config</span> <span class="k">import</span> <span class="n">get_validator_configuration</span>
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SubprocessNodeController"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.manage.subproc.html#sawtooth.manage.subproc.SubprocessNodeController">[docs]</a><span class="k">class</span> <span class="nc">SubprocessNodeController</span><span class="p">(</span><span class="n">NodeController</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host_name</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_host_name</span> <span class="o">=</span> <span class="n">host_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_base_config</span> <span class="o">=</span> <span class="n">get_validator_configuration</span><span class="p">([],</span> <span class="p">{})</span>
+        <span class="c1"># Additional configuration for the genesis validator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_genesis_cfg</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;InitialConnectivity&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="c1"># Additional configuration for the non-genesis validators</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_non_genesis_cfg</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;InitialConnectivity&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">_construct_start_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_args</span><span class="p">):</span>
+        <span class="n">host</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_host_name</span>
+        <span class="n">node_name</span> <span class="o">=</span> <span class="n">node_args</span><span class="o">.</span><span class="n">node_name</span>
+        <span class="n">http_port</span> <span class="o">=</span> <span class="n">node_args</span><span class="o">.</span><span class="n">http_port</span>
+        <span class="n">gossip_port</span> <span class="o">=</span> <span class="n">node_args</span><span class="o">.</span><span class="n">gossip_port</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">get_executable_script</span><span class="p">(</span><span class="s1">&#39;txnvalidator&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;-vv&#39;</span><span class="p">]</span>
+        <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;--node&#39;</span><span class="p">,</span> <span class="n">node_name</span><span class="p">]</span>
+        <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;--listen&#39;</span><span class="p">,</span> <span class="s2">&quot;0.0.0.0:</span><span class="si">{}</span><span class="s2">/TCP http&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">http_port</span><span class="p">)]</span>
+        <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;--listen&#39;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">/UDP gossip&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">gossip_port</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">node_args</span><span class="o">.</span><span class="n">config_files</span><span class="p">:</span>
+            <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;--config&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+        <span class="c1"># Create and indicate special config file</span>
+        <span class="n">config_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_config</span><span class="p">[</span><span class="s1">&#39;ConfigDirectory&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">node_args</span><span class="o">.</span><span class="n">currency_home</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">config_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">node_args</span><span class="o">.</span><span class="n">currency_home</span><span class="p">,</span> <span class="s1">&#39;etc&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config_dir</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">config_dir</span><span class="p">)</span>
+        <span class="n">config_file</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_bootstrap.json&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_name</span><span class="p">)</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_non_genesis_cfg</span>
+        <span class="k">if</span> <span class="n">node_args</span><span class="o">.</span><span class="n">genesis</span><span class="p">:</span>
+            <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_genesis_cfg</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">config_dir</span><span class="p">,</span> <span class="n">config_file</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+        <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;--config&#39;</span><span class="p">,</span> <span class="n">config_file</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">cmd</span>
+
+<div class="viewcode-block" id="SubprocessNodeController.is_running"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.manage.subproc.html#sawtooth.manage.subproc.SubprocessNodeController.is_running">[docs]</a>    <span class="k">def</span> <span class="nf">is_running</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Authority on whether a node is in fact running.  On discovering that a</span>
+<span class="sd">        node no longer exists, it removes the node from _nodes.  We do this</span>
+<span class="sd">        here rather than in stop/kill in order to allow stop/kill to be</span>
+<span class="sd">        non-blocking.  Thus, our internal model of nodes (_nodes) will always</span>
+<span class="sd">        be correct for a particular node the next time someone asks if it</span>
+<span class="sd">        &#39;is_running&#39;.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            node_name (str):</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            ret_val (bool):</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">ret_val</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="s1">&#39;Handle&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">if</span> <span class="n">handle</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">handle</span><span class="o">.</span><span class="n">poll</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">handle</span><span class="o">.</span><span class="n">returncode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">ret_val</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">ret_val</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="c1"># process is authoritatively stopped; toss handle if it exists</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">node_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret_val</span></div>
+
+    <span class="k">def</span> <span class="nf">_build_env</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_args</span><span class="p">):</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">env</span><span class="p">[</span><span class="s1">&#39;PYTHONPATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">node_args</span><span class="o">.</span><span class="n">currency_home</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">env</span><span class="p">[</span><span class="s1">&#39;CURRENCYHOME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">node_args</span><span class="o">.</span><span class="n">currency_home</span>
+
+        <span class="k">return</span> <span class="n">env</span>
+
+<div class="viewcode-block" id="SubprocessNodeController.create_genesis_block"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.manage.subproc.html#sawtooth.manage.subproc.SubprocessNodeController.create_genesis_block">[docs]</a>    <span class="k">def</span> <span class="nf">create_genesis_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Creates a key, then uses this key to author a genesis block.  The node</span>
+<span class="sd">        corresponding to node_args must be initially available on the network</span>
+<span class="sd">        in order to serve this genesis block.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            node_args (NodeArguments):</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">(</span><span class="n">node_args</span><span class="o">.</span><span class="n">node_name</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="c1"># Create key for initial validator</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="n">get_executable_script</span><span class="p">(</span><span class="s1">&#39;sawtooth&#39;</span><span class="p">)</span>
+            <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;keygen&#39;</span><span class="p">,</span> <span class="n">node_args</span><span class="o">.</span><span class="n">node_name</span><span class="p">]</span>
+            <span class="c1"># ...sawtooth keygen does not assume validator&#39;s CURRENCYHOME</span>
+            <span class="n">key_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_config</span><span class="p">[</span><span class="s1">&#39;KeyDirectory&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">node_args</span><span class="o">.</span><span class="n">currency_home</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">key_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">node_args</span><span class="o">.</span><span class="n">currency_home</span><span class="p">,</span> <span class="s1">&#39;keys&#39;</span><span class="p">)</span>
+            <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;--key-dir&#39;</span><span class="p">,</span> <span class="n">key_dir</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;--quiet&#39;</span><span class="p">]</span>
+            <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_env</span><span class="p">(</span><span class="n">node_args</span><span class="p">))</span>
+            <span class="n">proc</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+            <span class="c1"># Create genesis block</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="n">get_executable_script</span><span class="p">(</span><span class="s1">&#39;sawtooth&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">node_args</span><span class="o">.</span><span class="n">ledger_type</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> \
+                    <span class="n">node_args</span><span class="o">.</span><span class="n">ledger_type</span> <span class="o">==</span> <span class="s2">&quot;poet0&quot;</span><span class="p">:</span>
+                <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;poet0-genesis&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">node_args</span><span class="o">.</span><span class="n">ledger_type</span> <span class="o">==</span> <span class="s2">&quot;poet1&quot;</span><span class="p">:</span>
+                <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;poet1-genesis&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="s1">&#39;dev-mode-genesis&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;-vv&#39;</span><span class="p">]</span>
+            <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;--node&#39;</span><span class="p">,</span> <span class="n">node_args</span><span class="o">.</span><span class="n">node_name</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">node_args</span><span class="o">.</span><span class="n">config_files</span><span class="p">:</span>
+                <span class="n">cmd</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;--config&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+            <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_env</span><span class="p">(</span><span class="n">node_args</span><span class="p">))</span>
+            <span class="n">proc</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SubprocessNodeController.do_start"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.manage.subproc.html#sawtooth.manage.subproc.SubprocessNodeController.do_start">[docs]</a>    <span class="k">def</span> <span class="nf">do_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_args</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">):</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_construct_start_command</span><span class="p">(</span><span class="n">node_args</span><span class="p">)</span>
+        <span class="c1"># Execute popen and store the process handle</span>
+        <span class="n">handle</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">stderr</span><span class="p">,</span>
+                                  <span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_env</span><span class="p">(</span><span class="n">node_args</span><span class="p">))</span>
+        <span class="n">handle</span><span class="o">.</span><span class="n">poll</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">handle</span><span class="o">.</span><span class="n">returncode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># process is known to be running; save handle</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span><span class="p">[</span><span class="n">node_args</span><span class="o">.</span><span class="n">node_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Handle&quot;</span><span class="p">:</span> <span class="n">handle</span><span class="p">}</span></div>
+
+    <span class="k">def</span> <span class="nf">_do_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_args</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">do_start</span><span class="p">(</span><span class="n">node_args</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SubprocessNodeController.start"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.manage.subproc.html#sawtooth.manage.subproc.SubprocessNodeController.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Start a node if it is not already running.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            node_args (NodeArguments):</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">(</span><span class="n">node_args</span><span class="o">.</span><span class="n">node_name</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_do_start</span><span class="p">(</span><span class="n">node_args</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SubprocessNodeController.stop"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.manage.subproc.html#sawtooth.manage.subproc.SubprocessNodeController.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Send a non-blocking termination request to a node if it appears to be</span>
+<span class="sd">        running.  OSError is caught and logged because the process may die</span>
+<span class="sd">        between is_running and our signal transmission attempt.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            node_name (str):</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">(</span><span class="n">node_name</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="s1">&#39;Handle&#39;</span><span class="p">]</span>
+                <span class="n">handle</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.stop failed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SubprocessNodeController.kill"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.manage.subproc.html#sawtooth.manage.subproc.SubprocessNodeController.kill">[docs]</a>    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Send a non-blocking kill (9) to a node if it appears to be running.</span>
+<span class="sd">        OSError is caught and logged because the process may die between</span>
+<span class="sd">        is_running and our signal transmission attempt.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            node_name (str):</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">(</span><span class="n">node_name</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="s1">&#39;Handle&#39;</span><span class="p">]</span>
+                <span class="n">handle</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.kill failed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SubprocessNodeController.get_node_names"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.manage.subproc.html#sawtooth.manage.subproc.SubprocessNodeController.get_node_names">[docs]</a>    <span class="k">def</span> <span class="nf">get_node_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">names</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_running</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="SubprocessNodeController.get_ip"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.manage.subproc.html#sawtooth.manage.subproc.SubprocessNodeController.get_ip">[docs]</a>    <span class="k">def</span> <span class="nf">get_ip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_name</span><span class="p">):</span>
+
+        <span class="n">hostname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_host_name</span>
+        <span class="k">return</span> <span class="n">hostname</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

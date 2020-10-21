@@ -1,0 +1,15 @@
+sawtooth\.cli\.monitor\_lib package
+===================================
+
+.. automodule:: sawtooth.cli.monitor_lib
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   sawtooth.cli.monitor_lib.monitor_modules
+

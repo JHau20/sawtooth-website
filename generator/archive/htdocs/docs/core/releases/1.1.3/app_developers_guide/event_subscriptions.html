@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Subscribing to Events &mdash; Sawtooth v1.1.3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="About Sawtooth Events" href="about_events.html" />
+    <link rel="prev" title="Namespace Restriction" href="namespace_restriction.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.1.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Transaction Family Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_sawtooth.html">Setting Up a Sawtooth Application Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creating_sawtooth_network.html">Creating a Sawtooth Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Playing with the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_the_sdks.html">Using the Sawtooth SDKs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_restriction.html">Namespace Restriction</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Subscribing to Events</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="about_events.html">About Sawtooth Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="about_event_subscriptions.html">About Event Subscriptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zmq_event_subscription.html">Using ZMQ to Subscribe to Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="web_socket_event_subscription.html">About Web Sockets and Event Subscriptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer’s Guide</a> &raquo;</li>
+        
+      <li>Subscribing to Events</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/event_subscriptions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="subscribing-to-events">
+<h1>Subscribing to Events<a class="headerlink" href="#subscribing-to-events" title="Permalink to this headline">¶</a></h1>
+<p>As blocks are committed to the blockchain, an application developer may want to
+receive information on events such as the creation of a new block or switching
+to a new fork. This includes application-specific events that are defined by a
+custom transaction family.</p>
+<p>Hyperledger Sawtooth supports creating and broadcasting events. Event
+subscription allows an application to perform the following functions:</p>
+<ul class="simple">
+<li>Subscribe to events that occur related to the blockchain</li>
+<li>Communicate information about transaction execution back to clients without
+storing that data in state</li>
+<li>Perform event catch-up to gather information about state changes from a
+specific point on the blockchain</li>
+</ul>
+<p>An application can react immediately to each event or store event data for
+later processing and analysis. For example, a <cite>state delta processor</cite> could
+store state data in a reporting database for analysis and processing, which
+provides access to state information without the delay of requesting state data
+from the validator. For examples, see the <a class="reference external" href="https://github.com/hyperledger/sawtooth-supply-chain">Sawtooth Supply Chain</a>
+or <a class="reference external" href="https://github.com/hyperledger/sawtooth-marketplace">Sawtooth Marketplace</a>
+repository.</p>
+<p>This section describes the structure of events and event subscriptions, then
+explains how to use the validator’s <a class="reference external" href="http://zeromq.org">ZeroMQ</a> messaging
+protocol (also called ZMQ or 0MQ) to subscribe to events.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Web applications can also subscribe to events with a web socket connection to
+the REST API, but there are several limitations for this method. For more
+information, see <a class="reference internal" href="web_socket_event_subscription.html"><span class="doc">About Web Sockets and Event Subscriptions</span></a>.</p>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about_events.html">About Sawtooth Events</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about_events.html#event-namespace">Event Namespace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_events.html#example-an-application-specific-event">Example: An Application-specific Event</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="about_event_subscriptions.html">About Event Subscriptions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="about_event_subscriptions.html#event-filters">Event Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_event_subscriptions.html#event-subscription-protobuf">Event Subscription Protobuf</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="zmq_event_subscription.html">Using ZMQ to Subscribe to Events</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zmq_event_subscription.html#step-1-construct-a-subscription">Step 1: Construct a Subscription</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zmq_event_subscription.html#step-2-submit-the-event-subscription">Step 2: Submit the Event Subscription</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zmq_event_subscription.html#step-3-receiving-the-response">Step 3: Receiving the Response</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zmq_event_subscription.html#step-4-listening-for-events">Step 4: Listening for Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zmq_event_subscription.html#correlating-events-to-blocks">Correlating Events to Blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zmq_event_subscription.html#requesting-event-catch-up">Requesting Event Catch-Up</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zmq_event_subscription.html#unsubscribing-to-events">Unsubscribing to Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="web_socket_event_subscription.html">About Web Sockets and Event Subscriptions</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="about_events.html" class="btn btn-neutral float-right" title="About Sawtooth Events" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="namespace_restriction.html" class="btn btn-neutral" title="Namespace Restriction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

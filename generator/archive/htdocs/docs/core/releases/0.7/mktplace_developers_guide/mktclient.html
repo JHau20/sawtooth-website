@@ -1,0 +1,1054 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MarketPlace Client Reference &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="MarketPlace Developer’s Guide" href="../mktplace_developers_guide.html"/>
+        <link rel="next" title="System Administrator’s Guide" href="../sysadmin_guide.html"/>
+        <link rel="prev" title="mktplace.mktplace_token_store module" href="../mktplace_api/mktplace.mktplace_token_store.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mktplace_data_model.html">MarketPlace Data Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mktplace_messages.html">MarketPlace Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mktplace_transactions.html">MarketPlace Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mktplace_transactions.html#marketplace-transaction-updates">MarketPlace Transaction Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mktplace_initial_state.html">MarketPlace Initial State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_api/modules.html">MarketPlace Python API</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MarketPlace Client Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#launching-the-marketplace-client">Launching the MarketPlace Client</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mktclient-configuration-file">mktclient Configuration File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktclient-command-line-options">mktclient Command-Line Options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mktclient-examples">mktclient Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#marketplace-client-commands">MarketPlace Client Commands</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#marketplace-transaction-family-commands">MarketPlace Transaction Family Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#viewing-data-model-objects">Viewing Data Model Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#viewing-holdings">Viewing Holdings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#viewing-exchange-and-sell-offers">Viewing Exchange and Sell Offers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#viewing-marketplace-state">Viewing MarketPlace State</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#managing-symbols">Managing Symbols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#miscellaneous-commands">Miscellaneous Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#terminating-mktclient">Terminating mktclient</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#further-reading">Further Reading</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a> &raquo;</li>
+        
+      <li>MarketPlace Client Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/mktplace_developers_guide/mktclient.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="marketplace-client-reference">
+<h1>MarketPlace Client Reference<a class="headerlink" href="#marketplace-client-reference" title="Permalink to this headline">¶</a></h1>
+<p>The MarketPlace Client, aka mktclient, provides an interactive shell that
+can be use to interact with a validator network using the MarketPlace
+Transaction Family.</p>
+<p>This section serves as a reference for mktclient.  If you would like
+a tutorial to walk you through a simple example of using mktclient,
+please consult <a class="reference internal" href="../tutorial.html#mktplace-transaction-family-tutorial-label"><span class="std std-ref">Working with the MarketPlace Transaction Family</span></a>.</p>
+<p>The MarketPlace Client Reference assumes familiarity with both the MarketPlace
+Data Model and the MarketPlace Transaction Family.  As such, neither will be
+discussed outside how they correspond to mktclient commands.  If you have not
+done so already, you may wish to familiarize yourself with the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The MarketPlace Data Model.  Please consult
+<a class="reference internal" href="mktplace_data_model.html#mktplace-data-model-label"><span class="std std-ref">MarketPlace Data Model</span></a> for more information on the
+underlying MarketPlace Data Model.</li>
+<li>The MarketPlace Transaction Family.  Please consult
+<a class="reference internal" href="mktplace_transactions.html#mktplace-transactions-label"><span class="std std-ref">MarketPlace Transactions</span></a> for more information on the
+underlying MarketPlace Transaction Family.</li>
+</ul>
+</div></blockquote>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>To use mktclient, you need the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The sawtooth distribution installed on one or more machines.</li>
+<li>The URL and port for a validator in the validator network.</li>
+<li>A valid key used for signing transactions (this can be generated
+using the command <em>sawtooth keygen</em>).</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="launching-the-marketplace-client">
+<h2>Launching the MarketPlace Client<a class="headerlink" href="#launching-the-marketplace-client" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>For the remainder of the MarketPlace Client Reference:</p>
+<ul class="last simple">
+<li>{mktplace} refers to the top-level directory for the MarketPlace</li>
+<li>{home} refers to the top-level directory for the validator</li>
+</ul>
+</div>
+<p>Two pieces of information are needed for mktclient to connect to a validator network:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>A valid key for signing transactions.</li>
+<li>The URL of a validator in the validator network.</li>
+</ol>
+</div></blockquote>
+<p>These are provided through a combination of a JSON configuration file and
+command-line options used to override the configuration settings.</p>
+<div class="section" id="mktclient-configuration-file">
+<h3>mktclient Configuration File<a class="headerlink" href="#mktclient-configuration-file" title="Permalink to this headline">¶</a></h3>
+<p>An example configuration file is as follows:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{
+    ## Validator URL/port
+    &quot;LedgerURL&quot; : &quot;http://localhost:8800/&quot;,
+
+    ## Logging configuration
+    &quot;LogLevel&quot; : &quot;WARN&quot;,
+    &quot;LogFile&quot;  : &quot;__screen__&quot;,
+
+    ## Participant information
+    &quot;ParticipantName&quot; : &quot;player1&quot;,
+
+    ## File with private key used for signing transactions
+    &quot;KeyFile&quot; : &quot;{home}/keys/{name}.wif&quot;
+}
+</pre></div>
+</div>
+<p>Of most interest are the entries:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">LedgerURL</span></code>  The URL and port for the validator.</li>
+<li><code class="docutils literal"><span class="pre">ParticipantName</span></code>  The name of the participant.</li>
+<li><code class="docutils literal"><span class="pre">KeyFile</span></code>  The location of the private key used for signing transactions.
+In the above example, if the top-level directory for the Sawtooth validator
+is /project/sawtooth-validator and assuming that the participant name has
+not been explicitly supplied as a command-line option, the key file will
+be located in /project/sawtooth-validator/keys/player1.wif.</li>
+</ul>
+<p>Not present in the example above, but also of interest:</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">ParticipantId</span></code>  The transaction ID used to register the participant.  To
+specify a participant ID, prepend three forward slashes (///) to the transaction
+ID as specified in <a class="reference internal" href="../tutorial.html#mktplace-object-names-label"><span class="std std-ref">Object Names</span></a>.  For example, if the
+transaction ID to register the participant was 842bcb9ec98232db, the participant
+ID would be specified as follows in the configuration file:</p>
+<p><code class="docutils literal"><span class="pre">&quot;ParticipantId&quot;</span> <span class="pre">:</span> <span class="pre">&quot;///842bcb9ec98232db&quot;</span></code></p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If <code class="docutils literal"><span class="pre">ParticipantId</span></code> and <code class="docutils literal"><span class="pre">ParticipantName</span></code> are both present in the
+configuration file, then the participant ID supersedes the participant
+name.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If  <code class="docutils literal"><span class="pre">ParticipantName</span></code> and/or <code class="docutils literal"><span class="pre">ParticipantId</span></code> are specified along with
+<code class="docutils literal"><span class="pre">KeyFile</span></code> and the participant has already been registered, the private
+key must be the same one that signed the transaction used to register the
+participant.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">mktclient requires a signing key.  Therefore, <code class="docutils literal"><span class="pre">KeyFile</span></code> must appear in a
+configuration file or the <code class="docutils literal"><span class="pre">--keyfile</span></code> command-line option must be specified.</p>
+</div>
+<p>If a configuration file is not explicitly specified on the command line, the
+mktclient searches for a configuration file named mktclient.js in the following
+locations in order:</p>
+<ol class="arabic simple">
+<li>{home}/etc (i.e., the default validator configuration directory)</li>
+<li>$HOME/.sawtooth on Linux or %USERPROFILE%\.sawtooth on Windows</li>
+<li>The current directory</li>
+<li>{mktplace}/etc (i.e., the default mktclient configuration directory)</li>
+</ol>
+<p>The default configuration file name and the search path can be changed via
+command-line options (see below).</p>
+</div>
+<div class="section" id="mktclient-command-line-options">
+<h3>mktclient Command-Line Options<a class="headerlink" href="#mktclient-command-line-options" title="Permalink to this headline">¶</a></h3>
+<p>mktclient has numerous command-line options that can be used to override
+the default settings or the settings specified in the configuration file.  The
+entire list of command-line options can be seen by executing mktclient with
+the <code class="docutils literal"><span class="pre">--help</span></code> or <code class="docutils literal"><span class="pre">-h</span></code> command-line option:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> <span class="o">{</span>mktplace<span class="o">}</span>
+<span class="gp">$</span> ./bin/mktclient --help
+</pre></div>
+</div>
+<p>The command-line options are:</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">--config</span> <span class="pre">CONFIG</span> <span class="pre">[CONFIG</span> <span class="pre">...]</span></code>  Specifies one or more configuration file
+names.  The configuration files will be applied in the order in which they
+are specified such that entries in a configuration file later in the list
+will override entries with the same name from configuration files earlier
+in the list.</p>
+<p>If only a file name is specified, mktclient will search the list of locations
+noted above for the configuration file.  The search path can be altered by using
+the <code class="docutils literal"><span class="pre">--conf-dir</span></code> command-line option.  Alternately, a configuration file can
+be specified using a relative or absolute path.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">--keyfile</span> <span class="pre">KEYFILE</span></code>  Specifies the name of the file that contains the private
+key used to sign MarketPlace transactions.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If <code class="docutils literal"><span class="pre">KeyFile</span></code> does not appear in the configuration file(s), then the
+<code class="docutils literal"><span class="pre">--keyfile</span></code> command-line option is required.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If mktclient is started with a participant that has already been registered,
+then the private key in KEYFILE must be the same one that was used to sign
+the transaction used to register the participant.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">--conf-dir</span> <span class="pre">CONF_DIR</span></code>  Specifies the name of the validator configuration
+directory.  This directory will replace {home}/etc in the list of directories
+searched for the configuration file(s).</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">--name</span> <span class="pre">NAME</span></code>  Specifies the name of the participant to use as the creator
+of MarketPlace objects (i.e., accounts, etc.).</p>
+<p>If the default configuration is used, mktclient will search for the private key
+in {home}/etc/&lt;NAME&gt;.wif.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If the participant has already been registered, then the private key in
+the key file must have been the one that was used to sign the transaction
+that registered the participant.</p>
+</div>
+</div></blockquote>
+<p>If the participant ID is specified in either the configuration file or with the
+command-line option, the participant name will be superseded by the ID provided.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">--id</span> <span class="pre">ID</span></code>  Specifies the ID of the participant (i.e., the ID of the transaction
+that registered the participant) to use as the creator of MarketPlace objects.
+If this command-line option is supplied, it will supersede the participant name.
+To specify a participant ID, prepend three forward slashes (///) to the transaction
+ID as specified in <a class="reference internal" href="../tutorial.html#mktplace-object-names-label"><span class="std std-ref">Object Names</span></a>.  For example, if the
+transaction ID to register the participant was 842bcb9ec98232db, the participant
+ID would be specified as follows:</p>
+<p><code class="docutils literal"><span class="pre">--id</span> <span class="pre">///842bcb9ec98232db</span></code></p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The private key in the key file must have be the same one that was used to
+sign the transaction that registered the participant.</p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">--url</span> <span class="pre">URL</span></code>  Specifies the URL of the validator to use.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">--script</span> <span class="pre">SCRIPT</span></code>  Specifies the name of a file that contains mktclient
+commands to execute on startup before providing the interactive shell prompt</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">--echo</span></code>  Specifies that commands should be echoed.  This is not necessarily
+useful when using the interactive shell, but when combined with the <code class="docutils literal"><span class="pre">--script</span></code>
+command-line option allows you to see the commands that are executed.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">--log-dir</span> <span class="pre">LOG_DIR</span></code>  Specifies the name of the directory where the log file
+is written.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">--logfile</span> <span class="pre">LOGFILE</span></code>  Specifies the name of the log file.  A value of <code class="docutils literal"><span class="pre">__screen__</span></code>
+(two underscores before and after) to have log messages sent to standard output.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">--log-level</span> <span class="pre">LEVEL</span></code>  Specifies the logging level.  Valid logging levels are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>CRITICAL</li>
+<li>ERROR</li>
+<li>WARNING/WARN</li>
+<li>INFO</li>
+<li>DEBUG.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">--set</span> <span class="pre">OPTION</span> <span class="pre">VALUE</span></code>  Specifies that an arbitrary configuration option, OPTION,
+be set to VALUE.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">--mapvar</span> <span class="pre">VARIABLE</span> <span class="pre">VALUE</span></code> Specifies that a symbol named VARIABLE should be set
+to VALUE.  The symbol named VARIABLE is made available from the interactive shell
+prompt.  See below for the discussion about symbols.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="mktclient-examples">
+<h3>mktclient Examples<a class="headerlink" href="#mktclient-examples" title="Permalink to this headline">¶</a></h3>
+<p>To start mktclient with a participant named mkt:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> <span class="o">{</span>mktplace<span class="o">}</span>
+<span class="gp">$</span> ./bin/mktclient --name mkt
+</pre></div>
+</div>
+<p>To start mktclient with a participant created by the transaction with ID 842bcb9ec98232db:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> <span class="o">{</span>mktplace<span class="o">}</span>
+<span class="gp">$</span> ./bin/mktclient --id ///842bcb9ec98232db
+</pre></div>
+</div>
+<p>If mktclient is started with a participant name that has not been previously registered,
+the interactive shell provides the following prompt:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//UNKNOWN&gt;
+</pre></div>
+</div>
+<p>Otherwise, the interactive shell provides the following prompt (where {name} is replaced
+with the name of the participant):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//{name}&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="marketplace-client-commands">
+<h2>MarketPlace Client Commands<a class="headerlink" href="#marketplace-client-commands" title="Permalink to this headline">¶</a></h2>
+<p>The mktclient interactive shell presents a prompt that accepts commands.  The list of
+commands can by seen by executing the <code class="docutils literal"><span class="pre">help</span></code> command.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//UNKNOWN&gt; help
+
+Documented commands (type help &lt;topic&gt;):
+========================================
+EOF        dump           exit      liability    selloffer   waitforcommit
+account    echo           help      map          sleep
+asset      exchange       holding   offers       state
+assettype  exchangeoffer  holdings  participant  tokenstore
+
+Miscellaneous help topics:
+==========================
+symbols  names
+</pre></div>
+</div>
+<div class="section" id="marketplace-transaction-family-commands">
+<h3>MarketPlace Transaction Family Commands<a class="headerlink" href="#marketplace-transaction-family-commands" title="Permalink to this headline">¶</a></h3>
+<p>The mktclient contains a set of commands that have a one-to-one correspondence
+to the objects in the MarketPlace Data Model.  Specifically, these commands are:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">account</span></code>  Manage MarketPlace data model Account objects.</li>
+<li><code class="docutils literal"><span class="pre">asset</span></code>  Manage MarketPlace data model Asset objects.</li>
+<li><code class="docutils literal"><span class="pre">assettype</span></code>  Manage MarketPlace data model AssetType objects.</li>
+<li><code class="docutils literal"><span class="pre">exchangeoffer</span></code>  Manage MarketPlace data model ExchangeOffer objects.</li>
+<li><code class="docutils literal"><span class="pre">holding</span></code>  Manage MarketPlace data model Holding objects.</li>
+<li><code class="docutils literal"><span class="pre">liability</span></code>  Manage MarketPlace data model Liability objects.</li>
+<li><code class="docutils literal"><span class="pre">participant</span></code>  Manage MarketPlace data model Participant objects.</li>
+<li><code class="docutils literal"><span class="pre">selloffer</span></code>  Manage MarketPlace data model SellOffer objects.</li>
+</ul>
+<p>Each of the data model commands has two sub-commands that correspond to the
+MarketPlace Transaction Updates available for the data model objects:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">reg</span></code>  Registers a data model object.</li>
+<li><code class="docutils literal"><span class="pre">unr</span></code>  Unregisters a data model object.</li>
+</ul>
+<p>All of the register sub-commands support the common subset of command-line options:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">--help</span></code> or <code class="docutils literal"><span class="pre">-h</span></code>  Provides additional sub-command-specific help information.</li>
+<li><code class="docutils literal"><span class="pre">--name</span> <span class="pre">NAME</span></code>  The name of the data model object.</li>
+<li><code class="docutils literal"><span class="pre">--description</span> <span class="pre">DESCRIPTION</span></code>  The description of the data model object.</li>
+<li><code class="docutils literal"><span class="pre">--waitforcommit</span></code>  Specifies that the command will not return to the interactive
+shell prompt until the transaction has been committed.</li>
+<li><code class="docutils literal"><span class="pre">--symbol</span> <span class="pre">SYMBOL</span></code>  A human-friendly symbol to associate with the transaction ID
+for the registration.  This symbol can be used later in other commands that use an
+identifier.</li>
+</ul>
+<p>In addition to the common subset of command-line options, each of the register sub-commands
+supports command-line options that have a one-to-one correspondence to properties in the
+data model object.  The <code class="docutils literal"><span class="pre">-h</span></code> or <code class="docutils literal"><span class="pre">--help</span></code> command line option can be used to see them,
+for example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//UNKNOWN&gt; asset reg --help
+usage: asset reg|unr [-h] [--waitforcommit] [--restricted | --no-restricted]
+                     [--consumable | --no-consumable]
+                     [--divisible | --no-divisible]
+                     [--description DESCRIPTION] [--name NAME] --type TYPE
+                     [--symbol SYMBOL]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --waitforcommit       Wait for transaction to commit before returning
+  --restricted          Limit asset creation to the asset owner
+  --no-restricted       Limit asset creation to the asset owner
+  --consumable          Assets may not be copied
+  --no-consumable       Assets may be copied infinitely
+  --divisible           Fractional portions of an asset are acceptable
+  --no-divisible        Assets may not be divided
+  --description DESCRIPTION
+                        Description of the asset
+  --name NAME           Relative name, must begin with /
+  --type TYPE           Fully qualified asset type name
+  --symbol SYMBOL       Symbol to associate with the newly created id
+</pre></div>
+</div>
+<p>To register a new participant named bob and then create an account, named
+/myaccount, for bob:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> <span class="o">{</span>home<span class="o">}</span>
+<span class="gp">$</span> ./bin/sawtooth keygen --key-dir keys bob
+<span class="gp">$</span> <span class="nb">cd</span> <span class="o">{</span>market<span class="o">}</span>
+<span class="gp">$</span> ./bin/mktclient --name bob
+<span class="go">//UNKNWONN&gt; participant reg --name bob --description &quot;My Name Is Bob&quot; --waitforcommit --symbol BOB_ID</span>
+<span class="gp">$</span><span class="nv">BOB_ID</span> <span class="o">=</span> 163a6d90c6e1440f
+<span class="go">transaction 163a6d90c6e1440f submitted</span>
+<span class="go">Wait for commit</span>
+<span class="go">//bob&gt; account reg --name /myaccount --description &quot;Bob&#39;s Account&quot; --symbol ACCOUNT_ID --waitforcommit</span>
+<span class="gp">$</span><span class="nv">ACCOUNT_ID</span> <span class="o">=</span> 8e76be511243e9d2
+<span class="go">transaction 8e76be511243e9d2 submitted</span>
+<span class="go">Wait for commit</span>
+<span class="go">//bob&gt;</span>
+</pre></div>
+</div>
+<p>Now that there is a participant, bob, and an associated account, /myaccount,
+holdings can be added to the account.  Before registering a holding, an asset
+type as well as an asset of that type need to be registered:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; assettype reg --name /myassettype
+//bob&gt; asset reg --name /myasset --type /myassettype
+//bob&gt; holding reg --asset /myasset --count 5 --name /myholding1 --account /myaccount --description &quot;My Holding 1&quot;
+//bob&gt; holding reg --asset /myasset --count 0 --name /myholding2 --account /myaccount --description &quot;My Holding 2&quot;
+//bob&gt; dump --name /myholding1
+{
+  &quot;account&quot;: &quot;8e76be511243e9d2&quot;,
+  &quot;asset&quot;: &quot;2ccf837c6026571c&quot;,
+  &quot;count&quot;: 5,
+  &quot;creator&quot;: &quot;163a6d90c6e1440f&quot;,
+  &quot;description&quot;: &quot;My Holding 1&quot;,
+  &quot;name&quot;: &quot;/myholding1&quot;,
+  &quot;object-type&quot;: &quot;Holding&quot;
+}
+//bob&gt; dump --name /myholding2
+{
+  &quot;account&quot;: &quot;8e76be511243e9d2&quot;,
+  &quot;asset&quot;: &quot;2ccf837c6026571c&quot;,
+  &quot;count&quot;: 0,
+  &quot;creator&quot;: &quot;163a6d90c6e1440f&quot;,
+  &quot;description&quot;: &quot;My Holding 2&quot;,
+  &quot;name&quot;: &quot;/myholding2&quot;,
+  &quot;object-type&quot;: &quot;Holding&quot;
+}
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When registering the asset type, /myassettype, the <code class="docutils literal"><span class="pre">--no-restricted</span></code>
+command-line option was not provided, meaning that only the participant
+bob can create assets of that type.  Furthermore, since the
+<code class="docutils literal"><span class="pre">--no-restricted</span></code> command-line option was not provided when registering
+the asset, /myasset, only the participant bob can create holdings of that asset.</p>
+</div>
+<p>In addition to the commands for MarketPlace Transaction Updates on data model objects,
+there is one more MarketPlace Transaction Update command, <code class="docutils literal"><span class="pre">exchange</span></code>.  It has the
+following required command-line paramters:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">--src</span> <span class="pre">HOLDING</span></code>  The name of the holding from which assets are to be drawn.</li>
+<li><code class="docutils literal"><span class="pre">--dst</span> <span class="pre">HOLDING</span></code>  The name of the holding into which assets will be placed.</li>
+<li><code class="docutils literal"><span class="pre">--count</span> <span class="pre">COUNT</span></code>  The number of assets to transfer.</li>
+</ul>
+<p>To transfer three assets from //bob/myholding1 to //bob/myholding2, execute the
+following:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; exchange --src /myholding1 --dst /myholding2 --count 3
+//bob&gt; dump --name /myholding1
+{
+  &quot;account&quot;: &quot;8e76be511243e9d2&quot;,
+  &quot;asset&quot;: &quot;2ccf837c6026571c&quot;,
+  &quot;count&quot;: 2,
+  &quot;creator&quot;: &quot;163a6d90c6e1440f&quot;,
+  &quot;description&quot;: &quot;My Holding 1&quot;,
+  &quot;name&quot;: &quot;/myholding1&quot;,
+  &quot;object-type&quot;: &quot;Holding&quot;
+}
+//bob&gt; dump --name /myholding2
+{
+  &quot;account&quot;: &quot;8e76be511243e9d2&quot;,
+  &quot;asset&quot;: &quot;2ccf837c6026571c&quot;,
+  &quot;count&quot;: 3,
+  &quot;creator&quot;: &quot;163a6d90c6e1440f&quot;,
+  &quot;description&quot;: &quot;My Holding 2&quot;,
+  &quot;name&quot;: &quot;/myholding2&quot;,
+  &quot;object-type&quot;: &quot;Holding&quot;
+}
+</pre></div>
+</div>
+<p>Note that after the exchange, //bob/myholding1 has its original asset count
+decremented by three and //bob/myholding2 has its original asset count
+incremented by three.</p>
+<p>Because an exchange is a transaction update, it also supports the same <code class="docutils literal"><span class="pre">--waitforcommit</span></code>
+command-line option as the commands that register/unregister data model objects.</p>
+<p>All of the MarketPlace Data Model Transaction Update unregister sub-commands
+support the same set of command-line options:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">--help</span></code> or <code class="docutils literal"><span class="pre">-h</span></code>  Provides additional sub-command-specific help information.</li>
+<li><code class="docutils literal"><span class="pre">--name</span> <span class="pre">NAME</span></code>  The name of the data model object to unregister.  As mentioned above,
+consult <a class="reference internal" href="../tutorial.html#mktplace-object-names-label"><span class="std std-ref">Object Names</span></a> for how to specify names for data
+model objects.</li>
+<li><code class="docutils literal"><span class="pre">--waitforcommit</span></code>  Specifies that the command will not return to the interactive
+shell prompt until the transaction has been committed.</li>
+</ul>
+<p>To unregister the participant named bob that was created above, all of the
+following are equivalent:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">participant</span> <span class="pre">unr</span> <span class="pre">--name</span> <span class="pre">//bob</span></code></li>
+<li><code class="docutils literal"><span class="pre">participant</span> <span class="pre">unr</span> <span class="pre">--name</span> <span class="pre">///163a6d90c6e1440f</span></code></li>
+<li><code class="docutils literal"><span class="pre">participant</span> <span class="pre">unr</span> <span class="pre">--name</span> <span class="pre">///$BOB_ID</span></code></li>
+</ul>
+</div>
+<div class="section" id="viewing-data-model-objects">
+<h3>Viewing Data Model Objects<a class="headerlink" href="#viewing-data-model-objects" title="Permalink to this headline">¶</a></h3>
+<p>To view a previously-registered data model object, mktclient provides a
+command, <code class="docutils literal"><span class="pre">dump</span></code>, that has two command-line parameters:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">--name</span> <span class="pre">NAME</span></code>  The name, following the object naming rules, of the object
+to view.</li>
+<li><code class="docutils literal"><span class="pre">--fields</span> <span class="pre">FIELD</span> <span class="pre">[FIELD</span> <span class="pre">...]</span></code>  The fields to view.  The fields are specific
+to the particular data model object type.  If the <code class="docutils literal"><span class="pre">--fields</span></code> option is
+omitted, all fields are shown.</li>
+</ul>
+<p>For example, to view the participant bob and his account that were created
+previously above:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; dump --name //bob
+{
+  &quot;address&quot;: &quot;1MNwVmFaZBsr4sSLxQrT575o6PDNbmq8ap&quot;,
+  &quot;description&quot;: &quot;My Name Is Bob&quot;,
+  &quot;name&quot;: &quot;bob&quot;,
+  &quot;object-type&quot;: &quot;Participant&quot;
+}
+//bob&gt; dump --name ///$BOB_ID
+{
+  &quot;address&quot;: &quot;1MNwVmFaZBsr4sSLxQrT575o6PDNbmq8ap&quot;,
+  &quot;description&quot;: &quot;My Name Is Bob&quot;,
+  &quot;name&quot;: &quot;bob&quot;,
+  &quot;object-type&quot;: &quot;Participant&quot;
+}
+//bob&gt; dump --name //bob --fields name description
+bob
+My Name Is Bob
+//bob&gt; dump --name /myaccount
+{
+  &quot;creator&quot;: &quot;163a6d90c6e1440f&quot;,
+  &quot;description&quot;: &quot;Bob&#39;s Account&quot;,
+  &quot;name&quot;: &quot;/myaccount&quot;,
+  &quot;object-type&quot;: &quot;Account&quot;
+}
+//bob&gt; dump --name //bob/myaccount
+{
+  &quot;creator&quot;: &quot;163a6d90c6e1440f&quot;,
+  &quot;description&quot;: &quot;Bob&#39;s Account&quot;,
+  &quot;name&quot;: &quot;/myaccount&quot;,
+  &quot;object-type&quot;: &quot;Account&quot;
+}
+//bob&gt; dump --name ///$ACCOUNT_ID
+{
+  &quot;creator&quot;: &quot;163a6d90c6e1440f&quot;,
+  &quot;description&quot;: &quot;Bob&#39;s Account&quot;,
+  &quot;name&quot;: &quot;/myaccount&quot;,
+  &quot;object-type&quot;: &quot;Account&quot;
+}
+//bob&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>In the above example, notice that because mktclient is currently running
+under the auspices of the participant named bob, the relative name /myaccount
+and the absolute name //bob/myaccount resolve to the same data model object.</p>
+<p class="last">Also notice that symbols, specifically $BOB_ID and $ACCOUNT_ID, that were created
+when the data model objects were registered can also be used.</p>
+</div>
+</div>
+<div class="section" id="viewing-holdings">
+<h3>Viewing Holdings<a class="headerlink" href="#viewing-holdings" title="Permalink to this headline">¶</a></h3>
+<p>mktclient provides a command, <code class="docutils literal"><span class="pre">holdings</span></code>, that can be used to view the current
+holdings.  Without any command-line options, all holdings, regardless of the
+creator are listed.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; holdings
+10       //alice/aliceholding
+2        //bob/myholding1
+3        //bob/myholding2
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">holdings</span></code> command has several command-line options:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">--creator</span> <span class="pre">CREATOR</span></code>  Only list the holdings created by CREATOR.  If the
+special value <code class="docutils literal"><span class="pre">&#64;</span></code> is used for the creator, it means the participant under
+which mktclient is currently running (i.e., the name that appears in the
+prompt).</li>
+<li><code class="docutils literal"><span class="pre">--assets</span> <span class="pre">ASSET</span> <span class="pre">[ASSET</span> <span class="pre">...]</span></code>  Only list the holdings of the asset(s)
+specified.</li>
+<li><code class="docutils literal"><span class="pre">--sortby</span> <span class="pre">ATTRIBUTE</span></code>  Sort the output by the holding data model attribute
+specified.</li>
+<li><code class="docutils literal"><span class="pre">--verbose</span></code>  Provide verbose listing of holdings.</li>
+</ul>
+<p>To list the holdings sorted by the count attribute with additional output
+provided:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; holdings --sortby count --verbose
+Balance  Holding
+2        //bob/myholding1
+3        //bob/myholding2
+10       //alice/aliceholding
+</pre></div>
+</div>
+<p>If mktclient is running under the auspices of the participant bob, to
+restrict the list of holdings to those that were created by bob, execute any
+of the following:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; holdings --creator //bob
+2        //bob/myholding1
+3        //bob/myholding2
+//bob&gt; holdings --creator @
+2        //bob/myholding1
+3        //bob/myholding2
+//bob&gt; holdings --creator ///$BOB_ID
+2        //bob/myholding1
+3        //bob/myholding2
+</pre></div>
+</div>
+<p>To only see holdings of the asset //alice/aliceasset, execute the following:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; holdings --asset //alice/aliceasset
+10       //alice/aliceholding
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Because mktclient is running as participant bob, the asset name
+(i.e., //alice/aliceasset) has to be fully-qualified.  If instead
+mktclient was running as participant alice, the relative name, /aliceasset,
+can be used.</p>
+</div>
+</div>
+<div class="section" id="viewing-exchange-and-sell-offers">
+<h3>Viewing Exchange and Sell Offers<a class="headerlink" href="#viewing-exchange-and-sell-offers" title="Permalink to this headline">¶</a></h3>
+<p>mktclient provides a command, <code class="docutils literal"><span class="pre">offers</span></code>, that can be used to view the current
+offers.  Without any command-line options, all offers, regardless of the
+creator are listed.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; offers
+Ratio    Input Asset (What You Pay)          Output Asset (What You Get)         Name
+0.5      //mkt/asset/currency/USD            //mkt/asset/cookie/choc_chip        //bob/choc_chip_sale
+1000.0   //marketplace/asset/token           //mkt/asset/currency/USD            //mkt/offer/provision/USD
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">offers</span></code> command has several command-line options:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">--creator</span> <span class="pre">CREATOR</span></code>  Only list the offers created by CREATOR.  If the
+special value <code class="docutils literal"><span class="pre">&#64;</span></code> is used for the creator, it means the participant under
+which mktclient is currently running (i.e., the name that appears in the
+prompt).</li>
+<li><code class="docutils literal"><span class="pre">--iasset</span> <span class="pre">ASSET</span></code>  Only list the offers where the input asset matches ASSET.</li>
+<li><code class="docutils literal"><span class="pre">--oasset</span> <span class="pre">ASSET</span></code>  Only list the offers where the output asset matches ASSET.</li>
+<li><code class="docutils literal"><span class="pre">--sortby</span> <span class="pre">FIELD</span></code>  Sort the output by FIELD.</li>
+</ul>
+<p>If mktclient is running under the auspices of the participant bob, to restrict
+the list of offers to those that were created by bob, execute any of the following:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; offers --creator @
+Ratio    Input Asset (What You Pay)          Output Asset (What You Get)         Name
+0.5      //mkt/asset/currency/USD            //mkt/asset/cookie/choc_chip        //bob/choc_chip_sale
+//bob&gt; offers --creator //bob
+Ratio    Input Asset (What You Pay)          Output Asset (What You Get)         Name
+0.5      //mkt/asset/currency/USD            //mkt/asset/cookie/choc_chip        //bob/choc_chip_sale
+//bob&gt; offers --creator ///$BOB_ID
+Ratio    Input Asset (What You Pay)          Output Asset (What You Get)         Name
+0.5      //mkt/asset/currency/USD            //mkt/asset/cookie/choc_chip        //bob/choc_chip_sale
+</pre></div>
+</div>
+<p>To only see offers in which the input asset type is //marketplace/accet/token,
+execute the following:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; offers --iasset //marketplace/asset/token
+Ratio    Input Asset (What You Pay)          Output Asset (What You Get)         Name
+1000.0   //marketplace/asset/token           //mkt/asset/currency/USD            //mkt/offer/provision/USD
+</pre></div>
+</div>
+</div>
+<div class="section" id="viewing-marketplace-state">
+<h3>Viewing MarketPlace State<a class="headerlink" href="#viewing-marketplace-state" title="Permalink to this headline">¶</a></h3>
+<p>mktclient provides a command, <code class="docutils literal"><span class="pre">state</span></code>, that can be used to view the the transaction
+updates used to register MarketPlace data model objects.  The state command supports
+four sub-commands:</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">fetch</span></code>  Fetches the current version of the ledger state.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">query</span></code>  Finds the object that matches the specified criteria.  By default,
+all objects are returned.  The following command-line options are supported:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">--type</span> <span class="pre">TYPE</span></code>  The type of object to find, for example Participant.</li>
+<li><code class="docutils literal"><span class="pre">--creator</span> <span class="pre">CREATOR</span></code>  Only return objects created by CREATOR. If the
+special value <code class="docutils literal"><span class="pre">&#64;</span></code> is used for CREATOR, it means that participant under
+which mktclient is currently running (i.e., the name that appears in the
+prompt).</li>
+<li><code class="docutils literal"><span class="pre">--name</span> <span class="pre">NAME</span></code>  Return the object with name matching NAME.</li>
+<li><code class="docutils literal"><span class="pre">--fields</span> <span class="pre">FIELD</span> <span class="pre">[FIELD</span> <span class="pre">...]</span></code>  The fields to print out for the objects
+returned.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">byname</span></code>  Gets the identifier of an object based upon its name.  The following
+command-line options are supported:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">--name</span> <span class="pre">NAME</span></code>  The name of the object.</li>
+<li><code class="docutils literal"><span class="pre">--symbol</span> <span class="pre">SYMBOL</span></code>  The symbol name that will be associated with the identifier.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">value</span></code>  Gets the value associated with a field in the state.  The following
+command-line options are supported:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">--path</span> <span class="pre">PATH</span></code>  A period-separated path, beginning with the identifier,
+to the object field to retrieve.  If only the identifier is supplied, all
+fields are returned.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>To get the list of participants registered:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; state query --type Participant
+[
+  &quot;163a6d90c6e1440f&quot;,
+  &quot;b2232c7b18ff1c8e&quot;,
+  &quot;aac66eea84ce8444&quot;
+]
+//bob&gt; state query --type Participant --fields name
+[
+  [
+    &quot;bob&quot;
+  ],
+  [
+    &quot;marketplace&quot;
+  ],
+  [
+    &quot;alice&quot;
+  ]
+]
+</pre></div>
+</div>
+<p>To get the list of data model objects created by participant bob:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; state query --fields name --creator //bob
+[
+  [
+    &quot;/myassettype&quot;
+  ],
+  [
+    &quot;/myholding1&quot;
+  ],
+  [
+    &quot;/myaccount&quot;
+  ],
+  [
+    &quot;/myasset&quot;
+  ],
+  [
+    &quot;/myholding2&quot;
+  ]
+]
+//bob&gt; state query --fields name --creator @
+[
+  [
+    &quot;/myassettype&quot;
+  ],
+  [
+    &quot;/myholding1&quot;
+  ],
+  [
+    &quot;/myaccount&quot;
+  ],
+  [
+    &quot;/myasset&quot;
+  ],
+  [
+    &quot;/myholding2&quot;
+  ]
+]
+//bob&gt; state query --fields name --creator ///$BOB_ID
+[
+  [
+    &quot;/myassettype&quot;
+  ],
+  [
+    &quot;/myholding1&quot;
+  ],
+  [
+    &quot;/myaccount&quot;
+  ],
+  [
+    &quot;/myasset&quot;
+  ],
+  [
+    &quot;/myholding2&quot;
+  ]
+]
+</pre></div>
+</div>
+<p>To get the identifier for the participant bob, executing the following:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; state byname --name //bob
+163a6d90c6e1440f
+//bob&gt; state byname --name //bob --symbol BOB_ID
+//bob&gt; echo $BOB_ID
+163a6d90c6e1440f
+</pre></div>
+</div>
+<p>To get the name for the participant bob, using the identifier, execute the following:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; state byname --name //bob --symbol BOB_ID
+//bob&gt; state value --path $BOB_ID
+OrderedDict([(&#39;address&#39;, &#39;1MNwVmFaZBsr4sSLxQrT575o6PDNbmq8ap&#39;), (&#39;description&#39;, &#39;&#39;), (&#39;name&#39;, &#39;bob&#39;), (&#39;object-type&#39;, &#39;Participant&#39;)])
+//bob&gt; state value --path $BOB_ID.name
+bob
+</pre></div>
+</div>
+</div>
+<div class="section" id="managing-symbols">
+<h3>Managing Symbols<a class="headerlink" href="#managing-symbols" title="Permalink to this headline">¶</a></h3>
+<p>The mktclient interactive shell supports creating human-friendly symbols
+for identifiers via the <code class="docutils literal"><span class="pre">--symbol</span></code> command-line option for the commands
+that register data model objects.  In addition, mktclient has commands,
+<code class="docutils literal"><span class="pre">map</span></code> and <code class="docutils literal"><span class="pre">echo</span></code>, for creating and querying, respectively, symbol values.
+For example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//bob&gt; map --symbol BOB_ID --value 163a6d90c6e1440f
+$BOB_ID = 163a6d90c6e1440f
+//bob&gt; echo $BOB_ID
+163a6d90c6e1440f
+</pre></div>
+</div>
+</div>
+<div class="section" id="miscellaneous-commands">
+<h3>Miscellaneous Commands<a class="headerlink" href="#miscellaneous-commands" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">sleep</span> <span class="pre">SECONDS</span></code>  This causes the mktclient interactive shell to pause for the
+number of seconds requested.</li>
+<li><code class="docutils literal"><span class="pre">waitforcommit</span> <span class="pre">[--txn</span> <span class="pre">TXN_ID]</span></code>  Like the <code class="docutils literal"><span class="pre">--waitforcommit</span></code> command-line option
+on the MarketPlace Transaction Update commands, if the <code class="docutils literal"><span class="pre">--txn</span></code> command-line option
+is provided this commands waits until the transaction with ID TXN_ID has been committed.
+If the <code class="docutils literal"><span class="pre">--txn</span></code> command-line option is not present, this command wants for the most-recent
+transaction to complete.</li>
+</ul>
+</div>
+<div class="section" id="terminating-mktclient">
+<h3>Terminating mktclient<a class="headerlink" href="#terminating-mktclient" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">exit</span></code> or <code class="docutils literal"><span class="pre">EOF</span></code> command may be used to terminate the mktclient interactive
+shell.</p>
+</div>
+</div>
+<div class="section" id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+<p>This reference has only provided a very elementary example of transactions.  Consult
+the tutorial <a class="reference internal" href="../tutorial.html#mktplace-transaction-family-tutorial-label"><span class="std std-ref">Working with the MarketPlace Transaction Family</span></a> for a more
+complete example of registering MarketPlace data model objects as well as MarketPlace
+transaction updates.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../sysadmin_guide.html" class="btn btn-neutral float-right" title="System Administrator’s Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../mktplace_api/mktplace.mktplace_token_store.html" class="btn btn-neutral" title="mktplace.mktplace_token_store module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

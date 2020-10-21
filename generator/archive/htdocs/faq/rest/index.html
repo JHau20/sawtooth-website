@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+  <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<head>
+	<meta charset="utf-8">
+	<title>Sawtooth FAQ - REST API | Hyperledger Sawtooth</title>
+	<meta name="description" content="An enterprise-grade solution for distributed ledgers.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="0.0.0.0/faq/rest/">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Hyperledger Sawtooth" href="0.0.0.0/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+
+	<!-- Google Analytics
+	-->
+</head>
+
+  <body>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">Hyperledger Sawtooth</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+                        
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/release/">
+					Releases
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/docs/">
+					Docs
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/faq/">
+					FAQ
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/community/">
+					Community
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/contact/">
+					Contact
+				</a>
+			</li>
+			
+			
+			<li>
+				<a class="page-link" href="/examples">
+					Examples
+				</a>
+			</li>
+			<!-- Social icons from Font Awesome, if enabled -->
+			<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/hyperledger/sawtooth-core" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/\%23HyperledgerSawtooth" title="Follow on Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Sawtooth FAQ - REST API</h1>
+  </header>
+  <section class="post-content"><p class="mininav"><a class="reference external" href="/faq/client/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/permissioning/">NEXT</a></p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-s-the-difference-between-the-sawtooth-rest-api-bind-and-connect-options" id="id1">What's the difference between the <tt class="docutils literal"><span class="pre">sawtooth-rest-api</span> <span class="pre">--bind</span></tt> and <tt class="docutils literal"><span class="pre">--connect</span></tt> options?</a></li>
+<li><a class="reference internal" href="#is-the-rest-api-at-tcp-port-8080-or-8008" id="id2">Is the REST API at TCP port 8080 or 8008?</a></li>
+<li><a class="reference internal" href="#what-rest-api-commands-are-available" id="id3">What REST API commands are available?</a></li>
+<li><a class="reference internal" href="#what-is-a-transaction-receipt" id="id4">What is a transaction receipt?</a></li>
+<li><a class="reference internal" href="#how-do-i-retrieve-a-transaction-receipt" id="id5">How do I retrieve a transaction receipt?</a></li>
+<li><a class="reference internal" href="#what-does-this-error-mean-debug-route-handlers-received-client-state-get-response-response-from-validator-with-status-no-resource" id="id6">What does this error mean: <tt class="docutils literal"><span class="pre">[...</span> DEBUG route_handlers] Received CLIENT_STATE_GET_RESPONSE response from validator with status NO_RESOURCE</tt>?</a></li>
+<li><a class="reference internal" href="#what-does-this-rest-api-error-mean-the-submitted-batchlist-was-rejected-by-the-validator-it-was-poorly-formed-or-has-an-invalid-signature" id="id7">What does this REST API error mean: <tt class="docutils literal">The submitted BatchList was rejected by the validator. It was poorly formed, or has an invalid signature</tt></a></li>
+<li><a class="reference internal" href="#i-am-getting-this-error-cross-origin-request-blocked-the-same-origin-policy-disallows-reading-the-remote-resource-at-http-localhost-8008-batches-wait-reason-cors-header-access-control-allow-origin-missing" id="id8">I am getting this error: <tt class="docutils literal"><span class="pre">Cross-Origin</span> Request Blocked: The Same Origin Policy disallows reading the remote resource at <span class="pre">http://localhost:8008/batches?wait.</span> (Reason: CORS header <span class="pre">'Access-Control-Allow-Origin'</span> missing).</tt></a></li>
+<li><a class="reference internal" href="#what-does-this-error-mean-request-failed-with-status-code-429" id="id9">What does this error mean: <tt class="docutils literal">Request failed with status code 429</tt></a></li>
+<li><a class="reference internal" href="#what-is-the-back-pressure-test" id="id10">What is the back pressure test?</a></li>
+<li><a class="reference internal" href="#can-i-disable-the-back-pressure-test" id="id11">Can I disable the back pressure test?</a></li>
+<li><a class="reference internal" href="#what-does-this-error-mean-from-sawset-there-is-no-resource-with-the-identifier" id="id12">What does this error mean from sawset: <tt class="docutils literal">There is no resource with the identifier</tt>?</a></li>
+</ul>
+</div>
+<div class="section" id="what-s-the-difference-between-the-sawtooth-rest-api-bind-and-connect-options">
+<h2><a class="toc-backref" href="#id1">What's the difference between the <tt class="docutils literal"><span class="pre">sawtooth-rest-api</span> <span class="pre">--bind</span></tt> and <tt class="docutils literal"><span class="pre">--connect</span></tt> options?</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">sawtooth-rest-api</span> <span class="pre">--bind</span></tt> (<tt class="docutils literal"><span class="pre">-B</span></tt>)</dt>
+<dd>specifies where your rest-api would listen. The default is <a class="reference external" href="http://localhost:8008">http://localhost:8008</a></dd>
+<dt><tt class="docutils literal"><span class="pre">sawtooth-rest-api</span> <span class="pre">--connect</span></tt> (<tt class="docutils literal"><span class="pre">-C</span></tt>)</dt>
+<dd>specifies where your rest-api can reach to the validator. The default is <a class="reference external" href="http://localhost:4004">http://localhost:4004</a></dd>
+</dl>
+</div>
+<div class="section" id="is-the-rest-api-at-tcp-port-8080-or-8008">
+<h2><a class="toc-backref" href="#id2">Is the REST API at TCP port 8080 or 8008?</a></h2>
+<p>TCP Port 8008. It was 8080 before the 1.0 release and old examples and diagrams may use the old port number.</p>
+</div>
+<div class="section" id="what-rest-api-commands-are-available">
+<h2><a class="toc-backref" href="#id3">What REST API commands are available?</a></h2>
+<p>Use localhost to access the REST API from the Validator Docker container or from where the Validator is running.
+For example, to get state history (equivalent to <tt class="docutils literal">sawtooth state list</tt>) type:</p>
+<pre class="code sh literal-block">
+curl http://localhost:8008/state
+</pre>
+<p>From the Client Docker container, access from rest-api. For example:</p>
+<pre class="code sh literal-block">
+curl http://rest-api:8008/state
+</pre>
+<p>These are the supported REST API commands:</p>
+<dl class="docutils">
+<dt>POST /batches</dt>
+<dd>Submit a protobuf-formatted batch list to the validator</dd>
+<dt>GET /batches</dt>
+<dd>Fetch a paginated list of batches from the validator</dd>
+<dt>GET /batches/{batch_id}</dt>
+<dd>Fetch the specified batch</dd>
+<dt>GET /batch_statuses</dt>
+<dd>Fetch the committed statuses for a set of batches</dd>
+<dt>POST /batch_statuses</dt>
+<dd>Same as GET /batch_statuses except can be used for &gt; 15 IDs</dd>
+<dt>GET /state</dt>
+<dd>Fetch a paginated list of leaves for the current state, or relative to a particular head block</dd>
+<dt>GET /state/{address}</dt>
+<dd>Fetch a particular leaf from the current state</dd>
+<dt>GET /blocks</dt>
+<dd>Fetch a paginated list of blocks from the validator</dd>
+<dt>GET /blocks/{block_id}</dt>
+<dd>Fetch the specified block</dd>
+<dt>GET /transactions</dt>
+<dd>Fetch a paginated list of transactions from the validator.</dd>
+<dt>GET /transactions/{transaction_id}</dt>
+<dd>Fetch the specified transaction</dd>
+<dt>GET /receipts?id={transaction_ids}</dt>
+<dd>Fetch receipts for 1 or more transactions</dd>
+<dt>POST /receipts</dt>
+<dd>Same as GET /receipts except can be used for &gt; 15 IDs</dd>
+<dt>GET /peers</dt>
+<dd>Fetch a list of current peered validators</dd>
+</dl>
+<p>For more information, see the Sawtooth REST API Reference at
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/rest_api.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/rest_api.html</a></p>
+</div>
+<div class="section" id="what-is-a-transaction-receipt">
+<h2><a class="toc-backref" href="#id4">What is a transaction receipt?</a></h2>
+<p>Transaction receipts are transaction execution information that is not stored in state, such as how the transaction changed state, transaction family-specific data, transaction-related events, and if the transaction was valid.
+The transaction family-specific receipt data is usually empty, but can be added by the TP with <tt class="docutils literal">context.add_receipt_data()</tt>
+To access transaction receipts, use the REST API.
+For more information, see
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/events_and_transactions_receipts.html#transaction-receipts">https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/events_and_transactions_receipts.html#transaction-receipts</a></p>
+</div>
+<div class="section" id="how-do-i-retrieve-a-transaction-receipt">
+<h2><a class="toc-backref" href="#id5">How do I retrieve a transaction receipt?</a></h2>
+<p>Use the REST API. Here's a sample request (The ID is the transaction ID, listed with <cite>sawtooth transaction list</cite>):
+<tt class="docutils literal">wget <span class="pre">http://localhost:8008/receipts?id=YourTransactionIDsHere</span></tt>
+Replace <tt class="docutils literal">YourTransactionIDsHere</tt> with 1 or more comma-separated 128 hex character transaction IDs.
+Change <cite>localhost</cite> to <cite>rest-api</cite> for Docker.
+The response is several lines of JSON format output. For example,
+<a class="reference external" href="https://gist.github.com/danintel/0f878141c60bb566237e8db11226aa4e">https://gist.github.com/danintel/0f878141c60bb566237e8db11226aa4e</a> .
+For more than 15 IDs, use <tt class="docutils literal">POST /receipts</tt> .
+For Receipts REST API details, see <tt class="docutils literal">receipts</tt> at
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/rest_api/endpoint_specs.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/rest_api/endpoint_specs.html</a></p>
+</div>
+<div class="section" id="what-does-this-error-mean-debug-route-handlers-received-client-state-get-response-response-from-validator-with-status-no-resource">
+<h2><a class="toc-backref" href="#id6">What does this error mean: <tt class="docutils literal"><span class="pre">[...</span> DEBUG route_handlers] Received CLIENT_STATE_GET_RESPONSE response from validator with status NO_RESOURCE</tt>?</a></h2>
+<p>It means the transaction processor for this transaction is not running.</p>
+</div>
+<div class="section" id="what-does-this-rest-api-error-mean-the-submitted-batchlist-was-rejected-by-the-validator-it-was-poorly-formed-or-has-an-invalid-signature">
+<h2><a class="toc-backref" href="#id7">What does this REST API error mean: <tt class="docutils literal">The submitted BatchList was rejected by the validator. It was poorly formed, or has an invalid signature</tt></a></h2>
+<p>Most likey you are not putting the transaction into a batch or the batch in a batchlist for posting to the REST API. This is required, even for a single transaction.</p>
+</div>
+<div class="section" id="i-am-getting-this-error-cross-origin-request-blocked-the-same-origin-policy-disallows-reading-the-remote-resource-at-http-localhost-8008-batches-wait-reason-cors-header-access-control-allow-origin-missing">
+<h2><a class="toc-backref" href="#id8">I am getting this error: <tt class="docutils literal"><span class="pre">Cross-Origin</span> Request Blocked: The Same Origin Policy disallows reading the remote resource at <span class="pre">http://localhost:8008/batches?wait.</span> (Reason: CORS header <span class="pre">'Access-Control-Allow-Origin'</span> missing).</tt></a></h2>
+<p>The Sawtooth REST API doesn't support CORS. To allow cross-origin access to the Sawtooth API, put it behind a proxy.</p>
+</div>
+<div class="section" id="what-does-this-error-mean-request-failed-with-status-code-429">
+<h2><a class="toc-backref" href="#id9">What does this error mean: <tt class="docutils literal">Request failed with status code 429</tt></a></h2>
+<p>To avoid DDoS attacks (too many requests from a single source), Sawtooth has a mechanism called &quot;backpressure test&quot; which avoids such things as excessive network traffic and excessive Sawtooth transactions.</p>
+</div>
+<div class="section" id="what-is-the-back-pressure-test">
+<h2><a class="toc-backref" href="#id10">What is the back pressure test?</a></h2>
+<p>Back pressure is a flow-control technique to help prevent DoS attacks.
+It results in a <tt class="docutils literal">Status.QUEUE_FULL</tt> client batch submit response or a 429 &quot;Too Many Requests&quot; REST API error.
+If the validator is overwhelmed it will stop accepting new batches until it can handle more work. The number of batches that validator can accept is based on a multiplier,  QUEUE_MULTIPLIER (currently 10, formerly 2), times a rolling average of the number of published batches.</p>
+</div>
+<div class="section" id="can-i-disable-the-back-pressure-test">
+<h2><a class="toc-backref" href="#id11">Can I disable the back pressure test?</a></h2>
+<p>No. There isn't a way to disable that currently because it's determined based on a multiplier of the publishing rate of the network. Back pressure test is about rejecting load (in the form of batches) that the network wouldn't be able to accommodate in a reasonable amount of time (next couple blocks). This should never be turned off as without this feature it is trivial to do a client-based attack which overwhelms the network creating a DoS. You would have to make a custom build of Sawtooth to remove that check.</p>
+</div>
+<div class="section" id="what-does-this-error-mean-from-sawset-there-is-no-resource-with-the-identifier">
+<h2><a class="toc-backref" href="#id12">What does this error mean from sawset: <tt class="docutils literal">There is no resource with the identifier</tt>?</a></h2>
+<p>It means the command format is correct, but the identifier does not exist.</p>
+<p class="mininav"><a class="reference external" href="/faq/client/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/permissioning/">NEXT</a></p>
+<p>© Copyright 2018, Intel Corporation.</p>
+</div>
+
+</section>
+</article>
+
+    </div>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text"><p style="font-size: 1.5em;">
+  Hyperledger Sawtooth
+</p> <p>
+  <a href="/" title="Home"><span class="links">Home</span></a>
+  &bull;
+  <a href="/about/" title="About Sawtooth"><span class="links">About</span></a>
+  &bull;
+  <a href="/release/" title="Releases"><span class="links">Releases</span></a>
+  &bull;
+  <a href="/docs/" title="Documentation"><span class="links">Docs</span></a>
+  &bull;
+  <a href="/faq/" title="FAQ"><span class="links">FAQ</span></a>
+  &bull;
+  <a href="/community/" title="Community"><span class="links">Community</span></a>
+  &bull;
+  <a href="/contact/" title="Contact"><span class="links">Contact</span></a>
+</p> <p>
+  Find us: &nbsp;
+  <a href="https://github.com/hyperledger/sawtooth-core/" target="_blank" title="GitHub"><span  class="links">GitHub</span></a>
+  &bull;
+  <a href="https://chat.hyperledger.org/channel/sawtooth" target="_blank" title="#sawtooth chat channel"">Rocket.Chat</a>
+  &bull;
+  <a href="https://twitter.com/search?q=%23HyperledgerSawtooth" target="_blank" title="#sawtooth chat channel"">Twitter</a>
+</p> <p>
+  Examples: &nbsp;
+  <a href="/examples/seafood.html" target="_blank" title="Seafood Supply Chain Traceability">Seafood Supply Chain Traceability</a>
+  &bull;
+  <a href="/examples/bond.html" target="_blank" title="Bond Asset Settlement">Bond Asset Settlement</a>
+  &bull;
+  <a href="/examples/marketplace.html" target="_blank" title="Marketplace Digital Asset Exchange">Marketplace Digital Asset Exchange</a>
+</p> <p>
+  Linux Foundation: &nbsp;
+  <a href="http://www.linuxfoundation.org/privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+  &bull;
+  <a href="http://www.linuxfoundation.org/terms" target="_blank" title="Terms of Service">Terms of Service</a>
+</p> <p>
+  <small class="copyright">Copyright &copy; 2015-2019 contributors to Hyperledger Sawtooth</small>
+</p>
+</p>
+</footer>
+
+
+  </body>
+</html>

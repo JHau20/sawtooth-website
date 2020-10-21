@@ -1,0 +1,406 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>XO Transaction Family Specification &mdash; Sawtooth v0.8.13 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.13 documentation" href="../index.html"/>
+        <link rel="up" title="Transaction Family Specifications" href="../transaction_family_specifications.html"/>
+        <link rel="next" title="Seth Transaction Family Specification" href="sawtooth_burrow_evm_family.html"/>
+        <link rel="prev" title="IntegerKey Transaction Family Specification" href="integerkey_transaction_family.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.13
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../solidity_developers_guide.html">Solidity Developers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="settings_transaction_family.html">Settings Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity_transaction_family.html">Identity Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blockinfo_transaction_family.html">BlockInfo Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integerkey_transaction_family.html">IntegerKey Transaction Family Specification</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">XO Transaction Family Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#state">State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#addressing">Addressing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transaction-header">Transaction Header</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#inputs-and-outputs">Inputs and Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#family">Family</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#encoding">Encoding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#execution">Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sawtooth_burrow_evm_family.html">Seth Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_registry_transaction_family.html">Validator Registry Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smallbank_transaction_family.html">Smallbank Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="track_and_trade_transaction_family.html">Track and Trade Transaction Family Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../transaction_family_specifications.html">Transaction Family Specifications</a> &raquo;</li>
+        
+      <li>XO Transaction Family Specification</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/transaction_family_specifications/xo_transaction_family.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="xo-transaction-family-specification">
+<h1>XO Transaction Family Specification<a class="headerlink" href="#xo-transaction-family-specification" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The XO transaction family allows users to play a simple board game
+known variously as <em>tic-tac-toe</em>, <em>noughts and crosses</em>, and <em>XO</em>.</p>
+</div>
+<div class="section" id="state">
+<h2>State<a class="headerlink" href="#state" title="Permalink to this headline">¶</a></h2>
+<p>An XO state entry consists of the UTF-8 encoding of a string with
+exactly four commas formatted as follows:</p>
+<p><code class="docutils literal"><span class="pre">&lt;name&gt;,&lt;board&gt;,&lt;game-state&gt;,&lt;player-key-1&gt;,&lt;player-key-2&gt;</span></code></p>
+<p>where</p>
+<ul class="simple">
+<li>&lt;name&gt; is a nonempty string not containing <cite>|</cite>,</li>
+<li>&lt;board&gt; is a string of length 9 containing only <cite>O</cite>, <cite>X</cite>, or <cite>-</cite>,</li>
+<li>&lt;game-state&gt; is one of the following: <cite>P1-NEXT</cite>, <cite>P2-NEXT</cite>, <cite>P1-WIN</cite>, <cite>P2-WIN</cite>, or <cite>TIE</cite>, and</li>
+<li>&lt;player-key-1&gt; and &lt;player-key-2&gt; are the (possibly empty) public keys associated with the game&#8217;s players.</li>
+</ul>
+<p>In the event of a hash collision (i.e. two or more state entries
+sharing the same address), the colliding state entries will stored as
+the UTF-8 encoding of the string <code class="docutils literal"><span class="pre">&lt;a-entry&gt;|&lt;b-entry&gt;|...</span></code>, where
+&lt;a-entry&gt;, &lt;b-entry&gt;,... are sorted alphabetically.</p>
+<div class="section" id="addressing">
+<h3>Addressing<a class="headerlink" href="#addressing" title="Permalink to this headline">¶</a></h3>
+<p>XO data is stored in state using addresses generated from the XO
+family name and the name of the game being stored. In particular, an
+XO address consists of the first 6 characters of the SHA-512 hash of
+the UTF-8 encoding of the string &#8220;xo&#8221; (which is &#8220;5b7349&#8221;) plus the
+first 64 characters of the SHA-512 hash of the UTF-8 encoding of the
+game name.</p>
+<p>For example, the XO address for a game called &#8220;mygame&#8221; could be
+generated as follows:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">(</span><span class="s1">&#39;xo&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">6</span><span class="p">]</span> <span class="o">+</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">(</span><span class="s1">&#39;mygame&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">64</span><span class="p">]</span>
+<span class="go">&#39;5b7349700e158b598043efd6d7610345a75a00b22ac14c9278db53f586179a92b72fbd&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="transaction-payload">
+<h2>Transaction Payload<a class="headerlink" href="#transaction-payload" title="Permalink to this headline">¶</a></h2>
+<p>An XO transaction request payload consists of the UTF-8 encoding of a
+string with exactly two commas formatted as follows:</p>
+<p><code class="docutils literal"><span class="pre">&lt;name&gt;,&lt;action&gt;,&lt;space&gt;</span></code></p>
+<p>where</p>
+<ul class="simple">
+<li>&lt;name&gt; is a nonempty string not containing <cite>|</cite>,</li>
+<li>&lt;action&gt; is either <cite>take</cite> or <cite>create</cite>, and</li>
+<li>&lt;space&gt; is an integer strictly between 0 and 10 if &lt;action&gt; is <cite>take</cite>.</li>
+</ul>
+</div>
+<div class="section" id="transaction-header">
+<h2>Transaction Header<a class="headerlink" href="#transaction-header" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="inputs-and-outputs">
+<h3>Inputs and Outputs<a class="headerlink" href="#inputs-and-outputs" title="Permalink to this headline">¶</a></h3>
+<p>The inputs and outputs for an XO transaction are just the state
+address generated from the transaction game name.</p>
+</div>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<p>XO transactions have no explicit dependencies.</p>
+</div>
+<div class="section" id="family">
+<h3>Family<a class="headerlink" href="#family" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>family_name: &#8220;xo&#8221;</li>
+<li>family_version: &#8220;1.0&#8221;</li>
+</ul>
+</div>
+<div class="section" id="encoding">
+<h3>Encoding<a class="headerlink" href="#encoding" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>payload_encoding: &#8220;csv-utf8&#8221;</li>
+</ul>
+</div>
+</div>
+<div class="section" id="execution">
+<h2>Execution<a class="headerlink" href="#execution" title="Permalink to this headline">¶</a></h2>
+<p>The XO transaction processor receives a transaction request and a
+state dictionary. If it is valid, the transaction request payload will
+have a game name, an action, and, if the action is <cite>take</cite>, a space.</p>
+<ol class="arabic">
+<li><p class="first">If the action is <cite>create</cite>, then the transaction is invalid if the
+game name is already in state dictionary. Otherwise, the TP will
+store a new state entry with board <cite>&#8212;&#8212;&#8212;</cite> (i.e. a blank
+board), game state <cite>P1-NEXT</cite>, and empty strings for both player
+keys.</p>
+</li>
+<li><p class="first">If the action is <cite>take</cite>, then the transaction is invalid if the
+game name is not in the state dictionary. Otherwise, there is a
+state entry under the game name with a board, game state, player-1
+key, and player-2 key. The transaction is invalid if:</p>
+<ul class="simple">
+<li>the game state is <cite>P1-WIN</cite>, <cite>P2-WIN</cite>, or <cite>TIE</cite>, or</li>
+<li>the game state is <cite>P1-NEXT</cite> and the player-1 key is not null and different from the transaction signing key, or</li>
+<li>the game state is <cite>P2-NEXT</cite> and the player-2 key is nonnull and different from the transaction signing key, or</li>
+<li>the space-th character in the board-string is not <cite>-</cite>.</li>
+</ul>
+<p>Otherwise, the transaction processor will update the state entry
+according to the following rules:</p>
+<ol class="loweralpha simple">
+<li>Player keys - If the player-1 key is null (the empty string), it
+will be updated to key with which the transaciton was signed. If
+the player-1 key is nonnull and the player-2 key is null, the
+player-2 will be updated to the signing key. Otherwise, the
+player keys will not be changed.</li>
+<li>Board - If the game state is <cite>P1-NEXT</cite>, the updated board will
+be the same as the initial board except with the space-th
+character replaced by the character <cite>X</cite>, and the same for the
+state <cite>P2-NEXT</cite> and the character <cite>O</cite>.</li>
+<li>Game state - Call the first three characters of the board string
+its first row, the next three characters its second row, and the
+last three characters its third row.If any of the rows consist
+of the same character, say that character has a <em>win</em> on the
+board. If all the rows have the same first character or the same
+second character or the same third character (the board&#8217;s
+columns), that character has a win on the board. If the first
+character of the first row and the second character of the
+second row and the third character of the third row are the
+same, or if the third character of the first row and the second
+character of the second row and the first character of the third
+row are the same, that character has a win on the board.<ul>
+<li>If <cite>X</cite> has a win on the board and <cite>O</cite> doesn&#8217;t, the updated state will be <cite>P1-WINS</cite>.</li>
+<li>If <cite>O</cite> has a win on the board and <cite>X</cite> doesn&#8217;t, the updated state will be <cite>P2-WINS</cite>.</li>
+<li>Otherwise, if the updated board doesn&#8217;t contain <cite>-</cite> (if the board has no empty spaces), the updated state will be <cite>TIE</cite>.</li>
+<li>Otherwise, the updated state will be <cite>P2-NEXT</cite> if the initial state is <cite>P1-NEXT</cite> and <cite>P1-NEXT</cite> and if the initial state is <cite>P2-NEXT</cite>.</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sawtooth_burrow_evm_family.html" class="btn btn-neutral float-right" title="Seth Transaction Family Specification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="integerkey_transaction_family.html" class="btn btn-neutral" title="IntegerKey Transaction Family Specification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.13',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

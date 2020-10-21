@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction &mdash; Sawtooth PBFT latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using PBFT Consensus" href="using-pbft-consensus.html" />
+    <link rel="prev" title="Table of Contents" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Sawtooth PBFT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using-pbft-consensus.html">Using PBFT Consensus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">PBFT Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuring-pbft.html">Configuring PBFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-and-running-pbft.html">Installing and Testing PBFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sawtooth PBFT</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Introduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/introduction-to-sawtooth-pbft.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>Sawtooth PBFT is a consensus engine for Hyperledger Sawtooth that provides
+practical Byzantine fault tolerance.</p>
+<p>PBFT is a voting-based consensus algorithm that is:</p>
+<ul class="simple">
+<li><p>Byzantine fault tolerant: Network <a class="reference external" href="https://en.wikipedia.org/wiki/Liveness#Liveness_and_safety">liveness and safety</a>
+are guaranteed even when some nodes are faulty or malicious, as long as a
+minimum percentage of nodes are connected, working properly, and behaving
+honestly.</p></li>
+<li><p>Non-forking: Blocks committed by nodes are final, unlike lottery-style
+consensus algorithms such as Proof of Work (PoW) or Proof of Elapsed Time
+(PoET).</p></li>
+<li><p>Leader-based: A <cite>primary node</cite> is responsible for producing candidate blocks;
+<cite>secondary nodes</cite> vote on the blocks produced by the primary. The leader
+changes in a round-robin (circular) order.</p></li>
+<li><p>Communication-intensive: Nodes send many messages to reach consensus, commit
+blocks, and maintain a healthy leader node.</p></li>
+</ul>
+<p>A Sawtooth PBFT network does not support open enrollment, but nodes can be added
+and removed by an administrator. Full peering is required (all nodes must be
+connected to all other nodes). In order to provide Byzantine fault tolerance, a
+PBFT network must have a least four nodes.</p>
+<p>Sawtooth PBFT is based on the methodology described in
+<a class="reference external" href="https://www.usenix.org/legacy/events/osdi99/full_papers/castro/castro_html/castro.html">Practical Byzantine Fault Tolerance</a>
+by Miguel Castro and Barbara Liskov.
+This implementation has been adapted for use in a blockchain context; it
+includes extensions such as regular <cite>view changes</cite> (leader changes) and
+a <cite>consensus seal</cite> to verify block finality.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sawtooth PBFT uses the terms “primary” and “secondary” to refer to the role
+of nodes in the network, which differs slightly from the terminology used in
+the PBFT paper.</p>
+<ul class="simple">
+<li><p>“Primary” is synonymous with “leader”</p></li>
+<li><p>“Secondary” is synonymous with “follower” and “backup”</p></li>
+<li><p>“Node” is synonymous with “server” and “replica”</p></li>
+</ul>
+</div>
+<p>For implementation details, see the <a class="reference external" href="https://sawtooth.hyperledger.org/docs/pbft/nightly/master/pbft_doc/pbft_engine/index.html">rustdoc for Sawtooth PBFT</a>.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="using-pbft-consensus.html" class="btn btn-neutral float-right" title="Using PBFT Consensus" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Table of Contents" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018 Bitwise IO, Inc
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

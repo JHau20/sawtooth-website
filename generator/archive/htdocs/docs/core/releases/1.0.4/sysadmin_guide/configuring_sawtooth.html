@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Configuring Sawtooth &mdash; Sawtooth v1.0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Validator Configuration File" href="configuring_sawtooth/validator_configuration_file.html" />
+    <link rel="prev" title="Running Sawtooth as a Service" href="systemd.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installing Hyperledger Sawtooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="systemd.html">Running Sawtooth as a Service</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuring Sawtooth</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/validator_configuration_file.html">Validator Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/rest_api_configuration_file.html">REST API Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/cli_configuration.html">Sawtooth CLI Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/poet_sgx_enclave_configuration_file.html">PoET SGX Enclave Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/path_configuration_file.html">Path Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/identity_tp_configuration.html">Identity Transaction Processor Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/settings_tp_configuration.html">Settings Transaction Processor Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/xo_tp_configuration.html">XO Transaction Processor Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="log_configuration.html">Log Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_permissions.html">Configuring Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with the SGX Implementation of PoET</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Configuring Sawtooth</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/configuring_sawtooth.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="configuring-sawtooth">
+<h1>Configuring Sawtooth<a class="headerlink" href="#configuring-sawtooth" title="Permalink to this headline">¶</a></h1>
+<p>Each Sawtooth component, such as the validator or the REST API, has an optional
+configuration file that controls the component&#8217;s behavior. You can also specify
+configuration options on the command line when starting the component. For more
+information, see <a class="reference internal" href="../cli.html"><span class="doc">CLI Command Reference</span></a>.</p>
+<p>When a Sawtooth component starts, it looks for a
+<a class="reference external" href="https://github.com/toml-lang/toml">TOML</a> configuration file in the config
+directory (<code class="docutils literal"><span class="pre">config_dir</span></code>). By default, configuration files are stored in
+<code class="docutils literal"><span class="pre">/etc/sawtooth</span></code>; see <a class="reference internal" href="configuring_sawtooth/path_configuration_file.html"><span class="doc">Path Configuration File</span></a> for
+more information on the config directory location.</p>
+<p>In addition, the Sawtooth log output can be configured with a log config file
+in <a class="reference external" href="https://github.com/toml-lang/toml">TOML</a> or <a class="reference external" href="http://yaml.org">YAML</a>
+format. By default, Sawtooth stores error and debug log messages
+for each component in the log directory. For more information,
+see <a class="reference internal" href="log_configuration.html"><span class="doc">Log Configuration</span></a>.</p>
+<p>The following sections describe each component&#8217;s configuration file.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="configuring_sawtooth/validator_configuration_file.html">Validator Configuration File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuring_sawtooth/rest_api_configuration_file.html">REST API Configuration File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuring_sawtooth/cli_configuration.html">Sawtooth CLI Configuration File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuring_sawtooth/poet_sgx_enclave_configuration_file.html">PoET SGX Enclave Configuration File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuring_sawtooth/path_configuration_file.html">Path Configuration File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuring_sawtooth/identity_tp_configuration.html">Identity Transaction Processor Configuration File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuring_sawtooth/settings_tp_configuration.html">Settings Transaction Processor Configuration File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuring_sawtooth/xo_tp_configuration.html">XO Transaction Processor Configuration File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log_configuration.html">Log Configuration</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="configuring_sawtooth/validator_configuration_file.html" class="btn btn-neutral float-right" title="Validator Configuration File" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="systemd.html" class="btn btn-neutral" title="Running Sawtooth as a Service" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.4',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

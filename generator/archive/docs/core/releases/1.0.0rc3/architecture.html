@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Architecture &mdash; Sawtooth v1.0.0rc3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc3 documentation" href="index.html"/>
+        <link rel="next" title="Global State" href="architecture/global_state.html"/>
+        <link rel="prev" title="Introduction" href="introduction.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/global_state.html">Global State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/transactions_and_batches.html">Transactions and Batches!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/journal.html">Journal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/scheduling.html">Transaction Scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/rest_api.html">REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/poet.html">PoET 1.0 Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/validator_network.html">Validator Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/permissioning_requirement.html">Permissioning Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/injecting_batches_block_validation_rules.html">Injecting Batches and On-Chain Block Validation Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/events_and_transactions_receipts.html">Events and Transaction Receipts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="contents.html">Docs</a> &raquo;</li>
+        
+      <li>Architecture</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/architecture.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="architecture">
+<h1>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture/global_state.html">Global State</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/global_state.html#radix-merkle-tree-overview">Radix Merkle Tree Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/global_state.html#serialization-concerns">Serialization Concerns</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture/transactions_and_batches.html">Transactions and Batches!</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/transactions_and_batches.html#transaction-data-structure">Transaction Data Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/transactions_and_batches.html#batch-data-structure">Batch Data Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/transactions_and_batches.html#why-batches">Why Batches?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture/journal.html">Journal</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/journal.html#the-blockstore">The BlockStore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/journal.html#the-blockcache">The BlockCache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/journal.html#the-completer">The Completer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/journal.html#the-consensus-interface">The Consensus Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/journal.html#the-chaincontroller">The ChainController</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/journal.html#the-blockpublisher">The BlockPublisher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/journal.html#genesis-operation">Genesis Operation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture/scheduling.html">Transaction Scheduling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/scheduling.html#scheduling-within-the-validator">Scheduling within the Validator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/scheduling.html#iterative-scheduling">Iterative Scheduling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture/rest_api.html">REST API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/rest_api.html#open-api-specification">Open API Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/rest_api.html#http-status-codes">HTTP Status Codes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/rest_api.html#data-envelope">Data Envelope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/rest_api.html#query-parameters">Query Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/rest_api.html#endpoints">Endpoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/rest_api.html#future-development">Future Development</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture/poet.html">PoET 1.0 Specification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/poet.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/poet.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/poet.html#p2p-poet-sgx-enclave-specifications">P2P PoET SGX Enclave Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/poet.html#population-size-and-local-mean-computation">Population Size and Local Mean Computation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/poet.html#z-test">z-test</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture/validator_network.html">Validator Network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/validator_network.html#services">Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/validator_network.html#states">States</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/validator_network.html#wire-protocol">Wire Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/validator_network.html#peer-discovery">Peer Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/validator_network.html#related-components">Related Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/validator_network.html#message-delivery">Message Delivery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/validator_network.html#network-layer-security">Network Layer Security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/validator_network.html#network-permissioning">Network Permissioning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture/permissioning_requirement.html">Permissioning Requirements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/permissioning_requirement.html#definitions">Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/permissioning_requirement.html#validator-network-scenarios">Validator Network Scenarios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/permissioning_requirement.html#transactor-key-permissioning">Transactor Key Permissioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/permissioning_requirement.html#validator-key-permissioning">Validator Key Permissioning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture/injecting_batches_block_validation_rules.html">Injecting Batches and On-Chain Block Validation Rules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/injecting_batches_block_validation_rules.html#batchinjector-interface">BatchInjector Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/injecting_batches_block_validation_rules.html#on-chain-configuration">On-Chain Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/injecting_batches_block_validation_rules.html#on-chain-validation-rules">On-Chain Validation Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/injecting_batches_block_validation_rules.html#example-blockinfoinjector">Example: BlockInfoInjector</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture/events_and_transactions_receipts.html">Events and Transaction Receipts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/events_and_transactions_receipts.html#events">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/events_and_transactions_receipts.html#transaction-receipts">Transaction Receipts</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="architecture/global_state.html" class="btn btn-neutral float-right" title="Global State" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="introduction.html" class="btn btn-neutral" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'v1.0.0rc3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

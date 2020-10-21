@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["DiskStorage","A disk-based RAII-guarded Storage implementation"],["DiskStorageReadGuard","A disk-based read guard"],["DiskStorageWriteGuard","A disk-based write guard"]]});

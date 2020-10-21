@@ -1,0 +1,655 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using Sawtooth with the SGX Implementation of PoET &mdash; Sawtooth v0.8.10 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.10 documentation" href="../index.html"/>
+        <link rel="up" title="System Administrator’s Guide" href="../sysadmin_guide.html"/>
+        <link rel="next" title="REST API Reference" href="../rest_api.html"/>
+        <link rel="prev" title="Permissioning" href="permissioning.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../solidity_developers_guide.html">Solidity Developers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installing Hyperledger Sawtooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="systemd.html">Running Sawtooth As A Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log_configuration.html">Log Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="permissioning.html">Permissioning</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using Sawtooth with the SGX Implementation of PoET</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bios-update">BIOS Update</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#install-sgx-psw">Install SGX/PSW</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-sawtooth-to-use-sgx">Configuring Sawtooth to Use SGX</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#install-sawtooth">Install Sawtooth</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#certificate-file">Certificate File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configure-the-validator-to-use-sgx-poet">Configure the validator to use SGX PoET</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#change-the-validator-config-file">Change the validator config file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#start-the-sawtooth-services">Start the Sawtooth services</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stop-or-restart-the-sawtooth-services">Stop or restart the Sawtooth services</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Using Sawtooth with the SGX Implementation of PoET</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/configure_sgx.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-sawtooth-with-the-sgx-implementation-of-poet">
+<h1>Using Sawtooth with the SGX Implementation of PoET<a class="headerlink" href="#using-sawtooth-with-the-sgx-implementation-of-poet" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These instructions have been tested on Ubuntu 16.04 only.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bios-update">
+<span id="id1"></span><h3>BIOS Update<a class="headerlink" href="#bios-update" title="Permalink to this headline">¶</a></h3>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">You may need to update your BIOS with a security fix before running
+Hyperledger Sawtooth with PoET. Affected versions and instructions for
+updating can be found on
+<a class="reference external" href="https://security-center.intel.com/advisory.aspx?intelid=INTEL-SA-00076&amp;languageid=en-fr">Intel&#8217;s website</a>.
+If you&#8217;re running an affected version, you must update the BIOS
+to ensure that these installation instructions work correctly.</p>
+</div>
+<p>You can verify the BIOS version after the machine has booted by running:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo lshw<span class="p">|</span> grep -A5 *-firmware
+<span class="go">     *-firmware</span>
+<span class="go">          description: BIOS</span>
+<span class="go">          vendor: Intel Corp.</span>
+<span class="go">          physical id: 0</span>
+<span class="go">          version: BNKBL357.86A.0050.2017.0816.2002</span>
+<span class="go">          date: 08/16/2017</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="install-sgx-psw">
+<span id="install-sgx"></span><h2>Install SGX/PSW<a class="headerlink" href="#install-sgx-psw" title="Permalink to this headline">¶</a></h2>
+<p>Install the prerequisites for SGX/PSW:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get update <span class="o">&amp;&amp;</span>
+<span class="go">  sudo apt-get install -q -y \</span>
+<span class="go">      alien \</span>
+<span class="go">      autoconf \</span>
+<span class="go">      automake \</span>
+<span class="go">      build-essential \</span>
+<span class="go">      cmake \</span>
+<span class="go">      libcurl4-openssl-dev \</span>
+<span class="go">      libprotobuf-dev \</span>
+<span class="go">      libssl-dev \</span>
+<span class="go">      libtool \</span>
+<span class="go">      libxml2-dev \</span>
+<span class="go">      ocaml \</span>
+<span class="go">      pkg-config \</span>
+<span class="go">      protobuf-compiler \</span>
+<span class="go">      python \</span>
+<span class="go">      unzip \</span>
+<span class="go">      uuid-dev \</span>
+<span class="go">      wget</span>
+</pre></div>
+</div>
+<p>Download and install the SGX driver:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> mkdir ~/sgx <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ~/sgx
+<span class="gp">$</span> wget https://download.01.org/intel-sgx/linux-1.8/sgx_linux_x64_driver_4b57088.bin
+<span class="gp">$</span> chmod +x sgx_linux_x64_driver_4b57088.bin
+<span class="gp">$</span> sudo ./sgx_linux_x64_driver_4b57088.bin
+</pre></div>
+</div>
+<p>Download and install the Intel Capability Licensing Client. This is presently
+available only as an .rpm, so you must convert it to a .deb package with
+alien:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> wget http://registrationcenter-download.intel.com/akdlm/irc_nas/11414/iclsClient-1.45.449.12-1.x86_64.rpm
+<span class="gp">$</span> sudo alien --scripts iclsClient-1.45.449.12-1.x86_64.rpm
+<span class="gp">$</span> sudo dpkg -i iclsclient_1.45.449.12-2_amd64.deb
+</pre></div>
+</div>
+<p>Download and install the Dynamic Application Loader Host Interface (JHI):</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> wget https://github.com/01org/dynamic-application-loader-host-interface/archive/master.zip -O jhi-master.zip
+<span class="gp">$</span> unzip jhi-master.zip <span class="o">&amp;&amp;</span> <span class="nb">cd</span> dynamic-application-loader-host-interface-master
+<span class="gp">$</span> cmake .
+<span class="gp">$</span> make
+<span class="gp">$</span> sudo make install
+<span class="gp">$</span> sudo systemctl <span class="nb">enable</span> jhi
+</pre></div>
+</div>
+<p>Download and install the Intel SGX Platform Software (PSW):</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> ~/sgx
+<span class="gp">$</span> wget https://download.01.org/intel-sgx/linux-1.8/sgx_linux_ubuntu16.04.1_x64_psw_1.8.100.37689.bin
+<span class="gp">$</span> chmod +x sgx_linux_ubuntu16.04.1_x64_psw_1.8.100.37689.bin
+<span class="gp">$</span> sudo ./sgx_linux_ubuntu16.04.1_x64_psw_1.8.100.37689.bin
+</pre></div>
+</div>
+<p>Check to make sure the kernel module is loaded:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> lsmod <span class="p">|</span> grep sgx
+<span class="go">isgx                   36864  2</span>
+</pre></div>
+</div>
+<p>If the output does not show the isgx module, make sure that
+SGX is set to &#8220;Enabled&#8221; in the BIOS.</p>
+<p>If you&#8217;re still having trouble, the SGX software may need to be reinstalled:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo /opt/intel/sgxpsw/uninstall.sh
+<span class="gp">$</span> <span class="nb">cd</span> ~/sgx
+<span class="gp">$</span> sudo ./sgx_linux_x64_driver_4b57088.bin
+<span class="gp">$</span> sudo ./sgx_linux_ubuntu16.04.1_x64_psw_1.8.100.37689.bin
+</pre></div>
+</div>
+<p>After ensuring that the SGX kernel module is loaded, go to the next section
+to install and configure Sawtooth.</p>
+</div>
+<div class="section" id="configuring-sawtooth-to-use-sgx">
+<h2>Configuring Sawtooth to Use SGX<a class="headerlink" href="#configuring-sawtooth-to-use-sgx" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install-sawtooth">
+<h3>Install Sawtooth<a class="headerlink" href="#install-sawtooth" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD
+<span class="gp">$</span> sudo add-apt-repository <span class="s1">&#39;deb http://repo.sawtooth.me/ubuntu/0.8/stable xenial universe&#39;</span>
+<span class="gp">$</span> sudo apt-get update
+<span class="gp">$</span> sudo apt-get install -y -q <span class="se">\</span>
+  sawtooth <span class="se">\</span>
+  python3-sawtooth-poet-sgx
+</pre></div>
+</div>
+</div>
+<div class="section" id="certificate-file">
+<h3>Certificate File<a class="headerlink" href="#certificate-file" title="Permalink to this headline">¶</a></h3>
+<p>The configuration process requires an SGX certificate file in PEM format
+(.pem), which you will need before continuing.</p>
+<p>Instructions for creating your own service provider certificate can be found
+<a class="reference external" href="https://software.intel.com/en-us/articles/how-to-create-self-signed-certificates-for-use-with-intel-sgx-remote-attestation-using">here</a>.</p>
+<p>After your certificate is created you&#8217;ll need to register it with the
+attestation service.
+<a class="reference external" href="https://software.intel.com/formfill/sgx-onboarding">Click here</a> for the
+registration form.</p>
+</div>
+<div class="section" id="configure-the-validator-to-use-sgx-poet">
+<h3>Configure the validator to use SGX PoET<a class="headerlink" href="#configure-the-validator-to-use-sgx-poet" title="Permalink to this headline">¶</a></h3>
+<p>After installing Sawtooth, add config settings so PoET will work properly.
+Create the file <code class="docutils literal"><span class="pre">/etc/sawtooth/poet_enclave_sgx.toml</span></code>
+with your favorite editor (such as vi):</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo vi /etc/sawtooth/poet_enclave_sgx.toml
+</pre></div>
+</div>
+<p>Add the following lines, replacing [example] with the spid value provided by
+Intel:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span> Service Provider ID. It is linked to the key pair used to authenticate with
+<span class="gp">#</span> the attestation service.
+
+<span class="go">spid = &#39;[example]&#39;</span>
+
+<span class="gp">#</span> ias_url is the URL of the Intel Attestation Service <span class="o">(</span>IAS<span class="o">)</span> server.
+
+<span class="go">ias_url = &#39;https://test-as.sgx.trustedservices.intel.com:443&#39;</span>
+
+<span class="gp">#</span> spid_cert_file is the full path to the PEM-encoded certificate file that was
+<span class="gp">#</span> submitted to Intel in order to obtain a SPID
+
+<span class="go">spid_cert_file = &#39;/etc/sawtooth/sgx-certificate.pem&#39;</span>
+</pre></div>
+</div>
+<p>Next, copy the .pem certificate file that you downloaded earlier.
+Replace [example] in the path below with the path to the certificate file on
+your local system:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo cp /<span class="o">[</span>example<span class="o">]</span>/sgx-certificate.pem /etc/sawtooth/sgx-certificate.pem
+</pre></div>
+</div>
+<p>Become the sawtooth user and change to <code class="docutils literal"><span class="pre">/tmp</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth -s
+<span class="gp">$</span> <span class="nb">cd</span> /tmp
+</pre></div>
+</div>
+<p>Create validator keys:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth admin keygen
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you&#8217;re configuring multiple validators, the steps below are
+required for the first validator only.  For additional validators, you
+can skip to the <cite>$ exit</cite> command to log out of the sawtooth account,
+then continue with <a class="reference internal" href="#val-config"><span class="std std-ref">Change the validator config file</span></a>.</p>
+</div>
+<p>Create a genesis batch:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth config genesis --key /etc/sawtooth/keys/validator.priv -o config-genesis.batch
+</pre></div>
+</div>
+<p>Create and submit a proposal:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth config proposal create -k /etc/sawtooth/keys/validator.priv <span class="se">\</span>
+sawtooth.consensus.algorithm<span class="o">=</span>poet <span class="se">\</span>
+sawtooth.poet.report_public_key_pem<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>cat /etc/sawtooth/ias_rk_pub.pem<span class="k">)</span><span class="s2">&quot;</span> <span class="se">\</span>
+sawtooth.poet.valid_enclave_measurements<span class="o">=</span><span class="k">$(</span>poet enclave --enclave-module sgx measurement<span class="k">)</span> <span class="se">\</span>
+sawtooth.poet.valid_enclave_basenames<span class="o">=</span><span class="k">$(</span>poet enclave --enclave-module sgx basename<span class="k">)</span> <span class="se">\</span>
+sawtooth.poet.enclave_module_name<span class="o">=</span>poet_enclave_sgx.poet_enclave <span class="se">\</span>
+-o config.batch
+</pre></div>
+</div>
+<p>There’s quite a bit going on in the previous command, so let’s take a closer look at what it accomplishes:</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">sawtooth.consensus.algorithm=poet</span></code></dt>
+<dd>Changes the consensus algorithm to PoET.</dd>
+<dt><code class="docutils literal"><span class="pre">sawtooth.poet.report_public_key_pem=&quot;$(cat</span> <span class="pre">/etc/sawtooth/ias_rk_pub.pem)&quot;</span></code></dt>
+<dd>Adds the public key that the validator registry transaction processor uses
+to verify attestation reports.</dd>
+<dt><code class="docutils literal"><span class="pre">sawtooth.poet.valid_enclave_measurements=$(poet</span> <span class="pre">enclave</span> <span class="pre">--enclave-module</span> <span class="pre">sgx</span> <span class="pre">measurement)</span></code></dt>
+<dd>Adds the enclave measurement for your enclave to the blockchain for the
+validator registry transaction processor to use to check signup information.</dd>
+<dt><code class="docutils literal"><span class="pre">sawtooth.poet.valid_enclave_basenames=$(poet</span> <span class="pre">enclave</span> <span class="pre">--enclave-module</span> <span class="pre">sgx</span> <span class="pre">basename)</span></code></dt>
+<dd>Adds the enclave basename for your enclave to the blockchain for the
+validator registry transaction processor to use to check signup information.</dd>
+<dt><code class="docutils literal"><span class="pre">sawtooth.poet.enclave_module_name</span></code></dt>
+<dd>Specifies the name of the Python module that implements the PoET enclave.
+In this case, <code class="docutils literal"><span class="pre">poet_enclave_sgx.poet_enclave</span></code> is the SGX version of
+the enclave; it includes the Python code as well as the Python extension.</dd>
+</dl>
+<p>When the <code class="docutils literal"><span class="pre">sawtooth</span> <span class="pre">config</span> <span class="pre">proposal</span></code> command runs, you should see several
+lines of output showing that the SGX enclave has been initialized:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">[12:03:58 WARNING poet_enclave] SGX PoET enclave initialized.</span>
+<span class="go">[12:03:59 WARNING poet_enclave] SGX PoET enclave initialized.</span>
+</pre></div>
+</div>
+<p>Create a poet-genesis batch:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> poet genesis -k /etc/sawtooth/keys/validator.priv <span class="se">\</span>
+  --enclave-module sgx -o poet_genesis.batch
+<span class="go">Writing key state for PoET public key: 0387a451...9932a998</span>
+<span class="go">Generating poet_genesis.batch</span>
+</pre></div>
+</div>
+<p>Create a genesis block:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth admin genesis config-genesis.batch config.batch poet_genesis.batch
+</pre></div>
+</div>
+<p>You’ll see some output indicating success:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">Processing config-genesis.batch...</span>
+<span class="go">Processing config.batch...</span>
+<span class="go">Processing poet_genesis.batch...</span>
+<span class="go">Generating /var/lib/sawtooth/genesis.batch</span>
+</pre></div>
+</div>
+<p>Genesis configuration is complete! Log out of the sawtooth account:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">exit</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="change-the-validator-config-file">
+<span id="val-config"></span><h3>Change the validator config file<a class="headerlink" href="#change-the-validator-config-file" title="Permalink to this headline">¶</a></h3>
+<p>You must specify some networking information so that the validator advertises
+itself properly and knows where to search for peers.
+Create the file <code class="docutils literal"><span class="pre">/etc/sawtooth/validator.toml</span></code>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo vi /etc/sawtooth/validator.toml
+</pre></div>
+</div>
+<p>Add the following content to the file:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">#</span>
+<span class="gp">#</span> Hyperledger Sawtooth -- Validator Configuration
+<span class="gp">#</span>
+
+<span class="gp">#</span> This file should exist in the defined config directory and allows
+<span class="gp">#</span> validators to be configured without the need <span class="k">for</span> <span class="nb">command</span> line options.
+
+<span class="gp">#</span> The following is a possible example.
+
+<span class="gp">#</span> Bind is used to <span class="nb">set</span> the network and component endpoints. It should be a list
+<span class="gp">#</span> of strings in the format <span class="s2">&quot;option:endpoint&quot;</span>, where the options are currently
+<span class="gp">#</span> network and component.
+<span class="go">bind = [</span>
+<span class="go">  &quot;network:tcp://eno1:8800&quot;,</span>
+<span class="go">  &quot;component:tcp://127.0.0.1:4004&quot;</span>
+<span class="go">]</span>
+
+<span class="gp">#</span> The <span class="nb">type</span> of peering approach the validator should take. Choices are <span class="s1">&#39;static&#39;</span>
+<span class="gp">#</span> which only attempts to peer with candidates provided with the peers option,
+<span class="gp">#</span> and <span class="s1">&#39;dynamic&#39;</span> which will <span class="k">do</span> topology buildouts. If <span class="s1">&#39;dynamic&#39;</span> is provided,
+<span class="gp">#</span> any static peers will be processed first, prior to the topology buildout
+<span class="gp">#</span> starting.
+<span class="go">peering = &quot;dynamic&quot;</span>
+
+<span class="gp">#</span> Advertised network endpoint URL.
+<span class="go">endpoint = &quot;tcp://[external interface]:[port]&quot;</span>
+
+<span class="gp">#</span> Uri<span class="o">(</span>s<span class="o">)</span> to connect to in order to initially connect to the validator network,
+<span class="gp">#</span> in the format tcp://hostname:port. This is not needed in static peering mode
+<span class="gp">#</span> and defaults to None.
+<span class="go">seeds = [&quot;tcp://[seed address 1]:[port]&quot;,</span>
+<span class="go">         &quot;tcp://[seed address 2]:[port]&quot;]</span>
+
+<span class="gp">#</span> A list of peers to attempt to connect to in the format tcp://hostname:port.
+<span class="gp">#</span> It defaults to None.
+<span class="go">peers = []</span>
+
+<span class="gp">#</span> The <span class="nb">type</span> of scheduler to use. The choices are <span class="s1">&#39;serial&#39;</span> or <span class="s1">&#39;parallel&#39;</span>.
+<span class="go">scheduler = &#39;serial&#39;</span>
+
+<span class="gp">#</span> A Curve ZMQ key pair are used to create a secured network based on side-band
+<span class="gp">#</span> sharing of a single network key pair to all participating nodes.
+<span class="gp">#</span> Note <span class="k">if</span> the config file does not exist or these are not set, the network
+<span class="gp">#</span> will default to being insecure.
+<span class="gp">#</span><span class="nv">network_public_key</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="gp">#</span><span class="nv">network_private_key</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</pre></div>
+</div>
+<p>Next, locate the <code class="docutils literal"><span class="pre">endpoint</span></code> section in this file.
+Replace the external interface and port values with either the
+publicly-addressable IP address and port or the NAT values for your validator.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">endpoint = &quot;tcp://[external interface]:[port]&quot;</span>
+</pre></div>
+</div>
+<p>Find the <code class="docutils literal"><span class="pre">seeds</span></code> section in the config file.
+Replace the seed address and port values with either the
+publicly-addressable IP address and port or the NAT values for the other nodes
+in your network.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">seeds = [&quot;tcp://[seed address 1]:[port]&quot;,</span>
+<span class="go">         &quot;tcp://[seed address 2]:[port]&quot;]</span>
+</pre></div>
+</div>
+<p>If necessary, change the network bind interface in the <code class="docutils literal"><span class="pre">bind</span></code> section.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">bind = [</span>
+<span class="go">  &quot;network:tcp://eno1:8800&quot;,</span>
+<span class="go">  &quot;component:tcp://127.0.0.1:4004&quot;</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<p>The default network bind interface is &#8220;eno1&#8221;. If this device
+doesn&#8217;t exist on your machine, change the <code class="docutils literal"><span class="pre">network</span></code> definition to
+specify the correct bind interface.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>If the bind interface doesn&#8217;t exist,
+you may see a ZMQ error in the sawtooth-validator
+systemd logs when attempting to start the validator, as in this example:</p>
+<div class="last highlight-console"><div class="highlight"><pre><span></span><span class="go">Jun 02 14:50:37 ubuntu validator[15461]:   File &quot;/usr/lib/python3.5/threading.py&quot;, line 862, in run</span>
+<span class="go">...</span>
+<span class="go">Jun 02 14:50:37 ubuntu validator[15461]:   File &quot;zmq/backend/cython/socket.pyx&quot;, line 487, in zmq.backend.cython.socket.Socket.bind (zmq/backend/cython/socket.c:5156)</span>
+<span class="go">Jun 02 14:50:37 ubuntu validator[15461]:   File &quot;zmq/backend/cython/checkrc.pxd&quot;, line 25, in zmq.backend.cython.checkrc._check_rc (zmq/backend/cython/socket.c:7535)</span>
+<span class="go">Jun 02 14:50:37 ubuntu validator[15461]: zmq.error.ZMQError: No such device</span>
+<span class="go">Jun 02 14:50:37 ubuntu systemd[1]: sawtooth-validator.service: Main process exited, code=exited, status=1/FAILURE</span>
+<span class="go">Jun 02 14:50:37 ubuntu systemd[1]: sawtooth-validator.service: Unit entered failed state.</span>
+<span class="go">Jun 02 14:50:37 ubuntu systemd[1]: sawtooth-validator.service: Failed with result &#39;exit-code&#39;.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="start-the-sawtooth-services">
+<h3>Start the Sawtooth services<a class="headerlink" href="#start-the-sawtooth-services" title="Permalink to this headline">¶</a></h3>
+<p>Use these commands to start the Sawtooth services:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl start sawtooth-rest-api.service
+<span class="gp">$</span> sudo systemctl start sawtooth-poet-validator-registry-tp.service
+<span class="gp">$</span> sudo systemctl start sawtooth-validator.service
+<span class="gp">$</span> sudo systemctl start sawtooth-settings-tp.service
+<span class="gp">$</span> sudo systemctl start sawtooth-intkey-tp-python.service
+</pre></div>
+</div>
+<p>You can follow the logs by running:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo journalctl -f <span class="se">\</span>
+-u sawtooth-validator <span class="se">\</span>
+-u sawtooth-tp_settings <span class="se">\</span>
+-u sawtooth-poet-validator-registry-tp <span class="se">\</span>
+-u sawtooth-rest-api <span class="se">\</span>
+-u sawtooth-intkey-tp-python
+</pre></div>
+</div>
+<p>Additional logging output can be found in <code class="docutils literal"><span class="pre">/var/log/sawtooth/</span></code>.</p>
+<p>To verify that the services are running:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl status sawtooth-rest-api.service
+<span class="gp">$</span> sudo systemctl status sawtooth-poet-validator-registry-tp.service
+<span class="gp">$</span> sudo systemctl status sawtooth-validator.service
+<span class="gp">$</span> sudo systemctl status sawtooth-settings-tp.service
+<span class="gp">$</span> sudo systemctl status sawtooth-intkey-tp-python.service
+</pre></div>
+</div>
+</div>
+<div class="section" id="stop-or-restart-the-sawtooth-services">
+<h3>Stop or restart the Sawtooth services<a class="headerlink" href="#stop-or-restart-the-sawtooth-services" title="Permalink to this headline">¶</a></h3>
+<p>If you need to stop or restart the Sawtooth services for any reason, use the
+following commands:</p>
+<p>Stop Sawtooth services:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl stop sawtooth-rest-api.service
+<span class="gp">$</span> sudo systemctl stop sawtooth-poet-validator-registry-tp.service
+<span class="gp">$</span> sudo systemctl stop sawtooth-validator.service
+<span class="gp">$</span> sudo systemctl stop sawtooth-settings-tp.service
+<span class="gp">$</span> sudo systemctl stop sawtooth-intkey-tp-python.service
+</pre></div>
+</div>
+<p>Restart Sawtooth services:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl restart sawtooth-rest-api.service
+<span class="gp">$</span> sudo systemctl restart sawtooth-poet-validator-registry-tp.service
+<span class="gp">$</span> sudo systemctl restart sawtooth-validator.service
+<span class="gp">$</span> sudo systemctl restart sawtooth-settings-tp.service
+<span class="gp">$</span> sudo systemctl restart sawtooth-intkey-tp-python.service
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../rest_api.html" class="btn btn-neutral float-right" title="REST API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="permissioning.html" class="btn btn-neutral" title="Permissioning" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.10',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

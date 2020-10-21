@@ -1,0 +1,442 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>BlockInfo Transaction Family &mdash; Sawtooth v1.1.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="IntegerKey Transaction Family" href="integerkey_transaction_family.html" />
+    <link rel="prev" title="Identity Transaction Family" href="identity_transaction_family.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.1.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="settings_transaction_family.html">Settings Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity_transaction_family.html">Identity Transaction Family</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">BlockInfo Transaction Family</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#state">State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#address">Address</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#blockinfo">BlockInfo</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transaction-header">Transaction Header</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#inputs-and-outputs">Inputs and Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#family">Family</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#execution">Execution</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#timestamps">Timestamps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="integerkey_transaction_family.html">IntegerKey Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xo_transaction_family.html">XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_registry_transaction_family.html">Validator Registry Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smallbank_transaction_family.html">Smallbank Transaction Family</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../transaction_family_specifications.html">Transaction Family Specifications</a> &raquo;</li>
+        
+      <li>BlockInfo Transaction Family</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/transaction_family_specifications/blockinfo_transaction_family.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="blockinfo-transaction-family">
+<h1>BlockInfo Transaction Family<a class="headerlink" href="#blockinfo-transaction-family" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>A common feature among blockchain implementations is the ability to reference
+information about the blockchain while processing transactions. For example,
+the Ethereum Virtual Machine, which is used to process Ethereum transactions,
+defines a BLOCKHASH instruction which gives the processor executing the
+transaction access to the hashes of previous blocks.</p>
+<p>The Blockinfo transaction family provides a way for storing information about
+a configurable number of historic blocks.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">BlockInfo transactions should only be added to a block by a BlockInfo
+Injector and validation rules should ensure that only one transaction of this
+type is included at the beginning of the block. For more information,
+see <a class="reference internal" href="../architecture/injecting_batches_block_validation_rules.html"><span class="doc">Injecting Batches and On-Chain Block Validation Rules</span></a>.
+It is important to note that the data written to state by this
+transaction family cannot be trusted unless both the injector and
+validation rules are enabled.</p>
+</div>
+</div>
+<div class="section" id="state">
+<h2>State<a class="headerlink" href="#state" title="Permalink to this headline">¶</a></h2>
+<p>This section describes in detail how block information is stored and addressed
+using the blockinfo transaction family.</p>
+<div class="section" id="address">
+<h3>Address<a class="headerlink" href="#address" title="Permalink to this headline">¶</a></h3>
+<p>The top-level namespace of this transaction family is 00b10c. This namespace is
+further subdivided based on the next two characters as follows:</p>
+<dl class="docutils">
+<dt>00b10c01</dt>
+<dd>Information about the block info config and metadata; the “metadata namespace”</dd>
+<dt>00b10c00</dt>
+<dd>Historic block information; the “block info namespace”</dd>
+</dl>
+<p>Under the metadata namespace, the “zero-address” formed by concatenating the
+namespace and enough zeros to form a valid address will store the
+BlockInfoConfig.</p>
+<p>Additional information about blocks will be stored in state under the block info
+namespace at an address derived from the block number. A mod is used in the
+calculation of the address to support chains that have a length greater than
+the biggest number that can be hex-encoded with 62 characters. The procedure is
+as follows:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Convert block_num to a hex string and remove the leading “0x”</li>
+<li>Left pad the string with 0s until it is 62 characters long</li>
+<li>Concatenate the block info namespace and the string from step 3</li>
+</ol>
+</div></blockquote>
+<p>For example, in Python the address could be constructed with:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;00b10c00&#39;</span> <span class="o">+</span> <span class="nb">hex</span><span class="p">(</span><span class="n">block_num</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">62</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="blockinfo">
+<h3>BlockInfo<a class="headerlink" href="#blockinfo" title="Permalink to this headline">¶</a></h3>
+<p>BlockInfoConfig will store the following information:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The block number of the most recent block stored in state</li>
+<li>The block number of the oldest block stored in state</li>
+<li>The target number of blocks to store in state</li>
+<li>The network time synchronization tolerance</li>
+</ul>
+</div></blockquote>
+<p>These values will be stored in the following protobuf message:</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">BlockInfoConfig</span> <span class="p">{</span>
+  <span class="kt">uint64</span> <span class="na">latest_block</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">uint64</span> <span class="na">oldest_block</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">uint64</span> <span class="na">target_count</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="kt">uint64</span> <span class="na">sync_tolerance</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Block information is stored at the address calculated above using the
+following protobuf message:</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">BlockInfo</span> <span class="p">{</span>
+  <span class="c1">// Block number in the chain</span>
+  <span class="kt">uint64</span> <span class="na">block_num</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+      <span class="c1">// The header_signature of the previous block that was added to the chain.</span>
+      <span class="kt">string</span> <span class="na">previous_block_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+      <span class="c1">// Public key for the component internal to the validator that</span>
+      <span class="c1">// signed the BlockHeader</span>
+      <span class="kt">string</span> <span class="na">signer_public_key</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+      <span class="c1">// The signature derived from signing the header</span>
+      <span class="kt">string</span> <span class="na">header_signature</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+      <span class="c1">// Approximately when this block was committed, as a Unix UTC timestamp</span>
+      <span class="kt">uint64</span> <span class="na">timestamp</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="transaction-payload">
+<h2>Transaction Payload<a class="headerlink" href="#transaction-payload" title="Permalink to this headline">¶</a></h2>
+<p>BlockInfo transaction family payloads are defined by the following protocol
+buffers code:</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">BlockInfoTxn</span> <span class="p">{</span>
+  <span class="c1">// The new block to add to state</span>
+  <span class="n">BlockInfo</span> <span class="na">new_block</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// If this is set, the new target number of blocks to store in state</span>
+  <span class="kt">uint64</span> <span class="na">target_count</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="c1">// If set, the new network time synchronization tolerance.</span>
+  <span class="kt">uint64</span> <span class="na">sync_tolerance</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="transaction-header">
+<h2>Transaction Header<a class="headerlink" href="#transaction-header" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="inputs-and-outputs">
+<h3>Inputs and Outputs<a class="headerlink" href="#inputs-and-outputs" title="Permalink to this headline">¶</a></h3>
+<p>The inputs for BlockInfo family transactions must include:</p>
+<ul class="simple">
+<li>the address of the BlockInfoConfig</li>
+<li>the BlockInfo namespace</li>
+</ul>
+<p>The outputs for BlockInfo family transactions must include:</p>
+<ul class="simple">
+<li>the address of the BlockInfoConfig</li>
+<li>the BlockInfo namespace</li>
+</ul>
+</div>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<p>None.</p>
+</div>
+<div class="section" id="family">
+<h3>Family<a class="headerlink" href="#family" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>family_name: “block_info”</li>
+<li>family_version: “1.0”</li>
+</ul>
+</div>
+</div>
+<div class="section" id="execution">
+<h2>Execution<a class="headerlink" href="#execution" title="Permalink to this headline">¶</a></h2>
+<p>Processor execution will use the following procedure:</p>
+<p>The payload is checked to make sure it contains a valid block number, the
+previous block id, signer public key, and header_signature are all valid hex,
+and that the timestamp is greater than zero. If any of theses checks fail, the
+transaction is invalid.</p>
+<p>Read the most recent block number, oldest block number, target number of blocks,
+and synchronization tolerance from the config zero-address.</p>
+<p>If the config does not exist, treat this transaction as the first entry. Add
+the sync time and target count to the config object, along with the block_num
+from the payload. Add update config and new block info to state.</p>
+<p>If the config does exist, do the following checks.</p>
+<p>If target_count was set in the transaction, use the new value as the target
+number of blocks for the rest of the procedure and update the config.</p>
+<p>If sync_tolerance was set in the transaction, use the new value as the
+synchronization tolerance for the rest of the procedure and update the config.</p>
+<p>Verify the block number in the new BlockInfo message is one greater than the
+block number of the most recent block stored in state.  If not, this transactions
+is invalid.</p>
+<p>Verify the timestamp in the new BlockInfo message follows the rules below.
+If it does not, this transaction is invalid.</p>
+<p>Verify the previous block id in the new BlockInfo message is equal to the block
+id of the most recent block stored in state. If it is not equal, the transaction
+is invalid.</p>
+<p>Finally, calculate the address for the new block number. Write the new BlockInfo
+message to state at the address computed for that block.</p>
+<p>If number of blocks stored in state is greater than the target number of
+blocks, delete the oldest BlockInfo message from state.</p>
+<p>Write the most recent block number, oldest block number, and target number of
+blocks to the config zero-address.</p>
+<div class="section" id="timestamps">
+<h3>Timestamps<a class="headerlink" href="#timestamps" title="Permalink to this headline">¶</a></h3>
+<p>Handling timestamps in a distributed network is a difficult task because peers
+may not have synchronized clocks. The “clock” of the network may become skewed
+over time, either because of peers with substantially different clocks or
+bad actors may have an incentive to skew the clock. If the clock of the network
+becomes skewed, transactions that depend on the clock may become unexpectedly
+invalid. If block validation depends on timestamp validation, peers may not be
+able to publish blocks until their clocks are adjusted to better match the
+network’s clock.</p>
+<p>The BlockInfo Transaction Family will use the following timestamp validation
+rules:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>The timestamp in the new BlockInfo message must be greater than the
+timestamp in the most recent BlockInfo message in state.</li>
+<li>The timestamp in the new BlockInfo message must be less than the peer’s
+measured local time, adjusted to UTC, plus a network time synchronization
+tolerance that is greater than or equal to zero.</li>
+</ol>
+</div></blockquote>
+<p>Rule 1 enforces monotonicity of timestamps. Rule 2 adds a requirement to the
+network that all peers be roughly synchronized. It also allows historic blocks
+to be validated correctly.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="integerkey_transaction_family.html" class="btn btn-neutral float-right" title="IntegerKey Transaction Family" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="identity_transaction_family.html" class="btn btn-neutral float-left" title="Identity Transaction Family" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

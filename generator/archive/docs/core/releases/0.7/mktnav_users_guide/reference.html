@@ -1,0 +1,860 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Reference &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="Marketplace Navigator User’s Guide" href="../mktnav_users_guide.html"/>
+        <link rel="next" title="Sawtooth Lake Developer’s Guide" href="../sawtooth_developers_guide.html"/>
+        <link rel="prev" title="Scenarios" href="scenarios.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scenarios.html">Scenarios</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ui-elements">UI Elements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#persisent-elements">Persisent Elements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#informational-pages">Informational Pages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#forms">Forms</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#menu-bar">Menu Bar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sidebar">Sidebar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dashboard">Dashboard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#open-offers">Open Offers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#blockchain-history">Blockchain History</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#transaction-detail">Transaction Detail</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#portfolio">Portfolio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-asset">Create Asset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-holding">Create Holding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-offer">Create Offer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#execute-exchange">Execute Exchange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transfer-assets">Transfer Assets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/mktnav_users_guide/reference.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ui-elements">
+<h2>UI Elements<a class="headerlink" href="#ui-elements" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="persisent-elements">
+<h3>Persisent Elements<a class="headerlink" href="#persisent-elements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="#menu-bar">Menu Bar</a></li>
+<li><a class="reference internal" href="#sidebar">Sidebar</a></li>
+</ul>
+</div>
+<div class="section" id="informational-pages">
+<h3>Informational Pages<a class="headerlink" href="#informational-pages" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="#dashboard">Dashboard</a></li>
+<li><a class="reference internal" href="#open-offers">Open Offers</a></li>
+<li><a class="reference internal" href="#blockchain-history">Blockchain History</a></li>
+<li><a class="reference internal" href="#portfolio">Portfolio</a></li>
+</ul>
+</div>
+<div class="section" id="forms">
+<h3>Forms<a class="headerlink" href="#forms" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="#create-asset">Create Asset</a></li>
+<li><a class="reference internal" href="#create-holding">Create Holding</a></li>
+<li><a class="reference internal" href="#create-offer">Create Offer</a></li>
+<li><a class="reference internal" href="#execute-exchange">Execute Exchange</a></li>
+<li><a class="reference internal" href="#transfer-assets">Transfer Assets</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="menu-bar">
+<h2>Menu Bar<a class="headerlink" href="#menu-bar" title="Permalink to this headline">¶</a></h2>
+<p>The menu bar appears at the top of every Marketplace Navigator screen, and can be used to navigate to many Marketplace features.</p>
+<img alt="../_images/ref_menu_bar.png" src="../_images/ref_menu_bar.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="18%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>A</td>
+<td>Brand</td>
+<td>Goes to personal <a class="reference internal" href="#dashboard">Dashboard</a></td>
+</tr>
+<tr class="row-odd"><td>B</td>
+<td>Current Block</td>
+<td>Goes to <a class="reference internal" href="#blockchain-history">Blockchain History</a>, shows block count and id of latest block</td>
+</tr>
+<tr class="row-even"><td>C</td>
+<td>Create Offer</td>
+<td>Click to <a class="reference internal" href="#create-offer">Create Offer</a></td>
+</tr>
+<tr class="row-odd"><td>D</td>
+<td>Username</td>
+<td>Displays menu dropdown, shows signed in user&#8217;s name</td>
+</tr>
+<tr class="row-even"><td>E</td>
+<td>Dashboard</td>
+<td>Goes to personal <a class="reference internal" href="#dashboard">Dashboard</a></td>
+</tr>
+<tr class="row-odd"><td>F</td>
+<td>Portfolio</td>
+<td>Goes to personal <a class="reference internal" href="#portfolio">Portfolio</a></td>
+</tr>
+<tr class="row-even"><td>G</td>
+<td>Transfer Assets</td>
+<td>Click to <a class="reference internal" href="#transfer-assets">Transfer Assets</a></td>
+</tr>
+<tr class="row-odd"><td>H</td>
+<td>Sign out</td>
+<td>Signs out of Marketplace Navigator</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sidebar">
+<h2>Sidebar<a class="headerlink" href="#sidebar" title="Permalink to this headline">¶</a></h2>
+<p>This sidebar appears on most Marketplace Navigator screens, and displays the <em>Assets</em> in the marketplace, as well as a the currently selected user&#8217;s <em>Holdings</em>.</p>
+<img alt="../_images/ref_sidebar.png" src="../_images/ref_sidebar.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="28%" />
+<col width="63%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>A</td>
+<td>Asset list</td>
+<td>All assets in the marketplace</td>
+</tr>
+<tr class="row-odd"><td>B</td>
+<td>Create Asset</td>
+<td>Click to <a class="reference internal" href="#create-asset">Create Asset</a></td>
+</tr>
+<tr class="row-even"><td>C</td>
+<td>Holding list</td>
+<td>Currently selected user&#8217;s holdings</td>
+</tr>
+<tr class="row-odd"><td>D</td>
+<td>Create Holding</td>
+<td>Click to <a class="reference internal" href="#create-holding">Create Holding</a></td>
+</tr>
+<tr class="row-even"><td>E</td>
+<td>Individual asset</td>
+<td>Click to narrow holdings to just this asset</td>
+</tr>
+<tr class="row-odd"><td>F</td>
+<td>Individual holding</td>
+<td>Click to narrow offers to match holding</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="dashboard">
+<h2>Dashboard<a class="headerlink" href="#dashboard" title="Permalink to this headline">¶</a></h2>
+<p>This dashboard showcases the latest <em>Offers</em> and <em>Exchanges</em> for the currently selected user (usually the signed in user).</p>
+<img alt="../_images/ref_dashboard.png" src="../_images/ref_dashboard.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="33%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Action</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>A</td>
+<td>Latest Open Offers</td>
+<td>Goes to <a class="reference internal" href="#open-offers">Open Offers</a></td>
+</tr>
+<tr class="row-odd"><td>B</td>
+<td>Username</td>
+<td>Goes to this user&#8217;s <a class="reference internal" href="#dashboard">Dashboard</a></td>
+</tr>
+<tr class="row-even"><td>C</td>
+<td>Latest Exchanges</td>
+<td>Views all exchanges</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="open-offers">
+<h2>Open Offers<a class="headerlink" href="#open-offers" title="Permalink to this headline">¶</a></h2>
+<p>Displays all currently open <em>Offers</em> (unless filtered by the <a class="reference internal" href="#sidebar">Sidebar</a>), and allows those offers to be accepted. Reached from the <a class="reference internal" href="#dashboard">Dashboard</a>.</p>
+<img alt="../_images/ref_offers.png" src="../_images/ref_offers.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="20%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>A</td>
+<td>Offer list</td>
+<td>All offers, filtered by <a class="reference internal" href="#sidebar">Sidebar</a> selection</td>
+</tr>
+<tr class="row-odd"><td>B</td>
+<td>Username</td>
+<td>Goes to this user&#8217;s <a class="reference internal" href="#dashboard">Dashboard</a></td>
+</tr>
+<tr class="row-even"><td>C</td>
+<td>Accept</td>
+<td>Click to <a class="reference internal" href="#execute-exchange">Execute Exchange</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="blockchain-history">
+<h2>Blockchain History<a class="headerlink" href="#blockchain-history" title="Permalink to this headline">¶</a></h2>
+<p>Displays current block state, and a list of all previous transactions. Reached from the <a class="reference internal" href="#menu-bar">Menu Bar</a>.</p>
+<img alt="../_images/ref_block_history.png" src="../_images/ref_block_history.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="32%" />
+<col width="59%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>A</td>
+<td>Block State</td>
+<td>Information about the blockchain</td>
+</tr>
+<tr class="row-odd"><td>&#8220;</td>
+<td>Block Id</td>
+<td>Id of the most recent block</td>
+</tr>
+<tr class="row-even"><td>&#8220;</td>
+<td>Block Number</td>
+<td>Number of blocks in blockchain</td>
+</tr>
+<tr class="row-odd"><td>&#8220;</td>
+<td>Block Size</td>
+<td>Total number of items stored on blockchain</td>
+</tr>
+<tr class="row-even"><td>B</td>
+<td>Transaction list</td>
+<td>Info about every transaction so far</td>
+</tr>
+<tr class="row-odd"><td>C</td>
+<td>Individual transaction</td>
+<td>Click to show <a class="reference internal" href="#transaction-detail">Transaction Detail</a></td>
+</tr>
+<tr class="row-even"><td>D</td>
+<td>Page navigation</td>
+<td>Navigates pages of ten transactions each</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="transaction-detail">
+<h3>Transaction Detail<a class="headerlink" href="#transaction-detail" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/ref_transaction.png" src="../_images/ref_transaction.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="20%" />
+<col width="73%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>A</td>
+<td>Transaction Id</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>B</td>
+<td>Block Id</td>
+<td>The block containing this transaction</td>
+</tr>
+<tr class="row-even"><td>C</td>
+<td>Dependencies</td>
+<td>Clickable id&#8217;s of other transactions this is dependent on</td>
+</tr>
+<tr class="row-odd"><td>D</td>
+<td>Update Type</td>
+<td>The type of update sent to the blockchain</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="portfolio">
+<h2>Portfolio<a class="headerlink" href="#portfolio" title="Permalink to this headline">¶</a></h2>
+<p>A summary of the user&#8217;s financial information. Reached from the <a class="reference internal" href="#menu-bar">Menu Bar</a>.</p>
+<img alt="../_images/ref_portfolio.png" src="../_images/ref_portfolio.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="30%" />
+<col width="61%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>A</td>
+<td>Holdings list</td>
+<td>All of the user&#8217;s holdings</td>
+</tr>
+<tr class="row-odd"><td>B</td>
+<td>Latest offers</td>
+<td>Most recent offers made by the user</td>
+</tr>
+<tr class="row-even"><td>C</td>
+<td>Recent Exchanges</td>
+<td>Most recent exchanges user executed</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="create-asset">
+<h2>Create Asset<a class="headerlink" href="#create-asset" title="Permalink to this headline">¶</a></h2>
+<p>A form for creating new <em>Assets</em> and <em>AssetTypes</em> for the marketplace. Reached from the <a class="reference internal" href="#sidebar">Sidebar</a>.</p>
+<img alt="../_images/ref_create_asset.png" src="../_images/ref_create_asset.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="23%" />
+<col width="70%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>A</td>
+<td>Asset name</td>
+<td>Must begin with a <em>&#8220;/&#8221;</em>, for example: <em>&#8220;/currency/usd&#8221;</em></td>
+</tr>
+<tr class="row-odd"><td>B</td>
+<td>Asset description</td>
+<td>Optional</td>
+</tr>
+<tr class="row-even"><td>C</td>
+<td>Type dropdown</td>
+<td>Selects from existing asset types</td>
+</tr>
+<tr class="row-odd"><td>D</td>
+<td>Add Type</td>
+<td>Displays Create Asset Type pop-up</td>
+</tr>
+<tr class="row-even"><td>E</td>
+<td>Type name</td>
+<td>Must begin with a <em>&#8220;/&#8221;</em></td>
+</tr>
+<tr class="row-odd"><td>F</td>
+<td>Type description</td>
+<td>Optional</td>
+</tr>
+<tr class="row-even"><td>G</td>
+<td>Type options</td>
+<td>Select whether asset type should be <em>&#8220;restricted&#8221;</em></td>
+</tr>
+<tr class="row-odd"><td>H</td>
+<td>Discard</td>
+<td>Closes pop-up</td>
+</tr>
+<tr class="row-even"><td>I</td>
+<td>Asset options</td>
+<td>Select what options should be used with this asset</td>
+</tr>
+<tr class="row-odd"><td>&#8220;</td>
+<td>Restricted</td>
+<td>Only creator can create non-empty holdings</td>
+</tr>
+<tr class="row-even"><td>&#8220;</td>
+<td>Consumable</td>
+<td>Asset must be spent to be exchanged (i.e. non-infinite)</td>
+</tr>
+<tr class="row-odd"><td>&#8220;</td>
+<td>Divisible</td>
+<td>Can exist in fractional form</td>
+</tr>
+<tr class="row-even"><td>J</td>
+<td>Submit</td>
+<td>Creates asset</td>
+</tr>
+<tr class="row-odd"><td>K</td>
+<td>Reset</td>
+<td>Clears form</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="create-holding">
+<h2>Create Holding<a class="headerlink" href="#create-holding" title="Permalink to this headline">¶</a></h2>
+<p>A form for creating a new <em>Holding</em> designed to contain a particular <em>Asset</em>. May be created empty, or with some quantity of the asset (if asset is unrestricted, or the logged-in participant created it). Reached from the <a class="reference internal" href="#sidebar">Sidebar</a>.</p>
+<img alt="../_images/ref_create_holding.png" src="../_images/ref_create_holding.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="16%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>A</td>
+<td>Name</td>
+<td>Must begin with a <em>&#8220;/&#8221;</em>, for example: <em>&#8220;/accounts/savings&#8221;</em></td>
+</tr>
+<tr class="row-odd"><td>B</td>
+<td>Description</td>
+<td>Optional</td>
+</tr>
+<tr class="row-even"><td>C</td>
+<td>Asset</td>
+<td>Selects which kind of asset to hold</td>
+</tr>
+<tr class="row-odd"><td>D</td>
+<td>Count</td>
+<td>The amount of the asset to be created with the holding</td>
+</tr>
+<tr class="row-even"><td>E</td>
+<td>Submit</td>
+<td>Creates holding</td>
+</tr>
+<tr class="row-odd"><td>F</td>
+<td>Reset</td>
+<td>Clears form</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="create-offer">
+<h2>Create Offer<a class="headerlink" href="#create-offer" title="Permalink to this headline">¶</a></h2>
+<p>A form for creating new sell <em>Offers</em>. User must already have a <em>Holding</em> both in the <em>Asset</em> they expect to receive in payment, and the asset which they will pay out. The input holding may be empty. Reached from the <a class="reference internal" href="#menu-bar">Menu Bar</a>.</p>
+<img alt="../_images/ref_create_offer.png" src="../_images/ref_create_offer.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="24%" />
+<col width="69%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>A</td>
+<td>Name</td>
+<td>Must begin with a <em>&#8220;/&#8221;</em>, for example: <em>&#8220;/orders/cookies&#8221;</em></td>
+</tr>
+<tr class="row-odd"><td>B</td>
+<td>Description</td>
+<td>Optional</td>
+</tr>
+<tr class="row-even"><td>C</td>
+<td>Input</td>
+<td>Selects which holding will receive payments</td>
+</tr>
+<tr class="row-odd"><td>D</td>
+<td>Input amount</td>
+<td>The amount of the input asset expected</td>
+</tr>
+<tr class="row-even"><td>E</td>
+<td>Output</td>
+<td>Selects which holding payouts will be drawn from</td>
+</tr>
+<tr class="row-odd"><td>F</td>
+<td>Output amount</td>
+<td>With the input amount, creates an exchange ratio</td>
+</tr>
+<tr class="row-even"><td>G</td>
+<td>Minimum amount</td>
+<td>The least input assets that will be accepted</td>
+</tr>
+<tr class="row-odd"><td>H</td>
+<td>Maximum amount</td>
+<td>The most inputs</td>
+</tr>
+<tr class="row-even"><td>I</td>
+<td>Offer repeatability</td>
+<td>Unlimited, once ever, or once per participant</td>
+</tr>
+<tr class="row-odd"><td>J</td>
+<td>Submit</td>
+<td>Creates offer</td>
+</tr>
+<tr class="row-even"><td>K</td>
+<td>Reset</td>
+<td>Clears form</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="execute-exchange">
+<h2>Execute Exchange<a class="headerlink" href="#execute-exchange" title="Permalink to this headline">¶</a></h2>
+<p>A form for responding to and executing an <em>Offer</em>, or chain of offers. Reachable from <a class="reference internal" href="#open-offers">Open Offers</a>.</p>
+<img alt="../_images/ref_exchange.png" src="../_images/ref_exchange.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="20%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>A</td>
+<td>Initial Holding</td>
+<td>Selects holding from which payments will be drawn</td>
+</tr>
+<tr class="row-odd"><td>B</td>
+<td>Add offer</td>
+<td>Adds a new offer to the start of an arbitrage chain</td>
+</tr>
+<tr class="row-even"><td>C</td>
+<td>Input holding</td>
+<td>Holding from which an exchange will be drawn, including final amount</td>
+</tr>
+<tr class="row-odd"><td>D</td>
+<td>Output holding</td>
+<td>Holding to which an exchange will go, including final amount</td>
+</tr>
+<tr class="row-even"><td>E</td>
+<td>Add offer</td>
+<td>Adds a new offer to the end of an arbitrage chain</td>
+</tr>
+<tr class="row-odd"><td>F</td>
+<td>Output Holding</td>
+<td>Selects holding to which final payouts will go</td>
+</tr>
+<tr class="row-even"><td>G</td>
+<td>Exchange quantity</td>
+<td>Number of times to exchange (based on ratio)</td>
+</tr>
+<tr class="row-odd"><td>H</td>
+<td>Accept</td>
+<td>Executes exchange</td>
+</tr>
+<tr class="row-even"><td>I</td>
+<td>Cancel</td>
+<td>Returns to <a class="reference internal" href="#open-offers">Open Offers</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="transfer-assets">
+<h2>Transfer Assets<a class="headerlink" href="#transfer-assets" title="Permalink to this headline">¶</a></h2>
+<p>A form for transfering a single kind of <em>Asset</em> from one <em>Holding</em> to another. Always a one way transfer, it can be between a user&#8217;s own holdings, or to a different <em>Participant</em>. Reached from the <a class="reference internal" href="#menu-bar">Menu Bar</a></p>
+<img alt="../_images/ref_transfer_asset.png" src="../_images/ref_transfer_asset.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="15%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>A</td>
+<td>Source</td>
+<td>Selects the holding from which to draw the asset</td>
+</tr>
+<tr class="row-odd"><td>B</td>
+<td>Participant</td>
+<td>Selects the user who will receive the asset, defaults to <em>Self</em></td>
+</tr>
+<tr class="row-even"><td>C</td>
+<td>Destination</td>
+<td>Selects the holding to send the asset to</td>
+</tr>
+<tr class="row-odd"><td>D</td>
+<td>Amount</td>
+<td>The quantity of the asset to transfer</td>
+</tr>
+<tr class="row-even"><td>E</td>
+<td>Transfer</td>
+<td>Executes the transfer</td>
+</tr>
+<tr class="row-odd"><td>F</td>
+<td>Cancel</td>
+<td>Returns to <a class="reference internal" href="#portfolio">Portfolio</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../sawtooth_developers_guide.html" class="btn btn-neutral float-right" title="Sawtooth Lake Developer’s Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="scenarios.html" class="btn btn-neutral" title="Scenarios" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

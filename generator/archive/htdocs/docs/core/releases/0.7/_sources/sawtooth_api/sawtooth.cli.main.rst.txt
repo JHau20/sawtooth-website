@@ -1,0 +1,7 @@
+sawtooth\.cli\.main module
+==========================
+
+.. automodule:: sawtooth.cli.main
+    :members:
+    :undoc-members:
+    :show-inheritance:

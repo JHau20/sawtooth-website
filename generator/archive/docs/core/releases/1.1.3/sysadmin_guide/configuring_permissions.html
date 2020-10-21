@@ -1,0 +1,535 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Configuring Validator and Transactor Permissions &mdash; Sawtooth v1.1.3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using Grafana to Display Sawtooth Metrics" href="grafana_configuration.html" />
+    <link rel="prev" title="Using a Proxy Server to Authorize the REST API" href="rest_auth_proxy.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.1.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="setting_up_sawtooth_poet-sim.html">Setting Up a Sawtooth Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setting_allowed_txns.html">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuring Validator and Transactor Permissions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#transactor-key-permissioning">Transactor Key Permissioning</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#off-chain-transactor-permissioning">Off-chain Transactor Permissioning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#on-chain-transactor-permissioning">On-chain Transactor Permissioning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transactor-roles">Transactor Roles</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#validator-key-permissioning">Validator Key Permissioning</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configuring-authorization">Configuring Authorization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#network-roles">Network Roles</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="grafana_configuration.html">Using Grafana to Display Sawtooth Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_sawtooth.html">About Sawtooth Configuration Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator’s Guide</a> &raquo;</li>
+        
+      <li>Configuring Validator and Transactor Permissions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/configuring_permissions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="configuring-validator-and-transactor-permissions">
+<h1>Configuring Validator and Transactor Permissions<a class="headerlink" href="#configuring-validator-and-transactor-permissions" title="Permalink to this headline">¶</a></h1>
+<p>This section describes the validator and transactor permissions in Hyperledger
+Sawtooth.</p>
+<ul class="simple">
+<li><cite>Transactor key permissioning</cite> controls who (which users and clients) can
+submit transactions and batches to a validator. Sawtooth provides both
+on-chain (network-wide) and off-chain (local) settings for transactor
+key permissioning.</li>
+<li><cite>Validator key permissioning</cite> controls which nodes can connect to the
+Sawtooth network. These settings are configured with on-chain settings.</li>
+</ul>
+<p>The <a class="reference internal" href="../transaction_family_specifications/identity_transaction_family.html"><span class="doc">Identity</span></a>
+and <a class="reference internal" href="../transaction_family_specifications/settings_transaction_family.html"><span class="doc">Settings</span></a>
+transaction processors (or equivalent) are required to process the on-chain
+settings. Note that Settings includes several settings to control who can
+change on-chain settings and how many votes are required for a settings change.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Sawtooth also includes another type of transaction control that limits which
+transaction processors can submit transactions. For more information, see
+“Setting the Allowed Transaction Types (Optional)”.</p>
+</div>
+<div class="section" id="transactor-key-permissioning">
+<h2>Transactor Key Permissioning<a class="headerlink" href="#transactor-key-permissioning" title="Permalink to this headline">¶</a></h2>
+<p>A running protected network needs a mechanism for limiting which transactors
+are allowed to submit batches and transactions to the validators. There are
+two different methods for defining the transactors that a validator will accept.</p>
+<p>The first method is configuring a validator to only accept batches and
+transactions from predefined transactors that are loaded from a local validator
+config file. Once the validator is configured the list of allowed transactors
+is immutable while the validator is running. This set of permissions are only
+enforced when receiving a batch from a connected client, but not when receiving
+a batch from a peer on the network.</p>
+<p>The second method uses the Identity namespace which handles network-wide
+updates and agreement on allowed transactors. The allowed transactors are
+checked when a batch is received from a client, received from a peer, and
+when a block is validated.</p>
+<p>When using both on-chain and off-chain configuration, the validator only
+accepts transactions and batches from a client if both configurations agree it
+should be accepted. If a batch is received from a peer, only on-chain
+configuration is checked.</p>
+<p>It is possible that in the time that the batch has been in the pending queue,
+the transactor permissions have been updated to no longer allow a batch signer
+or a transaction signer that is being included in a block. For this reason, the
+allowed transactor roles must also be checked on block validation.</p>
+<div class="section" id="off-chain-transactor-permissioning">
+<span id="id1"></span><h3>Off-chain Transactor Permissioning<a class="headerlink" href="#off-chain-transactor-permissioning" title="Permalink to this headline">¶</a></h3>
+<p>Validators can be locally configured by creating a validation configuration
+file, <code class="docutils literal notranslate"><span class="pre">validator.toml</span></code>, and placing it in the config directory. Add
+the configuration for transactor permissioning to this file using the following
+format:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[permissions]
+
+ROLE = POLICY_NAME
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ROLE</span></code> is a role for transactor permissioning (see
+<a class="reference internal" href="#transactor-roles-label"><span class="std std-ref">Transactor Roles</span></a>).
+<code class="docutils literal notranslate"><span class="pre">POLICY_NAME</span></code> is the name of policy file in the policy_dir
+(<code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/policy</span></code> by default).
+Multiple roles may be defined in the same
+format within the validator configuration file.</p>
+<p>The policies are stored in the policy_dir defined by the path config (see
+See <a class="reference internal" href="configuring_sawtooth/path_configuration_file.html"><span class="doc">Path Configuration File</span></a>).</p>
+<p>Each policy consists of permit and deny rules, similar to policies defined in
+the Identity namespace. Each line contains either a <code class="docutils literal notranslate"><span class="pre">PERMIT_KEY</span></code> or
+<code class="docutils literal notranslate"><span class="pre">DENY_KEY</span></code> followed with either a public key for an allowed
+transactor or the <code class="docutils literal notranslate"><span class="pre">*</span></code> character to specify all possible transactors. The rules
+are evaluated in order.</p>
+<p>A policy file has the following format:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>PERMIT_KEY {key}
+DENY_KEY {key}
+</pre></div>
+</div>
+<p>Specify one key per line. To define multiple permitted or denied keys, use
+additional <code class="docutils literal notranslate"><span class="pre">PERMIT_KEY</span></code> or <code class="docutils literal notranslate"><span class="pre">DENY_KEY</span></code> lines.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A policy file implicitly ends with the rule <code class="docutils literal notranslate"><span class="pre">DENY_KEY</span> <span class="pre">*</span></code>, which denies
+all transactors or validators who are not explicitly specified in a
+<code class="docutils literal notranslate"><span class="pre">PERMIT_KEY</span></code> rule. For example, if a transactor policy file contains a
+single rule that permits one transactor, it is implicitly denying all
+other transactors.</p>
+</div>
+</div>
+<div class="section" id="on-chain-transactor-permissioning">
+<span id="config-onchain-txn-perm-label"></span><h3>On-chain Transactor Permissioning<a class="headerlink" href="#on-chain-transactor-permissioning" title="Permalink to this headline">¶</a></h3>
+<p>The Identity namespace stores roles as key-value pairs, where the key is a role
+name and the value is a policy. All roles that limit who is allowed to sign
+transactions and batches should start with transactor as a prefix.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>transactor.SUB_ROLE = POLICY_NAME
+</pre></div>
+</div>
+<p>SUB_ROLEs are more specific signing roles, for example who is allowed to sign
+transactions. Each role equals a policy name that corresponds to a policy
+stored in state. The policy contains a list of public keys that correspond
+to the identity signing key of the transactors.</p>
+<p>Before you can configure on-chain roles, your public key must be set in the
+<code class="docutils literal notranslate"><span class="pre">sawtooth.identity.allowed_keys</span></code> setting. Only those transactors whose
+public keys are in that setting are allowed to update roles and policies.</p>
+<ol class="arabic">
+<li><p class="first">Make sure that the Identity and Settings transaction processors and the
+REST API are running, as described in <a class="reference internal" href="systemd.html"><span class="doc">Running Sawtooth as a Service</span></a>.</p>
+</li>
+<li><p class="first">Add your public key to the list of those allowed to change settings.</p>
+<p>In the following command, change <code class="docutils literal notranslate"><span class="pre">{user}</span></code> to specify your own public key
+file.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo sawset proposal create --key /etc/sawtooth/keys/validator.priv \
+  sawtooth.identity.allowed_keys=$(cat ~/.sawtooth/keys/{user}.pub)
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">You must run this command on the same node that created the genesis
+block. Otherwise, an additional <code class="docutils literal notranslate"><span class="pre">sawset</span> <span class="pre">proposal</span> <span class="pre">create</span></code> command would
+be required on the “genesis node” to add a second node’s
+<code class="docutils literal notranslate"><span class="pre">validator.priv</span></code> key to the <code class="docutils literal notranslate"><span class="pre">sawtooth.identity.allowed_keys</span></code> setting.
+This guide does not show that step.</p>
+</div>
+</li>
+<li><p class="first">Once your public key is stored in the setting, use the command
+<code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">identity</span> <span class="pre">policy</span> <span class="pre">create</span></code> to set and update roles and policies.</p>
+<p>For example, running the following command will create a policy that permits all
+and is named <code class="docutils literal notranslate"><span class="pre">policy_1</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth identity policy create policy_1 <span class="s2">&quot;PERMIT_KEY *&quot;</span>
+</pre></div>
+</div>
+<p>You can enter multiple permit or deny rules in the same command; separate
+each rule with a space.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Be careful not to remove your permission to change Identity settings.
+Sawtooth will not prevent you from entering a rule to deny all transactors
+(including yourself).</p>
+</div>
+</li>
+<li><p class="first">To see the policy in state, run the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth identity policy list
+<span class="go">policy_1:</span>
+<span class="go">  Entries:</span>
+<span class="go">    PERMIT_KEY *</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Use the command <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">identity</span> <span class="pre">role</span> <span class="pre">create</span></code> to create a role
+for this policy. The following example sets the role for <code class="docutils literal notranslate"><span class="pre">transactor</span></code>
+to the policy that permits all:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth identity role create transactor policy_1
+</pre></div>
+</div>
+</li>
+<li><p class="first">To see the role in state, run the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth identity role list
+<span class="go">transactor: policy_1</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="transactor-roles">
+<span id="transactor-roles-label"></span><h3>Transactor Roles<a class="headerlink" href="#transactor-roles" title="Permalink to this headline">¶</a></h3>
+<p>The following identity roles are used to control which transactors
+are allowed to sign transactions and batches on the system.</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">default</span></code>:</dt>
+<dd>When evaluating role permissions, if the role has not been set, the default
+policy is used. The policy can be changed to meet the network’s
+requirements after initial start-up by submitting a new policy with the name
+default. If the default policy has not been explicitly set, the default
+is <code class="docutils literal notranslate"><span class="pre">PERMIT_KEY</span> <span class="pre">*</span></code> (permit all).</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">transactor</span></code>:</dt>
+<dd>The top level role for controlling who can sign transactions and batches on
+the system. This role is used when the allowed
+transactors for transactions and batches are the same. Any transactor whose
+public key is in the policy is allowed to sign transactions and batches,
+unless a more specific sub-role disallows their public key.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">transactor.transaction_signer</span></code>:</dt>
+<dd>If a transaction is received that is signed by a transactor who is not
+permitted by the policy, the batch containing the transaction will be dropped.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">transactor.transaction_signer.{tp_name}</span></code>:</dt>
+<dd>If a transaction is received for a specific transaction family that is signed
+by a transactor who is not permitted by the policy, the batch containing the
+transaction will be dropped. Replace {tp_name} with a transaction family
+name (see <a class="reference internal" href="../transaction_family_specifications.html"><span class="doc">Transaction Family Specifications</span></a>.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">transactor.batch_signer</span></code>:</dt>
+<dd>If a batch is received that is signed by a transactor who is not permitted by
+the policy, that batch will be dropped.</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="validator-key-permissioning">
+<h2>Validator Key Permissioning<a class="headerlink" href="#validator-key-permissioning" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth allows the validator network to
+limit the nodes that are able to connect to it. The permissioning rules
+determine the roles a connection is able to play on the network. These roles
+control the types of messages that can be sent and received over a given
+connection. In this section, the entities acting in the different roles are
+referred to as “requesters”.</p>
+<p>Validators are able to determine whether messages delivered to them should
+be handled or dropped based on a set of role and identities stored within the
+Identity namespace. Each requester is identified by the public key derived
+from its identity signing key. Permission verifiers examine incoming
+messages against the policy and the current configuration and either permit,
+drop, or respond with an error. In certain cases, the connection will be
+forcibly closed – such as if a node is not allowed to connect to the
+validator network.</p>
+<p>This on-chain approach allows the whole network to change its policies at the
+same time while the network is live, instead of relying on a startup
+configuration.</p>
+<div class="section" id="configuring-authorization">
+<h3>Configuring Authorization<a class="headerlink" href="#configuring-authorization" title="Permalink to this headline">¶</a></h3>
+<p>The Identity namespace stores roles as key-value pairs, where the key is a role
+name and the value is a policy. Validator network permissioning roles use
+the following pattern:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>network[.SUB_ROLE] = POLICY_NAME
+</pre></div>
+</div>
+<p>where network is the name of the role to be used for validator network
+permissioning. POLICY_NAME refers to the name of a policy that is set in the
+Identity namespace. The policy defines the public keys that are allowed to
+participate in that role. The policy is made up of PERMIT_KEY and DENY_KEY
+rules and is evaluated in order. If the public key is denied, the connection
+will be rejected. For more information, please look at the
+<a class="reference internal" href="../transaction_family_specifications/identity_transaction_family.html"><span class="doc">Identity Transaction Family</span></a>.</p>
+<ol class="arabic">
+<li><p class="first">As in the previous procedure (see <a class="reference internal" href="#config-onchain-txn-perm-label"><span class="std std-ref">On-chain Transactor Permissioning</span></a>),
+make sure that the Identity and Settings transaction processors and the
+REST API are running.</p>
+</li>
+<li><p class="first">This procedure assumes that you already added your public key to the
+<code class="docutils literal notranslate"><span class="pre">sawtooth.identity.allowed_keys</span></code> setting. If not, add the your public key
+now, using the <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">sawset</span> <span class="pre">proposal</span> <span class="pre">create</span></code> command in
+<a class="reference internal" href="#config-onchain-txn-perm-label"><span class="std std-ref">On-chain Transactor Permissioning</span></a>.</p>
+</li>
+<li><p class="first">Create a new policy for the network role, as described in
+<a class="reference internal" href="#config-onchain-txn-perm-label"><span class="std std-ref">On-chain Transactor Permissioning</span></a>.
+The remaining steps assume that the policy is named <code class="docutils literal notranslate"><span class="pre">policy_2</span></code>.</p>
+</li>
+<li><p class="first">Run the following command to set the role for network to permit all:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth identity role create network policy_2
+</pre></div>
+</div>
+</li>
+<li><p class="first">To see the role in state, run the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth identity role list
+<span class="go">network: policy_2</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="network-roles">
+<h3>Network Roles<a class="headerlink" href="#network-roles" title="Permalink to this headline">¶</a></h3>
+<p>The following is the suggested high-level role for on-chain validator network
+permissioning.</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">default</span></code>:</dt>
+<dd>When evaluating role permissions, if the role has not been set, the default
+policy is used. The policy can be changed to meet the network’s
+requirements after initial start-up by submitting a new policy with the name
+default. If the default policy has not been explicitly set, the default
+is <code class="docutils literal notranslate"><span class="pre">PERMIT_KEY</span> <span class="pre">*</span></code> (permit all).</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">network</span></code>:</dt>
+<dd><p class="first">If a validator receives a peer request from a node whose public key is not
+permitted by the policy, the message will be dropped, an
+<code class="docutils literal notranslate"><span class="pre">AuthorizationViolation</span></code> will be returned, and the connection will be closed.</p>
+<p>This role is checked by the permission verifier when the following
+messages are received:</p>
+<ul class="last simple">
+<li><code class="docutils literal notranslate"><span class="pre">GossipMessage</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">GetPeersRequest</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">PeerRegisterRequest</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">PeerUnregisterRequest</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">GossipBlockRequest</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">GossipBlockResponse</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">GossipBatchByBatchIdRequest</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">GossipBatchByTransactionIdRequest</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">GossipBatchResponse</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">GossipPeersRequest</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">GossipPeersResponse</span></code></li>
+</ul>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">network.consensus</span></code>:</dt>
+<dd>If a validator receives a <code class="docutils literal notranslate"><span class="pre">GossipMessage</span></code> that contains a new block published
+by a node whose public key is not permitted by the policy, the message will
+be dropped, an <code class="docutils literal notranslate"><span class="pre">AuthorizationViolation</span></code> will be returned, and the connection
+will be closed.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="grafana_configuration.html" class="btn btn-neutral float-right" title="Using Grafana to Display Sawtooth Metrics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rest_auth_proxy.html" class="btn btn-neutral" title="Using a Proxy Server to Authorize the REST API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

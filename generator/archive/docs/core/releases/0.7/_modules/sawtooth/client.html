@@ -1,0 +1,1140 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.client &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>sawtooth.client</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sawtooth.client</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="kn">import</span> <span class="nn">urlparse</span>
+<span class="k">try</span><span class="p">:</span>  <span class="c1"># weird windows behavior</span>
+    <span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">IntEnum</span> <span class="k">as</span> <span class="n">Enum</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
+
+<span class="kn">import</span> <span class="nn">cbor</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth.exceptions</span> <span class="k">import</span> <span class="n">ClientException</span>
+<span class="kn">from</span> <span class="nn">sawtooth.exceptions</span> <span class="k">import</span> <span class="n">InvalidTransactionError</span>
+<span class="kn">from</span> <span class="nn">sawtooth.exceptions</span> <span class="k">import</span> <span class="n">MessageException</span>
+<span class="kn">from</span> <span class="nn">sawtooth_signing</span> <span class="k">import</span> <span class="n">pbct_nativerecover</span> <span class="k">as</span> <span class="n">signing</span>
+
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="c1"># Map HTTP status codes to their corresponding transaction status</span>
+<div class="viewcode-block" id="TransactionStatus"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.TransactionStatus">[docs]</a><span class="k">class</span> <span class="nc">TransactionStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">committed</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">pending</span> <span class="o">=</span> <span class="mi">302</span>
+    <span class="n">not_found</span> <span class="o">=</span> <span class="mi">404</span>
+    <span class="n">internal_server_error</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="n">server_busy</span> <span class="o">=</span> <span class="mi">503</span></div>
+
+
+<span class="k">def</span> <span class="nf">_sign_message_with_transaction</span><span class="p">(</span><span class="n">transaction</span><span class="p">,</span> <span class="n">message_type</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Signs a transaction message or transaction</span>
+<span class="sd">    :param transaction (dict):</span>
+<span class="sd">    :param key (str): A signing key</span>
+<span class="sd">    returns message, txnid (tuple): The first 16 characters</span>
+<span class="sd">    of a sha256 hexdigest.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;Nonce&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">pub</span> <span class="o">=</span> <span class="n">signing</span><span class="o">.</span><span class="n">encode_pubkey</span><span class="p">(</span><span class="n">signing</span><span class="o">.</span><span class="n">generate_pubkey</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="s2">&quot;hex&quot;</span><span class="p">)</span>
+    <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;PublicKey&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pub</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">signing</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">_dict2cbor</span><span class="p">(</span><span class="n">transaction</span><span class="p">),</span> <span class="n">key</span><span class="p">)</span>
+    <span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;Signature&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sig</span>
+
+    <span class="n">txnid</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;Signature&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">16</span><span class="p">]</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Transaction&#39;</span><span class="p">:</span> <span class="n">transaction</span><span class="p">,</span>
+        <span class="s1">&#39;__TYPE__&#39;</span><span class="p">:</span> <span class="n">message_type</span><span class="p">,</span>
+        <span class="s1">&#39;__NONCE__&#39;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span>
+    <span class="p">}</span>
+    <span class="n">cbor_serialized_message</span> <span class="o">=</span> <span class="n">_dict2cbor</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="n">signing</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">cbor_serialized_message</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="n">message</span><span class="p">[</span><span class="s1">&#39;__SIGNATURE__&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">signature</span>
+    <span class="k">return</span> <span class="n">message</span><span class="p">,</span> <span class="n">txnid</span>
+
+
+<span class="k">def</span> <span class="nf">_pretty_print_dict</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generates a pretty-print formatted version of the input JSON.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dictionary (dict): the JSON string to format.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: pretty-print formatted string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">_ascii_encode_dict</span><span class="p">(</span><span class="n">dictionary</span><span class="p">),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_json2dict</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Deserializes JSON into a dictionary.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dictionary (str): the JSON string to deserialize.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: a dictionary object reflecting the structure of the JSON.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_ascii_encode_dict</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">dictionary</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_cbor2dict</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Deserializes CBOR into a dictionary.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dictionary (bytes): the CBOR object to deserialize.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: a dictionary object reflecting the structure of the CBOR.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">_ascii_encode_dict</span><span class="p">(</span><span class="n">cbor</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">dictionary</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_dict2cbor</span><span class="p">(</span><span class="n">dictionary</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Serializes a dictionary into CBOR.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dictionary (dict): a dictionary object to serialize into CBOR.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bytes: a CBOR object reflecting the structure of the input dict.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">cbor</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">_unicode_encode_dict</span><span class="p">(</span><span class="n">dictionary</span><span class="p">),</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_ascii_encode_dict</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Support method to ensure that JSON is converted to ascii since unicode</span>
+<span class="sd">    identifiers, in particular, can cause problems</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">_ascii_encode_dict</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">_ascii_encode_dict</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">_ascii_encode_dict</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">item</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">unicode</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">item</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">item</span>
+
+
+<span class="k">def</span> <span class="nf">_unicode_encode_dict</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Support method to ensure that JSON is converted to ascii since unicode</span>
+<span class="sd">    identifiers, in particular, can cause problems</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">_unicode_encode_dict</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">_unicode_encode_dict</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">_unicode_encode_dict</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">item</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">unicode</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">item</span>
+
+
+<span class="k">class</span> <span class="nc">_Communication</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to encapsulate communication with the validator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_url</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">=</span> <span class="n">base_url</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_proxy_handler</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">ProxyHandler</span><span class="p">({})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cookie</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">base_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span>
+
+    <span class="k">def</span> <span class="nf">headrequest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Send an HTTP head request to the validator. Return the result code.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;get content from url &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">get_method</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="s1">&#39;HEAD&#39;</span>
+            <span class="n">opener</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_proxy_handler</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">opener</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="c1"># in this case it isn&#39;t really an error since we are just looking</span>
+            <span class="c1"># for the status code</span>
+            <span class="k">return</span> <span class="n">err</span><span class="o">.</span><span class="n">code</span>
+
+        <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">URLError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;operation failed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">MessageException</span><span class="p">(</span><span class="s1">&#39;operation failed: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">reason</span><span class="p">))</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;no response from server&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">MessageException</span><span class="p">(</span><span class="s1">&#39;no response from server&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">code</span>
+
+    <span class="k">def</span> <span class="nf">_print_error_information_from_server</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">err</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">err</span><span class="o">.</span><span class="n">code</span> <span class="o">==</span> <span class="mi">400</span><span class="p">:</span>
+            <span class="n">err_content</span> <span class="o">=</span> <span class="n">err</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Error from server, detail information: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                        <span class="n">err_content</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">getmsg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Send an HTTP get request to the validator. If the resulting content</span>
+<span class="sd">        is in JSON form, parse it &amp; return the corresponding dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;get content from url &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">opener</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_proxy_handler</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">opener</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;operation failed with response: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_print_error_information_from_server</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">MessageException</span><span class="p">(</span>
+                <span class="s1">&#39;operation failed with response: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">code</span><span class="p">))</span>
+
+        <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">URLError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;operation failed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">MessageException</span><span class="p">(</span><span class="s1">&#39;operation failed: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">reason</span><span class="p">))</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;no response from server&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">MessageException</span><span class="p">(</span><span class="s1">&#39;no response from server&#39;</span><span class="p">)</span>
+
+        <span class="n">content</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">encoding</span> <span class="o">=</span> <span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">encoding</span> <span class="o">==</span> <span class="s1">&#39;application/json&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_json2dict</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">encoding</span> <span class="o">==</span> <span class="s1">&#39;application/cbor&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_cbor2dict</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">content</span>
+
+    <span class="k">def</span> <span class="nf">postmsg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msgtype_name</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Post a transaction message to the validator, parse the returning CBOR</span>
+<span class="sd">        and return the corresponding dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">_dict2cbor</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+        <span class="n">datalen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span><span class="p">,</span> <span class="n">msgtype_name</span><span class="p">)</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;post transaction to </span><span class="si">%s</span><span class="s1"> with DATALEN=</span><span class="si">%d</span><span class="s1">, DATA=&lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span>
+                     <span class="n">datalen</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+                                      <span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/cbor&#39;</span><span class="p">,</span>
+                                       <span class="s1">&#39;Content-Length&#39;</span><span class="p">:</span> <span class="n">datalen</span><span class="p">})</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cookie</span><span class="p">:</span>
+                <span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;cookie&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cookie</span><span class="p">)</span>
+
+            <span class="n">opener</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_proxy_handler</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">opener</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cookie</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cookie</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Set-Cookie&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="n">err</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">content</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">headers</span> <span class="o">=</span> <span class="n">err</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+                <span class="n">encoding</span> <span class="o">=</span> <span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">encoding</span> <span class="o">==</span> <span class="s1">&#39;application/json&#39;</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">_json2dict</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">encoding</span> <span class="o">==</span> <span class="s1">&#39;application/cbor&#39;</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">_cbor2dict</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;operation failed with response: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">MessageException</span><span class="p">(</span>
+                        <span class="s1">&#39;operation failed with response: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">code</span><span class="p">))</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;operation failed with response: </span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                            <span class="n">err</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                <span class="k">if</span> <span class="s2">&quot;errorType&quot;</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">value</span><span class="p">[</span><span class="s1">&#39;errorType&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;InvalidTransactionError&quot;</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span>
+                            <span class="n">value</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;error&#39;</span> <span class="ow">in</span> <span class="n">value</span> <span class="k">else</span> <span class="n">value</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">MessageException</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">MessageException</span><span class="p">(</span>
+                    <span class="s1">&#39;operation failed with response: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">code</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">URLError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;operation failed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">err</span><span class="o">.</span><span class="n">reason</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">MessageException</span><span class="p">(</span><span class="s1">&#39;operation failed: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">reason</span><span class="p">))</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;no response from server&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">MessageException</span><span class="p">(</span><span class="s1">&#39;no response from server&#39;</span><span class="p">)</span>
+
+        <span class="n">content</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">encoding</span> <span class="o">=</span> <span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">encoding</span> <span class="o">==</span> <span class="s1">&#39;application/json&#39;</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">_json2dict</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">encoding</span> <span class="o">==</span> <span class="s1">&#39;application/cbor&#39;</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">_cbor2dict</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;server responds with message </span><span class="si">%s</span><span class="s1"> of type </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span>
+                        <span class="n">encoding</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">_pretty_print_dict</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+
+<div class="viewcode-block" id="UpdateBatch"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.UpdateBatch">[docs]</a><span class="k">class</span> <span class="nc">UpdateBatch</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper object to allow group updates submission using</span>
+<span class="sd">         sawtooth client.</span>
+
+<span class="sd">         the block</span>
+<span class="sd">          try:</span>
+<span class="sd">            client.start_batch()</span>
+<span class="sd">            client.send_txn(...)</span>
+<span class="sd">            client.send_txn(...)</span>
+<span class="sd">            client.send_batch()</span>
+<span class="sd">          except:</span>
+<span class="sd">            client.reset_batch()</span>
+
+<span class="sd">         becomes:</span>
+
+<span class="sd">            with UpdateBatch(client) as _:</span>
+<span class="sd">                client.send_txn()</span>
+<span class="sd">                client.send_txn()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">start_batch</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">,</span> <span class="n">exception_value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">exception_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">send_batch</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">reset_batch</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SawtoothClient"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient">[docs]</a><span class="k">class</span> <span class="nc">SawtoothClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">base_url</span><span class="p">,</span>
+                 <span class="n">store_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">name</span><span class="o">=</span><span class="s1">&#39;SawtoothClient&#39;</span><span class="p">,</span>
+                 <span class="n">txntype_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">msgtype_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">keystring</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">keyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">disable_client_validation</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span> <span class="o">=</span> <span class="n">base_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_message_type</span> <span class="o">=</span> <span class="n">msgtype_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transaction_type</span> <span class="o">=</span> <span class="n">txntype_name</span>
+
+        <span class="c1"># an explicit store name takes precedence over a store name</span>
+        <span class="c1"># implied by the transaction type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_store_name</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">store_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_store_name</span> <span class="o">=</span> <span class="n">store_name</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">txntype_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_store_name</span> <span class="o">=</span> <span class="n">txntype_name</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_communication</span> <span class="o">=</span> <span class="n">_Communication</span><span class="p">(</span><span class="n">base_url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_transaction</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_signing_key</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_batch</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_disable_client_validation</span> <span class="o">=</span> <span class="n">disable_client_validation</span>
+
+        <span class="k">if</span> <span class="n">keystring</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;set signing key from string</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">keystring</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_signing_key</span> <span class="o">=</span> <span class="n">signing</span><span class="o">.</span><span class="n">decode_privkey</span><span class="p">(</span><span class="n">keystring</span><span class="p">,</span> <span class="s1">&#39;wif&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">keyfile</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;set signing key from file </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">keyfile</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_signing_key</span> <span class="o">=</span> <span class="n">signing</span><span class="o">.</span><span class="n">decode_privkey</span><span class="p">(</span>
+                    <span class="nb">open</span><span class="p">(</span><span class="n">keyfile</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="s1">&#39;wif&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">IOError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ClientException</span><span class="p">(</span>
+                    <span class="s2">&quot;Failed to load key file: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_signing_key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="o">=</span> <span class="n">signing</span><span class="o">.</span><span class="n">generate_identifier</span><span class="p">(</span>
+                <span class="n">signing</span><span class="o">.</span><span class="n">generate_pubkey</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_signing_key</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">base_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">last_transaction_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_transaction</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_construct_store_path</span><span class="p">(</span><span class="n">txn_type_or_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                              <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                              <span class="n">block_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                              <span class="n">delta</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;store&#39;</span>
+
+        <span class="n">path</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">txn_type_or_name</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">key</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+        <span class="n">query</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="n">block_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">query</span><span class="p">[</span><span class="s1">&#39;blockid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">block_id</span>
+        <span class="k">if</span> <span class="n">delta</span><span class="p">:</span>
+            <span class="n">query</span><span class="p">[</span><span class="s1">&#39;delta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">+=</span> <span class="s1">&#39;?&#39;</span> <span class="o">+</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">path</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_construct_list_path</span><span class="p">(</span><span class="n">list_type</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">list_type</span>
+
+        <span class="k">if</span> <span class="n">count</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">+=</span> <span class="s1">&#39;?&#39;</span> <span class="o">+</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">({</span><span class="s1">&#39;blockcount&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="p">)})</span>
+
+        <span class="k">return</span> <span class="n">path</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_construct_block_list_path</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SawtoothClient</span><span class="o">.</span><span class="n">_construct_list_path</span><span class="p">(</span><span class="s1">&#39;block&#39;</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_construct_transaction_list_path</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SawtoothClient</span><span class="o">.</span><span class="n">_construct_list_path</span><span class="p">(</span><span class="s1">&#39;transaction&#39;</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_construct_item_path</span><span class="p">(</span><span class="n">item_type</span><span class="p">,</span> <span class="n">item_id</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item_type</span><span class="p">,</span> <span class="n">item_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">field</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">field</span>
+
+        <span class="k">return</span> <span class="n">path</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_construct_block_path</span><span class="p">(</span><span class="n">block_id</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SawtoothClient</span><span class="o">.</span><span class="n">_construct_item_path</span><span class="p">(</span><span class="s1">&#39;block&#39;</span><span class="p">,</span> <span class="n">block_id</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_construct_transaction_path</span><span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> \
+            <span class="n">SawtoothClient</span><span class="o">.</span><span class="n">_construct_item_path</span><span class="p">(</span>
+                <span class="s1">&#39;transaction&#39;</span><span class="p">,</span>
+                <span class="n">transaction_id</span><span class="p">,</span>
+                <span class="n">field</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SawtoothClient.start_batch"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.start_batch">[docs]</a>    <span class="k">def</span> <span class="nf">start_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Start a batch of updates to be sent in a single transaction to</span>
+<span class="sd">        the validator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_batch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ClientException</span><span class="p">(</span>
+                <span class="s2">&quot;Update batch already in progress.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_batch</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Updates&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;Dependencies&#39;</span><span class="p">:</span> <span class="p">[]</span>
+        <span class="p">}</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.reset_batch"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.reset_batch">[docs]</a>    <span class="k">def</span> <span class="nf">reset_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Abandon the current batch.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_batch</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.send_batch"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.send_batch">[docs]</a>    <span class="k">def</span> <span class="nf">send_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends the current batch of transactions to the Validator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            transaction_id of the update transaction</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_update_batch</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ClientException</span><span class="p">(</span><span class="s2">&quot;No updates in batch.&quot;</span><span class="p">)</span>
+        <span class="n">msg_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_batch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_batch</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sendtxn</span><span class="p">(</span>
+            <span class="n">minfo</span><span class="o">=</span><span class="n">msg_info</span><span class="p">,</span>
+            <span class="n">txntype_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_transaction_type</span><span class="p">,</span>
+            <span class="n">msgtype_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_message_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.send_update"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.send_update">[docs]</a>    <span class="k">def</span> <span class="nf">send_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">updates</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Send an update or list of updates to the validator or add them to an</span>
+<span class="sd">        existing batch.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            updates: single update or list of updates to be sent.</span>
+<span class="sd">            dependencies: ids of transactions dependencies.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            transaction_id if update is sent, None if it is added to a batch.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_batch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># if we are in batching mode.</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">updates</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>  <span class="c1"># accept single update</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_batch</span><span class="p">[</span><span class="s1">&#39;Updates&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">updates</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">updates</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>  <span class="c1"># or a list</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_batch</span><span class="p">[</span><span class="s1">&#39;Updates&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">updates</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ClientException</span><span class="p">(</span>
+                    <span class="s2">&quot;Unexpected updates type </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">updates</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="n">dependencies</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_batch</span><span class="p">[</span><span class="s1">&#39;Dependencies&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">dependencies</span>
+            <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># there is no transaction id yet.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">updates</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>  <span class="c1"># accept single update</span>
+                <span class="n">updates</span> <span class="o">=</span> <span class="p">[</span><span class="n">updates</span><span class="p">]</span>
+
+        <span class="n">dependencies</span> <span class="o">=</span> <span class="n">dependencies</span> <span class="ow">or</span> <span class="p">[]</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sendtxn</span><span class="p">(</span>
+            <span class="n">minfo</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;Updates&#39;</span><span class="p">:</span> <span class="n">updates</span><span class="p">,</span>
+                <span class="s1">&#39;Dependencies&#39;</span><span class="p">:</span> <span class="n">dependencies</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">txntype_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_transaction_type</span><span class="p">,</span>
+            <span class="n">msgtype_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_message_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.sendtxn"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.sendtxn">[docs]</a>    <span class="k">def</span> <span class="nf">sendtxn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txntype_name</span><span class="p">,</span> <span class="n">msgtype_name</span><span class="p">,</span> <span class="n">minfo</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build a transaction for the update, wrap it in a message with all</span>
+<span class="sd">        of the appropriate signatures and post it to the validator. Will</span>
+<span class="sd">        not work with UpdatesTransaction txn families but will work with</span>
+<span class="sd">        txn families in Arcade.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_signing_key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ClientException</span><span class="p">(</span>
+                <span class="s1">&#39;can not send transactions as a read-only client&#39;</span><span class="p">)</span>
+
+        <span class="n">txn</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;TransactionType&#39;</span><span class="p">:</span> <span class="n">txntype_name</span><span class="p">}</span>
+        <span class="n">txn</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">txn</span><span class="p">,</span> <span class="o">**</span><span class="n">minfo</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;Dependencies&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">txn</span><span class="p">:</span>
+            <span class="n">txn</span><span class="p">[</span><span class="s1">&#39;Dependencies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">msg</span><span class="p">,</span> <span class="n">txnid</span> <span class="o">=</span> <span class="n">_sign_message_with_transaction</span><span class="p">(</span>
+            <span class="n">txn</span><span class="p">,</span>
+            <span class="n">msgtype_name</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_signing_key</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Posting transaction: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">txnid</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_communication</span><span class="o">.</span><span class="n">postmsg</span><span class="p">(</span><span class="n">msgtype_name</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">MessageException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Posting transaction failed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># if there was no exception thrown then all transactions should return</span>
+        <span class="c1"># a value which is a dictionary with the message that was sent</span>
+        <span class="k">assert</span> <span class="n">result</span>
+
+        <span class="c1"># if the message was successfully posted, then save the transaction</span>
+        <span class="c1"># id for future dependencies</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_transaction</span> <span class="o">=</span> <span class="n">txnid</span>
+        <span class="k">return</span> <span class="n">txnid</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.get_status"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.get_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the status for a validator</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timeout: Number of seconds to wait for response before determining</span>
+<span class="sd">                reqeuest has timed out</span>
+
+<span class="sd">        Returns: A dictionary of status items</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_communication</span><span class="o">.</span><span class="n">getmsg</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.get_store_list"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.get_store_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_store_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the list of stores on the validator.</span>
+
+<span class="sd">        Returns: A list of store names</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_communication</span><span class="o">.</span><span class="n">getmsg</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.get_store_by_name"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.get_store_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_store_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                          <span class="n">txn_type_or_name</span><span class="p">,</span>
+                          <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                          <span class="n">block_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                          <span class="n">delta</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generic store retrieval method of any named store.  This allows</span>
+<span class="sd">        complete flexibility in specifying the parameters to the HTTP</span>
+<span class="sd">        request.</span>
+
+<span class="sd">        This function is used when the client has not been configured, on</span>
+<span class="sd">        construction, to use a specific store or you wish to access a</span>
+<span class="sd">        different store than the object was initially configured to use.</span>
+
+<span class="sd">        This function should only be used when you need absolute control</span>
+<span class="sd">        over the HTTP request being made to the store.  Otherwise, the</span>
+<span class="sd">        store convenience methods should be used instead.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            txn_type_or_name: A transaction class or object (i.e., derived</span>
+<span class="sd">                from transaction.Transaction) that can be used to infer the</span>
+<span class="sd">                store name or a string with the store name.</span>
+<span class="sd">            key: (optional) The object to retrieve from the store.  If None,</span>
+<span class="sd">                will returns keys instead of objects.</span>
+<span class="sd">            block_id: (optional) The block ID to use as ending or starting</span>
+<span class="sd">                point of retrieval.</span>
+<span class="sd">            delta: (optional) A flag to indicate of only a delta should be</span>
+<span class="sd">                returned.  If key is None, this is ignored.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Either a list of keys, a dictionary of name/value pairs that</span>
+<span class="sd">            represent one or more objects, or a delta representation of the</span>
+<span class="sd">            store.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            Reference the Sawtooth Lake Web API documentation for the</span>
+<span class="sd">            behavior for the key/block_id/delta combinations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">_communication</span><span class="o">.</span><span class="n">getmsg</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_construct_store_path</span><span class="p">(</span>
+                    <span class="n">txn_type_or_name</span><span class="o">=</span><span class="n">txn_type_or_name</span><span class="p">,</span>
+                    <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
+                    <span class="n">block_id</span><span class="o">=</span><span class="n">block_id</span><span class="p">,</span>
+                    <span class="n">delta</span><span class="o">=</span><span class="n">delta</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.get_store"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.get_store">[docs]</a>    <span class="k">def</span> <span class="nf">get_store</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">block_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generic store retrieval method.  This allows complete flexibility</span>
+<span class="sd">        in specifying the parameters to the HTTP request.</span>
+
+<span class="sd">        This function should only be used when you need absolute control</span>
+<span class="sd">        over the HTTP request being made to the store.  Otherwise, the</span>
+<span class="sd">        store convenience methods should be used instead.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key: (optional) The object to retrieve from the store.  If None,</span>
+<span class="sd">                will returns keys instead of objects.</span>
+<span class="sd">            block_id: (optional) The block ID to use as ending or starting</span>
+<span class="sd">                point of retrieval.</span>
+<span class="sd">            delta: (optional) A flag to indicate of only a delta should be</span>
+<span class="sd">                returned.  If key is None, this is ignored.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Either a list of keys, a dictionary of name/value pairs that</span>
+<span class="sd">            represent one or more objects, or a delta representation of the</span>
+<span class="sd">            store.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            Reference the Sawtooth Lake Web API documentation for the</span>
+<span class="sd">            behavior for the key/block_id/delta combinations.</span>
+
+<span class="sd">        Raises ClientException if the client object was not created with a</span>
+<span class="sd">        store name or transaction type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_store_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> \
+                <span class="n">ClientException</span><span class="p">(</span>
+                    <span class="s1">&#39;The client must be configured with a store name or &#39;</span>
+                    <span class="s1">&#39;transaction type&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_store_by_name</span><span class="p">(</span>
+                <span class="n">txn_type_or_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_store_name</span><span class="p">,</span>
+                <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
+                <span class="n">block_id</span><span class="o">=</span><span class="n">block_id</span><span class="p">,</span>
+                <span class="n">delta</span><span class="o">=</span><span class="n">delta</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.get_store_keys"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.get_store_keys">[docs]</a>    <span class="k">def</span> <span class="nf">get_store_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the list of keys (object IDs) from the store.</span>
+
+<span class="sd">        Returns: A list of keys for the store</span>
+
+<span class="sd">        Raises ClientException if the client object was not created with a</span>
+<span class="sd">        store name or transaction type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_store</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.get_all_store_objects"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.get_all_store_objects">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_store_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve all of the objects for a particular store</span>
+
+<span class="sd">        Returns: A dictionary mapping object keys to objects (dictionaries</span>
+<span class="sd">            of key/value pairs).</span>
+
+<span class="sd">        Raises ClientException if the client object was not created with a</span>
+<span class="sd">        store name or transaction type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_store</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.get_store_object_for_key"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.get_store_object_for_key">[docs]</a>    <span class="k">def</span> <span class="nf">get_store_object_for_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the object from the store corresponding to the key</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key: The object to retrieve from the store</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary of name/value pairs that represent the object</span>
+<span class="sd">            associated with the key provided.</span>
+
+<span class="sd">        Raises ClientException if the client object was not created with a</span>
+<span class="sd">        store name or transaction type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_store</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.get_store_delta_for_block"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.get_store_delta_for_block">[docs]</a>    <span class="k">def</span> <span class="nf">get_store_delta_for_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the store for just the block provided.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            block_id: The ID of the block for which store should be returned.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">             A dictionary that represents the store.</span>
+
+<span class="sd">        Raises ClientException if the client object was not created with a</span>
+<span class="sd">        store name or transaction type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_store</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">block_id</span><span class="o">=</span><span class="n">block_id</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.get_store_objects_through_block"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.get_store_objects_through_block">[docs]</a>    <span class="k">def</span> <span class="nf">get_store_objects_through_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve all of the objects for a particular store up through the</span>
+<span class="sd">        block requested.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            block_id: The ID of the last block to look for objects.</span>
+
+<span class="sd">        Returns: A dictionary mapping object keys to objects (dictionaries</span>
+<span class="sd">            of key/value pairs).</span>
+
+<span class="sd">        Raises ClientException if the client object was not created with a</span>
+<span class="sd">        store name or transaction type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_store</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">block_id</span><span class="o">=</span><span class="n">block_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.get_block_list"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.get_block_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_block_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the list of block IDs, ordered from newest to oldest.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            count: (optional) If not None, specifies the maximum number of</span>
+<span class="sd">                blocks to return.</span>
+
+<span class="sd">        Returns: A list of block IDs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">_communication</span><span class="o">.</span><span class="n">getmsg</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_construct_block_list_path</span><span class="p">(</span><span class="n">count</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.get_block"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.get_block">[docs]</a>    <span class="k">def</span> <span class="nf">get_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_id</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve information about a specific block, returning all information</span>
+<span class="sd">        or, if provided, a specific field from the block.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            block_id: The ID of the block to retrieve</span>
+<span class="sd">            field: (optional) If not None, specifies the name of the field to</span>
+<span class="sd">                retrieve from the block.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary of block data, if field is None</span>
+<span class="sd">            The value for the field, if field is not None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">_communication</span><span class="o">.</span><span class="n">getmsg</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_construct_block_path</span><span class="p">(</span><span class="n">block_id</span><span class="p">,</span> <span class="n">field</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.get_transaction_list"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.get_transaction_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_transaction_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block_count</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the list of transaction IDs, ordered from newest to oldest.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            block_count: (optional) If not None, specifies the maximum number</span>
+<span class="sd">                of blocks to return transaction IDs for.</span>
+
+<span class="sd">        Returns: A list of transaction IDs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">_communication</span><span class="o">.</span><span class="n">getmsg</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_construct_transaction_list_path</span><span class="p">(</span><span class="n">block_count</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.get_transaction"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.get_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">get_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve information about a specific transaction, returning all</span>
+<span class="sd">        information or, if provided, a specific field from the transaction.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            transaction_id: The ID of the transaction to retrieve</span>
+<span class="sd">            field: (optional) If not None, specifies the name of the field to</span>
+<span class="sd">                retrieve from the transaction.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary of transaction data, if field is None</span>
+<span class="sd">            The value for the field, if field is not None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">_communication</span><span class="o">.</span><span class="n">getmsg</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_construct_transaction_path</span><span class="p">(</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">field</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.get_transaction_status"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.get_transaction_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_transaction_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves that status of a transaction.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            transaction_id: The ID of the transaction to check.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            One of the TransactionStatus values (committed, etc.)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">_communication</span><span class="o">.</span><span class="n">headrequest</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_construct_transaction_path</span><span class="p">(</span><span class="n">transaction_id</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.forward_message"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.forward_message">[docs]</a>    <span class="k">def</span> <span class="nf">forward_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Post a gossip message to the ledger with the intent of having the</span>
+<span class="sd">        receiving validator forward it to all of its peers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            msg: The message to send.</span>
+
+<span class="sd">        Returns: The parsed response, which is typically the encoding of</span>
+<span class="sd">            the original message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_communication</span><span class="o">.</span><span class="n">postmsg</span><span class="p">(</span><span class="s1">&#39;forward&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">dump</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="SawtoothClient.wait_for_commit"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.client.html#sawtooth.client.SawtoothClient.wait_for_commit">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_commit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txnid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timetowait</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wait until a specified transaction shows up in the ledger&#39;s committed</span>
+<span class="sd">        transaction list</span>
+
+<span class="sd">        :param id txnid: the transaction to wait for, the last transaction by</span>
+<span class="sd">            default</span>
+<span class="sd">        :param int timetowait: time to wait between polling the ledger</span>
+<span class="sd">        :param int iterations: number of iterations to wait before giving up</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">txnid</span><span class="p">:</span>
+            <span class="n">txnid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_transaction</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">txnid</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;no transaction specified for wait&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">passes</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">passes</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_transaction_status</span><span class="p">(</span><span class="n">txnid</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span> <span class="o">!=</span> <span class="n">TransactionStatus</span><span class="o">.</span><span class="n">committed</span> <span class="ow">and</span> <span class="n">passes</span> <span class="o">&gt;</span> <span class="n">iterations</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">TransactionStatus</span><span class="o">.</span><span class="n">not_found</span><span class="p">:</span>
+                    <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;unknown transaction </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">txnid</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">status</span> <span class="o">==</span> <span class="n">TransactionStatus</span><span class="o">.</span><span class="n">pending</span><span class="p">:</span>
+                    <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                        <span class="s1">&#39;transaction </span><span class="si">%s</span><span class="s1"> still uncommitted after </span><span class="si">%d</span><span class="s1"> sec&#39;</span><span class="p">,</span>
+                        <span class="n">txnid</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                        <span class="s1">&#39;transaction </span><span class="si">%s</span><span class="s1"> returned unexpected status code </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span>
+                        <span class="n">txnid</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">TransactionStatus</span><span class="o">.</span><span class="n">committed</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">pretty_status</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">TransactionStatus</span><span class="p">(</span><span class="n">status</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="n">pretty_status</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s1">&#39;waiting for transaction </span><span class="si">%s</span><span class="s1"> to commit (</span><span class="si">%s</span><span class="s1">)&#39;</span><span class="p">,</span>
+                <span class="n">txnid</span><span class="p">,</span>
+                <span class="n">pretty_status</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">timetowait</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

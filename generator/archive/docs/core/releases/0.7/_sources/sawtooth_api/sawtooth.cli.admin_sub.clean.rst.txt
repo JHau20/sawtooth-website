@@ -1,0 +1,7 @@
+sawtooth\.cli\.admin\_sub\.clean module
+=======================================
+
+.. automodule:: sawtooth.cli.admin_sub.clean
+    :members:
+    :undoc-members:
+    :show-inheritance:

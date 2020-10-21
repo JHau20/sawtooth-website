@@ -1,0 +1,924 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sabre Application Developer’s Guide &mdash; Sawtooth Sabre v0.5.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sabre CLI Reference" href="sabre_cli.html" />
+    <link rel="prev" title="Sabre Transaction Family" href="sabre_transaction_family.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Sawtooth Sabre
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.5.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sabre_transaction_family.html">Sabre Transaction Family</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sabre Application Developer’s Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#writing-a-sabre-smart-contract">Writing A Sabre Smart Contract</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#converting-a-transaction-processor-to-a-smart-contract">Converting a Transaction Processor to a Smart Contract</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#logging-in-a-sabre-smart-contract">Logging in a Sabre Smart Contract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#compiling-the-contract">Compiling the Contract</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rust">Rust</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#assemblyscript">AssemblyScript</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#using-asinit">Using asinit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#without-asinit">Without asinit</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#running-a-sabre-smart-contract">Running a Sabre Smart Contract</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-start-sawtooth-sabre-with-docker">Step 1: Start Sawtooth Sabre with Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-create-initial-values-for-the-smart-contract">Step 2: Create Initial Values for the Smart Contract</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-generate-the-payload-file">Step 3: Generate the Payload File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-4-create-a-contract-registry">Step 4: Create a Contract Registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-5-upload-the-contract-definition-file">Step 5. Upload the Contract Definition File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-6-create-a-namespace-registry-and-set-contract-permissions">Step 6. Create a Namespace Registry and Set Contract Permissions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-7-execute-the-smart-contract">Step 7. Execute the Smart Contract</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-8-stop-the-sawtooth-environment">Step 8: Stop the Sawtooth Environment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sabre_cli.html">Sabre CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smart_permissions.html">Smart Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_compatibility.html">Sabre and Sawtooth Version Compatibility</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sawtooth Sabre</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Sabre Application Developer’s Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/application_developer_guide.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sabre-application-developer-s-guide">
+<h1>Sabre Application Developer’s Guide<a class="headerlink" href="#sabre-application-developer-s-guide" title="Permalink to this headline">¶</a></h1>
+<p>The guide covers development of Sabre smart contracts which can be stored on
+chain and executed using the Sabre Transaction Processor. Topics covered
+include how to write a smart contract, how to convert an already existing
+transaction processor to a smart contract, and how to upload and execute the
+contracts.</p>
+<p>It would be a good idea to read through the Sabre Transaction Family
+Specification before reading through this guide.</p>
+<p>Currently, Sabre has a Rust SDK and an AssemblyScript SDK to support writing
+Sabre smart contracts. The following guide will use an example smart contract
+written in rust called intkey-multiply. This smart contract will take intkey
+values, multiply them, and store the new intkey key value pair in the intkey
+state.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This guide assumes familiarity with Sawtooth Transaction Processors
+and that cargo/rust is already installed.</p>
+</div>
+<div class="section" id="writing-a-sabre-smart-contract">
+<span id="writing-sabre-sm-label"></span><h2>Writing A Sabre Smart Contract<a class="headerlink" href="#writing-a-sabre-smart-contract" title="Permalink to this headline">¶</a></h2>
+<p>The Sabre Smart Contracts use a similar API to the Sawtooth transaction
+processor API. If you are unfamiliar, please take a look at
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/sdks.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/sdks.html</a>.</p>
+<p>Include the Sabre SDK in the dependencies list of the Cargo.toml file.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[dependencies]
+sabre-sdk = {git = &quot;https://github.com/hyperledger/sawtooth-sabre&quot;}
+</pre></div>
+</div>
+<p>The Sabre SDK provides the following required structs needed to write
+a smart contract.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">sabre_sdk</span>::<span class="n">ApplyError</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">sabre_sdk</span>::<span class="n">TransactionContext</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">sabre_sdk</span>::<span class="n">TransactionHandler</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">sabre_sdk</span>::<span class="n">TpProcessRequest</span><span class="p">;</span><span class="w"></span>
+<span class="k">use</span><span class="w"> </span><span class="n">sabre_sdk</span>::<span class="p">{</span><span class="n">WasmPtr</span><span class="p">,</span><span class="w"> </span><span class="n">execute_entrypoint</span><span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>ApplyError: Used to raise an InvalidTransaction or an InternalError</p></li>
+<li><dl class="simple">
+<dt>TransactionHandler: Mimics the Sawtooth SDK TransactionHandler and should be</dt><dd><p>used when writting a smart contract that can also function as a Transaction
+Processor.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>TpProcessRequest: Mimics the TpProcessRequest used by the Transaction</dt><dd><p>Processor API. The payload, header and signer can be retrieved from this
+struct.</p>
+</dd>
+</dl>
+</li>
+<li><p>WasmPtr: Pointer to location in executor memory.</p></li>
+<li><dl class="simple">
+<dt>execute_entrypoint: Required by the entrypoint function used by the wasm</dt><dd><p>interpreter to execute the contract.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Every smart contract must contain an entrypoint function and an apply function
+that can be passed into execute_entrypoint.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[no_mangle]</span><span class="w"></span>
+<span class="k">pub</span><span class="w"> </span><span class="k">unsafe</span><span class="w"> </span><span class="k">fn</span> <span class="nf">entrypoint</span><span class="p">(</span><span class="n">payload</span>: <span class="nc">WasmPtr</span><span class="p">,</span><span class="w"> </span><span class="n">signer</span>: <span class="nc">WasmPtr</span><span class="p">,</span><span class="w"> </span><span class="n">signature</span>: <span class="nc">WasmPtr</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">execute_entrypoint</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">signer</span><span class="p">,</span><span class="w"> </span><span class="n">signature</span><span class="p">,</span><span class="w"> </span><span class="n">apply</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The apply method should have the following signature.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">apply</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">request</span>: <span class="kp">&amp;</span><span class="nc">TpProcessRequest</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">context</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">dyn</span><span class="w"> </span><span class="n">TransactionContext</span><span class="p">,</span><span class="w"></span>
+<span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="n">ApplyError</span><span class="o">&gt;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The main function can be empty if you are only writing the smart contract to
+be deployed, not started up as a transaction processor in a different process.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="section" id="converting-a-transaction-processor-to-a-smart-contract">
+<h3>Converting a Transaction Processor to a Smart Contract<a class="headerlink" href="#converting-a-transaction-processor-to-a-smart-contract" title="Permalink to this headline">¶</a></h3>
+<p>Due to the similar API used for the Sabre SDK and the Sawtooth Transaction
+Processor SDK it is very simple to convert an existing transaction processor to
+a smart contract. In fact the exact same code can be run in either format.</p>
+<p>The Cargo.toml file should be updated to use Rust’s built in cfg attribute.
+Split the dependencies into what is required for normal transaction processors,
+dependencies for the smart contract, and dependencies used by both.
+Dependencies used by both should remain under <code class="docutils literal notranslate"><span class="pre">[dependencies]</span></code>, while smart
+contract dependencies should go under the
+<code class="docutils literal notranslate"><span class="pre">[target.'cfg(target_arch</span> <span class="pre">=</span> <span class="pre">&quot;wasm32&quot;)'.dependencies]</span></code> and transaction processors
+dependencies should go under <code class="docutils literal notranslate"><span class="pre">[target.'cfg(not(target_arch</span> <span class="pre">=</span> <span class="pre">&quot;wasm32&quot;))'.dependencies]</span></code>.</p>
+<p>The following is an example for intkey-multiply</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[package]
+name = &quot;intkey-multiply&quot;
+version = &quot;0.1.0&quot;
+authors = [&quot;Cargill Incorporated&quot;]
+edition = &quot;2018&quot;
+
+[dependencies]
+clap = &quot;2&quot;
+protobuf = &quot;2&quot;
+cfg-if = &quot;0.1&quot;
+hex = &quot;0.3.1&quot;
+
+[target.&#39;cfg(target_arch = &quot;wasm32&quot;)&#39;.dependencies]
+rust-crypto-wasm = &quot;0.3&quot;
+sabre-sdk = {path = &quot;../../../sdks/rust&quot;}
+
+[target.&#39;cfg(not(target_arch = &quot;wasm32&quot;))&#39;.dependencies]
+rust-crypto = &quot;0.2.36&quot;
+sawtooth-sdk = {git = &quot;https://github.com/hyperledger/sawtooth-sdk-rust&quot;}
+rustc-serialize = &quot;0.3.22&quot;
+log = &quot;0.3.0&quot;
+log4rs = &quot;0.7.0&quot;
+</pre></div>
+</div>
+<p>The main.rs file for the transaction processor should separate out the
+different extern crate and use statements. This can be done using cfg_if. Make
+the handler a public module and add an empty main function.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[macro_use]</span><span class="w"></span>
+<span class="k">extern</span><span class="w"> </span><span class="k">crate</span><span class="w"> </span><span class="n">cfg_if</span><span class="p">;</span><span class="w"></span>
+
+<span class="n">cfg_if</span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="cp">#[cfg(target_arch = </span><span class="s">&quot;wasm32&quot;</span><span class="cp">)]</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="cp">#[macro_use]</span><span class="w"></span>
+<span class="w">        </span><span class="k">extern</span><span class="w"> </span><span class="k">crate</span><span class="w"> </span><span class="n">sabre_sdk</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="cp">#[macro_use]</span><span class="w"></span>
+<span class="w">        </span><span class="k">extern</span><span class="w"> </span><span class="k">crate</span><span class="w"> </span><span class="n">clap</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="cp">#[macro_use]</span><span class="w"></span>
+<span class="w">        </span><span class="k">extern</span><span class="w"> </span><span class="k">crate</span><span class="w"> </span><span class="n">log</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">process</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">log</span>::<span class="n">LogLevelFilter</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">log4rs</span>::<span class="n">append</span>::<span class="n">console</span>::<span class="n">ConsoleAppender</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">log4rs</span>::<span class="n">config</span>::<span class="p">{</span><span class="n">Appender</span><span class="p">,</span><span class="w"> </span><span class="n">Config</span><span class="p">,</span><span class="w"> </span><span class="n">Root</span><span class="p">};</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">log4rs</span>::<span class="n">encode</span>::<span class="n">pattern</span>::<span class="n">PatternEncoder</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">sawtooth_sdk</span>::<span class="n">processor</span>::<span class="n">TransactionProcessor</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">handler</span>::<span class="n">IntkeyMultiplyTransactionHandler</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// Make sure this is here, otherwise the entrypoint is not reachable</span>
+<span class="k">pub</span><span class="w"> </span><span class="k">mod</span> <span class="nn">handler</span><span class="p">;</span><span class="w"></span>
+
+<span class="cp">#[cfg(target_arch = </span><span class="s">&quot;wasm32&quot;</span><span class="cp">)]</span><span class="w"></span>
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The handler.rs file should also separate out the use statements using cfg_if.
+The smart contract apply function should wrap the existing TransactionHandler
+and pass the TpProcessRequest to the handler’s apply method. The smart contract
+apply function should return Ok(true) if the transaction was valid, otherwise
+return the returned ApplyError. Finally, the entrypoint function needs to be
+added to the file. Note that the smart contract apply function and the
+entrypoint function should include the <code class="docutils literal notranslate"><span class="pre">#[cfg(target_arch</span> <span class="pre">=</span> <span class="pre">&quot;wasm32&quot;)]</span></code>
+decorator, so they will only be compiled when compiling into Wasm.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="n">cfg_if</span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="cp">#[cfg(target_arch = </span><span class="s">&quot;wasm32&quot;</span><span class="cp">)]</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">sabre_sdk</span>::<span class="n">ApplyError</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">sabre_sdk</span>::<span class="n">TransactionContext</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">sabre_sdk</span>::<span class="n">TransactionHandler</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">sabre_sdk</span>::<span class="n">TpProcessRequest</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">sabre_sdk</span>::<span class="p">{</span><span class="n">WasmPtr</span><span class="p">,</span><span class="w"> </span><span class="n">execute_entrypoint</span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">sawtooth_sdk</span>::<span class="n">processor</span>::<span class="n">handler</span>::<span class="n">ApplyError</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">sawtooth_sdk</span>::<span class="n">processor</span>::<span class="n">handler</span>::<span class="n">TransactionContext</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">sawtooth_sdk</span>::<span class="n">processor</span>::<span class="n">handler</span>::<span class="n">TransactionHandler</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">use</span><span class="w"> </span><span class="n">sawtooth_sdk</span>::<span class="n">messages</span>::<span class="n">processor</span>::<span class="n">TpProcessRequest</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="cp">#[cfg(target_arch = </span><span class="s">&quot;wasm32&quot;</span><span class="cp">)]</span><span class="w"></span>
+<span class="c1">// Sabre apply must return a bool</span>
+<span class="k">fn</span> <span class="nf">apply</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="n">request</span>: <span class="kp">&amp;</span><span class="nc">TpProcessRequest</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">context</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">dyn</span><span class="w"> </span><span class="n">TransactionContext</span><span class="p">,</span><span class="w"></span>
+<span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">Result</span><span class="o">&lt;</span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="n">ApplyError</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">handler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IntkeyMultiplyTransactionHandler</span>::<span class="n">new</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="k">match</span><span class="w"> </span><span class="n">handler</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="nb">Ok</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Ok</span><span class="p">(</span><span class="kc">true</span><span class="p">),</span><span class="w"></span>
+<span class="w">        </span><span class="nb">Err</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">info</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">err</span><span class="p">);</span><span class="w"></span>
+<span class="w">            </span><span class="nb">Err</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="w"></span>
+<span class="w">        </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+
+<span class="cp">#[cfg(target_arch = </span><span class="s">&quot;wasm32&quot;</span><span class="cp">)]</span><span class="w"></span>
+<span class="cp">#[no_mangle]</span><span class="w"></span>
+<span class="k">pub</span><span class="w"> </span><span class="k">unsafe</span><span class="w"> </span><span class="k">fn</span> <span class="nf">entrypoint</span><span class="p">(</span><span class="n">payload</span>: <span class="nc">WasmPtr</span><span class="p">,</span><span class="w"> </span><span class="n">signer</span>: <span class="nc">WasmPtr</span><span class="p">,</span><span class="w"> </span><span class="n">signature</span>: <span class="nc">WasmPtr</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="kt">i32</span> <span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">execute_entrypoint</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">signer</span><span class="p">,</span><span class="w"> </span><span class="n">signature</span><span class="p">,</span><span class="w"> </span><span class="n">apply</span><span class="p">)</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Though the goal is compatibility with the transaction processor API,
+it is not always trivial to compile commonly used Rust dependencies into Wasm.
+This may improve over time as Wasm popularity grows, or it may persist into
+the future.</p>
+<p>For example, cbor-codec, cbor crate used in the intkey transaction processor,
+does not compile into wasm and serde_cbor is missing libm dependencies at
+runtime. To bypass this, custom intkey cbor encode and decode functions had
+to be written for intkey multiply.</p>
+</div>
+<p>For the full intkey-multiply example look at
+sawtooth-sabre/example/intkey_multiply/processor</p>
+</div>
+</div>
+<div class="section" id="logging-in-a-sabre-smart-contract">
+<span id="logging-in-smart-contracts"></span><h2>Logging in a Sabre Smart Contract<a class="headerlink" href="#logging-in-a-sabre-smart-contract" title="Permalink to this headline">¶</a></h2>
+<p>The Sabre SDK provides log macros that match the provided log macros from the
+<a class="reference external" href="https://doc.rust-lang.org/1.1.0/log/macro.info!.html">log crate</a>. To use add
+<code class="docutils literal notranslate"><span class="pre">#[macro_use]</span></code> above <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">crate</span> <span class="pre">sabre_sdk</span></code> and use the macros as normal.</p>
+<div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="n">info</span><span class="o">!</span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="s">&quot;payload: {} {} {}&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="n">payload</span><span class="p">.</span><span class="n">get_name_a</span><span class="p">(),</span><span class="w"></span>
+<span class="w">    </span><span class="n">payload</span><span class="p">.</span><span class="n">get_name_b</span><span class="p">(),</span><span class="w"></span>
+<span class="w">    </span><span class="n">payload</span><span class="p">.</span><span class="n">get_name_c</span><span class="p">()</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>For debugging purposes, add a log statement to the final match statement in
+the apply method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#[cfg(target_arch = &quot;wasm32&quot;)]
+// Sabre apply must return a bool
+fn apply(
+    request: &amp;TpProcessRequest,
+    context: &amp;mut dyn TransactionContext,
+) -&gt; Result&lt;bool, ApplyError&gt; {
+
+    let handler = IntkeyMultiplyTransactionHandler::new();
+    match handler.apply(request, context) {
+        Ok(_) =&gt; Ok(true),
+        Err(err) =&gt; {
+            info!(&quot;{}&quot;, err);
+            Err(err)
+        }
+    }
+
+}
+</pre></div>
+</div>
+<p>The log level of the Sabre transaction processor is enforced for all smart
+contracts. For example, if the Sabre transaction processor has a log level of
+<code class="docutils literal notranslate"><span class="pre">info</span></code> a <code class="docutils literal notranslate"><span class="pre">debug</span></code> statement in a smart contract will not be logged.</p>
+</div>
+<div class="section" id="compiling-the-contract">
+<span id="compiling-smart-contract-label"></span><h2>Compiling the Contract<a class="headerlink" href="#compiling-the-contract" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rust">
+<h3>Rust<a class="headerlink" href="#rust" title="Permalink to this headline">¶</a></h3>
+<p>To compile your smart contract into wasm you need to use Rust’s nightly tool
+chain and need to add target wasm32-unknown-unknown.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> rustup update
+<span class="gp">$</span> rustup default nightly
+<span class="gp">$</span> rustup target add wasm32-unknown-unknown --toolchain nightly
+</pre></div>
+</div>
+<p>To compile the smart contract run the following command in
+sawtooth-sabre/example/intkey_multiply/processor:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cargo build --target wasm32-unknown-unknown --release
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The compiled Wasm file is going to be quite large
+due to the fact that Rust does not have a proper linker yet. Here are a few
+simple things you can do to help reduce the size.</p>
+<ul class="simple">
+<li><p>Compile in –release mode</p></li>
+<li><p>Remove any “{:?}” from any format strings, as this pulls in a bunch of stuff</p></li>
+<li><p>Use this script to reduce the size <a class="reference external" href="https://www.hellorust.com/news/native-wasm-target.html">https://www.hellorust.com/news/native-wasm-target.html</a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="assemblyscript">
+<h3>AssemblyScript<a class="headerlink" href="#assemblyscript" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="using-asinit">
+<h4>Using asinit<a class="headerlink" href="#using-asinit" title="Permalink to this headline">¶</a></h4>
+<p><cite>asinit</cite> is a tool for initializing an AssemblyScript project. Run the following
+to create a new AssemblyScript project.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> npm install --save-dev assemblyscript
+<span class="gp">$</span> npx asinit .
+</pre></div>
+</div>
+<p>Then, edit the <cite>package.json</cite> to generate WebAssembly that imports <cite>abort</cite>.</p>
+<p>Build a project run the following</p>
+</div>
+<div class="section" id="without-asinit">
+<h4>Without asinit<a class="headerlink" href="#without-asinit" title="Permalink to this headline">¶</a></h4>
+<p>In order to produce Sawtooth Sabre compatible WebAssembly install AssemblyScript
+Compiler (asc) and run the following command.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> npm install -g asc
+
+<span class="gp">$</span> asc assembly/index.ts <span class="se">\</span>
+    -b build/optimized.wasm <span class="se">\</span>
+    -t build/optimized.wat <span class="se">\</span>
+    --sourceMap <span class="se">\</span>
+    --importMemory <span class="se">\</span>
+    --noAssert <span class="se">\</span>
+    --use <span class="nv">abort</span><span class="o">=</span> <span class="se">\</span>
+    --validate <span class="se">\</span>
+    --optimize
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="running-a-sabre-smart-contract">
+<h2>Running a Sabre Smart Contract<a class="headerlink" href="#running-a-sabre-smart-contract" title="Permalink to this headline">¶</a></h2>
+<p>The previous section described an example smart contract, <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code>,
+and explained how to compile it into WebAssembly (Wasm).</p>
+<p>This procedure describes how to run this smart contract on Sawtooth Sabre using
+Docker. You will start a Sawtooth node, create the required values and payload
+file for the contract, set up the required items, then execute the smart
+contract and check the results.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth-sabre</span></code> repository includes a Sawtooth Docker Compose file that
+starts Sawtooth Sabre in Docker containers, plus another Compose file that adds
+the required containers for the example <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code> environment.</p>
+<div class="section" id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h3>
+<p>This procedure requires a compiled <code class="docutils literal notranslate"><span class="pre">intkey-multiply.wasm</span></code> smart contract,
+as described in <a class="reference internal" href="#writing-sabre-sm-label"><span class="std std-ref">Writing A Sabre Smart Contract</span></a>. The Docker Compose file in this
+procedure sets up shared volumes so that the <code class="docutils literal notranslate"><span class="pre">.wasm</span></code> file can be shared
+between your host system and the appropriate Docker containers.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you do not already have a compiled <code class="docutils literal notranslate"><span class="pre">intkey-multiply.wasm</span></code> file,
+do the following steps before starting this procedure:</p>
+<ul class="simple">
+<li><p>Clone the sawtooth-sabre repository.</p></li>
+<li><p>Compile the example smart contract, <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code>, as described in
+<a class="reference internal" href="#compiling-smart-contract-label"><span class="std std-ref">Compiling the Contract</span></a>.</p></li>
+</ul>
+</div>
+<p>This procedure also requires the namespace prefixes for your contract’s inputs
+and outputs (areas of state that the smart contract will read from and write
+to). For the <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code> example, the required namespace prefixes are
+included in the example contract definition file.</p>
+</div>
+<div class="section" id="step-1-start-sawtooth-sabre-with-docker">
+<h3>Step 1: Start Sawtooth Sabre with Docker<a class="headerlink" href="#step-1-start-sawtooth-sabre-with-docker" title="Permalink to this headline">¶</a></h3>
+<p>In this step, you will start a Sawtooth node that is running a validator, REST
+API, and three transaction processors: Settings, IntegerKey (intkey), and Sabre.</p>
+<ol class="arabic">
+<li><p>Open a terminal window on your system.</p></li>
+<li><p>Go to the top-level <code class="docutils literal notranslate"><span class="pre">sawtooth-sabre</span></code> directory and run the following
+command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker-compose -f docker-compose.yaml -f example/intkey_multiply/docker-compose.yaml up
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Startup takes a long time, because the Compose file runs <code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">build</span></code>
+on the Rust components.</p>
+</div>
+<p>The first <code class="docutils literal notranslate"><span class="pre">docker-compose.yaml</span></code> file sets up the Sawtooth environment:</p>
+<ul class="simple">
+<li><p>Starts a container for each Sawtooth component (validator, REST API, and
+the Settings and Sabre transaction processors), plus a sabre-shell and
+sabre-cli container</p></li>
+<li><p>Generates keys for the validator and root user</p></li>
+<li><p>Configures root as a Sawtooth administrator (with the
+<code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code> setting)</p></li>
+<li><p>Shares the administrator keys between the validator and sabre-cli
+containers</p></li>
+</ul>
+<p>The second file, <code class="docutils literal notranslate"><span class="pre">example/intkey_multiply/docker-compose.yaml</span></code>, starts the
+intkey transaction processor and an <code class="docutils literal notranslate"><span class="pre">intkey-multiply-cli</span></code> container.</p>
+</li>
+<li><p>Wait until the terminal output stops before continuing to the next step.</p>
+<p>The rest of this procedure will use other terminal windows. This terminal
+window will continue to display Sawtooth log messages.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="step-2-create-initial-values-for-the-smart-contract">
+<h3>Step 2: Create Initial Values for the Smart Contract<a class="headerlink" href="#step-2-create-initial-values-for-the-smart-contract" title="Permalink to this headline">¶</a></h3>
+<p>In this step, you will use the <code class="docutils literal notranslate"><span class="pre">sabre-shell</span></code> container to set initial
+values in state for your contract.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code> smart contract executes the simple function
+<cite>A=B*C</cite>. This contract requires existing <cite>B</cite> and <cite>C</cite> values from state,
+then stores the result <cite>A</cite> in state. This example also requires a payload
+file that identifies these values by key name.</p>
+<p>In this step, you will use the <code class="docutils literal notranslate"><span class="pre">intkey</span> <span class="pre">set</span></code> command to submit transactions
+that store the initial values in “intkey state” (the namespace used by the
+IntegerKey transaction family).</p>
+<ol class="arabic">
+<li><p>Open a new terminal window and connect to the <code class="docutils literal notranslate"><span class="pre">sabre-shell</span></code> Docker
+container.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker <span class="nb">exec</span> -it sabre-shell bash
+</pre></div>
+</div>
+</li>
+<li><p>Submit an intkey transaction to set B to 10.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> intkey <span class="nb">set</span> B <span class="m">10</span> --url http://rest-api:9708
+</pre></div>
+</div>
+</li>
+<li><p>Submit a second intkey transaction to set C to 5.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> intkey <span class="nb">set</span> C <span class="m">5</span> --url http://rest-api:9708
+</pre></div>
+</div>
+</li>
+<li><p>Check the results.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> intkey list --url http://rest-api:9708
+<span class="go">B: 10</span>
+<span class="go">C: 5</span>
+</pre></div>
+</div>
+</li>
+<li><p>Log out of the <code class="docutils literal notranslate"><span class="pre">sabre-shell</span></code> container.</p></li>
+</ol>
+</div>
+<div class="section" id="step-3-generate-the-payload-file">
+<h3>Step 3: Generate the Payload File<a class="headerlink" href="#step-3-generate-the-payload-file" title="Permalink to this headline">¶</a></h3>
+<p>In this step, you will use the <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code> command to generate a
+payload file for your smart contract.  This payload file is required when
+executing the <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code> smart contract.</p>
+<ol class="arabic">
+<li><p>Connect to the <code class="docutils literal notranslate"><span class="pre">intkey-multiply-cli</span></code> container.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker <span class="nb">exec</span> -it intkey-multiply-cli bash
+</pre></div>
+</div>
+</li>
+<li><p>Change to the example’s <code class="docutils literal notranslate"><span class="pre">intkey_multiply/cli</span></code> directory.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">cd</span> /project/example/intkey_multiply/cli
+</pre></div>
+</div>
+</li>
+<li><p>Run the following command to create the payload file for <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> intkey-multiply multiply A B C --output payload
+</pre></div>
+</div>
+<p>This command creates a payload file that tells the smart contract to
+multiply B and C, then store the result in A. The <code class="docutils literal notranslate"><span class="pre">--output</span></code> option writes
+the payload to a file instead of sending the transaction directly to the REST
+API. For more information on command options, run
+<code class="docutils literal notranslate"><span class="pre">intkey-multiply</span> <span class="pre">multiply</span> <span class="pre">--help</span></code>.</p>
+</li>
+<li><p>Log out of the <code class="docutils literal notranslate"><span class="pre">intkey-multiply-cli</span></code> container.</p></li>
+</ol>
+</div>
+<div class="section" id="step-4-create-a-contract-registry">
+<h3>Step 4: Create a Contract Registry<a class="headerlink" href="#step-4-create-a-contract-registry" title="Permalink to this headline">¶</a></h3>
+<p>In this step, you will use the <code class="docutils literal notranslate"><span class="pre">sabre-cli</span></code> container to create a contract
+registry for the <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code> smart contract.</p>
+<p>Each smart contract requires a contract registry so that Sabre can keep track of
+the contract’s versions and owners. A contract registry has the same name as its
+contract and has one or more owners. For more information, see
+<a class="reference internal" href="sabre_transaction_family.html#tpdoc-contractregistry-label"><span class="std std-ref">ContractRegistry</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only a Sawtooth administrator (defined in the <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code>
+setting) can create a contract registry and set the initial owner or owners.
+The example Docker Compose file sets up root as a Sawtooth administrator and
+shares the root keys between the validator container and the <code class="docutils literal notranslate"><span class="pre">sabre-cli</span></code>
+container.</p>
+</div>
+<ol class="arabic">
+<li><p>Connect to the <code class="docutils literal notranslate"><span class="pre">sabre-cli</span></code> container.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker <span class="nb">exec</span> -it sabre-cli bash
+</pre></div>
+</div>
+</li>
+<li><p>Copy your public key.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> cat /root/.sawtooth/keys/root.pub
+</pre></div>
+</div>
+<p>This example uses root as the contract registry owner. In a production
+environment, the owner would be a regular user, not root.</p>
+</li>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">cr</span></code> command to create a contract registry for the
+<code class="docutils literal notranslate"><span class="pre">intkey_multiply</span></code> smart contract. Replace <code class="docutils literal notranslate"><span class="pre">{owner-public-key}</span></code> with your
+public key.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> sabre cr --create intkey_multiply --owner <span class="o">{</span>owner-public-key<span class="o">}</span> --url http://rest-api:9708
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><p>This command creates a contract registry named <code class="docutils literal notranslate"><span class="pre">intkey_multiply</span></code> (the
+same name as the smart contract) with one owner.  To specify multiple owners,
+repeat the <code class="docutils literal notranslate"><span class="pre">--owner</span></code> option. For more information on command options, run
+<code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">cr</span> <span class="pre">--help</span></code>.</p>
+</div></blockquote>
+<p>Once the contract registry is created, any contract registry owner can add
+and delete versions of the contract. An owner can also delete an empty
+contract registry.</p>
+</div>
+<div class="section" id="step-5-upload-the-contract-definition-file">
+<h3>Step 5. Upload the Contract Definition File<a class="headerlink" href="#step-5-upload-the-contract-definition-file" title="Permalink to this headline">¶</a></h3>
+<p>In this step, you will continue to use the <code class="docutils literal notranslate"><span class="pre">sabre-cli</span></code> container to upload
+a contract definition file for the <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code> smart contract.</p>
+<p>Each Sabre smart contract requires a contract definition file in YAML format.
+This file specifies the contract name, version, path to the compiled contract
+(Wasm file), and the contract’s inputs and outputs.
+The <code class="docutils literal notranslate"><span class="pre">sawtooth-sabre</span></code> repository includes an example contract definition file,
+<code class="docutils literal notranslate"><span class="pre">intkey_multiply.yaml</span></code>.</p>
+<ol class="arabic">
+<li><p>Display the example contract definition file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cat /project/example/intkey_multiply/intkey_multiply.yaml
+</pre></div>
+</div>
+</li>
+<li><p>Ensure that this file has the following contents:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>name: intkey_multiply
+version: &#39;1.0&#39;
+wasm: processor/target/wasm32-unknown-unknown/release/intkey-multiply.wasm
+inputs:
+  - &#39;cad11d&#39;
+  - &#39;1cf126&#39;
+  - &#39;00ec03&#39;
+outputs:
+  - &#39;1cf126&#39;
+  - &#39;cad11d&#39;
+  - &#39;00ec03&#39;
+</pre></div>
+</div>
+<p>The inputs and outputs specify the namespaces that the contract can read from
+and write to. This example uses the following namespace prefixes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">1cf126</span></code>: intkey namespace</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">00ec03</span></code>: Sabre smart permission namespace</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cad11d</span></code>: Pike (identity management) namespace</p></li>
+</ul>
+</li>
+<li><p>Run the following command to upload this contract definition file to Sabre.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> sabre upload --filename ../example/intkey_multiply/intkey_multiply.yaml --url http://rest-api:9708
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only a Sawtooth administrator or contract registry owner can upload
+a new or updated smart contract.</p>
+</div>
+<p>By default, the signing key name is set to your public key (root in this
+example). Use the <code class="docutils literal notranslate"><span class="pre">--key</span></code> option to specify a different signing key name.
+For more information on command options, run <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">upload</span> <span class="pre">--help</span></code>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="step-6-create-a-namespace-registry-and-set-contract-permissions">
+<h3>Step 6. Create a Namespace Registry and Set Contract Permissions<a class="headerlink" href="#step-6-create-a-namespace-registry-and-set-contract-permissions" title="Permalink to this headline">¶</a></h3>
+<p>In this step, you will continue to use the <code class="docutils literal notranslate"><span class="pre">sabre-cli</span></code> container to create a
+namespace registry, then set the namespace read and write permissions for your
+contract.</p>
+<p>Each smart contract requires a namespace registry that specifies the area in
+state that the contract will read from and write to. You must also grant
+explicit namespace read and write permissions to the contract.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only a Sawtooth administrator (defined in the <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code>
+setting) can create a namespace registry and set the initial owner or owners.
+Once the namespace registry is created, any namespace registry owner can
+change and delete contract permissions. An owner can also delete an empty
+namespace registry (one with no contract permissions).</p>
+</div>
+<ol class="arabic">
+<li><p>Copy your public key.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> cat /root/.sawtooth/keys/root.pub
+</pre></div>
+</div>
+<p>This example uses root as the namespace registry owner. In a production
+environment, the owner would be a regular user, not root.</p>
+</li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">ns</span></code> to create the namespace registry. Replace <code class="docutils literal notranslate"><span class="pre">{owner-key}</span></code>
+with your public key.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> sabre ns --create 1cf126 --owner <span class="o">{</span>owner-key<span class="o">}</span> --url http://rest-api:9708
+</pre></div>
+</div>
+<p>This command specifies the intkey namespace prefix (<code class="docutils literal notranslate"><span class="pre">1cf126</span></code>) and defines
+root as the namespace registry owner.
+For more information on command options, run <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">ns</span> <span class="pre">--help</span></code>.</p>
+</li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">perm</span></code> to grant the appropriate namespace permissions for your
+smart contract.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> sabre perm  1cf126 intkey_multiply --read --write --url http://rest-api:9708
+</pre></div>
+</div>
+<p>This command gives <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code> both read and write permissions for
+the intkey namespace (<code class="docutils literal notranslate"><span class="pre">1cf126</span></code>). For more information on command options,
+run <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">perm</span> <span class="pre">--help</span></code>.</p>
+</li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">ns</span></code> to create the namespace registry for pike. Replace
+<code class="docutils literal notranslate"><span class="pre">{owner-key}</span></code> with your public key.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> sabre ns --create cad11d --owner <span class="o">{</span>owner-key<span class="o">}</span> --url http://rest-api:9708
+</pre></div>
+</div>
+<p>This command specifies the pike namespace prefix (<code class="docutils literal notranslate"><span class="pre">cad11d</span></code>) and defines
+root as the namespace registry owner.
+For more information on command options, run <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">ns</span> <span class="pre">--help</span></code>.</p>
+</li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">perm</span></code> to grant the appropriate namespace permissions for your
+smart contract.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> sabre perm cad11d intkey_multiply --read --url http://rest-api:9708
+</pre></div>
+</div>
+<p>This command gives <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code> read permissions for the pike
+namespace (<code class="docutils literal notranslate"><span class="pre">cad11d</span></code>). For more information on command options,
+run <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">perm</span> <span class="pre">--help</span></code>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="step-7-execute-the-smart-contract">
+<h3>Step 7. Execute the Smart Contract<a class="headerlink" href="#step-7-execute-the-smart-contract" title="Permalink to this headline">¶</a></h3>
+<p>At this point, all required items are in place for the <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code>
+smart contract:</p>
+<ul class="simple">
+<li><p>Initial values for the contract are set in intkey state.</p></li>
+<li><p>The payload file exists at <code class="docutils literal notranslate"><span class="pre">/project/example/intkey_multiply/cli/payload</span></code>.</p></li>
+<li><p>The contract registry identifies the contract name and owner.</p></li>
+<li><p>The contract definition file specifies the contract name, version, and path
+to the compiled Wasm smart contract.</p></li>
+<li><p>The namespace registry declares that the contract will use the intkey
+namespace and sets the owner.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">perm</span></code> command has granted the necessary namespace
+permissions (both read and write) to the <code class="docutils literal notranslate"><span class="pre">intkey_multiply</span></code> contract.</p></li>
+</ul>
+<p>In this step, you will continue to use the <code class="docutils literal notranslate"><span class="pre">sabre-cli</span></code> container to execute
+the <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code> smart contract, then use the <code class="docutils literal notranslate"><span class="pre">sabre-shell</span></code> container
+to check the results.</p>
+<ol class="arabic">
+<li><p>Run the following command to execute the <code class="docutils literal notranslate"><span class="pre">intkey-multiply</span></code> smart contract.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> sabre <span class="nb">exec</span> --contract intkey_multiply:1.0 <span class="se">\</span>
+  --payload /project/example/intkey_multiply/cli/payload  <span class="se">\</span>
+  --inputs  1cf126 --inputs cad11d --outputs  1cf126 <span class="se">\</span>
+  --url http://rest-api:9708
+</pre></div>
+</div>
+<p>This command submits a transaction to execute the <code class="docutils literal notranslate"><span class="pre">intkey_multiply</span></code> smart
+contract, version 1.0, with the specified payload file. The contract’s inputs
+and outputs are set to the intkey namespace (<code class="docutils literal notranslate"><span class="pre">1cf126</span></code>).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">exec</span></code> command requires namespace prefixes or addresses that
+are at least 6 characters long.  For more information on command options,
+run <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">exec</span> <span class="pre">--help</span></code>.</p>
+</div>
+</li>
+<li><p>To check the results, connect to the <code class="docutils literal notranslate"><span class="pre">sabre-shell</span></code> container in a separate
+terminal window.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker <span class="nb">exec</span> -it sabre-shell bash
+</pre></div>
+</div>
+</li>
+<li><p>Run the following command to display intkey state values.  You should see
+that A is set to 50.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">#</span> intkey list --url http://rest-api:9708
+<span class="go">A 50</span>
+<span class="go">B 10</span>
+<span class="go">C 5</span>
+</pre></div>
+</div>
+</li>
+<li><p>Log out of the <code class="docutils literal notranslate"><span class="pre">sabre-shell</span></code> docker container.</p></li>
+</ol>
+</div>
+<div class="section" id="step-8-stop-the-sawtooth-environment">
+<h3>Step 8: Stop the Sawtooth Environment<a class="headerlink" href="#step-8-stop-the-sawtooth-environment" title="Permalink to this headline">¶</a></h3>
+<p>When you are done using this Sawtooth Sabre environment, use this procedure to
+stop and reset the environment.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Any work done in this environment will be lost once the container exits,
+unless it is stored under the <code class="docutils literal notranslate"><span class="pre">/project</span></code> directory. To keep your work in
+other areas, you would need to take additional steps, such as mounting a host
+directory into the container. See the <a class="reference external" href="https://docs.docker.com/">Docker
+documentation</a> for more information.</p>
+</div>
+<ol class="arabic">
+<li><p>Log out of the <code class="docutils literal notranslate"><span class="pre">sabre-cli</span></code> container and any other open containers.</p></li>
+<li><p>Enter CTRL-c from the window where you originally ran <code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">up</span></code>.</p></li>
+<li><p>After all containers have shut down, run this <code class="docutils literal notranslate"><span class="pre">docker-compose</span></code> command:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This command deletes all values in state.</p>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker-compose -f docker-compose.yaml -f example/intkey_multiply/docker-compose.yaml down
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sabre_cli.html" class="btn btn-neutral float-right" title="Sabre CLI Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sabre_transaction_family.html" class="btn btn-neutral float-left" title="Sabre Transaction Family" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Cargill Incorporated
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

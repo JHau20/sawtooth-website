@@ -1,0 +1,562 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.cli.stats_lib.stats_writers &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>sawtooth.cli.stats_lib.stats_writers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sawtooth.cli.stats_lib.stats_writers</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.stats_utils</span> <span class="k">import</span> <span class="n">StatsModule</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.stats_utils</span> <span class="k">import</span> <span class="n">DictWalker</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.stats_utils</span> <span class="k">import</span> <span class="n">SignalHandler</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.validator_stats</span> <span class="k">import</span> <span class="n">ValidatorStatsManager</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.validator_stats</span> <span class="k">import</span> <span class="n">SystemStatsManager</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.platform_stats</span> <span class="k">import</span> <span class="n">PlatformStatsManager</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.fork_detect</span> <span class="k">import</span> <span class="n">BranchManager</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.topology_stats</span> <span class="k">import</span> <span class="n">TopologyManager</span>
+
+
+<div class="viewcode-block" id="CsvWriter"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvWriter">[docs]</a><span class="k">class</span> <span class="nc">CsvWriter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csvdata</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="CsvWriter.open_csv_file"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvWriter.open_csv_file">[docs]</a>    <span class="k">def</span> <span class="nf">open_csv_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CsvWriter.close_csv_file"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvWriter.close_csv_file">[docs]</a>    <span class="k">def</span> <span class="nf">close_csv_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CsvWriter.csv_newline"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvWriter.csv_newline">[docs]</a>    <span class="k">def</span> <span class="nf">csv_newline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csvdata</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="CsvWriter.csv_append"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvWriter.csv_append">[docs]</a>    <span class="k">def</span> <span class="nf">csv_append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datalist</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csvdata</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">datalist</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CsvWriter.csv_write_header"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvWriter.csv_write_header">[docs]</a>    <span class="k">def</span> <span class="nf">csv_write_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">headerlist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add_time</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">headerlist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">csvdata</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">headerlist</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">add_time</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">csvdata</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_csv_write</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CsvWriter.csv_write_data"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvWriter.csv_write_data">[docs]</a>    <span class="k">def</span> <span class="nf">csv_write_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datalist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">add_time</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">datalist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">csvdata</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">datalist</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">add_time</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">csvdata</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_csv_write</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_csv_write</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">csvdata</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csvdata</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+
+<div class="viewcode-block" id="CsvSummaryStats"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvSummaryStats">[docs]</a><span class="k">class</span> <span class="nc">CsvSummaryStats</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">system_stats</span><span class="p">,</span> <span class="n">platform_stats</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer</span> <span class="o">=</span> <span class="n">CsvWriter</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span> <span class="o">=</span> <span class="n">system_stats</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform_stats</span> <span class="o">=</span> <span class="n">platform_stats</span>
+
+<div class="viewcode-block" id="CsvSummaryStats.initialize"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvSummaryStats.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;summary_stats_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span> <span class="o">+</span> <span class="s2">&quot;.csv&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer</span><span class="o">.</span><span class="n">open_csv_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">get_names</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer</span><span class="o">.</span><span class="n">csv_append</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform_stats</span><span class="o">.</span><span class="n">get_names</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer</span><span class="o">.</span><span class="n">csv_write_header</span><span class="p">(</span><span class="n">header</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CsvSummaryStats.write_stats"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvSummaryStats.write_stats">[docs]</a>    <span class="k">def</span> <span class="nf">write_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer</span><span class="o">.</span><span class="n">csv_append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform_stats</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer</span><span class="o">.</span><span class="n">csv_write_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CsvSummaryStats.stop"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvSummaryStats.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer</span><span class="o">.</span><span class="n">close_csv_file</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="CsvValidatorStats"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvValidatorStats">[docs]</a><span class="k">class</span> <span class="nc">CsvValidatorStats</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client_list</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer</span> <span class="o">=</span> <span class="n">CsvWriter</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_header</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_stats</span> <span class="o">=</span> <span class="n">CsvWriter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clients</span> <span class="o">=</span> <span class="n">client_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stat_names</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dict_walker</span> <span class="o">=</span> <span class="n">DictWalker</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CsvValidatorStats.initialize"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvValidatorStats.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;validator_stats_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span> <span class="o">+</span> <span class="s2">&quot;.csv&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer</span><span class="o">.</span><span class="n">open_csv_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="c1"># defer writing header until first instance of data dictionary</span>
+        <span class="c1"># is available</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_header</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="CsvValidatorStats.write_stats"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvValidatorStats.write_stats">[docs]</a>    <span class="k">def</span> <span class="nf">write_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">current_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">client</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">client</span><span class="o">.</span><span class="n">responding</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dict_walker</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">validator_stats</span><span class="o">.</span><span class="n">val_stats</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_header</span><span class="p">:</span>
+                        <span class="n">names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict_walker</span><span class="o">.</span><span class="n">get_names</span><span class="p">()</span>
+                        <span class="n">names</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;validator_name&quot;</span><span class="p">)</span>
+                        <span class="n">names</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer</span><span class="o">.</span><span class="n">csv_write_header</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">add_time</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">get_header</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict_walker</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">current_time</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer</span><span class="o">.</span><span class="n">csv_write_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">add_time</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CsvValidatorStats.stop"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvValidatorStats.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">csv_writer</span><span class="o">.</span><span class="n">close_csv_file</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="CsvManager"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvManager">[docs]</a><span class="k">class</span> <span class="nc">CsvManager</span><span class="p">(</span><span class="n">StatsModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epm</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CsvManager</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">css</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cvs</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="CsvManager.initialize"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvManager.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_list</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_list</span> <span class="o">=</span> <span class="n">module_list</span>
+        <span class="n">system_stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">SystemStatsManager</span><span class="p">)</span>
+        <span class="n">platform_stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">PlatformStatsManager</span><span class="p">)</span>
+        <span class="n">validator_stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">ValidatorStatsManager</span><span class="p">)</span>
+        <span class="n">validator_clients</span> <span class="o">=</span> <span class="n">validator_stats</span><span class="o">.</span><span class="n">clients</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">css</span> <span class="o">=</span> <span class="n">CsvSummaryStats</span><span class="p">(</span>
+            <span class="n">system_stats</span><span class="p">,</span>
+            <span class="n">platform_stats</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cvs</span> <span class="o">=</span> <span class="n">CsvValidatorStats</span><span class="p">(</span><span class="n">validator_clients</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CsvManager.csv_init"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvManager.csv_init">[docs]</a>    <span class="k">def</span> <span class="nf">csv_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable_summary</span><span class="p">,</span> <span class="n">enable_validator</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">enable_summary</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">css</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">enable_validator</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cvs</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CsvManager.report"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvManager.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">csv_write</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CsvManager.csv_write"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvManager.csv_write">[docs]</a>    <span class="k">def</span> <span class="nf">csv_write</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">css</span><span class="o">.</span><span class="n">write_stats</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cvs</span><span class="o">.</span><span class="n">write_stats</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CsvManager.default_config"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvManager.default_config">[docs]</a>    <span class="k">def</span> <span class="nf">default_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="p">{}</span></div>
+
+<div class="viewcode-block" id="CsvManager.update_config"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvManager.update_config">[docs]</a>    <span class="k">def</span> <span class="nf">update_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="n">csv_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;CsvManager&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">csv_config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">csv_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;csv_enable_summary&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">css</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">csv_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;csv_enable_validator&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cvs</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CsvManager.csv_stop"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.CsvManager.csv_stop">[docs]</a>    <span class="k">def</span> <span class="nf">csv_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">css</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cvs</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="StatsSnapshotWriter"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.StatsSnapshotWriter">[docs]</a><span class="k">class</span> <span class="nc">StatsSnapshotWriter</span><span class="p">(</span><span class="n">StatsModule</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Writes json-formatted snapshot of stats client statistics to file.</span>
+<span class="sd">    Writes file to where stats client is running.</span>
+<span class="sd">    Filename includes searchable file name + timestamp</span>
+<span class="sd">    Captures the following:</span>
+<span class="sd">    - Summary: each of the summary lines displayed by stats client</span>
+<span class="sd">    - Per-Validator: Each of the selectable views displayed by stats client</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epm</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">StatsSnapshotWriter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">do_snapshot</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform_stats_manager</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signal_handler</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topology_stats</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stats_clients</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="StatsSnapshotWriter.initialize"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.StatsSnapshotWriter.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_list</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_list</span> <span class="o">=</span> <span class="n">module_list</span>
+        <span class="n">system_stats_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">SystemStatsManager</span><span class="p">)</span>
+        <span class="n">topology_stats_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">TopologyManager</span><span class="p">)</span>
+        <span class="n">validator_stats_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">ValidatorStatsManager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform_stats_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">PlatformStatsManager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">BranchManager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">signal_handler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">SignalHandler</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span> <span class="o">=</span> <span class="n">system_stats_manager</span><span class="o">.</span><span class="n">system_stats</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topology_stats</span> <span class="o">=</span> <span class="n">topology_stats_manager</span><span class="o">.</span><span class="n">topology_stats</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stats_clients</span> <span class="o">=</span> <span class="n">validator_stats_manager</span><span class="o">.</span><span class="n">clients</span></div>
+
+<div class="viewcode-block" id="StatsSnapshotWriter.report"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.StatsSnapshotWriter.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_snapshot</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="StatsSnapshotWriter.write_snapshot"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.StatsSnapshotWriter.write_snapshot">[docs]</a>    <span class="k">def</span> <span class="nf">write_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">signal_handler</span><span class="o">.</span><span class="n">sig_user1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">signal_handler</span><span class="o">.</span><span class="n">sig_user1</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># acts as one-shot</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_initialize</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_summary_stats</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_per_validator_stats</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_branch_stats</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fork_stats</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_collector_stats</span><span class="p">()</span>
+
+            <span class="n">sawtooth_stats</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;sawtooth_stats&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_write_snapshot</span><span class="p">(</span><span class="n">sawtooth_stats</span><span class="p">,</span> <span class="n">pretty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_close</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;sawtooth_stats_snap_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span> <span class="o">+</span> <span class="s2">&quot;.js&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wt&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_write_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">pretty</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">line_feed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">pretty</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">line_feed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_summary_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;clients&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_client</span><span class="o">.</span><span class="n">_asdict</span><span class="p">(),</span>
+                 <span class="s1">&#39;blocks&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_blocks</span><span class="o">.</span><span class="n">_asdict</span><span class="p">(),</span>
+                 <span class="s1">&#39;transactions&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_txns</span><span class="o">.</span><span class="n">_asdict</span><span class="p">(),</span>
+                 <span class="s1">&#39;packets&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_packets</span><span class="o">.</span><span class="n">_asdict</span><span class="p">(),</span>
+                 <span class="s1">&#39;messages&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_msgs</span><span class="o">.</span><span class="n">_asdict</span><span class="p">(),</span>
+                 <span class="s1">&#39;poet&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">poet_stats</span><span class="o">.</span><span class="n">_asdict</span><span class="p">(),</span>
+                 <span class="s1">&#39;topology&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology_stats</span><span class="o">.</span><span class="n">get_stats_as_dict</span><span class="p">(),</span>
+                 <span class="s1">&#39;branches&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">bm_stats</span><span class="o">.</span><span class="n">get_stats_as_dict</span><span class="p">(),</span>
+                 <span class="s1">&#39;forks&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">f_stats</span><span class="o">.</span><span class="n">get_stats_as_dict</span><span class="p">()}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;summary_stats&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span>
+
+    <span class="k">def</span> <span class="nf">_per_validator_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">client</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats_clients</span><span class="p">:</span>
+            <span class="n">client_stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_stats_fixup</span><span class="p">(</span>
+                <span class="n">client</span><span class="o">.</span><span class="n">validator_stats</span><span class="o">.</span><span class="n">val_stats</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+            <span class="n">stats</span><span class="p">[</span><span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">client_stats</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">val_id</span><span class="p">,</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                    <span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+                    <span class="s1">&#39;responding&#39;</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">responding</span><span class="p">,</span>
+                    <span class="s1">&#39;no_response_reason&#39;</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">response_status</span><span class="p">,</span>
+                    <span class="s1">&#39;response_time&#39;</span><span class="p">:</span> <span class="n">client</span><span class="o">.</span><span class="n">response_time</span><span class="p">}</span>
+            <span class="n">stats</span><span class="p">[</span><span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;info&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;per-validator_stats&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span>
+
+    <span class="k">def</span> <span class="nf">_branch_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">branch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
+            <span class="n">stats</span><span class="p">[</span><span class="n">branch</span><span class="o">.</span><span class="n">bcb_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">branch</span><span class="o">.</span><span class="n">get_stats_as_dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;branch_stats&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span>
+
+    <span class="k">def</span> <span class="nf">_fork_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">fork</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">forks</span><span class="p">:</span>
+            <span class="n">stats</span><span class="p">[</span><span class="n">fork</span><span class="o">.</span><span class="n">bcf_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">fork</span><span class="o">.</span><span class="n">get_stats_as_dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;fork_stats&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span>
+
+    <span class="k">def</span> <span class="nf">_collector_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;gmt_time&#39;</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;GMT:%Y:%m:</span><span class="si">%d</span><span class="s2">:%H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">()),</span>
+            <span class="s1">&#39;local_time&#39;</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;LOCAL:%Y:%m:</span><span class="si">%d</span><span class="s2">:%H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">()),</span>
+            <span class="s1">&#39;platform&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform_stats_manager</span><span class="o">.</span><span class="n">get_data_as_dict</span><span class="p">()}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;stats_collector&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stats</span>
+
+<div class="viewcode-block" id="StatsSnapshotWriter.val_stats_fixup"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_writers.html#sawtooth.cli.stats_lib.stats_writers.StatsSnapshotWriter.val_stats_fixup">[docs]</a>    <span class="k">def</span> <span class="nf">val_stats_fixup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val_stats_copy</span><span class="p">):</span>
+        <span class="c1"># this will become a noop when validator stats is fixed so that</span>
+        <span class="c1"># it reports nodes under the &#39;peer_nodes&#39; key</span>
+        <span class="n">val_stats_copy</span><span class="p">[</span><span class="s1">&#39;peer_nodes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">keys_to_remove</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">root</span> <span class="ow">in</span> <span class="n">val_stats_copy</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="s1">&#39;IsPeer&#39;</span> <span class="ow">in</span> <span class="n">root</span><span class="p">:</span>
+                <span class="n">val_stats_copy</span><span class="p">[</span><span class="s1">&#39;peer_nodes&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">root</span>
+                <span class="n">keys_to_remove</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys_to_remove</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">val_stats_copy</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">val_stats_copy</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

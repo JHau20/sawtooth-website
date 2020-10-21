@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MarketPlace Messages &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="MarketPlace Developer’s Guide" href="../mktplace_developers_guide.html"/>
+        <link rel="next" title="MarketPlace Transactions" href="mktplace_transactions.html"/>
+        <link rel="prev" title="MarketPlace Data Model" href="mktplace_data_model.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mktplace_data_model.html">MarketPlace Data Model</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MarketPlace Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mktplace_transactions.html">MarketPlace Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mktplace_transactions.html#marketplace-transaction-updates">MarketPlace Transaction Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mktplace_initial_state.html">MarketPlace Initial State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_api/modules.html">MarketPlace Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mktclient.html">MarketPlace Client Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a> &raquo;</li>
+        
+      <li>MarketPlace Messages</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/mktplace_developers_guide/mktplace_messages.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="marketplace-messages">
+<h1>MarketPlace Messages<a class="headerlink" href="#marketplace-messages" title="Permalink to this headline">¶</a></h1>
+<p>MarketPlace ledger clients can send messages to validators through an
+HTTP/POST interface. Messages are JSON-encoded for example:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;Transaction&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;Dependencies&quot;</span><span class="o">:</span> <span class="p">[],</span>
+    <span class="s2">&quot;Nonce&quot;</span><span class="o">:</span> <span class="mf">1444777217.496317</span><span class="p">,</span>
+    <span class="s2">&quot;Signature&quot;</span><span class="o">:</span> <span class="s2">&quot;HAy35m01U0SNVbCBDUS+EQ8ufC1x7d1V2IAwRRqDQX4UhdKr3YMIiiHCTLLPrRCbyDB1jpiaemfDNoznqvd1eS4=&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TransactionType&quot;</span><span class="o">:</span> <span class="s2">&quot;/MarketPlaceTransaction&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Update&quot;</span><span class="o">:</span> <span class="p">{</span>
+      <span class="s2">&quot;UpdateType&quot;</span><span class="o">:</span> <span class="s2">&quot;/mktplace.transactions.ParticipantUpdate/Register&quot;</span>
+      <span class="s2">&quot;Description&quot;</span><span class="o">:</span> <span class="s2">&quot;MarketPlace Participant&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="s2">&quot;market&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;__NONCE__&quot;</span><span class="o">:</span> <span class="mf">1444777217.575749</span><span class="p">,</span>
+  <span class="s2">&quot;__SIGNATURE__&quot;</span><span class="o">:</span> <span class="s2">&quot;HAFYXv9paHt/EQ35vQeR/TPbm48/maA0lKAav/u7kkl4womFuDh8emJRowoO0dHLfUEJO4NzlwxY3FpdwA9hDa4=&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;__TYPE__&quot;</span><span class="o">:</span> <span class="s2">&quot;/mktplace.transactions.MarketPlace/Transaction&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Messages contain one of the <a class="reference internal" href="mktplace_transactions.html#mktplace-transactions-label"><span class="std std-ref">MarketPlace Transactions</span></a> and three
+additional fields:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">__NONCE__:</th><td class="field-body">random float used to ensure the message signature is unique;
+we use the python representation of wall clock time</td>
+</tr>
+<tr class="field-even field"><th class="field-name">__TYPE__:</th><td class="field-body">the type of message; for all MarketPlace transactions the
+message type is
+&#8220;/mktplace.transactions.MarketPlace/Transaction&#8221;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">__SIGNATURE__:</th><td class="field-body">the message signature is computed using all fields in
+the message except for the __SIGNATURE__ field.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mktplace_transactions.html" class="btn btn-neutral float-right" title="MarketPlace Transactions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mktplace_data_model.html" class="btn btn-neutral" title="MarketPlace Data Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

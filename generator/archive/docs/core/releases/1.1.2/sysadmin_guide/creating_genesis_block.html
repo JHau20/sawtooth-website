@@ -1,0 +1,379 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Creating the Genesis Block &mdash; Sawtooth v1.1.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Changing Off-chain Settings with Configuration Files" href="off_chain_settings.html" />
+    <link rel="prev" title="Generating User and Validator Keys" href="generating_keys.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.1.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="setting_up_sawtooth_poet-sim.html">Setting Up a Sawtooth Node</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="installation.html">Installing Hyperledger Sawtooth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generating_keys.html">Generating User and Validator Keys</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Creating the Genesis Block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="off_chain_settings.html">Changing Off-chain Settings with Configuration Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="systemd.html">Running Sawtooth as a Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing_sawtooth.html">Testing Sawtooth Functionality</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="setting_allowed_txns.html">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_permissions.html">Configuring Validator and Transactor Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grafana_configuration.html">Using Grafana to Display Sawtooth Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_sawtooth.html">About Sawtooth Configuration Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="setting_up_sawtooth_poet-sim.html">Setting Up a Sawtooth Node</a> &raquo;</li>
+        
+      <li>Creating the Genesis Block</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/creating_genesis_block.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="creating-the-genesis-block">
+<h1>Creating the Genesis Block<a class="headerlink" href="#creating-the-genesis-block" title="Permalink to this headline">¶</a></h1>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Use this procedure <strong>only</strong> for the first validator node on a Sawtooth
+network. Skip this procedure if you are creating a node that will join an
+existing Sawtooth network.</p>
+</div>
+<p>The first node in a new Sawtooth network must create the genesis block to
+initialize the Settings transaction processor and specify the consensus
+mechanism. The settings in the genesis block enable other nodes to join the
+network and use these on-chain settings.</p>
+<p>Before you start the first Sawtooth node, use this procedure to create and
+submit the genesis block.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This procedure uses the same validator key for all commands that require a
+key. In theory, some of these commands could use a different key, but
+configuring multiple keys is a complicated process. Describing how to use
+multiple keys to create the genesis block is outside the scope of this guide.</p>
+</div>
+<ol class="arabic">
+<li><p class="first">Ensure that the required user and validator keys exist:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ls ~/.sawtooth/keys/
+<span class="go">{yourname}.priv    {yourname}.pub</span>
+
+<span class="gp">$</span> ls /etc/sawtooth/keys/
+<span class="go">validator.priv   validator.pub</span>
+</pre></div>
+</div>
+<p>If these key files do not exist, create them as described in
+<a class="reference internal" href="generating_keys.html"><span class="doc">Generating User and Validator Keys</span></a>.</p>
+</li>
+<li><p class="first">Become the <code class="docutils literal"><span class="pre">sawtooth</span></code> user. In the following commands, the prompt
+<code class="docutils literal"><span class="pre">[sawtooth&#64;system]</span></code> shows the commands that must be executed as
+<code class="docutils literal"><span class="pre">sawtooth</span></code>.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth -s
+<span class="gp">[sawtooth@system]$</span> <span class="nb">cd</span> /tmp
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create a batch to initialize the Settings transaction family in the genesis
+block.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">[sawtooth@system]$</span> sawset genesis --key /etc/sawtooth/keys/validator.priv -o config-genesis.batch
+</pre></div>
+</div>
+<p>This command authorizes this key (the validator key on this node) to change
+Sawtooth settings. You must use the same key for the following commands in
+this procedure. Also, any later commands to change on-chain Sawtooth settings
+must specify this key.</p>
+</li>
+<li><p class="first">Create and submit a proposal to initialize the PoET consensus settings. This
+command sets the consensus algorithm to PoET simulator, and then applies the
+required settings.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">[sawtooth@system]$</span> sawset proposal create --key /etc/sawtooth/keys/validator.priv <span class="se">\</span>
+-o config.batch <span class="se">\</span>
+sawtooth.consensus.algorithm<span class="o">=</span>poet <span class="se">\</span>
+sawtooth.poet.report_public_key_pem<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>cat /etc/sawtooth/simulator_rk_pub.pem<span class="k">)</span><span class="s2">&quot;</span> <span class="se">\</span>
+sawtooth.poet.valid_enclave_measurements<span class="o">=</span><span class="k">$(</span>poet enclave measurement<span class="k">)</span> <span class="se">\</span>
+sawtooth.poet.valid_enclave_basenames<span class="o">=</span><span class="k">$(</span>poet enclave basename<span class="k">)</span>
+</pre></div>
+</div>
+<p>This is a complicated command. Here&#8217;s an explanation of the options:</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">--key</span> <span class="pre">/etc/sawtooth/keys/validator.priv</span></code></dt>
+<dd><p class="first last">Signs the proposal with this node&#8217;s validator key. Only this key can be
+used to change on-chain settings. For more information, see
+<a class="reference internal" href="configuring_permissions.html"><span class="doc">Configuring Validator and Transactor Permissions</span></a>.</p>
+</dd>
+<dt><code class="docutils literal"><span class="pre">-o</span> <span class="pre">config.batch</span></code></dt>
+<dd><p class="first last">Wraps the proposal transaction in a batch named <code class="docutils literal"><span class="pre">config.batch</span></code>.</p>
+</dd>
+<dt><code class="docutils literal"><span class="pre">sawtooth.consensus.algorithm=poet</span></code></dt>
+<dd><p class="first last">Changes the consensus algorithm to PoET.</p>
+</dd>
+<dt><code class="docutils literal"><span class="pre">sawtooth.poet.report_public_key_pem=&quot;$(cat</span> <span class="pre">/etc/sawtooth/simulator_rk_pub.pem)&quot;</span></code></dt>
+<dd><p class="first last">Adds the public key for the PoET Validator Registry transaction
+processor to use for the PoET simulator consensus.</p>
+</dd>
+<dt><code class="docutils literal"><span class="pre">sawtooth.poet.valid_enclave_measurements=$(poet</span> <span class="pre">enclave</span> <span class="pre">measurement)</span></code></dt>
+<dd><p class="first last">Adds a simulated enclave measurement to the blockchain. The
+PoET Validator Registry transaction processor uses this value to check
+signup information.</p>
+</dd>
+<dt><code class="docutils literal"><span class="pre">sawtooth.poet.valid_enclave_basenames=$(poet</span> <span class="pre">enclave</span> <span class="pre">basename)</span></code></dt>
+<dd><p class="first last">Adds a simulated enclave basename to the blockchain. The PoET
+Validator Registry uses this value to check signup information.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">Create a batch to register the first Sawtooth node with the PoET Validator
+Registry transaction processor. Without this command, the validator would not
+be able to publish any blocks.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">[sawtooth@system]$</span> poet registration create --key /etc/sawtooth/keys/validator.priv -o poet.batch
+</pre></div>
+</div>
+</li>
+<li><p class="first">(Optional) Create a batch to configure other PoET settings. This example
+shows the default settings.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">[sawtooth@system]$</span> sawset proposal create --key /etc/sawtooth/keys/validator.priv <span class="se">\</span>
+-o poet-settings.batch <span class="se">\</span>
+sawtooth.poet.target_wait_time<span class="o">=</span><span class="m">5</span> <span class="se">\</span>
+sawtooth.poet.initial_wait_time<span class="o">=</span><span class="m">25</span> <span class="se">\</span>
+sawtooth.publisher.max_batches_per_block<span class="o">=</span><span class="m">100</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Combine the previously created batches into a single genesis batch that will
+be committed in the genesis block.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">[sawtooth@system]$</span> sawadm genesis config-genesis.batch config.batch poet.batch poet-settings.batch
+</pre></div>
+</div>
+<p>You’ll see some output indicating success:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">Processing config-genesis.batch...</span>
+<span class="go">Processing config.batch...</span>
+<span class="go">Processing poet.batch...</span>
+<span class="go">Processing poet-settings.batch...</span>
+<span class="go">Generating /var/lib/sawtooth/genesis.batch</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">When this command finishes, genesis configuration is complete. Log out of the
+<code class="docutils literal"><span class="pre">sawtooth</span></code> account.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">[sawtooth@system]$</span> <span class="nb">exit</span>
+<span class="gp">$</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="off_chain_settings.html" class="btn btn-neutral float-right" title="Changing Off-chain Settings with Configuration Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="generating_keys.html" class="btn btn-neutral" title="Generating User and Validator Keys" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'v1.1.2',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

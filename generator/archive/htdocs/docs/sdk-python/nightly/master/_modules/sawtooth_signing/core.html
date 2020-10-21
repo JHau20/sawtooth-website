@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth_signing.core &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../sdks/python_sdk/processor.html">processor package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sdks/python_sdk/sawtooth_signing.html">sawtooth_signing package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../sawtooth_signing.html">sawtooth_signing</a> &raquo;</li>
+        
+      <li>sawtooth_signing.core</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sawtooth_signing.core</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016, 2017 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
+
+
+<div class="viewcode-block" id="NoSuchAlgorithmError"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.NoSuchAlgorithmError">[docs]</a><span class="k">class</span> <span class="nc">NoSuchAlgorithmError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Thrown when trying to create an algorithm which does not exist.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="SigningError"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.SigningError">[docs]</a><span class="k">class</span> <span class="nc">SigningError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Thrown when an error occurs during the signing process.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="ParseError"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.ParseError">[docs]</a><span class="k">class</span> <span class="nc">ParseError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Thrown when an error occurs during deserialization of a Private or</span>
+<span class="sd">    Public key from various formats.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="PrivateKey"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.PrivateKey">[docs]</a><span class="k">class</span> <span class="nc">PrivateKey</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A private key instance.</span>
+
+<span class="sd">    The underlying content is dependent on implementation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PrivateKey.get_algorithm_name"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.PrivateKey.get_algorithm_name">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_algorithm_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the algorithm name used for this private key.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="PrivateKey.as_hex"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.PrivateKey.as_hex">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">as_hex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the private key encoded as a hex string.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="PrivateKey.as_bytes"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.PrivateKey.as_bytes">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">as_bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the private key bytes.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="PublicKey"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.PublicKey">[docs]</a><span class="k">class</span> <span class="nc">PublicKey</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A public key instance.</span>
+
+<span class="sd">    The underlying content is dependent on implementation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PublicKey.get_algorithm_name"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.PublicKey.get_algorithm_name">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_algorithm_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the algorithm name used for this public key.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="PublicKey.as_hex"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.PublicKey.as_hex">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">as_hex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the public key encoded as a hex string.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="PublicKey.as_bytes"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.PublicKey.as_bytes">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">as_bytes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the public key bytes.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+
+
+<div class="viewcode-block" id="Context"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.Context">[docs]</a><span class="k">class</span> <span class="nc">Context</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A context for a cryptographic signing algorithm.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Context.get_algorithm_name"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.Context.get_algorithm_name">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_algorithm_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the algorithm name.</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="Context.sign"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.Context.sign">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">sign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">private_key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sign a message</span>
+
+<span class="sd">        Given a private key for this algorithm, sign the given message bytes</span>
+<span class="sd">        and return a hex-encoded string of the resulting signature.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            message (bytes): the message bytes</span>
+<span class="sd">            private_key (:obj:`PrivateKey`): the private key</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The signature in a hex-encoded string</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            SigningError: if any error occurs during the signing process</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="Context.verify"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.Context.verify">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">verify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signature</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">public_key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Verifies that a signature of a message was produced with the</span>
+<span class="sd">        associated public key.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            signature (str): the hex-encoded signature</span>
+<span class="sd">            message (bytes): the message bytes</span>
+<span class="sd">            public_key (:obj:`PublicKey`): the public key to use for</span>
+<span class="sd">                verification</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            boolean: True if the public key is associated with the signature</span>
+<span class="sd">            for that method, False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="Context.new_random_private_key"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.Context.new_random_private_key">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">new_random_private_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generates a new random PrivateKey using this context.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (:obj:`PrivateKey`): a random private key</span>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+
+<div class="viewcode-block" id="Context.get_public_key"><a class="viewcode-back" href="../../sdks/python_sdk/sawtooth_signing.html#sawtooth_signing.core.Context.get_public_key">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_public_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">private_key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Produce a public key for the given private key.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            private_key (:obj:`PrivateKey`): a private key</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            (:obj:`PublicKey`) the public key for the given private key</span>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

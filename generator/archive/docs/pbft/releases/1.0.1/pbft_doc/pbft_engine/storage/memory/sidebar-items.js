@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["MemStorage","Memory-backed RAII-guarded Storage implementation"],["MemStorageReadGuard","Memory-backed read guard"],["MemStorageWriteGuard","Memory-backed write guard"]]});

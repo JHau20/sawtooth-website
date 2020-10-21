@@ -1,0 +1,1269 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>btp CLI Reference &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../index.html"/>
+        <link rel="up" title="Sawtooth Lake Bond Family User’s Guide" href="../users_guide.html"/>
+        <link rel="next" title="Sawtooth Lake Bond Family System Administrator’s Guide" href="../sysadmin_guide.html"/>
+        <link rel="prev" title="Scenarios" href="scenarios.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../bond_family_guide.html">Bond Family Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../users_guide.html">Sawtooth Lake Bond Family User&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ui_reference.html">UI Reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scenarios.html">Scenarios</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">btp CLI Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#btp">btp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-init">btp init</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-bond">btp bond</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-bond-list">btp bond list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-bond-show">btp bond show</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-holding">btp holding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-holding-create">btp holding create</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-holding-list">btp holding list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-holding-show">btp holding show</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-load">btp load</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-order">btp order</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-order-create">btp order create</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-order-list">btp order list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-order-show">btp order show</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-org">btp org</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-org-create">btp org create</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-org-list">btp org list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-org-show">btp org show</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-quote">btp quote</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-quote-create">btp quote create</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-quote-list">btp quote list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-quote-show">btp quote show</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-receipt">btp receipt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-receipt-list">btp receipt list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-receipt-show">btp receipt show</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-settlement">btp settlement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-settlement-create">btp settlement create</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-settlement-list">btp settlement list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-user">btp user</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-user-list">btp user list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-user-register">btp user register</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-user-show">btp user show</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#btp-user-update">btp user update</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sysadmin_guide.html">Sawtooth Lake Bond Family System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design.html">Sawtooth Lake Bond Family Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bond_workload_simulator.html">Sawtooth Lake Bond Family Workload Simulator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../bond_family_guide.html">Bond Family Guide</a> &raquo;</li>
+        
+          <li><a href="../users_guide.html">Sawtooth Lake Bond Family User&#8217;s Guide</a> &raquo;</li>
+        
+      <li>btp CLI Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/bond_family_guide/users_guide/cli.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="btp-cli-reference">
+<span id="btp-cli-reference-label"></span><h1>btp CLI Reference<a class="headerlink" href="#btp-cli-reference" title="Permalink to this headline">¶</a></h1>
+<p>A command line interface, <strong class="command">btp</strong>, can submit transactions and display
+the current state of the validator&#8217;s object-based store.  This includes creating
+and viewing organizations, users, bonds, holdings, orders, quotes, etc.</p>
+<div class="section" id="btp">
+<h2>btp<a class="headerlink" href="#btp" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp [-h] [-v]</span>
+<span class="go">           {init,load,bond,org,holding,user,order,quote,settlement,receipt}</span>
+<span class="go">           ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         add more v&#39;s for more information e.g. -vv</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {init,load,bond,org,holding,user,order,quote,settlement,receipt}</span>
+<span class="go">    init                configure the cli client</span>
+<span class="go">    load                load a YAML file</span>
+<span class="go">    bond                list and show bonds</span>
+<span class="go">    org                 list, show, and create organizations</span>
+<span class="go">    holding             list, show, and create holdings</span>
+<span class="go">    user                list, show, register, and update users</span>
+<span class="go">    order               list, show, and create orders</span>
+<span class="go">    quote               list, show, and create quotes</span>
+<span class="go">    settlement          list, show, and create settlements</span>
+<span class="go">    receipt             list and show receipts</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-init">
+<h2>btp init<a class="headerlink" href="#btp-init" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp init [-h] [-v] [--username USERNAME] [--url URL]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help           show this help message and exit</span>
+<span class="go">  -v, --verbose        add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --username USERNAME  the name of the user</span>
+<span class="go">  --url URL            the url of the validator to connect with</span>
+
+<span class="go">Example: btp init --username johndoe --url http://192.168.5.1:8800</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-bond">
+<h2>btp bond<a class="headerlink" href="#btp-bond" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp bond [-h] [-v] {list,show} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+
+<span class="go">bond subcommands:</span>
+<span class="go">  {list,show}</span>
+<span class="go">    list         list all the bonds</span>
+<span class="go">    show         show a particular bond</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-bond-list">
+<h2>btp bond list<a class="headerlink" href="#btp-bond-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp bond list [-h] [-v] [--yaml] [--full]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --yaml         display the list of bonds in YAML format</span>
+<span class="go">  --full         show columns wider than 30 characters</span>
+</pre></div>
+</td></tr></table></div>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">btp bond list</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-bond-show">
+<h2>btp bond show<a class="headerlink" href="#btp-bond-show" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp bond show [-h] [-v] identifier</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  identifier     object id, isin, or cusip</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-holding">
+<h2>btp holding<a class="headerlink" href="#btp-holding" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp holding [-h] [-v] {create,list,show} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help          show this help message and exit</span>
+<span class="go">  -v, --verbose       add more v&#39;s for more information e.g. -vv</span>
+
+<span class="go">holding subcommands:</span>
+<span class="go">  {create,list,show}</span>
+<span class="go">    create            create a holding</span>
+<span class="go">    list              list all holdings, or just those specified with --org</span>
+<span class="go">    show              show a particular holding</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-holding-create">
+<h2>btp holding create<a class="headerlink" href="#btp-holding-create" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp holding create [-h] [-v] [--wait] [--object-id OBJECT_ID]</span>
+<span class="go">                          owner asset-type asset-id amount</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  owner                 the object-id, ticker, or pricing-source of the</span>
+<span class="go">                        organization</span>
+<span class="go">  asset-type            either Currency or Bond</span>
+<span class="go">  asset-id              The bond identifier(isin, cusip, object-id) or if</span>
+<span class="go">                        Currency the string USD</span>
+<span class="go">  amount                The amount of the holding</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --wait                wait for this commit before exiting</span>
+<span class="go">  --object-id OBJECT_ID</span>
+<span class="go">                        optionally specify the created holding&#39;s object-id</span>
+
+<span class="go">Example:</span>
+<span class="go">                    btp holding create CMP3 Currency USD 1000000000</span>
+<span class="go">                    btp holding create CMP1 Bond US2847D48509 100000</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-holding-list">
+<h2>btp holding list<a class="headerlink" href="#btp-holding-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp holding list [-h] [-v] [--org ORG] [--yaml] [--full]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --org ORG      the org object-id, ticker, or pricing-source (only applies to</span>
+<span class="go">                 marketmakers</span>
+<span class="go">  --yaml         Display the holding info in YAML</span>
+<span class="go">  --full         display columns that are wider than 30 characters</span>
+</pre></div>
+</td></tr></table></div>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">btp holding list</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-holding-show">
+<h2>btp holding show<a class="headerlink" href="#btp-holding-show" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp holding show [-h] [-v] identifier</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  identifier     the object id of the holding</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-load">
+<h2>btp load<a class="headerlink" href="#btp-load" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp load [-h] [-v] [--wait] filename [filename ...]</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  filename       filename of YAML file to load</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --wait         wait for this commit before exiting</span>
+
+<span class="go">Example: btp load data.yml</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-order">
+<h2>btp order<a class="headerlink" href="#btp-order" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp order [-h] [-v] {create,list,show} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help          show this help message and exit</span>
+<span class="go">  -v, --verbose       add more v&#39;s for more information e.g. -vv</span>
+
+<span class="go">order subcommands:</span>
+<span class="go">  {create,list,show}</span>
+<span class="go">    create            create an order</span>
+<span class="go">    list              list all orders limited by --user or --org</span>
+<span class="go">    show              show a particular order, including settlement if</span>
+<span class="go">                      applicable</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-order-create">
+<h2>btp order create<a class="headerlink" href="#btp-order-create" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp order create [-h] [-v] [--firm-id FIRM_ID] [--isin ISIN]</span>
+<span class="go">                        [--cusip CUSIP] [--limit-price LIMIT_PRICE]</span>
+<span class="go">                        [--limit-yield LIMIT_YIELD] [--object-id OBJECT_ID]</span>
+<span class="go">                        [--wait]</span>
+<span class="go">                        action order-type quantity</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  action                Buy or Sell</span>
+<span class="go">  order-type            Limit or Market</span>
+<span class="go">  quantity              the amount of bonds being sold or bought e.g. 1000000</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --firm-id FIRM_ID     the organization&#39;s object-id</span>
+<span class="go">  --isin ISIN           the isin of the bond the order is on</span>
+<span class="go">  --cusip CUSIP         the cusip of the bond the order is on (one of --cusip</span>
+<span class="go">                        or --isin is required)</span>
+<span class="go">  --limit-price LIMIT_PRICE</span>
+<span class="go">                        the limit-price to buy or sell at e.g. &quot;101-15 1/4&quot;</span>
+<span class="go">  --limit-yield LIMIT_YIELD</span>
+<span class="go">                        the limit-yield to buy or sell at e.g. 1.248</span>
+<span class="go">  --object-id OBJECT_ID</span>
+<span class="go">                        specify an object-id for the order</span>
+<span class="go">  --wait                wait for this commit before exiting</span>
+
+<span class="go">Example:</span>
+<span class="go">btp order create --isin US035242AP13 Buy Market 100000 --firm-id OBJECT_ID</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-order-list">
+<h2>btp order list<a class="headerlink" href="#btp-order-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp order list [-h] [-v] [--yaml] [--full] [--user USER | --org ORG]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --yaml</span>
+<span class="go">  --full         display columns wider than 30 characters</span>
+<span class="go">  --user USER    the object-id, key-id, or username of user</span>
+<span class="go">  --org ORG      the object-id, ticker, or pricing-source (only applies to</span>
+<span class="go">                 marketmakers)</span>
+</pre></div>
+</td></tr></table></div>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">btp order list</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-order-show">
+<h2>btp order show<a class="headerlink" href="#btp-order-show" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp order show [-h] [-v] identifier</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  identifier     the object-id of the order</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-org">
+<h2>btp org<a class="headerlink" href="#btp-org" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp org [-h] [-v] {create,list,show} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help          show this help message and exit</span>
+<span class="go">  -v, --verbose       add more v&#39;s for more information e.g. -vv</span>
+
+<span class="go">org subcommands:</span>
+<span class="go">  {create,list,show}</span>
+<span class="go">    create            create an organization</span>
+<span class="go">    list              list all organizations</span>
+<span class="go">    show              show a particular organization</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-org-create">
+<h2>btp org create<a class="headerlink" href="#btp-org-create" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp org create [-h] [-v] [--object-id OBJECT_ID] [--ticker TICKER]</span>
+<span class="go">                      [--pricing-src PRICING_SRC] [--industry INDUSTRY]</span>
+<span class="go">                      [--auth AUTH] [--wait]</span>
+<span class="go">                      name</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name                  the name of the organization. e.g. &quot;Company 10&quot;</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --object-id OBJECT_ID</span>
+<span class="go">                        specify the object-id for the organization</span>
+<span class="go">  --ticker TICKER       the ticker symbol of the organization</span>
+<span class="go">  --pricing-src PRICING_SRC</span>
+<span class="go">                        a four letter code for marketmakers</span>
+<span class="go">  --industry INDUSTRY   the organization&#39;s industry</span>
+<span class="go">  --auth AUTH           who in the organization is authorized to act as</span>
+<span class="go">                        marketmaker or trader as an array of json objects e.g.</span>
+<span class="go">                        &#39;[{&quot;Role&quot;: &quot;marketmaker&quot;, &quot;ParticipantId&quot;:</span>
+<span class="go">                        &quot;OBJECT_ID&quot;}]&#39;</span>
+<span class="go">  --wait                wait for this commit before exiting</span>
+
+<span class="go">Example:</span>
+<span class="go">    btp org create --ticker CMP10 --industry Technology &#39;Company 10&#39;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-org-list">
+<h2>btp org list<a class="headerlink" href="#btp-org-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp org list [-h] [-v] [--yaml] [--full]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --yaml         display the list in YAML format</span>
+<span class="go">  --full         list columns wider than 30 characters</span>
+</pre></div>
+</td></tr></table></div>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">btp org list</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-org-show">
+<h2>btp org show<a class="headerlink" href="#btp-org-show" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp org show [-h] [-v] identifier</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  identifier     object-id, ticker, or pricing-source (only applies to</span>
+<span class="go">                 marketmakers</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-quote">
+<h2>btp quote<a class="headerlink" href="#btp-quote" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp quote [-h] [-v] {create,list,show} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help          show this help message and exit</span>
+<span class="go">  -v, --verbose       add more v&#39;s for more information e.g. -vv</span>
+
+<span class="go">quote subcommands:</span>
+<span class="go">  {create,list,show}</span>
+<span class="go">    create            create a quote</span>
+<span class="go">    list              list all quotes, or filter by --org or --user</span>
+<span class="go">    show              show a particular quote</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-quote-create">
+<h2>btp quote create<a class="headerlink" href="#btp-quote-create" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp quote create [-h] [-v] [--isin ISIN] [--cusip CUSIP]</span>
+<span class="go">                        [--object-id OBJECT_ID] [--wait]</span>
+<span class="go">                        firm ask-price ask-qty bid-price bid-qty</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  firm                  the pricing-source of the firm making the quote</span>
+<span class="go">  ask-price             the ask price</span>
+<span class="go">  ask-qty               the ask quantity</span>
+<span class="go">  bid-price             the bid price</span>
+<span class="go">  bid-qty               The bid quantity</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --isin ISIN           the isin of the bond</span>
+<span class="go">  --cusip CUSIP         The cusip of the bond, (either --cusip or --isin must</span>
+<span class="go">                        be specified)</span>
+<span class="go">  --object-id OBJECT_ID</span>
+<span class="go">                        optionally specify the created quote&#39;s object-id</span>
+<span class="go">  --wait                wait for this commit before exiting</span>
+
+<span class="go">Example:</span>
+<span class="go">btp quote create --cusip 22160KAF2 CMP2 &#39;101-13+&#39; 100000 &#39;99-12 1/8&#39; 100000</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-quote-list">
+<h2>btp quote list<a class="headerlink" href="#btp-quote-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp quote list [-h] [-v] [--org ORG] [--user USER] [--yaml] [--full]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --org ORG      The org object-id, ticker, or pricing-source (only applies to</span>
+<span class="go">                 marketmakers</span>
+<span class="go">  --user USER    The username, object-id, or key-id of the user</span>
+<span class="go">  --yaml         display the quote info in YAML</span>
+<span class="go">  --full         display columns that are wider than 30 characters</span>
+</pre></div>
+</td></tr></table></div>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">btp quote list</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-quote-show">
+<h2>btp quote show<a class="headerlink" href="#btp-quote-show" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp quote show [-h] [-v] identifier</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  identifier     The object-id of the quote</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-receipt">
+<h2>btp receipt<a class="headerlink" href="#btp-receipt" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp receipt [-h] [-v] {list,show} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+
+<span class="go">receipt subcommands:</span>
+<span class="go">  {list,show}</span>
+<span class="go">    list         list redemptions and coupons, filter by --org (payee) or</span>
+<span class="go">                 --bond</span>
+<span class="go">    show         show a particular redemption or coupon</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-receipt-list">
+<h2>btp receipt list<a class="headerlink" href="#btp-receipt-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp receipt list [-h] [-v] [--bond BOND | --org ORG] [--yaml] [--full]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --bond BOND    the isin, cusip, or bond object-id</span>
+<span class="go">  --org ORG      the ticker, pricing-source, or organization object-id</span>
+<span class="go">  --yaml         display in YAML format</span>
+<span class="go">  --full         Display columns wider than 30 characters</span>
+</pre></div>
+</td></tr></table></div>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">btp receipt list</span>
+<span class="go">Timestamp           CouponDate   PaymentType   Amount    ObjectType  </span>
+<span class="go">08/04/16 17:37:54   08/04/2016   Coupon        11986.3   receipt     </span>
+<span class="go">08/04/16 17:37:54   08/04/2016   Coupon        11986.3   receipt     </span>
+<span class="go">08/04/16 17:37:54   08/04/2016   Coupon        7707.81   receipt     </span>
+<span class="go">08/04/16 17:37:54   08/04/2016   Coupon        11986.3   receipt     </span>
+<span class="go">08/04/16 17:37:54   N/A          Redemption    1000000   receipt     </span>
+<span class="go">08/04/16 17:37:54   N/A          Redemption    1000000   receipt     </span>
+<span class="go">08/04/16 17:37:54   08/04/2016   Coupon        11986.3   receipt     </span>
+<span class="go">08/04/16 17:37:54   08/04/2016   Coupon        11986.3   receipt     </span>
+<span class="go">08/04/16 17:37:54   08/04/2016   Coupon        7707.81   receipt     </span>
+<span class="go">...</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-receipt-show">
+<h2>btp receipt show<a class="headerlink" href="#btp-receipt-show" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp receipt show [-h] [-v] identifier</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  identifier     the object-id of the receipt</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-settlement">
+<h2>btp settlement<a class="headerlink" href="#btp-settlement" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp settlement [-h] [-v] {create,list,show} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help          show this help message and exit</span>
+<span class="go">  -v, --verbose       add more v&#39;s for more information e.g. -vv</span>
+
+<span class="go">settlement subcommands:</span>
+<span class="go">  {create,list,show}</span>
+<span class="go">    create            create a settlement</span>
+<span class="go">    list              list all settlements, filter by --creator (key-id,</span>
+<span class="go">                      username, or object-id of the creator of the settlement)</span>
+<span class="go">    show              show a particular settlement</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-settlement-create">
+<h2>btp settlement create<a class="headerlink" href="#btp-settlement-create" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp settlement create [-h] [-v] [--object-id OBJECT_ID] [--wait]</span>
+<span class="go">                             order-id</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  order-id              the object-id of the order for settlement</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --object-id OBJECT_ID</span>
+<span class="go">                        optionally specify the created settlement&#39;s object-id</span>
+<span class="go">  --wait                wait for this commit before exiting</span>
+
+<span class="go">Example:</span>
+<span class="go">                    btp settlement create OBJECT_ID</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-settlement-list">
+<h2>btp settlement list<a class="headerlink" href="#btp-settlement-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp settlement list [-h] [-v] [--creator CREATOR] [--full] [--yaml]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help         show this help message and exit</span>
+<span class="go">  -v, --verbose      add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --creator CREATOR  the key-id, username, or object-id</span>
+<span class="go">  --full             display columns that are wider than 30 characters</span>
+<span class="go">  --yaml             display as settlement as YAML</span>
+</pre></div>
+</td></tr></table></div>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">btp settlement list</span>
+<span class="go">BondQuantity   ObjectType   Action   CurrencyAmount  </span>
+<span class="go">100000         settlement   Sell     98183.59375     </span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-user">
+<h2>btp user<a class="headerlink" href="#btp-user" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp user [-h] [-v] {register,update,list,show} ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         add more v&#39;s for more information e.g. -vv</span>
+
+<span class="go">User subcommands:</span>
+<span class="go">  {register,update,list,show}</span>
+<span class="go">    register            register the current user</span>
+<span class="go">    update              update the username and/or firm-id</span>
+<span class="go">    list                list all users</span>
+<span class="go">    show                show a particular user</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-user-list">
+<h2>btp user list<a class="headerlink" href="#btp-user-list" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp user list [-h] [-v] [--yaml] [--full]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --yaml         display the holding info in YAML</span>
+<span class="go">  --full         display columns wider than 30 characters</span>
+</pre></div>
+</td></tr></table></div>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">btp user list</span>
+<span class="go">Username           ObjectType   </span>
+<span class="go">FirstParticipant   participant  </span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-user-register">
+<h2>btp user register<a class="headerlink" href="#btp-user-register" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp user register [-h] [-v] [--firm-id FIRM_ID] [--object-id OBJECT_ID]</span>
+<span class="go">                         [--wait]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --firm-id FIRM_ID     the object-id of the organization</span>
+<span class="go">  --object-id OBJECT_ID</span>
+<span class="go">                        specify the object-id of the created user</span>
+<span class="go">  --wait                wait for this commit before exiting</span>
+
+<span class="go">Example:</span>
+<span class="go">                    btp user init --username johndoe</span>
+<span class="go">                    btp user register</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-user-show">
+<h2>btp user show<a class="headerlink" href="#btp-user-show" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp user show [-h] [-v] identifier</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  identifier     the username, object-id, or key-id of the user</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  add more v&#39;s for more information e.g. -vv</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="btp-user-update">
+<h2>btp user update<a class="headerlink" href="#btp-user-update" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: btp user update [-h] [-v] [--username USERNAME] [--firm-id FIRM_ID]</span>
+<span class="go">                       [--wait]</span>
+<span class="go">                       object-id</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  object-id            the object-id of the user to update</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help           show this help message and exit</span>
+<span class="go">  -v, --verbose        add more v&#39;s for more information e.g. -vv</span>
+<span class="go">  --username USERNAME  the username to change the user to, (must be unique)</span>
+<span class="go">  --firm-id FIRM_ID    the firm-id to add or change for the user</span>
+<span class="go">  --wait               wait for this commit before exiting</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../sysadmin_guide.html" class="btn btn-neutral float-right" title="Sawtooth Lake Bond Family System Administrator’s Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="scenarios.html" class="btn btn-neutral" title="Scenarios" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

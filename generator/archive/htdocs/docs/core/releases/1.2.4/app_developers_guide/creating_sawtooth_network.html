@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Creating a Sawtooth Test Network &mdash; Sawtooth v1.2.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="About Sawtooth Networks" href="about_sawtooth_networks.html" />
+    <link rel="prev" title="Using Ubuntu for a Single Sawtooth Node" href="ubuntu.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Transaction Family Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_sawtooth.html">Setting Up a Sawtooth Node for Testing</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Creating a Sawtooth Test Network</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="about_sawtooth_networks.html">About Sawtooth Networks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="docker_test_network.html">Using Docker for a Sawtooth Test Network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kubernetes_test_network.html">Using Kubernetes for a Sawtooth Test Network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ubuntu_test_network.html">Using Ubuntu for a Sawtooth Test Network</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Playing with the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_the_sdks.html">Using the Sawtooth SDKs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_restriction.html">Namespace Restriction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_subscriptions.html">Subscribing to Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer’s Guide</a> &raquo;</li>
+        
+      <li>Creating a Sawtooth Test Network</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/creating_sawtooth_network.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="creating-a-sawtooth-test-network">
+<h1>Creating a Sawtooth Test Network<a class="headerlink" href="#creating-a-sawtooth-test-network" title="Permalink to this headline">¶</a></h1>
+<p>This section describes how to create a Sawtooth network for an application
+development environment. Each node is similar to the single-node environment
+described <a class="reference internal" href="installing_sawtooth.html"><span class="doc">earlier in this guide</span></a>, but the network
+uses a consensus algorithm that is appropriate for a Sawtooth network (instead
+of Devmode consensus). For more information, see <a class="reference internal" href="about_sawtooth_networks.html"><span class="doc">About Sawtooth Networks</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For a single-node test environment, see <a class="reference internal" href="installing_sawtooth.html"><span class="doc">Setting Up a Sawtooth Node for Testing</span></a>.</p>
+</div>
+<p>Use the procedures in this section to create a Sawtooth test network using
+prebuilt <a class="reference external" href="https://www.docker.com/">Docker</a> containers,
+a <a class="reference external" href="https://kubernetes.io">Kubernetes</a> cluster inside a virtual machine on
+your computer, or a native <a class="reference external" href="https://www.ubuntu.com/">Ubuntu</a> installation.</p>
+<p>To get started, read <a class="reference internal" href="about_sawtooth_networks.html"><span class="doc">About Sawtooth Networks</span></a>, then choose the guide for
+the platform of your choice.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="about_sawtooth_networks.html">About Sawtooth Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker_test_network.html">Using Docker for a Sawtooth Test Network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docker_test_network.html#about-the-docker-sawtooth-network-environment">About the Docker Sawtooth Network Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker_test_network.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker_test_network.html#step-1-download-the-docker-compose-file">Step 1: Download the Docker Compose File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker_test_network.html#step-2-start-the-sawtooth-network">Step 2: Start the Sawtooth Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker_test_network.html#step-3-check-the-rest-api-process">Step 3: Check the REST API Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker_test_network.html#step-4-confirm-network-functionality">Step 4: Confirm Network Functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker_test_network.html#step-5-configure-the-allowed-transaction-types-optional">Step 5. Configure the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker_test_network.html#step-6-stop-the-sawtooth-network-optional">Step 6: Stop the Sawtooth Network (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="kubernetes_test_network.html">Using Kubernetes for a Sawtooth Test Network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes_test_network.html#about-the-kubernetes-sawtooth-network-environment">About the Kubernetes Sawtooth Network Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes_test_network.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes_test_network.html#step-1-install-kubectl-and-minikube">Step 1: Install kubectl and minikube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes_test_network.html#step-2-start-minikube">Step 2: Start Minikube</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes_test_network.html#step-3-download-the-sawtooth-configuration-file">Step 3: Download the Sawtooth Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes_test_network.html#step-4-pbft-only-configure-keys-for-the-kubernetes-pods">Step 4: (PBFT Only) Configure Keys for the Kubernetes Pods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes_test_network.html#step-5-start-the-sawtooth-cluster">Step 5: Start the Sawtooth Cluster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes_test_network.html#step-6-confirm-network-and-blockchain-functionality">Step 6: Confirm Network and Blockchain Functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes_test_network.html#step-7-configure-the-allowed-transaction-types-optional">Step 7. Configure the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kubernetes_test_network.html#step-8-stop-the-sawtooth-kubernetes-cluster">Step 8: Stop the Sawtooth Kubernetes Cluster</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ubuntu_test_network.html">Using Ubuntu for a Sawtooth Test Network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_test_network.html#about-the-ubuntu-sawtooth-network-environment">About the Ubuntu Sawtooth Network Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_test_network.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_test_network.html#step-1-install-sawtooth-on-all-nodes">Step 1: Install Sawtooth on All Nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_test_network.html#step-2-create-user-and-validator-keys">Step 2: Create User and Validator Keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_test_network.html#step-3-create-the-genesis-block-on-the-first-node">Step 3: Create the Genesis Block on the First Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_test_network.html#step-4-pbft-only-configure-peers-in-off-chain-settings">Step 4. (PBFT Only) Configure Peers in Off-Chain Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_test_network.html#step-5-start-sawtooth-on-the-first-node">Step 5. Start Sawtooth on the First Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_test_network.html#step-6-test-the-first-node">Step 6. Test the First Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_test_network.html#step-7-start-the-other-nodes">Step 7: Start the Other Nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_test_network.html#step-8-confirm-network-functionality">Step 8: Confirm Network Functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu_test_network.html#step-9-optional-configure-the-allowed-transaction-types">Step 9. (Optional) Configure the Allowed Transaction Types</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="about_sawtooth_networks.html" class="btn btn-neutral float-right" title="About Sawtooth Networks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ubuntu.html" class="btn btn-neutral float-left" title="Using Ubuntu for a Single Sawtooth Node" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

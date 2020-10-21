@@ -1,0 +1,7 @@
+sawtooth\.cli\.monitor\_lib\.monitor\_modules module
+====================================================
+
+.. automodule:: sawtooth.cli.monitor_lib.monitor_modules
+    :members:
+    :undoc-members:
+    :show-inheritance:

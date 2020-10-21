@@ -1,0 +1,7 @@
+sawtooth\.simulator\_cli module
+===============================
+
+.. automodule:: sawtooth.simulator_cli
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["hash_sha512","Hashes the given bytes with SHA-512"],["verify_sha512","Verifies that the SHA-512 hash of the given content matches the given hash"]]});

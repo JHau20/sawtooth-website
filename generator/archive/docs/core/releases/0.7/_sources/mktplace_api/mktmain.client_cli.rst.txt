@@ -1,0 +1,7 @@
+mktmain\.client\_cli module
+===========================
+
+.. automodule:: mktmain.client_cli
+    :members:
+    :undoc-members:
+    :show-inheritance:

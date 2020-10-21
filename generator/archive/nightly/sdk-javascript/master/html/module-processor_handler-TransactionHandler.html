@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: TransactionHandler</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: TransactionHandler</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="module-processor_handler.html">processor/handler</a>~</span>TransactionHandler<span class="signature">(transactionFamilyName, versions, namespaces)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">TransactionHandler is the interface that defines the business logic
+for a new transaction family. This is the only interface that needs
+to be implemented to create a new transaction family.
+
+The transactionFamilyName, versions, and namespaces properties are
+used by the processor to route processing requests to the handler.</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="TransactionHandler"><span class="type-signature"></span>new TransactionHandler<span class="signature">(transactionFamilyName, versions, namespaces)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>transactionFamilyName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the name of the
+transaction family that this handler can process, e.g. "intkey"</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>versions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the versions of the transaction
+family that this handler can process, e.g. ["1.0", "1.5"]</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>namespaces</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">a list containing all of the
+handler's namespaces, e.g. ["abcdef"]</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="processor_handler.js.html">processor/handler.js</a>, <a href="processor_handler.js.html#line29">line 29</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="apply"><span class="type-signature"></span>apply<span class="signature">(transactionProcessRequest, context)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Apply is the single method where all the business logic for a
+transaction family is defined. The method will be called by the
+transaction processor upon receiving a TpProcessRequest that the
+handler understands and will pass in the TpProcessRequest and an
+initialized instance of the Context type.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>transactionProcessRequest</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">TpProcessRequest</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the
+transaction to be processed</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>context</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Context</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the context the handler can use to
+access state</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="processor_handler.js.html">processor/handler.js</a>, <a href="processor_handler.js.html#line56">line 56</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-processor.html">processor</a></li><li><a href="module-processor_context.html">processor/context</a></li><li><a href="module-processor_exceptions.html">processor/exceptions</a></li><li><a href="module-processor_handler.html">processor/handler</a></li><li><a href="module-protobuf.html">protobuf</a></li><li><a href="module-signing.html">signing</a></li><li><a href="module-signing_core.html">signing/core</a></li><li><a href="module-signing_secp256k1.html">signing/secp256k1</a></li></ul><h3>Classes</h3><ul><li><a href="module-processor_context-Context.html">Context</a></li><li><a href="module-processor_exceptions-AuthorizationException.html">AuthorizationException</a></li><li><a href="module-processor_exceptions-InternalError.html">InternalError</a></li><li><a href="module-processor_exceptions-InvalidTransaction.html">InvalidTransaction</a></li><li><a href="module-processor_exceptions-ValidatorConnectionError.html">ValidatorConnectionError</a></li><li><a href="module-processor_handler-TransactionHandler.html">TransactionHandler</a></li><li><a href="module-processor-TransactionProcessor.html">TransactionProcessor</a></li><li><a href="module-signing_core-Context.html">Context</a></li><li><a href="module-signing_core-NoSuchAlgorithmError.html">NoSuchAlgorithmError</a></li><li><a href="module-signing_core-ParseError.html">ParseError</a></li><li><a href="module-signing_core-PrivateKey.html">PrivateKey</a></li><li><a href="module-signing_core-PublicKey.html">PublicKey</a></li><li><a href="module-signing_core-SigningError.html">SigningError</a></li><li><a href="module-signing_secp256k1-Secp256k1Context.html">Secp256k1Context</a></li><li><a href="module-signing_secp256k1-Secp256k1PrivateKey.html">Secp256k1PrivateKey</a></li><li><a href="module-signing_secp256k1-Secp256k1PublicKey.html">Secp256k1PublicKey</a></li><li><a href="module-signing-CryptoFactory.html">CryptoFactory</a></li><li><a href="module-signing-Signer.html">Signer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Oct 04 2020 08:14:32 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

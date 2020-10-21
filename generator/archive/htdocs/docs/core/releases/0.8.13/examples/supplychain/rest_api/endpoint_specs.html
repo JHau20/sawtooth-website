@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Endpoint Specifications &mdash; Sawtooth v0.8.13 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.13 documentation" href="../../../index.html"/>
+        <link rel="up" title="SupplyChain Example" href="../overview.html"/>
+        <link rel="next" title="SupplyChain Error Responses" href="error_codes.html"/>
+        <link rel="prev" title="Supply Chain Transaction Family" href="../supplychain_transaction_family.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.13
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../solidity_developers_guide.html">Solidity Developers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../overview.html">SupplyChain Example</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../overview.html#supplychain-overview">SupplyChain Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../overview.html#supplychain-transaction-family">SupplyChain Transaction Family</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../overview.html#supplychain-rest-api">SupplyChain REST API</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Endpoint Specifications</a></li>
+<li class="toctree-l4"><a class="reference internal" href="error_codes.html">SupplyChain Error Responses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../private_utxo/overview.html">Private UTXO Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../examples.html">Examples</a> &raquo;</li>
+        
+          <li><a href="../overview.html">SupplyChain Example</a> &raquo;</li>
+        
+      <li>Endpoint Specifications</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/examples/supplychain/rest_api/endpoint_specs.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="endpoint-specifications">
+<h1>Endpoint Specifications<a class="headerlink" href="#endpoint-specifications" title="Permalink to this headline">¶</a></h1>
+<p>These specifications document the available Supply Chain REST API endpoints. They
+are generated from the official <a class="reference external" href="http://swagger.io/specification/">OpenAPI</a>
+formatted YAML specification, which can be found on the
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-core/blob/master/families/supplychain/rest_api/openapi.yaml">Sawtooth Github</a>.</p>
+<dl class="get">
+<dt id="get--agents">
+<code class="descname">GET </code><code class="descname">/agents</code><a class="headerlink" href="#get--agents" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches the data for the current set of Agents</strong></p>
+<p>Fetches a paginated list of all Agents. Using the <cite>name</cite> filter parameter narrows the list to any Agents who have a name which contains a specified case-insensitive string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>string</em>) &#8211; A partial name to filter Agents by</li>
+<li><strong>count</strong> (<em>integer</em>) &#8211; Number of items to return</li>
+<li><strong>page</strong> (<em>integer</em>) &#8211; page number for the current page of items to return</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; Successfully retrieved Agents</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> &#8211; Request was malformed</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> &#8211; Something went wrong within the validator</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> &#8211; API is unable to reach the validator</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--agents-agent_id">
+<code class="descname">GET </code><code class="descname">/agents/{agent_id}</code><a class="headerlink" href="#get--agents-agent_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches a particular Agent.</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>agent_id</strong> (<em>string</em>) &#8211; Agent identifier, the public key the agent uses.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; Successfully fetched Agent</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> &#8211; Request was malformed</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> &#8211; Identifier did not match any resource</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> &#8211; Something went wrong within the validator</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> &#8211; API is unable to reach the validator</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--applications">
+<code class="descname">GET </code><code class="descname">/applications</code><a class="headerlink" href="#get--applications" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches the data for the current set of Applications</strong></p>
+<p>Fetches a paginated list of all Applications. Using the <cite>applicant</cite> parameter will narrow the list to any Applications that have a matching value in their applicant field. Using the <cite>identifier</cite> filter parameter will narrow the list to any Applications that have an identifier containing the specified string. Using the <cite>status</cite> parameter will narrow the list to any Applications that have a matching value in their status field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><strong>applicant</strong> (<em>string</em>) &#8211; The public key of the applicant Agent to filter by</li>
+<li><strong>status</strong> (<em>string</em>) &#8211; An application status to filter by</li>
+<li><strong>count</strong> (<em>integer</em>) &#8211; Number of items to return</li>
+<li><strong>page</strong> (<em>integer</em>) &#8211; page number for the current page of items to return</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; Successfully retrieved Applications</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> &#8211; Request was malformed</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> &#8211; Something went wrong within the validator</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> &#8211; API is unable to reach the validator</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--records">
+<code class="descname">GET </code><code class="descname">/records</code><a class="headerlink" href="#get--records" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches the data for the current set of Records</strong></p>
+<p>Fetches a paginated list of all Records. Using the <cite>identifier</cite> filter parameter will narrow the list to any Records that have an identifier containing the specified string.
+Records are identified by their serial number or other marking on the physical asset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><strong>identifier</strong> (<em>string</em>) &#8211; A partial identifier to filter Records by</li>
+<li><strong>count</strong> (<em>integer</em>) &#8211; Number of items to return</li>
+<li><strong>page</strong> (<em>integer</em>) &#8211; page number for the current page of items to return</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; Successfully retrieved Records</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> &#8211; Request was malformed</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> &#8211; Something went wrong within the validator</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> &#8211; API is unable to reach the validator</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--records-record_id">
+<code class="descname">GET </code><code class="descname">/records/{record_id}</code><a class="headerlink" href="#get--records-record_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches a particular Record.</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>record_id</strong> (<em>string</em>) &#8211; Record identifier, the serial number or natural identifier of the item (material) being tracked.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; Successfully fetched Record</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> &#8211; Request was malformed</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> &#8211; Identifier did not match any resource</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> &#8211; Something went wrong within the validator</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> &#8211; API is unable to reach the validator</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--records-record_id-applications">
+<code class="descname">GET </code><code class="descname">/records/{record_id}/applications</code><a class="headerlink" href="#get--records-record_id-applications" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches Applications for a particular Record.</strong></p>
+<p>Fetches a paginated list of Applications for a record. Applications are identified by the identifier of the Record they are associated with. Using the <cite>applicant</cite> parameter will narrow the list to any Applications that have a matching value in their applicant field. Using the <cite>status</cite> parameter will narrow the list to any Applications that have a matching value in their status field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>record_id</strong> (<em>string</em>) &#8211; Record identifier, the serial number or natural identifier of the item (material) being tracked.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><strong>applicant</strong> (<em>string</em>) &#8211; The public key of the applicant Agent to filter by</li>
+<li><strong>status</strong> (<em>string</em>) &#8211; An application status to filter by</li>
+<li><strong>count</strong> (<em>integer</em>) &#8211; Number of items to return</li>
+<li><strong>page</strong> (<em>integer</em>) &#8211; page number for the current page of items to return</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; Successfully fetched Applications</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> &#8211; Request was malformed</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> &#8211; Identifier did not match any resource</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> &#8211; Something went wrong within the validator</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> &#8211; API is unable to reach the validator</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="error_codes.html" class="btn btn-neutral float-right" title="SupplyChain Error Responses" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../supplychain_transaction_family.html" class="btn btn-neutral" title="Supply Chain Transaction Family" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'v0.8.13',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

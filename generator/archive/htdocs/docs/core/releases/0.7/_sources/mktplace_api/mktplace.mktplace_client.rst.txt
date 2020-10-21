@@ -1,0 +1,7 @@
+mktplace\.mktplace\_client module
+=================================
+
+.. automodule:: mktplace.mktplace_client
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>IntegerKey Transaction Family Specification &mdash; Sawtooth v0.8.11 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.11 documentation" href="../index.html"/>
+        <link rel="up" title="Transaction Family Specifications" href="../transaction_family_specifications.html"/>
+        <link rel="next" title="XO Transaction Family Specification" href="xo_transaction_family.html"/>
+        <link rel="prev" title="BlockInfo Transaction Family Specification" href="blockinfo_transaction_family.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.11
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../solidity_developers_guide.html">Solidity Developers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="settings_transaction_family.html">Settings Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity_transaction_family.html">Identity Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blockinfo_transaction_family.html">BlockInfo Transaction Family Specification</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">IntegerKey Transaction Family Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#state">State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#addressing">Addressing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transaction-header">Transaction Header</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#inputs-and-outputs">Inputs and Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#family">Family</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#encoding">Encoding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#execution">Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="xo_transaction_family.html">XO Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawtooth_burrow_evm_family.html">Seth Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_registry_transaction_family.html">Validator Registry Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smallbank_transaction_family.html">Smallbank Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="track_and_trade_transaction_family.html">Track and Trade Transaction Family Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../transaction_family_specifications.html">Transaction Family Specifications</a> &raquo;</li>
+        
+      <li>IntegerKey Transaction Family Specification</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/transaction_family_specifications/integerkey_transaction_family.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="integerkey-transaction-family-specification">
+<h1>IntegerKey Transaction Family Specification<a class="headerlink" href="#integerkey-transaction-family-specification" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The IntegerKey transaction family allows users to set, increment, and decrement
+the value of entries stored in a state dictionary.</p>
+<p>An IntegerKey family transaction request is defined by the following values:</p>
+<ul class="simple">
+<li>A verb which describes what action the transaction takes</li>
+<li>A name of the entry that is to be set or changed</li>
+<li>A value by which the entry will be set or changed</li>
+</ul>
+<p>The &#8216;set&#8217; verb is used to create new entries. The initial value of the entry will be
+set to the value specified in the transaction request. The &#8216;inc&#8217; and &#8216;dec&#8217; verbs are
+used to change the value of existing entries in the state dictionary.</p>
+</div>
+<div class="section" id="state">
+<h2>State<a class="headerlink" href="#state" title="Permalink to this headline">¶</a></h2>
+<p>This section describes in detail how IntegerKey transaction information is stored
+and addressed.</p>
+<p>The address values of IntegerKey transaction family entries are stored in state as
+a CBOR encoded dictionary, with the key being the <em>Name</em> and the value being an integer
+<em>Value</em>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">cbor</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+    <span class="c1"># The name of the entry : The current value of the entry</span>
+    <span class="s1">&#39;Name&#39;</span><span class="p">:</span><span class="s1">&#39;Value&#39;</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p><em>Names</em> and <em>Values</em> must conform to the following rules:</p>
+<ul class="simple">
+<li>Valid <em>Names</em> are utf-8 encoded strings with a maximum of 20 characters</li>
+<li>Valid <em>Values</em> must be integers in the range of 0 through 2<sup>32</sup> - 1 (32-bit unsigned int)</li>
+</ul>
+<div class="section" id="addressing">
+<h3>Addressing<a class="headerlink" href="#addressing" title="Permalink to this headline">¶</a></h3>
+<p>IntegerKey data is stored in the state dictionary using addresses which are generated from the IntegerKey namespace prefix and the unique name of the IntegerKey entry. Addresses will adhere to the following format:</p>
+<ul class="simple">
+<li>Addresses must be a 70 character hexadecimal string</li>
+<li>The first 6 characters of the address are the first 6 characters of a sha512 hash of the IntegerKey namespace prefix: &#8220;intkey&#8221;</li>
+<li>The following 64 characters of the address are the last 64 characters of a sha512 hash of the entry <em>Name</em></li>
+</ul>
+<p>For example, an IntegerKey address could be generated as follows:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">(</span><span class="s1">&#39;intkey&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">+</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[</span><span class="o">-</span><span class="mi">64</span><span class="p">:]</span>
+<span class="go">&#39;1cf126cc488cca4cc3565a876f6040f8b73a7b92475be1d0b1bc453f6140fba7183b9a&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Due to the possibility of hash collisions, there may be multiple <em>Names</em> in the state dictionary with the same address.</p>
+</div>
+</div>
+</div>
+<div class="section" id="transaction-payload">
+<h2>Transaction Payload<a class="headerlink" href="#transaction-payload" title="Permalink to this headline">¶</a></h2>
+<p>IntegerKey transaction request payloads are defined by the following CBOR data format:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">cbor</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+    <span class="c1"># Describes the action the transaction takes, either &#39;set&#39;, &#39;inc&#39;, or &#39;dec&#39;</span>
+    <span class="s1">&#39;Verb&#39;</span><span class="p">:</span> <span class="s1">&#39;verb&#39;</span><span class="p">,</span>
+
+    <span class="c1"># The variable name of the entry which is to be modified</span>
+    <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span>
+
+    <span class="c1"># The amount to set, increment, or decrement</span>
+    <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="transaction-header">
+<h2>Transaction Header<a class="headerlink" href="#transaction-header" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="inputs-and-outputs">
+<h3>Inputs and Outputs<a class="headerlink" href="#inputs-and-outputs" title="Permalink to this headline">¶</a></h3>
+<p>The inputs for IntegerKey family transactions must include:</p>
+<ul class="simple">
+<li>Address of the <em>Name</em> being changed or added</li>
+</ul>
+<p>The outputs for IntegerKey family transactions must include:</p>
+<ul class="simple">
+<li>Address of the <em>Name</em> being changed or added</li>
+</ul>
+</div>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>A list of transaction <em>header_signatures</em> which are required dependencies and must be processed prior to processing this transaction</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For example, &#8216;inc&#8217; and &#8216;dec&#8217; transactions must list the initial &#8216;set&#8217; transaction for the entry. If an &#8216;inc&#8217; or &#8216;dec&#8217; transaction is ordered before the corresponding &#8216;set&#8217; transaction (without listing the &#8216;set&#8217; transaction as a dependency), they will be considered invalid (because <em>Name</em> will not exist when they are processed).</p>
+</div>
+</div>
+<div class="section" id="family">
+<h3>Family<a class="headerlink" href="#family" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>family_name: &#8220;intkey&#8221;</li>
+<li>family_version: &#8220;1.0&#8221;</li>
+</ul>
+</div>
+<div class="section" id="encoding">
+<h3>Encoding<a class="headerlink" href="#encoding" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>payload_encoding: &#8220;application/cbor&#8221;</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The CBOR encoding map used by IntegerKey is a definite map. For example, a transaction payload is encoded as follows:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cbor</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s1">&#39;Verb&#39;</span><span class="p">:</span><span class="s1">&#39;verb&#39;</span><span class="p">,</span> <span class="s1">&#39;Name&#39;</span><span class="p">:</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;Value&#39;</span><span class="p">:</span><span class="mi">1234</span><span class="p">})</span>
+<span class="go">b&#39;\xa3dVerbdverbdNamednameeValue\x19\x04\xd2&#39;</span>
+</pre></div>
+</div>
+<p class="last">CBOR Specification: <a class="reference external" href="https://tools.ietf.org/html/rfc7049">RFC 7049 - Concise Binary Object Representation (CBOR)</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="execution">
+<h2>Execution<a class="headerlink" href="#execution" title="Permalink to this headline">¶</a></h2>
+<p>The IntegerKey transaction processor receives a transaction request and a state dictionary.</p>
+<p>If the payload of the transaction request is empty, the transaction is invalid.</p>
+<p>The address for the transaction is generated using the algorithm stated in the Addressing
+section of this document. If an encoding error occurs, the transaction is invalid.</p>
+<p>The transaction request <em>Verb</em> , <em>Name</em>, and <em>Value</em> are checked. If any of these values are
+empty, the transaction is invalid. <em>Verb</em> must be either &#8216;set&#8217;, &#8216;inc&#8217;, or &#8216;dec&#8217;.
+<em>Name</em> must be a utf-8 encoded string with a maximum of 20 characters. <em>Value</em> must be
+a 32-bit unsigned integer. If any of these checks fail, the transaction is invalid.</p>
+<p>If the <em>Verb</em> is &#8216;set&#8217;, the state dictionary is checked to determine if the <em>Name</em> associated with the
+transaction request already exists. If it does already exist, the transaction is invalid.
+Otherwise the <em>Name</em> and <em>Value</em> are stored as a new entry in the state dictionary.</p>
+<p>If the <em>Verb</em> is &#8216;inc&#8217;, the <em>Name</em> specified by the transaction request is checked determine
+if the entry exists in the state dictionary. If the <em>Name</em> does not exist in the state dictionary,
+it is an invalid transaction. Otherwise, we attempt to increment the <em>Value</em> in the state dictionary by the <em>Value</em> specified in the transaction request. If this incrementation would result in a value outside the range of 0 through 2<sup>32</sup> - 1 it is considered an invalid transaction. Otherwise, the <em>Value</em> in the state dictionary is incremented.</p>
+<p>If the <em>Verb</em> is &#8216;dec&#8217;, the <em>Name</em> specified by the transaction request is checked determine
+if the entry exists in the state dictionary. If the <em>Name</em> does not exist in the state dictionary, it is an invalid transaction. Otherwise, we attempt to decrement the <em>Value</em> in the state dictionary by the <em>Value</em> specified in the transaction request. If this decrementation would result in a value outside the range of 0 through 2<sup>32</sup> - 1, it is considered an invalid transaction. Otherwise, the <em>Value</em> in the state dictionary is decremented.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="xo_transaction_family.html" class="btn btn-neutral float-right" title="XO Transaction Family Specification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="blockinfo_transaction_family.html" class="btn btn-neutral" title="BlockInfo Transaction Family Specification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.11',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

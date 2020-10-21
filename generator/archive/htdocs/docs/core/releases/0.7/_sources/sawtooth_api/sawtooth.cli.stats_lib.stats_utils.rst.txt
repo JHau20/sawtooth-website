@@ -1,0 +1,7 @@
+sawtooth\.cli\.stats\_lib\.stats\_utils module
+==============================================
+
+.. automodule:: sawtooth.cli.stats_lib.stats_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,786 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Seth CLI &mdash; Sawtooth v0.8.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.7 documentation" href="../index.html"/>
+        <link rel="up" title="CLI Reference" href="../cli.html"/>
+        <link rel="next" title="PoET CLI" href="poet.html"/>
+        <link rel="prev" title="Sawtooth CLI" href="sawtooth.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../cli.html">CLI Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sawtooth.html">Sawtooth CLI</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Seth CLI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#seth">seth</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seth-init">seth init</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seth-show">seth show</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seth-account">seth account</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seth-account-import">seth account import</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seth-account-list">seth account list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seth-account-create">seth account create</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seth-contract">seth contract</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seth-contract-call">seth contract call</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seth-contract-create">seth contract create</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seth-permissions">seth permissions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#seth-permissions-set">seth permissions set</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#compiling-contracts">Compiling Contracts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#abi-formatting">ABI Formatting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="poet.html">PoET CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator.html">Validator CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intkey.html">intkey Family CLIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xo.html">xo Family CLIs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../cli.html">CLI Reference</a> &raquo;</li>
+        
+      <li>Seth CLI</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cli/seth.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="seth-cli">
+<span id="seth-cli-reference-label"></span><h1>Seth CLI<a class="headerlink" href="#seth-cli" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The seth command can be used to interact with the Sawtooth Burrow-EVM
+transaction family. It provides functionality for loading and executing smart
+contracts, querying the data associated with a contract, and generating keys in
+the format used by the tool. The following section reproduces the CLI usage
+output obtained by running seth and its various subcommands with the <cite>-h</cite> flag.</p>
+<p>See the final section for an explanation of how to generate contract
+initialization data and how to format function calls using the Ethereum
+Contract ABI.</p>
+<div class="section" id="seth">
+<h3>seth<a class="headerlink" href="#seth" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">Usage:</span>
+<span class="go">  seth [OPTIONS] &lt;command&gt;</span>
+
+<span class="go">Application Options:</span>
+<span class="go">  -v, --verbose  Set the log level</span>
+
+<span class="go">Help Options:</span>
+<span class="go">  -h, --help     Show this help message</span>
+
+<span class="go">Available commands:</span>
+<span class="go">  account      Manage seth accounts</span>
+<span class="go">  contract     Deploy and execute contracts</span>
+<span class="go">  init         Initialize seth to communicate with the given URL</span>
+<span class="go">  permissions  Manage permissions of accounts</span>
+<span class="go">  show         Show all data associated with a given account</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="seth-init">
+<h3>seth init<a class="headerlink" href="#seth-init" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">Usage:</span>
+<span class="go">  seth [OPTIONS] init [url]</span>
+
+<span class="go">Application Options:</span>
+<span class="go">  -v, --verbose    Set the log level</span>
+
+<span class="go">Help Options:</span>
+<span class="go">  -h, --help       Show this help message</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="seth-show">
+<h3>seth show<a class="headerlink" href="#seth-show" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">Usage:</span>
+<span class="go">  seth [OPTIONS] show address</span>
+
+<span class="go">Application Options:</span>
+<span class="go">  -v, --verbose      Set the log level</span>
+
+<span class="go">Help Options:</span>
+<span class="go">  -h, --help         Show this help message</span>
+
+<span class="go">[show command arguments]</span>
+<span class="go">  address:           Address of account to show</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="seth-account">
+<h3>seth account<a class="headerlink" href="#seth-account" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">Usage:</span>
+<span class="go">  seth [OPTIONS] account &lt;create | import | list&gt;</span>
+
+<span class="go">Application Options:</span>
+<span class="go">  -v, --verbose   Set the log level</span>
+
+<span class="go">Help Options:</span>
+<span class="go">  -h, --help      Show this help message</span>
+
+<span class="go">Available commands:</span>
+<span class="go">  create  Create a new externally owned account</span>
+<span class="go">  import  Import the private and create an alias for later reference</span>
+<span class="go">  list    List all imported accounts as &quot;alias: address&quot;</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="seth-account-import">
+<h3>seth account import<a class="headerlink" href="#seth-account-import" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">Usage:</span>
+<span class="go">  seth [OPTIONS] account import [import-OPTIONS] [key-file] [alias]</span>
+
+<span class="go">Application Options:</span>
+<span class="go">  -v, --verbose       Set the log level</span>
+
+<span class="go">Help Options:</span>
+<span class="go">  -h, --help          Show this help message</span>
+
+<span class="go">[import command options]</span>
+<span class="go">      -f, --force     Overwrite key with the same alias if it exists</span>
+
+<span class="go">[import command arguments]</span>
+<span class="go">  key-file:           Path to the file that contains the private key to import</span>
+<span class="go">  alias:              Alias to assign the private key</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="seth-account-list">
+<h3>seth account list<a class="headerlink" href="#seth-account-list" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">Usage:</span>
+<span class="go">  seth [OPTIONS] account list</span>
+
+<span class="go">Application Options:</span>
+<span class="go">  -v, --verbose   Set the log level</span>
+
+<span class="go">Help Options:</span>
+<span class="go">  -h, --help      Show this help message</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="seth-account-create">
+<h3>seth account create<a class="headerlink" href="#seth-account-create" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">Usage:</span>
+<span class="go">  seth [OPTIONS] account create [create-OPTIONS] [alias]</span>
+
+<span class="go">Application Options:</span>
+<span class="go">  -v, --verbose          Set the log level</span>
+
+<span class="go">Help Options:</span>
+<span class="go">  -h, --help             Show this help message</span>
+
+<span class="go">[create command options]</span>
+<span class="go">      -m, --moderator=   Alias of another account to be used to create the</span>
+<span class="go">                         account</span>
+<span class="go">      -p, --permissions= Permissions for new account; see &#39;seth permissions -h&#39;</span>
+<span class="go">                         for more info</span>
+<span class="go">      -n, --nonce=       Current nonce of moderator account (default: 0)</span>
+
+<span class="go">[create command arguments]</span>
+<span class="go">  alias:                 Alias of the imported key associated with the account</span>
+<span class="go">                         to be created</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="seth-contract">
+<h3>seth contract<a class="headerlink" href="#seth-contract" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">Usage:</span>
+<span class="go">  seth [OPTIONS] contract &lt;call | create&gt;</span>
+
+<span class="go">Application Options:</span>
+<span class="go">  -v, --verbose   Set the log level</span>
+
+<span class="go">Help Options:</span>
+<span class="go">  -h, --help      Show this help message</span>
+
+<span class="go">Available commands:</span>
+<span class="go">  call    Execute a deployed contract account</span>
+<span class="go">  create  Deploy a new contract account</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="seth-contract-call">
+<h3>seth contract call<a class="headerlink" href="#seth-contract-call" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">Usage:</span>
+<span class="go">  seth [OPTIONS] contract call [call-OPTIONS] [alias] [address] [data]</span>
+
+<span class="go">Application Options:</span>
+<span class="go">  -v, --verbose      Set the log level</span>
+
+<span class="go">Help Options:</span>
+<span class="go">  -h, --help         Show this help message</span>
+
+<span class="go">[call command options]</span>
+<span class="go">      -g, --gas=     Gas limit for contract creation (default: 0)</span>
+<span class="go">      -n, --nonce=   Current nonce of moderator account (default: 0)</span>
+
+<span class="go">[call command arguments]</span>
+<span class="go">  alias:             Alias of the imported key associated with the contract to</span>
+<span class="go">                     be created</span>
+<span class="go">  address:           Address of contract to call</span>
+<span class="go">  data:              Input data to pass to contract when called; must conform</span>
+<span class="go">                     to contract ABI</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="seth-contract-create">
+<h3>seth contract create<a class="headerlink" href="#seth-contract-create" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">Usage:</span>
+<span class="go">  seth [OPTIONS] contract create [create-OPTIONS] [alias] [init]</span>
+
+<span class="go">Application Options:</span>
+<span class="go">  -v, --verbose          Set the log level</span>
+
+<span class="go">Help Options:</span>
+<span class="go">  -h, --help             Show this help message</span>
+
+<span class="go">[create command options]</span>
+<span class="go">      -p, --permissions= Permissions for new account; see &#39;seth permissions -h&#39;</span>
+<span class="go">                         for more info</span>
+<span class="go">      -g, --gas=         Gas limit for contract creation (default: 0)</span>
+<span class="go">      -n, --nonce=       Current nonce of moderator account (default: 0)</span>
+
+<span class="go">[create command arguments]</span>
+<span class="go">  alias:                 Alias of the imported key associated with the</span>
+<span class="go">                         contract to be created</span>
+<span class="go">  init:                  Initialization code to be executed on deployment</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="seth-permissions">
+<h3>seth permissions<a class="headerlink" href="#seth-permissions" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">Usage:</span>
+<span class="go">  seth [OPTIONS] permissions &lt;set&gt;</span>
+
+<span class="go">Permissions can be set for individual EVM accounts. If a permission is not set,</span>
+<span class="go">account permissions default to those set at the global permissions address. If</span>
+<span class="go">no permissions are set at the global permissions address, all permissions are</span>
+<span class="go">allowed.</span>
+
+<span class="go">Supported permissions are:</span>
+<span class="go">* root: Change permissions of accounts</span>
+<span class="go">* send: Transfer value from an owned account to another account</span>
+<span class="go">* call: Execute a deployed contract</span>
+<span class="go">* contract: Deploy new contracts from an owned account</span>
+<span class="go">* account: Create new externally owned accounts</span>
+
+<span class="go">When a new account is created, its permissions are inherited from the creating</span>
+<span class="go">account, with the exception of the &quot;root&quot; permission, which is set to disabled</span>
+<span class="go">during creation and must be set with a separate transaction. If the account is</span>
+<span class="go">creating itself, its permissions are inherited from the account at the global</span>
+<span class="go">permissions address. If no permissions are set at the global permissions</span>
+<span class="go">address, all permissions are enabled for the new account (including root).</span>
+
+<span class="go">To specify permissions on the command line, use a comma-separated list of</span>
+<span class="go">&quot;prefixed&quot; permissions from the list above. Permissions must be prefixed with a</span>
+<span class="go">plus (&quot;+&quot;) or minus (&quot;-&quot;) to indicated allowed and not allowed respectively.</span>
+<span class="go">Permissions that are omitted from the list will be left unset and default to</span>
+<span class="go">those set at the global permissions address.</span>
+
+<span class="go">&quot;all&quot; may be used as a special keyword to refer to all permissions. Duplicates</span>
+<span class="go">are allowed and items that come later in the list override earlier items.</span>
+
+<span class="go">Examples:</span>
+
+<span class="go">-all,+contract,+call      Disable all permissions except contract creation or</span>
+<span class="go">calling</span>
+<span class="go">+account,+send,-contract  Enable account creation and sending value; Disable</span>
+<span class="go">contract creation</span>
+<span class="go">+all,-root                Enable all permissions except setting permissions</span>
+
+<span class="go">Application Options:</span>
+<span class="go">  -v, --verbose   Set the log level</span>
+
+<span class="go">Help Options:</span>
+<span class="go">  -h, --help      Show this help message</span>
+
+<span class="go">Available commands:</span>
+<span class="go">  set  Change the permissions of accounts</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="seth-permissions-set">
+<h3>seth permissions set<a class="headerlink" href="#seth-permissions-set" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">Usage:</span>
+<span class="go">  seth [OPTIONS] permissions set [set-OPTIONS] [moderator]</span>
+
+<span class="go">See &#39;seth permissions -h&#39; for more info.</span>
+
+<span class="go">Application Options:</span>
+<span class="go">  -v, --verbose          Set the log level</span>
+
+<span class="go">Help Options:</span>
+<span class="go">  -h, --help             Show this help message</span>
+
+<span class="go">[set command options]</span>
+<span class="go">      -a, --address=     Address of account whose permissions are being</span>
+<span class="go">                         changed; &#39;global&#39; may be used to refer to the zero</span>
+<span class="go">                         address</span>
+<span class="go">      -p, --permissions= New permissions for the account</span>
+<span class="go">      -n, --nonce=       Current nonce of the moderator account (default: 1)</span>
+
+<span class="go">[set command arguments]</span>
+<span class="go">  moderator:             Alias of key to be used for modifying permissions</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+<div class="section" id="compiling-contracts">
+<h2>Compiling Contracts<a class="headerlink" href="#compiling-contracts" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>seth load</cite> command has a <cite>&#8211;init</cite> flag which takes a hex-encoded
+byte array as an argument. This string is interpreted as the contract creation
+code. To generate this string given a Solidity smart contract, the <cite>solc</cite>
+compiler can be used. Assuming the contract is named <cite>contract.sol</cite>, the
+command is:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> solc --bin contract.sol
+
+<span class="go">======= contract.sol:SimpleStorage =======</span>
+<span class="go">Binary:</span>
+<span class="go">6060604052341561000c57fe5b5b60c68061001b6000396000f30060606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806360fe47b11460445780636d4ce63c146061575bfe5b3415604b57fe5b605f60048080359060200190919050506084565b005b3415606857fe5b606e608f565b6040518082815260200191505060405180910390f35b806000819055505b50565b600060005490505b905600a165627a7a7230582042f71fb995ac3f6a4ce0560bae1342e5a54e96ec0462f812340a305e3c94da910029</span>
+</pre></div>
+</div>
+<p>The hex string that is output by this command can be passed directly to the
+<cite>&#8211;init</cite> flag.</p>
+<p>For more information on solc including how to install it and more advanced
+usage, read the <a class="reference external" href="https://solidity.readthedocs.io/en/develop/index.html">Solidity Documentation</a>.</p>
+</div>
+<div class="section" id="abi-formatting">
+<h2>ABI Formatting<a class="headerlink" href="#abi-formatting" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>seth exec</cite> command has a <cite>&#8211;data</cite> flag which takes a hex-encoded byte
+array as an argument. This string is interpreted according to the Ethereum
+Contract ABI and, in the context of solidity, is used to select a function and
+pass in arguments to that function.</p>
+<p>One option for generating this string given a Solidity function is to use the
+<a class="reference external" href="https://www.npmjs.com/package/ethereumjs-abi">ethereumjs-abi</a> library.</p>
+<p>Given the solidity function <cite>set(uint key, uint val) {...}</cite> and the specific
+call <cite>set(19, 84)</cite>, the commands to generate the byte array are:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> node
+<span class="gp">&gt;</span> var <span class="nv">abi</span> <span class="o">=</span> require<span class="o">(</span><span class="s1">&#39;ethereumjs-abi&#39;</span><span class="o">)</span>
+<span class="gp">&gt;</span> abi.simpleEncode<span class="o">(</span><span class="s2">&quot;set(uint,uint)&quot;</span>, <span class="s2">&quot;0x13&quot;</span>, <span class="s2">&quot;0x54&quot;</span><span class="o">)</span>.toString<span class="o">(</span><span class="s2">&quot;hex&quot;</span><span class="o">)</span>
+<span class="go">&#39;1ab06ee500000000000000000000000000000000000000000000000000000000000000130000000000000000000000000000000000000000000000000000000000000054&#39;</span>
+</pre></div>
+</div>
+<p>The hex string that is output by this command can be passed directly to the
+<cite>&#8211;data</cite> flag.</p>
+<p>For more information on the <a class="reference external" href="https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI">Ethereum Contract ABI</a>, read the wiki.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="poet.html" class="btn btn-neutral float-right" title="PoET CLI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sawtooth.html" class="btn btn-neutral" title="Sawtooth CLI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

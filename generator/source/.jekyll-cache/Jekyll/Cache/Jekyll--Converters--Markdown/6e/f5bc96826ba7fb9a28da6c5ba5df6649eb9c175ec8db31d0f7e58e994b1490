@@ -1,0 +1,13 @@
+I"í<p>Hyperledger Sawtooth is an enterprise solution for building, deploying, and
+running distributed ledgers (also called blockchains). It provides an extremely
+modular and flexible platform for implementing transaction-based updates to
+shared state between untrusted parties coordinated by consensus algorithms.</p>
+
+<h1 id="project-status">Project Status</h1>
+
+<p>This project is an <em>active</em> Hyperledger project. It was proposed to the
+community and documented
+<a href="https://docs.google.com/document/d/1j7YcGLJH6LkzvWdOYFIt2kpkVlLEmILErXL6t-Ky2zU">here</a>.
+Information on what <em>Active</em> entails can be found in the
+<a href="https://wiki.hyperledger.org/display/HYP/Project+Lifecycle">Hyperledger Project Lifecycle document</a>.</p>
+:ET

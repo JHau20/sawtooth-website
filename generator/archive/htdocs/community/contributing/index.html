@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+  <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<head>
+	<meta charset="utf-8">
+	<title>Contributing | Hyperledger Sawtooth</title>
+	<meta name="description" content="An enterprise-grade solution for distributed ledgers.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="0.0.0.0/community/contributing/">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Hyperledger Sawtooth" href="0.0.0.0/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+
+	<!-- Google Analytics
+	-->
+</head>
+
+  <body>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">Hyperledger Sawtooth</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+                        
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/release/">
+					Releases
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/docs/">
+					Docs
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/faq/">
+					FAQ
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/community/">
+					Community
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/contact/">
+					Contact
+				</a>
+			</li>
+			
+			
+			<li>
+				<a class="page-link" href="/examples">
+					Examples
+				</a>
+			</li>
+			<!-- Social icons from Font Awesome, if enabled -->
+			<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/hyperledger/sawtooth-core" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/\%23HyperledgerSawtooth" title="Follow on Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Contributing</h1>
+  </header>
+  <section class="post-content"><div class="section" id="ways-to-contribute-to-hyperledger-sawtooth">
+<h2>Ways to Contribute to Hyperledger Sawtooth</h2>
+<p>Contributions from the development community help improve the capabilities of
+Hyperledger Sawtooth. These contributions are the most effective way to
+make a positive impact on the project.</p>
+<p>Ways you can contribute:</p>
+<ul class="simple">
+<li>Bugs or issues: Report problems or defects found when working with Sawtooth</li>
+<li>Core features and enhancements: Provide expanded capabilities or optimizations</li>
+<li>Documentation: Improve existing documentation or create new information</li>
+<li>Tests for events and results: Add functional, performance, or scalability
+tests</li>
+</ul>
+<p>Hyperledger Sawtooth issues can be found in
+<a class="reference external" href="/community/issue_tracking#using-jira">Using JIRA</a>.  Any unassigned items
+are probably still open. When in doubt, ask on RocketChat about a specific
+JIRA issue (see <a class="reference external" href="/community/join_the_discussion">Joining the Discussion</a>).</p>
+</div>
+<div class="section" id="the-commit-process">
+<h2>The Commit Process</h2>
+<p>Hyperledger Sawtooth is Apache 2.0 licensed and accepts contributions
+via <a class="reference external" href="https://github.com/hyperledger/sawtooth-core">GitHub</a>
+pull requests. When contributing code, please follow these guidelines:</p>
+<ul class="simple">
+<li>Fork the repository and make your changes in a feature branch</li>
+<li>Include unit and integration tests for any new features and updates
+to existing tests</li>
+<li>Ensure that the unit and integration tests run successfully. Run both
+of these tests with <tt class="docutils literal">./bin/run_tests</tt></li>
+<li>Check that the lint tests pass by running <tt class="docutils literal">./bin/run_lint <span class="pre">-s</span> master</tt>.</li>
+</ul>
+<p><strong>Pull Request Guidelines</strong></p>
+<p>A pull request can contain a single commit or multiple commits. The most
+important guideline is that a single commit should map to a single fix or
+enhancement. Here are some example scenarios:</p>
+<ul class="simple">
+<li>If a pull request adds a feature but also fixes two bugs, the pull
+request should have three commits: one commit for the feature change and
+two commits for the bug fixes.</li>
+<li>If a PR is opened with five commits that contain changes to fix a single
+issue, the PR should be rebased to a single commit.</li>
+<li>If a PR is opened with several commits, where the first commit fixes one issue
+and the rest fix a separate issue, the PR should be rebased to two
+commits (one for each issue).</li>
+</ul>
+<dl class="docutils">
+<dt><strong>Important:</strong></dt>
+<dd>Your pull request should be rebased against the current master branch. Do
+not merge the current master branch in with your topic branch. Do not use the
+Update Branch button provided by GitHub on the pull request page.</dd>
+</dl>
+<p><strong>Commit Messages</strong></p>
+<p>Commit messages should follow common Git conventions, such as using the
+imperative mood, separate subject lines, and a line length of 72 characters.
+These rules are well documented in <a class="reference external" href="https://chris.beams.io/posts/git-commit/#seven-rules">Chris Beam's blog post</a>.</p>
+<p><strong>Signed-off-by</strong></p>
+<p>Each commit must include a &quot;Signed-off-by&quot; line in the commit message
+(<tt class="docutils literal">git commit <span class="pre">-s</span></tt>). This sign-off indicates that you agree the commit satisfies
+the <a class="reference external" href="http://developercertificate.org/">Developer Certificate of Origin (DCO)</a>.</p>
+<p><strong>Commit Email Address</strong></p>
+<p>Your commit email address must match your GitHub email address. For more
+information, see
+<a class="reference external" href="https://help.github.com/articles/setting-your-commit-email-address-in-git/">https://help.github.com/articles/setting-your-commit-email-address-in-git/</a></p>
+<p><strong>Important GitHub Requirements</strong></p>
+<p>A pull request cannot merged until it has passed these status checks:</p>
+<ul class="simple">
+<li>The build must pass on Jenkins</li>
+<li>The PR must be approved by at least two reviewers without any
+outstanding requests for changes</li>
+</ul>
+<p><strong>Integrating GitHub Commits with JIRA</strong></p>
+<p>You can link JIRA issues to your commits, which  will integrate
+developer activity with the associated issue. JIRA uses the issue key to
+associate the commit with the issue, so that the commit can be summarized in the
+development panel for the JIRA issue.</p>
+<p>When you make a commit, add the JIRA issue key to the end of the commit message
+or to the branch name. Either method should integrate your commit with the JIRA
+issue that it references.</p>
+<!-- Licensed under Creative Commons Attribution 4.0 International License -->
+<!-- https://creativecommons.org/licenses/by/4.0/ -->
+</div>
+
+</section>
+</article>
+
+    </div>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text"><p style="font-size: 1.5em;">
+  Hyperledger Sawtooth
+</p> <p>
+  <a href="/" title="Home"><span class="links">Home</span></a>
+  &bull;
+  <a href="/about/" title="About Sawtooth"><span class="links">About</span></a>
+  &bull;
+  <a href="/release/" title="Releases"><span class="links">Releases</span></a>
+  &bull;
+  <a href="/docs/" title="Documentation"><span class="links">Docs</span></a>
+  &bull;
+  <a href="/faq/" title="FAQ"><span class="links">FAQ</span></a>
+  &bull;
+  <a href="/community/" title="Community"><span class="links">Community</span></a>
+  &bull;
+  <a href="/contact/" title="Contact"><span class="links">Contact</span></a>
+</p> <p>
+  Find us: &nbsp;
+  <a href="https://github.com/hyperledger/sawtooth-core/" target="_blank" title="GitHub"><span  class="links">GitHub</span></a>
+  &bull;
+  <a href="https://chat.hyperledger.org/channel/sawtooth" target="_blank" title="#sawtooth chat channel"">Rocket.Chat</a>
+  &bull;
+  <a href="https://twitter.com/search?q=%23HyperledgerSawtooth" target="_blank" title="#sawtooth chat channel"">Twitter</a>
+</p> <p>
+  Examples: &nbsp;
+  <a href="/examples/seafood.html" target="_blank" title="Seafood Supply Chain Traceability">Seafood Supply Chain Traceability</a>
+  &bull;
+  <a href="/examples/bond.html" target="_blank" title="Bond Asset Settlement">Bond Asset Settlement</a>
+  &bull;
+  <a href="/examples/marketplace.html" target="_blank" title="Marketplace Digital Asset Exchange">Marketplace Digital Asset Exchange</a>
+</p> <p>
+  Linux Foundation: &nbsp;
+  <a href="http://www.linuxfoundation.org/privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+  &bull;
+  <a href="http://www.linuxfoundation.org/terms" target="_blank" title="Terms of Service">Terms of Service</a>
+</p> <p>
+  <small class="copyright">Copyright &copy; 2015-2019 contributors to Hyperledger Sawtooth</small>
+</p>
+</p>
+</footer>
+
+
+  </body>
+</html>

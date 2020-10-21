@@ -1,0 +1,1111 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using Ubuntu for a Sawtooth Test Network &mdash; Sawtooth v1.2.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Playing with the XO Transaction Family" href="intro_xo_transaction_family.html" />
+    <link rel="prev" title="Using Kubernetes for a Sawtooth Test Network" href="kubernetes_test_network.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Transaction Family Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_sawtooth.html">Setting Up a Sawtooth Node for Testing</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="creating_sawtooth_network.html">Creating a Sawtooth Test Network</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="about_sawtooth_networks.html">About Sawtooth Networks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="docker_test_network.html">Using Docker for a Sawtooth Test Network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kubernetes_test_network.html">Using Kubernetes for a Sawtooth Test Network</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Using Ubuntu for a Sawtooth Test Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#about-the-ubuntu-sawtooth-network-environment">About the Ubuntu Sawtooth Network Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-install-sawtooth-on-all-nodes">Step 1: Install Sawtooth on All Nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-create-user-and-validator-keys">Step 2: Create User and Validator Keys</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-create-the-genesis-block-on-the-first-node">Step 3: Create the Genesis Block on the First Node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-4-pbft-only-configure-peers-in-off-chain-settings">Step 4. (PBFT Only) Configure Peers in Off-Chain Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-5-start-sawtooth-on-the-first-node">Step 5. Start Sawtooth on the First Node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-6-test-the-first-node">Step 6. Test the First Node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-7-start-the-other-nodes">Step 7: Start the Other Nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-8-confirm-network-functionality">Step 8: Confirm Network Functionality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-9-optional-configure-the-allowed-transaction-types">Step 9. (Optional) Configure the Allowed Transaction Types</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Playing with the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_the_sdks.html">Using the Sawtooth SDKs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_restriction.html">Namespace Restriction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_subscriptions.html">Subscribing to Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="creating_sawtooth_network.html">Creating a Sawtooth Test Network</a> &raquo;</li>
+        
+      <li>Using Ubuntu for a Sawtooth Test Network</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/ubuntu_test_network.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-ubuntu-for-a-sawtooth-test-network">
+<span id="proc-multi-ubuntu-label"></span><h1>Using Ubuntu for a Sawtooth Test Network<a class="headerlink" href="#using-ubuntu-for-a-sawtooth-test-network" title="Permalink to this headline">¶</a></h1>
+<p>This procedure describes how to create a Sawtooth network for an application
+development environment on a Ubuntu platform. Each host system (physical
+computer or virtual machine) is a <cite>Sawtooth node</cite> that runs a validator and
+related Sawtooth components.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For a single-node environment, see <a class="reference internal" href="ubuntu.html"><span class="doc">Using Ubuntu for a Single Sawtooth Node</span></a>.</p>
+</div>
+<p>This procedure guides you through the following tasks:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Installing Sawtooth</p></li>
+<li><p>Creating user and validator keys</p></li>
+<li><p>Creating the genesis block on the first node
+(includes specifying either PBFT or PoET consensus)</p></li>
+<li><p>Starting Sawtooth on each node</p></li>
+<li><p>Confirming network functionality</p></li>
+<li><p>Configuring the allowed transaction types (optional)</p></li>
+</ul>
+</div></blockquote>
+<p>For information on Sawtooth <a class="reference internal" href="../glossary.html#term-dynamic-consensus"><span class="xref std std-term">dynamic consensus</span></a> or to learn how to change
+the consensus type, see <a class="reference internal" href="../sysadmin_guide/about_dynamic_consensus.html"><span class="doc">About Dynamic Consensus</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These instructions have been tested on Ubuntu 18.04 (Bionic) only.</p>
+</div>
+<div class="section" id="about-the-ubuntu-sawtooth-network-environment">
+<span id="about-sawtooth-nw-env-label"></span><h2>About the Ubuntu Sawtooth Network Environment<a class="headerlink" href="#about-the-ubuntu-sawtooth-network-environment" title="Permalink to this headline">¶</a></h2>
+<p>This test environment is a network of several Sawtooth nodes. The following
+figure shows a network with five nodes.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/appdev-environment-multi-node.svg"><img alt="Ubuntu: Example Sawtooth network with five nodes" src="../_images/appdev-environment-multi-node.svg" width="100%" /></a>
+</div>
+<p>Each node in this Sawtooth network runs a <a class="reference internal" href="../glossary.html#term-validator"><span class="xref std std-term">validator</span></a>, a <a class="reference internal" href="../glossary.html#term-rest-api"><span class="xref std std-term">REST API</span></a>,
+a consensus engine, and the following
+<a class="reference internal" href="../glossary.html#term-transaction-processor"><span class="xref std std-term">transaction processors</span></a>:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../transaction_family_specifications/settings_transaction_family.html"><span class="doc">Settings</span></a>
+(<code class="docutils literal notranslate"><span class="pre">settings-tp</span></code>): Handles Sawtooth’s on-chain configuration settings. The
+Settings transaction processor (or an equivalent) is required for all Sawtooth
+networks.</p></li>
+<li><p><a class="reference internal" href="../transaction_family_specifications/integerkey_transaction_family.html"><span class="doc">IntegerKey</span></a>
+(<code class="docutils literal notranslate"><span class="pre">intkey-tp-python</span></code>): Demonstrates basic Sawtooth functionality. The
+associated <code class="docutils literal notranslate"><span class="pre">intkey</span></code> client includes shell commands to perform integer-based
+transactions.</p></li>
+<li><p><a class="reference internal" href="../transaction_family_specifications/xo_transaction_family.html"><span class="doc">XO</span></a>
+(<code class="docutils literal notranslate"><span class="pre">sawtooth-xo-tp-python</span></code>: Simple application for playing a game of
+tic-tac-toe on the blockchain. The assocated <code class="docutils literal notranslate"><span class="pre">xo</span></code> client provides shell
+commands to define players and play a game. XO is described in a later
+section, <a class="reference internal" href="intro_xo_transaction_family.html"><span class="doc">Playing with the XO Transaction Family</span></a>.</p></li>
+<li><p>(PoET only) <a class="reference internal" href="../transaction_family_specifications/validator_registry_transaction_family.html"><span class="doc">PoET Validator Registry</span></a>
+(<code class="docutils literal notranslate"><span class="pre">poet-validator-registry-tp</span></code>): Configures PoET consensus and handles a
+network with multiple nodes.</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Each node in a Sawtooth network must run the same set of transaction
+processors.</p>
+</div>
+<p>Like the single-node environment, this environment uses parallel transaction
+processing and static peering. However, it uses a different consensus algorithm
+(Devmode consensus is not recommended for a network).</p>
+<p>This procedure explains how to configure either PBFT or PoET consensus. The
+initial network must include the minimum number of nodes for the chosen consensus:</p>
+<blockquote>
+<div><ul>
+<li><p><a class="reference internal" href="../glossary.html#term-pbft-consensus"><span class="xref std std-term">PBFT consensus</span></a> requires four or more nodes. At least four nodes must
+be configured and running in order for the network to start.</p></li>
+<li><p><a class="reference internal" href="../glossary.html#term-poet-consensus"><span class="xref std std-term">PoET consensus</span></a> requires three or more nodes. You can start the first
+node and test basic functionality, then add the other nodes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This procedure uses PoET simulator consensus (also called PoET CFT
+because it is crash fault tolerant), which is a version of PoET-SGX
+consensus that runs on any processor.</p>
+</div>
+</li>
+<li><p><a class="reference internal" href="../glossary.html#term-devmode-consensus"><span class="xref std std-term">Devmode consensus</span></a> has no minimum requirement,
+but it is not recommended for multiple-node test networks or production
+networks. Devmode is a light-weight consensus that is intended for
+short-term testing on a single node or a very small network (two or three
+nodes). It is not crash fault tolerant and does not handle forks
+efficiently.</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For PBFT consensus, the network must be <cite>fully peered</cite> (each node must be
+connected to all other nodes).</p>
+</div>
+</div>
+<div class="section" id="prerequisites">
+<span id="prereqs-multi-ubuntu-label"></span><h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Remove data from an existing single node: To reuse the single test node
+described in <a class="reference internal" href="ubuntu.html"><span class="doc">Using Ubuntu for a Single Sawtooth Node</span></a>, stop Sawtooth and delete all blockchain data
+and logs from that node.</p>
+<ol class="arabic simple">
+<li><p>If the first node is running, stop the Sawtooth components
+(validator, REST API, consensus engine, and transaction processors),
+as described in <a class="reference internal" href="ubuntu.html#stop-sawtooth-ubuntu-label"><span class="std std-ref">Step 14: Stop Sawtooth Components</span></a>.</p></li>
+<li><p>Delete the existing blockchain data by removing all files from
+<code class="docutils literal notranslate"><span class="pre">/var/lib/sawtooth/</span></code>.</p></li>
+<li><p>Delete the logs by removing all files from <code class="docutils literal notranslate"><span class="pre">/var/log/sawtooth/</span></code>.</p></li>
+<li><p>You can reuse the existing user and validator keys. If you want to start with
+new keys, delete the <code class="docutils literal notranslate"><span class="pre">.priv</span></code> and <code class="docutils literal notranslate"><span class="pre">.pub</span></code> files from
+<code class="docutils literal notranslate"><span class="pre">/home/yourname/.sawtooth/keys/</span></code> and <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/keys/</span></code>.</p></li>
+</ol>
+</li>
+<li><p>Gather networking information: For each node that will be on your
+network, gather the following information.</p>
+<ul>
+<li><p><strong>Component bind string</strong>: Where this validator will listen for incoming
+communication from this validator’s components. You will set this value with
+<code class="docutils literal notranslate"><span class="pre">--bind</span> <span class="pre">component</span></code> when starting the validator. Default:
+<code class="docutils literal notranslate"><span class="pre">tcp://127.0.0.1:4004</span></code>.</p></li>
+<li><p><strong>Network bind string</strong>: Where this validator will listen for incoming
+communication from other nodes (also called peers). You will set
+this value with <code class="docutils literal notranslate"><span class="pre">--bind</span> <span class="pre">network</span></code> when starting the validator.  Default:
+<code class="docutils literal notranslate"><span class="pre">tcp://127.0.0.1:8800</span></code>.</p></li>
+<li><p><strong>Public endpoint string</strong>: The address that other peers should use to
+find the validator on this node. You will set this value with <code class="docutils literal notranslate"><span class="pre">--endpoint</span></code> when
+starting the validator. You will also specify this value in the peers list
+when starting a validator on another node. Default: <code class="docutils literal notranslate"><span class="pre">tcp://127.0.0.1:8800</span></code>.</p></li>
+<li><p><strong>Consensus endpoint string</strong>: Where this validator will listen for incoming
+communication from the <a class="reference internal" href="../glossary.html#term-consensus-engine"><span class="xref std std-term">consensus engine</span></a>. You will set this value
+with <code class="docutils literal notranslate"><span class="pre">--bind</span> <span class="pre">consensus</span></code> when starting the validator.  Default:
+<code class="docutils literal notranslate"><span class="pre">tcp://127.0.0.1:5050</span></code>.</p></li>
+<li><p><strong>Peers list</strong>: The addresses that this validator should use to connect to
+the other nodes (peers); that is, the public endpoint strings of
+those nodes. You will set this value with <code class="docutils literal notranslate"><span class="pre">--peers</span></code> when starting the
+validator. Default: none.</p></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="about-component-and-network-bind-strings">
+<span id="about-bind-strings-label"></span><h3>About component and network bind strings<a class="headerlink" href="#about-component-and-network-bind-strings" title="Permalink to this headline">¶</a></h3>
+<p>For the network bind string and component bind string, you would typically use
+a specific network interface that you want to bind to.
+The <code class="docutils literal notranslate"><span class="pre">ifconfig</span></code> command provides an easy way to determine what this interface
+should be. <code class="docutils literal notranslate"><span class="pre">ifconfig</span></code> displays the network interfaces on your host system,
+along with additional information about the interfaces. For example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ifconfig
+<span class="go">eth0      Link encap:Ethernet  HWaddr ...</span>
+<span class="go">          inet addr:...  Bcast:...  Mask:255.255.0.0</span>
+<span class="go">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span>
+<span class="go">          RX packets:17964 errors:0 dropped:0 overruns:0 frame:0</span>
+<span class="go">          TX packets:6134 errors:0 dropped:0 overruns:0 carrier:0</span>
+<span class="go">          collisions:0 txqueuelen:0</span>
+<span class="go">          RX bytes:26335425 (26.3 MB)  TX bytes:338394 (338.3 KB)</span>
+<span class="go">lo        Link encap:Local Loopback</span>
+<span class="go">          inet addr:127.0.0.1  Mask:255.0.0.0</span>
+<span class="go">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span>
+<span class="go">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span>
+<span class="go">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span>
+<span class="go">          collisions:0 txqueuelen:1</span>
+<span class="go">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span>
+</pre></div>
+</div>
+<p>This example output shows that <code class="docutils literal notranslate"><span class="pre">eth0</span></code> is a network interface that has access
+to the Internet. In this case, you could use one of the following:</p>
+<ul class="simple">
+<li><p>If you would like the validator to accept connections from other
+nodes on the network behind <code class="docutils literal notranslate"><span class="pre">eth0</span></code>, you could specify a
+network bind string such as <code class="docutils literal notranslate"><span class="pre">tcp://eth0:8800</span></code>.</p></li>
+<li><p>If you would like the validator to accept only connections from local
+Sawtooth components, you could specify the component bind string
+<code class="docutils literal notranslate"><span class="pre">tcp://lo:4004</span></code>. Note that this is equivalent to <code class="docutils literal notranslate"><span class="pre">tcp://127.0.0.1:4004</span></code>.</p></li>
+</ul>
+<p>For more information on how to specify the component and network bind strings,
+see “Assigning a local address to a socket” in the
+<a class="reference external" href="http://api.zeromq.org/4-2:zmq-tcp">zmq-tcp API Reference</a>.</p>
+</div>
+<div class="section" id="about-the-public-endpoint-string">
+<span id="about-endpoint-string-label"></span><h3>About the public endpoint string<a class="headerlink" href="#about-the-public-endpoint-string" title="Permalink to this headline">¶</a></h3>
+<p>The correct value for your public endpoint string depends on your network
+configuration.</p>
+<ul>
+<li><p>If this network is for development purposes and all of the nodes
+will be on the same local network, the IP address returned by <code class="docutils literal notranslate"><span class="pre">ifconfig</span></code>
+should work as your public endpoint string.</p></li>
+<li><p>If part of your network is behind a NAT or firewall, or if you want to start
+up a public network on the Internet, you must determine the correct routable
+values for all the nodes in your network.</p>
+<p>Determining these values for a distributed or production network is an
+advanced networking topic that is beyond the scope of this guide. Contact your
+network administrator for help with this task.</p>
+</li>
+</ul>
+<p>For information on how to specify the public endpoint string, see “Connecting
+a socket” in the <a class="reference external" href="http://api.zeromq.org/4-2:zmq-tcp">zmq-tcp API Reference</a>.</p>
+</div>
+</div>
+<div class="section" id="step-1-install-sawtooth-on-all-nodes">
+<span id="appdev-multinode-install-label"></span><h2>Step 1: Install Sawtooth on All Nodes<a class="headerlink" href="#step-1-install-sawtooth-on-all-nodes" title="Permalink to this headline">¶</a></h2>
+<p>Use these steps on each system to install Hyperledger Sawtooth.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>For PBFT consensus, you must install Sawtooth and generate keys for all
+nodes before continuing to step 3 (creating the genesis block on the
+first node).</p></li>
+<li><p>For PoET consensus, you can choose to install Sawtooth on the other nodes
+after configuring and starting the first node.</p></li>
+</ul>
+</div>
+<ol class="arabic">
+<li><p>Choose whether you want the stable version (recommended) or the most recent
+nightly build (for testing purposes only).</p>
+<ul>
+<li><p>(Release 1.2 and later) To add the stable repository, run these commands in
+a terminal window on your host system.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD
+<span class="gp">$</span> sudo add-apt-repository <span class="s1">&#39;deb [arch=amd64] http://repo.sawtooth.me/ubuntu/chime/stable bionic universe&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">chime</span></code> metapackage includes the Sawtooth core software and
+associated items such as separate consensus software.</p>
+</div>
+</li>
+<li><p>The v1.2.4 version of Sawtooth is available in a repository of nightly
+builds. These builds may incorporate undocumented features and should be
+used for testing purposes only.</p>
+<p>To use the nightly repository, run the following commands in a terminal
+window on your host system.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 44FC67F19B2466EA
+<span class="gp">$</span> sudo apt-add-repository <span class="s1">&#39;deb [arch=amd64] http://repo.sawtooth.me/ubuntu/nightly bionic universe&#39;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>Update your package lists.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get update
+</pre></div>
+</div>
+</li>
+<li><p>Install the Sawtooth packages. Sawtooth consists of several Ubuntu packages
+that can be installed together using the <code class="docutils literal notranslate"><span class="pre">sawtooth</span></code> meta-package. Run the
+following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get install -y sawtooth
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><ol class="arabic">
+<li><p>(PBFT only) Install the PBFT consensus engine package.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get install -y sawtooth sawtooth-pbft-engine
+</pre></div>
+</div>
+</li>
+<li><p>(PoET only) Install the PoET consensus engine, transaction processor, and CLI packages.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get install -y sawtooth <span class="se">\</span>
+python3-sawtooth-poet-cli <span class="se">\</span>
+python3-sawtooth-poet-engine <span class="se">\</span>
+python3-sawtooth-poet-families
+</pre></div>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Any time after installation, you can view the installed Sawtooth packages
+with the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> dpkg -l <span class="s1">&#39;*sawtooth*&#39;</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="step-2-create-user-and-validator-keys">
+<span id="appdev-multinode-keys-label"></span><h2>Step 2: Create User and Validator Keys<a class="headerlink" href="#step-2-create-user-and-validator-keys" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Skip this step if you are reusing an existing node that already has user and
+validator keys.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>For PBFT, repeat this procedure on the other nodes in the initial network.
+When you create the genesis block on the first node, you will need the
+validator keys for at least three other nodes.</p>
+</div>
+<ol class="arabic">
+<li><p>Generate your user key for Sawtooth.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth keygen my_key
+<span class="go">writing file: /home/yourname/.sawtooth/keys/my_key.priv</span>
+<span class="go">writing file: /home/yourname/.sawtooth/keys/my_key.pub</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This command specifies <code class="docutils literal notranslate"><span class="pre">my_key</span></code> as the base name for the key files,
+to be consistent with the key name that is used in some example Docker and
+Kubernetes files. By default (when no key name is specified), the
+<code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">keygen</span></code> command uses your user name.</p>
+</div>
+</li>
+<li><p>Generate the key for the validator, which runs as root.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo sawadm keygen
+<span class="go">writing file: /etc/sawtooth/keys/validator.priv</span>
+<span class="go">writing file: /etc/sawtooth/keys/validator.pub</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default, this command stores the validator key files in
+<code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/keys/validator.priv</span></code> and
+<code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/keys/validator.pub</span></code>.
+However, settings in the path configuration file could change this location;
+see <a class="reference internal" href="../sysadmin_guide/configuring_sawtooth/path_configuration_file.html"><span class="doc">Path Configuration File</span></a>.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="step-3-create-the-genesis-block-on-the-first-node">
+<h2>Step 3: Create the Genesis Block on the First Node<a class="headerlink" href="#step-3-create-the-genesis-block-on-the-first-node" title="Permalink to this headline">¶</a></h2>
+<p>The first node creates the genesis block, which specifies the initial on-chain
+settings for the network configuration. Other nodes access those settings when
+they join the network.</p>
+<p><strong>Prerequisites</strong>:</p>
+<ul class="simple">
+<li><p>If you are reusing an existing node, make sure that you have deleted the
+blockchain data before continuing (as described in <a class="reference internal" href="#prereqs-multi-ubuntu-label"><span class="std std-ref">the Ubuntu section’s
+prerequisites</span></a>).</p></li>
+<li><p>For PBFT, the genesis block requires the validator keys for at least four
+nodes (or all nodes in the initial network, if known). If you have not
+installed Sawtooth and generated keys on the other nodes, perform
+<a class="reference internal" href="#appdev-multinode-install-label"><span class="std std-ref">Step 1</span></a> and
+<a class="reference internal" href="#appdev-multinode-keys-label"><span class="std std-ref">Step 2</span></a>
+on those nodes, then gather the public keys from
+<code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/keys/validator.pub</span></code> on each node.</p></li>
+</ul>
+<p>The first node in a new Sawtooth network must create the <cite>genesis block</cite> (the
+first block on the distributed ledger). When the other nodes join the network,
+they use the on-chain settings that were specified in the genesis block.</p>
+<p>The genesis block specifies the consensus algorithm and the keys for nodes (or
+users) who are authorized to change configuration settings. For PBFT, the
+genesis block also includes the keys for the other nodes in the initial network.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Use this procedure <strong>only</strong> for the first node on a Sawtooth
+network. Skip this procedure for a node that will join an existing network.</p>
+</div>
+<ol class="arabic">
+<li><p>Ensure that the required user and validator keys exist on this node:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ls <span class="nv">$HOME</span>/.sawtooth/keys/
+<span class="go">my_key.priv    my_key.pub</span>
+
+<span class="gp">$</span> ls /etc/sawtooth/keys/
+<span class="go">validator.priv   validator.pub</span>
+</pre></div>
+</div>
+<p>If these key files do not exist, create them as described in the previous
+step.</p>
+</li>
+<li><p>Change to a writable directory such as <code class="docutils literal notranslate"><span class="pre">/tmp</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /tmp
+</pre></div>
+</div>
+</li>
+<li><p>Create a batch with a settings proposal for the genesis block.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawset genesis --key <span class="nv">$HOME</span>/.sawtooth/keys/my_key.priv <span class="se">\</span>
+-o config-genesis.batch
+</pre></div>
+</div>
+<p>This command authorizes you to set and change Sawtooth settings. The
+settings changes will take effect after the validator and Settings
+transaction processor have started.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You must use the same key for the <code class="docutils literal notranslate"><span class="pre">sawset</span> <span class="pre">proposal</span> <span class="pre">create</span></code> commands
+in the following steps. In theory, some of these commands could use a
+different key, but configuring multiple keys is a complicated process
+that is not shown in this procedure. For more information, see
+<a class="reference internal" href="../sysadmin_guide/adding_authorized_users.html"><span class="doc">Adding Authorized Users for Settings Proposals</span></a>.</p>
+</div>
+</li>
+<li><p>Create a batch to initialize the consensus settings.</p>
+<ul>
+<li><p>For PBFT:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawset proposal create --key <span class="nv">$HOME</span>/.sawtooth/keys/my_key.priv <span class="se">\</span>
+-o config-consensus.batch <span class="se">\</span>
+sawtooth.consensus.algorithm.name<span class="o">=</span>pbft <span class="se">\</span>
+sawtooth.consensus.algorithm.version<span class="o">=</span><span class="m">1</span>.0 <span class="se">\</span>
+sawtooth.consensus.pbft.members<span class="o">=</span><span class="s1">&#39;[&quot;VAL1KEY&quot;,&quot;VAL2KEY&quot;,...,&quot;VALnKEY&quot;]&#39;</span>
+</pre></div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">&quot;VAL1KEY&quot;,&quot;VAL2KEY&quot;,&quot;VAL3KEY&quot;,...,&quot;VALnKEY&quot;</span></code> with the validator public
+keys of all the nodes (including this node). This information is in the
+file <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/keys/validator.pub</span></code> on each node. Be sure to use
+single quotes and double quotes correctly, as shown in the example.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The PBFT version number is in the file <code class="docutils literal notranslate"><span class="pre">sawtooth-pbft/Cargo.toml</span></code>
+as <code class="docutils literal notranslate"><span class="pre">version</span> <span class="pre">=</span> <span class="pre">&quot;{major}.{minor}.{patch}&quot;</span></code>. Use only the first two
+digits (major and minor release numbers); omit the patch number.
+For example, if the version is 1.0.3, use <code class="docutils literal notranslate"><span class="pre">1.0</span></code> for this setting.</p>
+</div>
+</li>
+<li><p>For PoET:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawset proposal create --key <span class="nv">$HOME</span>/.sawtooth/keys/my_key.priv <span class="se">\</span>
+-o config-consensus.batch <span class="se">\</span>
+sawtooth.consensus.algorithm.name<span class="o">=</span>PoET <span class="se">\</span>
+sawtooth.consensus.algorithm.version<span class="o">=</span><span class="m">0</span>.1 <span class="se">\</span>
+sawtooth.poet.report_public_key_pem<span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>cat /etc/sawtooth/simulator_rk_pub.pem<span class="k">)</span><span class="s2">&quot;</span> <span class="se">\</span>
+sawtooth.poet.valid_enclave_measurements<span class="o">=</span><span class="k">$(</span>poet enclave measurement<span class="k">)</span> <span class="se">\</span>
+sawtooth.poet.valid_enclave_basenames<span class="o">=</span><span class="k">$(</span>poet enclave basename<span class="k">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is a complicated command. Here’s an explanation of the options and
+arguments:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">--key</span> <span class="pre">$HOME/.sawtooth/keys/my_key.priv</span></code></dt><dd><p>Signs the proposal with your private key. Only this key can be
+used to change on-chain settings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">config-consensus.batch</span></code></dt><dd><p>Wraps the consensus proposal transaction in a batch named
+<code class="docutils literal notranslate"><span class="pre">config-consensus.batch</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.algorithm.name</span></code></dt><dd><p>Specifies the consensus algorithm for this network; this setting is
+required.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.algorithm.version</span></code></dt><dd><p>Specifies the version of the consensus algorithm; this setting is
+required.</p>
+</dd>
+<dt>(PBFT only) <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code></dt><dd><p>Lists the member nodes on the initial network as a JSON-formatted
+string of the validators’ public keys, using the following format:</p>
+<p><code class="docutils literal notranslate"><span class="pre">'[&quot;&lt;public-key-1&gt;&quot;,&quot;&lt;public-key-2&gt;&quot;,...,&quot;&lt;public-key-n&gt;&quot;]'</span></code></p>
+</dd>
+<dt>(PoET only) <code class="docutils literal notranslate"><span class="pre">sawtooth.poet.report_public_key_pem=&quot;$(cat</span> <span class="pre">/etc/sawtooth/simulator_rk_pub.pem)&quot;</span></code></dt><dd><p>Adds the public key for the PoET Validator Registry transaction
+processor to use for the PoET simulator consensus.</p>
+</dd>
+<dt>(PoET only) <code class="docutils literal notranslate"><span class="pre">sawtooth.poet.valid_enclave_measurements=$(poet</span> <span class="pre">enclave</span> <span class="pre">measurement)</span></code></dt><dd><p>Adds a simulated enclave measurement to the blockchain. The
+PoET Validator Registry transaction processor uses this value to check
+signup information.</p>
+</dd>
+<dt>(PoET only) <code class="docutils literal notranslate"><span class="pre">sawtooth.poet.valid_enclave_basenames=$(poet</span> <span class="pre">enclave</span> <span class="pre">basename)</span></code></dt><dd><p>Adds a simulated enclave basename to the blockchain. The PoET
+Validator Registry uses this value to check signup information.</p>
+</dd>
+</dl>
+</div>
+</li>
+<li><p>(PoET only) Create a batch to register the first Sawtooth node with the PoET
+Validator Registry transaction processor, using the validator’s private key.
+Without this command, the validator would not be able to publish any blocks.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> poet registration create --key /etc/sawtooth/keys/validator.priv -o poet.batch
+</pre></div>
+</div>
+</li>
+<li><p>(Optional) Create a batch to configure other consensus settings.</p>
+<ul>
+<li><p>For PBFT:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawset proposal create --key <span class="nv">$HOME</span>/.sawtooth/keys/my_key.priv <span class="se">\</span>
+-o pbft-settings.batch <span class="se">\</span>
+SETTING-NAME<span class="o">=</span>VALUE <span class="se">\</span>
+... <span class="se">\</span>
+SETTING-NAME<span class="o">=</span>VALUE
+</pre></div>
+</div>
+<p>For the available settings and their default values, see
+“On-Chain Settings” in the <a class="reference external" href="https://sawtooth.hyperledger.org/docs/#sawtooth-pbft">Sawtooth PBFT documentation</a>.</p>
+</li>
+<li><p>For PoET:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawset proposal create --key <span class="nv">$HOME</span>/.sawtooth/keys/my_key.priv <span class="se">\</span>
+-o poet-settings.batch <span class="se">\</span>
+sawtooth.poet.target_wait_time<span class="o">=</span><span class="m">5</span> <span class="se">\</span>
+sawtooth.poet.initial_wait_time<span class="o">=</span><span class="m">25</span> <span class="se">\</span>
+sawtooth.publisher.max_batches_per_block<span class="o">=</span><span class="m">100</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This example shows the default PoET settings.
+For more information, see the <a class="reference external" href="https://sawtooth.hyperledger.org/faq/settings/">Hyperledger Sawtooth Settings
+FAQ</a>.</p>
+</div>
+</li>
+</ul>
+</li>
+<li><p>As the sawtooth user, combine the separate batches into a single genesis
+batch that will be committed in the genesis block.</p>
+<ul>
+<li><p>For PBFT:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth sawadm genesis <span class="se">\</span>
+config-genesis.batch config-consensus.batch pbft-settings.batch
+</pre></div>
+</div>
+</li>
+<li><p>For PoET:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth sawadm genesis <span class="se">\</span>
+config-genesis.batch config-consensus.batch poet.batch poet-settings.batch
+</pre></div>
+</div>
+</li>
+</ul>
+<p>You’ll see some output indicating success:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Processing config-genesis.batch...</span>
+<span class="go">Processing config-consensus.batch...</span>
+<span class="go">...</span>
+<span class="go">Generating /var/lib/sawtooth/genesis.batch</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.algorithm.name</span></code> and
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.algorithm.version</span></code> settings are required; <code class="docutils literal notranslate"><span class="pre">sawadm</span>
+<span class="pre">genesis</span></code> will fail if they are not present in one of the batches unless
+the <code class="docutils literal notranslate"><span class="pre">--ignore-required-settings</span></code> flag is used.</p>
+</div>
+</li>
+</ol>
+<p>When this command finishes, the genesis block is complete.</p>
+<p>The settings in the genesis block will be available after the first node has
+started and the genesis block has been committed.</p>
+</div>
+<div class="section" id="step-4-pbft-only-configure-peers-in-off-chain-settings">
+<h2>Step 4. (PBFT Only) Configure Peers in Off-Chain Settings<a class="headerlink" href="#step-4-pbft-only-configure-peers-in-off-chain-settings" title="Permalink to this headline">¶</a></h2>
+<p>For PBFT, each node specify the peer nodes in the network, because a PBFT
+network must be fully peered (all nodes must be directly connected). This
+setting is in the off-chain
+<a class="reference internal" href="../sysadmin_guide/configuring_sawtooth/validator_configuration_file.html"><span class="doc">validator configuration file</span></a>.</p>
+<ol class="arabic">
+<li><p>Create the validator configuration file by copying the example file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo cp -a /etc/sawtooth/validator.toml.example /etc/sawtooth/validator.toml
+</pre></div>
+</div>
+</li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sudo</span></code> to edit this file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo vi /etc/sawtooth/validator.toml
+</pre></div>
+</div>
+</li>
+<li><p>Locate the <code class="docutils literal notranslate"><span class="pre">peering</span></code> setting and make sure that it is set to <code class="docutils literal notranslate"><span class="pre">static</span></code>
+(the default).</p></li>
+<li><p>Find the <code class="docutils literal notranslate"><span class="pre">peers</span></code> setting and enter the URLs for other validators on the
+network.</p>
+<p>Use the format <code class="docutils literal notranslate"><span class="pre">tcp://{hostname}:{port}</span></code> for each peer. Specify multiple
+peers in a comma-separated list. For example:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">peers</span> <span class="o">=</span> <span class="s">[&quot;tcp://node1:8800&quot;, &quot;tcp://node2:8800&quot;, &quot;tcp://node3:8800&quot;]</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>This setting will take effect when the validator starts.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For information about optional configuration settings, see
+<a class="reference internal" href="../sysadmin_guide/off_chain_settings.html"><span class="doc">Changing Off-chain Settings with Configuration Files</span></a>.</p>
+</div>
+</div>
+<div class="section" id="step-5-start-sawtooth-on-the-first-node">
+<span id="start-sawtooth-first-node-label"></span><h2>Step 5. Start Sawtooth on the First Node<a class="headerlink" href="#step-5-start-sawtooth-on-the-first-node" title="Permalink to this headline">¶</a></h2>
+<p>This step shows how to start all Sawtooth components: the validator, REST API,
+transaction processors, and consensus engine. Use a separate terminal window
+to start each component.</p>
+<ol class="arabic">
+<li><p>Start the validator with the following command.</p>
+<p>Substitute your actual values for the component and network bind strings,
+public endpoint string, and peer list, as described in
+<a class="reference internal" href="#prereqs-multi-ubuntu-label"><span class="std std-ref">Prerequisites</span></a>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth sawtooth-validator <span class="se">\</span>
+--bind component:<span class="o">{</span>component-bind-string<span class="o">}</span> <span class="se">\</span>
+--bind network:<span class="o">{</span>network-bind-string<span class="o">}</span> <span class="se">\</span>
+--bind consensus:<span class="o">{</span>consensus-bind-string<span class="o">}</span> <span class="se">\</span>
+--endpoint <span class="o">{</span>public-endpoint-string<span class="o">}</span> <span class="se">\</span>
+--peers <span class="o">{</span>peer-list<span class="o">}</span>
+</pre></div>
+</div>
+<p>Specify multiple peers in a comma-separated list, as in this example:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>--peers tcp://203.0.113.0:8800,198.51.100.0:8800
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>For PBFT, specify all known peers in the initial network. (PBFT requires
+at least four nodes.) If you want to add another PBFT node later, see
+<a class="reference internal" href="../sysadmin_guide/pbft_adding_removing_node.html"><span class="doc">Adding or Removing a PBFT Node</span></a>.</p>
+</div>
+<p>The following example uses these values:</p>
+<ul>
+<li><p>component bind address <code class="docutils literal notranslate"><span class="pre">127.0.0.1:4004</span></code> (the default value)</p></li>
+<li><p>network bind address and endpoint <code class="docutils literal notranslate"><span class="pre">192.0.2.0:8800</span></code>
+(a TEST-NET-1 example address)</p></li>
+<li><p>consensus bind address and endpoint <code class="docutils literal notranslate"><span class="pre">192.0.2.0:5050</span></code></p></li>
+<li><p>three peers at the public endpoints <code class="docutils literal notranslate"><span class="pre">203.0.113.0:8800</span></code>,
+<code class="docutils literal notranslate"><span class="pre">203.0.113.1:8800</span></code>, and <code class="docutils literal notranslate"><span class="pre">203.0.113.2:8800</span></code>.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth sawtooth-validator <span class="se">\</span>
+--bind component:tcp://127.0.0.1:4004 <span class="se">\</span>
+--bind network:tcp://192.0.2.0:8800 <span class="se">\</span>
+--bind consensus:tcp://192.0.2.0:5050 <span class="se">\</span>
+--endpoint tcp://192.0.2.0:8800 <span class="se">\</span>
+--peers tcp://203.0.113.0:8800,tcp://203.0.113.1:8800,tcp://203.0.113.2:8800
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>Leave this window open; the validator will continue to display logging output
+as it runs.</p>
+</li>
+<li><p>Open a separate terminal window and start the REST API.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth sawtooth-rest-api -v
+</pre></div>
+</div>
+<p>If necessary, use the <code class="docutils literal notranslate"><span class="pre">--connect</span></code> option to specify a non-default value for
+the validator’s component bind address and port, as described in
+<a class="reference internal" href="#prereqs-multi-ubuntu-label"><span class="std std-ref">Prerequisites</span></a>. The following example shows the default
+value:</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo -u sawtooth sawtooth-rest-api -v --connect 127.0.0.1:4004
+</pre></div>
+</div>
+</div></blockquote>
+<p>For more information, see <a class="reference internal" href="ubuntu.html#start-rest-api-label"><span class="std std-ref">Step 7: Start the REST API</span></a>.</p>
+</li>
+<li><p>Start the transaction processors. Open a separate terminal window to start
+each one.</p>
+<p>As with the previous command, use the <code class="docutils literal notranslate"><span class="pre">--connect</span></code> option for each command,
+if necessary, to specify a non-default value for validator’s component bind
+address and port.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth settings-tp -v
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth intkey-tp-python -v
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth xo-tp-python -v
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The transaction processors for Integer Key (<code class="docutils literal notranslate"><span class="pre">intkey-tp-python</span></code>) and
+XO (<code class="docutils literal notranslate"><span class="pre">xo-tp-python</span></code>) are not required for a Sawtooth network, but are
+used for the other steps in this guide.</p>
+</div>
+<p>For more information, see <a class="reference internal" href="ubuntu.html#start-tps-label"><span class="std std-ref">Step 8: Start the Transaction Processors</span></a>.</p>
+</li>
+<li><p>(PoET only) Also start the PoET Validator Registry transaction processor in
+a separate terminal window.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth poet-validator-registry-tp -v
+</pre></div>
+</div>
+</li>
+<li><p>Start the consensus engine in a separate terminal window.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Change the <code class="docutils literal notranslate"><span class="pre">--connect</span></code> option, if necessary, to specify a non-default
+value for validator’s consensus bind address and port.</p>
+</div>
+<ul>
+<li><p>For PBFT:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth pbft-engine -vv --connect tcp://localhost:5050
+</pre></div>
+</div>
+</li>
+<li><p>For PoET:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth poet-engine -vv --connect tcp://localhost:5050
+</pre></div>
+</div>
+</li>
+</ul>
+<p>The terminal window displays log messages as the consensus engine connects to
+and registers with the validator. The output will be similar to this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">[2019-01-09 11:45:07.807 INFO     handlers] Consensus engine registered: ...</span>
+
+<span class="go">DEBUG | {name:}:engine | Min: 0 -- Max: 0</span>
+<span class="go">INFO  | {name:}:engine | Wait time: 0</span>
+<span class="go">DEBUG | {name}::engine | Initializing block</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="step-6-test-the-first-node">
+<h2>Step 6. Test the First Node<a class="headerlink" href="#step-6-test-the-first-node" title="Permalink to this headline">¶</a></h2>
+<p>Although the Sawtooth network is not fully functional until other nodes have
+joined the network, you can use any or all of the following commands to verify
+the REST API and check that the genesis block has been committed.</p>
+<ul>
+<li><p>Confirm that the REST API is reachable.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl http://localhost:8008/blocks
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Sawtooth environment described this guide runs a local REST API on
+each node. For a node that is not running a local REST API,
+replace <code class="docutils literal notranslate"><span class="pre">localhost:8008</span></code> with the externally advertised IP address and
+port.</p>
+</div>
+<p>You should see a JSON response that is similar to this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">{</span>
+<span class="go">  &quot;data&quot;: [</span>
+<span class="go">    {</span>
+<span class="go">      &quot;batches&quot;: [</span>
+<span class="go">        {</span>
+<span class="go">          &quot;header&quot;: {</span>
+<span class="go">            &quot;signer_public_key&quot;: . . .</span>
+</pre></div>
+</div>
+<p>If not, check the status of the REST API service and restart it, if necessary.</p>
+</li>
+</ul>
+<ul>
+<li><p>Check the list of blocks on the blockchain.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth block list
+</pre></div>
+</div>
+<p>For the first node on a network, this list will contain only a few blocks.
+If this node has joined an existing network, the block list could be quite
+long. In both cases, the list should end with output that resembles this
+example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">NUM  BLOCK_ID                                                                                                                          BATS  TXNS  SIGNER</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">2    f40b90d06b4a9074af2ab09e0187223da7466be75ec0f472f2edd5f22960d76e402e6c07c90b7816374891d698310dd25d9b88dce7dbcba8219d9f7c9cae1861  3     3     02e56e...</span>
+<span class="go">1    4d7b3a2e6411e5462d94208a5bb83b6c7652fa6f4c2ada1aa98cabb0be34af9d28cf3da0f8ccf414aac2230179becade7cdabbd0976c4846990f29e1f96000d6  1     1     034aad...</span>
+<span class="go">0    0fb3ebf6fdc5eef8af600eccc8d1aeb3d2488992e17c124b03083f3202e3e6b9182e78fef696f5a368844da2a81845df7c3ba4ad940cee5ca328e38a0f0e7aa0  3     11    034aad...</span>
+</pre></div>
+</div>
+<p>Block 0 is the <a class="reference internal" href="../glossary.html#term-genesis-block"><span class="xref std std-term">genesis block</span></a>. The other two blocks contain the
+initial transactions for on-chain settings, such as setting the consensus
+algorithm.</p>
+</li>
+</ul>
+<ul>
+<li><p>(PBFT only) Ensure that the on-chain setting
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code> lists the validator public keys of all
+PBFT member nodes on the network.</p>
+<ol class="loweralpha">
+<li><p>Connect to the first node (the one that created the genesis
+block).</p></li>
+<li><p>Display the on-chain settings.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth settings list
+</pre></div>
+</div>
+</li>
+<li><p>In the output, look for <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code> and
+verify that it includes the public key for each node.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sawtooth.consensus.pbft.members=[&quot;03e27504580fa15...</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">sawset</span> <span class="pre">proposal</span> <span class="pre">create</span></code> command to change this
+setting. For more information, see
+<a class="reference internal" href="../sysadmin_guide/pbft_adding_removing_node.html"><span class="doc">Adding or Removing a PBFT Node</span></a>.</p>
+</div>
+</li>
+</ol>
+</li>
+</ul>
+</div>
+<div class="section" id="step-7-start-the-other-nodes">
+<span id="install-second-val-ubuntu-label"></span><h2>Step 7: Start the Other Nodes<a class="headerlink" href="#step-7-start-the-other-nodes" title="Permalink to this headline">¶</a></h2>
+<p>After confirming basic functionality on the first node, start Sawtooth on all
+other nodes in the initial network.</p>
+<p>Use the procedure in <a class="reference internal" href="#start-sawtooth-first-node-label"><span class="std std-ref">Step 5. Start Sawtooth on the First Node</span></a>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Be careful to specify the correct values for the component and network bind
+address, endpoint, and peers settings. Incorrect values could cause the
+network to fail.</p>
+<p>Start the same transaction processors that are running on the first
+node. For example, if you chose not to start <code class="docutils literal notranslate"><span class="pre">intkey-tp-python</span></code>
+and <code class="docutils literal notranslate"><span class="pre">xo-tp-python</span></code> on the first node, do not start them on the other nodes.</p>
+</div>
+<p>When each node’s validator fully starts, it will peer with the other running
+nodes.</p>
+</div>
+<div class="section" id="step-8-confirm-network-functionality">
+<span id="confirm-nw-funct-ubuntu-label"></span><h2>Step 8: Confirm Network Functionality<a class="headerlink" href="#step-8-confirm-network-functionality" title="Permalink to this headline">¶</a></h2>
+<p>For the remaining steps, multiple nodes in the network must be running.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>PBFT requires at least four nodes.</p></li>
+<li><p>PoET requires at least three nodes.</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic">
+<li><p>To check whether peering has occurred on the network, submit a peers query
+to the REST API on the first node.</p>
+<p>Open a terminal window on the first node and run the following
+command.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl http://localhost:8008/peers
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This environment runs a local REST API on each node. For
+a node that is not running a local REST API, you must replace
+<code class="docutils literal notranslate"><span class="pre">localhost:8008</span></code> with the externally advertised IP address and
+port.  (Non-default values are set with the <code class="docutils literal notranslate"><span class="pre">--bind</span></code> option when
+starting the REST API.)</p>
+</div>
+<p>If this query returns a 503 error, the nodes have not yet peered with the
+Sawtooth network. Repeat the query until you see output that resembles the
+following example:</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">{</span>
+<span class="go">    &quot;data&quot;: [</span>
+<span class="go">    &quot;tcp://validator-1:8800&quot;,</span>
+<span class="go">  ],</span>
+<span class="go">  &quot;link&quot;: &quot;http://rest-api:8008/peers&quot;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Run the following Sawtooth commands on a node to show the other
+nodes on the network.</p>
+<ol class="loweralpha simple">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">peer</span> <span class="pre">list</span></code> to show the peers of a particular node.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">sawnet</span> <span class="pre">peers</span> <span class="pre">list</span></code> to display a complete graph of peers on the
+network (available in Sawtooth release 1.1 and later).</p></li>
+</ol>
+</li>
+<li><p>Verify that transactions are being processed correctly.</p>
+<ol class="loweralpha">
+<li><p>Submit a transaction to the REST API on the first node. This
+example sets a key named <code class="docutils literal notranslate"><span class="pre">MyKey</span></code> to the value 999.</p>
+<p>Run the following command in a terminal window on the first node.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> intkey <span class="nb">set</span> MyKey <span class="m">999</span>
+</pre></div>
+</div>
+</li>
+<li><p>Watch for this transaction to appear on the other node. The
+following command requests the value of <code class="docutils literal notranslate"><span class="pre">MyKey</span></code> from the REST API on the
+that node.</p>
+<p>Open a terminal window on another node to run the following
+command.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> intkey show MyKey
+<span class="go">MyKey: 999</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section" id="step-9-optional-configure-the-allowed-transaction-types">
+<span id="configure-txn-procs-ubuntu-label"></span><h2>Step 9. (Optional) Configure the Allowed Transaction Types<a class="headerlink" href="#step-9-optional-configure-the-allowed-transaction-types" title="Permalink to this headline">¶</a></h2>
+<p>By default, a validator accepts transactions from any transaction processor.
+However, Sawtooth allows you to limit the types of transactions that can be
+submitted.</p>
+<p>For this procedure, see <a class="reference internal" href="../sysadmin_guide/setting_allowed_txns.html"><span class="doc">Setting the Allowed Transaction Types (Optional)</span></a> in the
+System Administrator’s Guide.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="intro_xo_transaction_family.html" class="btn btn-neutral float-right" title="Playing with the XO Transaction Family" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="kubernetes_test_network.html" class="btn btn-neutral float-left" title="Using Kubernetes for a Sawtooth Test Network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

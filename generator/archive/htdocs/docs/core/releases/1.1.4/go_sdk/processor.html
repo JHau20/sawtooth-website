@@ -1,0 +1,638 @@
+use 'godoc cmd/sawtooth_sdk/processor' for documentation on the sawtooth_sdk/processor command 
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script type='text/javascript'>
+	document.ANALYSIS_DATA = ;
+	document.CALLGRAPH = ;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "sawtooth_sdk/processor"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				<p>
+Package processor defines:
+1. A TransactionHandler interface to be used to create new transaction
+families.
+</p>
+<p>
+2. A high-level, general purpose, multi-threaded TransactionProcessor that
+any number of handlers can be added to.
+</p>
+<p>
+3. A Context class used to abstract getting and setting addresses in global
+validator state.
+</p>
+
+			</div>
+		</div>
+		
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+				<dd><a href="#pkg-constants">Constants</a></dd>
+			
+			
+			
+			
+				
+				<dd><a href="#Attribute">type Attribute</a></dd>
+				
+				
+			
+				
+				<dd><a href="#AuthorizationException">type AuthorizationException</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#AuthorizationException.Error">func (err *AuthorizationException) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="#Context">type Context</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#NewContext">func NewContext(connection messaging.Connection, contextId string) *Context</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Context.AddEvent">func (self *Context) AddEvent(event_type string, attributes []Attribute, event_data []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Context.AddReceiptData">func (self *Context) AddReceiptData(data []byte) error</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Context.DeleteState">func (self *Context) DeleteState(addresses []string) ([]string, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Context.GetState">func (self *Context) GetState(addresses []string) (map[string][]byte, error)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Context.SetState">func (self *Context) SetState(pairs map[string][]byte) ([]string, error)</a></dd>
+				
+			
+				
+				<dd><a href="#InternalError">type InternalError</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#InternalError.Error">func (err *InternalError) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="#InvalidTransactionError">type InvalidTransactionError</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#InvalidTransactionError.Error">func (err *InvalidTransactionError) Error() string</a></dd>
+				
+			
+				
+				<dd><a href="#TransactionHandler">type TransactionHandler</a></dd>
+				
+				
+			
+				
+				<dd><a href="#TransactionProcessor">type TransactionProcessor</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#NewTransactionProcessor">func NewTransactionProcessor(uri string) *TransactionProcessor</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#TransactionProcessor.AddHandler">func (self *TransactionProcessor) AddHandler(handler TransactionHandler)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#TransactionProcessor.SetMaxQueueSize">func (self *TransactionProcessor) SetMaxQueueSize(n uint)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#TransactionProcessor.SetThreadCount">func (self *TransactionProcessor) SetThreadCount(n uint)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#TransactionProcessor.Shutdown">func (self *TransactionProcessor) Shutdown()</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#TransactionProcessor.ShutdownOnSignal">func (self *TransactionProcessor) ShutdownOnSignal(siglist ...os.Signal)</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#TransactionProcessor.Start">func (self *TransactionProcessor) Start() error</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h4>Package files</h4>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="/src/sawtooth_sdk/processor/context.go">context.go</a>
+			
+				<a href="/src/sawtooth_sdk/processor/errors.go">errors.go</a>
+			
+				<a href="/src/sawtooth_sdk/processor/handler.go">handler.go</a>
+			
+				<a href="/src/sawtooth_sdk/processor/processor.go">processor.go</a>
+			
+				<a href="/src/sawtooth_sdk/processor/worker.go">worker.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		<div id="pkg-callgraph" class="toggle" style="display: none">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Internal Call Graph section">Internal call graph ▹</h2>
+		</div> <!-- .expanded -->
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Internal Call Graph section">Internal call graph ▾</h2>
+			<p>
+			  In the call graph viewer below, each node
+			  is a function belonging to this package
+			  and its children are the functions it
+			  calls&mdash;perhaps dynamically.
+			</p>
+			<p>
+			  The root nodes are the entry points of the
+			  package: functions that may be called from
+			  outside the package.
+			  There may be non-exported or anonymous
+			  functions among them if they are called
+			  dynamically from another package.
+			</p>
+			<p>
+			  Click a node to visit that function's source code.
+			  From there you can visit its callers by
+			  clicking its declaring <code>func</code>
+			  token.
+			</p>
+			<p>
+			  Functions may be omitted if they were
+			  determined to be unreachable in the
+			  particular programs or tests that were
+			  analyzed.
+			</p>
+			<!-- Zero means show all package entry points. -->
+			<ul style="margin-left: 0.5in" id="callgraph-0" class="treeview"></ul>
+		</div>
+		</div> <!-- #pkg-callgraph -->
+
+		
+			<h2 id="pkg-constants">Constants</h2>
+			
+				<pre>const <span id="DEFAULT_MAX_WORK_QUEUE_SIZE">DEFAULT_MAX_WORK_QUEUE_SIZE</span> = 100</pre>
+				
+			
+		
+		
+		
+		
+			
+			
+			<h2 id="Attribute">type <a href="/src/target/context.go?s=1270:1323#L28">Attribute</a></h2>
+			<pre>type Attribute struct {
+    Key   <a href="/pkg/builtin/#string">string</a>
+    Value <a href="/pkg/builtin/#string">string</a>
+}</pre>
+			
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="AuthorizationException">type <a href="/src/target/errors.go?s=1186:1266#L32">AuthorizationException</a></h2>
+			<pre>type AuthorizationException struct {
+    Msg          <a href="/pkg/builtin/#string">string</a>
+    ExtendedData []<a href="/pkg/builtin/#byte">byte</a>
+}</pre>
+			
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="AuthorizationException.Error">func (*AuthorizationException) <a href="/src/target/errors.go?s=1313:1362#L38">Error</a></h3>
+				<pre>func (err *<a href="#AuthorizationException">AuthorizationException</a>) Error() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Raised when a authorization error occurs.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Context">type <a href="/src/target/context.go?s=1193:1268#L23">Context</a></h2>
+			<pre>type Context struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}</pre>
+			<p>
+Context provides an abstract interface for getting and setting validator
+state. All validator interactions by a handler should be through a Context
+instance. Currently, the Context class is NOT thread-safe and Context classes
+may not share the same messaging.Connection object.
+</p>
+
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewContext">func <a href="/src/target/context.go?s=1403:1478#L34">NewContext</a></h3>
+				<pre>func NewContext(connection <a href="/pkg/sawtooth_sdk/messaging/">messaging</a>.<a href="/pkg/sawtooth_sdk/messaging/#Connection">Connection</a>, contextId <a href="/pkg/builtin/#string">string</a>) *<a href="#Context">Context</a></pre>
+				<p>
+Construct a new context object given an initialized Stream and Context ID.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Context.AddEvent">func (*Context) <a href="/src/target/context.go?s=9375:9472#L299">AddEvent</a></h3>
+				<pre>func (self *<a href="#Context">Context</a>) AddEvent(event_type <a href="/pkg/builtin/#string">string</a>, attributes []<a href="#Attribute">Attribute</a>, event_data []<a href="/pkg/builtin/#byte">byte</a>) <a href="/pkg/builtin/#error">error</a></pre>
+				<p>
+Add a new event to the execution result for this transaction.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Context.AddReceiptData">func (*Context) <a href="/src/target/context.go?s=7910:7964#L249">AddReceiptData</a></h3>
+				<pre>func (self *<a href="#Context">Context</a>) AddReceiptData(data []<a href="/pkg/builtin/#byte">byte</a>) <a href="/pkg/builtin/#error">error</a></pre>
+				<p>
+Add a blob to the execution result for this transaction.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Context.DeleteState">func (*Context) <a href="/src/target/context.go?s=6343:6413#L198">DeleteState</a></h3>
+				<pre>func (self *<a href="#Context">Context</a>) DeleteState(addresses []<a href="/pkg/builtin/#string">string</a>) ([]<a href="/pkg/builtin/#string">string</a>, <a href="/pkg/builtin/#error">error</a>)</pre>
+				<p>
+DeleteState requests that each address in the validator state be
+deleted from state. A slice of addresses deleted is returned or an
+error if there was a problem deleting the addresses. For example:
+</p>
+<pre>responses, err := context.DeleteState(dataMap)
+if err != nil {
+    fmt.Println(&#34;Error deleting addresses!&#34;)
+}
+delete, ok := results[address]
+if !ok {
+    fmt.Prinln(&#34;Address was not deleted!&#34;)
+}
+</pre>
+
+				
+				
+				
+			
+				
+				<h3 id="Context.GetState">func (*Context) <a href="/src/target/context.go?s=1989:2065#L54">GetState</a></h3>
+				<pre>func (self *<a href="#Context">Context</a>) GetState(addresses []<a href="/pkg/builtin/#string">string</a>) (map[<a href="/pkg/builtin/#string">string</a>][]<a href="/pkg/builtin/#byte">byte</a>, <a href="/pkg/builtin/#error">error</a>)</pre>
+				<p>
+GetState queries the validator state for data at each of the addresses in the
+given slice. A string-&gt;[]byte map is returned. If an address is not set,
+it will not exist in the map.
+</p>
+<pre>results, err := context.Get(addresses)
+if err != nil {
+    fmt.Println(&#34;Error getting data!&#34;)
+}
+data, ok := results[address]
+if !ok {
+    fmt.Prinln(&#34;No data stored at address!&#34;)
+}
+</pre>
+
+				
+				
+				
+			
+				
+				<h3 id="Context.SetState">func (*Context) <a href="/src/target/context.go?s=4105:4177#L124">SetState</a></h3>
+				<pre>func (self *<a href="#Context">Context</a>) SetState(pairs map[<a href="/pkg/builtin/#string">string</a>][]<a href="/pkg/builtin/#byte">byte</a>) ([]<a href="/pkg/builtin/#string">string</a>, <a href="/pkg/builtin/#error">error</a>)</pre>
+				<p>
+SetState requests that each address in the validator state be set to the given
+value. A slice of addresses set is returned or an error if there was a
+problem setting the addresses. For example:
+</p>
+<pre>responses, err := context.Set(dataMap)
+if err != nil {
+    fmt.Println(&#34;Error setting addresses!&#34;)
+}
+set, ok := results[address]
+if !ok {
+    fmt.Prinln(&#34;Address was not set!&#34;)
+}
+</pre>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="InternalError">type <a href="/src/target/errors.go?s=948:1019#L22">InternalError</a></h2>
+			<pre>type InternalError struct {
+    Msg          <a href="/pkg/builtin/#string">string</a>
+    ExtendedData []<a href="/pkg/builtin/#byte">byte</a>
+}</pre>
+			
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InternalError.Error">func (*InternalError) <a href="/src/target/errors.go?s=1092:1132#L28">Error</a></h3>
+				<pre>func (err *<a href="#InternalError">InternalError</a>) Error() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Raised when an internal error occurs during transaction processing.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="InvalidTransactionError">type <a href="/src/target/errors.go?s=718:799#L12">InvalidTransactionError</a></h2>
+			<pre>type InvalidTransactionError struct {
+    Msg          <a href="/pkg/builtin/#string">string</a>
+    ExtendedData []<a href="/pkg/builtin/#byte">byte</a>
+}</pre>
+			
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="InvalidTransactionError.Error">func (*InvalidTransactionError) <a href="/src/target/errors.go?s=839:889#L18">Error</a></h3>
+				<pre>func (err *<a href="#InvalidTransactionError">InvalidTransactionError</a>) Error() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Raised for an Invalid Transaction.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="TransactionHandler">type <a href="/src/target/handler.go?s=1731:2562#L37">TransactionHandler</a></h2>
+			<pre>type TransactionHandler interface {
+    <span class="comment">// FamilyName should return the name of the transaction family that this</span>
+    <span class="comment">// handler can process, e.g. &#34;intkey&#34;</span>
+    FamilyName() <a href="/pkg/builtin/#string">string</a>
+
+    <span class="comment">// FamilyVersions should return the versions of the transaction</span>
+    <span class="comment">// family that this handler can process. Eg., [&#34;1.0&#34;, &#34;1.5&#34;]</span>
+    FamilyVersions() []<a href="/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Namespaces should return a slice containing all the handler&#39;s</span>
+    <span class="comment">// namespaces, e.g. []string{&#34;abcdef&#34;}</span>
+    Namespaces() []<a href="/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Apply is the single method where all the business logic for a</span>
+    <span class="comment">// transaction family is defined. The method will be called by the</span>
+    <span class="comment">// transaction processor upon receiving a TpProcessRequest that the handler</span>
+    <span class="comment">// understands and will pass in the TpProcessRequest and an initialized</span>
+    <span class="comment">// instance of the Context type.</span>
+    Apply(*<a href="/pkg/sawtooth_sdk/protobuf/processor_pb2/">processor_pb2</a>.<a href="/pkg/sawtooth_sdk/protobuf/processor_pb2/#TpProcessRequest">TpProcessRequest</a>, *<a href="#Context">Context</a>) <a href="/pkg/builtin/#error">error</a>
+}</pre>
+			<p>
+TransactionHandler is the interface that defines the business logic for a
+new transaction family. This is the only interface that needs to be
+implemented to create a new transaction family.
+</p>
+<p>
+To create a transaction processor that uses a new transaction handler:
+</p>
+<pre>validatorEndpoint := &#34;tcp://localhost:4004&#34;
+myHandler := NewMyHandler()
+processor := NewTransactionProcessor(validatorEndpoint)
+processor.AddHandler(myHandler)
+processor.Start()
+</pre>
+<p>
+The FamilyName(), FamilyVersions(), and Namespaces() methods are
+used by the processor to route processing requests to the handler.
+</p>
+
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+		
+			
+			
+			<h2 id="TransactionProcessor">type <a href="/src/target/processor.go?s=1287:1478#L32">TransactionProcessor</a></h2>
+			<pre>type TransactionProcessor struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}</pre>
+			<p>
+TransactionProcessor is a generic class for communicating with a validator
+and routing transaction processing requests to a registered handler. It uses
+ZMQ and channels to handle requests concurrently.
+</p>
+
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewTransactionProcessor">func <a href="/src/target/processor.go?s=1622:1684#L43">NewTransactionProcessor</a></h3>
+				<pre>func NewTransactionProcessor(uri <a href="/pkg/builtin/#string">string</a>) *<a href="#TransactionProcessor">TransactionProcessor</a></pre>
+				<p>
+NewTransactionProcessor initializes a new Transaction Process and points it
+at the given URI. If it fails to initialize, it will panic.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="TransactionProcessor.AddHandler">func (*TransactionProcessor) <a href="/src/target/processor.go?s=2120:2192#L57">AddHandler</a></h3>
+				<pre>func (self *<a href="#TransactionProcessor">TransactionProcessor</a>) AddHandler(handler <a href="#TransactionHandler">TransactionHandler</a>)</pre>
+				<p>
+AddHandler adds the given handler to the TransactionProcessor so it can
+receive transaction processing requests. All handlers must be added prior
+to starting the processor.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TransactionProcessor.SetMaxQueueSize">func (*TransactionProcessor) <a href="/src/target/processor.go?s=2438:2495#L67">SetMaxQueueSize</a></h3>
+				<pre>func (self *<a href="#TransactionProcessor">TransactionProcessor</a>) SetMaxQueueSize(n <a href="/pkg/builtin/#uint">uint</a>)</pre>
+				
+				
+				
+				
+			
+				
+				<h3 id="TransactionProcessor.SetThreadCount">func (*TransactionProcessor) <a href="/src/target/processor.go?s=2357:2413#L63">SetThreadCount</a></h3>
+				<pre>func (self *<a href="#TransactionProcessor">TransactionProcessor</a>) SetThreadCount(n <a href="/pkg/builtin/#uint">uint</a>)</pre>
+				<p>
+Set the number of worker threads to be created for handling requests. Must
+be set before calling Start()
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TransactionProcessor.Shutdown">func (*TransactionProcessor) <a href="/src/target/processor.go?s=6095:6139#L185">Shutdown</a></h3>
+				<pre>func (self *<a href="#TransactionProcessor">TransactionProcessor</a>) Shutdown()</pre>
+				<p>
+Shutdown sends a message to the processor telling it to deregister.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TransactionProcessor.ShutdownOnSignal">func (*TransactionProcessor) <a href="/src/target/processor.go?s=6457:6529#L197">ShutdownOnSignal</a></h3>
+				<pre>func (self *<a href="#TransactionProcessor">TransactionProcessor</a>) ShutdownOnSignal(siglist ...<a href="/pkg/os/">os</a>.<a href="/pkg/os/#Signal">Signal</a>)</pre>
+				<p>
+ShutdownOnSignal sets up signal handling to shutdown the processor when one
+of the signals passed is received.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="TransactionProcessor.Start">func (*TransactionProcessor) <a href="/src/target/processor.go?s=2659:2706#L73">Start</a></h3>
+				<pre>func (self *<a href="#TransactionProcessor">TransactionProcessor</a>) Start() <a href="/pkg/builtin/#error">error</a></pre>
+				<p>
+Start connects the TransactionProcessor to a validator and starts listening
+for requests and routing them to an appropriate handler.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+

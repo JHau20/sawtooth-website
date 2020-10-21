@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.cli.admin_sub.permissioned_validator_registry &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>sawtooth.cli.admin_sub.permissioned_validator_registry</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sawtooth.cli.admin_sub.permissioned_validator_registry</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">gossip.common</span> <span class="k">import</span> <span class="n">pretty_print_dict</span>
+<span class="kn">from</span> <span class="nn">sawtooth.client</span> <span class="k">import</span> <span class="n">SawtoothClient</span>
+<span class="kn">from</span> <span class="nn">sawtooth.exceptions</span> <span class="k">import</span> <span class="n">ClientException</span>
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PermissionedValidatorRegistryClient"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.admin_sub.permissioned_validator_registry.html#sawtooth.cli.admin_sub.permissioned_validator_registry.PermissionedValidatorRegistryClient">[docs]</a><span class="k">class</span> <span class="nc">PermissionedValidatorRegistryClient</span><span class="p">(</span><span class="n">SawtoothClient</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">keyfile</span><span class="p">,</span>
+                 <span class="n">base_url</span><span class="o">=</span><span class="s1">&#39;http://localhost:8800&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PermissionedValidatorRegistryClient</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">base_url</span><span class="o">=</span><span class="n">base_url</span><span class="p">,</span>
+            <span class="n">store_name</span><span class="o">=</span><span class="s1">&#39;PermissionedValidatorRegistryTransaction&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;PermissionedValidatorRegistryClient&#39;</span><span class="p">,</span>
+            <span class="n">txntype_name</span><span class="o">=</span><span class="s1">&#39;/PermissionedValidatorRegistryTransaction&#39;</span><span class="p">,</span>
+            <span class="n">msgtype_name</span><span class="o">=</span><span class="s1">&#39;/ledger.transaction.PermissionedValidatorRegistry/&#39;</span> <span class="o">+</span>
+                         <span class="s1">&#39;Transaction&#39;</span><span class="p">,</span>
+            <span class="n">keyfile</span><span class="o">=</span><span class="n">keyfile</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PermissionedValidatorRegistryClient.get_validator_list"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.admin_sub.permissioned_validator_registry.html#sawtooth.cli.admin_sub.permissioned_validator_registry.PermissionedValidatorRegistryClient.get_validator_list">[docs]</a>    <span class="k">def</span> <span class="nf">get_validator_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the endpoint list from the validator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            N/A</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of endpoints.  Each endpoint is an OrderedDict of values</span>
+<span class="sd">            from EndpointRegistryTransaction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">validator</span> <span class="k">for</span> <span class="n">validator</span> <span class="ow">in</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_all_store_objects</span><span class="p">()</span><span class="o">.</span><span class="n">itervalues</span><span class="p">()]</span></div>
+
+<div class="viewcode-block" id="PermissionedValidatorRegistryClient.send_permissioned_validator_registry_txn"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.admin_sub.permissioned_validator_registry.html#sawtooth.cli.admin_sub.permissioned_validator_registry.PermissionedValidatorRegistryClient.send_permissioned_validator_registry_txn">[docs]</a>    <span class="k">def</span> <span class="nf">send_permissioned_validator_registry_txn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This sets up the same defaults as the Transaction so when</span>
+<span class="sd">        signing happens in sendtxn, the same payload is signed.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            update: dict The data associated with the Xo data model</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            txnid: str The txnid associated with the transaction</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sendtxn</span><span class="p">(</span>
+            <span class="s1">&#39;/PermissionedValidatorRegistryTransaction&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;/ledger.transaction.PermissionedValidatorRegistry/Transaction&#39;</span><span class="p">,</span>
+            <span class="n">update</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="add_validator_parser"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.admin_sub.permissioned_validator_registry.html#sawtooth.cli.admin_sub.permissioned_validator_registry.add_validator_parser">[docs]</a><span class="k">def</span> <span class="nf">add_validator_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">):</span>
+
+    <span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">        details:</span>
+<span class="s1">          --config accepts a comma-separated list.</span>
+<span class="s1">          alternatively, multiple --config options</span>
+<span class="s1">          can be specified</span>
+<span class="s1">        &#39;&#39;&#39;</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;validator-registry&#39;</span><span class="p">,</span> <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--config&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;config files to load&#39;</span><span class="p">,</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;append&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--conf-dir&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;name of the config directory&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--url&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;the URL to the validator&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--keyfile&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Name of the key file&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--whitelist&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Name of the whitelist file&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="do_permissioned_validator_registry"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.admin_sub.permissioned_validator_registry.html#sawtooth.cli.admin_sub.permissioned_validator_registry.do_permissioned_validator_registry">[docs]</a><span class="k">def</span> <span class="nf">do_permissioned_validator_registry</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+
+    <span class="n">validator_url</span> <span class="o">=</span> <span class="s1">&#39;http://localhost:8800&#39;</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">url</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">validator_url</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">url</span>
+    <span class="n">client</span> <span class="o">=</span>\
+        <span class="n">PermissionedValidatorRegistryClient</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">keyfile</span><span class="p">,</span>
+                                            <span class="n">base_url</span><span class="o">=</span><span class="n">validator_url</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">whitelist</span><span class="p">)</span> <span class="k">as</span> <span class="n">whitelist_fd</span><span class="p">:</span>
+            <span class="n">permissioned_validators</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">whitelist_fd</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ClientException</span><span class="p">(</span><span class="s1">&#39;IOError: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)))</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">whitelist</span> <span class="o">=</span> <span class="n">permissioned_validators</span><span class="p">[</span><span class="s2">&quot;WhitelistOfPermissionedValidators&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="s1">&#39;WhitelistName&#39;</span> <span class="ow">in</span> <span class="n">whitelist</span><span class="p">:</span>
+        <span class="n">whitelist_name</span> <span class="o">=</span> <span class="n">whitelist</span><span class="p">[</span><span class="s1">&#39;WhitelistName&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ClientException</span><span class="p">(</span><span class="s1">&#39;No WhitelistName&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s1">&#39;PermissionedValidatorPublicKeys&#39;</span> <span class="ow">in</span> <span class="n">whitelist</span><span class="p">:</span>
+        <span class="n">permissioned_public_keys</span> <span class="o">=</span>\
+            <span class="n">whitelist</span><span class="p">[</span><span class="s1">&#39;PermissionedValidatorPublicKeys&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="s1">&#39;PermissionedValidatorAddrs&#39;</span> <span class="ow">in</span> <span class="n">whitelist</span><span class="p">:</span>
+        <span class="n">permissioned_addrs</span> <span class="o">=</span> <span class="n">whitelist</span><span class="p">[</span><span class="s1">&#39;PermissionedValidatorAddrs&#39;</span><span class="p">]</span>
+
+    <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;whitelist_name&#39;</span><span class="p">:</span> <span class="n">whitelist_name</span><span class="p">,</span>
+        <span class="s1">&#39;verb&#39;</span><span class="p">:</span> <span class="s1">&#39;reg&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;permissioned_public_keys&#39;</span><span class="p">:</span> <span class="n">permissioned_public_keys</span><span class="p">,</span>
+        <span class="s1">&#39;permissioned_addrs&#39;</span><span class="p">:</span> <span class="n">permissioned_addrs</span>
+    <span class="p">}</span>
+    <span class="n">result</span><span class="p">[</span><span class="s1">&#39;Update&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">update</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">send_permissioned_validator_registry_txn</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="do_validator_registry"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.admin_sub.permissioned_validator_registry.html#sawtooth.cli.admin_sub.permissioned_validator_registry.do_validator_registry">[docs]</a><span class="k">def</span> <span class="nf">do_validator_registry</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">do_permissioned_validator_registry</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="list_validator_registry"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.admin_sub.permissioned_validator_registry.html#sawtooth.cli.admin_sub.permissioned_validator_registry.list_validator_registry">[docs]</a><span class="k">def</span> <span class="nf">list_validator_registry</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">validator_url</span> <span class="o">=</span> <span class="s1">&#39;http://localhost:8800&#39;</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">url</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">validator_url</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">url</span>
+    <span class="n">client</span> <span class="o">=</span>\
+        <span class="n">PermissionedValidatorRegistryClient</span><span class="p">(</span><span class="n">keyfile</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">keyfile</span><span class="p">,</span>
+                                            <span class="n">base_url</span><span class="o">=</span><span class="n">validator_url</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pretty_print_dict</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">get_validator_list</span><span class="p">()))</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

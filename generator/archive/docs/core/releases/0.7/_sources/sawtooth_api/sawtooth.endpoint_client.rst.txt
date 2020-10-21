@@ -1,0 +1,7 @@
+sawtooth\.endpoint\_client module
+=================================
+
+.. automodule:: sawtooth.endpoint_client
+    :members:
+    :undoc-members:
+    :show-inheritance:

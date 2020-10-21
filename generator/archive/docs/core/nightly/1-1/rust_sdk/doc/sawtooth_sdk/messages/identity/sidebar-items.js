@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Policy_EntryType",""]],"fn":[["file_descriptor_proto",""]],"struct":[["Policy","Generated files are compatible only with the same version of protobuf runtime."],["PolicyList",""],["Policy_Entry",""],["Role",""],["RoleList",""]]});

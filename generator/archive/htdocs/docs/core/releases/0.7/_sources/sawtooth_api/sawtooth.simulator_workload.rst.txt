@@ -1,0 +1,7 @@
+sawtooth\.simulator\_workload module
+====================================
+
+.. automodule:: sawtooth.simulator_workload
+    :members:
+    :undoc-members:
+    :show-inheritance:

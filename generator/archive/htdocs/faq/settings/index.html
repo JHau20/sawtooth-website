@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+  <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<head>
+	<meta charset="utf-8">
+	<title>Appendix: Sawtooth Settings | Hyperledger Sawtooth</title>
+	<meta name="description" content="An enterprise-grade solution for distributed ledgers.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="0.0.0.0/faq/settings/">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Hyperledger Sawtooth" href="0.0.0.0/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+
+	<!-- Google Analytics
+	-->
+</head>
+
+  <body>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">Hyperledger Sawtooth</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+                        
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/release/">
+					Releases
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/docs/">
+					Docs
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/faq/">
+					FAQ
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/community/">
+					Community
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/contact/">
+					Contact
+				</a>
+			</li>
+			
+			
+			<li>
+				<a class="page-link" href="/examples">
+					Examples
+				</a>
+			</li>
+			<!-- Social icons from Font Awesome, if enabled -->
+			<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/hyperledger/sawtooth-core" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/\%23HyperledgerSawtooth" title="Follow on Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Appendix: Sawtooth Settings</h1>
+  </header>
+  <section class="post-content"><p class="mininav"><a class="reference external" href="/faq/prefixes/">PREVIOUS</a> <a class="reference external" href="/faq/">FAQ</a> <a class="reference external" href="/faq/videos/">NEXT</a></p>
+<p>This is an unofficial list of some Transaction Family (TF) settings.
+There is no central registry, most or all of these can be found on github.</p>
+<p>The following are some Sawtooth settings.
+Since Sawtooth settings are extensible and include transaction family-specific settings, this list is incomplete.</p>
+<ul class="simple">
+<li>You can list existing settings with the
+<tt class="docutils literal">sawtooth settings list <span class="pre">--url</span> <span class="pre">http://localhost:8008</span></tt> command.
+For options, append <tt class="docutils literal">help</tt> to the command.</li>
+<li>You can set a setting with the <tt class="docutils literal">sawset proposal create <span class="pre">--url</span> <span class="pre">http://localhost:8008</span></tt> command.  For example,
+<tt class="docutils literal">sawset proposal create <span class="pre">--url</span> <span class="pre">http://localhost:8008</span> <span class="pre">--key</span> /etc/sawtooth/keys/validator.priv sawtooth.publisher.max_batches_per_block=200</tt></li>
+<li>Some baseline settings are documented at <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/transaction_family_specifications/settings_transaction_family.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/transaction_family_specifications/settings_transaction_family.html</a></li>
+<li>Transactor settings are documented at <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/configuring_permissions.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/configuring_permissions.html</a>
+and at <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/transaction_family_specifications/settings_transaction_family.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/transaction_family_specifications/settings_transaction_family.html</a></li>
+<li>PoET settings are documented at <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/configure_sgx.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/configure_sgx.html</a></li>
+<li>Validator settings are documented at <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/architecture/injecting_batches_block_validation_rules.html#on-chain-validation-rules">https://sawtooth.hyperledger.org/docs/core/nightly/master/architecture/injecting_batches_block_validation_rules.html#on-chain-validation-rules</a>
+and <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/architecture/injecting_batches_block_validation_rules.html#on-chain-configuration">https://sawtooth.hyperledger.org/docs/core/nightly/master/architecture/injecting_batches_block_validation_rules.html#on-chain-configuration</a></li>
+</ul>
+<dl class="docutils">
+<dt>sawtooth.config.authorization_type</dt>
+<dd>Example setting--never used.  To set authorization type, use command line option <tt class="docutils literal"><span class="pre">sawtooth-validator</span> <span class="pre">--network-auth</span> {trust|challenge}</tt></dd>
+<dt>sawtooth.consensus.algorithm.name</dt>
+<dd>Pluggable consensus algorithm name. These include <tt class="docutils literal">PoET</tt>, <tt class="docutils literal">Devmode</tt>, <tt class="docutils literal">raft</tt>, and <tt class="docutils literal">pbft</tt>.  The default is <tt class="docutils literal">devmode</tt> for Sawtooth 1.1 or earlier, with no default for the (unreleased) nightly build.</dd>
+<dt>sawtooth.consensus.algorithm.version</dt>
+<dd>Consensus algorithm version. Currently 0.1 for PoET, Devmode, PBFT, and Raft.</dd>
+<dt>sawtooth.consensus.block_validation_rules</dt>
+<dd>Lists validation rules to use in deciding what blocks to add to the blockchain.
+See <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/architecture/injecting_batches_block_validation_rules.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/architecture/injecting_batches_block_validation_rules.html</a></dd>
+<dt>sawtooth.consensus.max_wait_time</dt>
+<dd>Maximum devmode consensus wait time, in seconds</dd>
+<dt>sawtooth.consensus.min_wait_time</dt>
+<dd>Minimum devmode consensus wait time, in seconds</dd>
+<dt>sawtooth.consensus.pbft.members</dt>
+<dd><p class="first">JSON list of public keys belonging to each node that is a member of the PBFT
+network. Only required PBFT setting.
+Key is from <tt class="docutils literal">/etc/sawtooth/keys/validator.pub</tt> .
+Example:
+<tt class="docutils literal"><span class="pre">[&quot;0276f8fed116837eb7646f800e2dad6d13ad707055923e49df08f47a963547b631&quot;,\</span>
+&quot;035d8d519a200cdb8085c62d6fb9f2678cf71cbde738101d61c4c8c2e9f2919aa&quot;]</tt></p>
+<p class="last">For details on this and other PBFT settings, see
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-pbft/blob/master/src/config.rs">https://github.com/hyperledger/sawtooth-pbft/blob/master/src/config.rs</a></p>
+</dd>
+<dt>sawtooth.consensus.pbft.block_publishing_delay</dt>
+<dd>How often to try to publish a block. Optional, default 1000 ms.</dd>
+<dt>sawtooth.consensus.pbft.idle_timeout</dt>
+<dd>How long to wait for the next (BlockNew + PrePrepare) before determining
+primary is faulty. Must be longer than block_publishing_delay.
+Optional, default 30000 ms</dd>
+<dt>sawtooth.consensus.pbft.commit_timeout</dt>
+<dd>How long to wait (after Pre-Preparing) for the node to commit the block
+before starting a view change
+Optional, default 10000 ms</dd>
+<dt>sawtooth.consensus.pbft.view_change_duration</dt>
+<dd>How long to wait for a valid <tt class="docutils literal">NewView</tt> message before starting the next
+view change. If a node on view v starts a change to view (v + n), the
+timeout before starting a new change to view (v + n + 1) will be
+(n * view_change_duration)
+Optional, default 5000 ms</dd>
+<dt>sawtooth.consensus.pbft.forced_view_change_interval</dt>
+<dd>How many blocks to commit before forcing a view change for fairness
+Optional, default 100 blocks</dd>
+<dt>sawtooth.consensus.raft.election_tick</dt>
+<dd>RAFT consensus election tick, in seconds. E.g., 1500</dd>
+<dt>sawtooth.consensus.raft.heartbeat_tick</dt>
+<dd>RAFT consensus heartbeat tick, in seconds. E.g., 150</dd>
+<dt>sawtooth.consensus.raft.peers</dt>
+<dd>JSON list of each peer node's public key. Only required RAFT setting.
+Key is from <tt class="docutils literal">/etc/sawtooth/keys/validator.pub</tt> .
+Example:
+<tt class="docutils literal"><span class="pre">[&quot;0276f8fed116837eb7646f800e2dad6d13ad707055923e49df08f47a963547b631&quot;,\</span>
+&quot;035d8d519a200cdb8085c62d6fb9f2678cf71cbde738101d61c4c8c2e9f2919aa&quot;]</tt></dd>
+<dt>sawtooth.consensus.raft.period</dt>
+<dd>RAFT consensus period, in seconds. E.g., 3. Higher settings cause larger blocks, small settings have faster performance with smaller, quicker block publication, but causes more network traffic.</dd>
+<dt>sawtooth.consensus.valid_block_publishers</dt>
+<dd>List of public keys for allowed block publishers. For devmode</dd>
+<dt>sawtooth.gossip.time_to_live</dt>
+<dd>Expiration time for the Gossip node communication protocol</dd>
+<dt>sawtooth.identity.allowed_keys</dt>
+<dd>List of keys allowed to make identity transactions to the identity TP</dd>
+<dt>sawtooth.poet.enclave_module_name</dt>
+<dd>Python module name implementing the PoET enclave.
+Set to <tt class="docutils literal">sawtooth_poet_sgx.poet_enclave_sgx.poet_enclave</tt></dd>
+<dt>sawtooth.poet.initial_wait_time</dt>
+<dd>For C Test: initial time to wait in seconds before proposing a block (e.g., 25; default is 3000)</dd>
+<dt>sawtooth.poet.block_claim_delay</dt>
+<dd>For C Test: block claim delay in blocks.
+Set to 1 to prevent most reasonable attacks.
+Set to 2 or 3 if you want more aggressive protection. Default is 1.</dd>
+<dt>sawtooth.poet.key_block_claim_limit</dt>
+<dd>For K Test: maximum number of blocks a validator may claim with a PoET keypair before it needs to refresh its signup information.
+I recommend bumping up so each key is good for 100000 blocks.
+A big number reduces the likelihood that validator keys will expire simultaneously and deadlock the network. Default is 250</dd>
+<dt>sawtooth.poet.population_estimate_sample_size</dt>
+<dd>Sample size, in blocks, to compute the local mean wait time (default 50).
+The local mean wait time multiplied by random_float(0,1) yields the PoET duration time.
+For production, we recommend 500 to get stable population estimates. Most enterprise networks have stable populations and so a long sample length is preferable.</dd>
+<dt>sawtooth.poet.report_public_key_pem</dt>
+<dd>Public key used by Validator Registry TP to verify attestation reports.
+From <tt class="docutils literal">/etc/sawtooth/ias_rk_pub.pem</tt> or (for PoET CFT) <tt class="docutils literal">/etc/sawtooth/simulator_rk_pub.pem</tt></dd>
+<dt>sawtooth.poet.target_wait_time</dt>
+<dd>Target time to wait in seconds before proposing a block (e.g., 5; default 20)</dd>
+<dt>sawtooth.poet.valid_enclave_basenames</dt>
+<dd>Adds the enclave basename for your enclave to the blockchain for the validator registry transaction processor to use to check signup information.
+From <tt class="docutils literal">poet enclave <span class="pre">--enclave-module</span> sgx basename</tt></dd>
+<dt>sawtooth.poet.valid_enclave_measurements</dt>
+<dd>Adds the enclave measurement for your enclave to the blockchain for the validator registry transaction processor to use to check signup information.
+From <tt class="docutils literal">poet enclave <span class="pre">--enclave-module</span> sgx measurement</tt> or (for PoET CFT) <tt class="docutils literal">poet enclave measurement</tt></dd>
+<dt>sawtooth.poet.ztest_minimum_win_count</dt>
+<dd>For Z Test: minimum win count, to test a node is not winning too frequently.
+For test networks, disable by setting to 999999999, which gives you several decades before the Z test kicks in (16 years * 5 validators &#64; 30 seconds/block). This test is meant to catch rogue validators who have broken their enclave and are publishing too frequently.  The Z Test doesn't work on small networks because all validators publish often</dd>
+<dt>sawtooth.publisher.max_batches_per_block</dt>
+<dd>Maximum batches allowed per block (e.g., 100)</dd>
+<dt>sawtooth.settings.vote.approval_threshold</dt>
+<dd>Minimum number of votes required to accept or reject a proposal (default 1)</dd>
+<dt>sawtooth.settings.vote.authorized_keys</dt>
+<dd>List of public keys for authorized voters for on-chain settings.
+The initial setting is in the Genesis Block, Block 0</dd>
+<dt>sawtooth.settings.vote.proposals</dt>
+<dd>List of proposals to make changes to settings (base64-encoded <tt class="docutils literal">SettingCandidates</tt> protobuf)</dd>
+<dt>sawtooth.swa.administrators</dt>
+<dd>List of public keys for authorized administrators to create, change, or delete Sabre contract and namespace registries.</dd>
+<dt>sawtooth.validator.batch_injectors</dt>
+<dd>Comma-separated list of batch injectors to load.
+Parsed by validator at beginning of block publishing for each block</dd>
+<dt>sawtooth.validator.block_validation_rules</dt>
+<dd>On-chain validation rules; enforced by the block validator</dd>
+<dt>sawtooth.validator.max_transactions_per_block</dt>
+<dd>Maximum transactions allowed per block</dd>
+<dt>sawtooth.validator.transaction_families</dt>
+<dd>List of permitted transaction families.
+If not set, all transaction families are permitted.
+Example setting:
+<tt class="docutils literal"><span class="pre">[{&quot;family&quot;:&quot;sawtooth_settings&quot;,</span> <span class="pre">&quot;version&quot;:&quot;1.0&quot;},</span> <span class="pre">{&quot;family&quot;:&quot;xo&quot;,</span> <span class="pre">&quot;version&quot;:&quot;1.0&quot;}]</span></tt>
+<em>Dan's ProTip</em>: <tt class="docutils literal">sawtooth_settings</tt> is a required TF. <tt class="docutils literal">sawtooth_validator_registry</tt> is required if you use PoET.</dd>
+<dt>transactor</dt>
+<dd>Public keys of authorized signers (of any kind, batch or transaction)</dd>
+<dt>transactor.batch_signer</dt>
+<dd>Public keys of authorized batch signers</dd>
+<dt>transactor.transaction_signer</dt>
+<dd>Public keys of authorized transaction signers</dd>
+<dt>transactor.transaction_signer.&lt;transaction family name&gt;</dt>
+<dd>Public keys of authorized transaction signers for a transaction processor.
+For a partial list of transaction family names,
+see <a class="reference external" href="https://github.com/danintel/sawtooth-faq/blob/master/prefixes.rst">https://github.com/danintel/sawtooth-faq/blob/master/prefixes.rst</a></dd>
+<dt>transactor.transaction_signer.intkey</dt>
+<dd>Public keys of authorized intkey TF signers</dd>
+<dt>transactor.transaction_signer.sawtooth_identity</dt>
+<dd>Public keys of authorized sawtooth_identity TF signers</dd>
+<dt>transactor.transaction_signer.settings</dt>
+<dd>Public keys of authorized settings TF signers</dd>
+<dt>transactor.transaction_signer.validator_registry</dt>
+<dd>Public keys of authorized validator_registry TF signers</dd>
+<dt>transactor.transaction_signer.xo</dt>
+<dd>Public keys of authorized xo TF signers</dd>
+</dl>
+<p class="mininav"><a class="reference external" href="/faq/prefixes/">PREVIOUS</a> <a class="reference external" href="/faq/">FAQ</a> <a class="reference external" href="/faq/videos/">NEXT</a></p>
+<p>© Copyright 2018, Intel Corporation.</p>
+
+</section>
+</article>
+
+    </div>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text"><p style="font-size: 1.5em;">
+  Hyperledger Sawtooth
+</p> <p>
+  <a href="/" title="Home"><span class="links">Home</span></a>
+  &bull;
+  <a href="/about/" title="About Sawtooth"><span class="links">About</span></a>
+  &bull;
+  <a href="/release/" title="Releases"><span class="links">Releases</span></a>
+  &bull;
+  <a href="/docs/" title="Documentation"><span class="links">Docs</span></a>
+  &bull;
+  <a href="/faq/" title="FAQ"><span class="links">FAQ</span></a>
+  &bull;
+  <a href="/community/" title="Community"><span class="links">Community</span></a>
+  &bull;
+  <a href="/contact/" title="Contact"><span class="links">Contact</span></a>
+</p> <p>
+  Find us: &nbsp;
+  <a href="https://github.com/hyperledger/sawtooth-core/" target="_blank" title="GitHub"><span  class="links">GitHub</span></a>
+  &bull;
+  <a href="https://chat.hyperledger.org/channel/sawtooth" target="_blank" title="#sawtooth chat channel"">Rocket.Chat</a>
+  &bull;
+  <a href="https://twitter.com/search?q=%23HyperledgerSawtooth" target="_blank" title="#sawtooth chat channel"">Twitter</a>
+</p> <p>
+  Examples: &nbsp;
+  <a href="/examples/seafood.html" target="_blank" title="Seafood Supply Chain Traceability">Seafood Supply Chain Traceability</a>
+  &bull;
+  <a href="/examples/bond.html" target="_blank" title="Bond Asset Settlement">Bond Asset Settlement</a>
+  &bull;
+  <a href="/examples/marketplace.html" target="_blank" title="Marketplace Digital Asset Exchange">Marketplace Digital Asset Exchange</a>
+</p> <p>
+  Linux Foundation: &nbsp;
+  <a href="http://www.linuxfoundation.org/privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+  &bull;
+  <a href="http://www.linuxfoundation.org/terms" target="_blank" title="Terms of Service">Terms of Service</a>
+</p> <p>
+  <small class="copyright">Copyright &copy; 2015-2019 contributors to Hyperledger Sawtooth</small>
+</p>
+</p>
+</footer>
+
+
+  </body>
+</html>

@@ -1,0 +1,41 @@
+I"		<p>Hyperledger Sawtooth is an enterprise solution for building, deploying, and
+running distributed ledgers (also called blockchains). It provides an extremely
+modular and flexible platform for implementing transaction-based updates to
+shared state between untrusted parties coordinated by consensus algorithms.</p>
+
+<h1 id="documentation">Documentation</h1>
+
+<p>Documentation for how to run and extend Sawtooth is available here:
+<a href="https://sawtooth.hyperledger.org/docs/">https://sawtooth.hyperledger.org/docs/</a></p>
+
+<p>Hyperledger Sawtooth Core Developers Setup Guide can be found here:
+<a href="https://github.com/hyperledger/sawtooth-core/blob/master/BUILD.md">BUILD.md</a></p>
+
+<p>Running examples of Sawtooth blockchains can be found here:
+<a href="https://sawtooth.hyperledger.org/examples/">https://sawtooth.hyperledger.org/examples/</a></p>
+
+<h1 id="project-status">Project Status</h1>
+
+<p>This project is an <em>active</em> Hyperledger project. It was proposed to the
+community and documented <a href="https://docs.google.com/document/d/1j7YcGLJH6LkzvWdOYFIt2kpkVlLEmILErXL6t-Ky2zU">here</a>.
+Information on what <em>active</em> entails can be found in the
+<a href="https://wiki.hyperledger.org/display/HYP/Project+Lifecycle">Hyperledger Project Lifecycle document</a>.</p>
+
+<h1 id="license">License</h1>
+
+<p>Hyperledger Sawtooth software is licensed under the
+<a href="https://github.com/hyperledger/sawtooth-core/blob/master/LICENSE">Apache License Version 2.0</a>
+software license.</p>
+
+<p>Hyperledger Sawtooth documentation in the
+<a href="https://github.com/hyperledger/sawtooth-core/blob/master/docs">docs</a>
+subdirectory is licensed under a Creative Commons Attribution 4.0 International
+License.  You may obtain a copy of the license at:
+<a href="http://creativecommons.org/licenses/by/4.0/">http://creativecommons.org/licenses/by/4.0/</a>.</p>
+
+<p>Portions of this site were generated with <a href="http://jekyllrb.com">Jekyll</a> using the
+<a href="https://github.com/rohanchandra/type-theme">Type Theme</a>. Both are used under the
+<a href="https://github.com/hyperledger/sawtooth-website/blob/master/generator/source/LICENSE">MIT Licence</a></p>
+
+<p><img src="https://github.com/hyperledger/sawtooth-core/raw/master/images/rookies16-small.png" alt="Open Source Award Badge" /></p>
+:ET

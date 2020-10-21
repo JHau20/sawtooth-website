@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>object-type: receipt &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../index.html"/>
+        <link rel="up" title="Object Model" href="../object_model.html"/>
+        <link rel="next" title="object-type: settlement" href="settlement.html"/>
+        <link rel="prev" title="object-type: quote" href="quote.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../bond_family_guide.html">Bond Family Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../users_guide.html">Sawtooth Lake Bond Family User&#8217;s Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sysadmin_guide.html">Sawtooth Lake Bond Family System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../design.html">Sawtooth Lake Bond Family Design</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../updates.html">Transaction Updates</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../object_model.html">Object Model</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../object_model.html#objectstore">ObjectStore</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../object_model.html#common-attributes">Common Attributes</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../object_model.html#object-types">Object Types</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../libor.html">Sawtooth LIBOR</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bond_workload_simulator.html">Sawtooth Lake Bond Family Workload Simulator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../bond_family_guide.html">Bond Family Guide</a> &raquo;</li>
+        
+          <li><a href="../../design.html">Sawtooth Lake Bond Family Design</a> &raquo;</li>
+        
+          <li><a href="../object_model.html">Object Model</a> &raquo;</li>
+        
+      <li>object-type: receipt</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/bond_family_guide/design/object_model/receipt.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="object-type-receipt">
+<span id="id1"></span><h1>object-type: receipt<a class="headerlink" href="#object-type-receipt" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="docutils">
+<dt>object-id</dt>
+<dd>See <a class="reference internal" href="../object_model.html#common-attributes"><span class="std std-ref">Common Attributes</span></a>.</dd>
+<dt>object-type</dt>
+<dd>The string &#8216;receipt&#8217;.</dd>
+<dt>creator-id</dt>
+<dd>See <a class="reference internal" href="../object_model.html#common-attributes"><span class="std std-ref">Common Attributes</span></a>.</dd>
+<dt>bond-id</dt>
+<dd>The object-id of the bond for which this payment occurred.</dd>
+<dt>payee-id</dt>
+<dd>The object-id of the organization to which the payment was paid.</dd>
+<dt>payment-type</dt>
+<dd>One of &#8216;Coupon&#8217; or &#8216;Redemption&#8217;.</dd>
+<dt>coupon-date</dt>
+<dd><p class="first">The date of the coupon.  This is the date that it became due.</p>
+<p>Format: MM/DD/YYYY</p>
+<p class="last">Required if payment-type is &#8216;Coupon&#8217;.</p>
+</dd>
+<dt>amount</dt>
+<dd>The amount paid.</dd>
+<dt>timestamp</dt>
+<dd>The time that the receipt is created in relation to the current clock.</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="example-json">
+<h2>Example JSON<a class="headerlink" href="#example-json" title="Permalink to this headline">¶</a></h2>
+<p>Coupon example:</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;object-id&quot;</span> <span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;object-type&quot;</span> <span class="p">:</span> <span class="s2">&quot;receipt&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;creator-id&quot;</span><span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;bond-id&quot;</span><span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;payee-id&quot;</span><span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;payment-type&quot;</span><span class="p">:</span> <span class="s2">&quot;Coupon&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;coupon-date&quot;</span><span class="p">:</span> <span class="s2">&quot;10/03/2015&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;amount&quot;</span><span class="p">:</span> <span class="mf">100.00</span><span class="p">,</span>
+    <span class="nt">&quot;timestamp&quot;</span> <span class="p">:</span> <span class="mf">1469045984.965841</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Bond redemption example:</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;object-id&quot;</span> <span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;object-type&quot;</span> <span class="p">:</span> <span class="s2">&quot;holding&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;creator-id&quot;</span><span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;bond-id&quot;</span><span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;payee-id&quot;</span><span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;payment-type&quot;</span><span class="p">:</span> <span class="s2">&quot;Redemption&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;amount&quot;</span><span class="p">:</span> <span class="mf">1000.00</span><span class="p">,</span>
+    <span class="nt">&quot;timestamp&quot;</span> <span class="p">:</span> <span class="mf">1469045984.965841</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="related-transaction-updates">
+<h2>Related Transaction Updates<a class="headerlink" href="#related-transaction-updates" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="../updates/create_receipt.html#update-create-receipt"><span class="std std-ref">CreateReceipt</span></a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="settlement.html" class="btn btn-neutral float-right" title="object-type: settlement" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="quote.html" class="btn btn-neutral" title="object-type: quote" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

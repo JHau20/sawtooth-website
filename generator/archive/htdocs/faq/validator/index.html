@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+  <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<head>
+	<meta charset="utf-8">
+	<title>Sawtooth FAQ - Validator | Hyperledger Sawtooth</title>
+	<meta name="description" content="An enterprise-grade solution for distributed ledgers.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="0.0.0.0/faq/validator/">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Hyperledger Sawtooth" href="0.0.0.0/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+
+	<!-- Google Analytics
+	-->
+</head>
+
+  <body>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">Hyperledger Sawtooth</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+                        
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/release/">
+					Releases
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/docs/">
+					Docs
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/faq/">
+					FAQ
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/community/">
+					Community
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/contact/">
+					Contact
+				</a>
+			</li>
+			
+			
+			<li>
+				<a class="page-link" href="/examples">
+					Examples
+				</a>
+			</li>
+			<!-- Social icons from Font Awesome, if enabled -->
+			<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/hyperledger/sawtooth-core" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/\%23HyperledgerSawtooth" title="Follow on Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Sawtooth FAQ - Validator</h1>
+  </header>
+  <section class="post-content"><p class="mininav"><a class="reference external" href="/faq/transaction-processing/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/consensus/">NEXT</a></p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-validation-does-the-validator-do" id="id1">What validation does the validator do?</a></li>
+<li><a class="reference internal" href="#is-there-a-simple-example-to-show-how-to-run-sawtooth" id="id2">Is there a simple example to show how to run Sawtooth</a></li>
+<li><a class="reference internal" href="#is-there-an-example-for-a-multiple-node-sawtooth-network" id="id3">Is there an example for a multiple node Sawtooth Network?</a></li>
+<li><a class="reference internal" href="#how-do-i-add-a-node-to-a-sawtooth-network" id="id4">How do I add a node to a Sawtooth Network?</a></li>
+<li><a class="reference internal" href="#how-do-i-verify-the-validator-is-running-and-reachable" id="id5">How do I verify the Validator is running and reachable?</a></li>
+<li><a class="reference internal" href="#what-do-i-do-if-some-of-the-sawtooth-network-nodes-go-offline" id="id6">What do I do if some of the Sawtooth Network nodes go offline?</a></li>
+<li><a class="reference internal" href="#do-all-validators-need-to-run-the-same-transaction-processors" id="id7">Do all validators need to run the same transaction processors?</a></li>
+<li><a class="reference internal" href="#i-set-sawtooth-validator-transaction-families-as-follows-from-the-documentation-but-it-s-ignored" id="id8">I set sawtooth.validator.transaction_families as follows (from the documentation) but it's ignored</a></li>
+<li><a class="reference internal" href="#what-is-the-difference-between-sawtooth-validator-peers-list-and-sawtooth-validator-seeds-list" id="id9">What is the difference between <tt class="docutils literal"><span class="pre">sawtooth-validator</span> <span class="pre">--peers</span> {list}</tt> and <tt class="docutils literal"><span class="pre">sawtooth-validator</span> <span class="pre">--seeds</span> {list}</tt>?</a></li>
+<li><a class="reference internal" href="#for-static-peering-do-i-need-to-specify-all-validator-nodes-or-just-some-of-them" id="id10">For static peering do I need to specify all validator nodes, or just some of them?</a></li>
+<li><a class="reference internal" href="#what-files-does-sawtooth-use" id="id11">What files does Sawtooth use?</a></li>
+<li><a class="reference internal" href="#why-does-the-validator-create-large-1tbyte-files" id="id12">Why does the validator create large 1TByte files?</a></li>
+<li><a class="reference internal" href="#how-do-i-backup-a-large-sparse-file" id="id13">How do I backup a large sparse file?</a></li>
+<li><a class="reference internal" href="#what-does-lmdb-corruptederror-mdb-put-mdb-corrupted-located-page-was-wrong-type-mean" id="id14">What does <tt class="docutils literal">lmdb.CorruptedError: mdb_put: MDB_CORRUPTED: Located page was wrong type</tt> mean?</a></li>
+<li><a class="reference internal" href="#what-tcp-ports-does-sawtooth-use" id="id15">What TCP ports does Sawtooth use?</a></li>
+<li><a class="reference internal" href="#how-do-i-create-a-sawtooth-network" id="id16">How do I create a Sawtooth Network?</a></li>
+<li><a class="reference internal" href="#i-have-sawtooth-running-with-a-single-node-how-do-i-add-a-node" id="id17">I have Sawtooth running with a single node. How do I add a node?</a></li>
+<li><a class="reference internal" href="#can-i-run-two-validators-on-the-same-machine" id="id18">Can I run two validators on the same machine?</a></li>
+<li><a class="reference internal" href="#what-tcp-ports-should-i-restrict-or-allow-through-a-firewall" id="id19">What TCP ports should I restrict or allow through a firewall?</a></li>
+<li><a class="reference internal" href="#what-is-the-validator-parallel-scheduler" id="id20">What is the validator parallel scheduler?</a></li>
+<li><a class="reference internal" href="#what-are-the-verbosity-levels-of-the-various-sawtooth-clis" id="id21">What are the verbosity levels of the various Sawtooth CLIs?</a></li>
+<li><a class="reference internal" href="#after-a-failed-transaction-the-validator-stops-processing-further-transactions-what-can-i-do" id="id22">After a failed transaction, the validator stops processing further transactions. What can I do?</a></li>
+<li><a class="reference internal" href="#how-can-i-improve-sawtooth-performance" id="id23">How can I improve Sawtooth performance?</a></li>
+<li><a class="reference internal" href="#is-there-any-way-to-get-real-time-sawtooth-statistics" id="id24">Is there any way to get real-time Sawtooth statistics?</a></li>
+<li><a class="reference internal" href="#what-does-this-error-mean-debug-client-handlers-unable-to-find-entry-at-address" id="id25">What does this error mean: <tt class="docutils literal"><span class="pre">[...</span> DEBUG client_handlers] Unable to find entry at address ...</tt>?</a></li>
+<li><a class="reference internal" href="#what-does-this-error-mean-sawtooth-validator-error-cli-cannot-have-a-genesis-batch-file-and-an-existing-chain" id="id26">What does this error mean: <tt class="docutils literal"><span class="pre">sawtooth-validator[...</span> ERROR cli] Cannot have a genesis_batch_file and an existing chain</tt>?</a></li>
+<li><a class="reference internal" href="#i-get-this-error-when-testing-with-a-lot-of-validators-max-occupancy-was-not-provided-by-transaction-processor-using-default-max-occupancy-10" id="id27">I get this error when testing with a lot of validators: <tt class="docutils literal">Max occupancy was not provided by transaction processor: ... Using default max occupancy: 10</tt></a></li>
+<li><a class="reference internal" href="#i-start-the-validator-but-it-s-stuck-at-this-message-waiting-for-transaction-processor-sawtooth-settings-1-0" id="id28">I start the validator, but it's stuck at this message: <tt class="docutils literal">Waiting for transaction processor (sawtooth_settings, 1.0)</tt></a></li>
+<li><a class="reference internal" href="#can-i-change-sawtooth-settings-after-genesis" id="id29">Can I change Sawtooth settings after genesis?</a></li>
+<li><a class="reference internal" href="#why-am-i-getting-this-validator-message-reject-building-on-block-8c5ebbea-validator-is-claiming-blocks-too-frequently" id="id30">Why am I getting this validator message: <tt class="docutils literal">Reject building on block 8c5ebbea: Validator is claiming blocks too frequently.</tt></a></li>
+<li><a class="reference internal" href="#why-do-i-get-a-block-validation-failed-message-from-the-validator" id="id31">Why do I get a <tt class="docutils literal">Block validation failed</tt> message from the validator?</a></li>
+<li><a class="reference internal" href="#what-does-this-error-mean-network-communications-between-validators-will-not-be-authenticated-or-encrypted" id="id32">What does this error mean: <tt class="docutils literal">Network communications between validators will not be authenticated or encrypted.</tt></a></li>
+<li><a class="reference internal" href="#how-do-i-generate-the-network-public-key-and-network-private-key-in-validator-toml" id="id33">How do I generate the <tt class="docutils literal">network_public_key</tt> and <tt class="docutils literal">network_private_key</tt> in <tt class="docutils literal">validator.toml</tt> ?</a></li>
+<li><a class="reference internal" href="#what-does-this-warning-mean-network-key-pair-is-not-configured-network-communications-between-validators-will-not-be-authenticated-or-encrypted" id="id34">What does this warning mean: <tt class="docutils literal">Network key pair is not configured, Network communications between validators will not be authenticated or encrypted</tt> ?</a></li>
+<li><a class="reference internal" href="#i-am-seeing-only-one-transaction-per-block-in-my-blockchain-why" id="id35">I am seeing only one transaction per block in my blockchain. Why?</a></li>
+<li><a class="reference internal" href="#what-does-block-publishing-suspended-until-new-chain-head-arrives-mean" id="id36">What does <tt class="docutils literal">Block publishing suspended until new chain head arrives</tt> mean?</a></li>
+<li><a class="reference internal" href="#after-adding-100-000-blockchain-state-variables-i-run-out-of-memory-why" id="id37">After adding 100,000 blockchain state variables, I run out of memory. Why?</a></li>
+<li><a class="reference internal" href="#what-are-the-maximum-number-of-blocks-in-a-sawtooth-blockchain" id="id38">What are the maximum number of blocks in a Sawtooth blockchain?</a></li>
+</ul>
+</div>
+<div class="section" id="what-validation-does-the-validator-do">
+<h2><a class="toc-backref" href="#id1">What validation does the validator do?</a></h2>
+<p>At a high-level, the Validator verifies the following:</p>
+<ul class="simple">
+<li>Permission - Check the batch signing key against the allowed transactor permissions</li>
+<li>Signature - Check for integrity of the data</li>
+<li>Structure - Check structural composition of batches: duplicate transactions, extra transactions, etc.</li>
+</ul>
+</div>
+<div class="section" id="is-there-a-simple-example-to-show-how-to-run-sawtooth">
+<h2><a class="toc-backref" href="#id2">Is there a simple example to show how to run Sawtooth</a></h2>
+<p>See these instructions to install and use Sawtooth with Docker, Ubuntu Linux, or AWS:
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/installing_sawtooth.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/installing_sawtooth.html</a></p>
+</div>
+<div class="section" id="is-there-an-example-for-a-multiple-node-sawtooth-network">
+<h2><a class="toc-backref" href="#id3">Is there an example for a multiple node Sawtooth Network?</a></h2>
+<p>See these instructions for setting up a 5-node Sawtooth Network with PoET CFT Consensus using Docker:
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html</a></p>
+<p>Here is a gist with brief instructions for a 2-node network:
+<a class="reference external" href="https://gist.github.com/askmish/a23bde6f2e59e4256be8afe965a9166b">https://gist.github.com/askmish/a23bde6f2e59e4256be8afe965a9166b</a></p>
+<p>The important part about configuring a multi-node network is
+to create a genesis block only with the first validator. Do not create multiple genesis blocks with subsequent validators (that is do not re-run <tt class="docutils literal">sawset genesis</tt> and <tt class="docutils literal">sawadm genesis</tt>).</p>
+</div>
+<div class="section" id="how-do-i-add-a-node-to-a-sawtooth-network">
+<h2><a class="toc-backref" href="#id4">How do I add a node to a Sawtooth Network?</a></h2>
+<p>See
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html#ubuntu-add-a-node-to-the-single-node-environment">https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html#ubuntu-add-a-node-to-the-single-node-environment</a></p>
+</div>
+<div class="section" id="how-do-i-verify-the-validator-is-running-and-reachable">
+<h2><a class="toc-backref" href="#id5">How do I verify the Validator is running and reachable?</a></h2>
+<p>Run the following command from the Validator Docker container or from where the Validator is running:</p>
+</div>
+<div class="section" id="what-do-i-do-if-some-of-the-sawtooth-network-nodes-go-offline">
+<h2><a class="toc-backref" href="#id6">What do I do if some of the Sawtooth Network nodes go offline?</a></h2>
+<p>You can restart any failed nodes. They should rejoin the network and will then process all blocks that were added to the blockchain since the node went down. It will be busy during this initial phase, but will return to normal after that.</p>
+<pre class="code sh literal-block">
+curl http://localhost:8008/blocks
+</pre>
+<p>This verifies the REST API is available.</p>
+<p>From the Client Docker container run this:</p>
+<pre class="code sh literal-block">
+curl http://rest-api:8008/blocks
+</pre>
+<p>You should see a JSON response similar to this:</p>
+<pre class="literal-block">
+{
+  &quot;data&quot;: [
+    {
+      &quot;batches&quot;: [
+        {
+          &quot;header&quot;: {
+            &quot;signer_public_key&quot;: . . .
+</pre>
+</div>
+<div class="section" id="do-all-validators-need-to-run-the-same-transaction-processors">
+<h2><a class="toc-backref" href="#id7">Do all validators need to run the same transaction processors?</a></h2>
+<p>Yes. All validators must run all of the same transaction processors that are
+on the network. If a validator receives a transaction that it does not have a
+transaction processor for, the validator will wait until a transaction processor
+connects that can handle that transaction. That validator would fall behind the
+rest on the network while it waits. You can also limit which transactions are
+accepted on the network with the <tt class="docutils literal">sawtooth.validator.transaction_families</tt>
+setting. If that setting is not set, all transaction would be accepted.</p>
+</div>
+<div class="section" id="i-set-sawtooth-validator-transaction-families-as-follows-from-the-documentation-but-it-s-ignored">
+<h2><a class="toc-backref" href="#id8">I set sawtooth.validator.transaction_families as follows (from the documentation) but it's ignored</a></h2>
+<p>The sawtooth.validator.transaction_families setting is ignored using dev-mode consensus and does not need to be set.</p>
+</div>
+<div class="section" id="what-is-the-difference-between-sawtooth-validator-peers-list-and-sawtooth-validator-seeds-list">
+<h2><a class="toc-backref" href="#id9">What is the difference between <tt class="docutils literal"><span class="pre">sawtooth-validator</span> <span class="pre">--peers</span> {list}</tt> and <tt class="docutils literal"><span class="pre">sawtooth-validator</span> <span class="pre">--seeds</span> {list}</tt>?</a></h2>
+<p>There are two peering modes in sawtooth: static and dynamic. The static peering mode requires the <tt class="docutils literal"><span class="pre">--peers</span></tt> arg to connect to other peer validators. Whereas, in the dynamic peering mode the <tt class="docutils literal"><span class="pre">--peers</span></tt> if specified will be processed and then use <tt class="docutils literal"><span class="pre">--seeds</span></tt> for the initial connection to the validator network and to start topology build-out (discovery and connection to more peer validators).</p>
+</div>
+<div class="section" id="for-static-peering-do-i-need-to-specify-all-validator-nodes-or-just-some-of-them">
+<h2><a class="toc-backref" href="#id10">For static peering do I need to specify all validator nodes, or just some of them?</a></h2>
+<p>For static, you need to specify all nodes. I recommend dynamic peering where you don't need to specify all of them, just a good sampling (with --seeds). The rest will be discovered. All dynamic peers have to specified by at least one other node (and preferably multiple nodes).</p>
+</div>
+<div class="section" id="what-files-does-sawtooth-use">
+<h2><a class="toc-backref" href="#id11">What files does Sawtooth use?</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal">/var/lib/sawtooth/</tt></dt>
+<dd>contains the blockchain, Merkle tree, and transaction receipts</dd>
+<dt><tt class="docutils literal">/var/log/sawtooth/</tt></dt>
+<dd>contains log files</dd>
+<dt><tt class="docutils literal"><span class="pre">~/.sawtooth/keys/</span></tt></dt>
+<dd>contain one or more sets of user key pairs</dd>
+<dt><tt class="docutils literal">/etc/sawtooth/keys/</tt></dt>
+<dd>contain the validator key pair</dd>
+<dt><tt class="docutils literal">/etc/sawtooth/policy/</tt></dt>
+<dd>contains policy settings, if any</dd>
+<dt><tt class="docutils literal"><span class="pre">/var/lib/sawtooth-raft/</span></tt></dt>
+<dd>Optional Raft consensus-specific files.  Present only if you use Raft.  Directory can be changed with <tt class="docutils literal">$SAWTOOTH_RAFT_HOME</tt></dd>
+</dl>
+<p>If set these files are placed under directory <tt class="docutils literal">$SAWTOOTH_HOME</tt> (except files under your home directory, <tt class="docutils literal">~</tt> ). Detailed configuration information and examples for Sawtooth directories is at <tt class="docutils literal">/etc/sawtooth/path.toml.example</tt></p>
+</div>
+<div class="section" id="why-does-the-validator-create-large-1tbyte-files">
+<h2><a class="toc-backref" href="#id12">Why does the validator create large 1TByte files?</a></h2>
+<p>The large 1TByte files in <tt class="docutils literal">/var/lib/sawtooth/</tt> are &quot;sparse&quot; files, implemented with LMDB (Lightning Memory-mapped Database). They are random-access files with mostly empty blocks. They do not actually consume 1Tbyte of storage.</p>
+</div>
+<div class="section" id="how-do-i-backup-a-large-sparse-file">
+<h2><a class="toc-backref" href="#id13">How do I backup a large sparse file?</a></h2>
+<p>One method to backup it up is to use the <tt class="docutils literal">tar <span class="pre">-S</span></tt> option (sparse option). For example: <tt class="docutils literal">tar cSf <span class="pre">merkle-00.tar</span> <span class="pre">merkle-00.*</span></tt> . Some of the Linux file tools have similar options, such as <tt class="docutils literal">cp <span class="pre">--sparse</span></tt>.</p>
+<p>For LMDB databases, the database should be backed up when it is quiet (no updates). If the database is &quot;live&quot;, it's best to do a backup by dumping it to a file. That will avoid inconsistencies from backups during the middle of updates. Use <tt class="docutils literal">mdb_dump</tt> from package <tt class="docutils literal"><span class="pre">lmdb-utils</span></tt> . For example,
+<tt class="docutils literal">mdb_dump <span class="pre">-n</span> <span class="pre">/var/lib/sawtooth/block-00.lmdb</span> <span class="pre">&gt;block-00.lmdb.dump</span></tt>
+Use <tt class="docutils literal">mdb_load <span class="pre">-n</span> <span class="pre">-f</span> <span class="pre">block-00.lmdb.dump</span></tt> to restore the database.</p>
+</div>
+<div class="section" id="what-does-lmdb-corruptederror-mdb-put-mdb-corrupted-located-page-was-wrong-type-mean">
+<h2><a class="toc-backref" href="#id14">What does <tt class="docutils literal">lmdb.CorruptedError: mdb_put: MDB_CORRUPTED: Located page was wrong type</tt> mean?</a></h2>
+<p>The LMDB database, which stores the blockchain, is corrupted.
+The blockchain is backed-up automatically with multiple nodes.
+There are no published recovery tools, but you could clean out the data on the failed machine and restart and then allow the chain to be rebuilt from its peers.</p>
+</div>
+<div class="section" id="what-tcp-ports-does-sawtooth-use">
+<h2><a class="toc-backref" href="#id15">What TCP ports does Sawtooth use?</a></h2>
+<ul>
+<li><p class="first">4004 is used by the Validator component bus, which uses ZMQ. The validator listens to requests on this port from the REST API and from one or more transaction processors.
+This port can be closed to external hosts in a firewall configuration if all the transaction processors are on the same host as the validator (the usual case)</p>
+<p>Port 4004 is sometimes exported to port 4040 in Sawtooth Docker containers for the validator.</p>
+</li>
+<li><p class="first">8008 is used by the REST API, which connects the Client to the Validator.
+This port should be closed to external hosts in a firewall configuration if the client is always on the same host as a validator. This port is not encrypted.
+If the client connecting to the REST API is external to the host, I recommend placing a TLS/HTTPS proxy in front this port and adding authentication.</p>
+</li>
+<li><p class="first">8800 is used by the Validator network to communicate with other Validators.
+This port needs to be open to external hosts in a firewall configuration to communicate with peer validators. Uses ZMQ.</p>
+</li>
+<li><p class="first">5050 is used by the consensus engine (such as PoET or Raft).
+This port should be closed to external hosts in a firewall configuration. Uses ZMQ.</p>
+</li>
+<li><p class="first">3030 is used by the Seth TP (if you have Seth running).
+It is used to send JSON-RPC EVM requests and is not encrypted.
+This port should be blocked from external access because one can do admin operations from it.</p>
+</li>
+</ul>
+<p>Sawtooth does not use UDP ports (only TCP).</p>
+</div>
+<div class="section" id="how-do-i-create-a-sawtooth-network">
+<h2><a class="toc-backref" href="#id16">How do I create a Sawtooth Network?</a></h2>
+<p>See <em>Creating a Sawtooth Network</em> at
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html</a></p>
+<p>Create the genesis block only one time, on the first node, and configure one or more peer Validator nodes for each node.</p>
+</div>
+<div class="section" id="i-have-sawtooth-running-with-a-single-node-how-do-i-add-a-node">
+<h2><a class="toc-backref" href="#id17">I have Sawtooth running with a single node. How do I add a node?</a></h2>
+<p>You need to either start up the validator with information about the network peers using the <tt class="docutils literal"><span class="pre">sawtooth-validator</span> <span class="pre">--peers</span></tt> option or set <tt class="docutils literal">seeds</tt> or <tt class="docutils literal">peers</tt> in configuration file <tt class="docutils literal">/etc/sawtooth/validator.toml</tt>. Then restart the node.</p>
+</div>
+<div class="section" id="can-i-run-two-validators-on-the-same-machine">
+<h2><a class="toc-backref" href="#id18">Can I run two validators on the same machine?</a></h2>
+<p>Yes, but it is not recommended. You need to configure separate Sawtooth instances with different:</p>
+<ul>
+<li><p class="first">data, key, log, and policy directories (default values listed above).
+If <tt class="docutils literal">$SAWTOOTH_HOME</tt> is set, all these directories are under <tt class="docutils literal">$SAWTOOTH_HOME</tt>.
+It's not recommended, but you can also can also change the directories in <tt class="docutils literal">path.toml</tt>.
+For more information, see
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/configuring_sawtooth/path_configuration_file.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/configuring_sawtooth/path_configuration_file.html</a></p>
+</li>
+<li><p class="first">REST API TCP port (default 8008). Change in <tt class="docutils literal"><span class="pre">rest-api.toml</span></tt>. For details, see
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/configuring_sawtooth/rest_api_configuration_file.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/configuring_sawtooth/rest_api_configuration_file.html</a></p>
+</li>
+<li><p class="first">Validator TCP ports (default of 8800 for the peer network and 4004 for the validator components). Change with the <tt class="docutils literal">bind</tt> setting in <tt class="docutils literal">validator.toml</tt>.
+For details, see
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/configuring_sawtooth/">https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/configuring_sawtooth/</a>  validator_configuration_file.html</p>
+</li>
+<li><p class="first">Genesis block. This is important. As with validators on multiple machines (the usual case), it's important to create a genesis block only with the first validator. Do not create multiple genesis blocks with subsequent validators (that is do not run <tt class="docutils literal">sawset genesis</tt> and <tt class="docutils literal">sawadm genesis</tt>)</p>
+<p>Instead, consider setting up separate virtual machines (such as with VirtualBox) for each validator. This ensures isolation of files and ports for each Validator.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="what-tcp-ports-should-i-restrict-or-allow-through-a-firewall">
+<h2><a class="toc-backref" href="#id19">What TCP ports should I restrict or allow through a firewall?</a></h2>
+<ul class="simple">
+<li>TCP Port 4004 is used for internal validator / transaction processor communications. Restrict from outside use</li>
+<li>TCP Port 8008 is used by the REST API for validator / client communications. Restrict from outside use if the client resides on the host</li>
+<li>TCP Port 8080 is used to communicate between validator nodes. Allow</li>
+</ul>
+</div>
+<div class="section" id="what-is-the-validator-parallel-scheduler">
+<h2><a class="toc-backref" href="#id20">What is the validator parallel scheduler?</a></h2>
+<p>The validator has two schedulers--parallel and serial.
+The parallel scheduler gives a performance boost because it allows multiple transactions to be processed at the same time when the transaction inputs/outputs do not conflict.
+The scheduler is specified with the
+<tt class="docutils literal"><span class="pre">sawtooth-validator</span> <span class="pre">--scheduler</span> {parallel,serial}</tt> option.
+The current default is <tt class="docutils literal">serial</tt> for Sawtooth 1.1 and earlier and <tt class="docutils literal">parallel</tt> for the (unreleased) Sawtooth nightly build.
+For example:
+<tt class="docutils literal"><span class="pre">sawtooth-validator</span> <span class="pre">--scheduler</span> parallel <span class="pre">-vv</span></tt> .</p>
+</div>
+<div class="section" id="what-are-the-verbosity-levels-of-the-various-sawtooth-clis">
+<h2><a class="toc-backref" href="#id21">What are the verbosity levels of the various Sawtooth CLIs?</a></h2>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">-v</span></tt> means warning messages</li>
+<li><tt class="docutils literal"><span class="pre">-vv</span></tt> means information + warning messages</li>
+<li><tt class="docutils literal"><span class="pre">-vvv</span></tt> means debug + information + warning messages</li>
+</ul>
+</div>
+<div class="section" id="after-a-failed-transaction-the-validator-stops-processing-further-transactions-what-can-i-do">
+<h2><a class="toc-backref" href="#id22">After a failed transaction, the validator stops processing further transactions. What can I do?</a></h2>
+<p>You can run the validator in parallel processing mode.
+For a serial scheduler, a failed transaction will be retried and no further transactions can be processed until the blocked transaction is processed successfully. Parallel scheduling will cause non-dependent transactions to be scheduled irrespective of the failed transaction.</p>
+</div>
+<div class="section" id="how-can-i-improve-sawtooth-performance">
+<h2><a class="toc-backref" href="#id23">How can I improve Sawtooth performance?</a></h2>
+<ul class="simple">
+<li>First, for performance measurement or tuning, do not run the default &quot;dev mode&quot; consensus algorithm. Run another one, such as PoET SGX or PoET CFT. Dev mode is not for production use and excessive forks under heavy use degrades performance</li>
+<li>Run the validator in parallel mode, not serial mode</li>
+<li>Consider increasing the on-chain setting <tt class="docutils literal">sawtooth.publisher.max_batches_per_block</tt> . Try a value of 200 batches per block to start with. This and other on-chain settings can be changed on-the-fly without impacting older blocks.</li>
+<li>Run multiple transaction processors per validator node for the same transaction family. This is especially useful for TPs written in Python</li>
+<li>Batch multiple transactions together as much as possible in a Batch of transaction or a BatchList of multiple transactions (or both)</li>
+<li>Write the transaction processor in a thread-friendly programming language such as Rust or C++, not Python. Python is an interpretive language and therefore slower. It also suffers from the Global Interpreter Lock (GIL), which locks executing multiple threads to one thread at-a-time</li>
+<li>When fully stabilized, substitute PoET consensus with Raft consensus. Raft is CFT instead of BFT, but it should perform better in exchange for lower fault tolerance</li>
+<li>As you make changes, measure the impact with a performance tool such as Hyperledger Caliper</li>
+</ul>
+</div>
+<div class="section" id="is-there-any-way-to-get-real-time-sawtooth-statistics">
+<h2><a class="toc-backref" href="#id24">Is there any way to get real-time Sawtooth statistics?</a></h2>
+<p>Yes. Sawtooth has Telegraf/InfluxDB/Grafana to gather and display metrics.
+Install the packages and follow these instructions:
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/grafana_configuration.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/grafana_configuration.html</a></p>
+<p>Here is a Sawtooth Grafana screenshot: <a class="reference external" href="https://twitter.com/liedenavilla/status/1042792583221653504">https://twitter.com/liedenavilla/status/1042792583221653504</a></p>
+</div>
+<div class="section" id="what-does-this-error-mean-debug-client-handlers-unable-to-find-entry-at-address">
+<h2><a class="toc-backref" href="#id25">What does this error mean: <tt class="docutils literal"><span class="pre">[...</span> DEBUG client_handlers] Unable to find entry at address ...</tt>?</a></h2>
+<p>It means the address doesn't exist.
+I've seen this error when retrieving a value that should have been written, but was not written.
+The reason was because the transaction processor for the value was not running so the object at the address was never created.</p>
+</div>
+<div class="section" id="what-does-this-error-mean-sawtooth-validator-error-cli-cannot-have-a-genesis-batch-file-and-an-existing-chain">
+<h2><a class="toc-backref" href="#id26">What does this error mean: <tt class="docutils literal"><span class="pre">sawtooth-validator[...</span> ERROR cli] Cannot have a genesis_batch_file and an existing chain</tt>?</a></h2>
+<p>You tried to create a new genesis block when you did not need to (because there already is a genesis block). To solve, this remove file <tt class="docutils literal">/var/lib/sawtooth/genesis.batch.file</tt> and restart <tt class="docutils literal"><span class="pre">sawtooth-validator</span></tt> .</p>
+</div>
+<div class="section" id="i-get-this-error-when-testing-with-a-lot-of-validators-max-occupancy-was-not-provided-by-transaction-processor-using-default-max-occupancy-10">
+<h2><a class="toc-backref" href="#id27">I get this error when testing with a lot of validators: <tt class="docutils literal">Max occupancy was not provided by transaction processor: ... Using default max occupancy: 10</tt></a></h2>
+<p>You need to set the number of validators if it's over 10.
+For example, in <tt class="docutils literal">/etc/sawtooth/validator.toml</tt> set <tt class="docutils literal">maximum_peer_connectivity = 50</tt>
+See <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/configuring_sawtooth/validator_configuration_file.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/configuring_sawtooth/validator_configuration_file.html</a>
+You can also use the <cite>sawtooth-validator --maximum-peer-connectivity</cite>
+command line option.</p>
+</div>
+<div class="section" id="i-start-the-validator-but-it-s-stuck-at-this-message-waiting-for-transaction-processor-sawtooth-settings-1-0">
+<h2><a class="toc-backref" href="#id28">I start the validator, but it's stuck at this message: <tt class="docutils literal">Waiting for transaction processor (sawtooth_settings, 1.0)</tt></a></h2>
+<p>The Sawtooth Settings TP is mandatory for all Sawtooth nodes--even if you don't add or change any settings. You probably want to also start the TP for your desired application. To start the Settings TP, type: <tt class="docutils literal">sudo <span class="pre">-u</span> sawtooth <span class="pre">settings-tp</span> <span class="pre">-v</span></tt></p>
+</div>
+<div class="section" id="can-i-change-sawtooth-settings-after-genesis">
+<h2><a class="toc-backref" href="#id29">Can I change Sawtooth settings after genesis?</a></h2>
+<p>Yes, but you are limited to using the rule that is currently set for changing settings. This is handled by the Settings TP.</p>
+</div>
+<div class="section" id="why-am-i-getting-this-validator-message-reject-building-on-block-8c5ebbea-validator-is-claiming-blocks-too-frequently">
+<h2><a class="toc-backref" href="#id30">Why am I getting this validator message: <tt class="docutils literal">Reject building on block 8c5ebbea: Validator is claiming blocks too frequently.</tt></a></h2>
+<p>It is from the z-test, which is a defense-in-depth mechanism to catch validators that are publishing blocks with an improbable frequency. Unfortunately the defaults we chose for that statistical test aren't well suited for tiny networks (that feature is really intended for added security in large production networks).
+If you have only one validator, you are bound to fail the z-test eventually.
+Probably the best way to fix that in your test network is to restart it with some different z-test settings. This will effectively disable z-test:
+<tt class="docutils literal">sawtooth.poet.ztest_minimum_win_count = 999999999</tt></p>
+</div>
+<div class="section" id="why-do-i-get-a-block-validation-failed-message-from-the-validator">
+<h2><a class="toc-backref" href="#id31">Why do I get a <tt class="docutils literal">Block validation failed</tt> message from the validator?</a></h2>
+<p>Usually block validation fails because of something non-deterministic in the transaction processor. This is usually because of the serialization method, which is usually because someone used JSON (use something like Protobufs or CBOR instead). Other common sources of non-determinism are relying on system time in the transaction processor logic.</p>
+</div>
+<div class="section" id="what-does-this-error-mean-network-communications-between-validators-will-not-be-authenticated-or-encrypted">
+<h2><a class="toc-backref" href="#id32">What does this error mean: <tt class="docutils literal">Network communications between validators will not be authenticated or encrypted.</tt></a></h2>
+<p>It means you did not configure your <tt class="docutils literal">network_public_key</tt> and <tt class="docutils literal">network_private_key</tt> in <tt class="docutils literal">validator.toml</tt>.</p>
+</div>
+<div class="section" id="how-do-i-generate-the-network-public-key-and-network-private-key-in-validator-toml">
+<h2><a class="toc-backref" href="#id33">How do I generate the <tt class="docutils literal">network_public_key</tt> and <tt class="docutils literal">network_private_key</tt> in <tt class="docutils literal">validator.toml</tt> ?</a></h2>
+<p>These are the ZMQ message keys used to securely communicate with other nodes.</p>
+<p>If you've installed sawtooth already, python3 and python3-zmq would have been already installed and available in your system.
+Here's an example to create the keypair in Python:</p>
+<pre class="code python literal-block">
+<span class="keyword namespace">import</span> <span class="name namespace">zmq</span>
+<span class="punctuation">(</span><span class="name">public</span><span class="punctuation">,</span> <span class="name">secret</span><span class="punctuation">)</span> <span class="operator">=</span> <span class="name">zmq</span><span class="operator">.</span><span class="name">curve_keypair</span><span class="punctuation">()</span>
+<span class="name builtin">print</span><span class="punctuation">(</span><span class="literal string double">&quot;network_public_key =&quot;</span><span class="punctuation">,</span> <span class="name">public</span><span class="operator">.</span><span class="name">decode</span><span class="punctuation">(</span><span class="literal string double">&quot;utf-8&quot;</span><span class="punctuation">),</span>
+      <span class="literal string double">&quot;</span><span class="literal string escape">\n</span><span class="literal string double">network_private_key =&quot;</span><span class="punctuation">,</span> <span class="name">secret</span><span class="operator">.</span><span class="name">decode</span><span class="punctuation">(</span><span class="literal string double">&quot;utf-8&quot;</span><span class="punctuation">))</span>
+</pre>
+<p>Also, if you can use a compiled binary tool:</p>
+<pre class="code sh literal-block">
+$ sudo apt-get install g++ libzmq3-dev
+$ wget https://raw.githubusercontent.com/zeromq/libzmq/master/tools/curve_keygen.cpp
+$ g++ curve_keygen.cpp -o curve_keygen -lzmq
+$ ./curve_keygen
+</pre>
+<p>Copy the corresponding public key output to <tt class="docutils literal">network_public_key</tt> and the private key output to <tt class="docutils literal">network_private_key</tt> fields in <tt class="docutils literal">validator.toml</tt></p>
+</div>
+<div class="section" id="what-does-this-warning-mean-network-key-pair-is-not-configured-network-communications-between-validators-will-not-be-authenticated-or-encrypted">
+<h2><a class="toc-backref" href="#id34">What does this warning mean: <tt class="docutils literal">Network key pair is not configured, Network communications between validators will not be authenticated or encrypted</tt> ?</a></h2>
+<p>You did not configure the keypair for the network nodes.  For development purposes, that is OK.  For production, use create a network keypair and add to file <cite>validator.toml</cite>, as instructed in the question here about how to generate the <tt class="docutils literal">network_public_key</tt> and <tt class="docutils literal">network_private_key</tt> .</p>
+</div>
+<div class="section" id="i-am-seeing-only-one-transaction-per-block-in-my-blockchain-why">
+<h2><a class="toc-backref" href="#id35">I am seeing only one transaction per block in my blockchain. Why?</a></h2>
+<p>The Sawtooth Validator combines transaction batches when possible. If you are using dev mode consensus, it is producing blocks as fast as possible, which will typically only contain one transaction. You can simulate what would happen on a real network by setting min and max block times for devmode. If you set min to 10 and max to 20, it will include many more transactions per block. You can also combine transactions from your client by submitting multiple transactions in a batch.</p>
+</div>
+<div class="section" id="what-does-block-publishing-suspended-until-new-chain-head-arrives-mean">
+<h2><a class="toc-backref" href="#id36">What does <tt class="docutils literal">Block publishing suspended until new chain head arrives</tt> mean?</a></h2>
+<p>It means that a new block arrived and the receiving validator wants to stop creating the block it was working on until it finds the new chain head.</p>
+</div>
+<div class="section" id="after-adding-100-000-blockchain-state-variables-i-run-out-of-memory-why">
+<h2><a class="toc-backref" href="#id37">After adding 100,000 blockchain state variables, I run out of memory. Why?</a></h2>
+<p>Sawtooth stores the blockchain in a LMDB database at <tt class="docutils literal"><span class="pre">/var/lib/Sawtooth/block-00.lmdb</span></tt> . The LMDB database is a &quot;sparse&quot; file meaning no storage is allocated for the file until it is used (written to). The database should not run out of memory, as long as filesystem storage is available. The memory error could happen in Kubernetes or Docker or other virtual machine environments where there are no storage volumes mapped to the VM.</p>
+</div>
+<div class="section" id="what-are-the-maximum-number-of-blocks-in-a-sawtooth-blockchain">
+<h2><a class="toc-backref" href="#id38">What are the maximum number of blocks in a Sawtooth blockchain?</a></h2>
+<p>There is no limit, other than the available storage for a node.</p>
+<p class="mininav"><a class="reference external" href="/faq/transaction-processing/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/consensus/">NEXT</a></p>
+<p>© Copyright 2018, Intel Corporation.</p>
+</div>
+
+</section>
+</article>
+
+    </div>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text"><p style="font-size: 1.5em;">
+  Hyperledger Sawtooth
+</p> <p>
+  <a href="/" title="Home"><span class="links">Home</span></a>
+  &bull;
+  <a href="/about/" title="About Sawtooth"><span class="links">About</span></a>
+  &bull;
+  <a href="/release/" title="Releases"><span class="links">Releases</span></a>
+  &bull;
+  <a href="/docs/" title="Documentation"><span class="links">Docs</span></a>
+  &bull;
+  <a href="/faq/" title="FAQ"><span class="links">FAQ</span></a>
+  &bull;
+  <a href="/community/" title="Community"><span class="links">Community</span></a>
+  &bull;
+  <a href="/contact/" title="Contact"><span class="links">Contact</span></a>
+</p> <p>
+  Find us: &nbsp;
+  <a href="https://github.com/hyperledger/sawtooth-core/" target="_blank" title="GitHub"><span  class="links">GitHub</span></a>
+  &bull;
+  <a href="https://chat.hyperledger.org/channel/sawtooth" target="_blank" title="#sawtooth chat channel"">Rocket.Chat</a>
+  &bull;
+  <a href="https://twitter.com/search?q=%23HyperledgerSawtooth" target="_blank" title="#sawtooth chat channel"">Twitter</a>
+</p> <p>
+  Examples: &nbsp;
+  <a href="/examples/seafood.html" target="_blank" title="Seafood Supply Chain Traceability">Seafood Supply Chain Traceability</a>
+  &bull;
+  <a href="/examples/bond.html" target="_blank" title="Bond Asset Settlement">Bond Asset Settlement</a>
+  &bull;
+  <a href="/examples/marketplace.html" target="_blank" title="Marketplace Digital Asset Exchange">Marketplace Digital Asset Exchange</a>
+</p> <p>
+  Linux Foundation: &nbsp;
+  <a href="http://www.linuxfoundation.org/privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+  &bull;
+  <a href="http://www.linuxfoundation.org/terms" target="_blank" title="Terms of Service">Terms of Service</a>
+</p> <p>
+  <small class="copyright">Copyright &copy; 2015-2019 contributors to Hyperledger Sawtooth</small>
+</p>
+</p>
+</footer>
+
+
+  </body>
+</html>

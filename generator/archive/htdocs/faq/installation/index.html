@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+  <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<head>
+	<meta charset="utf-8">
+	<title>Sawtooth FAQ - Installation and Configuration | Hyperledger Sawtooth</title>
+	<meta name="description" content="An enterprise-grade solution for distributed ledgers.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="0.0.0.0/faq/installation/">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Hyperledger Sawtooth" href="0.0.0.0/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+
+	<!-- Google Analytics
+	-->
+</head>
+
+  <body>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">Hyperledger Sawtooth</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+                        
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/release/">
+					Releases
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/docs/">
+					Docs
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/faq/">
+					FAQ
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/community/">
+					Community
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/contact/">
+					Contact
+				</a>
+			</li>
+			
+			
+			<li>
+				<a class="page-link" href="/examples">
+					Examples
+				</a>
+			</li>
+			<!-- Social icons from Font Awesome, if enabled -->
+			<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/hyperledger/sawtooth-core" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/\%23HyperledgerSawtooth" title="Follow on Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Sawtooth FAQ - Installation and Configuration</h1>
+  </header>
+  <section class="post-content"><p class="mininav"><a class="reference external" href="/faq/sawtooth/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/transaction-processing/">NEXT</a></p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#how-do-i-list-and-install-sawtooth-packages" id="id1">How do I list and install Sawtooth packages?</a></li>
+<li><a class="reference internal" href="#how-do-i-edit-sawtooth-settings" id="id2">How do I edit Sawtooth settings?</a></li>
+<li><a class="reference internal" href="#i-get-this-error-installing-ubuntu-packages-could-not-get-lock-var-lib-dpkg-lock" id="id3">I get this error installing Ubuntu packages: <tt class="docutils literal">Could not get lock /var/lib/dpkg/lock</tt></a></li>
+<li><a class="reference internal" href="#i-get-this-error-installing-sawtooth-cxx-sdk-depends-protobuf-but-it-is-not-installable" id="id4">I get this error installing <tt class="docutils literal"><span class="pre">sawtooth-cxx-sdk</span></tt>: <tt class="docutils literal">Depends: protobuf but it is not installable</tt></a></li>
+<li><a class="reference internal" href="#i-get-this-error-when-running-sawtooth-setting-list-or-xo-list-error-503-service-unavailable" id="id5">I get this error when running <tt class="docutils literal">sawtooth setting list</tt> or <tt class="docutils literal">xo list</tt> : <tt class="docutils literal">Error 503: Service Unavailable</tt></a></li>
+<li><a class="reference internal" href="#i-get-this-error-when-running-sudo-u-sawtooth-sawadm-genesis-config-genesis-batch-permission-denied" id="id6">I get this error when running <tt class="docutils literal">sudo <span class="pre">-u</span> sawtooth sawadm genesis <span class="pre">config-genesis.batch</span></tt> : <tt class="docutils literal">Permission denied</tt></a></li>
+<li><a class="reference internal" href="#i-get-a-key-file-is-not-readable-error-when-starting-sudo-u-sawtooth-sawtooth-validator-vv" id="id7">I get a <tt class="docutils literal">Key file is not readable</tt> error when starting <tt class="docutils literal">sudo <span class="pre">-u</span> sawtooth <span class="pre">sawtooth-validator</span> <span class="pre">-vv</span></tt></a></li>
+<li><a class="reference internal" href="#how-to-i-delete-all-blockchain-data" id="id8">How to I delete all blockchain data?</a></li>
+<li><a class="reference internal" href="#how-do-i-delete-or-change-a-specific-block-in-the-blockchain" id="id9">How do I delete or change a specific block in the blockchain?</a></li>
+<li><a class="reference internal" href="#i-get-a-usage-error-running-sawnet-peers-or-sawnet-list-blocks" id="id10">I get a usage error running <tt class="docutils literal">sawnet peers</tt> or <tt class="docutils literal">sawnet <span class="pre">list-blocks</span></tt></a></li>
+<li><a class="reference internal" href="#how-can-i-change-on-chain-settings-without-deleting-the-blockchain" id="id11">How can I change on-chain settings without deleting the blockchain?</a></li>
+<li><a class="reference internal" href="#i-got-error-gpg-keyserver-receive-failed-keyserver-error-when-executing-sudo-apt-key-adv-keyserver-hkp-keyserver" id="id12">I got error <tt class="docutils literal">gpg: keyserver receive failed: keyserver error</tt> when executing <tt class="docutils literal">sudo <span class="pre">apt-key</span> adv <span class="pre">--keyserver</span> <span class="pre">hkp://keyserver...</span></tt></a></li>
+<li><a class="reference internal" href="#what-does-this-error-mean-repository-xenial-inrelease-doesn-t-support-architecture-i386" id="id13">What does this error mean <tt class="docutils literal">repository ... xenial InRelease' doesn't support architecture 'i386'</tt>?</a></li>
+<li><a class="reference internal" href="#i-get-this-error-running-sawset-modulenotfounderror-no-module-named-colorlog" id="id14">I get this error running <tt class="docutils literal">sawset</tt>: <tt class="docutils literal">ModuleNotFoundError: No module named 'colorlog'</tt></a></li>
+<li><a class="reference internal" href="#i-get-this-error-starting-sawtooth-lmdb-diskerror-var-lib-sawtooth-poet-key-state-03efb2aa-lmdb-no-space-left-on-device" id="id15">I get this error starting Sawtooth: <tt class="docutils literal">lmdb.DiskError: <span class="pre">/var/lib/sawtooth/poet-key-state-03efb2aa.lmdb:</span> No space left on device</tt></a></li>
+<li><a class="reference internal" href="#i-get-this-error-when-running-sawtooth-sawadm-genesis-config-genesis-batch-processing-config-genesis-batch-error-unable-to-read-config-genesis-batch" id="id16">I get this error when running <tt class="docutils literal">sawtooth sawadm genesis <span class="pre">config-genesis.batch</span></tt>:  <tt class="docutils literal">Processing <span class="pre">config-genesis.batch...</span> Error: Unable to read <span class="pre">config-genesis.batch</span></tt></a></li>
+<li><a class="reference internal" href="#how-do-i-install-sawtooth-on-ubuntu" id="id17">How do I install Sawtooth on Ubuntu?</a></li>
+<li><a class="reference internal" href="#how-do-i-install-sawtooth-on-aws" id="id18">How do I install Sawtooth on AWS?</a></li>
+<li><a class="reference internal" href="#how-do-i-use-ssh-with-aws" id="id19">How do I use ssh with AWS?</a></li>
+<li><a class="reference internal" href="#how-to-i-build-sawtooth-from-source" id="id20">How to I build Sawtooth from source?</a></li>
+<li><a class="reference internal" href="#how-do-i-install-sawtooth-on-freebsd" id="id21">How do I install Sawtooth on FreeBSD?</a></li>
+<li><a class="reference internal" href="#i-get-this-error-while-installing-sawtooth-error-starting-userland-proxy-listen-tcp-0-0-0-0-8080-bind-address-already-in-use" id="id22">I get this error while installing Sawtooth: <tt class="docutils literal">Error starting userland proxy: listen tcp 0.0.0.0:8080: bind: address already in use</tt></a></li>
+<li><a class="reference internal" href="#i-get-this-error-after-setting-up-a-sawtooth-network-can-t-send-message-ping-response-back-to-because-connection-outboundconnectionthread-tcp-192-168-0-100-8800-not-in-dispatcher" id="id23">I get this error after setting up a Sawtooth network: <tt class="docutils literal">Can't send message PING_RESPONSE back to ... because connection OutboundConnectionThread- <span class="pre">tcp://192.168.0.100:8800</span> not in dispatcher</tt></a></li>
+<li><a class="reference internal" href="#i-get-unmet-dependencies-errors-installing-sawtooth-on-ubuntu-18-04-lts" id="id24">I get <tt class="docutils literal">unmet dependencies</tt> errors installing Sawtooth on Ubuntu 18.04 LTS.</a></li>
+<li><a class="reference internal" href="#i-get-this-error-installing-sawtooth-no-matching-distribution-found-for-sawtooth-rest-api" id="id25">I get this error installing Sawtooth: <tt class="docutils literal">No matching distribution found for sawtooth_rest_api</tt></a></li>
+<li><a class="reference internal" href="#i-get-this-error-with-add-apt-repository-couldn-t-connect-to-accessibility-bus-failed-to-connect-to-socket-connection-refused" id="id26">I get this error with <tt class="docutils literal"><span class="pre">add-apt-repository</span></tt>: Couldn't connect to accessibility bus: Failed to connect to socket . . . Connection refused</a></li>
+<li><a class="reference internal" href="#i-get-this-error-starting-sawtooth-on-docker-no-response-from-beginning-heartbeat-pings" id="id27">I get this error starting Sawtooth on Docker: <tt class="docutils literal">No response from ... beginning heartbeat pings</tt></a></li>
+<li><a class="reference internal" href="#how-do-i-list-sawtooth-command-line-options" id="id28">How do I list sawtooth command line options?</a></li>
+<li><a class="reference internal" href="#why-do-i-get-a-no-module-named-error-running-a-sawtooth-program" id="id29">Why do I get a <tt class="docutils literal">No module named ...</tt> error running a Sawtooth program?</a></li>
+<li><a class="reference internal" href="#how-do-i-fix-this-error-no-transaction-processors-registered-for-processor-type-sawtooth-settings" id="id30">How do I fix this error: <tt class="docutils literal">no transaction processors registered for processor type sawtooth_settings</tt> ??</a></li>
+<li><a class="reference internal" href="#i-get-unmet-dependencies-errors-on-python3-sawtooth-poet-cli-and-other-packages-with-sudo-apt-get-install-y-sawtooth-on-ubuntu-xenial" id="id31">I get <tt class="docutils literal">unmet dependencies</tt> errors on <tt class="docutils literal"><span class="pre">python3-sawtooth-poet-cli</span></tt> and other packages with <tt class="docutils literal">sudo <span class="pre">apt-get</span> install <span class="pre">-y</span> sawtooth</tt> on Ubuntu Xenial</a></li>
+<li><a class="reference internal" href="#i-get-unable-to-start-validator-sawtooth-consensus-algorithm-name-and-sawtooth-consensus-algorithm-version-must-be-set-in-the-genesis-block-when-installing-sawtooth-1-2-nightly-builds" id="id32">I get <tt class="docutils literal">Unable to start validator; sawtooth.consensus.algorithm.name and sawtooth.consensus.algorithm.version must be set in the genesis block</tt> when installing Sawtooth 1.2 nightly builds</a></li>
+</ul>
+</div>
+<div class="section" id="how-do-i-list-and-install-sawtooth-packages">
+<h2><a class="toc-backref" href="#id1">How do I list and install Sawtooth packages?</a></h2>
+<p>The following setups the Sawtooth stable repository, lists the packages,
+and installs the core packages
+(sawtooth, python3-sawtooth-cli, python3-sawtooth-sdk, python3-sawtooth-signing):</p>
+<pre class="code sh literal-block">
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD
+$ sudo add-apt-repository <span class="literal string single">'deb [arch=amd64] http://repo.sawtooth.me/ubuntu/bumper/stable xenial universe'</span>
+$ sudo apt update
+$ apt install sawtooth python3-sawtooth-*
+$ apt search sawtooth
+</pre>
+<p>For more, up-to-date installation information see
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/installation.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/installation.html</a></p>
+</div>
+<div class="section" id="how-do-i-edit-sawtooth-settings">
+<h2><a class="toc-backref" href="#id2">How do I edit Sawtooth settings?</a></h2>
+<p>With <tt class="docutils literal">.toml</tt> configuration files in <tt class="docutils literal">/etc/sawtooth</tt> .
+Examples are in the directory as <tt class="docutils literal">.toml.example</tt> .
+For details, see
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/configuring_sawtooth.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/configuring_sawtooth.html</a></p>
+<p>Configuration files include:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal">validator.toml</tt></dt>
+<dd>Validator configuration file</dd>
+<dt><tt class="docutils literal">rest_api.toml</tt></dt>
+<dd>REST API configuration file</dd>
+<dt><tt class="docutils literal">cli.toml</tt></dt>
+<dd>Sawtooth CLI configuration file</dd>
+<dt><tt class="docutils literal">poet_enclave.toml</tt></dt>
+<dd>PoET SGX Enclave configuration file</dd>
+<dt><tt class="docutils literal">path.toml</tt></dt>
+<dd>Directory path configuration (or use <tt class="docutils literal">$SAWTOOTH_HOME</tt>)</dd>
+<dt><tt class="docutils literal">identity.toml</tt></dt>
+<dd>Identity TP configuration file</dd>
+<dt><tt class="docutils literal">settings.toml</tt></dt>
+<dd>Settings TP configuration file</dd>
+<dt><tt class="docutils literal">log_config.toml</tt></dt>
+<dd>Log configuration file</dd>
+</dl>
+<p>More transaction-processor specific configuration files may be present.</p>
+</div>
+<div class="section" id="i-get-this-error-installing-ubuntu-packages-could-not-get-lock-var-lib-dpkg-lock">
+<h2><a class="toc-backref" href="#id3">I get this error installing Ubuntu packages: <tt class="docutils literal">Could not get lock /var/lib/dpkg/lock</tt></a></h2>
+<p>The file lock is probably left over from a previous failed install.
+The solution is <tt class="docutils literal">sudo rm&nbsp; /var/lib/dpkg/lock</tt> .
+This assumes you're not multitasking and installing something else in another terminal on the same host.</p>
+</div>
+<div class="section" id="i-get-this-error-installing-sawtooth-cxx-sdk-depends-protobuf-but-it-is-not-installable">
+<h2><a class="toc-backref" href="#id4">I get this error installing <tt class="docutils literal"><span class="pre">sawtooth-cxx-sdk</span></tt>: <tt class="docutils literal">Depends: protobuf but it is not installable</tt></a></h2>
+<p>The C++ SDK package is in the nightly repository.
+Until the package dependency is fixed, here's a workaround to force an install:</p>
+<pre class="code sh literal-block">
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 44FC67F19B2466EA
+$ sudo apt-add-repository <span class="literal string double">&quot;deb [trusted=yes] http://repo.sawtooth.me/ubuntu/nightly bionic universe&quot;</span>
+$ sudo apt update
+$ apt download sawtooth-cxx-sdk
+$ sudo dpkg -i  sawtooth-cxx-sdk_1.1.1.dev808_amd64.deb
+$ pkg contents sawtooth-cxx-sdk
+</pre>
+</div>
+<div class="section" id="i-get-this-error-when-running-sawtooth-setting-list-or-xo-list-error-503-service-unavailable">
+<h2><a class="toc-backref" href="#id5">I get this error when running <tt class="docutils literal">sawtooth setting list</tt> or <tt class="docutils literal">xo list</tt> : <tt class="docutils literal">Error 503: Service Unavailable</tt></a></h2>
+<p>This usually occurs when there is no genesis node created. To create, type the following:</p>
+<pre class="code sh literal-block">
+<span class="comment single"># Create the genesis node:
+</span>sawtooth keygen
+sawset genesis
+sudo -u sawtooth sawadm genesis config-genesis.batch
+<span class="comment single"># Start the validator:
+</span>sudo sawadm keygen
+sudo -u sawtooth sawtooth-validator -vv
+</pre>
+</div>
+<div class="section" id="i-get-this-error-when-running-sudo-u-sawtooth-sawadm-genesis-config-genesis-batch-permission-denied">
+<h2><a class="toc-backref" href="#id6">I get this error when running <tt class="docutils literal">sudo <span class="pre">-u</span> sawtooth sawadm genesis <span class="pre">config-genesis.batch</span></tt> : <tt class="docutils literal">Permission denied</tt></a></h2>
+<p>Change to a sawtooth user-writable directory before running the command and make sure file <cite>config-genesis.batch</cite> does not already exist: <tt class="docutils literal">cd /tmp; ls <span class="pre">config-genesis.batch</span></tt></p>
+</div>
+<div class="section" id="i-get-a-key-file-is-not-readable-error-when-starting-sudo-u-sawtooth-sawtooth-validator-vv">
+<h2><a class="toc-backref" href="#id7">I get a <tt class="docutils literal">Key file is not readable</tt> error when starting <tt class="docutils literal">sudo <span class="pre">-u</span> sawtooth <span class="pre">sawtooth-validator</span> <span class="pre">-vv</span></tt></a></h2>
+<p>The validator key file permissions are wrong. To fix it, type:</p>
+<pre class="code sh literal-block">
+$ sudo
+$ sudo chown root:sawtooth /etc/sawtooth/keys /etc/sawtooth/keys/*
+$ sudo chmod <span class="literal number">755</span> /etc/sawtooth/keys
+$ sudo chmod <span class="literal number">640</span> /etc/sawtooth/keys/validator.priv
+$ sudo chmod <span class="literal number">644</span> /etc/sawtooth/keys/validator.pub
+$ ls -la /etc/sawtooth/keys
+drwxr-xr-x <span class="literal number">2</span> root sawtooth <span class="literal number">4096</span> Jan <span class="literal number">11</span> <span class="literal number">11</span>:35 .
+-rw-r----- <span class="literal number">1</span> root sawtooth   <span class="literal number">65</span> Jan <span class="literal number">11</span> <span class="literal number">11</span>:35 validator.priv
+-rw-r--r-- <span class="literal number">1</span> root sawtooth   <span class="literal number">67</span> Jan <span class="literal number">11</span> <span class="literal number">11</span>:35 validator.pub
+</pre>
+<p>If the validator key files are missing, type <tt class="docutils literal">sudo sawadm keygen</tt></p>
+</div>
+<div class="section" id="how-to-i-delete-all-blockchain-data">
+<h2><a class="toc-backref" href="#id8">How to I delete all blockchain data?</a></h2>
+<p>Type the following: <tt class="docutils literal">sudo <span class="pre">-u</span> sawtooth rm <span class="pre">-rf</span> /var/lib/sawtooth/*</tt>
+This deletes the entire database--for development and purposes.</p>
+</div>
+<div class="section" id="how-do-i-delete-or-change-a-specific-block-in-the-blockchain">
+<h2><a class="toc-backref" href="#id9">How do I delete or change a specific block in the blockchain?</a></h2>
+<p>You cannot delete blocks--they are immutable by design.
+You can create a new transaction (or block of transactions)
+that reverse a previous transaction.</p>
+</div>
+<div class="section" id="i-get-a-usage-error-running-sawnet-peers-or-sawnet-list-blocks">
+<h2><a class="toc-backref" href="#id10">I get a usage error running <tt class="docutils literal">sawnet peers</tt> or <tt class="docutils literal">sawnet <span class="pre">list-blocks</span></tt></a></h2>
+<p>You should upgrade to the current release. These commands were added after the Sawtooth 1.0.4 release and are not available in earlier releases.</p>
+</div>
+<div class="section" id="how-can-i-change-on-chain-settings-without-deleting-the-blockchain">
+<h2><a class="toc-backref" href="#id11">How can I change on-chain settings without deleting the blockchain?</a></h2>
+<p>Use the <tt class="docutils literal">sawset</tt> command. This allows you to change settings such
+as maximum batches per block or target wait time.</p>
+</div>
+<div class="section" id="i-got-error-gpg-keyserver-receive-failed-keyserver-error-when-executing-sudo-apt-key-adv-keyserver-hkp-keyserver">
+<h2><a class="toc-backref" href="#id12">I got error <tt class="docutils literal">gpg: keyserver receive failed: keyserver error</tt> when executing <tt class="docutils literal">sudo <span class="pre">apt-key</span> adv <span class="pre">--keyserver</span> <span class="pre">hkp://keyserver...</span></tt></a></h2>
+<p>This error means your machine couldn't add the supplied key to trusted list. This key is later used to authenticate and get sawtooth package.
+One of the possible reason for this error is that your machine is trying to connect to keyserver through a proxy server. Add proxy server details in the command to solve this issue. For example, <tt class="docutils literal">sudo <span class="pre">apt-key</span> adv <span class="pre">--keyserver-options</span> <span class="pre">http-proxy=http://[username:password]&#64;&lt;proxyserver&gt;:&lt;port&gt;</span> <span class="pre">--keyserver</span> <span class="pre">hkp://keyse...</span></tt> (notice usage of flag <tt class="docutils literal"><span class="pre">--keyserver-options</span></tt> here).</p>
+</div>
+<div class="section" id="what-does-this-error-mean-repository-xenial-inrelease-doesn-t-support-architecture-i386">
+<h2><a class="toc-backref" href="#id13">What does this error mean <tt class="docutils literal">repository ... xenial InRelease' doesn't support architecture 'i386'</tt>?</a></h2>
+<p>Following could be possibilities:</p>
+<ol class="arabic simple">
+<li>You installed on a 32-bit-only system. Install on a 64-bit system.</li>
+<li>You are using 64-bit system, but your linux variant has enabled additional architecture i386. <tt class="docutils literal">apt</tt> is expecting the repository for all configured architectures on your machine. One safe way to solve this error would be to tell <tt class="docutils literal">apt</tt> to get only 64-bit repository. For example, <tt class="docutils literal">sudo <span class="pre">add-apt-repository</span> 'deb [arch=amd64] <span class="pre">http://repo.sawtooth.me/ubuntu.....'</span></tt>.</li>
+</ol>
+</div>
+<div class="section" id="i-get-this-error-running-sawset-modulenotfounderror-no-module-named-colorlog">
+<h2><a class="toc-backref" href="#id14">I get this error running <tt class="docutils literal">sawset</tt>: <tt class="docutils literal">ModuleNotFoundError: No module named 'colorlog'</tt></a></h2>
+<p>Something went wrong with installing Python dependencies or they were removed.
+In this case, install <tt class="docutils literal">colorlog</tt> with <tt class="docutils literal">sudo apt install <span class="pre">python3-colorlog</span></tt> or with``pip3 install colorlog``</p>
+</div>
+<div class="section" id="i-get-this-error-starting-sawtooth-lmdb-diskerror-var-lib-sawtooth-poet-key-state-03efb2aa-lmdb-no-space-left-on-device">
+<h2><a class="toc-backref" href="#id15">I get this error starting Sawtooth: <tt class="docutils literal">lmdb.DiskError: <span class="pre">/var/lib/sawtooth/poet-key-state-03efb2aa.lmdb:</span> No space left on device</tt></a></h2>
+<p>Besides the obvious problem of no disk space, it could be your OS or filesystem does not support sparse files. The LMDB databases used by Sawtooth are 1TB sparse (mostly unallocated) files.</p>
+</div>
+<div class="section" id="i-get-this-error-when-running-sawtooth-sawadm-genesis-config-genesis-batch-processing-config-genesis-batch-error-unable-to-read-config-genesis-batch">
+<h2><a class="toc-backref" href="#id16">I get this error when running <tt class="docutils literal">sawtooth sawadm genesis <span class="pre">config-genesis.batch</span></tt>:  <tt class="docutils literal">Processing <span class="pre">config-genesis.batch...</span> Error: Unable to read <span class="pre">config-genesis.batch</span></tt></a></h2>
+<p>This error can occur when there is no sawtooth user and group.
+This should have been done by the package <tt class="docutils literal">postinst</tt> script.
+To add, type <tt class="docutils literal">addgroup <span class="pre">--system</span> sawtooth; adduser <span class="pre">--system</span> <span class="pre">--ingroup</span> sawtooth sawtooth</tt> .</p>
+<p>It could be a file or directory permission problem--try changing the file ownership with <tt class="docutils literal">chown sawtooth:sawtooth <span class="pre">config-genesis.batch</span></tt> and move it to a sawtooth-writable directory. For example <tt class="docutils literal">mv <span class="pre">config-genesis.batch</span> /tmp; cd /tmp</tt></p>
+<p>Another cause is the file doesn't exist. Create it with <tt class="docutils literal">sawset genesis</tt> .</p>
+</div>
+<div class="section" id="how-do-i-install-sawtooth-on-ubuntu">
+<h2><a class="toc-backref" href="#id17">How do I install Sawtooth on Ubuntu?</a></h2>
+<p>Follow the instructions at <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/ubuntu.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/ubuntu.html</a></p>
+<p>These instructions are missing steps for installing and starting the DevMode consensus engine. If the consensus engine is not started, no new blocks can be published. The missing steps are:</p>
+<ul class="simple">
+<li>After the &quot;Install Sawtooth&quot; step, install the DevMode consensus engine package.</li>
+</ul>
+<pre class="code sh literal-block">
+$ sudo apt-get install sawtooth-devmode-engine-rust
+</pre>
+<ul class="simple">
+<li>After &quot;Step 5: Start the Validator&quot;, start the DevMode consensus engine</li>
+</ul>
+<pre class="code sh literal-block">
+$ sudo -u sawtooth devmode-engine-rust -vv --connect tcp://localhost:5050
+</pre>
+<ul class="simple">
+<li>A &quot;Consensus engine registered&quot; message should appear indicating the consensus engine connected with validator TCP port 5050 (for consensus messages).</li>
+</ul>
+</div>
+<div class="section" id="how-do-i-install-sawtooth-on-aws">
+<h2><a class="toc-backref" href="#id18">How do I install Sawtooth on AWS?</a></h2>
+<ul class="simple">
+<li>Sign up for a free AWS Free Tier account, if you don't have an account. The AWS Free Tier is free for qualifying developers. This gives you 1 Micro instance (or any combination of instances up to 750 hours/month) for 12 months. See <a class="reference external" href="https://aws.amazon.com/free/">https://aws.amazon.com/free/</a></li>
+<li>Create your instance from the Hyperledger Sawtooth product page on AWS Marketplace, at <a class="reference external" href="https://aws.amazon.com/marketplace/pp/B075TKQCC2">https://aws.amazon.com/marketplace/pp/B075TKQCC2</a></li>
+<li>Follow instructions to launch an AWS Marketplace instance at
+<a class="reference external" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launch-marketplace-console.html">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launch-marketplace-console.html</a></li>
+<li>Then follow the instructions for using your Sawtooth AWS instance at
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/aws.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/aws.html</a></li>
+</ul>
+</div>
+<div class="section" id="how-do-i-use-ssh-with-aws">
+<h2><a class="toc-backref" href="#id19">How do I use ssh with AWS?</a></h2>
+<p>By default ssh access to AWS instances are disabled.
+To enable, first paste the contents of your public key, at `` ~/.ssh/id_rsa.pub`` , to <tt class="docutils literal">Key Pairs</tt>  under your EC2 Dashboard. Use this key when creating your Sawtooth instance.</p>
+<p>After creating your AWS Sawtooth instance, go to your EC2 Dashboard and click on the security group for your instance (usually <tt class="docutils literal">default</tt>). Select the <tt class="docutils literal">Inbound</tt> tab and  <tt class="docutils literal">Edit</tt>. Add <tt class="docutils literal">SSH</tt> (TCP port 22) and Source <tt class="docutils literal">Anywhere</tt> (or <tt class="docutils literal">My IP</tt> and your IP address) and save. I had to reboot the instance (Actions --&gt; InstanceState --&gt; Reboot) to get it to work.</p>
+</div>
+<div class="section" id="how-to-i-build-sawtooth-from-source">
+<h2><a class="toc-backref" href="#id20">How to I build Sawtooth from source?</a></h2>
+<p>Use <tt class="docutils literal">git</tt> to download the source, then <tt class="docutils literal">build_all</tt> to build. Type <tt class="docutils literal">./bin/build_all</tt> for options. For example:
+.. code:: sh</p>
+<blockquote>
+$ sawtooth --version
+$ git clone <a class="reference external" href="https://github.com/hyperledger/sawtooth-core">https://github.com/hyperledger/sawtooth-core</a>
+$ cd sawtooth-core
+$ ./bin/build_all -l python</blockquote>
+<p>For details, see
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-core/blob/master/BUILD.md">https://github.com/hyperledger/sawtooth-core/blob/master/BUILD.md</a></p>
+</div>
+<div class="section" id="how-do-i-install-sawtooth-on-freebsd">
+<h2><a class="toc-backref" href="#id21">How do I install Sawtooth on FreeBSD?</a></h2>
+<p>Sawtooth is supported for Ubuntu Linux with binary packages.
+For other other *IX-like systems, including FreeBSD, you can build from source.
+The following blog may help:
+<a class="reference external" href="https://wiki.freebsd.org/HyperledgerSawtooth">https://wiki.freebsd.org/HyperledgerSawtooth</a>
+This is based on FreeBSD 11.1. Docker is not required to run Sawtooth.
+See also this bug for the status of the FreeBSD Sawtooth port:
+<a class="reference external" href="https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=228581">https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=228581</a></p>
+</div>
+<div class="section" id="i-get-this-error-while-installing-sawtooth-error-starting-userland-proxy-listen-tcp-0-0-0-0-8080-bind-address-already-in-use">
+<h2><a class="toc-backref" href="#id22">I get this error while installing Sawtooth: <tt class="docutils literal">Error starting userland proxy: listen tcp 0.0.0.0:8080: bind: address already in use</tt></a></h2>
+<p>You already have a program running that uses TCP port 8080. Either kill it or change the port you use to something else.
+To find the process(es) that have port 8080 open, type <tt class="docutils literal">sudo lsof <span class="pre">-t</span> <span class="pre">-i:8080</span></tt>
+Then kill the processes. Check again that they have not restarted. Also check that they are not Docker containers that have restarted.</p>
+</div>
+<div class="section" id="i-get-this-error-after-setting-up-a-sawtooth-network-can-t-send-message-ping-response-back-to-because-connection-outboundconnectionthread-tcp-192-168-0-100-8800-not-in-dispatcher">
+<h2><a class="toc-backref" href="#id23">I get this error after setting up a Sawtooth network: <tt class="docutils literal">Can't send message PING_RESPONSE back to ... because connection OutboundConnectionThread- <span class="pre">tcp://192.168.0.100:8800</span> not in dispatcher</tt></a></h2>
+<p>The usual problem when you get this message is configuring the peer endpoints</p>
+<ul class="simple">
+<li>If you are using Ubuntu directly instead of Docker, use the Validator's hostname or IP address instead of the default (<tt class="docutils literal">validator</tt>), which only works with Docker, or <tt class="docutils literal">localhost</tt>, which may not be routable</li>
+<li>If you are using Docker, make sure the Docker ports are mapped to the Ubuntu OS, and that the OS IP address/port is routable between the two machines. Check the <tt class="docutils literal">expose:</tt> and <tt class="docutils literal">ports:</tt> entries in your <tt class="docutils literal"><span class="pre">docker-compose.yaml</span></tt> file or similar file</li>
+<li>Verify network connectivity to the remote machine with <tt class="docutils literal">ping</tt></li>
+<li>Verify port connectivity <tt class="docutils literal">telnet aremotehostname 8800</tt> (replace <tt class="docutils literal">aremotehostname</tt> with the remote peer's hostname or IP address). Control-c out if it connects</li>
+<li>Verify network and port connectivity in the other direction (remote to local)</li>
+<li>Check peer configuration in your local and remote <tt class="docutils literal">/etc/sawtooth/validator.toml</tt> files. Check the <tt class="docutils literal">peering</tt> and <tt class="docutils literal">endpoint</tt> lines. Check the <tt class="docutils literal">seeds</tt> line (for dynamic peering) or <tt class="docutils literal">peers</tt> line (for static peering)</li>
+<li>If you are connecting to external nodes on the network, bind to 0.0.0.0 (which means every IP address) or your external IP address instead of 127.0.0.1 (localhost only). Be careful doing this as may open up this port to external networks.</li>
+</ul>
+</div>
+<div class="section" id="i-get-unmet-dependencies-errors-installing-sawtooth-on-ubuntu-18-04-lts">
+<h2><a class="toc-backref" href="#id24">I get <tt class="docutils literal">unmet dependencies</tt> errors installing Sawtooth on Ubuntu 18.04 LTS.</a></h2>
+<p>Ubuntu 18.04 LTS is supported only in the nightly development packages. Use Ubuntu 16.04 LTS for the stable release packages.
+You can also install Sawtooth with Docker. See:
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/docker.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/docker.html</a></p>
+<p>If you wish to install the nightly development packages on Ubuntu 18.04 LTS (Bionic), then, for now, specify the individual packages you wish to install instead of parent package <tt class="docutils literal">sawtooth</tt>.  For example, <tt class="docutils literal">sudo <span class="pre">apt-get</span> install <span class="pre">python3-sawtooth-cli</span> <span class="pre">python3-sawtooth-integration</span> <span class="pre">python3-sawtooth-rest-api</span> <span class="pre">python3-sawtooth-sdk</span> <span class="pre">python3-sawtooth-settings</span> <span class="pre">python3-sawtooth-signing</span> <span class="pre">python3-sawtooth-validator</span> <span class="pre">sawtooth-devmode-engine-rust</span></tt></p>
+<p>For details, see <a class="reference external" href="https://jira.hyperledger.org/projects/STL/issues/STL-1465">https://jira.hyperledger.org/projects/STL/issues/STL-1465</a></p>
+</div>
+<div class="section" id="i-get-this-error-installing-sawtooth-no-matching-distribution-found-for-sawtooth-rest-api">
+<h2><a class="toc-backref" href="#id25">I get this error installing Sawtooth: <tt class="docutils literal">No matching distribution found for sawtooth_rest_api</tt></a></h2>
+<p>You tried to install Sawtooth using Python pip.
+I don't know if this could work. I know installing Sawtooth using Ubuntu/Debian installation tools (such as apt, apt-get, dpkg, aptitude) works OK.</p>
+</div>
+<div class="section" id="i-get-this-error-with-add-apt-repository-couldn-t-connect-to-accessibility-bus-failed-to-connect-to-socket-connection-refused">
+<h2><a class="toc-backref" href="#id26">I get this error with <tt class="docutils literal"><span class="pre">add-apt-repository</span></tt>: Couldn't connect to accessibility bus: Failed to connect to socket . . . Connection refused</a></h2>
+<p>It is just a warning and you can ignore it. Verify the Sawtooth repository was added in <tt class="docutils literal">/etc/apt/sources.list</tt> The cause is the command tried to start a graphic display (probably over SSH) when it was not available. A workaround to remove the warning is to add <tt class="docutils literal">export NO_AT_BRIDGE=1</tt> to <tt class="docutils literal"><span class="pre">~/.bashrc</span></tt></p>
+</div>
+<div class="section" id="i-get-this-error-starting-sawtooth-on-docker-no-response-from-beginning-heartbeat-pings">
+<h2><a class="toc-backref" href="#id27">I get this error starting Sawtooth on Docker: <tt class="docutils literal">No response from ... beginning heartbeat pings</tt></a></h2>
+<p>This means there is a problem with the genesis node and peer nodes connecting.</p>
+</div>
+<div class="section" id="how-do-i-list-sawtooth-command-line-options">
+<h2><a class="toc-backref" href="#id28">How do I list sawtooth command line options?</a></h2>
+<p>For the Sawtooth CLIs (sawadm, sawset, sawnet, sawtooth), append <tt class="docutils literal"><span class="pre">-h</span></tt> after the command to list subcommands (for example, <tt class="docutils literal">sawadm <span class="pre">-h</span></tt> ). For the Sawtooth subcommands, append <tt class="docutils literal"><span class="pre">-h</span></tt> after the subcommand (for example, <tt class="docutils literal">sawadm keygen <span class="pre">-h</span></tt> ).</p>
+</div>
+<div class="section" id="why-do-i-get-a-no-module-named-error-running-a-sawtooth-program">
+<h2><a class="toc-backref" href="#id29">Why do I get a <tt class="docutils literal">No module named ...</tt> error running a Sawtooth program?</a></h2>
+<p>The <tt class="docutils literal">No module named</tt> error occurs in Python when a Python module is missing. The usual fix is to install the corresponding Python package. Something you need to prepend <tt class="docutils literal">python3-</tt> to the name. So, for example, if you get a <tt class="docutils literal">No module named 'netifaces'</tt> error, install the missing package with something like <tt class="docutils literal">apt install <span class="pre">python3-netifaces</span></tt></p>
+</div>
+<div class="section" id="how-do-i-fix-this-error-no-transaction-processors-registered-for-processor-type-sawtooth-settings">
+<h2><a class="toc-backref" href="#id30">How do I fix this error: <tt class="docutils literal">no transaction processors registered for processor type sawtooth_settings</tt> ??</a></h2>
+<p>You start the Settings TP, as follows <tt class="docutils literal">sudo <span class="pre">-u</span> sawtooth <span class="pre">settings-tp</span> <span class="pre">-v</span></tt> .
+The Settings TP is always required for all Sawtooth nodes, even if you did not add or change any settings.</p>
+</div>
+<div class="section" id="i-get-unmet-dependencies-errors-on-python3-sawtooth-poet-cli-and-other-packages-with-sudo-apt-get-install-y-sawtooth-on-ubuntu-xenial">
+<h2><a class="toc-backref" href="#id31">I get <tt class="docutils literal">unmet dependencies</tt> errors on <tt class="docutils literal"><span class="pre">python3-sawtooth-poet-cli</span></tt> and other packages with <tt class="docutils literal">sudo <span class="pre">apt-get</span> install <span class="pre">-y</span> sawtooth</tt> on Ubuntu Xenial</a></h2>
+<p>The Sawtooth PoET packages are not yet available for the unreleased Sawtooth nightly builds on Ubuntu 18.x LTS (Xenial). As a workaround do not install the meta-package <tt class="docutils literal">sawtooth</tt>.  Instead list the Sawtooth packages and install the packages you need. For example:</p>
+<pre class="code sh literal-block">
+$ apt search sawtooth <span class="comment single"># List Sawtooth packages (optional)
+</span>$ sudo apt-get install python3-sawtooth-cli python3-sawtooth-integration <span class="literal string escape">\
+</span>    python3-sawtooth-rest-api python3-sawtooth-sdk <span class="literal string escape">\
+</span>    python3-sawtooth-settings python3-sawtooth-signing <span class="literal string escape">\
+</span>    python3-sawtooth-validator sawtooth-devmode-engine-rust
+</pre>
+</div>
+<div class="section" id="i-get-unable-to-start-validator-sawtooth-consensus-algorithm-name-and-sawtooth-consensus-algorithm-version-must-be-set-in-the-genesis-block-when-installing-sawtooth-1-2-nightly-builds">
+<h2><a class="toc-backref" href="#id32">I get <tt class="docutils literal">Unable to start validator; sawtooth.consensus.algorithm.name and sawtooth.consensus.algorithm.version must be set in the genesis block</tt> when installing Sawtooth 1.2 nightly builds</a></h2>
+<p>The installation instructions for &quot;Step 3&quot; at
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/ubuntu.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/ubuntu.html</a>
+are incomplete for Sawtooth nightly builds.
+They work for Sawtooth 1.1, but for nightly builds the consensus engine setting is now required. The correct instructions in Step 3 for nightly builds are:</p>
+<pre class="code sh literal-block">
+$ <span class="name builtin">cd</span> /tmp
+$ sudo -u sawtooth sawset genesis -k /etc/sawtooth/keys/validator.priv
+$ sudo -u sawtooth sawset proposal create <span class="literal string escape">\
+</span>     -k /etc/sawtooth/keys/validator.priv <span class="literal string escape">\
+</span>     sawtooth.consensus.algorithm.name<span class="operator">=</span>Devmode <span class="literal string escape">\
+</span>     sawtooth.consensus.algorithm.version<span class="operator">=</span><span class="literal number">0</span>.1 -o config.batch
+$ sudo -u sawtooth sawadm genesis config-genesis.batch config.batch
+</pre>
+<p class="mininav"><a class="reference external" href="/faq/sawtooth/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/transaction-processing/">NEXT</a></p>
+<p>© Copyright 2018, Intel Corporation.</p>
+</div>
+
+</section>
+</article>
+
+    </div>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text"><p style="font-size: 1.5em;">
+  Hyperledger Sawtooth
+</p> <p>
+  <a href="/" title="Home"><span class="links">Home</span></a>
+  &bull;
+  <a href="/about/" title="About Sawtooth"><span class="links">About</span></a>
+  &bull;
+  <a href="/release/" title="Releases"><span class="links">Releases</span></a>
+  &bull;
+  <a href="/docs/" title="Documentation"><span class="links">Docs</span></a>
+  &bull;
+  <a href="/faq/" title="FAQ"><span class="links">FAQ</span></a>
+  &bull;
+  <a href="/community/" title="Community"><span class="links">Community</span></a>
+  &bull;
+  <a href="/contact/" title="Contact"><span class="links">Contact</span></a>
+</p> <p>
+  Find us: &nbsp;
+  <a href="https://github.com/hyperledger/sawtooth-core/" target="_blank" title="GitHub"><span  class="links">GitHub</span></a>
+  &bull;
+  <a href="https://chat.hyperledger.org/channel/sawtooth" target="_blank" title="#sawtooth chat channel"">Rocket.Chat</a>
+  &bull;
+  <a href="https://twitter.com/search?q=%23HyperledgerSawtooth" target="_blank" title="#sawtooth chat channel"">Twitter</a>
+</p> <p>
+  Examples: &nbsp;
+  <a href="/examples/seafood.html" target="_blank" title="Seafood Supply Chain Traceability">Seafood Supply Chain Traceability</a>
+  &bull;
+  <a href="/examples/bond.html" target="_blank" title="Bond Asset Settlement">Bond Asset Settlement</a>
+  &bull;
+  <a href="/examples/marketplace.html" target="_blank" title="Marketplace Digital Asset Exchange">Marketplace Digital Asset Exchange</a>
+</p> <p>
+  Linux Foundation: &nbsp;
+  <a href="http://www.linuxfoundation.org/privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+  &bull;
+  <a href="http://www.linuxfoundation.org/terms" target="_blank" title="Terms of Service">Terms of Service</a>
+</p> <p>
+  <small class="copyright">Copyright &copy; 2015-2019 contributors to Hyperledger Sawtooth</small>
+</p>
+</p>
+</footer>
+
+
+  </body>
+</html>

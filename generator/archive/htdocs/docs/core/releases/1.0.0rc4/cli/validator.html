@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Validator CLI (sawtooth-validator) &mdash; Sawtooth v1.0.0rc4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc4 documentation" href="../index.html"/>
+        <link rel="up" title="CLI Reference" href="../cli.html"/>
+        <link rel="next" title="REST API CLI (sawtooth-rest-api)" href="rest_api.html"/>
+        <link rel="prev" title="PoET CLI" href="poet.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../cli.html">CLI Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sawtooth.html">Sawtooth CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawadm.html">Sawtooth Admin CLI (sawadm)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawset.html">Sawtooth Config CLI (sawset)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poet.html">PoET CLI</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Validator CLI (sawtooth-validator)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-validator">sawtooth-validator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API CLI (sawtooth-rest-api)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intkey.html">IntegerKey CLI (intkey)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xo.html">XO CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings-tp.html">Settings Transaction Processor CLI (sawtooth-settings)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity-tp.html">Identity Transaction Processor CLI (identity-tp)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../cli.html">CLI Reference</a> &raquo;</li>
+        
+      <li>Validator CLI (sawtooth-validator)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cli/validator.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="validator-cli-sawtooth-validator">
+<span id="validator-cli-reference-label"></span><h1>Validator CLI (sawtooth-validator)<a class="headerlink" href="#validator-cli-sawtooth-validator" title="Permalink to this headline">¶</a></h1>
+<p>The validator CLI, <code class="docutils literal"><span class="pre">sawtooth-validator</span></code>, controls the
+behavior of the validator.</p>
+<p>A validator is the component ultimately responsible for validating
+batches of transactions, combining them into blocks, maintaining
+consensus with the network, and coordinating communication between
+clients, other validators, and transaction processors. Much of the
+actual validation is delegated to other components, such as
+transaction processors and the active consensus module.</p>
+<div class="section" id="sawtooth-validator">
+<h2>sawtooth-validator<a class="headerlink" href="#sawtooth-validator" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">sawtooth-validator</span></code> command starts the validator. Note the
+following options which provide several ways to configure the
+validator.</p>
+<ul class="simple">
+<li>Use the <code class="docutils literal"><span class="pre">--peering</span></code> option to set the peering type to <code class="docutils literal"><span class="pre">dynamic</span></code>
+or <code class="docutils literal"><span class="pre">static</span></code>.<ul>
+<li>If set to <code class="docutils literal"><span class="pre">static</span></code>, use the <code class="docutils literal"><span class="pre">--peers</span></code> option to list the URLs
+of all peers that the validator should connect to, using the
+format <code class="docutils literal"><span class="pre">tcp</span></code>://<cite>hostname</cite>:<cite>port</cite>. Specify multiple peer URLs in a
+comma-separated list.</li>
+<li>If set to <code class="docutils literal"><span class="pre">dynamic</span></code>, any static peers will be processed first,
+before starting the topology buildout starting, then the URLs
+specified by <code class="docutils literal"><span class="pre">--seeds</span></code> will be used for the initial connection
+to the validator network.</li>
+</ul>
+</li>
+<li>Use <code class="docutils literal"><span class="pre">--scheduler</span></code> to set the scheduler type to <code class="docutils literal"><span class="pre">serial</span></code> or
+<code class="docutils literal"><span class="pre">parallel</span></code>. Note that both scheduler types result in the same
+deterministic results and are completely interchangeable. However,
+parallel processing of transactions provides a performance
+improvement even for fast transaction workloads by reducing the
+overall latency effects that occur when transactions are processed
+serially.</li>
+<li>Use <code class="docutils literal"><span class="pre">--network-auth</span></code> to specify the required authorization
+procedure (<code class="docutils literal"><span class="pre">trust</span></code> or <code class="docutils literal"><span class="pre">challenge</span></code>) that validator connections
+must go through before they are allowed to participate on the
+network. To use network permissions, specify <code class="docutils literal"><span class="pre">challenge</span></code>, which
+requires connections to sign a challenge so their identity can be
+proved.</li>
+</ul>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth-validator [-h] [--config-dir CONFIG_DIR] [-B BIND]</span>
+<span class="go">                          [-P {static,dynamic}] [-E ENDPOINT] [-s SEEDS]</span>
+<span class="go">                          [-p PEERS] [-v] [--scheduler {serial,parallel}]</span>
+<span class="go">                          [--network-auth {trust,challenge}]</span>
+<span class="go">                          [--opentsdb-url OPENTSDB_URL]</span>
+<span class="go">                          [--opentsdb-db OPENTSDB_DB]</span>
+<span class="go">                          [--minimum-peer-connectivity MINIMUM_PEER_CONNECTIVITY]</span>
+<span class="go">                          [--maximum-peer-connectivity MAXIMUM_PEER_CONNECTIVITY]</span>
+<span class="go">                          [-V]</span>
+
+<span class="go">Configures and starts a Sawtooth validator.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --config-dir CONFIG_DIR</span>
+<span class="go">                        specify the configuration directory</span>
+<span class="go">  -B BIND, --bind BIND  set the URL for the network or validator component service endpoints with the format network:&lt;endpoint&gt; or component:&lt;endpoint&gt;. Use two --bind options to specify both endpoints.</span>
+<span class="go">  -P {static,dynamic}, --peering {static,dynamic}</span>
+<span class="go">                        determine peering type for the validator: &#39;static&#39; (must use --peers to list peers) or &#39;dynamic&#39; (processes any static peers first, then starts topology buildout).</span>
+<span class="go">  -E ENDPOINT, --endpoint ENDPOINT</span>
+<span class="go">                        specifies the advertised network endpoint URL</span>
+<span class="go">  -s SEEDS, --seeds SEEDS</span>
+<span class="go">                        provide URI(s) for the initial connection to the validator network, in the format tcp://&lt;hostname&gt;:&lt;port&gt;. Specify multiple URIs in a comma-separated list. Repeating the --seeds option is also accepted.</span>
+<span class="go">  -p PEERS, --peers PEERS</span>
+<span class="go">                        list static peers to attempt to connect to in the format tcp://&lt;hostname&gt;:&lt;port&gt;. Specify multiple peers in a comma-separated list. Repeating the --peers option is also accepted.</span>
+<span class="go">  -v, --verbose         enable more verbose output to stderr</span>
+<span class="go">  --scheduler {serial,parallel}</span>
+<span class="go">                        set scheduler type: serial or parallel</span>
+<span class="go">  --network-auth {trust,challenge}</span>
+<span class="go">                        identify type of authorization required to join validator network.</span>
+<span class="go">  --opentsdb-url OPENTSDB_URL</span>
+<span class="go">                        specify host and port for Open TSDB database                         used for metrics</span>
+<span class="go">  --opentsdb-db OPENTSDB_DB</span>
+<span class="go">                        specify name of database used for storing                         metrics</span>
+<span class="go">  --minimum-peer-connectivity MINIMUM_PEER_CONNECTIVITY</span>
+<span class="go">                        set the minimum number of peers required before                         stopping peer search</span>
+<span class="go">  --maximum-peer-connectivity MAXIMUM_PEER_CONNECTIVITY</span>
+<span class="go">                        set the maximum number of peers to accept</span>
+<span class="go">  -V, --version         display version information</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rest_api.html" class="btn btn-neutral float-right" title="REST API CLI (sawtooth-rest-api)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="poet.html" class="btn btn-neutral" title="PoET CLI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.0rc4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

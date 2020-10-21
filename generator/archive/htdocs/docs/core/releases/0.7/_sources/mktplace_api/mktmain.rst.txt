@@ -1,0 +1,15 @@
+mktmain package
+===============
+
+.. automodule:: mktmain
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   mktmain.client_cli
+

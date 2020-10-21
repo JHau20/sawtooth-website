@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Creating Packages for SLES &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="System Administrator’s Guide" href="../sysadmin_guide.html"/>
+        <link rel="next" title="Creating Packages for Windows" href="packaging_windows.html"/>
+        <link rel="prev" title="Creating Packages for Ubuntu" href="packaging_ubuntu.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="packaging_ubuntu.html">Creating Packages for Ubuntu</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Creating Packages for SLES</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-directory-for-resulting-packages">Create Directory for Resulting Packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-python-dependency-packages">Create Python Dependency Packages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cbor">cbor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pybitcointools">pybitcointools</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#create-sawtoothlake-python-packages">Create SawtoothLake Python Packages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#clone-repositories">Clone Repositories</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-packages">Create Packages</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#create-tar-file-of-packages">Create tar File of Packages</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="packaging_windows.html">Creating Packages for Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_ubuntu.html">Installation on Ubuntu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_sles.html">Installation on SLES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_windows.html">Installation on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network_configuration.html">Network Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Creating Packages for SLES</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/packaging_sles.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="creating-packages-for-sles">
+<h1>Creating Packages for SLES<a class="headerlink" href="#creating-packages-for-sles" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>To create packages for SLES, you need the following:</p>
+<ul class="simple">
+<li>SLES 12 64-bit with Internet access</li>
+<li>git Repository: sawtooth-core</li>
+</ul>
+<p>The remainder of these instructions assume a vanilla SLES 12 installation
+as a starting point.</p>
+</div>
+<div class="section" id="install-dependencies">
+<h2>Install Dependencies<a class="headerlink" href="#install-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Install the prerequisite packages:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@sles #</span> zypper install -y <span class="se">\</span>
+    python-setuptools <span class="se">\</span>
+    rpmbuild <span class="se">\</span>
+    swig <span class="se">\</span>
+    gcc-c++ <span class="se">\</span>
+    python-devel <span class="se">\</span>
+    libjson-c-devel
+</pre></div>
+</div>
+<p>To get cryptopp, you must add an additional repository:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@sles #</span> zypper addrepo <span class="se">\</span>
+    http://download.opensuse.org/repositories/devel:libraries:c_c++/SLE_12/devel:libraries:c_c++.repo
+<span class="gp">root@sles #</span> zypper refresh
+</pre></div>
+</div>
+<p>Then, install libcryptopp-devel:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@sles #</span> zypper install -y libcryptopp-devel
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-directory-for-resulting-packages">
+<h2>Create Directory for Resulting Packages<a class="headerlink" href="#create-directory-for-resulting-packages" title="Permalink to this headline">¶</a></h2>
+<p>Create a directory to hold the packages as we build them.  For this guide, we
+will use $HOME/packages.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@sles #</span> mkdir <span class="nv">$HOME</span>/packages
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-python-dependency-packages">
+<h2>Create Python Dependency Packages<a class="headerlink" href="#create-python-dependency-packages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="cbor">
+<h3>cbor<a class="headerlink" href="#cbor" title="Permalink to this headline">¶</a></h3>
+<p>Create the python-cbor RPM package:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@sles #</span> mkdir -p <span class="nv">$HOME</span>/projects
+<span class="gp">root@sles #</span> <span class="nb">cd</span> <span class="nv">$HOME</span>/projects
+<span class="gp">root@sles #</span> wget https://pypi.python.org/packages/source/c/cbor/cbor-0.1.24.tar.gz
+<span class="gp">root@sles #</span> tar xvfz cbor-0.1.24.tar.gz
+<span class="gp">root@sles #</span> <span class="nb">cd</span> cbor-0.1.24
+<span class="gp">root@sles #</span> python setup.py bdist_rpm
+<span class="gp">root@sles #</span> cp dist/cbor-*.x86_64.rpm <span class="nv">$HOME</span>/packages/
+</pre></div>
+</div>
+</div>
+<div class="section" id="pybitcointools">
+<h3>pybitcointools<a class="headerlink" href="#pybitcointools" title="Permalink to this headline">¶</a></h3>
+<p>Create the python-pybitcointools RPM package:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@sles #</span> mkdir -p <span class="nv">$HOME</span>/projects
+<span class="gp">root@sles #</span> <span class="nb">cd</span> <span class="nv">$HOME</span>/projects
+<span class="gp">root@sles #</span> wget https://pypi.python.org/packages/source/p/pybitcointools/pybitcointools-1.1.15.tar.gz
+<span class="gp">root@sles #</span> tar xvfz pybitcointools-1.1.15.tar.gz
+<span class="gp">root@sles #</span> <span class="nb">cd</span> pybitcointools-1.1.15
+<span class="gp">root@sles #</span> python setup.py bdist_rpm
+<span class="gp">root@sles #</span> cp dist/pybitcointools-*.noarch.rpm <span class="nv">$HOME</span>/packages/
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="create-sawtoothlake-python-packages">
+<h2>Create SawtoothLake Python Packages<a class="headerlink" href="#create-sawtoothlake-python-packages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="clone-repositories">
+<h3>Clone Repositories<a class="headerlink" href="#clone-repositories" title="Permalink to this headline">¶</a></h3>
+<p>Clone or copy the repositories into the SLES environment:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@sles #</span> mkdir -p <span class="nv">$HOME</span>/projects
+<span class="gp">root@sles #</span> <span class="nb">cd</span> <span class="nv">$HOME</span>/projects
+<span class="gp">root@sles #</span> git clone git@github.com:IntelLedger/sawtooth-core.git
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You will have to setup your SSH private key to directly clone the repository
+directly into the VM.</p>
+</div>
+<p>At this time, if you are using a branch other than master for any of the
+repositories, check out the appropriate branch.</p>
+</div>
+<div class="section" id="create-packages">
+<h3>Create Packages<a class="headerlink" href="#create-packages" title="Permalink to this headline">¶</a></h3>
+<p>Create package from sawtooth repository:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@sles #</span> <span class="nb">cd</span> <span class="nv">$HOME</span>/projects/sawtooth-core
+<span class="gp">root@sles #</span> python setup.py bdist_rpm
+<span class="gp">root@sles #</span> cp dist/sawtooth-core*x86_64.rpm <span class="nv">$HOME</span>/packages
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="create-tar-file-of-packages">
+<h2>Create tar File of Packages<a class="headerlink" href="#create-tar-file-of-packages" title="Permalink to this headline">¶</a></h2>
+<p>To make it trivial to deliver the SLES RPM files, create a tar file:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@sles #</span> <span class="nb">cd</span> <span class="nv">$HOME</span>
+<span class="gp">root@sles #</span> mv packages sawtoothlake-x.y.z-sles-packages
+<span class="gp">root@sles #</span> tar cvfj sawtoothlake-x.y.z-sles-packages.tar.bz2 sawtoothlake-x.y.z-sles-packages
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The x.y.z in the above tar file name should be replaced with the version of
+the overall sawtoothlake deliverable.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="packaging_windows.html" class="btn btn-neutral float-right" title="Creating Packages for Windows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="packaging_ubuntu.html" class="btn btn-neutral" title="Creating Packages for Ubuntu" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,559 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Building and Submitting Transactions &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Address and Namespace Design" href="../app_developers_guide/address_and_namespace.html" />
+    <link rel="prev" title="Development Without an SDK" href="../app_developers_guide/no_sdk.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/overview.html">Transaction Family Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/installing_sawtooth.html">Setting Up a Sawtooth Node for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/creating_sawtooth_network.html">Creating a Sawtooth Test Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/intro_xo_transaction_family.html">Playing with the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/using_the_sdks.html">Using the Sawtooth SDKs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../app_developers_guide/no_sdk.html">Development Without an SDK</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Building and Submitting Transactions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#creating-private-and-public-keys">Creating Private and Public Keys</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#encoding-your-payload">Encoding Your Payload</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#building-the-transaction">Building the Transaction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#building-the-batch">Building the Batch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submitting-batches-to-the-validator">Submitting Batches to the Validator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/namespace_restriction.html">Namespace Restriction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/event_subscriptions.html">Subscribing to Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide/no_sdk.html">Development Without an SDK</a> &raquo;</li>
+        
+      <li>Building and Submitting Transactions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_autogen/txn_submit_tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="building-and-submitting-transactions">
+<h1>Building and Submitting Transactions<a class="headerlink" href="#building-and-submitting-transactions" title="Permalink to this headline">¶</a></h1>
+<p>The process of encoding information to be submitted to a distributed ledger is
+generally non-trivial. A series of cryptographic safeguards are used to
+confirm identity and data validity, and <em>Hyperledger Sawtooth</em> is no different.
+SHA-512 hashes and secp256k1 signatures must be generated. Transaction and
+Batch Protobufs must be created and serialized. The process can be somewhat
+daunting, but this document will take Sawtooth client developers step by step
+through the process using copious Python 3 examples.</p>
+<div class="section" id="creating-private-and-public-keys">
+<h2>Creating Private and Public Keys<a class="headerlink" href="#creating-private-and-public-keys" title="Permalink to this headline">¶</a></h2>
+<p>In order to sign your Transactions, you will need a 256-bit private key.
+Sawtooth uses the secp256k1 ECDSA standard for signing, which means that almost
+any set of 32 bytes is a valid key. A common way to generate one, is just to
+generate a random set of bytes, and then use a secp256k1 library to ensure they
+are valid.</p>
+<p>For Python, the <em>secp256k1</em> module provides a <em>PrivateKey</em> handler class from
+which we can generate the actual bytes to use for a key.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">secp256k1</span>
+
+<span class="n">key_handler</span> <span class="o">=</span> <span class="n">secp256k1</span><span class="o">.</span><span class="n">PrivateKey</span><span class="p">()</span>
+<span class="n">private_key_bytes</span> <span class="o">=</span> <span class="n">key_handler</span><span class="o">.</span><span class="n">private_key</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This key is the <strong>only</strong> way to prove your identity on the blockchain. Any
+person possessing it will be able to sign Transactions using your identity,
+and there is no way to recover it if lost. It is very important that any
+private key is kept secret and secure.</p>
+</div>
+<p>In addition to a private key, you will need a shareable public key. It will be
+generated from your private key, and can be used to confirm the private key was
+used to sign a Transaction without exposing the private key itself. Your
+secp256k1 library should be able to generate a public key, and Sawtooth will
+expect it to be formatted as a lower-case hexadecimal string for distribution
+with a Transaction.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">public_key_bytes</span> <span class="o">=</span> <span class="n">key_handler</span><span class="o">.</span><span class="n">public_key</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span>
+
+<span class="n">public_key_hex</span> <span class="o">=</span> <span class="n">public_key_bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="encoding-your-payload">
+<h2>Encoding Your Payload<a class="headerlink" href="#encoding-your-payload" title="Permalink to this headline">¶</a></h2>
+<p>Transaction payloads are composed of binary-encoded data that is opaque to the
+validator. The logic for encoding and decoding them rests entirely within the
+particular Transaction Processor itself. As a result, there are many possible
+formats, and you will have to look to the definition of the Transaction
+Processor itself for that information. As an example, the <em>IntegerKey</em>
+Transaction Processor uses a payload of three key/value pairs encoded as
+<a class="reference external" href="https://en.wikipedia.org/wiki/CBOR">CBOR</a>. Creating one might look like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cbor</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Verb&#39;</span><span class="p">:</span> <span class="s1">&#39;set&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Value&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">}</span>
+
+<span class="n">payload_bytes</span> <span class="o">=</span> <span class="n">cbor</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="building-the-transaction">
+<h2>Building the Transaction<a class="headerlink" href="#building-the-transaction" title="Permalink to this headline">¶</a></h2>
+<p><em>Transactions</em> are the basis for individual changes of state to the Sawtooth
+blockchain. They are composed of a binary payload, a binary-encoded
+<em>TransactionHeader</em> with some cryptographic safeguards and metadata about how
+it should be handled, and a signature of that header. It would be worthwhile to
+familiarize yourself with the information in
+<a class="reference internal" href="../architecture/transactions_and_batches.html"><span class="doc">Transactions and Batches</span></a>, particularly the definition of
+TransactionHeaders.</p>
+<div class="section" id="create-a-sha-512-payload-hash">
+<h3>1. Create a SHA-512 Payload Hash<a class="headerlink" href="#create-a-sha-512-payload-hash" title="Permalink to this headline">¶</a></h3>
+<p>However the payload was originally encoded, in order to confirm it has not been
+tampered with, a hash of it must be included within the Transaction’s header.
+This hash should be created using the SHA-512 function, and then formatted as a
+lower-case hexadecimal string.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha512</span>
+
+<span class="n">payload_sha512</span> <span class="o">=</span> <span class="n">sha512</span><span class="p">(</span><span class="n">payload_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-the-transactionheader">
+<h3>2. Create the TransactionHeader<a class="headerlink" href="#create-the-transactionheader" title="Permalink to this headline">¶</a></h3>
+<p>Transactions and their headers are built using the
+<a class="reference external" href="https://developers.google.com/protocol-buffers/">Google Protocol Buffer</a>
+(or Protobuf) format. This allows data to be serialized and deserialized
+consistently and efficiently across multiple platforms and multiple languages.
+The Protobuf definition files are located in the
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-core/tree/master/protos">/protos</a>
+directory at the root level of the sawtooth-core repo. These files must first
+be compiled into usable classes for your language (typically with the <cite>protoc</cite>
+command). Then, serializing a <em>TransactionHeader</em> is just a matter of plugging
+the right data into the right keys.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Generally, to compile Python Protobufs you would follow
+<a class="reference external" href="https://developers.google.com/protocol-buffers/docs/pythontutorial#compiling-your-protocol-buffers">these instructions</a>
+to install Google’s <em>Protobuf compiler</em> and manually compile Python
+classes however you like.</p>
+<p>This example will use classes from the <em>Sawtooth Python SDK</em>, which can be
+compiled by running the executable script <code class="docutils literal notranslate"><span class="pre">bin/protogen</span></code>.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+<span class="kn">from</span> <span class="nn">sawtooth_sdk.protobuf.transaction_pb2</span> <span class="kn">import</span> <span class="n">TransactionHeader</span>
+
+<span class="n">txn_header</span> <span class="o">=</span> <span class="n">TransactionHeader</span><span class="p">(</span>
+    <span class="n">batcher_public_key</span><span class="o">=</span><span class="n">public_key_hex</span><span class="p">,</span>
+    <span class="c1"># If we had any dependencies, this is what it might look like:</span>
+    <span class="c1"># dependencies=[&#39;540a6803971d1880ec73a96cb97815a95d374cbad5d865925e5aa0432fcf1931539afe10310c122c5eaae15df61236079abbf4f258889359c4d175516934484a&#39;],</span>
+    <span class="n">family_name</span><span class="o">=</span><span class="s1">&#39;intkey&#39;</span><span class="p">,</span>
+    <span class="n">family_version</span><span class="o">=</span><span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
+    <span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;1cf1266e282c41be5e4254d8820772c5518a2c5a8c0c7f7eda19594a7eb539453e1ed7&#39;</span><span class="p">],</span>
+    <span class="n">nonce</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000000000</span><span class="p">)),</span>
+    <span class="n">outputs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;1cf1266e282c41be5e4254d8820772c5518a2c5a8c0c7f7eda19594a7eb539453e1ed7&#39;</span><span class="p">],</span>
+    <span class="n">payload_sha512</span><span class="o">=</span><span class="n">payload_sha512</span><span class="p">,</span>
+    <span class="n">signer_public_key</span><span class="o">=</span><span class="n">public_key_hex</span><span class="p">)</span>
+
+<span class="n">txn_header_bytes</span> <span class="o">=</span> <span class="n">txn_header</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Remember that <em>inputs</em> and <em>outputs</em> are state addresses that this
+Transaction is allowed to read from or write to, and <em>dependencies</em> are the
+<em>header signatures</em> of Transactions that must be committed before this one
+(see TransactionHeaders in <a class="reference internal" href="../architecture/transactions_and_batches.html"><span class="doc">Transactions and Batches</span></a>).
+The dependencies property will frequently be left empty, but generally at
+least one input and output must always be set, and those addresses must
+adhere to validation rules specific to your Transaction Family (in this
+case, <a class="reference external" href="../transaction_family_specifications/integerkey_transaction_family.html#addressing">IntegerKey</a>).</p>
+</div>
+</div>
+<div class="section" id="sign-the-header">
+<h3>3. Sign the Header<a class="headerlink" href="#sign-the-header" title="Permalink to this headline">¶</a></h3>
+<p>Once the TransactionHeader is created and serialized as a Protobuf binary, you
+can use your private key to create an <em>ECDSA signature</em>. In order to generate a
+signature the Sawtooth validator will accept, you must:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>use the <em>secp256k1</em> elliptic curve</p></li>
+<li><p>sign a <em>SHA-256</em> hash of the TransactionHeader binary</p></li>
+<li><p>use a compact 64-byte signature</p></li>
+<li><p>format the signature as a lower-case hexadecimal string</p></li>
+</ul>
+</div></blockquote>
+<p>This is a fairly typical way to sign data, so depending on the language and
+library you are using, some of these steps may be handled automatically.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">key_handler</span> <span class="o">=</span> <span class="n">secp256k1</span><span class="o">.</span><span class="n">PrivateKey</span><span class="p">(</span><span class="n">private_key_bytes</span><span class="p">)</span>
+
+<span class="c1"># ecdsa_sign automatically generates a SHA-256 hash of the header bytes</span>
+<span class="n">txn_signature</span> <span class="o">=</span> <span class="n">key_handler</span><span class="o">.</span><span class="n">ecdsa_sign</span><span class="p">(</span><span class="n">txn_header_bytes</span><span class="p">)</span>
+<span class="n">txn_signature_bytes</span> <span class="o">=</span> <span class="n">key_handler</span><span class="o">.</span><span class="n">ecdsa_serialize_compact</span><span class="p">(</span><span class="n">txn_signature</span><span class="p">)</span>
+<span class="n">txn_signature_hex</span> <span class="o">=</span> <span class="n">txn_signature_bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-the-transaction">
+<h3>4. Create the Transaction<a class="headerlink" href="#create-the-transaction" title="Permalink to this headline">¶</a></h3>
+<p>With the other pieces in place, constructing the Transaction instance should be
+fairly straightforward. Create a <em>Transaction</em> class and use it to instantiate
+the Transaction.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sawtooth_sdk.protobuf.transaction_pb2</span> <span class="kn">import</span> <span class="n">Transaction</span>
+
+<span class="n">txn</span> <span class="o">=</span> <span class="n">Transaction</span><span class="p">(</span>
+    <span class="n">header</span><span class="o">=</span><span class="n">txn_header_bytes</span><span class="p">,</span>
+    <span class="n">header_signature</span><span class="o">=</span><span class="n">txn_signature_hex</span><span class="p">,</span>
+    <span class="n">payload</span><span class="o">=</span><span class="n">payload_bytes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="optional-encode-the-transaction-s">
+<h3>5. (optional) Encode the Transaction(s)<a class="headerlink" href="#optional-encode-the-transaction-s" title="Permalink to this headline">¶</a></h3>
+<p>If the same machine is creating Transactions and Batches there is no need to
+encode the Transaction instances. However, in the use case where Transactions
+are being batched externally, they must be serialized before being transmitted
+to the batcher. Technically any encoding scheme could be used so long as the
+batcher knows how to decode it, but Sawtooth does provide a <em>TransactionList</em>
+Protobuf for this purpose. Simply wrap a set of Transactions in the
+<em>transactions</em> property of a TransactionList and serialize it.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sawtooth_sdk.protobuf.transaction_pb2</span> <span class="kn">import</span> <span class="n">TransactionList</span>
+
+<span class="n">txnList</span> <span class="o">=</span> <span class="n">TransactionList</span><span class="p">(</span><span class="n">transactions</span><span class="o">=</span><span class="p">[</span><span class="n">txn</span><span class="p">])</span>
+<span class="n">txnBytes</span> <span class="o">=</span> <span class="n">txnList</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="building-the-batch">
+<h2>Building the Batch<a class="headerlink" href="#building-the-batch" title="Permalink to this headline">¶</a></h2>
+<p>Once you have one or more Transaction instances ready, they must be wrapped in
+a <em>Batch</em>. Batches are the atomic unit of change in Sawtooth’s state. When a
+Batch is submitted to a validator, each Transaction in it will be applied (in
+order) or <em>no</em> Transactions will be applied. Even if a Transaction is not
+dependent on any others, it cannot be submitted directly to the validator. It
+must be wrapped in a Batch.</p>
+<div class="section" id="optional-decode-the-transaction-s">
+<h3>1. (optional) Decode the Transaction(s)<a class="headerlink" href="#optional-decode-the-transaction-s" title="Permalink to this headline">¶</a></h3>
+<p>If the batcher is on a separate machine than the Transaction creator, any
+Transactions will have been encoded as a binary and transmitted. If so, they
+must be decoded before being wrapped in a batch. Here we assume you used a
+<em>TransactionList</em> to serialize the Transactions.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">txnList</span> <span class="o">=</span> <span class="n">TransactionList</span><span class="p">()</span>
+<span class="n">txnList</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">txnBytes</span><span class="p">)</span>
+
+<span class="n">txn</span> <span class="o">=</span> <span class="n">txnList</span><span class="o">.</span><span class="n">transactions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-the-batchheader">
+<h3>2. Create the BatchHeader<a class="headerlink" href="#create-the-batchheader" title="Permalink to this headline">¶</a></h3>
+<p>The process for creating a <em>BatchHeader</em> is very similar to a
+TransactionHeader. Compile the <em>batch.proto</em> file, and then instantiate the
+appropriate class with the appropriate values. This time, there
+are just two properties: a <em>signer public_key</em>, and a set of <em>Transaction ids</em>.
+Just like with a TransactionHeader, the signer public_key must have been generated
+from the private key used to sign the Batch. The Transaction ids are a list of
+the <em>header signatures</em> from the Transactions to be batched. They must be in
+the same order as the Transactions themselves.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sawtooth_sdk.protobuf.batch_pb2</span> <span class="kn">import</span> <span class="n">BatchHeader</span>
+
+<span class="n">batch_header</span> <span class="o">=</span> <span class="n">BatchHeader</span><span class="p">(</span>
+    <span class="n">signer_public_key</span><span class="o">=</span><span class="n">public_key_hex</span><span class="p">,</span>
+    <span class="n">transaction_ids</span><span class="o">=</span><span class="p">[</span><span class="n">txn</span><span class="o">.</span><span class="n">header_signature</span><span class="p">])</span>
+
+<span class="n">batch_header_bytes</span> <span class="o">=</span> <span class="n">batch_header</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h3>3. Sign the Header<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The process for signing a BatchHeader is identical to signing the
+TransactionHeader. Create a SHA-256 hash of the header binary, use your
+private key to create a 64-byte secp256k1 signature, and format that signature
+as a lower-case hexadecimal string. As with signing a TransactionHeader, some of
+these steps may be handled automatically by the library you are using.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">batch_signature</span> <span class="o">=</span> <span class="n">key_handler</span><span class="o">.</span><span class="n">ecdsa_sign</span><span class="p">(</span><span class="n">batch_header_bytes</span><span class="p">)</span>
+
+<span class="n">batch_signature_bytes</span> <span class="o">=</span> <span class="n">key_handler</span><span class="o">.</span><span class="n">ecdsa_serialize_compact</span><span class="p">(</span><span class="n">batch_signature</span><span class="p">)</span>
+
+<span class="n">batch_signature_hex</span> <span class="o">=</span> <span class="n">batch_signature_bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <em>batcher public_key</em> specified in every TransactionHeader must have been
+generated from the private key being used to sign the Batch, or validation
+will fail.</p>
+</div>
+</div>
+<div class="section" id="create-the-batch">
+<h3>4. Create the Batch<a class="headerlink" href="#create-the-batch" title="Permalink to this headline">¶</a></h3>
+<p>Creating a <em>Batch</em> also looks a lot like creating a Transaction. Just use the
+compiled class to instantiate a new Batch with the proper data.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sawtooth_sdk.protobuf.batch_pb2</span> <span class="kn">import</span> <span class="n">Batch</span>
+
+<span class="n">batch</span> <span class="o">=</span> <span class="n">Batch</span><span class="p">(</span>
+    <span class="n">header</span><span class="o">=</span><span class="n">batch_header_bytes</span><span class="p">,</span>
+    <span class="n">header_signature</span><span class="o">=</span><span class="n">batch_signature_hex</span><span class="p">,</span>
+    <span class="n">transactions</span><span class="o">=</span><span class="p">[</span><span class="n">txn</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="encode-the-batch-es">
+<h3>5. Encode the Batch(es)<a class="headerlink" href="#encode-the-batch-es" title="Permalink to this headline">¶</a></h3>
+<p>In order to submit one or more Batches to a validator, they must be serialized
+in a <em>BatchList</em> Protobuf. BatchLists have a single property, <em>batches</em>, which
+should be set to one or more Batches. Unlike Transactions, where
+TransactionList was a convenience, a Sawtooth validator will <em>only</em> accept
+Batches that have been wrapped in a BatchList.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sawtooth_sdk.protobuf.batch_pb2</span> <span class="kn">import</span> <span class="n">BatchList</span>
+
+<span class="n">batch_list</span> <span class="o">=</span> <span class="n">BatchList</span><span class="p">(</span><span class="n">batches</span><span class="o">=</span><span class="p">[</span><span class="n">batch</span><span class="p">])</span>
+<span class="n">batch_bytes</span> <span class="o">=</span> <span class="n">batch_list</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="submitting-batches-to-the-validator">
+<h2>Submitting Batches to the Validator<a class="headerlink" href="#submitting-batches-to-the-validator" title="Permalink to this headline">¶</a></h2>
+<p>The prescribed way to submit Batches to the validator is via the REST API.
+This is an independent process that runs alongside a validator, allowing clients
+to communicate using HTTP/JSON standards. Simply send a <em>POST</em> request to the
+<em>/batches</em> endpoint, with a <em>“Content-Type”</em> header of
+<em>“application/octet-stream”</em>, and the <em>body</em> as a serialized <em>BatchList</em>.</p>
+<p>There are a many ways to make an HTTP request, and hopefully the submission
+process is fairly straightforward from here, but as an example, this is what it
+might look if you sent the request from the same  process that
+prepared the BatchList:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">urllib.request</span>
+<span class="kn">from</span> <span class="nn">urllib.error</span> <span class="kn">import</span> <span class="n">HTTPError</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span>
+        <span class="s1">&#39;http://rest.api.domain/batches&#39;</span><span class="p">,</span>
+        <span class="n">batch_list_bytes</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/octet-stream&#39;</span><span class="p">})</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">file</span>
+</pre></div>
+</div>
+<p>And here is what it would look like if you saved the binary to a file, and then
+sent it from the command line with <code class="docutils literal notranslate"><span class="pre">curl</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;intkey.batches&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
+<span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">batch_list_bytes</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>% curl --request POST <span class="se">\</span>
+    --header <span class="s2">&quot;Content-Type: application/octet-stream&quot;</span> <span class="se">\</span>
+    --data-binary @intkey.batches <span class="se">\</span>
+    <span class="s2">&quot;http://rest.api.domain/batches&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../app_developers_guide/address_and_namespace.html" class="btn btn-neutral float-right" title="Address and Namespace Design" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../app_developers_guide/no_sdk.html" class="btn btn-neutral float-left" title="Development Without an SDK" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

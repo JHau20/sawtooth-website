@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["file_descriptor_proto",""]],"struct":[["BlockInfo",""],["BlockInfoConfig","Generated files are compatible only with the same version of protobuf runtime."],["BlockInfoTxn",""]]});

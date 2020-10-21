@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Testing a Transaction Processor &mdash; Sawtooth v0.8.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.7 documentation" href="../index.html"/>
+        <link rel="up" title="Application Developer’s Guide" href="../app_developers_guide.html"/>
+        <link rel="next" title="JavaScript SDK" href="javascript_sdk.html"/>
+        <link rel="prev" title="Address and Namespace Design" href="address_and_namespace.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installing_sawtooth.html">Installing and Running Sawtooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Introduction to the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Testing a Transaction Processor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#communication-with-the-validator">Communication with the Validator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#message-factory-and-mock-validator">Message Factory and Mock Validator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="javascript_sdk.html">JavaScript SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_sdk.html">Python SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="java_sdk.html">Java SDK</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Testing a Transaction Processor</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/testing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="testing-a-transaction-processor">
+<h1>Testing a Transaction Processor<a class="headerlink" href="#testing-a-transaction-processor" title="Permalink to this headline">¶</a></h1>
+<p>Say we&#8217;ve written a transaction processor &#8211; how can it be tested? In this
+section, we&#8217;ll see how to test the XO transaction processor described in the
+language-specific tutorials that show you how to write your own transaction
+family (see the <a class="reference internal" href="../app_developers_guide.html"><span class="doc">Application Developer&#8217;s Guide</span></a>) against a mock validator.</p>
+<div class="section" id="communication-with-the-validator">
+<h2>Communication with the Validator<a class="headerlink" href="#communication-with-the-validator" title="Permalink to this headline">¶</a></h2>
+<p>First, let&#8217;s look at what happens when the XO transaction &#8216;create game000&#8217; is
+processed. Communication between the validator and a transaction processor (TP)
+takes place in six steps:</p>
+<p>1) The validator needs to process a transaction, so it sends a transaction
+process request to the TP containing the transaction information (in this case,
+the command &#8216;create&#8217; and the game name &#8216;game000&#8217;).</p>
+<p>2) The TP needs to know whether a game already exists with the name &#8216;game000&#8217;,
+so it sends a &#8216;get&#8217; request back to the validator.</p>
+<p>3) After querying state, the validator sends back the results to the TP (in
+this case, we&#8217;ll assume that there is no game called &#8216;game000&#8217;).</p>
+<p>4) The TP now sends a message back to the validator requesting that it set
+&#8216;game000&#8217; to an initialized game (with an empty board, etc).</p>
+<ol class="arabic simple" start="5">
+<li>The validator sends the address of the created game back to the TP.</li>
+</ol>
+<p>6) The TP sends an &#8216;OK&#8217; response to the validator, signaling that the
+transaction was processed successfully.</p>
+<p>This description suggests an outline for a test:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_create_game</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">validator_sends_tp_process_request</span><span class="p">(</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;create&#39;</span><span class="p">,</span>
+        <span class="n">game</span><span class="o">=</span><span class="s1">&#39;game000&#39;</span><span class="p">)</span>
+
+    <span class="n">get_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator_expects_get_request</span><span class="p">(</span><span class="s1">&#39;game000&#39;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">validator_responds_to_get_request</span><span class="p">(</span>
+        <span class="n">get_message</span><span class="p">,</span>
+        <span class="n">game</span><span class="o">=</span><span class="s1">&#39;game000&#39;</span><span class="p">,</span> <span class="n">board</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+        <span class="n">state</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">player1</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">player2</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+
+    <span class="n">set_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator_expects_set_request</span><span class="p">(</span>
+        <span class="n">game</span><span class="o">=</span><span class="s1">&#39;game000&#39;</span><span class="p">,</span> <span class="n">board</span><span class="o">=</span><span class="s1">&#39;---------&#39;</span><span class="p">,</span>
+        <span class="n">state</span><span class="o">=</span><span class="s1">&#39;P1-NEXT&#39;</span><span class="p">,</span> <span class="n">player1</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">player2</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">validator_responds_to_set_request</span><span class="p">(</span><span class="n">set_message</span><span class="p">,</span> <span class="s1">&#39;game000&#39;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">validator_expects_tp_response</span><span class="p">(</span><span class="s1">&#39;OK&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="message-factory-and-mock-validator">
+<h2>Message Factory and Mock Validator<a class="headerlink" href="#message-factory-and-mock-validator" title="Permalink to this headline">¶</a></h2>
+<p>To implement these functions, we&#8217;ll need a mock validator to send messages to
+and from and a way manufacture the appropriate messages. How exactly the
+messages are manufactured is not important here &#8211; it&#8217;s just a matter of
+getting the relevant information into probuf objects. This will be taken care
+of for us by the <em>XoMessageFactory</em>
+(<code class="docutils literal"><span class="pre">/project/sawtooth-core/sdk/examples/xo_python/sawtooth_xo/xo_message_factory.py</span></code>),
+which itself relies on the more general <em>MessageFactory</em>
+(<code class="docutils literal"><span class="pre">/project/sawtooth-core/sdk/python/sawtooth_processor_test/message_factory.py</span></code>).</p>
+<p>To set up a mock validator, we can rely on <em>TransactionProcessorTestCase</em>
+(<code class="docutils literal"><span class="pre">/project/sawtooth-core/sdk/python/sawtooth_processor_test/transaction_processor_test_case.py</span></code>).
+This test class assumes that a transaction processor has been set up to connect
+to a certain address. It creates a mock validator that binds to that address
+(and closes the connection after all the tests have run):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TransactionProcessorTestCase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">setUpClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;eth0:4004&#39;</span>
+
+        <span class="bp">cls</span><span class="o">.</span><span class="n">validator</span> <span class="o">=</span> <span class="n">MockValidator</span><span class="p">()</span>
+
+        <span class="bp">cls</span><span class="o">.</span><span class="n">validator</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">validator</span><span class="o">.</span><span class="n">register_processor</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Failed to register processor&#39;</span><span class="p">)</span>
+
+        <span class="bp">cls</span><span class="o">.</span><span class="n">factory</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">tearDownClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">validator</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Combining functions from the message factory and the test validator to create
+our helper functions is straightforward:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TestXo</span><span class="p">(</span><span class="n">TransactionProcessorTestCase</span><span class="p">):</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">setUpClass</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">setUpClass</span><span class="p">()</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">factory</span> <span class="o">=</span> <span class="n">XoMessageFactory</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">test_create_game</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># ...</span>
+
+    <span class="c1"># helper functions</span>
+
+    <span class="k">def</span> <span class="nf">validator_sends_tp_process_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="o">.</span><span class="n">send</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">create_tp_process_request</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">validator_expects_get_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="o">.</span><span class="n">expect</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">create_get_request</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">validator_responds_to_get_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">create_get_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">message</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">validator_expects_set_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="o">.</span><span class="n">expect</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">create_set_request</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">validator_responds_to_set_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">create_set_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">message</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">validator_expects_tp_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator</span><span class="o">.</span><span class="n">expect</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">create_tp_response</span><span class="p">(</span><span class="n">status</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>With this apparatus, we can easily create tests for other XO commands, like
+taking a space:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_take_space</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">player1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">get_public_key</span><span class="p">()</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">validator_sends_tp_process_request</span><span class="p">(</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;take&#39;</span><span class="p">,</span>
+        <span class="n">game</span><span class="o">=</span><span class="s1">&#39;game000&#39;</span><span class="p">,</span>
+        <span class="n">space</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">get_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator_expects_get_request</span><span class="p">(</span><span class="s1">&#39;game000&#39;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">validator_responds_to_get_request</span><span class="p">(</span>
+        <span class="n">get_message</span><span class="p">,</span>
+        <span class="n">game</span><span class="o">=</span><span class="s1">&#39;game000&#39;</span><span class="p">,</span> <span class="n">board</span><span class="o">=</span><span class="s1">&#39;---------&#39;</span><span class="p">,</span>
+        <span class="n">state</span><span class="o">=</span><span class="s1">&#39;P1-NEXT&#39;</span><span class="p">,</span> <span class="n">player1</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">player2</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="n">set_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator_expects_set_request</span><span class="p">(</span>
+        <span class="n">game</span><span class="o">=</span><span class="s1">&#39;game000&#39;</span><span class="p">,</span> <span class="n">board</span><span class="o">=</span><span class="s1">&#39;--X------&#39;</span><span class="p">,</span>
+        <span class="n">state</span><span class="o">=</span><span class="s1">&#39;P2-NEXT&#39;</span><span class="p">,</span> <span class="n">player1</span><span class="o">=</span><span class="n">player1</span><span class="p">,</span> <span class="n">player2</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">validator_responds_to_set_request</span><span class="p">(</span><span class="n">set_message</span><span class="p">,</span> <span class="s1">&#39;game000&#39;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">validator_expects_tp_response</span><span class="p">(</span><span class="s1">&#39;OK&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="javascript_sdk.html" class="btn btn-neutral float-right" title="JavaScript SDK" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="address_and_namespace.html" class="btn btn-neutral" title="Address and Namespace Design" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

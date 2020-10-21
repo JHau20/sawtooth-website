@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+  <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<head>
+	<meta charset="utf-8">
+	<title>Sawtooth FAQ - Upgrading Hyperledger Sawtooth | Hyperledger Sawtooth</title>
+	<meta name="description" content="An enterprise-grade solution for distributed ledgers.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="0.0.0.0/faq/upgrade/">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Hyperledger Sawtooth" href="0.0.0.0/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+
+	<!-- Google Analytics
+	-->
+</head>
+
+  <body>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">Hyperledger Sawtooth</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+                        
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/release/">
+					Releases
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/docs/">
+					Docs
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/faq/">
+					FAQ
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/community/">
+					Community
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/contact/">
+					Contact
+				</a>
+			</li>
+			
+			
+			<li>
+				<a class="page-link" href="/examples">
+					Examples
+				</a>
+			</li>
+			<!-- Social icons from Font Awesome, if enabled -->
+			<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/hyperledger/sawtooth-core" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/\%23HyperledgerSawtooth" title="Follow on Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Sawtooth FAQ - Upgrading Hyperledger Sawtooth</h1>
+  </header>
+  <section class="post-content"><p class="mininav"><a class="reference external" href="/faq/docker/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/glossary/">NEXT</a></p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#points-to-consider-while-upgrading-hyperledger-sawtooth" id="id1">Points to consider while upgrading Hyperledger Sawtooth</a></li>
+<li><a class="reference internal" href="#transaction-processor-upgrades" id="id2">Transaction Processor upgrades</a></li>
+<li><a class="reference internal" href="#consensus-engine-upgrades" id="id3">Consensus engine upgrades</a></li>
+<li><a class="reference internal" href="#general-practice-for-deploying-a-hyperledger-sawtooth-application" id="id4">General practice for deploying a Hyperledger Sawtooth application</a></li>
+</ul>
+</div>
+<div class="section" id="points-to-consider-while-upgrading-hyperledger-sawtooth">
+<h2><a class="toc-backref" href="#id1">Points to consider while upgrading Hyperledger Sawtooth</a></h2>
+<p>This is applicable to upgrade from version 1.0.X to 1.1.X</p>
+<ol class="arabic simple">
+<li>Persist the block store, transaction receipt and global state (lmdb files
+default stored in /var/lib/sawtooth directory).</li>
+<li>Persist the keys generated for the validator (default stored in
+/etc/sawtooth directory).</li>
+<li>Hyperledger Sawtooth 1.1.X versions have a major feature introduced where
+different consensus engine can be plugged into the validator.<ul>
+<li>Validator shall open the listener port so that the consensus engine can
+be registered to it. This in addition to other ports which are open to
+transaction processor/event listeners/clients, validator connections.
+For example, command line option to listen on localhost is as follows</li>
+</ul>
+</li>
+</ol>
+<pre class="code sh literal-block">
+sawtooth-validator --bind consensus:tcp://localhost:5050
+</pre>
+<ol class="arabic simple" start="4">
+<li>When a validator service is restarted, you need to re-register the
+transaction processor, consensus engine or other components such as event
+listeners. This is true for all the components which initiates a connection
+to the validator service, except for the case of validator itself initiates
+a connection.</li>
+<li>Submitted transactions are stored in memory, these are lost when the service
+is brought down or a new service is brought up.</li>
+<li>Client should have a retry mechanism for all the transactions until they are
+either considered in a block or rejected by the validator.</li>
+</ol>
+<p><strong>Note:</strong> The validator service would be unavailable for the time period when
+the upgrade happens. Client can consider this as validator service unavailable
+and retry the transactions when the validator service is up again.</p>
+</div>
+<div class="section" id="transaction-processor-upgrades">
+<h2><a class="toc-backref" href="#id2">Transaction Processor upgrades</a></h2>
+<ul class="simple">
+<li>Maintain old versions of transaction processors, even though clients are not
+sending transactions to the old version. This is required so that when a new
+validator is added to the network and it needs to catch up with earlier
+published blocks.</li>
+</ul>
+</div>
+<div class="section" id="consensus-engine-upgrades">
+<h2><a class="toc-backref" href="#id3">Consensus engine upgrades</a></h2>
+<ul class="simple">
+<li>Maintain older version of consensus engines for a newly added node in the
+network, to catch up with the earlier blocks.</li>
+</ul>
+</div>
+<div class="section" id="general-practice-for-deploying-a-hyperledger-sawtooth-application">
+<h2><a class="toc-backref" href="#id4">General practice for deploying a Hyperledger Sawtooth application</a></h2>
+<ul class="simple">
+<li>Transactions may be rejected by a validator if the input rate is higher than
+what a validator can handle in its queue. The queue maintained by the
+validator does not have a fixed size, rather the size depends on the rate at
+which blocks are published. Client should consider this queue full case at
+validator end and retry the same transaction when the validator is able to
+handle.</li>
+</ul>
+<p class="mininav"><a class="reference external" href="/faq/docker/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/glossary/">NEXT</a></p>
+<p>© Copyright 2018, Intel Corporation.</p>
+</div>
+
+</section>
+</article>
+
+    </div>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text"><p style="font-size: 1.5em;">
+  Hyperledger Sawtooth
+</p> <p>
+  <a href="/" title="Home"><span class="links">Home</span></a>
+  &bull;
+  <a href="/about/" title="About Sawtooth"><span class="links">About</span></a>
+  &bull;
+  <a href="/release/" title="Releases"><span class="links">Releases</span></a>
+  &bull;
+  <a href="/docs/" title="Documentation"><span class="links">Docs</span></a>
+  &bull;
+  <a href="/faq/" title="FAQ"><span class="links">FAQ</span></a>
+  &bull;
+  <a href="/community/" title="Community"><span class="links">Community</span></a>
+  &bull;
+  <a href="/contact/" title="Contact"><span class="links">Contact</span></a>
+</p> <p>
+  Find us: &nbsp;
+  <a href="https://github.com/hyperledger/sawtooth-core/" target="_blank" title="GitHub"><span  class="links">GitHub</span></a>
+  &bull;
+  <a href="https://chat.hyperledger.org/channel/sawtooth" target="_blank" title="#sawtooth chat channel"">Rocket.Chat</a>
+  &bull;
+  <a href="https://twitter.com/search?q=%23HyperledgerSawtooth" target="_blank" title="#sawtooth chat channel"">Twitter</a>
+</p> <p>
+  Examples: &nbsp;
+  <a href="/examples/seafood.html" target="_blank" title="Seafood Supply Chain Traceability">Seafood Supply Chain Traceability</a>
+  &bull;
+  <a href="/examples/bond.html" target="_blank" title="Bond Asset Settlement">Bond Asset Settlement</a>
+  &bull;
+  <a href="/examples/marketplace.html" target="_blank" title="Marketplace Digital Asset Exchange">Marketplace Digital Asset Exchange</a>
+</p> <p>
+  Linux Foundation: &nbsp;
+  <a href="http://www.linuxfoundation.org/privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+  &bull;
+  <a href="http://www.linuxfoundation.org/terms" target="_blank" title="Terms of Service">Terms of Service</a>
+</p> <p>
+  <small class="copyright">Copyright &copy; 2015-2019 contributors to Hyperledger Sawtooth</small>
+</p>
+</p>
+</footer>
+
+
+  </body>
+</html>

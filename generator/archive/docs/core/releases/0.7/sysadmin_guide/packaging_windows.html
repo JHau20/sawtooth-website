@@ -1,0 +1,602 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Creating Packages for Windows &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="System Administrator’s Guide" href="../sysadmin_guide.html"/>
+        <link rel="next" title="Installation on Ubuntu" href="installation_ubuntu.html"/>
+        <link rel="prev" title="Creating Packages for SLES" href="packaging_sles.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="packaging_ubuntu.html">Creating Packages for Ubuntu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging_sles.html">Creating Packages for SLES</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Creating Packages for Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-tools">Install Tools</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#install-net-framework-3-5">Install .Net Framework 3.5</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-visual-studio-2008">Install Visual Studio 2008</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-microsoft-visual-c-compiler-for-python-2-7">Install Microsoft Visual C++ Compiler for Python 2.7</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-python">Install Python</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-swig">Install SWIG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-nsis">Install NSIS</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#compile-and-install-source-dependencies">Compile and Install Source Dependencies</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#crypto">Crypto++</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#json-c">JSON-C</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#build-sawtooth-lake-package">Build Sawtooth Lake Package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation_ubuntu.html">Installation on Ubuntu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_sles.html">Installation on SLES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_windows.html">Installation on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network_configuration.html">Network Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Creating Packages for Windows</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/packaging_windows.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="creating-packages-for-windows">
+<h1>Creating Packages for Windows<a class="headerlink" href="#creating-packages-for-windows" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>To create packages for Windows, you need the following:</p>
+<ul class="simple">
+<li>Windows Server 2012R2 or Windows 8.1</li>
+<li>.Net Framework 3.5</li>
+<li>Visual Studio 2008</li>
+<li>Microsoft Visual C++ Compiler for Python 2.7 (VCForPython27.msi)</li>
+<li>Python 2.7.11 Windows x86-64 MSI Installer (python-2.7.11.amd64.msi)</li>
+<li>SWIG 3.0.7 (swigwin-3.0.7.zip)</li>
+<li>NSIS 2.50 (nsis-2.50-setup.exe)</li>
+<li>Crypto++ 5.6.1 (cryptopp561.zip)</li>
+<li>json-c 0.11 (json-c-0.11.tar.gz)</li>
+</ul>
+<p>Download Visual C++ Compiler for Python 2.7 (VCForPython27.msi) from:</p>
+<blockquote>
+<div><a class="reference external" href="http://www.microsoft.com/en-us/download/details.aspx?id=44266">http://www.microsoft.com/en-us/download/details.aspx?id=44266</a></div></blockquote>
+<p>Download Python Windows x86-64 MSI Installer (python-2.7.11.amd64.msi) from:</p>
+<blockquote>
+<div><a class="reference external" href="https://www.python.org/downloads/windows/">https://www.python.org/downloads/windows/</a></div></blockquote>
+<p>Download the Swig 3.0.7 (swigwin-3.0.7.zip) pre-built package from:</p>
+<blockquote>
+<div><a class="reference external" href="http://www.swig.org/download.html">http://www.swig.org/download.html</a></div></blockquote>
+<p>Download the NSIS installer (nsis-2.50-setup.exe) from:</p>
+<blockquote>
+<div><a class="reference external" href="http://nsis.sourceforge.net/Download">http://nsis.sourceforge.net/Download</a></div></blockquote>
+<p>Download cryptopp561.zip from:</p>
+<blockquote>
+<div><a class="reference external" href="https://www.cryptopp.com/#download">https://www.cryptopp.com/#download</a></div></blockquote>
+<p>Download json-c-011.tar.gz from:</p>
+<blockquote>
+<div><a class="reference external" href="https://s3.amazonaws.com/json-c_releases/releases/index.html">https://s3.amazonaws.com/json-c_releases/releases/index.html</a></div></blockquote>
+<p>The remainder of these instructions assume a vanilla Windows 2012R2
+machine as a starting point.</p>
+</div>
+<div class="section" id="install-tools">
+<h2>Install Tools<a class="headerlink" href="#install-tools" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install-net-framework-3-5">
+<h3>Install .Net Framework 3.5<a class="headerlink" href="#install-net-framework-3-5" title="Permalink to this headline">¶</a></h3>
+<p>On Windows Server 2012R2:</p>
+<ul class="simple">
+<li>Open Server Manager&gt; Add Roles and Features&gt;</li>
+<li>Click Next until you get to Features</li>
+<li>Check .Net Framework 3.5 Features</li>
+</ul>
+<img alt="../_images/net_framework.png" src="../_images/net_framework.png" />
+<ul class="simple">
+<li>Click Install</li>
+</ul>
+</div>
+<div class="section" id="install-visual-studio-2008">
+<h3>Install Visual Studio 2008<a class="headerlink" href="#install-visual-studio-2008" title="Permalink to this headline">¶</a></h3>
+<p>If you don&#8217;t have a copy, a trial version is available at:</p>
+<p><a class="reference external" href="http://download.microsoft.com/download/8/1/d/81d3f35e-fa03-485b-953b-ff952e402520/VS2008ProEdition90dayTrialENUX1435622.iso">http://download.microsoft.com/download/8/1/d/81d3f35e-fa03-485b-953b-ff952e402520/VS2008ProEdition90dayTrialENUX1435622.iso</a></p>
+<ul class="simple">
+<li>Click Install Visual Studio 2008&gt;
+Accept license terms and click Next&gt;
+Select Custom and click Next&gt;</li>
+</ul>
+<img alt="../_images/visual_studio_custom.png" src="../_images/visual_studio_custom.png" />
+<ul class="simple">
+<li>Expand &#8220;Visual C++&#8221; check X64 C++ Compilers and Tools</li>
+</ul>
+<img alt="../_images/visual_studio_x64_compiler.png" src="../_images/visual_studio_x64_compiler.png" />
+<ul class="simple">
+<li>Click Install. The installation process may take around ten minutes to
+complete</li>
+<li>Launch Visual Studio. Select Visual C++ Development Settings</li>
+</ul>
+</div>
+<div class="section" id="install-microsoft-visual-c-compiler-for-python-2-7">
+<h3>Install Microsoft Visual C++ Compiler for Python 2.7<a class="headerlink" href="#install-microsoft-visual-c-compiler-for-python-2-7" title="Permalink to this headline">¶</a></h3>
+<p>Install Microsoft Visual C++ Compiler for Python 2.7 using the
+VCForPython27.msi package:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">PS C:\Users\username&gt; cd .\Download</span>
+<span class="go">PS C:\Users\username\Downloads&gt; msiexec /i VCForPython27.msi ALLUSERS=1</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you don&#8217;t have administrator rights, the above command should be
+executed without ALLUSERS=1.</p>
+</div>
+</div>
+<div class="section" id="install-python">
+<h3>Install Python<a class="headerlink" href="#install-python" title="Permalink to this headline">¶</a></h3>
+<p>Use the Python 2.7.11 Windows x86-64 MSI Installer (python-2.7.11.amd64.msi)
+to install Python.  You may be asked to reboot.</p>
+</div>
+<div class="section" id="install-swig">
+<h3>Install SWIG<a class="headerlink" href="#install-swig" title="Permalink to this headline">¶</a></h3>
+<p>Unzip the contents of swigwin-3.0.7.zip to <code class="docutils literal"><span class="pre">c:\swig</span></code>.</p>
+</div>
+<div class="section" id="install-nsis">
+<h3>Install NSIS<a class="headerlink" href="#install-nsis" title="Permalink to this headline">¶</a></h3>
+<p>Use the NSIS 2.50 Installer to install NSIS to the default location.</p>
+</div>
+</div>
+<div class="section" id="compile-and-install-source-dependencies">
+<h2>Compile and Install Source Dependencies<a class="headerlink" href="#compile-and-install-source-dependencies" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="crypto">
+<h3>Crypto++<a class="headerlink" href="#crypto" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="extract-cryptopp561-zip">
+<h4>Extract cryptopp561.zip<a class="headerlink" href="#extract-cryptopp561-zip" title="Permalink to this headline">¶</a></h4>
+<p>Extract cryptopp561.zip to two locations:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">C:\build\cryptop561</span></code></li>
+<li><code class="docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Common</span> <span class="pre">Files\Microsoft\Visual</span> <span class="pre">C++</span> <span class="pre">for</span> <span class="pre">Python\9.0\VC\include\cryptopp</span></code></li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you installed VCForPython27.msi without administrator rights, the
+destination path is
+<code class="docutils literal"><span class="pre">C:\Users\username\AppData\Local\Programs\Common\Microsoft\Visual</span> <span class="pre">C++</span> <span class="pre">for</span> <span class="pre">Python\9.0\VC\include\cryptopp</span></code></p>
+</div>
+</div>
+<div class="section" id="source-code-modifications">
+<h4>Source Code Modifications<a class="headerlink" href="#source-code-modifications" title="Permalink to this headline">¶</a></h4>
+<p>We need to add the CRYPTOPP_DLL macro to the class definitions in base32.h
+in order to export some additional non-FIPS functions. This patch should be
+applied to the files in <code class="docutils literal"><span class="pre">c:\build\cryptop561</span></code>:</p>
+<div class="highlight-diff"><div class="highlight"><pre><span></span><span class="gd">--- base32.h.old  2015-12-22 19:51:01.000000000 -0600</span>
+<span class="gi">+++ base32.h  2015-12-21 17:45:06.000000000 -0600</span>
+<span class="gu">@@ -7,7 +7,7 @@</span>
+
+ //! Converts given data to base 32, the default code is based on draft-ietf-idn-dude-02.txt
+ /*! To specify alternative code, call Initialize() with EncodingLookupArray parameter. */
+<span class="gd">-class Base32Encoder : public SimpleProxyFilter</span>
+<span class="gi">+class CRYPTOPP_DLL Base32Encoder : public SimpleProxyFilter</span>
+ {
+ public:
+  Base32Encoder(BufferedTransformation *attachment = NULL, bool uppercase = true, int outputGroupSize = 0, const std::string &amp;separator = &quot;:&quot;, const std::string &amp;terminator = &quot;&quot;)
+<span class="gu">@@ -21,7 +21,7 @@</span>
+
+ //! Decode base 32 data back to bytes, the default code is based on draft-ietf-idn-dude-02.txt
+ /*! To specify alternative code, call Initialize() with DecodingLookupArray parameter. */
+<span class="gd">-class Base32Decoder : public BaseN_Decoder</span>
+<span class="gi">+class CRYPTOPP_DLL Base32Decoder : public BaseN_Decoder</span>
+ {
+ public:
+  Base32Decoder(BufferedTransformation *attachment = NULL)
+</pre></div>
+</div>
+</div>
+<div class="section" id="build">
+<h4>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h4>
+<p>Import the Crypto++ project into Visual Studio:</p>
+<ul class="simple">
+<li>Open VS 2008</li>
+<li>File&gt; Open Solution&gt; Navigate to <code class="docutils literal"><span class="pre">c:\build\cryptopp561</span></code> and select
+cryptest.sln</li>
+<li>A box will pop up asking you to convert the solution. You can click
+&#8220;Finish&#8221; and then &#8220;Close&#8221;</li>
+</ul>
+<p>We&#8217;ll need to first build the 32-bit configuration in order for the 64-bit
+libraries to work correctly:</p>
+<ul class="simple">
+<li>Change the Solution Configuration dropdown from &#8220;Debug&#8221; to &#8220;Release&#8221;</li>
+<li>Select Build&gt; Build Solution from the menu. You can also initate a build by
+pressing the F7 key.</li>
+</ul>
+<p>After the build completes, build the 64-bit libraries.</p>
+<ul class="simple">
+<li>Change the Solution Configuration dropdown from &#8220;Release&#8221; to
+&#8220;Dll-Import Release&#8221;</li>
+<li>Change Platform to x64</li>
+<li>Build the solution</li>
+<li>This sometimes needs to be run twice in order to produce usable libraries</li>
+</ul>
+<p>The build artifacts are placed in
+<code class="docutils literal"><span class="pre">c:\build\cryptopp561\x64\DLL_Output\Release</span></code></p>
+</div>
+</div>
+<div class="section" id="json-c">
+<h3>JSON-C<a class="headerlink" href="#json-c" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="extract-json-c-011-tar-gz">
+<h4>Extract json-c-011.tar.gz<a class="headerlink" href="#extract-json-c-011-tar-gz" title="Permalink to this headline">¶</a></h4>
+<p>Extract json-c-011.tar.gz to two locations:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">C:\build\json-c-0.11</span></code></li>
+<li><code class="docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Common</span> <span class="pre">Files\Microsoft\Visual</span> <span class="pre">C++</span> <span class="pre">for</span> <span class="pre">Python\9.0\VC\include\json-c</span></code></li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you installed VCForPython27.msi without administrator rights, the
+destination path is
+<code class="docutils literal"><span class="pre">C:\Users\username\AppData\Local\Programs\Common\Microsoft\Visual</span> <span class="pre">C++</span> <span class="pre">for</span> <span class="pre">Python\9.0\VC\include\json-c</span></code></p>
+</div>
+</div>
+<div class="section" id="id1">
+<h4>Source Code Modifications<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<p>A few changes need to be made so JSON-C will properly build on windows.
+These patches should be applied to the files in <code class="docutils literal"><span class="pre">c:\build\json-c-0.11</span></code></p>
+<p>Changes to c:\build\json-c-0.11\json_util.c:</p>
+<div class="highlight-diff"><div class="highlight"><pre><span></span><span class="gd">--- json_util.c.old 2013-03-31 21:01:09.000000000 -0500</span>
+<span class="gi">+++ json_util.c 2015-12-22 11:07:56.000000000 -0600</span>
+<span class="gu">@@ -40,6 +40,7 @@</span>
+ # define WIN32_LEAN_AND_MEAN
+ # include &lt;windows.h&gt;
+ # include &lt;io.h&gt;
+<span class="gi">+# define snprintf _snprintf</span>
+ #endif /* defined(WIN32) */
+
+ #if !defined(HAVE_OPEN) &amp;&amp; defined(WIN32)
+<span class="gu">@@ -158,15 +159,19 @@</span>
+  */
+ static void sscanf_is_broken_test()
+ {
+<span class="gi">+ int ret_errno;</span>
+  int64_t num64;
+<span class="gi">+ int is_int64_min;</span>
+<span class="gi">+ int ret_errno2;</span>
+<span class="gi">+ int is_int64_max;</span>
+
+  (void)sscanf(&quot; -01234567890123456789012345&quot;, &quot;%&quot; SCNd64, &amp;num64);
+<span class="gd">- int ret_errno = errno;</span>
+<span class="gd">- int is_int64_min = (num64 == INT64_MIN);</span>
+<span class="gi">+ ret_errno = errno;</span>
+<span class="gi">+ is_int64_min = (num64 == INT64_MIN);</span>
+
+  (void)sscanf(&quot; 01234567890123456789012345&quot;, &quot;%&quot; SCNd64, &amp;num64);
+<span class="gd">- int ret_errno2 = errno;</span>
+<span class="gd">- int is_int64_max = (num64 == INT64_MAX);</span>
+<span class="gi">+ ret_errno2 = errno;</span>
+<span class="gi">+ is_int64_max = (num64 == INT64_MAX);</span>
+
+  if (ret_errno != ERANGE || !is_int64_min ||
+      ret_errno2 != ERANGE || !is_int64_max)
+</pre></div>
+</div>
+<p>Changes to c:\build\json-c-0.11\json_object.c:</p>
+<div class="highlight-diff"><div class="highlight"><pre><span></span><span class="gd">--- json_object.c.old 2015-12-22 20:17:02.000000000 -0600</span>
+<span class="gi">+++ json_object.c 2015-12-22 20:16:48.000000000 -0600</span>
+<span class="gu">@@ -37,6 +37,10 @@</span>
+   char* strndup(const char* str, size_t n);
+ #endif /* !HAVE_STRNDUP */
+
+<span class="gi">+#ifdef WIN32</span>
+<span class="gi">+# define snprintf _snprintf</span>
+<span class="gi">+#endif /* defined(WIN32) */</span>
+<span class="gi">+</span>
+ // Don&#39;t define this.  It&#39;s not thread-safe.
+ /* #define REFCOUNT_DEBUG 1 */
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h4>Build<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Copy <code class="docutils literal"><span class="pre">c:\build\json-c-0.11\config.h.win32</span></code> to
+<code class="docutils literal"><span class="pre">c:\build\json-c-0.11\config.h</span></code></li>
+<li>Open VS 2008</li>
+<li>File&gt; Open Solution&gt; Navigate to <code class="docutils literal"><span class="pre">c:\build\json-c-0.11</span></code> and select
+json-c.sln</li>
+<li>A box will pop up asking you to convert the solution. You can click
+&#8220;Finish&#8221; and then &#8220;Close&#8221;</li>
+<li>Build&gt; Configuration Manager&gt;</li>
+<li>Click the &#8220;Active solution plaform&#8221; drop-down and select &#8220;New&#8221;</li>
+<li>Select &#8220;x64&#8221; from the &#8220;Type or select the new platform&#8221; dropdown</li>
+</ul>
+<img alt="../_images/new_platform_solution.png" src="../_images/new_platform_solution.png" />
+<ul class="simple">
+<li>Click OK, then Close</li>
+<li>Change the Solution Configuration dropdown from &#8220;Debug&#8221; to &#8220;Release&#8221;</li>
+<li>Change Platform to x64</li>
+<li>Build the solution</li>
+</ul>
+<p>Build artifacts are placed in <code class="docutils literal"><span class="pre">c:\build\json-c-0.11\x64\Release</span></code></p>
+</div>
+</div>
+</div>
+<div class="section" id="build-sawtooth-lake-package">
+<h2>Build Sawtooth Lake Package<a class="headerlink" href="#build-sawtooth-lake-package" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Open Windows Powershell and set some environment variables</li>
+</ul>
+<div class="code console highlight-default"><div class="highlight"><pre><span></span>PS C:\Users\username&gt; $env:path += ”;c:\swig;c:\python27;C:\Program Files (x86)\NSIS”
+PS C:\Users\username&gt; $env:PYTHONPATH += &quot;;C:\Program Files (x86)\Intel\sawtooth-validator\lib\python\&quot;
+</pre></div>
+</div>
+<ul class="simple">
+<li>Copy cryptlib.lib and cryptopp.lib to <code class="docutils literal"><span class="pre">c:\Python27\libs\</span></code></li>
+</ul>
+<div class="code console highlight-default"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="n">users</span>\<span class="n">username</span><span class="o">&gt;</span> <span class="n">cp</span> <span class="n">C</span><span class="p">:</span>\<span class="n">build</span>\<span class="n">cryptopp561</span>\<span class="n">x64</span>\<span class="n">DLL_Output</span>\<span class="n">Release</span>\<span class="n">cryptlib</span><span class="o">.</span><span class="n">lib</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Python27</span>\<span class="n">Libs</span>
+<span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="n">users</span>\<span class="n">username</span><span class="o">&gt;</span> <span class="n">cp</span> <span class="n">C</span><span class="p">:</span>\<span class="n">build</span>\<span class="n">cryptopp561</span>\<span class="n">x64</span>\<span class="n">DLL_Output</span>\<span class="n">Release</span>\<span class="n">cryptopp</span><span class="o">.</span><span class="n">lib</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Python27</span>\<span class="n">Libs</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Copy json.lib to <code class="docutils literal"><span class="pre">c:\Python27\libs\</span></code> as json-c.lib</li>
+</ul>
+<div class="code console highlight-default"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="n">users</span>\<span class="n">username</span><span class="o">&gt;</span> <span class="n">cp</span> <span class="n">C</span><span class="p">:</span>\<span class="n">build</span>\<span class="n">json</span><span class="o">-</span><span class="n">c</span><span class="o">-</span><span class="mf">0.11</span>\<span class="n">x64</span>\<span class="n">Release</span>\<span class="n">json</span><span class="o">.</span><span class="n">lib</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Python27</span>\<span class="n">Libs</span>\<span class="n">json</span><span class="o">-</span><span class="n">c</span><span class="o">.</span><span class="n">lib</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Create the destination directory</li>
+</ul>
+<div class="code console highlight-default"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="n">users</span>\<span class="n">username</span><span class="o">&gt;</span> <span class="n">mkdir</span> <span class="s2">&quot;C:\Program Files (x86)\Intel\sawtooth-validator\lib\python&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Clone the git sawtooth, sawtooth-validator and marketplace git repositories into
+<code class="docutils literal"><span class="pre">c:\build</span></code></li>
+<li>Navigate to the directories and create the build artifacts</li>
+</ul>
+<div class="code console highlight-default"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="n">build</span><span class="o">&gt;</span> <span class="n">cd</span> <span class="n">sawtooth</span><span class="o">-</span><span class="n">core</span>
+<span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="n">build</span>\<span class="n">sawtooth</span><span class="o">-</span><span class="n">core</span><span class="o">&gt;</span> <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span> <span class="o">--</span><span class="n">home</span><span class="o">=</span><span class="s1">&#39;C:\Program Files (x86)\Intel\sawtooth-validator&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Copy cryptopp.dll into the Ledger libs directory</li>
+</ul>
+<div class="code console highlight-default"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="n">build</span><span class="o">&gt;</span> <span class="n">cp</span> <span class="n">C</span><span class="p">:</span>\<span class="n">build</span>\<span class="n">cryptopp561</span>\<span class="n">x64</span>\<span class="n">DLL_Output</span>\<span class="n">Release</span>\<span class="n">cryptopp</span><span class="o">.</span><span class="n">dll</span> <span class="s2">&quot;C:\Program Files (x86)\Intel\sawtooth-validator\lib\python\sawtooth-core-&lt;version&gt;-py2.7.egg</span><span class="se">\&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Copy the packaging script from the sawtooth-validator repository to <code class="docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Intel\</span></code></li>
+</ul>
+<div class="code console highlight-default"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="n">build</span><span class="o">&gt;</span> <span class="n">cp</span> <span class="n">c</span><span class="p">:</span>\<span class="n">build</span>\<span class="n">sawtooth</span><span class="o">-</span><span class="n">core</span>\<span class="n">validator</span>\<span class="n">packaging</span>\<span class="n">sawtooth</span><span class="o">-</span><span class="n">validator</span><span class="o">.</span><span class="n">nsi</span> <span class="s2">&quot;C:\Program Files (x86)\Intel</span><span class="se">\&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Run NSIS to create the installer package</li>
+</ul>
+<div class="code console highlight-default"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="n">C</span><span class="p">:</span>\<span class="n">build</span><span class="o">&gt;</span> <span class="n">makensis</span> <span class="s1">&#39;C:\Program Files (x86)\Intel\sawtooth-validator.nsi&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>sawtooth-validator.exe will be created in <code class="docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Intel</span></code></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation_ubuntu.html" class="btn btn-neutral float-right" title="Installation on Ubuntu" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="packaging_sles.html" class="btn btn-neutral" title="Creating Packages for SLES" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

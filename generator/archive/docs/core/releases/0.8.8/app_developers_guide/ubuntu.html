@@ -1,0 +1,680 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using Sawtooth on Ubuntu 16.04 &mdash; Sawtooth v0.8.8 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.8 documentation" href="../index.html"/>
+        <link rel="up" title="Installing and Running Sawtooth" href="installing_sawtooth.html"/>
+        <link rel="next" title="Address and Namespace Design" href="address_and_namespace.html"/>
+        <link rel="prev" title="Using Sawtooth with Docker" href="docker.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.8
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="installing_sawtooth.html">Installing and Running Sawtooth</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="docker.html">Using Sawtooth with Docker</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Using Sawtooth on Ubuntu 16.04</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview-of-sawtooth-components">Overview of Sawtooth Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#validator-start-up-process">Validator Start-up Process</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#starting-the-rest-api">Starting the REST API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#running-a-transaction-processor">Running a Transaction Processor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multi-language-support-for-transaction-processors">Multi-language Support for Transaction Processors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#settings-transaction-family-usage">Settings Transaction Family Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#creating-and-submitting-transactions">Creating and Submitting Transactions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#viewing-blocks-and-state">Viewing Blocks and State</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Introduction to the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="java_sdk.html">Java SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascript_sdk.html">JavaScript SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_sdk.html">Python SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">Testing a Transaction Processor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="installing_sawtooth.html">Installing and Running Sawtooth</a> &raquo;</li>
+        
+      <li>Using Sawtooth on Ubuntu 16.04</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/ubuntu.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-sawtooth-on-ubuntu-16-04">
+<h1>Using Sawtooth on Ubuntu 16.04<a class="headerlink" href="#using-sawtooth-on-ubuntu-16-04" title="Permalink to this headline">¶</a></h1>
+<p>This document guides you through the process of setting up Hyperledger Sawtooth
+for application development on Ubuntu, introduces some of the basic Sawtooth
+concepts necessary for application development, and walks through performing
+the following tasks:</p>
+<ul class="simple">
+<li>Installing Sawtooth on Ubuntu 16.04</li>
+<li>Starting a Sawtooth validator and related components</li>
+<li>Submitting transactions to the REST API</li>
+<li>Viewing blocks, transactions, and state with the sawtooth CLI tool</li>
+</ul>
+<p>Upon completion of this section, you will be prepared for subsequent sections
+that describe application development topics, such as implementing business
+logic with transaction families and writing clients which use Sawtooth&#8217;s REST
+API.</p>
+<div class="section" id="overview-of-sawtooth-components">
+<h2>Overview of Sawtooth Components<a class="headerlink" href="#overview-of-sawtooth-components" title="Permalink to this headline">¶</a></h2>
+<p>A running Sawtooth network consists of the following applications or processes:</p>
+<a class="reference internal image-reference" href="../_images/hyperledger_sawtooth_components.png"><img alt="Sawtooth components" class="align-center" src="../_images/hyperledger_sawtooth_components.png" style="width: 80%;" /></a>
+<p>This diagram represents a simple network with just two validators and two
+transaction processors. The second validator&#8217;s transaction processors are not
+depicted.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Ubuntu packages are provided by one of the Sawtooth package repositories:
+stable or nightly.  We recommend using the stable repository. To add the stable
+repository, run the following commands in a terminal window:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD
+<span class="gp">$</span> sudo add-apt-repository <span class="s1">&#39;deb http://repo.sawtooth.me/ubuntu/0.8/stable xenial universe&#39;</span>
+<span class="gp">$</span> sudo apt-get update
+</pre></div>
+</div>
+<p>or, to use the nightly repository:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 44FC67F19B2466EA
+<span class="gp">$</span> sudo apt-add-repository <span class="s2">&quot;deb http://repo.sawtooth.me/ubuntu/nightly xenial universe&quot;</span>
+<span class="gp">$</span> sudo apt-get update
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">Nightly builds may be out-of-sync with the documentation and have not gone
+through long-running network testing.  We really do recommend the stable
+repository.</p>
+</div>
+<p>Sawtooth consists of several Ubuntu packages, which can be installed together
+using the &#8216;sawtooth&#8217; metapackage.  Run the following in a terminal window:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get install -y sawtooth
+</pre></div>
+</div>
+<p>At any time after installation, you can view the sawtooth packages installed
+with the following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> dpkg -l <span class="s1">&#39;*sawtooth*&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="validator-start-up-process">
+<h2>Validator Start-up Process<a class="headerlink" href="#validator-start-up-process" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="create-genesis-block">
+<h3>Create Genesis Block<a class="headerlink" href="#create-genesis-block" title="Permalink to this headline">¶</a></h3>
+<p>In most use cases, it is not necessary to create a genesis block when starting
+a validator, because the validator joins an existing distributed ledger
+network. However, as a developer, you may often need to create short-lived
+test networks. In this case, you need to create a genesis block when
+instantiating a new network.</p>
+<p>The genesis block contains some initial values that are necessary when a
+Sawtooth distributed ledger is created and used for the first time.
+One of the settings in the genesis block that should be set is the
+key that is authorized to set and change configuration settings, as
+shown below using the <strong>sawtooth config genesis</strong> command.</p>
+<p>To create the genesis block, run the following commands as root:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth keygen
+<span class="gp">$</span> sawtooth config genesis
+<span class="gp">$</span> sudo -u sawtooth sawtooth admin genesis config-genesis.batch
+</pre></div>
+</div>
+<p>The following output appears:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">Processing config-genesis.batch...</span>
+<span class="go">Generating /var/lib/sawtooth/genesis.batch</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you need to delete previously existing block-chain data before running a
+validator, simply remove all files from /var/lib/sawtooth.</p>
+</div>
+</div>
+<div class="section" id="start-validator">
+<h3>Start Validator<a class="headerlink" href="#start-validator" title="Permalink to this headline">¶</a></h3>
+<p>To start a validator that listens locally on the default ports, run the
+following commands from a Linux terminal:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo sawtooth admin keygen
+<span class="gp">$</span> sudo -u sawtooth sawtooth-validator -vv
+</pre></div>
+</div>
+<p>This will start the validator. Logging output will be printed to the
+terminal window. The validator outputs something similar to this to
+the terminal window:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">[16:18:30.145 INFO    chain] Chain controller initialized with chain head: None</span>
+<span class="go">[16:18:30.145 INFO    publisher] Now building on top of block: None</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When you want to stop the validator, or any other running sawtooth
+component, press CTRL+C.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <cite>-vv</cite> flag sets the log level. To run the validator with less logging
+output, use <cite>-v</cite> or omit the flag.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>By default, the validator listens on the loopback interface for both network
+and component communications. To change the interface and port used, the
+<cite>&#8211;bind</cite> flag can be used. The following command is equivalent to the default
+behavior:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">sawtooth</span> <span class="n">sawtooth</span><span class="o">-</span><span class="n">validator</span> <span class="o">-</span><span class="n">vv</span> <span class="o">--</span><span class="n">bind</span> <span class="n">network</span><span class="p">:</span><span class="n">tcp</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">8800</span> <span class="o">--</span><span class="n">bind</span> <span class="n">component</span><span class="p">:</span><span class="n">tcp</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">4004</span>
+</pre></div>
+</div>
+<p class="last">See <a class="reference internal" href="../cli/validator.html"><span class="doc">Validator CLI</span></a> for more information on the validator flags.</p>
+</div>
+</div>
+</div>
+<div class="section" id="starting-the-rest-api">
+<h2>Starting the REST API<a class="headerlink" href="#starting-the-rest-api" title="Permalink to this headline">¶</a></h2>
+<p>In order to configure a running validator, submit batches, and query the state
+of the ledger, you must start the REST API application. Run the following
+command to start the REST API and connect to a local validator:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth sawtooth-rest-api -v
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-a-transaction-processor">
+<h2>Running a Transaction Processor<a class="headerlink" href="#running-a-transaction-processor" title="Permalink to this headline">¶</a></h2>
+<p>Transaction processors can be started either before or after the validator is
+started.</p>
+<p>The intkey transaction processor is provided as a simple example of a
+transaction family, which can also be used for testing purposes.</p>
+<p>To start an intkey transaction processor, run the following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth intkey-tp-python -v
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>By default, the transaction processor tries to connect to a local validator
+on port 4004. This can be modified by passing a different endpoint as an
+argument. The following is equivalent to the default:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">intkey</span><span class="o">-</span><span class="n">tp</span><span class="o">-</span><span class="n">python</span> <span class="o">-</span><span class="n">v</span> <span class="n">tcp</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">4004</span>
+</pre></div>
+</div>
+</div>
+<p>This will start a transaction processor with an <strong>intkey</strong> handler that can
+understand and process transactions from the intkey transaction family.</p>
+<p>The transaction processor produces the following output:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">[23:07:57 INFO    core] register attempt: OK</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In a production environment, you should always run a transaction processor
+that supports the config transaction family. See <a class="reference internal" href="#settings-transaction-family-usage">Settings Transaction
+Family Usage</a> for more information.</p>
+</div>
+</div>
+<div class="section" id="multi-language-support-for-transaction-processors">
+<h2>Multi-language Support for Transaction Processors<a class="headerlink" href="#multi-language-support-for-transaction-processors" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth supports multiple languages for transaction processor development and
+includes additional transaction processors written in several languages.
+The following lists the processors that are included:</p>
+<ul class="simple">
+<li>settings-tp<ul>
+<li>A settings family transaction processor written in Python</li>
+</ul>
+</li>
+<li>intkey-tp-go<ul>
+<li>An intkey transaction processor written in Go</li>
+</ul>
+</li>
+<li>intkey-tp-java<ul>
+<li>An intkey transaction processor written in Java</li>
+</ul>
+</li>
+<li>intkey-tp-javascript<ul>
+<li>An intkey transaction processor written in JavaScript</li>
+<li>Requires node.js</li>
+</ul>
+</li>
+<li>jvm-sc-tp<ul>
+<li>An intkey transaction processor implemented as a smart contract.</li>
+<li>The bytecode to run a transaction is stored in state and the blockchain.</li>
+<li>Requires Java</li>
+</ul>
+</li>
+<li>poet-validator-registry-tp<ul>
+<li>A transaction family used by the PoET consensus algorithm implementation
+to keep track of other validators.</li>
+</ul>
+</li>
+<li>xo-tp-javascript<ul>
+<li>An XO transaction processor written in JavaScript</li>
+<li>Requires node.js</li>
+</ul>
+</li>
+<li>xo-tp-python<ul>
+<li>An XO transaction processor written in Python</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="settings-transaction-family-usage">
+<h2>Settings Transaction Family Usage<a class="headerlink" href="#settings-transaction-family-usage" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth provides a <a class="reference internal" href="../transaction_family_specifications/settings_transaction_family.html"><span class="doc">settings transaction family</span></a> that stores
+on-chain settings, along with a settings family transaction processor written
+in Python.</p>
+<p>One of the on-chain settings is the list of supported transaction families.
+To configure this setting, follow these steps:</p>
+<div class="section" id="step-one-start-settings-family-processor">
+<h3>Step One: Start Settings Family Processor<a class="headerlink" href="#step-one-start-settings-family-processor" title="Permalink to this headline">¶</a></h3>
+<p>To start the settings family transaction processor, run the following commands
+from the Linux CLI:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth settings-tp -v
+</pre></div>
+</div>
+<p>Confirm that the transaction processor registers with the validator by viewing
+the terminal window in which the validator is running. A successful
+registration event produces the following output:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">[21:03:55.955 INFO    processor_handlers] registered transaction processor: identity=b&#39;6d2d80275ae280ea&#39;, family=sawtooth_settings, version=1.0, encoding=application/protobuf, namespaces=&lt;google.protobuf.pyext._message.RepeatedScalarContainer object at 0x7e1ff042f6c0&gt;</span>
+<span class="go">[21:03:55.956 DEBUG   interconnect] ServerThread sending TP_REGISTER_RESPONSE to b&#39;6d2d80275ae280ea&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-two-starting-the-rest-api">
+<h3>Step Two: Starting the Rest API<a class="headerlink" href="#step-two-starting-the-rest-api" title="Permalink to this headline">¶</a></h3>
+<p>In order to configure a running validator, you must start the REST API
+application. Run the following command to start the REST API, if it hasn&#8217;t
+already been started.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth sawtooth-rest-api -v
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-three-create-and-submit-batch">
+<h3>Step Three: Create and Submit Batch<a class="headerlink" href="#step-three-create-and-submit-batch" title="Permalink to this headline">¶</a></h3>
+<p>In the example below, a JSON array is submitted to the <cite>sawtooth config</cite>
+command, which creates and submits a batch of transactions containing the
+settings change.</p>
+<p>The JSON array used tells the validator or validator network to accept
+transactions of the following types:</p>
+<ul class="simple">
+<li>intkey</li>
+<li>sawtooth_settings</li>
+</ul>
+<p>To create and submit the batch containing the new settings, enter the
+following commands from the Linux CLI:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth config proposal create sawtooth.validator.transaction_families<span class="o">=</span><span class="s1">&#39;[{&quot;family&quot;: &quot;intkey&quot;, &quot;version&quot;: &quot;1.0&quot;, &quot;encoding&quot;: &quot;application/cbor&quot;}, {&quot;family&quot;:&quot;sawtooth_settings&quot;, &quot;version&quot;:&quot;1.0&quot;, &quot;encoding&quot;:&quot;application/protobuf&quot;}]&#39;</span>
+</pre></div>
+</div>
+<p>A TP_PROCESS_REQUEST message appears in the logging output of the validator,
+and output similar to the following appears in the validator terminal:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">sawtooth.settings.vote.authorized_keys: 035bd41bf6ea872...</span>
+<span class="go">sawtooth.validator.transaction_families: [{&quot;family&quot;: &quot;in...</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="creating-and-submitting-transactions">
+<h2>Creating and Submitting Transactions<a class="headerlink" href="#creating-and-submitting-transactions" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>intkey</strong> command is provided to create sample transactions of the intkey
+transaction type for testing purposes.</p>
+<p>This section guide you through the following tasks:</p>
+<ol class="arabic simple">
+<li>Prepare a batch of intkey transactions that set the keys to random values.</li>
+<li>Generate <em>inc</em> (increment) and <em>dec</em> (decrement) transactions to apply to
+the existing state stored in the blockchain.</li>
+<li>Submit these transactions to the validator.</li>
+</ol>
+<p>Run the following commands from the Linux CLI:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> intkey create_batch
+<span class="gp">$</span> intkey load
+</pre></div>
+</div>
+<p>You can observe the processing of the intkey transactions by observing the
+logging output of the intkey transaction processor. A truncated example of
+the intkey transaction processor&#8217;s output is shown below:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">[19:29:26 INFO    core] register attempt: OK</span>
+<span class="go">[19:31:06 INFO    handler] processing: Verb=set Name=eBuPof Value=99811 address=1cf126c584128aaf1837c90c83748ab222c11b8bbd2fe6cc30f17fe35f2acb9af8efd4ee3f092b676546316cf85b2e929b68d9c5314e93ac318ba527ec74aa3ed1bc2e</span>
+<span class="go">[19:31:06 INFO    handler] processing: Verb=set Name=HOUUQS Value=10140 address=1cf126380fa9e716a05ac815741fd1960d5952e60f8747e13334f79504c57d0287b77cf9b78284d0e1544f6f0366d66c6e6eb99dc5c154b84175b2d20008d721c7b623</span>
+<span class="go">[19:31:06 INFO    handler] processing: Verb=set Name=lrnuDC Value=92318 address=1cf12617c797cf8c27254bbdb5c9bda09f9405b9494ae32b79b9b6d30881ca8552d5932a68f703d1b6754b9feb2edafa76a797fc0826110381b0f8614f2c6853316b47</span>
+<span class="go">[19:31:06 INFO    handler] processing: Verb=set Name=BKaiql Value=94175 address=1cf12669cbc17d076a1accb4b0bb61f40ed4f999173b90e3ca2591875a55fee2947661e60fa1c57b41ef0f2660176b945a01c85ff645543297068a3fb1306324a19612</span>
+<span class="go">[19:31:06 INFO    handler] processing: Verb=set Name=wpMQmE Value=47316 address=1cf1260f6bdf66b65ff7c00ec58c4deccffd167bfee7a85698880dfa485df3de1ec18a5b2d1dc12849743d1c74320108360a2d40d223b35fbc1c4ea03bbd8306480c62</span>
+<span class="go">[19:31:06 INFO    handler] processing: Verb=set Name=GTgrvP Value=31921 address=1cf12606ac7db03c756133c07d7d02b59f3ef9eae6774fe59c75c88ab66a9fabbbaef9975dbf9aa197d1090ed126d7b18e2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="viewing-blocks-and-state">
+<h2>Viewing Blocks and State<a class="headerlink" href="#viewing-blocks-and-state" title="Permalink to this headline">¶</a></h2>
+<p>You can view the blocks stored in the blockchain, and the nodes of the Markle
+tree, using the sawtooth CLI.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The sawtooth CLI provides help for all subcommands. For example, to get help
+for the <cite>block</cite> subcommand, enter the command <cite>sawtooth block -h</cite>.</p>
+</div>
+<div class="section" id="id1">
+<h3>Starting the Rest API<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>In order to submit queries to the validator, you must start the REST API
+application. Run the following command to start the REST API, if it hasn&#8217;t
+already been started.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo su - sawtooth sawtooth-rest-api -v
+</pre></div>
+</div>
+</div>
+<div class="section" id="viewing-list-of-blocks">
+<h3>Viewing List of Blocks<a class="headerlink" href="#viewing-list-of-blocks" title="Permalink to this headline">¶</a></h3>
+<p>Enter the command <cite>sawtooth block list</cite> to view the blocks stored by the state:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth block list
+</pre></div>
+</div>
+<p>The output of the command will be similar to this:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">NUM  BLOCK_ID</span>
+<span class="go">8    22e79778855768ea380537fb13ad210b84ca5dd1cdd555db7792a9d029113b0a183d5d71cc5558e04d10a9a9d49031de6e86d6a7ddb25325392d15bb7ccfd5b7  2     8     02a0e049...</span>
+<span class="go">7    c84346f5e18c6ce29f1b3e6e31534da7cd538533457768f86a267053ddf73c4f1139c9055be283dfe085c94557de24726191eee9996d4192d21fa6acb0b29152  2     20    02a0e049...</span>
+<span class="go">6    efc0d6175b6329ac5d0814546190976bc6c4e18bd0630824c91e9826f93c7735371f4565a8e84c706737d360873fac383ab1cf289f9bf640b92c570cb1ba1875  2     27    02a0e049...</span>
+<span class="go">5    840c0ef13023f93e853a4555e5b46e761fc822d4e2d9131581fdabe5cb85f13e2fb45a0afd5f5529fbde5216d22a88dddec4b29eeca5ac7a7b1b1813fcc1399a  2     16    02a0e049...</span>
+<span class="go">4    4d6e0467431a409185e102301b8bdcbdb9a2b177de99ae139315d9b0fe5e27aa3bd43bda6b168f3ac8f45e84b069292ddc38ec6a1848df16f92cd35c5bd6e6c9  2     20    02a0e049...</span>
+<span class="go">3    9743e39eadf20e922e242f607d847445aba18dacdf03170bf71e427046a605744c84d9cb7d440d257c21d11e4da47e535ba7525afcbbc037da226db48a18f4a8  2     22    02a0e049...</span>
+<span class="go">2    6d7e641232649da9b3c23413a31db09ebec7c66f8207a39c6dfcb21392b033163500d367f8592b476e0b9c1e621d6c14e8c0546a7377d9093fb860a00c1ce2d3  2     38    02a0e049...</span>
+<span class="go">1    7252a5ab3440ee332aef5830b132cf9dc3883180fb086b2a50f62bf7c6c8ff08311b8009da3b3f6e38d3cfac1b3ac4cfd9a864d6a053c8b27df63d1c730469b3  2     120   02a0e049...</span>
+<span class="go">0    8821a997796f3e38a28dbb8e418ed5cbdd60b8a2e013edd20bca7ebf9a58f1302740374d98db76137e48b41dc404deda40ca4d2303a349133991513d0fec4074  0     0     02a0e049...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="viewing-a-particular-block">
+<h3>Viewing a Particular Block<a class="headerlink" href="#viewing-a-particular-block" title="Permalink to this headline">¶</a></h3>
+<p>Using the <cite>sawtooth block list</cite> command as shown above, copy the block id you want to
+view, then use the <cite>sawtooth block show</cite> command (truncated output shown):</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth block show 22e79778855768ea380537fb13ad210b84ca5dd1cdd555db7792a9d029113b0a183d5d71cc5558e04d10a9a9d49031de6e86d6a7ddb25325392d15bb7ccfd5b7
+</pre></div>
+</div>
+<p>The output of the command will be similar to this:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">  batches:</span>
+<span class="go">- header:</span>
+<span class="go">    signer_pubkey: 0380be3421629849b1d03af520d7fa2cdc24c2d2611771ddf946ef3aaae216be84</span>
+<span class="go">    transaction_ids:</span>
+<span class="go">    - c498c916da09450597053ada1938858a11d94e2ed5c18f92cd7d34b865af646144d180bdc121a48eb753b4abd326baa3ea26ee8a29b07119052320370d24ab84</span>
+<span class="go">    - c68de164421bbcfcc9ea60b725bae289aecd02ddde6f520e6e85b3227337e2971e89bbff468bdebe408e0facc343c612a32db98e5ac4da2296a7acf4033073cd</span>
+<span class="go">    - faf9121f9744716363253cb0ff4b6011093ada6e19dae63ae04a58a1fca25424779a13628a047c009d2e73d0e7baddc95b428b4a22cf1c60961d6dcae8ee60fa</span>
+<span class="go">  header_signature: 2ff874edfa80a8e6b718e7d10e91970150fcc3fcfd46d38eb18f356e7a733baa40d9e816247985d7ea7ef2492c09cd9c1830267471c6e35dca0d19f5c6d2b61e</span>
+<span class="go">  transactions:</span>
+<span class="go">  - header:</span>
+<span class="go">      batcher_pubkey: 0380be3421629849b1d03af520d7fa2cdc24c2d2611771ddf946ef3aaae216be84</span>
+<span class="go">      dependencies:</span>
+<span class="go">      - 19ad647bd292c980e00f05eed6078b471ca2d603b842bc4eaecf301d61f15c0d3705a4ec8d915ceb646f35d443da43569f58c906faf3713853fe638c7a0ea410</span>
+<span class="go">      family_name: intkey</span>
+<span class="go">      family_version: &#39;1.0&#39;</span>
+<span class="go">      inputs:</span>
+<span class="go">      - 1cf126c15b04cb20206d45c4d0e432d036420401dbd90f064683399fae55b99af1a543f7de79cfafa4f220a22fa248f8346fb1ad0343fcf8d7708565ebb8a3deaac09d</span>
+<span class="go">      nonce: 0x1.63021cad39ceep+30</span>
+<span class="go">      outputs:</span>
+<span class="go">      - 1cf126c15b04cb20206d45c4d0e432d036420401dbd90f064683399fae55b99af1a543f7de79cfafa4f220a22fa248f8346fb1ad0343fcf8d7708565ebb8a3deaac09d</span>
+<span class="go">      payload_encoding: application/cbor</span>
+<span class="go">      payload_sha512: 942a09c0254c4a5712ffd152dc6218fc5453451726d935ac1ba67de93147b5e7be605da7ab91245f48029b41f493a1cc8dfc45bb090ac97420580eb1bdded01f</span>
+<span class="go">      signer_pubkey: 0380be3421629849b1d03af520d7fa2cdc24c2d2611771ddf946ef3aaae216be84</span>
+<span class="go">    header_signature: c498c916da09450597053ada1938858a11d94e2ed5c18f92cd7d34b865af646144d180bdc121a48eb753b4abd326baa3ea26ee8a29b07119052320370d24ab84</span>
+<span class="go">    payload: o2ROYW1lZnFrbGR1emVWYWx1ZQFkVmVyYmNpbmM=</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="viewing-global-state">
+<h3>Viewing Global State<a class="headerlink" href="#viewing-global-state" title="Permalink to this headline">¶</a></h3>
+<p>Use the command <cite>sawtooth state list</cite> to list the nodes in the Merkle tree
+(truncated list):</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth state list
+</pre></div>
+</div>
+<p>The output of the command will be similar to this:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">ADDRESS                                                                                                                                SIZE DATA</span>
+<span class="go">1cf126ddb507c936e4ee2ed07aa253c2f4e7487af3a0425f0dc7321f94be02950a081ab7058bf046c788dbaf0f10a980763e023cde0ee282585b9855e6e5f3715bf1fe 11   b&#39;\xa1fcCTdcH\x...</span>
+<span class="go">1cf1260cd1c2492b6e700d5ef65f136051251502e5d4579827dc303f7ed76ddb7185a19be0c6443503594c3734141d2bdcf5748a2d8c75541a8e568bae063983ea27b9 11   b&#39;\xa1frdLONu\x...</span>
+<span class="go">1cf126ed7d0ac4f755be5dd040e2dfcd71c616e697943f542682a2feb14d5f146538c643b19bcfc8c4554c9012e56209f94efe580b6a94fb326be9bf5bc9e177d6af52 11   b&#39;\xa1fAUZZqk\x...</span>
+<span class="go">1cf126c46ff13fcd55713bcfcf7b66eba515a51965e9afa8b4ff3743dc6713f4c40b4254df1a2265d64d58afa14a0051d3e38999704f6e25c80bed29ef9b80aee15c65 11   b&#39;\xa1fLvUYLk\x...</span>
+<span class="go">1cf126c4b1b09ebf28775b4923e5273c4c01ba89b961e6a9984632612ec9b5af82a0f7c8fc1a44b9ae33bb88f4ed39b590d4774dc43c04c9a9bd89654bbee68c8166f0 13   b&#39;\xa1fXHonWY\x...</span>
+<span class="go">1cf126e924a506fb2c4bb8d167d20f07d653de2447df2754de9eb61826176c7896205a17e363e457c36ccd2b7c124516a9b573d9a6142f031499b18c127df47798131a 13   b&#39;\xa1foWZXEz\x...</span>
+<span class="go">1cf126c295a476acf935cd65909ed5ead2ec0168f3ee761dc6f37ea9558fc4e32b71504bf0ad56342a6671db82cb8682d64689838731da34c157fa045c236c97f1dd80 13   b&#39;\xa1fadKGve\x...</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">An address is equivalent to a node id.</p>
+</div>
+</div>
+<div class="section" id="viewing-data-in-a-node">
+<h3>Viewing Data in a Node<a class="headerlink" href="#viewing-data-in-a-node" title="Permalink to this headline">¶</a></h3>
+<p>Using the <cite>sawtooth state list</cite> command show above, copy the node id you want to
+view, then use the <cite>sawtooth state show</cite> command to view the node:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth state show 1cf126ddb507c936e4ee2ed07aa253c2f4e7487af3a0425f0dc7321f94be02950a081ab7058bf046c788dbaf0f10a980763e023cde0ee282585b9855e6e5f3715bf1fe
+</pre></div>
+</div>
+<p>The output of the command will be similar to this:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">DATA: &quot;b&#39;\xa1fcCTdcH\x192B&#39;&quot;</span>
+<span class="go">HEAD: &quot;0c4364c6d5181282a1c7653038ec9515cb0530c6bfcb46f16e79b77cb524491676638339e8ff8e3cc57155c6d920e6a4d1f53947a31dc02908bcf68a91315ad5&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="address_and_namespace.html" class="btn btn-neutral float-right" title="Address and Namespace Design" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="docker.html" class="btn btn-neutral" title="Using Sawtooth with Docker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.8',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

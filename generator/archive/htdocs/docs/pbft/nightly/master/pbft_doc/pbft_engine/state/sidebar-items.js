@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["PbftMode","Modes that the PBFT algorithm can possibly be in"],["PbftPhase","Phases of the PBFT algorithm, in `Normal` mode"]],"struct":[["PbftState","Information about the PBFT algorithm's state"]]});

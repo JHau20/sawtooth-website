@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sawtooth LIBOR &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../index.html"/>
+        <link rel="up" title="Sawtooth Lake Bond Family Design" href="../design.html"/>
+        <link rel="next" title="Sawtooth Lake Bond Family Workload Simulator" href="../bond_workload_simulator.html"/>
+        <link rel="prev" title="object-type: settlement" href="object_model/settlement.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../bond_family_guide.html">Bond Family Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../users_guide.html">Sawtooth Lake Bond Family User&#8217;s Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sysadmin_guide.html">Sawtooth Lake Bond Family System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../design.html">Sawtooth Lake Bond Family Design</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="updates.html">Transaction Updates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="object_model.html">Object Model</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Sawtooth LIBOR</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submitting-new-libor-data">Submitting New LIBOR Data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#listing-libor-data">Listing LIBOR Data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../bond_workload_simulator.html">Sawtooth Lake Bond Family Workload Simulator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../bond_family_guide.html">Bond Family Guide</a> &raquo;</li>
+        
+          <li><a href="../design.html">Sawtooth Lake Bond Family Design</a> &raquo;</li>
+        
+      <li>Sawtooth LIBOR</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/bond_family_guide/design/libor.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sawtooth-libor">
+<h1>Sawtooth LIBOR<a class="headerlink" href="#sawtooth-libor" title="Permalink to this headline">¶</a></h1>
+<p>Sawtooth London Interbank Offered Rate (LIBOR) is a transaction family and
+sample client for the Intercontinental Exchange (ICE) LIBOR, the world&#8217;s most
+widely-used benchmark for short-term interest rates.  LIBOR&#8217;s primary function
+is to serve as the benchmark reference rate for government and corporate bonds,
+mortgages, etc.</p>
+<p>The ICE LIBOR has interest rates for five currencies:</p>
+<blockquote>
+<div><ul class="simple">
+<li>CHF (Swiss Franc)</li>
+<li>EUR (Euro)</li>
+<li>GBP (Pound Sterling)</li>
+<li>JPY (Japanese Yen)</li>
+<li>USD (US Dollar)</li>
+</ul>
+</div></blockquote>
+<p>Each currency has interest rates for seven maturities:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Overnight</li>
+<li>One Week</li>
+<li>One Month</li>
+<li>Two Month</li>
+<li>Three Month</li>
+<li>Six Month</li>
+<li>One Year</li>
+</ul>
+</div></blockquote>
+<p>More information about LIBOR can be found at:</p>
+<blockquote>
+<div><p><a class="reference external" href="http://www.investopedia.com/terms/l/libor.asp">http://www.investopedia.com/terms/l/libor.asp</a></p>
+<p><a class="reference external" href="https://www.theice.com/iba/libor">https://www.theice.com/iba/libor</a></p>
+</div></blockquote>
+<p>The Sawtooth LIBOR transaction family currently only supports interest rates
+for the USD.</p>
+<p>To use the Sawtooth LIBOR transaction family, it must be added to the list of
+transaction families in txnvalidator.js:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;TransactionFamilies&quot;</span> <span class="o">:</span> <span class="p">[</span>
+   <span class="s2">&quot;libor&quot;</span>
+<span class="p">],</span>
+</pre></div>
+</div>
+<p>txnvalidator must be able to find the Sawtooth LIBOR transaction family
+implementation, which can be done by adding this repository directory to the
+PYTHONPATH environment variable.</p>
+<p>The Sawtooth LIBOR client, libor, simulates obtaining current LIBOR data from
+ICE by screen scraping the Wall Street Journal web site that publishes the
+data:</p>
+<blockquote>
+<div><a class="reference external" href="http://online.wsj.com/mdc/public/page/2_3020-libor.html">http://online.wsj.com/mdc/public/page/2_3020-libor.html</a></div></blockquote>
+<p>The Sawtooth LIBOR client has two sub-commands:  submit and list.</p>
+<div class="section" id="submitting-new-libor-data">
+<h2>Submitting New LIBOR Data<a class="headerlink" href="#submitting-new-libor-data" title="Permalink to this headline">¶</a></h2>
+<p>To submit new LIBOR data:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ./bin/libor submit --keyfile ./libor/key/libor.wif --wait
+<span class="go">Submitting LIBOR for effective date: 2016-06-09</span>
+<span class="go">OneMonth =&gt; 0.44705</span>
+<span class="go">ThreeMonth =&gt; 0.65605</span>
+<span class="go">SixMonth =&gt; 0.94390</span>
+<span class="go">Overnight =&gt; 0.38560</span>
+<span class="go">OneYear =&gt; 1.27425</span>
+<span class="go">TwoMonth =&gt; 0.54015</span>
+<span class="go">OneWeek =&gt; 0.41075</span>
+</pre></div>
+</div>
+<p>The submit sub-command supports the following command-line parameters:</p>
+<dl class="option">
+<dt id="cmdoption-libor-submit-wait">
+<code class="descname">--wait</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-libor-submit-wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Waits for the transaction to successfully be committed.  The default is to
+not wait for the transaction to be committed.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-libor-submit-keyfile">
+<code class="descname">--keyfile</code><code class="descclassname"> KEYFILE</code><a class="headerlink" href="#cmdoption-libor-submit-keyfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the file that contains the key used to sign the LIBOR data.  The
+key must correspond to the address 1UrR1WTfkMaWmY8z6DxwEE2MYFXA6rdzZ.  The
+key file, ./libor/key/libor.wif, contains the appropriate key.  This
+parameter is <em>required</em>.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-libor-submit-url">
+<code class="descname">--url</code><code class="descclassname"> URL</code><a class="headerlink" href="#cmdoption-libor-submit-url" title="Permalink to this definition">¶</a></dt>
+<dd><p>The URL of the validator to which the transaction will be submitted.  If
+not specified, the default URL is <a class="reference external" href="http://localhost:8800">http://localhost:8800</a>.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-libor-submit-date">
+<code class="descname">--date</code><code class="descclassname"> DATE</code><a class="headerlink" href="#cmdoption-libor-submit-date" title="Permalink to this definition">¶</a></dt>
+<dd><p>The date, in ISO-8601 format (YYYY-MM-DD), for which LIBOR data should be
+fetched.  Note that for a specific date on the WSJ site, the effective date
+is actually the previous day, which will be used as the date in the
+transaction.  If the <a class="reference internal" href="#cmdoption-libor-submit-date"><code class="xref std std-option docutils literal"><span class="pre">--date</span></code></a> parameter is not present, the
+most-recent LIBOR data is fetched.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If a transaction already exists for the date submitted, the
+transaction will fail.</p>
+</div>
+</div>
+<div class="section" id="listing-libor-data">
+<h2>Listing LIBOR Data<a class="headerlink" href="#listing-libor-data" title="Permalink to this headline">¶</a></h2>
+<p>To list LIBOR data:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ./bin/libor list
+<span class="go">+----------+---------+--------+--------+--------+--------+--------+--------+</span>
+<span class="go">|   Date   |Overnight| 1 Week | 1 Month| 2 Month| 3 Month| 6 Month| 1 Year |</span>
+<span class="go">+----------+---------+--------+--------+--------+--------+--------+--------+</span>
+<span class="go">|2016-06-08|   0.3876|  0.4080|  0.4453|  0.5373|  0.6580|  0.9470|  1.2784|</span>
+<span class="go">|2016-06-09|   0.3856|  0.4108|  0.4471|  0.5402|  0.6561|  0.9439|  1.2743|</span>
+<span class="go">+----------+---------+--------+--------+--------+--------+--------+--------+</span>
+<span class="gp">$</span>
+<span class="gp">$</span> ./bin/libor list --date <span class="m">2016</span>-06-08
+<span class="go">|---------------------+</span>
+<span class="go">|LIBOR for 2016-06-08 |</span>
+<span class="go">|------------+--------+</span>
+<span class="go">|Overnight:  |  0.3876|</span>
+<span class="go">|------------+--------+</span>
+<span class="go">|1 Week:     |  0.4080|</span>
+<span class="go">|------------+--------+</span>
+<span class="go">|1 Month:    |  0.4453|</span>
+<span class="go">|------------+--------+</span>
+<span class="go">|2 Month:    |  0.5373|</span>
+<span class="go">|------------+--------+</span>
+<span class="go">|3 Month:    |  0.6580|</span>
+<span class="go">|------------+--------+</span>
+<span class="go">|6 Month:    |  0.9470|</span>
+<span class="go">|------------+--------+</span>
+<span class="go">|1 Year:     |  1.2784|</span>
+<span class="go">|------------+--------+</span>
+</pre></div>
+</div>
+<p>The list sub-command supports the following command-line parameters:</p>
+<dl class="option">
+<dt id="cmdoption-libor-list-url">
+<code class="descname">--url</code><code class="descclassname"> URL</code><a class="headerlink" href="#cmdoption-libor-list-url" title="Permalink to this definition">¶</a></dt>
+<dd><p>The URL of the validator from which LIBOR transactions will be queried.  If
+not specified, the default URL is <a class="reference external" href="http://localhost:8800">http://localhost:8800</a>.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-libor-list-date">
+<code class="descname">--date</code><code class="descclassname"> DATE</code><a class="headerlink" href="#cmdoption-libor-list-date" title="Permalink to this definition">¶</a></dt>
+<dd><p>The date, in ISO-8601 format (YYYY-MM-DD), for which LIBOR data should be
+queried.  If the <a class="reference internal" href="#cmdoption-libor-list-date"><code class="xref std std-option docutils literal"><span class="pre">--date</span></code></a> parameter is not present, all available
+LIBOR data is returned.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../bond_workload_simulator.html" class="btn btn-neutral float-right" title="Sawtooth Lake Bond Family Workload Simulator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="object_model/settlement.html" class="btn btn-neutral" title="object-type: settlement" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

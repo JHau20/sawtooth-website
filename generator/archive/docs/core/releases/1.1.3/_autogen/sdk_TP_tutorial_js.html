@@ -1,0 +1,690 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Transaction Processor: Creating a Transaction Handler &mdash; Sawtooth v1.1.3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Client: Building and Submitting Transactions" href="sdk_submit_tutorial_js.html" />
+    <link rel="prev" title="Overview" href="sdk_overview_tutorial_js.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.1.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/overview.html">Transaction Family Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/installing_sawtooth.html">Setting Up a Sawtooth Application Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/creating_sawtooth_network.html">Creating a Sawtooth Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/intro_xo_transaction_family.html">Playing with the XO Transaction Family</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../app_developers_guide/using_the_sdks.html">Using the Sawtooth SDKs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../app_developers_guide/sdk_table.html">Available SDKs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../app_developers_guide/go_sdk.html">Using the Go SDK</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../app_developers_guide/javascript_sdk.html">Using the JavaScript SDK</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="sdk_overview_tutorial_js.html">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../app_developers_guide/sdk_prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Transaction Processor: Creating a Transaction Handler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sdk_submit_tutorial_js.html">Client: Building and Submitting Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../app_developers_guide/python_sdk.html">Using the Python SDK</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../app_developers_guide/rust_sdk.html">Using the Rust SDK</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/no_sdk.html">Development Without an SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/namespace_restriction.html">Namespace Restriction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/event_subscriptions.html">Subscribing to Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide/using_the_sdks.html">Using the Sawtooth SDKs</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide/javascript_sdk.html">Using the JavaScript SDK</a> &raquo;</li>
+        
+      <li>Transaction Processor: Creating a Transaction Handler</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_autogen/sdk_TP_tutorial_js.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="transaction-processor-creating-a-transaction-handler">
+<h1>Transaction Processor: Creating a Transaction Handler<a class="headerlink" href="#transaction-processor-creating-a-transaction-handler" title="Permalink to this headline">¶</a></h1>
+<p>A transaction processor has two top-level components:</p>
+<ul class="simple">
+<li>Processor class. The SDK provides a general-purpose processor class.</li>
+<li>Handler class. The handler class is application-dependent. It contains the
+business logic for a particular family of transactions. Multiple handlers
+can be connected to an instance of the processor class.</li>
+</ul>
+<div class="section" id="entry-point">
+<h2>Entry Point<a class="headerlink" href="#entry-point" title="Permalink to this headline">¶</a></h2>
+<p>Since a transaction processor is a long running process, it must have an
+entry point.</p>
+<p>In the entry point, the <code class="docutils literal notranslate"><span class="pre">TransactionProcessor</span></code> class is given the address
+to connect with the validator and the handler class.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">a simplified sawtooth-sdk-javascript/examples/xo/index.js</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="p">{</span> <span class="nx">TransactionProcessor</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;sawtooth-sdk/processor&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">XOHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./xo_handler&#39;</span><span class="p">)</span>
+
+<span class="c1">// In docker, the address would be the validator&#39;s container name</span>
+<span class="c1">// with port 4004</span>
+<span class="kr">const</span> <span class="nx">address</span> <span class="o">=</span> <span class="s1">&#39;tcp://127.0.0.1:4004&#39;</span>
+<span class="kr">const</span> <span class="nx">transactionProcessor</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TransactionProcessor</span><span class="p">(</span><span class="nx">address</span><span class="p">)</span>
+
+<span class="nx">transactionProcessor</span><span class="p">.</span><span class="nx">addHandler</span><span class="p">(</span><span class="k">new</span> <span class="nx">XOHandler</span><span class="p">())</span>
+
+<span class="nx">transactionProcessor</span><span class="p">.</span><span class="nx">start</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Handlers get called in two ways: with an <code class="docutils literal notranslate"><span class="pre">apply</span></code> method and with various
+“metadata” methods. The metadata is used to connect the handler to the
+processor. The bulk of the handler, however, is made up of <code class="docutils literal notranslate"><span class="pre">apply</span></code> and its
+helper functions.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">sawtooth-sdk-javascript/examples/xo/handler.js XOHandler class</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">XOHandler</span> <span class="kr">extends</span> <span class="nx">TransactionHandler</span> <span class="p">{</span>
+  <span class="nx">constructor</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">XO_FAMILY</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;1.0&#39;</span><span class="p">],</span> <span class="p">[</span><span class="nx">XO_NAMESPACE</span><span class="p">])</span>
+  <span class="p">}</span>
+
+  <span class="nx">apply</span> <span class="p">(</span><span class="nx">transactionProcessRequest</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//</span>
+</pre></div>
+</div>
+</div>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">XOHandler</span></code> class extends the <code class="docutils literal notranslate"><span class="pre">TransactionHandler</span></code> class defined in the
+JavaScript SDK.</p>
+</div>
+<div class="section" id="the-apply-method">
+<h2>The <code class="docutils literal notranslate"><span class="pre">apply</span></code> Method<a class="headerlink" href="#the-apply-method" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">apply</span></code> gets called with two arguments, <code class="docutils literal notranslate"><span class="pre">transactionProcessRequest</span></code> and <code class="docutils literal notranslate"><span class="pre">stateStore</span></code>.
+<code class="docutils literal notranslate"><span class="pre">transactionProcessRequest</span></code> holds the command that is to be executed (e.g. taking a space or
+creating a game), while <code class="docutils literal notranslate"><span class="pre">stateStore</span></code> stores information about the current
+state of the game (e.g. the board layout and whose turn it is).</p>
+<p>The transaction contains payload bytes that are opaque to the validator core,
+and transaction family specific. When implementing a transaction handler the
+binary serialization protocol is up to the implementer.</p>
+<p>To separate details of state encoding and payload handling from validation
+logic, the XO example has <code class="docutils literal notranslate"><span class="pre">XoState</span></code> and <code class="docutils literal notranslate"><span class="pre">XoPayload</span></code> classes. The
+<code class="docutils literal notranslate"><span class="pre">XoPayload</span></code> has name, action, and space fields, while the <code class="docutils literal notranslate"><span class="pre">XoState</span></code>
+contains information about the game name, board, state, and which players are
+playing in the game.</p>
+<p>Valid actions are: create a new game, take an unoccupied space, and delete a game.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">sawtooth-sdk-javascript/examples/xo/handler.js apply overview</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">apply</span> <span class="p">(</span><span class="nx">transactionProcessRequest</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">payload</span> <span class="o">=</span> <span class="nx">XoPayload</span><span class="p">.</span><span class="nx">fromBytes</span><span class="p">(</span><span class="nx">transactionProcessRequest</span><span class="p">.</span><span class="nx">payload</span><span class="p">)</span>
+    <span class="kd">let</span> <span class="nx">xoState</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XoState</span><span class="p">(</span><span class="nx">context</span><span class="p">)</span>
+    <span class="kd">let</span> <span class="nx">header</span> <span class="o">=</span> <span class="nx">transactionProcessRequest</span><span class="p">.</span><span class="nx">header</span>
+    <span class="kd">let</span> <span class="nx">player</span> <span class="o">=</span> <span class="nx">header</span><span class="p">.</span><span class="nx">signerPublicKey</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">action</span> <span class="o">===</span> <span class="s1">&#39;create&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">...</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">action</span> <span class="o">===</span> <span class="s1">&#39;take&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">...</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">action</span> <span class="o">===</span> <span class="s1">&#39;delete&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">...</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">InvalidTransaction</span><span class="p">(</span>
+            <span class="sb">`Action must be create, delete, or take not </span><span class="si">${</span><span class="nx">payload</span><span class="p">.</span><span class="nx">action</span><span class="si">}</span><span class="sb">`</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>For every new payload, the transaction processor validates rules surrounding the
+action. If all of the rules validate, then
+state is updated based on whether we are creating a game, deleting a game, or updating the
+game by taking a space.</p>
+</div>
+<div class="section" id="game-logic">
+<h2>Game Logic<a class="headerlink" href="#game-logic" title="Permalink to this headline">¶</a></h2>
+<p>The XO game logic is described in the XO transaction family specification;
+see <a class="reference internal" href="../transaction_family_specifications/xo_transaction_family.html#xo-execution-label"><span class="std std-ref">Execution</span></a>.</p>
+<p>The validation rules and state updates that are associated with the <code class="docutils literal notranslate"><span class="pre">create</span></code>,
+<code class="docutils literal notranslate"><span class="pre">delete</span></code>, and <code class="docutils literal notranslate"><span class="pre">take</span></code> actions are shown below.</p>
+<div class="section" id="create">
+<h3>Create<a class="headerlink" href="#create" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">create</span></code> action has the following implementation:</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">sawtooth-sdk-javascript/examples/xo/handler.js apply ‘create’</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">action</span> <span class="o">===</span> <span class="s1">&#39;create&#39;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">xoState</span><span class="p">.</span><span class="nx">getGame</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">game</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">game</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">InvalidTransaction</span><span class="p">(</span><span class="s1">&#39;Invalid Action: Game already exists.&#39;</span><span class="p">)</span>
+      <span class="p">}</span>
+
+      <span class="kd">let</span> <span class="nx">createdGame</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="nx">name</span><span class="o">:</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span>
+        <span class="nx">board</span><span class="o">:</span> <span class="s1">&#39;---------&#39;</span><span class="p">,</span>
+        <span class="nx">state</span><span class="o">:</span> <span class="s1">&#39;P1-NEXT&#39;</span><span class="p">,</span>
+        <span class="nx">player1</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="nx">player2</span><span class="o">:</span> <span class="s1">&#39;&#39;</span>
+      <span class="p">}</span>
+
+      <span class="nx">_display</span><span class="p">(</span><span class="sb">`Player </span><span class="si">${</span><span class="nx">player</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span><span class="si">}</span><span class="sb"> created game </span><span class="si">${</span><span class="nx">payload</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+
+      <span class="k">return</span> <span class="nx">xoState</span><span class="p">.</span><span class="nx">setGame</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">createdGame</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="delete">
+<h3>Delete<a class="headerlink" href="#delete" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">delete</span></code> action has the following implementation:</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">sawtooth-sdk-javascript/examples/xo/handler.js apply ‘delete’</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">action</span> <span class="o">===</span> <span class="s1">&#39;delete&#39;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">xoState</span><span class="p">.</span><span class="nx">getGame</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">game</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">game</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">InvalidTransaction</span><span class="p">(</span>
+          <span class="sb">`No game exists with name </span><span class="si">${</span><span class="nx">payload</span><span class="p">.</span><span class="nx">name</span><span class="si">}</span><span class="sb">: unable to delete`</span><span class="p">)</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">xoState</span><span class="p">.</span><span class="nx">deleteGame</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="nx">InvalidTransaction</span><span class="p">(</span>
+    <span class="sb">`Action must be create or take not </span><span class="si">${</span><span class="nx">payload</span><span class="p">.</span><span class="nx">action</span><span class="si">}</span><span class="sb">`</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="take">
+<h3>Take<a class="headerlink" href="#take" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">take</span></code> action has the following implementation:</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">sawtooth-sdk-javascript/examples/xo/handler.js apply ‘take’</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>if (payload.action === &#39;take&#39;) {
+  return xoState.getGame(payload.name)
+    .then((game) =&gt; {
+      try {
+        parseInt(payload.space)
+      } catch (err) {
+        throw new InvalidTransaction(&#39;Space could not be converted as an integer.&#39;)
+      }
+
+      if (payload.space &lt; 1 || payload.space &gt; 9) {
+        throw new InvalidTransaction(&#39;Invalid space &#39; + payload.space)
+      }
+
+      if (game === undefined) {
+        throw new InvalidTransaction(
+          &#39;Invalid Action: Take requires an existing game.&#39;
+        )
+      }
+      if ([&#39;P1-WIN&#39;, &#39;P2-WIN&#39;, &#39;TIE&#39;].includes(game.state)) {
+        throw new InvalidTransaction(&#39;Invalid Action: Game has ended.&#39;)
+      }
+
+      if (game.player1 === &#39;&#39;) {
+        game.player1 = player
+      } else if (game.player2 === &#39;&#39;) {
+        game.player2 = player
+      }
+      let boardList = game.board.split(&#39;&#39;)
+
+      if (boardList[payload.space - 1] !== &#39;-&#39;) {
+        throw new InvalidTransaction(&#39;Invalid Action: Space already taken.&#39;)
+      }
+
+      if (game.state === &#39;P1-NEXT&#39; &amp;&amp; player === game.player1) {
+        boardList[payload.space - 1] = &#39;X&#39;
+        game.state = &#39;P2-NEXT&#39;
+      } else if (
+        game.state === &#39;P2-NEXT&#39; &amp;&amp;
+        player === game.player2
+      ) {
+        boardList[payload.space - 1] = &#39;O&#39;
+        game.state = &#39;P1-NEXT&#39;
+      } else {
+        throw new InvalidTransaction(
+          `Not this player&#39;s turn: ${player.toString().substring(0, 6)}`
+        )
+      }
+
+      game.board = boardList.join(&#39;&#39;)
+
+      if (_isWin(game.board, &#39;X&#39;)) {
+        game.state = &#39;P1-WIN&#39;
+      } else if (_isWin(game.board, &#39;O&#39;)) {
+        game.state = &#39;P2-WIN&#39;
+      } else if (game.board.search(&#39;-&#39;) === -1) {
+        game.state = &#39;TIE&#39;
+      }
+
+      let playerString = player.toString().substring(0, 6)
+
+      _display(
+        `Player ${playerString} takes space: ${payload.space}\n\n` +
+          _gameToStr(
+            game.board,
+            game.state,
+            game.player1,
+            game.player2,
+            payload.name
+          )
+      )
+
+      return xoState.setGame(payload.name, game)
+    })
+}
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="payload">
+<h2>Payload<a class="headerlink" href="#payload" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference internal" href="../architecture/transactions_and_batches.html"><span class="doc">Transactions and Batches</span></a> contains a detailed
+description of how transactions are structured and used. Please read
+this document before proceeding, if you have not reviewed it.</p>
+</div>
+<p>So how do we get data out of the transaction? The transaction consists of a
+header and a payload. The header contains the “signer”, which is used to
+identify the current player. The payload will contain an encoding of the game
+name, the action (<code class="docutils literal notranslate"><span class="pre">create</span></code> a game, <code class="docutils literal notranslate"><span class="pre">delete</span></code> a game, <code class="docutils literal notranslate"><span class="pre">take</span></code> a space), and
+the space (which will be an empty string if the action isn’t <code class="docutils literal notranslate"><span class="pre">take</span></code>).</p>
+<p>An XO transaction request payload consists of the UTF-8 encoding of a
+string with exactly two commas, which is formatted as follows:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;name&gt;,&lt;action&gt;,&lt;space&gt;</span></code></p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">&lt;name&gt;</span></code> is the game name as a non-empty string not containing the character
+<code class="docutils literal notranslate"><span class="pre">|</span></code>. If the action is <cite>create</cite>, the new name must be unique.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;action&gt;</span></code> is the game action: <cite>create</cite>, <cite>take</cite>, or <cite>delete</cite></li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;space&gt;</span></code> is the location on the board, as an integer between 1-9
+(inclusive), if the action is <cite>take</cite></li>
+</ul>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">sawtooth-sdk-javascript/examples/xo/payload.js</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">XoPayload</span> <span class="p">{</span>
+    <span class="nx">constructor</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">action</span><span class="p">,</span> <span class="nx">space</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">action</span> <span class="o">=</span> <span class="nx">action</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">space</span> <span class="o">=</span> <span class="nx">space</span>
+    <span class="p">}</span>
+
+    <span class="kr">static</span> <span class="nx">fromBytes</span> <span class="p">(</span><span class="nx">payload</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">payload</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">let</span> <span class="nx">xoPayload</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XoPayload</span><span class="p">(</span><span class="nx">payload</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">payload</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">payload</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">xoPayload</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nx">InvalidTransaction</span><span class="p">(</span><span class="s1">&#39;Name is required&#39;</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">xoPayload</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">)</span> <span class="o">!==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nx">InvalidTransaction</span><span class="p">(</span><span class="s1">&#39;Name cannot contain &quot;|&quot;&#39;</span><span class="p">)</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">xoPayload</span><span class="p">.</span><span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">throw</span> <span class="k">new</span> <span class="nx">InvalidTransaction</span><span class="p">(</span><span class="s1">&#39;Action is required&#39;</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="nx">xoPayload</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">InvalidTransaction</span><span class="p">(</span><span class="s1">&#39;Invalid payload serialization&#39;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="state">
+<h2>State<a class="headerlink" href="#state" title="Permalink to this headline">¶</a></h2>
+<p>The XoState class turns game information into bytes and stores it in the validator’s Radix-Merkle tree,
+turns bytes stored in the validator’s Radix-Merkle tree into game information, and does these
+operations with a state storage scheme that handles hash collisions.</p>
+<p>An XO state entry consists of the UTF-8 encoding of a string with
+exactly four commas formatted as follows:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;name&gt;,&lt;board&gt;,&lt;game-state&gt;,&lt;player-key-1&gt;,&lt;player-key-2&gt;</span></code></p>
+<p>where</p>
+<ul class="simple">
+<li>&lt;name&gt; is a nonempty string not containing <cite>|</cite>,</li>
+<li>&lt;board&gt; is a string of length 9 containing only <cite>O</cite>, <cite>X</cite>, or <cite>-</cite>,</li>
+<li>&lt;game-state&gt; is one of the following: <cite>P1-NEXT</cite>, <cite>P2-NEXT</cite>, <cite>P1-WIN</cite>,</li>
+<li><cite>P2-WIN</cite>, or <cite>TIE</cite>, and</li>
+<li>&lt;player-key-1&gt; and &lt;player-key-2&gt; are the (possibly empty) public keys</li>
+<li>associated with the game’s players.</li>
+</ul>
+<p>In the event of a hash collision (i.e. two or more state entries
+sharing the same address), the colliding state entries will stored as
+the UTF-8 encoding of the string <code class="docutils literal notranslate"><span class="pre">&lt;a-entry&gt;|&lt;b-entry&gt;|...</span></code>, where
+&lt;a-entry&gt;, &lt;b-entry&gt;,… are sorted alphabetically.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">sawtooth-sdk-javascript/examples/xo/state.js</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">XoState</span> <span class="p">{</span>
+    <span class="nx">constructor</span> <span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">context</span> <span class="o">=</span> <span class="nx">context</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">addressCache</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">([])</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">timeout</span> <span class="o">=</span> <span class="mi">500</span> <span class="c1">// Timeout in milliseconds</span>
+    <span class="p">}</span>
+
+    <span class="nx">getGame</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_loadGames</span><span class="p">(</span><span class="nx">name</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">games</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">games</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">name</span><span class="p">))</span>
+    <span class="p">}</span>
+
+    <span class="nx">setGame</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">game</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">address</span> <span class="o">=</span> <span class="nx">_makeXoAddress</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_loadGames</span><span class="p">(</span><span class="nx">name</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">games</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="nx">games</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">game</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nx">games</span>
+        <span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">games</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="kd">let</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">_serialize</span><span class="p">(</span><span class="nx">games</span><span class="p">)</span>
+
+            <span class="k">this</span><span class="p">.</span><span class="nx">addressCache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
+            <span class="kd">let</span> <span class="nx">entries</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="p">[</span><span class="nx">address</span><span class="p">]</span><span class="o">:</span> <span class="nx">data</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="nx">entries</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">timeout</span><span class="p">)</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+
+    <span class="nx">deleteGame</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">address</span> <span class="o">=</span> <span class="nx">_makeXoAddress</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_loadGames</span><span class="p">(</span><span class="nx">name</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">games</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+            <span class="nx">games</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="nx">games</span><span class="p">.</span><span class="nx">size</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">addressCache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="kc">null</span><span class="p">)</span>
+                <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">deleteState</span><span class="p">([</span><span class="nx">address</span><span class="p">],</span> <span class="k">this</span><span class="p">.</span><span class="nx">timeout</span><span class="p">)</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="kd">let</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">_serialize</span><span class="p">(</span><span class="nx">games</span><span class="p">)</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">addressCache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
+                <span class="kd">let</span> <span class="nx">entries</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="p">[</span><span class="nx">address</span><span class="p">]</span><span class="o">:</span> <span class="nx">data</span>
+                <span class="p">}</span>
+                    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">setState</span><span class="p">(</span><span class="nx">entries</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">timeout</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">})</span>
+        <span class="p">}</span>
+
+    <span class="nx">_loadGames</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">address</span> <span class="o">=</span> <span class="nx">_makeXoAddress</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">addressCache</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">address</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">addressCache</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">address</span><span class="p">)</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="k">new</span> <span class="nx">Map</span><span class="p">([]))</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">_deserialize</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">addressCache</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">address</span><span class="p">)))</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">getState</span><span class="p">([</span><span class="nx">address</span><span class="p">],</span> <span class="k">this</span><span class="p">.</span><span class="nx">timeout</span><span class="p">)</span>
+                <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">addressValues</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">addressValues</span><span class="p">[</span><span class="nx">address</span><span class="p">].</span><span class="nx">toString</span><span class="p">())</span> <span class="p">{</span>
+                        <span class="k">this</span><span class="p">.</span><span class="nx">addressCache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="kc">null</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">([])</span>
+                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                        <span class="kd">let</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">addressValues</span><span class="p">[</span><span class="nx">address</span><span class="p">].</span><span class="nx">toString</span><span class="p">()</span>
+                        <span class="k">this</span><span class="p">.</span><span class="nx">addressCache</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="nx">_deserialize</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">})</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">_hash</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">=&gt;</span>
+    <span class="nx">crypto</span><span class="p">.</span><span class="nx">createHash</span><span class="p">(</span><span class="s1">&#39;sha512&#39;</span><span class="p">).</span><span class="nx">update</span><span class="p">(</span><span class="nx">x</span><span class="p">).</span><span class="nx">digest</span><span class="p">(</span><span class="s1">&#39;hex&#39;</span><span class="p">).</span><span class="nx">toLowerCase</span><span class="p">().</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+
+<span class="kr">const</span> <span class="nx">XO_FAMILY</span> <span class="o">=</span> <span class="s1">&#39;xo&#39;</span>
+
+<span class="kr">const</span> <span class="nx">XO_NAMESPACE</span> <span class="o">=</span> <span class="nx">_hash</span><span class="p">(</span><span class="nx">XO_FAMILY</span><span class="p">).</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+
+<span class="kr">const</span> <span class="nx">_deserialize</span> <span class="o">=</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">gamesIterable</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nx">x</span> <span class="p">=&gt;</span> <span class="nx">x</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
+        <span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">x</span> <span class="p">=&gt;</span> <span class="p">[</span><span class="nx">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="nx">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">board</span><span class="o">:</span> <span class="nx">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">state</span><span class="o">:</span> <span class="nx">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nx">player1</span><span class="o">:</span> <span class="nx">x</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="nx">player2</span><span class="o">:</span> <span class="nx">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]}])</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">(</span><span class="nx">gamesIterable</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">_serialize</span> <span class="o">=</span> <span class="p">(</span><span class="nx">games</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">gameStrs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">nameGame</span> <span class="k">of</span> <span class="nx">games</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">let</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">nameGame</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="kd">let</span> <span class="nx">game</span> <span class="o">=</span> <span class="nx">nameGame</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="nx">gameStrs</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="nx">name</span><span class="p">,</span> <span class="nx">game</span><span class="p">.</span><span class="nx">board</span><span class="p">,</span> <span class="nx">game</span><span class="p">.</span><span class="nx">state</span><span class="p">,</span> <span class="nx">game</span><span class="p">.</span><span class="nx">player1</span><span class="p">,</span> <span class="nx">game</span><span class="p">.</span><span class="nx">player2</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
+    <span class="p">}</span>
+
+    <span class="nx">gameStrs</span><span class="p">.</span><span class="nx">sort</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="nx">Buffer</span><span class="p">.</span><span class="nx">from</span><span class="p">(</span><span class="nx">gameStrs</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;|&#39;</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="addressing">
+<h3>Addressing<a class="headerlink" href="#addressing" title="Permalink to this headline">¶</a></h3>
+<p>By convention, we’ll store game data at an address obtained from hashing the
+game name prepended with some constant.</p>
+<p>XO data is stored in state using addresses generated from the XO
+family name and the name of the game being stored. In particular, an
+XO address consists of the first 6 characters of the SHA-512 hash of
+the UTF-8 encoding of the string “xo” (which is “5b7349”) plus the
+first 64 characters of the SHA-512 hash of the UTF-8 encoding of the
+game name.</p>
+<p>For example, the XO address for a game called “my-game” could be
+generated as follows (in Python):</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">XO_NAMESPACE</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">(</span><span class="s1">&#39;xo&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">6</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">XO_NAMESPACE</span>
+<span class="go">&#39;5b7349&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">(</span><span class="s1">&#39;my-game&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">64</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span>
+<span class="go">&#39;4d4cffe9cf3fb4e41def5114a323e292af9b0e07925cca6299d671ce7fc7ec37&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">XO_NAMESPACE</span><span class="o">+</span><span class="n">y</span>
+<span class="go">&#39;5b73494d4cffe9cf3fb4e41def5114a323e292af9b0e07925cca6299d671ce7fc7ec37&#39;</span>
+</pre></div>
+</div>
+<p>Addressing is implemented as follows:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">_makeXoAddress</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">XO_NAMESPACE</span> <span class="o">+</span> <span class="nx">_hash</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sdk_submit_tutorial_js.html" class="btn btn-neutral float-right" title="Client: Building and Submitting Transactions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sdk_overview_tutorial_js.html" class="btn btn-neutral" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

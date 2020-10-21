@@ -1,0 +1,505 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Journal &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Transaction Scheduling" href="scheduling.html" />
+    <link rel="prev" title="Transactions and Batches" href="transactions_and_batches.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../architecture.html">Architecture Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="global_state.html">Global State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transactions_and_batches.html">Transactions and Batches</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Journal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-completer">The Completer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-blockpublisher">The BlockPublisher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-chaincontroller">The ChainController</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-blockstore">The BlockStore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-blockcache">The BlockCache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-consensus-interface">The Consensus Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-genesis-process">The Genesis Process</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#genesis-batch-creation">Genesis Batch Creation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genesis-block-creation">Genesis Block Creation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genesis-block-processing">Genesis Block Processing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html">Transaction Scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_network.html">Validator Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="permissioning_requirement.html">Permissioning Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="injecting_batches_block_validation_rules.html">Injecting Batches and On-Chain Block Validation Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_and_transactions_receipts.html">Events and Transaction Receipts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poet.html">PoET 1.0 Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../architecture.html">Architecture Guide</a> &raquo;</li>
+        
+      <li>Journal</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/architecture/journal.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="journal">
+<h1>Journal<a class="headerlink" href="#journal" title="Permalink to this headline">¶</a></h1>
+<p>The <cite>journal</cite> is the group of validator components that work together to handle
+batches and proposed blocks. These components are responsible for completing
+published blocks, publishing batches into blocks to extend the chain, and
+validating proposed blocks to determine if they should be considered for the new
+chain head.</p>
+<p>Blocks and batches arrive via interconnect, either through the gossip protocol
+or from client requests. The processing of these blocks and batches is handled
+in multiple pipelines.</p>
+<a class="reference internal image-reference" href="../_images/journal_organization.svg"><div align="center" class="align-center"><img alt="Journal Components" src="../_images/journal_organization.svg" width="60%" /></div>
+</a>
+<ul class="simple">
+<li><p>The <strong>Completer</strong> initially receives the blocks and batches. It guarantees
+that all dependencies for the blocks and batches have been satisfied.</p></li>
+<li><p>Completed batches go to the <strong>BlockPublisher</strong> for batch validation and
+inclusion in a block.</p></li>
+<li><p>Completed blocks go to the <strong>ChainController</strong> for block validation and
+fork resolution.</p></li>
+<li><p>The <strong>BlockCache</strong> and <strong>BlockStore</strong> provide storage for the batches and
+blocks being processed.</p></li>
+</ul>
+<p>Batch and block processing is designed to be asynchronous, which allows the
+ChainController to process incoming blocks in parallel, as well as allowing the
+BlockPublisher to proceed with claiming blocks even when the incoming block rate
+is high.</p>
+<p>This approach is flexible enough to work with different consensus algorithms.
+Sawtooth includes a <em>consensus interface</em> that communicates with the components
+in the journal.</p>
+<div class="section" id="the-completer">
+<h2>The Completer<a class="headerlink" href="#the-completer" title="Permalink to this headline">¶</a></h2>
+<p>When a proposed block is broadcasted, it contains only the minimum required
+information, such as batch IDs but not the batches themselves.  The Completer
+is responsible for making sure that blocks and batches are complete before
+delivering them to the BlockPublisher or ChainController.</p>
+<p>The Completer checks for dependencies, ensures that the previous block exists,
+and makes sure that the batches exist in the BlockStore or BlockCache.</p>
+<ul class="simple">
+<li><p>A batch is considered complete when all of its dependent transactions exist in
+the current chain or have been delivered to the BlockPublisher. Once a batch
+is formally complete, it is delivered to the ChainController.</p></li>
+<li><p>A block is considered complete when all of its predecessors have been
+delivered to the ChainController and the <code class="docutils literal notranslate"><span class="pre">batches</span></code> field contains all
+the batches specified (as batch IDs) in the block header. Also, the
+<code class="docutils literal notranslate"><span class="pre">batches</span></code> field must be in the same order as the list of batch IDs. Once a
+block is formally complete, it is delivered to the ChainController for
+validation.</p></li>
+</ul>
+<p>All blocks and batches have a timeout for being completed. The Completer sends
+an initial request for any missing dependencies or predecessors. If a response
+is not received in the specified time, the block or batch is dropped.</p>
+<p>For example, consider the case of a chain A-&gt;B-&gt;C. If block C arrives but B is
+not in the BlockCache, the Completer will request block B. If the request for
+B times out, block C is dropped.</p>
+<p>Later, if block D arrives with predecessor C (for the chain A-&gt;B-&gt;C-&gt;D), the
+Completer requests block C from the network. After C arrives, the Completer
+requests B again. If B arrives this time, the new chain is delivered to the
+ChainController, which checks it for validity and considers making it the
+new block head.</p>
+</div>
+<div class="section" id="the-blockpublisher">
+<span id="journal-block-publisher-label"></span><h2>The BlockPublisher<a class="headerlink" href="#the-blockpublisher" title="Permalink to this headline">¶</a></h2>
+<p>The BlockPublisher is responsible for creating candidate blocks to extend the
+current chain. The BlockPublisher does all of the housekeeping work for creating
+a block, but takes direction from the consensus algorithm for when to create a
+block and when to publish a block.</p>
+<p>The BlockPublisher responds to the following events:</p>
+<ul class="simple">
+<li><p>Start block</p></li>
+<li><p>Receive batch</p></li>
+<li><p>Summarize block (stop and make the block available)</p></li>
+<li><p>Finalize block (publish the block)</p></li>
+</ul>
+</div>
+<div class="section" id="the-chaincontroller">
+<span id="journal-chain-controller-label"></span><h2>The ChainController<a class="headerlink" href="#the-chaincontroller" title="Permalink to this headline">¶</a></h2>
+<p>The ChainController is responsible for maintaining the blockchain for the
+validator. This responsibility involves validating proposed blocks, evaluating
+valid blocks to determine if they should be considered for the new chain head,
+and generating new blocks to extend the chain.</p>
+<p>The ChainController determines which chain the validator is currently on and
+coordinates any change-of-chain activities that need to happen.</p>
+</div>
+<div class="section" id="the-blockstore">
+<h2>The BlockStore<a class="headerlink" href="#the-blockstore" title="Permalink to this headline">¶</a></h2>
+<p>The BlockStore is a persistent on-disk store of all blocks in the current
+chain - that is, the list of blocks from the current chain head back to the
+<a class="reference internal" href="../glossary.html#term-genesis-block"><span class="xref std std-term">genesis block</span></a>. (Blocks from forks are not included in the BlockStore.)
+When the validator is started, the contents of the BlockStore is trusted
+to be the current “state of the blockchain”. All blocks stored here are formally
+complete.</p>
+<p>In addition, the BlockStore maintains internal mappings of transaction-to-block
+and batch-to-block. These mappings can be rebuilt if they are missing or corrupt
+(usually during startup, not during the course of normal operation). These
+mappings are stored in a format that is cached to disk, so they are not held in
+memory at all times. Note that as the blockchain grows, this set of mappings
+will become quite large.</p>
+<p>The BlockStore provides an atomic method for updating the current chain (when
+the fork is changed). In order for the BlockStore to switch forks, it is
+provided with a list of blocks in the new chain to commit, and a list of blocks
+in the old chain to de-commit. These two lists specify the blocks in each
+fork back to the common root.</p>
+<p>Blocks in the BlockStore can be accessed by block ID. Blocks can also be
+accessed via batch ID, transaction ID, or block number.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The BlockStore is expected to be coherent at all times. An error in the
+BlockStore is considered a non-recoverable error for the validator. Such
+critical errors would include missing blocks, bad indexes, missing chain
+reference, incomplete blocks or invalid blocks.</p>
+</div>
+</div>
+<div class="section" id="the-blockcache">
+<h2>The BlockCache<a class="headerlink" href="#the-blockcache" title="Permalink to this headline">¶</a></h2>
+<p>The BlockCache is an in-memory construct that is rebuilt when the system is
+started. It holds the working set of blocks for the validator.</p>
+<p>The BlockCache tracks the processing state of each block as valid, invalid, or
+unknown.</p>
+<ul class="simple">
+<li><p>Valid blocks have been proven to be valid by the ChainController. All blocks
+in the BlockStore are considered valid.</p></li>
+<li><p>Invalid blocks have failed validation or have an invalid block as a
+predecessor.</p></li>
+<li><p>Unknown blocks have not yet completed validation. Usually, these blocks have
+just arrived from the Completer.</p></li>
+</ul>
+<p>If a block is not present in the BlockCache, the validator looks in the
+BlockStore for the block. If it is not found or the lookup fails, the block is
+marked as unknown. If the block is found in the BlockStore, it is loaded into
+the BlockCache and marked as valid.</p>
+<p>The BlockCache keeps blocks that are currently relevant, tracked by the last
+time the block was accessed. Periodically, blocks that have not been accessed
+recently are purged from the BlockCache, but only if none of the other blocks
+in the BlockCache reference those blocks as predecessors.</p>
+</div>
+<div class="section" id="the-consensus-interface">
+<h2>The Consensus Interface<a class="headerlink" href="#the-consensus-interface" title="Permalink to this headline">¶</a></h2>
+<p>In the spirit of configurability, Sawtooth supports <cite>dynamic consensus</cite>.
+The initial consensus algorithm for the blockchain is set in the
+genesis block, but can be changed during a blockchain’s lifetime with
+the Settings transaction processor.</p>
+<p>The consensus interface is responsible for determining who can publish a block,
+whether a published block is valid according to the consensus rules, and which
+block should become the chain head in the case of a fork.</p>
+<p>As described earlier in this section, the validator handles the mechanics of
+creating blocks, committing blocks, and networking between peers and other nodes
+on the network.</p>
+</div>
+<div class="section" id="the-genesis-process">
+<h2>The Genesis Process<a class="headerlink" href="#the-genesis-process" title="Permalink to this headline">¶</a></h2>
+<p>The process of creating a <a class="reference internal" href="../glossary.html#term-genesis-block"><span class="xref std std-term">genesis block</span></a> is different from the standard
+block-creation process that is described in the
+<a class="reference internal" href="#"><span class="doc">previous Journal sections</span></a>.</p>
+<p>A genesis block (the root of a blockchain) is required to bootstrap a new
+Sawtooth validator network with on-chain settings such as the desired consensus
+algorithm, any deployment-specific configuration settings, and any
+application-specific transactions that are needed at genesis time.</p>
+<p>The genesis block contains a list of batches that the validator will process
+when starting with an empty blockchain. This allows applications (also called
+transaction families) to include their own batches without needing to know
+the details of the genesis process.</p>
+<p>The genesis process has the following general steps:</p>
+<ol class="arabic simple">
+<li><p>Create a genesis batch of initial blockchain transactions</p></li>
+<li><p>Create a genesis block from the genesis batch</p></li>
+<li><p>Start the transaction processors</p></li>
+<li><p>Process the genesis block</p></li>
+</ol>
+<div class="section" id="genesis-batch-creation">
+<h3>Genesis Batch Creation<a class="headerlink" href="#genesis-batch-creation" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawadm</span> <span class="pre">genesis</span></code> command takes a set of batches as input and combines them
+to create the genesis batch, which is a single protobuf-encoded list of batches
+contained in <cite>GenesisData</cite>.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">File: sawtooth-core/protos/genesis.proto</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">GenesisData</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">Batch</span> <span class="na">batches</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>The batches in the genesis block will be executed in order, using the same
+ordering as the list. Each batch is implicitly dependent on the previous one.
+The <code class="docutils literal notranslate"><span class="pre">sawadm</span> <span class="pre">genesis</span></code> command checks dependencies when creating the list to
+verify that if dependencies exist, the batches are in the correct order.</p>
+<p>If an application needs to include a set of transactions in the genesis block,
+it must provide a tool to produce the <code class="docutils literal notranslate"><span class="pre">GenesisData</span></code> list of batches in the
+correct order. If necessary, this tool should also manage the batch and
+transaction dependencies explicitly within the context of the application’s
+genesis batch.</p>
+<p>The following example uses the <code class="docutils literal notranslate"><span class="pre">sawset</span> <span class="pre">proposal</span> <span class="pre">create</span></code> command to create a
+batch of transactions that configure PoET consensus. Next, the
+<code class="docutils literal notranslate"><span class="pre">sawadm</span> <span class="pre">genesis</span></code> command combines that batch (plus any others that exist) into
+a <code class="docutils literal notranslate"><span class="pre">GenesisData</span></code> list of batches for the genesis block.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sawset proposal create <span class="se">\</span>
+  -k &lt;signing-key-file&gt; <span class="se">\</span>
+  -o sawset.batch <span class="se">\</span>
+  sawtooth.consensus.algorithm.name<span class="o">=</span>PoET <span class="se">\</span>
+  sawtooth.consensus.algorithm.version<span class="o">=</span><span class="m">0</span>.1 <span class="se">\</span>
+  sawtooth.poet.initial_wait_timer<span class="o">={</span>value<span class="o">}</span> <span class="se">\</span>
+  sawtooth.poet.target_wait_time<span class="o">={</span>value<span class="o">}</span> <span class="se">\</span>
+  sawtooth.poet.population_estimate_sample_size<span class="o">={</span>value<span class="o">}</span>
+
+$ sawadm genesis sawset.batch
+</pre></div>
+</div>
+<p>When <code class="docutils literal notranslate"><span class="pre">sawadm</span> <span class="pre">genesis</span></code> runs, it writes a <code class="docutils literal notranslate"><span class="pre">genesis.batch</span></code> file to the
+validator’s data directory (for more information, see
+<a class="reference internal" href="../cli/sawadm.html"><span class="doc">sawadm</span></a> in the CLI Command Reference).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For a network using PoET consensus, additional batches must be included in
+the genesis batch. For more information, see <a class="reference internal" href="../app_developers_guide/creating_sawtooth_network.html#proc-multi-ubuntu-label"><span class="std std-ref">Ubuntu: Add a Node to the Single-Node Environment</span></a>
+in the Application Developer’s Guide.</p>
+</div>
+</div>
+<div class="section" id="genesis-block-creation">
+<h3>Genesis Block Creation<a class="headerlink" href="#genesis-block-creation" title="Permalink to this headline">¶</a></h3>
+<p>Once the genesis batch exists, the validator uses the following process to
+produce a genesis block.</p>
+<ol class="arabic">
+<li><p>When a validator starts, it determines that it must produce a genesis block
+if the following conditions are true:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">genesis.batch</span></code> file exists</p></li>
+<li><p>There is no block specified as the chain head</p></li>
+</ul>
+<p>If either of these conditions is not met, the validator halts operation.</p>
+</li>
+<li><p>The validator loads the batches from the <code class="docutils literal notranslate"><span class="pre">genesis.batch</span></code> file into the
+pending queue.</p></li>
+<li><p>The validator produces the genesis block using the standard block-creation
+process, with the following modifications:</p>
+<ul class="simple">
+<li><p>The batch execution order is strictly in the order of the batches in the
+<code class="docutils literal notranslate"><span class="pre">GenesisData</span></code> list. The <a class="reference internal" href="scheduling.html#txn-sched-executor-label"><span class="std std-ref">Executor</span></a> does not attempt
+to reorder batches or drop failed transactions. If any transaction in
+<code class="docutils literal notranslate"><span class="pre">genesis.batch</span></code> fails, no genesis block is produced. The validator
+treats this failure as a fatal error.</p></li>
+<li><p>The validator determines block validity without considering consensus.
+At the start of the genesis block creation process, state (the
+Merkle-Radix tree) is empty, so the blockchain does not have a consensus
+algorithm yet. As a result, the genesis block has an empty consensus field.</p></li>
+</ul>
+</li>
+<li><p>The validator also writes the blockchain ID (that is, the signature of the
+genesis block) to the file <code class="docutils literal notranslate"><span class="pre">block-chain-id</span></code> in the validator’s data
+directory. The blockchain ID is used to mark this validator’s genesis block
+as the correct one for the blockchain.</p></li>
+</ol>
+</div>
+<div class="section" id="genesis-block-processing">
+<h3>Genesis Block Processing<a class="headerlink" href="#genesis-block-processing" title="Permalink to this headline">¶</a></h3>
+<p>To complete the genesis process and commit the genesis block, all
+necessary transaction processors must be running.</p>
+<p>If any transactions in the genesis block set or change settings, Sawtooth
+requires the <a class="reference external" href="../cli/settings-tp">Sawtooth Settings transaction processor</a>
+or an equivalent implementation.
+For example, if the genesis block configures PoET consensus, this transaction
+processor handles the transactions with PoET settings.</p>
+<p>When the genesis block is committed, the consensus settings are stored in
+state. All subsequent blocks are processed with the configured consensus
+algorithm.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="scheduling.html" class="btn btn-neutral float-right" title="Transaction Scheduling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="transactions_and_batches.html" class="btn btn-neutral float-left" title="Transactions and Batches" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

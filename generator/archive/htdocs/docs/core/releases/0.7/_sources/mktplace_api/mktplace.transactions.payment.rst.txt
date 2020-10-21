@@ -1,0 +1,7 @@
+mktplace\.transactions\.payment module
+======================================
+
+.. automodule:: mktplace.transactions.payment
+    :members:
+    :undoc-members:
+    :show-inheritance:

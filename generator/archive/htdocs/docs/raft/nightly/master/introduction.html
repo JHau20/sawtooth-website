@@ -1,0 +1,265 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Configuring and Deploying Sawtooth Raft" href="configuring_deploying.html" />
+    <link rel="prev" title="Table of Contents" href="contents.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#join-the-sawtooth-community">Join the Sawtooth Community</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuring_deploying.html">Configuring and Deploying Sawtooth Raft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting and Common Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="contents.html">Docs</a> &raquo;</li>
+        
+      <li>Introduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>Sawtooth Raft is a consensus engine for Hyperledger Sawtooth based on the crash
+fault tolerant consensus algorithm <a class="reference external" href="http://raft.github.io/">Raft</a>.
+Specifically, it is built on top of the Rust implementation of Raft used by
+TiKV, <a class="reference external" href="https://github.com/pingcap/raft-rs">raft-rs</a>.</p>
+<p>Sawtooth Raft differs from the PoET SGX and devmode consensus engines in a few
+major ways:</p>
+<ul class="simple">
+<li><p><strong>Raft is a leader-based consensus algorithm</strong> - The Raft algorithm defines
+an election process whereby a leader is established and recognized by all
+followers. This means that only one node—the leader—publishes blocks, which
+are then validated and agreed on by the other nodes in the network—the
+followers.</p></li>
+<li><p><strong>Raft is non-forking</strong> - No forks arise on a Raft network because only one
+node can publish blocks. This means that no fork resolution needs to be done,
+which reduces the overhead associated with block management and lends itself
+to increased performance.</p></li>
+<li><p><strong>Raft membership is fixed</strong> - Raft requires that a majority of nodes agree on
+all progress that is made. To ensure safety by preventing invalid node
+configurations, Sawtooth Raft does not support open membership. The population
+of nodes is fixed unless changed by an administrator.</p></li>
+<li><p><strong>Raft networks should be small</strong> - Raft requires exchanging messages between
+all nodes to reach consensus for each block, and the leader must wait for a
+majority of nodes to agree on a new entry before it can be committed. The
+number of messages that need to be exchanged increases exponentially with the
+size of the network, which make large networks impractical.</p></li>
+<li><p><strong>Raft is not Byzantine fault tolerant</strong> - The Raft algorithm was designed to
+be crash fault tolerant—it can continue to make progress as long as a majority
+of its nodes are available. However, Raft only guarantees safety and
+availability under non-Byzantine conditions, which makes it ill-suited for
+networks that require Byzantine fault tolerance.</p></li>
+</ul>
+<p>The Sawtooth Raft consensus engine may be right for you if your Sawtooth
+deployment will:</p>
+<ol class="arabic simple">
+<li><p>Consist of a small number of nodes (roughly 1 to 10)</p></li>
+<li><p>Have a mostly fixed membership</p></li>
+<li><p>Not require Byzantine fault tolerance</p></li>
+</ol>
+<div class="section" id="join-the-sawtooth-community">
+<h2>Join the Sawtooth Community<a class="headerlink" href="#join-the-sawtooth-community" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth is an open source project under the Hyperledger umbrella. We welcome
+working with individuals and companies interested in advancing distributed
+ledger technology. Please see <a class="reference internal" href="community.html"><span class="doc">Community</span></a> for ways to become a part of
+the Sawtooth community.</p>
+</div>
+<div class="section" id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
+<p>This project uses software developed by the OpenSSL Project for use in the
+OpenSSL Toolkit (<a class="reference external" href="http://www.openssl.org/">http://www.openssl.org/</a>).</p>
+<p>This project relies on other third-party components. For details, see the
+LICENSE and NOTICES files in the <a class="reference external" href="https://github.com/hyperledger/sawtooth-raft">sawtooth-raft repository</a>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="configuring_deploying.html" class="btn btn-neutral float-right" title="Configuring and Deploying Sawtooth Raft" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="contents.html" class="btn btn-neutral float-left" title="Table of Contents" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2018, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

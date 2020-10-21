@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Signing Transactions &mdash; Sawtooth v0.8.12 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.12 documentation" href="../index.html"/>
+        <link rel="up" title="Core Developer’s Guide" href="../core_developers_guide.html"/>
+        <link rel="next" title="System Administrator’s Guide" href="../sysadmin_guide.html"/>
+        <link rel="prev" title="Docker" href="sawtooth_docker.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.12
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../solidity_developers_guide.html">Solidity Developers Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="environment_setup.html">Environment Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intkey_workload.html">The Workload Generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawtooth_docker.html">Docker</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Signing Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../core_developers_guide.html">Core Developer&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Signing Transactions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/core_developers_guide/signing_transactions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="signing-transactions">
+<h1>Signing Transactions<a class="headerlink" href="#signing-transactions" title="Permalink to this headline">¶</a></h1>
+<p>Consistency in transaction signing is critical for successful submission
+of transactions to Sawtooth.</p>
+<p><strong>Step 1: Serialize the transaction</strong></p>
+<p>The transaction schema describes the fields that must be present in the
+serialized transaction. All fields, including optional fields, must have a
+value set. For optional fields that are not specified, the value of the
+field must be set to the default value specified in the schema.</p>
+<p>The exception to the previous rule is that the top level &#8220;Signature&#8221;
+field must be removed from the transaction completely. It is not
+sufficient simply to set the value to an empty string.</p>
+<p>An important note is that data types must match those used in the
+schema. Specifically, a float must have at least one decimal point or
+the value will be encoded as an integer. For example, for signing
+purposes, 1.0 is not equivalent to 1.</p>
+<p>All strings in the transaction including fields names and values should
+be encoded as Unicode.</p>
+<p>Fields in the transaction must be ordered alpha-numerically by field
+name. This includes field in any contained object.</p>
+<p>The transaction is serialized in <cite>CBOR &lt;http://cbor.io&gt;</cite>.</p>
+<p><strong>Step 2: Create the signature for the serialized transaction</strong></p>
+<p>The resulting serialized document is signed with the transactor&#8217;s private
+ECDSA key using the secp256k1 curve.</p>
+<p>The validator expects a 64 byte &#8220;compact&#8221; signature. (This is a concatenation
+of the R and S fields of the signature. Some libraries will include an
+additional header byte, recovery ID field, or provide DER encoded signatures.
+Sawtooth will reject the signature if it is anything other than 64 bytes.)</p>
+<p><strong>Step 3: Add the signature to the transaction</strong></p>
+<p>Set the value of the &#8220;Signature&#8221; field to the 64 byte base64 encoded signature.</p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../sysadmin_guide.html" class="btn btn-neutral float-right" title="System Administrator’s Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sawtooth_docker.html" class="btn btn-neutral" title="Docker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.12',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

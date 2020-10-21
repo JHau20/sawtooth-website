@@ -1,0 +1,645 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Client: Building and Submitting Transactions &mdash; Sawtooth Java SDK  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="ystatic/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Java SDK API Reference" href="sdk_api_ref.html" />
+    <link rel="prev" title="Importing the Java SDK" href="importing_java_sdk.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Sawtooth Java SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="importing_java_sdk.html">Importing the Java SDK</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Client: Building and Submitting Transactions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-private-key-and-signer">Creating a Private Key and Signer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#encoding-your-payload">Encoding Your Payload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-transaction">Building the Transaction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-the-transaction-header">1. Create the Transaction Header</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-the-transaction">2. Create the Transaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optional-encode-the-transaction-s">3. (optional) Encode the Transaction(s)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-batch">Building the Batch</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-the-batchheader">1. Create the BatchHeader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-the-batch">2. Create the Batch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#encode-the-batch-es-in-a-batchlist">3. Encode the Batch(es) in a BatchList</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submitting-batches-to-the-validator">Submitting Batches to the Validator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sdk_api_ref.html">Java SDK API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sawtooth Java SDK</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Client: Building and Submitting Transactions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/using_java_sdk.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="client-building-and-submitting-transactions">
+<h1>Client: Building and Submitting Transactions<a class="headerlink" href="#client-building-and-submitting-transactions" title="Permalink to this headline">¶</a></h1>
+<p>The process of encoding information to be submitted to a distributed ledger is
+generally non-trivial. A series of cryptographic safeguards are used to
+confirm identity and data validity. Hyperledger Sawtooth is no different, but
+the Java SDK provides client functionality that handles
+most of these details and greatly simplifies the process of making changes to
+the blockchain.</p>
+<div class="section" id="creating-a-private-key-and-signer">
+<h2>Creating a Private Key and Signer<a class="headerlink" href="#creating-a-private-key-and-signer" title="Permalink to this headline">¶</a></h2>
+<p>In order to confirm your identity and sign the information you send to the
+validator, you will need a 256-bit key. Sawtooth uses the secp256k1 ECDSA
+standard for signing, which means that almost any set of 32 bytes is a valid
+key. It is fairly simple to generate a valid key using the SDK’s <em>signing</em>
+module.</p>
+<p>A <em>Signer</em> wraps a private key and provides some convenient methods for signing
+bytes and getting the private key’s associated public key.</p>
+<p><strong>Kotlin</strong></p>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">sawtooth.sdk.signing.Secp256k1Context</span>
+<span class="k">import</span> <span class="nn">sawtooth.sdk.signing.Signer</span>
+
+<span class="k">val</span> <span class="py">context</span> <span class="p">=</span> <span class="n">Secp256k1Context</span><span class="p">()</span>
+<span class="k">val</span> <span class="py">privateKey</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">newRandomPrivateKey</span><span class="p">()</span>
+<span class="k">val</span> <span class="py">signer</span> <span class="p">=</span> <span class="n">Signer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Java</strong></p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sawtooth.sdk.signing.PrivateKey</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">sawtooth.sdk.signing.Secp256k1Context</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">sawtooth.sdk.signing.Signer</span><span class="p">;</span>
+
+<span class="kd">private</span> <span class="n">Secp256k1Context</span> <span class="n">context</span>  <span class="o">=</span> <span class="k">new</span> <span class="n">Secp256k1Context</span><span class="p">();</span>
+<span class="kd">private</span> <span class="n">PrivateKey</span> <span class="n">privateKey</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="na">newRandomPrivateKey</span><span class="p">();</span>
+<span class="kd">private</span> <span class="n">Signer</span> <span class="n">signer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Signer</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">privateKey</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This key is the <strong>only</strong> way to prove your identity on the blockchain. Any
+person possessing it will be able to sign Transactions using your identity,
+and there is no way to recover it if lost. It is very important that any
+private key is kept secret and secure.</p>
+</div>
+</div>
+<div class="section" id="encoding-your-payload">
+<h2>Encoding Your Payload<a class="headerlink" href="#encoding-your-payload" title="Permalink to this headline">¶</a></h2>
+<p>Transaction payloads are composed of binary-encoded data that is opaque to the
+validator. The logic for encoding and decoding them rests entirely within the
+particular Transaction Processor itself. As a result, there are many possible
+formats, and you will have to look to the definition of the Transaction
+Processor itself for that information. As an example, the <em>IntegerKey</em>
+Transaction Processor uses a payload of three key/value pairs encoded as
+<a class="reference external" href="https://en.wikipedia.org/wiki/CBOR">CBOR</a>. Creating one might look like this:</p>
+<blockquote>
+<div><p><strong>Kotlin</strong></p>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">co.nstant.`in`.cbor.CborBuilder</span>
+<span class="k">import</span> <span class="nn">co.nstant.`in`.cbor.CborEncoder</span>
+
+<span class="k">val</span> <span class="py">payload</span> <span class="p">=</span> <span class="n">ByteArrayOutputStream</span><span class="p">()</span>
+<span class="n">CborEncoder</span><span class="p">(</span><span class="n">payload</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span>
+     <span class="n">CborBuilder</span><span class="p">()</span>
+         <span class="p">.</span><span class="n">addMap</span><span class="p">()</span>
+         <span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s">&quot;Verb&quot;</span><span class="p">,</span> <span class="s">&quot;set&quot;</span><span class="p">)</span>
+         <span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s">&quot;Name&quot;</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">)</span>
+         <span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s">&quot;Value&quot;</span><span class="p">,</span> <span class="m">42</span><span class="p">)</span>
+         <span class="p">.</span><span class="n">end</span><span class="p">()</span>
+         <span class="p">.</span><span class="n">build</span><span class="p">())</span>
+
+ <span class="k">val</span> <span class="py">encodedBytes</span> <span class="p">=</span> <span class="n">payload</span><span class="p">.</span><span class="n">toByteArray</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Java</strong></p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">co.nstant.in.cbor.CborBuilder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">co.nstant.in.cbor.CborEncoder</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">co.nstant.in.cbor.CborException</span><span class="p">;</span>
+
+<span class="n">ByteArrayOutputStream</span> <span class="n">payload</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ByteArrayOutputStream</span><span class="p">();</span>
+ <span class="k">try</span> <span class="p">{</span>
+     <span class="k">new</span> <span class="n">CborEncoder</span><span class="p">(</span><span class="n">payload</span><span class="p">).</span><span class="na">encode</span><span class="p">(</span><span class="k">new</span> <span class="n">CborBuilder</span><span class="p">()</span>
+             <span class="p">.</span><span class="na">addMap</span><span class="p">()</span>
+             <span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;Verb&quot;</span><span class="p">,</span> <span class="s">&quot;set&quot;</span><span class="p">)</span>
+             <span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;Name&quot;</span><span class="p">,</span> <span class="s">&quot;foo&quot;</span><span class="p">)</span>
+             <span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;Value&quot;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+             <span class="p">.</span><span class="na">end</span><span class="p">()</span>
+             <span class="p">.</span><span class="na">build</span><span class="p">());</span>
+ <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">CborException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+ <span class="p">}</span>
+ <span class="kt">byte</span><span class="o">[]</span> <span class="n">payloadBytes</span> <span class="o">=</span> <span class="n">payload</span><span class="p">.</span><span class="na">toByteArray</span><span class="p">();</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="building-the-transaction">
+<h2>Building the Transaction<a class="headerlink" href="#building-the-transaction" title="Permalink to this headline">¶</a></h2>
+<p><em>Transactions</em> are the basis for individual changes of state to the Sawtooth
+blockchain. They are composed of a binary payload, a binary-encoded
+<em>TransactionHeader</em> with some cryptographic safeguards and metadata about how
+it should be handled, and a signature of that header. It would be worthwhile
+to familiarize yourself with the information in  <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/transactions_and_batches.html">Transactions and Batches</a>,
+particularly the definition of TransactionHeaders.</p>
+<div class="section" id="create-the-transaction-header">
+<h3>1. Create the Transaction Header<a class="headerlink" href="#create-the-transaction-header" title="Permalink to this headline">¶</a></h3>
+<p>A TransactionHeader contains information for routing a transaction to the
+correct transaction processor, what input and output state addresses are
+involved, references to prior transactions it depends on, and the public keys
+associated with the its signature. The header references the payload through a
+SHA-512 hash of the payload bytes.</p>
+<p><strong>Kotlin</strong></p>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">sawtooth.sdk.protobuf.TransactionHeader</span>
+<span class="k">import</span> <span class="nn">java.util.UUID</span>
+
+<span class="k">import</span> <span class="nn">com.google.common.io.BaseEncoding</span>
+<span class="k">import</span> <span class="nn">java.security.MessageDigest</span>
+
+<span class="k">fun</span> <span class="nf">hash</span><span class="p">(</span><span class="n">input</span><span class="p">:</span> <span class="n">String</span><span class="p">):</span> <span class="n">String</span> <span class="p">{</span>
+    <span class="k">val</span> <span class="py">digest</span> <span class="p">=</span> <span class="n">MessageDigest</span><span class="p">.</span><span class="n">getInstance</span><span class="p">(</span><span class="s">&quot;SHA-512&quot;</span><span class="p">)</span>
+    <span class="n">digest</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="n">digest</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="n">toByteArray</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">BaseEncoding</span><span class="p">.</span><span class="n">base16</span><span class="p">().</span><span class="n">lowerCase</span><span class="p">().</span><span class="n">encode</span><span class="p">(</span><span class="n">digest</span><span class="p">.</span><span class="n">digest</span><span class="p">())</span>
+<span class="p">}</span>
+
+<span class="k">val</span> <span class="py">header</span> <span class="p">=</span> <span class="n">TransactionHeader</span><span class="p">.</span><span class="n">newBuilder</span><span class="p">()</span>
+  <span class="p">.</span><span class="n">setSignerPublicKey</span><span class="p">(</span><span class="n">signer</span><span class="p">.</span><span class="n">publicKey</span><span class="p">.</span><span class="n">hex</span><span class="p">())</span>
+  <span class="p">.</span><span class="n">setFamilyName</span><span class="p">(</span><span class="s">&quot;intkey&quot;</span><span class="p">)</span>
+  <span class="p">.</span><span class="n">setFamilyVersion</span><span class="p">(</span><span class="s">&quot;1.0&quot;</span><span class="p">)</span>
+  <span class="p">.</span><span class="n">addInputs</span><span class="p">(</span><span class="s">&quot;1cf1266e282c41be5e4254d8820772c5518a2c5a8c0c7f7eda19594a7eb539453e1ed7&quot;</span><span class="p">)</span>
+  <span class="p">.</span><span class="n">addOutputs</span><span class="p">(</span><span class="s">&quot;1cf1266e282c41be5e4254d8820772c5518a2c5a8c0c7f7eda19594a7eb539453e1ed7&quot;</span><span class="p">)</span>
+  <span class="p">.</span><span class="n">setPayloadSha512</span><span class="p">(</span><span class="n">hash</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+  <span class="p">.</span><span class="n">setBatcherPublicKey</span><span class="p">(</span><span class="n">signer</span><span class="p">.</span><span class="n">publicKey</span><span class="p">.</span><span class="n">hex</span><span class="p">())</span>
+  <span class="p">.</span><span class="n">setNonce</span><span class="p">(</span><span class="n">UUID</span><span class="p">.</span><span class="n">randomUUID</span><span class="p">().</span><span class="n">toString</span><span class="p">())</span>
+  <span class="p">.</span><span class="n">build</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Java</strong></p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sawtooth.sdk.protobuf.TransactionHeader</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.UUID</span><span class="p">;</span>
+
+<span class="n">TransactionHeader</span> <span class="n">header</span> <span class="o">=</span> <span class="n">TransactionHeader</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">()</span>
+  <span class="p">.</span><span class="na">setSignerPublicKey</span><span class="p">(</span><span class="n">signer</span><span class="p">.</span><span class="na">getPublicKey</span><span class="p">().</span><span class="na">hex</span><span class="p">())</span>
+  <span class="p">.</span><span class="na">setFamilyName</span><span class="p">(</span><span class="s">&quot;xo&quot;</span><span class="p">)</span>
+  <span class="p">.</span><span class="na">setFamilyVersion</span><span class="p">(</span><span class="s">&quot;1.0&quot;</span><span class="p">)</span>
+  <span class="p">.</span><span class="na">addInputs</span><span class="p">(</span><span class="s">&quot;1cf1266e282c41be5e4254d8820772c5518a2c5a8c0c7f7eda19594a7eb539453e1ed7&quot;</span><span class="p">)</span>
+  <span class="p">.</span><span class="na">addOutputs</span><span class="p">(</span><span class="s">&quot;1cf1266e282c41be5e4254d8820772c5518a2c5a8c0c7f7eda19594a7eb539453e1ed7&quot;</span><span class="p">)</span>
+  <span class="p">.</span><span class="na">setPayloadSha512</span><span class="p">(</span><span class="n">hash</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+  <span class="p">.</span><span class="na">setBatcherPublicKey</span><span class="p">(</span><span class="n">signer</span><span class="p">.</span><span class="na">getPublicKey</span><span class="p">().</span><span class="na">hex</span><span class="p">())</span>
+  <span class="p">.</span><span class="na">setNonce</span><span class="p">(</span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">().</span><span class="na">toString</span><span class="p">())</span>
+  <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Remember that a <em>batcher public_key</em> is the hex public key matching the private
+key that will later be used to sign a Transaction’s Batch, and
+<em>dependencies</em> are the <em>header signatures</em> of Transactions that must be
+committed before this one (see <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/transactions_and_batches.html">TransactionHeaders</a>).</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <em>inputs</em> and <em>outputs</em> are the state addresses a Transaction is allowed
+to read from or write to. With the Transaction above, we referenced the
+specific address where the value of  <code class="docutils literal notranslate"><span class="pre">'foo'</span></code> is stored.  Whenever possible,
+specific addresses should be used, as this will allow the validator to
+schedule transaction processing more efficiently.</p>
+<p>Note that the methods for assigning and validating addresses are entirely up
+to the Transaction Processor. In the case of IntegerKey, there are <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/transaction_family_specifications/integerkey_transaction_family.html#addressing">specific
+rules to generate valid addresses</a>, which must be followed or
+Transactions will be rejected. You will need to follow the addressing rules
+for whichever Transaction Family you are working with.</p>
+</div>
+</div>
+<div class="section" id="create-the-transaction">
+<h3>2. Create the Transaction<a class="headerlink" href="#create-the-transaction" title="Permalink to this headline">¶</a></h3>
+<p>Once the TransactionHeader is constructed, its bytes are then used to create a
+signature.  This header signature also acts as the ID of the transaction.  The
+header bytes, the header signature, and the payload bytes are all used to
+construct the complete Transaction.</p>
+<p><strong>Kotlin</strong></p>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">com.google.protobuf.ByteString</span>
+<span class="k">import</span> <span class="nn">sawtooth.sdk.protobuf.Transaction</span>
+
+<span class="k">val</span> <span class="py">signature</span> <span class="p">=</span> <span class="n">signer</span><span class="p">.</span><span class="n">sign</span><span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="n">toByteArray</span><span class="p">())</span>
+
+<span class="k">val</span> <span class="py">transaction</span> <span class="p">=</span>  <span class="n">Transaction</span><span class="p">.</span><span class="n">newBuilder</span><span class="p">()</span>
+                    <span class="p">.</span><span class="n">setHeader</span><span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="n">toByteString</span><span class="p">())</span>
+                    <span class="p">.</span><span class="n">setPayload</span><span class="p">(</span><span class="n">ByteString</span><span class="p">.</span><span class="n">copyFrom</span><span class="p">(</span><span class="n">payloadBytes</span><span class="p">))</span>
+                    <span class="p">.</span><span class="n">setHeaderSignature</span><span class="p">(</span><span class="n">signature</span><span class="p">)</span>
+                    <span class="p">.</span><span class="n">build</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Java</strong></p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.google.protobuf.ByteString</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">sawtooth.sdk.protobuf.Transaction</span><span class="p">;</span>
+
+<span class="n">String</span> <span class="n">signature</span> <span class="o">=</span> <span class="n">signer</span><span class="p">.</span><span class="na">sign</span><span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="na">toByteArray</span><span class="p">());</span>
+
+<span class="n">Transaction</span> <span class="n">transaction</span> <span class="o">=</span>  <span class="n">Transaction</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">()</span>
+                               <span class="p">.</span><span class="na">setHeader</span><span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="na">toByteString</span><span class="p">())</span>
+                               <span class="p">.</span><span class="na">setPayload</span><span class="p">(</span><span class="n">ByteString</span><span class="p">.</span><span class="na">copyFrom</span><span class="p">(</span><span class="n">payloadBytes</span><span class="p">))</span>
+                               <span class="p">.</span><span class="na">setHeaderSignature</span><span class="p">(</span><span class="n">signature</span><span class="p">)</span>
+                               <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="optional-encode-the-transaction-s">
+<h3>3. (optional) Encode the Transaction(s)<a class="headerlink" href="#optional-encode-the-transaction-s" title="Permalink to this headline">¶</a></h3>
+<p>If the same machine is creating Transactions and Batches there is no need to
+encode the Transaction instances. However, in the use case where Transactions
+are being batched externally, they must be serialized before being transmitted
+to the batcher. The Java SDK offers two options for this. One or more
+Transactions can be combined into a serialized <em>TransactionList</em> method, or can
+be serialized as a single Transaction.</p>
+<p><strong>Kotlin</strong></p>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">sawtooth.sdk.protobuf.TransactionList</span>
+
+<span class="k">val</span> <span class="py">txn_list_bytes</span> <span class="p">=</span> <span class="n">TransactionList</span><span class="p">.</span><span class="n">newBuilder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">addTransactions</span><span class="p">(</span><span class="n">txn1</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">addTransactions</span><span class="p">(</span><span class="n">txn2</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">build</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">toByteString</span><span class="p">()</span>
+
+<span class="n">txn_bytes</span> <span class="p">=</span> <span class="n">txn</span><span class="p">.</span><span class="n">toByteString</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Java</strong></p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">com.google.protobuf.ByteString</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">sawtooth.sdk.protobuf.TransactionList</span><span class="p">;</span>
+
+<span class="n">ByteString</span> <span class="n">txn_list_bytes</span> <span class="o">=</span> <span class="n">TransactionList</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">addTransactions</span><span class="p">(</span><span class="n">txn1</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">addTransactions</span><span class="p">(</span><span class="n">txn2</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">build</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">toByteString</span><span class="p">();</span>
+
+<span class="n">ByteString</span> <span class="n">txn_bytes</span> <span class="o">=</span> <span class="n">transaction</span><span class="p">.</span><span class="na">toByteString</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="building-the-batch">
+<h2>Building the Batch<a class="headerlink" href="#building-the-batch" title="Permalink to this headline">¶</a></h2>
+<p>Once you have one or more Transaction instances ready, they must be wrapped in a
+<em>Batch</em>. Batches are the atomic unit of change in Sawtooth’s state. When a Batch
+is submitted to a validator each Transaction in it will be applied (in order),
+or <em>no</em> Transactions will be applied. Even if your Transactions are not
+dependent on any others, they cannot be submitted directly to the validator.
+They must all be wrapped in a Batch.</p>
+<div class="section" id="create-the-batchheader">
+<h3>1. Create the BatchHeader<a class="headerlink" href="#create-the-batchheader" title="Permalink to this headline">¶</a></h3>
+<p>Similar to the TransactionHeader, there is a <em>BatchHeader</em> for each Batch.
+As Batches are much simpler than Transactions, a BatchHeader needs only  the
+public key of the signer and the list of Transaction IDs, in the same order they
+are listed in the Batch.</p>
+<p><strong>Kotlin</strong></p>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">sawtooth.sdk.protobuf.BatchHeader</span>
+
+<span class="k">val</span> <span class="py">transactions</span> <span class="p">=</span> <span class="n">arrayOf</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+
+<span class="k">val</span> <span class="py">batchHeader</span> <span class="p">=</span> <span class="n">BatchHeader</span><span class="p">.</span><span class="n">newBuilder</span><span class="p">()</span>
+       <span class="p">.</span><span class="n">setSignerPublicKey</span><span class="p">(</span><span class="n">signer</span><span class="p">.</span><span class="n">publicKey</span><span class="p">.</span><span class="n">hex</span><span class="p">())</span>
+       <span class="p">.</span><span class="n">addAllTransactionIds</span><span class="p">(</span>
+          <span class="n">transactions</span><span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">transaction</span> <span class="p">-&gt;</span> <span class="n">transaction</span><span class="p">.</span><span class="n">headerSignature</span> <span class="p">}</span>
+       <span class="p">)</span>
+       <span class="p">.</span><span class="n">build</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Java</strong></p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sawtooth.sdk.protobuf.BatchHeader</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">sawtooth.sdk.protobuf.Transaction</span><span class="p">;</span>
+
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Transaction</span><span class="o">&gt;</span> <span class="n">transactions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="p">();</span>
+<span class="n">transactions</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">transaction</span><span class="p">);</span>
+
+<span class="n">BatchHeader</span> <span class="n">batchHeader</span> <span class="o">=</span> <span class="n">BatchHeader</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">setSignerPublicKey</span><span class="p">(</span><span class="n">signer</span><span class="p">.</span><span class="na">getPublicKey</span><span class="p">().</span><span class="na">hex</span><span class="p">())</span>
+    <span class="p">.</span><span class="na">addAllTransactionIds</span><span class="p">(</span>
+            <span class="n">transactions</span>
+                    <span class="p">.</span><span class="na">stream</span><span class="p">()</span>
+                    <span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">Transaction</span><span class="p">::</span><span class="n">getHeaderSignature</span><span class="p">)</span>
+                    <span class="p">.</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">())</span>
+    <span class="p">)</span>
+    <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-the-batch">
+<h3>2. Create the Batch<a class="headerlink" href="#create-the-batch" title="Permalink to this headline">¶</a></h3>
+<p>Using the SDK, creating a Batch is similar to creating a transaction.  The
+header is signed, and the resulting signature acts as the Batch’s ID.  The Batch
+is then constructed out of the header bytes, the header signature, and the
+transactions that make up the batch.</p>
+<p><strong>Kotlin</strong></p>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">sawtooth.sdk.protobuf.Batch</span>
+
+<span class="k">val</span> <span class="py">batchSignature</span> <span class="p">=</span> <span class="n">signer</span><span class="p">.</span><span class="n">sign</span><span class="p">(</span><span class="n">batchHeader</span><span class="p">.</span><span class="n">toByteArray</span><span class="p">())</span>
+
+<span class="k">val</span> <span class="py">batch</span> <span class="p">=</span> <span class="n">Batch</span><span class="p">.</span><span class="n">newBuilder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">setHeader</span><span class="p">(</span><span class="n">batchHeader</span><span class="p">.</span><span class="n">toByteString</span><span class="p">())</span>
+    <span class="p">.</span><span class="n">addAllTransactions</span><span class="p">(</span><span class="n">transactions</span><span class="p">.</span><span class="n">asIterable</span><span class="p">())</span>
+    <span class="p">.</span><span class="n">setHeaderSignature</span><span class="p">(</span><span class="n">batchSignature</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">build</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Java</strong></p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sawtooth.sdk.protobuf.Batch</span><span class="p">;</span>
+
+<span class="n">String</span> <span class="n">batchSignature</span> <span class="o">=</span> <span class="n">signer</span><span class="p">.</span><span class="na">sign</span><span class="p">(</span><span class="n">batchHeader</span><span class="p">.</span><span class="na">toByteArray</span><span class="p">());</span>
+
+<span class="n">Batch</span> <span class="n">batch</span> <span class="o">=</span> <span class="n">Batch</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">()</span>
+         <span class="p">.</span><span class="na">setHeader</span><span class="p">(</span><span class="n">batchHeader</span><span class="p">.</span><span class="na">toByteString</span><span class="p">())</span>
+         <span class="p">.</span><span class="na">addAllTransactions</span><span class="p">(</span><span class="n">transactions</span><span class="p">)</span>
+         <span class="p">.</span><span class="na">setHeaderSignature</span><span class="p">(</span><span class="n">batchSignature</span><span class="p">)</span>
+         <span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="encode-the-batch-es-in-a-batchlist">
+<h3>3. Encode the Batch(es) in a BatchList<a class="headerlink" href="#encode-the-batch-es-in-a-batchlist" title="Permalink to this headline">¶</a></h3>
+<p>In order to submit Batches to the validator, they  must be collected into a
+<em>BatchList</em>.  Multiple batches can be submitted in one BatchList, though the
+Batches themselves don’t necessarily need to depend on each other. Unlike
+Batches, a BatchList is not atomic. Batches from other clients may be
+interleaved with yours.</p>
+<p><strong>Kotlin</strong></p>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">sawtooth.sdk.protobuf.BatchList</span>
+
+<span class="k">val</span> <span class="py">batchList</span> <span class="p">=</span> <span class="n">BatchList</span><span class="p">.</span><span class="n">newBuilder</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">addBatches</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+    <span class="p">.</span><span class="n">build</span><span class="p">()</span>
+    <span class="p">.</span><span class="n">toByteArray</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Java</strong></p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sawtooth.sdk.protobuf.BatchList</span><span class="p">;</span>
+
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">batchListBytes</span> <span class="o">=</span> <span class="n">BatchList</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">()</span>
+        <span class="p">.</span><span class="na">addBatches</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="p">.</span><span class="na">build</span><span class="p">()</span>
+        <span class="p">.</span><span class="na">toByteArray</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note, if the transaction creator is using a different private key than the
+batcher, the <em>batcher public_key</em> must have been specified for every Transaction,
+and must have been generated from the private key being used to sign the
+Batch, or validation will fail.</p>
+</div>
+</div>
+</div>
+<div class="section" id="submitting-batches-to-the-validator">
+<h2>Submitting Batches to the Validator<a class="headerlink" href="#submitting-batches-to-the-validator" title="Permalink to this headline">¶</a></h2>
+<p>The prescribed way to submit Batches to the validator is via the REST API.
+This is an independent process that runs alongside a validator, allowing clients
+to communicate using HTTP/JSON standards. Simply send a <em>POST</em> request to the
+<em>/batches</em> endpoint, with a <em>“Content-Type”</em> header of
+<em>“application/octet-stream”</em>, and the <em>body</em> as a serialized <em>BatchList</em>.</p>
+<p>There are a many ways to make an HTTP request, and hopefully the submission
+process is fairly straightforward from here, but as an example in Kotlin, this is what it
+might look if you sent the request from the same process that
+prepared the BatchList.</p>
+<blockquote>
+<div><p><strong>Kotlin</strong></p>
+</div></blockquote>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">okhttp3.RequestBody</span>
+<span class="k">import</span> <span class="nn">retrofit2.Call</span>
+<span class="k">import</span> <span class="nn">retrofit2.http.Body</span>
+<span class="k">import</span> <span class="nn">retrofit2.http.POST</span>
+<span class="k">import</span> <span class="nn">retrofit2.converter.gson.GsonConverterFactory</span>
+
+<span class="k">interface</span> <span class="nc">SawtoothRestApi</span> <span class="p">{</span>
+    <span class="n">@POST</span><span class="p">(</span><span class="s">&quot;/batches&quot;</span><span class="p">)</span>
+    <span class="k">fun</span> <span class="nf">postBatchList</span><span class="p">(</span><span class="n">@Body</span> <span class="n">payload</span><span class="p">:</span> <span class="n">RequestBody</span><span class="p">):</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">BatchListResponse</span><span class="p">&gt;</span>
+<span class="p">}</span>
+
+<span class="k">val</span> <span class="py">retrofit</span> <span class="p">=</span> <span class="n">Retrofit</span><span class="p">.</span><span class="n">Builder</span><span class="p">()</span>
+     <span class="p">.</span><span class="n">baseUrl</span><span class="p">(</span><span class="s">&quot;http://rest.api.domain/batches&quot;</span><span class="p">)</span>
+     <span class="p">.</span><span class="n">addConverterFactory</span><span class="p">(</span><span class="n">GsonConverterFactory</span><span class="p">.</span><span class="n">create</span><span class="p">())</span>
+     <span class="p">.</span><span class="n">build</span><span class="p">()</span>
+
+ <span class="k">val</span> <span class="py">service</span> <span class="p">=</span> <span class="n">retrofit</span><span class="p">.</span><span class="n">create</span><span class="p">&lt;</span><span class="n">SawtoothRestApi</span><span class="p">&gt;(</span><span class="n">SawtoothRestApi</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">)</span>
+
+ <span class="k">val</span> <span class="py">body</span> <span class="p">=</span> <span class="n">RequestBody</span><span class="p">.</span><span class="n">create</span><span class="p">(</span>
+              <span class="n">MediaType</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="s">&quot;application/octet-stream&quot;</span><span class="p">),</span>
+              <span class="n">batchListBytes</span><span class="p">)</span>
+
+ <span class="k">val</span> <span class="py">call1</span> <span class="p">=</span> <span class="n">service</span><span class="p">.</span><span class="n">postBatchList</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+ <span class="n">call1</span><span class="p">.</span><span class="n">enqueue</span><span class="p">(</span><span class="k">object</span> <span class="p">:</span> <span class="nc">Callback</span><span class="p">&lt;</span><span class="n">BatchListResponse</span><span class="p">&gt;</span> <span class="p">{</span>
+     <span class="k">override</span> <span class="k">fun</span> <span class="nf">onResponse</span><span class="p">(</span><span class="n">call</span><span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">BatchListResponse</span><span class="p">&gt;,</span> <span class="n">response</span><span class="p">:</span> <span class="n">Response</span><span class="p">&lt;</span><span class="n">BatchListResponse</span><span class="p">&gt;)</span> <span class="p">{</span>
+           <span class="k">if</span> <span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">body</span><span class="p">()</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span> <span class="p">{</span>
+               <span class="n">Log</span><span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="s">&quot;Response&quot;</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">body</span><span class="p">().</span><span class="n">toString</span><span class="p">())</span>
+           <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+               <span class="n">Log</span><span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="s">&quot;Response&quot;</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="n">toString</span><span class="p">())</span>
+           <span class="p">}</span>
+     <span class="p">}</span>
+     <span class="k">override</span> <span class="k">fun</span> <span class="nf">onFailure</span><span class="p">(</span><span class="n">call</span><span class="p">:</span> <span class="n">Call</span><span class="p">&lt;</span><span class="n">BatchListResponse</span><span class="p">&gt;,</span> <span class="n">t</span><span class="p">:</span> <span class="n">Throwable</span><span class="p">)</span> <span class="p">{</span>
+         <span class="n">Log</span><span class="p">.</span><span class="n">d</span><span class="p">(</span><span class="s">&quot;Response&quot;</span><span class="p">,</span> <span class="s">&quot;Failed to submit transaction&quot;</span><span class="p">)</span>
+         <span class="n">call</span><span class="p">.</span><span class="n">cancel</span><span class="p">()</span>
+     <span class="p">}</span>
+ <span class="p">})</span>
+</pre></div>
+</div>
+<p>And here is what it would look like if you saved the binary to a file, and then
+sent it from the command line with <code class="docutils literal notranslate"><span class="pre">curl</span></code>:</p>
+<blockquote>
+<div><p><strong>Kotlin</strong></p>
+</div></blockquote>
+<div class="highlight-kotlin notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">java.io.File</span>
+<span class="k">import</span> <span class="nn">java.nio.file.Files</span>
+<span class="k">import</span> <span class="nn">java.nio.file.StandardOpenOption</span>
+
+<span class="k">val</span> <span class="py">myfile</span> <span class="p">=</span> <span class="n">File</span><span class="p">(</span><span class="s">&quot;intkey.batches&quot;</span><span class="p">)</span>
+<span class="n">Files</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">myfile</span><span class="p">.</span><span class="n">toPath</span><span class="p">(),</span> <span class="n">batchListBytes</span><span class="p">,</span> <span class="n">StandardOpenOption</span><span class="p">.</span><span class="n">APPEND</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>% curl --request POST <span class="se">\</span>
+    --header <span class="s2">&quot;Content-Type: application/octet-stream&quot;</span> <span class="se">\</span>
+    --data-binary @intkey.batches <span class="se">\</span>
+    <span class="s2">&quot;http://rest.api.domain/batches&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sdk_api_ref.html" class="btn btn-neutral float-right" title="Java SDK API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="importing_java_sdk.html" class="btn btn-neutral float-left" title="Importing the Java SDK" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, Bitwise IO
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

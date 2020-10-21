@@ -1,0 +1,7 @@
+sawtooth\.cli\.stats\_lib\.print\_views module
+==============================================
+
+.. automodule:: sawtooth.cli.stats_lib.print_views
+    :members:
+    :undoc-members:
+    :show-inheritance:

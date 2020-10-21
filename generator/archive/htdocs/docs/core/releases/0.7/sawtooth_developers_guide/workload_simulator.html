@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Workload Simulator &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="Sawtooth Lake Developer’s Guide" href="../sawtooth_developers_guide.html"/>
+        <link rel="next" title="Signing Transactions" href="signing_transactions.html"/>
+        <link rel="prev" title="The Validator Network Launcher" href="validator_network_launcher.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="architecture_overview.html">Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawtooth_vagrant.html">Vagrant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_api/modules.html">Distributed Ledger Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_api/index.html">Distributed Ledger Web API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_network_launcher.html">The Validator Network Launcher</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The Workload Simulator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-file">Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-options">Command-Line Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="signing_transactions.html">Signing Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a> &raquo;</li>
+        
+      <li>The Workload Simulator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sawtooth_developers_guide/workload_simulator.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="the-workload-simulator">
+<h1>The Workload Simulator<a class="headerlink" href="#the-workload-simulator" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth Lake has a workload simulator that can be used to generate a
+synthetic transaction workload.  The workload simulator attempts to generate
+transactions at a relatively steady rate across the network of validators
+it has discovered, adapting to validators joining and leaving the network.
+In its simplest form, the workload simulator is started as follows:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./bin/simulator
+<span class="go">[22:35:28 INFO    simulator_cli] Simulator configuration:</span>
+<span class="go">[22:35:28 INFO    simulator_cli] Simulator: url = http://127.0.0.1:8800</span>
+<span class="go">[22:35:28 INFO    simulator_cli] Simulator: workload = txnintegration.integer_key_workload.IntegerKeyWorkload</span>
+<span class="go">[22:35:28 INFO    simulator_cli] Simulator: rate = 12</span>
+<span class="go">[22:35:28 INFO    simulator_cli] Simulator: discover = 15</span>
+<span class="go">[22:35:28 INFO    simulator_cli] Simulator: verbose = 1</span>
+<span class="go">[22:35:28 INFO    simulator] Discovered a new validator: http://127.0.0.1:8800</span>
+<span class="go">[22:35:28 INFO    simulator] Discovered a new validator: http://127.0.0.1:8803</span>
+<span class="go">[22:35:28 INFO    simulator] Discovered a new validator: http://127.0.0.1:8801</span>
+<span class="go">[22:35:28 INFO    simulator] Discovered a new validator: http://127.0.0.1:8804</span>
+<span class="go">[22:35:28 INFO    simulator] Discovered a new validator: http://127.0.0.1:8802</span>
+<span class="go">[22:35:28 INFO    simulator] Simulator will generate 12 transaction(s)/minute</span>
+<span class="go">[22:35:28 INFO    simulator] Simulator will discover validators every 15 minute(s)</span>
+</pre></div>
+</div>
+<p>Without any command-line options, the workload simulator attempts to load the
+configuration file that controls execution from
+<code class="docutils literal"><span class="pre">&lt;USER_HOME&gt;/.sawtooth/simulator.cfg</span></code>.  If the file does not exist, the
+workload simulator will create it and populate it with the defaults shown
+above.</p>
+</div>
+<div class="section" id="configuration-file">
+<h2>Configuration File<a class="headerlink" href="#configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>An example configuration file is as follows:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[Simulator]
+url = http://127.0.0.1:8800
+workload = txnintegration.integer_key_workload.IntegerKeyWorkload
+rate = 12
+discover = 15
+verbose = 1
+</pre></div>
+</div>
+<p>The Simulator section of the configuration file contains name/value pairs that
+are used to control the execution of the workload simulator.  The names in the
+name/value pairs correspond directly to command-line options that share the
+same name.  If a command-line option has one or more dashes in it, the
+corresponding configuration file option name will replace the dashes with
+underscores.  The configuration file options are:</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">url</span></code> The URL of the initial validator used to prime the simulator.  The
+simulator will begin with this validator&#8217;s endpoint registry to discover
+the validators in the validator network and then for each new validator
+discovered will fetch its endpoint registry and will keep doing this until
+it has discovered all of the validators in the validator network.  If this
+option is not present in the configuration file, the default is
+http://127.0.0.1:8800.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">workload</span></code> The workload generator that will be used to generate
+transactions.  This is specified as module_name.class_name.  If this option
+is not present in the configuration file, the default is
+txnintegration.integer_key_workload.IntegerKeyWorkload.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">rate</span></code> The rate, in transactions per minute, that the workload simulator
+will attempt to generate transactions.  If this option is not present in the
+configuration file, the default is 12 transactions per minute.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">discover</span></code> How often, in minutes, that the workload simulator will check
+for changes in the validator network.  If this options is not present in the
+configuration file, the default is once every 15 minutes.</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">verbose</span></code> The verbosity level for workload simulator logging messages
+that are displayed on the console.  Verbosity values correspond to the
+following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>0: display messages with logging level of WARNING and above</li>
+<li>1: display messages with logging level of INFO and above</li>
+<li>&gt;= 2: display messages with logging level of DEBUG and above</li>
+</ul>
+</div></blockquote>
+<p>If this options is not present in the configuration file, the default
+verbosity level is 1.</p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Individual transaction workloads may also have their own sections that
+contain values.</p>
+</div>
+</div>
+<div class="section" id="command-line-options">
+<h2>Command-Line Options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h2>
+<p>The workload simulator has numerous command-line options, all of which can be
+seen by executing the command with the <code class="docutils literal"><span class="pre">--help</span></code> (or <code class="docutils literal"><span class="pre">-h</span></code>) command-line
+option.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Any options provided on the command-line override their corresponding
+entries in the configuration file or defaults for options that do not
+appear in the configuration file.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ./bin/simulator --help
+<span class="go">usage: simulator [-h] [--url] [--workload WORKLOAD] [--rate RATE]</span>
+<span class="go">                 [--discover DISCOVER] [--config CONFIG] [-v]</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help           show this help message and exit</span>
+<span class="go">  --url                Base validator URL</span>
+<span class="go">  --workload WORKLOAD  Transaction workload</span>
+<span class="go">  --rate RATE          Transaction rate in transactions per minute</span>
+<span class="go">  --discover DISCOVER  How often, in minutes, to refresh validators list</span>
+<span class="go">  --config CONFIG      Config file to provide base configuration for the</span>
+<span class="go">                       simulator and (possibly) the workload generator.</span>
+<span class="go">                       Command-line options override corresponding values in</span>
+<span class="go">                       the configuration file</span>
+<span class="go">  -v, --verbose        enable more verbose output</span>
+</pre></div>
+</div>
+<p>The verbosity of the workload simulator is controlled by the number of
+occurrences of the <code class="docutils literal"><span class="pre">--verbose</span></code> (or <code class="docutils literal"><span class="pre">-v</span></code>) option.  The number of occurrences
+directly correspond to the numeric value described above for the <code class="docutils literal"><span class="pre">verbose</span></code>
+configuration file option.  For example, <code class="docutils literal"><span class="pre">-vv</span></code>, <code class="docutils literal"><span class="pre">-v</span> <span class="pre">-v</span></code>, and
+<code class="docutils literal"><span class="pre">--verbose</span> <span class="pre">--verbose</span></code> all would result in logging messages with level
+DEBUG and above being displayed on the console.</p>
+<p>The <code class="docutils literal"><span class="pre">--config</span> <span class="pre">CONFIG</span></code> option is used to specify the configuration file to
+use in place of the default one.</p>
+<p>The remaining command-line options correspond directly to their counterparts
+in the configuration file.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="signing_transactions.html" class="btn btn-neutral float-right" title="Signing Transactions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="validator_network_launcher.html" class="btn btn-neutral" title="The Validator Network Launcher" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

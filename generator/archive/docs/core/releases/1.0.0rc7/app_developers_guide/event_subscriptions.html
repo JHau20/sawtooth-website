@@ -1,0 +1,565 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Subscribing to Events &mdash; Sawtooth v1.0.0rc7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc7 documentation" href="../index.html"/>
+        <link rel="up" title="Development Without an SDK" href="no_sdk.html"/>
+        <link rel="next" title="System Administrator’s Guide" href="../sysadmin_guide.html"/>
+        <link rel="prev" title="Building and Submitting Transactions" href="../_autogen/txn_submit_tutorial.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sdk_table.html">Available SDKs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_sawtooth.html">Installing and Running Sawtooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="example_transaction_processors.html">Example Transaction Processors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Introduction to the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="java_sdk.html">Java SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascript_sdk.html">JavaScript SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_sdk.html">Python SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">Testing a Transaction Processor</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../_autogen/txn_submit_tutorial.html">Building and Submitting Transactions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Subscribing to Events</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#constructing-a-subscription">Constructing a Subscription</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submitting-an-event-subscription">Submitting an Event Subscription</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#receiving-the-response">Receiving the Response</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#listening-for-events">Listening for Events</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#correlating-events-to-blocks">Correlating Events to Blocks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#requesting-event-catch-up">Requesting Event Catch-Up</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unsubscribing-to-events">Unsubscribing to Events</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="no_sdk.html">Development Without an SDK</a> &raquo;</li>
+        
+      <li>Subscribing to Events</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/event_subscriptions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="subscribing-to-events">
+<h1>Subscribing to Events<a class="headerlink" href="#subscribing-to-events" title="Permalink to this headline">¶</a></h1>
+<p>As blocks are committed to the blockchain, an application developer
+may want to receive information on events such as the creation of a new block,
+switching to a new fork, or application-specific events defined by a
+transaction family.</p>
+<p>Client applications can subscribe to Hyperledger Sawtooth events
+using ZMQ and Protobuf messages. The general process is:</p>
+<ol class="arabic simple">
+<li>Construct a subscription that includes the event type and any filters</li>
+<li>Submit the event subscription as a message to the validator</li>
+<li>Wait for a response from the validator</li>
+<li>Start listening for events</li>
+</ol>
+<p>For information on the architecture of events in Sawtooth, see
+<a class="reference internal" href="../architecture/events_and_transactions_receipts.html"><span class="doc">Events and Transaction Receipts</span></a>.</p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>To subscribe to Sawtooth events, a client application can use any language
+that provides the following items:</p>
+<ul class="simple">
+<li>ZMQ library</li>
+<li>Protobuf library</li>
+</ul>
+<p>In addition, the required Sawtooth protobuf messages must be compiled
+for the chosen language.</p>
+<p>This section uses Python examples to show the event-subscription procedure,
+but the process is similar for any imperative programming language that meets
+these requirements.</p>
+</div>
+<div class="section" id="constructing-a-subscription">
+<h2>Constructing a Subscription<a class="headerlink" href="#constructing-a-subscription" title="Permalink to this headline">¶</a></h2>
+<p>An event subscription consists of an event type (the name of the event)
+and an optional list of filters for this event type.</p>
+<div class="section" id="event-type">
+<h3>Event Type<a class="headerlink" href="#event-type" title="Permalink to this headline">¶</a></h3>
+<p>Each Sawtooth event has an <code class="docutils literal"><span class="pre">event_type</span></code> field that is used to
+determine how opaque data has been serialized and what
+transparent attributes to expect.
+An event is “in a subscription” if the event’s <code class="docutils literal"><span class="pre">event_type</span></code> field
+matches the subscription’s <code class="docutils literal"><span class="pre">event_type</span></code> field, and the event matches
+any filters that are in the event subscription.</p>
+<p>The core Sawtooth events are prefixed with <code class="docutils literal"><span class="pre">sawtooth/</span></code>:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">sawtooth/block-commit</span></code></li>
+<li><code class="docutils literal"><span class="pre">sawtooth/state-delta</span></code></li>
+</ul>
+<p>Each transaction family can define its own events. The convention
+is to prefix the event type with the name of the transaction family,
+such as <code class="docutils literal"><span class="pre">xo/create</span></code>.</p>
+</div>
+<div class="section" id="event-filters">
+<h3>Event Filters<a class="headerlink" href="#event-filters" title="Permalink to this headline">¶</a></h3>
+<p>An event subscription can include one or more event filters, which direct the
+validator to include events of a given type based on the event&#8217;s transparent
+attributes. If multiple event filters are included in a subscription,
+only events that pass all filters will be received.</p>
+<p>An event filter consists of a key and a match string. Filters apply only to
+the event attributes that have the same key as the filter. The filter&#8217;s match
+string is compared against the attribute&#8217;s value according to the type of
+event filter.</p>
+<p>An event filter can either be a simple filter (an exact match to a string)
+or a regex filter. In addition, the filter can specify the match type of
+ANY (one or more) or ALL.  The following filters are supported:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">SIMPLE_ANY</span></code></li>
+<li><code class="docutils literal"><span class="pre">SIMPLE_ALL</span></code></li>
+<li><code class="docutils literal"><span class="pre">REGEX_ANY</span></code></li>
+<li><code class="docutils literal"><span class="pre">REGEX_ALL</span></code></li>
+</ul>
+<p>For example filters, see <a class="reference internal" href="../architecture/events_and_transactions_receipts.html#events-reference-label"><span class="std std-ref">Events</span></a>.</p>
+</div>
+<div class="section" id="event-protobuf-message">
+<h3>Event Protobuf Message<a class="headerlink" href="#event-protobuf-message" title="Permalink to this headline">¶</a></h3>
+<p>Event subscriptions are represented with the following protobuf messages,
+which are defined in the <code class="docutils literal"><span class="pre">events.proto</span></code> file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="n">EventSubscription</span> <span class="p">{</span>
+  <span class="n">string</span> <span class="n">event_type</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">repeated</span> <span class="n">EventFilter</span> <span class="n">filters</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">message</span> <span class="n">EventFilter</span> <span class="p">{</span>
+  <span class="n">string</span> <span class="n">key</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">string</span> <span class="n">match_string</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="n">enum</span> <span class="n">FilterType</span> <span class="p">{</span>
+      <span class="n">FILTER_TYPE_UNSET</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="n">SIMPLE_ANY</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="n">SIMPLE_ALL</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+      <span class="n">REGEX_ANY</span>  <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+      <span class="n">REGEX_ALL</span>  <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">FilterType</span> <span class="n">filter_type</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-subscribing-to-state-deltas-within-a-namespace">
+<h3>Example: Subscribing to State Deltas within a Namespace<a class="headerlink" href="#example-subscribing-to-state-deltas-within-a-namespace" title="Permalink to this headline">¶</a></h3>
+<p>This example constructs an event subscription for state deltas
+(a single change in state at a given address)
+within the namespace <code class="docutils literal"><span class="pre">&quot;abcdef&quot;</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">subscription</span> <span class="o">=</span> <span class="n">EventSubscription</span><span class="p">(</span>
+    <span class="n">event_type</span><span class="o">=</span><span class="s2">&quot;sawtooth/state-delta&quot;</span><span class="p">,</span>
+    <span class="n">filters</span><span class="o">=</span><span class="p">[</span>
+        <span class="c1"># Filter to only addresses in the &quot;abcdef&quot; namespace using a regex</span>
+        <span class="n">EventFilter</span><span class="p">(</span>
+            <span class="n">key</span><span class="o">=</span><span class="s2">&quot;address&quot;</span><span class="p">,</span>
+            <span class="n">match_string</span><span class="o">=</span><span class="s2">&quot;abcdef.*&quot;</span><span class="p">,</span>
+            <span class="n">filter_type</span><span class="o">=</span><span class="n">EventFilter</span><span class="o">.</span><span class="n">REGEX_ANY</span><span class="p">)</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="submitting-an-event-subscription">
+<h2>Submitting an Event Subscription<a class="headerlink" href="#submitting-an-event-subscription" title="Permalink to this headline">¶</a></h2>
+<p>After constructing a subscription, send the subscription request to the
+validator. The following example connects to the validator&#8217;s URL using ZMQ,
+then submits the subscription request.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Setup a connection to the validator</span>
+<span class="n">ctx</span> <span class="o">=</span> <span class="n">zmq</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span>
+<span class="n">socket</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">DEALER</span><span class="p">)</span>
+<span class="n">socket</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="c1"># Construct the request</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">ClientEventsSubscribeRequest</span><span class="p">(</span>
+    <span class="n">subscriptions</span><span class="o">=</span><span class="p">[</span><span class="n">subscription</span><span class="p">])</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()</span>
+
+<span class="c1"># Construct the message wrapper</span>
+<span class="n">correlation_id</span> <span class="o">=</span> <span class="s2">&quot;123&quot;</span> <span class="c1"># This must be unique for all in-flight requests</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span>
+    <span class="n">correlation_id</span><span class="o">=</span><span class="n">correlation_id</span><span class="p">,</span>
+    <span class="n">message_type</span><span class="o">=</span><span class="n">CLIENT_EVENTS_SUBSCRIBE_REQUEST</span><span class="p">,</span>
+    <span class="n">content</span><span class="o">=</span><span class="n">request</span><span class="p">)</span>
+
+<span class="c1"># Send the request</span>
+<span class="n">socket</span><span class="o">.</span><span class="n">send_multipart</span><span class="p">([</span><span class="n">msg</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="receiving-the-response">
+<h2>Receiving the Response<a class="headerlink" href="#receiving-the-response" title="Permalink to this headline">¶</a></h2>
+<p>The validator will return a response indicating whether the subscription
+was successful. The following example receives the response and verifies
+the status.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Receive the response</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">recv_multipart</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Parse the message wrapper</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">Message</span><span class="p">()</span>
+<span class="n">msg</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+
+<span class="c1"># Validate the response type</span>
+<span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">message_type</span> <span class="o">!=</span> <span class="n">CLIENT_EVENTS_SUBSCRIBE_RESPONSE</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Unexpected message type&quot;</span><span class="p">)</span>
+
+<span class="c1"># Parse the response</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">ClientEventsSubscribeResponse</span><span class="p">()</span>
+<span class="n">response</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+
+<span class="c1"># Validate the response status</span>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">ClientEventsSubscribeResponse</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+  <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Subscription failed: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">response_message</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="listening-for-events">
+<h2>Listening for Events<a class="headerlink" href="#listening-for-events" title="Permalink to this headline">¶</a></h2>
+<p>If the event subscription was successful, events are sent to the subscriber.
+In order to limit network traffic, individual events are wrapped in an
+event list message before being sent.</p>
+<p>The following example listens for events and prints them indefinitely.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+  <span class="n">resp</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">recv_multipart</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+  <span class="c1"># Parse the message wrapper</span>
+  <span class="n">msg</span> <span class="o">=</span> <span class="n">Message</span><span class="p">()</span>
+  <span class="n">msg</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+
+  <span class="c1"># Validate the response type</span>
+  <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">message_type</span> <span class="o">!=</span> <span class="n">CLIENT_EVENTS</span><span class="p">:</span>
+      <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Unexpected message type&quot;</span><span class="p">)</span>
+
+  <span class="c1"># Parse the response</span>
+  <span class="n">events</span> <span class="o">=</span> <span class="n">EventList</span><span class="p">()</span>
+  <span class="n">events</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+
+  <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="correlating-events-to-blocks">
+<h2>Correlating Events to Blocks<a class="headerlink" href="#correlating-events-to-blocks" title="Permalink to this headline">¶</a></h2>
+<p>All events originate from some block and are only sent to the subscriber
+once the block is committed and state is updated. As a result, events can be
+treated as output from processing and committing blocks.</p>
+<p>To match an event with the block it originated from, subscribe to the
+<code class="docutils literal"><span class="pre">block-commit</span></code> event. All lists of events received from the validator will
+contain a <code class="docutils literal"><span class="pre">block-commit</span></code> event for the block that the events came from.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For forking networks, we recommend subscribing to <code class="docutils literal"><span class="pre">block-commit</span></code> events
+in order to watch for network forks and react appropriately. Without
+a subscription to <code class="docutils literal"><span class="pre">block-commit</span></code> events, there is no way to determine
+whether a fork has occurred.</p>
+</div>
+</div>
+<div class="section" id="requesting-event-catch-up">
+<h2>Requesting Event Catch-Up<a class="headerlink" href="#requesting-event-catch-up" title="Permalink to this headline">¶</a></h2>
+<p>An event subscription can request &#8220;event catch-up&#8221; information on all
+historical events that have occurred since the creation of a specific
+block or blocks.</p>
+<p>To use this feature, set the <code class="docutils literal"><span class="pre">last_known_block_ids</span></code> field in the
+<code class="docutils literal"><span class="pre">ClientEventsSubscribeRequest</span></code> to a list of known block ids.
+The validator will bring the client up to date by doing the following:</p>
+<ul class="simple">
+<li>Filter the list to include only the blocks on the current chain</li>
+<li>Sort the list by block number</li>
+<li>Send historical events from all blocks since the most recent block,
+one block at a time</li>
+</ul>
+<p>If no blocks on the current chain are sent, the subscription will fail.</p>
+<p>The following example submits a subscription request that includes
+event catch-up.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Setup a connection to the validator</span>
+<span class="n">ctx</span> <span class="o">=</span> <span class="n">zmq</span><span class="o">.</span><span class="n">Context</span><span class="p">()</span>
+<span class="n">socket</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">zmq</span><span class="o">.</span><span class="n">DEALER</span><span class="p">)</span>
+<span class="n">socket</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="c1"># Construct the request</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">ClientEventSubscribeRequest</span><span class="p">(</span>
+    <span class="n">subscriptions</span><span class="o">=</span><span class="p">[</span><span class="n">subscription</span><span class="p">],</span>
+    <span class="n">last_known_block_ids</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;000…&#39;</span><span class="p">,</span> <span class="s1">&#39;beef…&#39;</span><span class="p">])</span>
+
+<span class="c1"># Construct the message wrapper</span>
+<span class="n">correlation_id</span> <span class="o">=</span> <span class="s2">&quot;123&quot;</span> <span class="c1"># This must be unique for all &quot;in-flight requests</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span>
+    <span class="n">correlation_id</span><span class="o">=</span><span class="n">correlation_id</span><span class="p">,</span>
+    <span class="n">message_type</span><span class="o">=</span><span class="n">CLIENT_EVENTS_SUBSCRIBE_REQUEST</span><span class="p">,</span>
+    <span class="n">content</span><span class="o">=</span><span class="n">request</span><span class="p">)</span>
+
+<span class="c1"># Send the request</span>
+<span class="n">socket</span><span class="o">.</span><span class="n">send_multipart</span><span class="p">([</span><span class="n">msg</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="unsubscribing-to-events">
+<h2>Unsubscribing to Events<a class="headerlink" href="#unsubscribing-to-events" title="Permalink to this headline">¶</a></h2>
+<p>To unsubscribe to events, send a unsubscribe request with no arguments,
+then close the ZMQ socket.</p>
+<p>This example submits an unsubscribe request.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Construct the request</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">ClientEventsUnsubscribeRequest</span><span class="p">()</span>
+
+<span class="c1"># Construct the message wrapper</span>
+<span class="n">correlation_id</span> <span class="o">=</span> <span class="s2">&quot;123&quot;</span> <span class="c1"># This must be unique for all &quot;in-flight requests</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">Message</span><span class="p">(</span>
+    <span class="n">correlation_id</span><span class="o">=</span><span class="n">correlation_id</span><span class="p">,</span>
+    <span class="n">message_type</span><span class="o">=</span><span class="n">CLIENT_EVENTS_UNSUBSCRIBE_REQUEST</span><span class="p">,</span>
+    <span class="n">content</span><span class="o">=</span><span class="n">request</span><span class="p">)</span>
+
+<span class="c1"># Send the request</span>
+<span class="n">socket</span><span class="o">.</span><span class="n">send_multipart</span><span class="p">([</span><span class="n">msg</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()])</span>
+</pre></div>
+</div>
+<p>The following example receives the validator&#8217;s response to an unsubscribe
+request, verifies the status, and closes the ZMQ connection.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Receive the response</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">recv_multipart</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Parse the message wrapper</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">Message</span><span class="p">()</span>
+<span class="n">msg</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+
+<span class="c1"># Validate the response type</span>
+<span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">message_type</span> <span class="o">!=</span> <span class="n">CLIENT_EVENTS_UNSUBSCRIBE_RESPONSE</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Unexpected message type&quot;</span><span class="p">)</span>
+
+<span class="c1"># Parse the response</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">ClientEventsUnsubscribeResponse</span><span class="p">()</span>
+<span class="n">response</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+
+<span class="c1"># Validate the response status</span>
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="n">ClientEventsUnsubscribeResponse</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+  <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Unsubscription failed: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">response_message</span><span class="p">))</span>
+
+<span class="c1"># Close the connection to the validator</span>
+<span class="n">socket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../sysadmin_guide.html" class="btn btn-neutral float-right" title="System Administrator’s Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../_autogen/txn_submit_tutorial.html" class="btn btn-neutral" title="Building and Submitting Transactions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.0rc7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

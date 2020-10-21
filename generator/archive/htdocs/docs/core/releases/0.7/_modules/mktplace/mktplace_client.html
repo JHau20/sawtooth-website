@@ -1,0 +1,994 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mktplace.mktplace_client &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>mktplace.mktplace_client</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mktplace.mktplace_client</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Helper functions for creating and submitting marketplace transactions</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">twisted.web</span> <span class="k">import</span> <span class="n">http</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth_signing</span> <span class="k">import</span> <span class="n">pbct_nativerecover</span> <span class="k">as</span> <span class="n">signing</span>
+<span class="kn">from</span> <span class="nn">gossip</span> <span class="k">import</span> <span class="n">node</span><span class="p">,</span> <span class="n">signed_object</span>
+<span class="kn">from</span> <span class="nn">gossip.common</span> <span class="k">import</span> <span class="n">dict2cbor</span>
+<span class="kn">from</span> <span class="nn">mktplace.mktplace_communication</span> <span class="k">import</span> <span class="n">MarketPlaceCommunication</span>
+<span class="kn">from</span> <span class="nn">mktplace.mktplace_communication</span> <span class="k">import</span> <span class="n">MessageException</span>
+<span class="kn">from</span> <span class="nn">mktplace.mktplace_state</span> <span class="k">import</span> <span class="n">MarketPlaceState</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="interactive_client"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.interactive_client">[docs]</a><span class="k">def</span> <span class="nf">interactive_client</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    InterativeClient -- utility function to simplify initialization of the</span>
+<span class="sd">    MarketPlaceClient class in an interactive python shell.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        url -- base url for a validator</span>
+<span class="sd">        name -- simple name of a player, e.g. &#39;market&#39;</span>
+<span class="sd">        keyfile -- the name of the file from which keys should be retreived</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">url</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://localhost:8800/&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;market&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">keyfile</span><span class="p">:</span>
+        <span class="n">keyfile</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">/keys/</span><span class="si">{1}</span><span class="s2">.wif&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CURRENCYHOME&#39;</span><span class="p">],</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="n">state</span> <span class="o">=</span> <span class="n">MarketPlaceState</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+
+    <span class="n">creator</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">n2i</span><span class="p">(</span><span class="s1">&#39;/player/</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="s1">&#39;Participant&#39;</span><span class="p">)</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">MarketPlaceClient</span><span class="p">(</span><span class="n">url</span><span class="p">,</span>
+                               <span class="n">creator</span><span class="o">=</span><span class="n">creator</span><span class="p">,</span>
+                               <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                               <span class="n">keyfile</span><span class="o">=</span><span class="n">keyfile</span><span class="p">,</span>
+                               <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">client</span></div>
+
+
+<div class="viewcode-block" id="sign_message_with_transaction"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.sign_message_with_transaction">[docs]</a><span class="k">def</span> <span class="nf">sign_message_with_transaction</span><span class="p">(</span><span class="n">transaction</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Signs a transaction message or transaction</span>
+<span class="sd">    :param transaction dict:</span>
+<span class="sd">    :param key str: A signing key</span>
+<span class="sd">    returns message, txnid tuple: The first 16 characters</span>
+<span class="sd">    of a sha256 hexdigest.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;Nonce&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">pub</span> <span class="o">=</span> <span class="n">signing</span><span class="o">.</span><span class="n">encode_pubkey</span><span class="p">(</span><span class="n">signing</span><span class="o">.</span><span class="n">generate_pubkey</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="s2">&quot;hex&quot;</span><span class="p">)</span>
+    <span class="n">transaction</span><span class="p">[</span><span class="s2">&quot;PublicKey&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pub</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">signing</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">dict2cbor</span><span class="p">(</span><span class="n">transaction</span><span class="p">),</span> <span class="n">key</span><span class="p">)</span>
+    <span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;Signature&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sig</span>
+
+    <span class="n">txnid</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;Signature&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">16</span><span class="p">]</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Transaction&#39;</span><span class="p">:</span> <span class="n">transaction</span><span class="p">,</span>
+        <span class="s1">&#39;__TYPE__&#39;</span><span class="p">:</span> <span class="s2">&quot;/mktplace.transactions.MarketPlace/Transaction&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;__NONCE__&#39;</span><span class="p">:</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span>
+    <span class="p">}</span>
+    <span class="n">cbor_serialized_mess</span> <span class="o">=</span> <span class="n">dict2cbor</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">signature</span> <span class="o">=</span> <span class="n">signing</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">cbor_serialized_mess</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="n">message</span><span class="p">[</span><span class="s1">&#39;__SIGNATURE__&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">signature</span>
+    <span class="k">return</span> <span class="n">message</span><span class="p">,</span> <span class="n">txnid</span></div>
+
+
+<div class="viewcode-block" id="MarketPlaceClient"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient">[docs]</a><span class="k">class</span> <span class="nc">MarketPlaceClient</span><span class="p">(</span><span class="n">MarketPlaceCommunication</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The MarketPlaceClient class wraps transaction generation and</span>
+<span class="sd">    submission for the Sawtooth Lake Digital Market.</span>
+
+<span class="sd">    :param url baseurl: the base URL for a Sawtooth Lake validator that</span>
+<span class="sd">        supports an HTTP interface</span>
+<span class="sd">    :param id creator: the identifier for the participant generating</span>
+<span class="sd">        transactions</span>
+<span class="sd">    :param str keystring: the wif format key used to sign transactions</span>
+<span class="sd">    :param str keyfile: the name of a file that contains the wif format key</span>
+<span class="sd">    :param MarketPlaceState state: ledger state used to test correctness of</span>
+<span class="sd">        transactions prior to submission</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">baseurl</span><span class="p">,</span>
+                 <span class="n">creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">name</span><span class="o">=</span><span class="s1">&#39;txnclient&#39;</span><span class="p">,</span>
+                 <span class="n">keystring</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">keyfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">tokenstore</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">session</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MarketPlaceClient</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">baseurl</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span> <span class="o">=</span> <span class="n">creator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">LastTransaction</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">CurrentState</span> <span class="o">=</span> <span class="n">state</span> <span class="ow">or</span> <span class="n">MarketPlaceState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">BaseURL</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">TokenStore</span> <span class="o">=</span> <span class="n">tokenstore</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">enable_session</span> <span class="o">=</span> <span class="n">session</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;self.enable_session: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_session</span><span class="p">)</span>
+
+        <span class="c1"># set up the signing key</span>
+        <span class="k">if</span> <span class="n">keystring</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;set signing key from string</span><span class="se">\n</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">keystring</span><span class="p">)</span>
+            <span class="n">signingkey</span> <span class="o">=</span> <span class="n">signed_object</span><span class="o">.</span><span class="n">generate_signing_key</span><span class="p">(</span><span class="n">wifstr</span><span class="o">=</span><span class="n">keystring</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">keyfile</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;set signing key from file </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">keyfile</span><span class="p">)</span>
+            <span class="n">signingkey</span> <span class="o">=</span> <span class="n">signed_object</span><span class="o">.</span><span class="n">generate_signing_key</span><span class="p">(</span>
+                <span class="n">wifstr</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">keyfile</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;expecting valid signing key, none provided&#39;</span><span class="p">)</span>
+
+        <span class="n">identifier</span> <span class="o">=</span> <span class="n">signed_object</span><span class="o">.</span><span class="n">generate_identifier</span><span class="p">(</span><span class="n">signingkey</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">LocalNode</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">identifier</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span>
+                                   <span class="n">signingkey</span><span class="o">=</span><span class="n">signingkey</span><span class="p">,</span>
+                                   <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_sendtxn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends the transaction to the validator, if enable_session is True,</span>
+<span class="sd">        the txns are sent to the prevalidation page first to be validated</span>
+<span class="sd">        :param update dict: The txn family specific data model items needed</span>
+<span class="sd">        :return txnid str: The first 16 characters of a sha256 hexdigest.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">transaction</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;TransactionType&#39;</span><span class="p">:</span> <span class="s2">&quot;/MarketPlaceTransaction&quot;</span><span class="p">}</span>
+        <span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;Updates&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">update</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">dependencies</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;Dependencies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">transaction</span><span class="p">[</span><span class="s1">&#39;Dependencies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">dependencies</span><span class="p">)</span>
+
+        <span class="n">msg</span><span class="p">,</span> <span class="n">txnid</span> <span class="o">=</span> <span class="n">sign_message_with_transaction</span><span class="p">(</span>
+            <span class="n">transaction</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">LocalNode</span><span class="o">.</span><span class="n">SigningKey</span>
+        <span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_session</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">postmsg</span><span class="p">(</span>
+                    <span class="s2">&quot;/mktplace.transactions.MarketPlace/Transaction&quot;</span><span class="p">,</span>
+                    <span class="n">msg</span><span class="p">,</span>
+                    <span class="s1">&#39;/prevalidation&#39;</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">postmsg</span><span class="p">(</span>
+                    <span class="s2">&quot;/mktplace.transactions.MarketPlace/Transaction&quot;</span><span class="p">,</span>
+                    <span class="n">msg</span>
+                <span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">MessageException</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;message post failed for some unusual reason&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># if there was no exception thrown then all transactions should return</span>
+        <span class="c1"># a value which is a dictionary with the message that was sent</span>
+        <span class="k">assert</span> <span class="n">result</span>
+
+        <span class="c1"># if the message was successfully posted, then save the transaction</span>
+        <span class="c1"># id for future dependencies this could be a problem if the transaction</span>
+        <span class="c1"># fails during application</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">LastTransaction</span> <span class="o">=</span> <span class="n">txnid</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_session</span><span class="p">:</span>
+            <span class="n">storeinfo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getmsg</span><span class="p">(</span><span class="s1">&#39;/prevalidation&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">CurrentState</span><span class="o">.</span><span class="n">State</span> <span class="o">=</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">CurrentState</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">clone_store</span><span class="p">(</span><span class="n">storeinfo</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">txnid</span>
+
+<div class="viewcode-block" id="MarketPlaceClient.create_session"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.create_session">[docs]</a>    <span class="k">def</span> <span class="nf">create_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enable_session</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.delete_session"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.delete_session">[docs]</a>    <span class="k">def</span> <span class="nf">delete_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_session</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">headrequest</span><span class="p">(</span><span class="s1">&#39;/prevalidation&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">enable_session</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">except</span> <span class="n">MessageException</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;message post failed for some unusual reason&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.waitforcommit"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.waitforcommit">[docs]</a>    <span class="k">def</span> <span class="nf">waitforcommit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">txnid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timetowait</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wait until a specified transaction shows up in the ledger&#39;s committed</span>
+<span class="sd">        transaction list</span>
+
+<span class="sd">        :param id txnid: the transaction to wait for, the last transaction by</span>
+<span class="sd">            default</span>
+<span class="sd">        :param int timetowait: time to wait between polling the ledger</span>
+<span class="sd">        :param int iterations: number of iterations to wait before giving up</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">txnid</span><span class="p">:</span>
+            <span class="n">txnid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LastTransaction</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">txnid</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;no transaction specified for wait&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="n">passes</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">passes</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">headrequest</span><span class="p">(</span><span class="s1">&#39;/transaction/</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">txnid</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">http</span><span class="o">.</span><span class="n">NOT_FOUND</span> <span class="ow">and</span> <span class="n">passes</span> <span class="o">&gt;</span> <span class="n">iterations</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;unknown transaction </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">txnid</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">http</span><span class="o">.</span><span class="n">OK</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;waiting for transaction </span><span class="si">%s</span><span class="s1"> to commit&#39;</span><span class="p">,</span> <span class="n">txnid</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">timetowait</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.exchange"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.exchange">[docs]</a>    <span class="k">def</span> <span class="nf">exchange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payer</span><span class="p">,</span> <span class="n">payee</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">offerids</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate an exchange transaction for moving assets amongst holdings</span>
+
+<span class="sd">        :param id payer: the holding/liability from which assets will be</span>
+<span class="sd">            transferred</span>
+<span class="sd">        :param id payee: the holding/liability into which assets will be</span>
+<span class="sd">            transferred</span>
+<span class="sd">        :param int count: the number of assets that will be transferred from</span>
+<span class="sd">            the payer holding/liability</span>
+<span class="sd">        :param offerids: a list of offer identifiers that transform payer to</span>
+<span class="sd">            payee transaction</span>
+<span class="sd">        :type offerids: list of id</span>
+<span class="sd">        :return: exchange transaction id</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;Exchange&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;InitialLiabilityId&#39;</span><span class="p">:</span> <span class="n">payer</span><span class="p">,</span>
+            <span class="s1">&#39;FinalLiabilityId&#39;</span><span class="p">:</span> <span class="n">payee</span><span class="p">,</span> <span class="s1">&#39;OfferIdList&#39;</span><span class="p">:</span> <span class="n">offerids</span> <span class="ow">or</span> <span class="p">[],</span>
+            <span class="s1">&#39;InitialCount&#39;</span><span class="p">:</span> <span class="n">count</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">payer</span><span class="p">,</span> <span class="n">payee</span>
+        <span class="p">]</span> <span class="o">+</span> <span class="n">offerids</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.register_asset"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.register_asset">[docs]</a>    <span class="k">def</span> <span class="nf">register_asset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                       <span class="n">assettype</span><span class="p">,</span>
+                       <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                       <span class="n">description</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                       <span class="n">consumable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                       <span class="n">restricted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                       <span class="n">divisible</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register an asset with the ledger.</span>
+
+<span class="sd">        :param id assettype: the asset type identifier</span>
+<span class="sd">        :param str name: an optional name for the asset, unique for the current</span>
+<span class="sd">            participant</span>
+<span class="sd">        :param str description: an optional description for the asset</span>
+
+<span class="sd">        :return: asset id</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;RegisterAsset&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;AssetTypeId&#39;</span><span class="p">:</span> <span class="n">assettype</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">,</span>
+            <span class="s1">&#39;Consumable&#39;</span><span class="p">:</span> <span class="n">consumable</span><span class="p">,</span>
+            <span class="s1">&#39;Restricted&#39;</span><span class="p">:</span> <span class="n">restricted</span><span class="p">,</span>
+            <span class="s1">&#39;Divisible&#39;</span><span class="p">:</span> <span class="n">divisible</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">,</span> <span class="n">assettype</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.unregister_asset"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.unregister_asset">[docs]</a>    <span class="k">def</span> <span class="nf">unregister_asset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unregister an asset.</span>
+
+<span class="sd">        :param id objectid: the identifier for the asset object</span>
+
+<span class="sd">        :return: unregister transaction identifier</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UnregisterAsset&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_asset_name"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_asset_name">[docs]</a>    <span class="k">def</span> <span class="nf">update_asset_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UpdateAssetName&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_asset_description"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_asset_description">[docs]</a>    <span class="k">def</span> <span class="nf">update_asset_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UpdateAssetDescription&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.register_assettype"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.register_assettype">[docs]</a>    <span class="k">def</span> <span class="nf">register_assettype</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">restricted</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register an asset type.</span>
+
+<span class="sd">        :param str name: an optional name for the asset type, unique for the</span>
+<span class="sd">            current participant</span>
+<span class="sd">        :param str description: an optional description for the asset type</span>
+
+<span class="sd">        :return: asset type id</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;RegisterAssetType&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s1">&#39;Restricted&#39;</span><span class="p">:</span> <span class="n">restricted</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.unregister_assettype"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.unregister_assettype">[docs]</a>    <span class="k">def</span> <span class="nf">unregister_assettype</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unregister an asset type.</span>
+
+<span class="sd">        :param id objectid: the identifier for the asset type object</span>
+
+<span class="sd">        :return: unregister transaction identifier</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UnregisterAssetType&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_assettype_name"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_assettype_name">[docs]</a>    <span class="k">def</span> <span class="nf">update_assettype_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UpdateAssetTypeName&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_assettype_description"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_assettype_description">[docs]</a>    <span class="k">def</span> <span class="nf">update_assettype_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UpdateAssetTypeDescription&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.register_exchangeoffer"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.register_exchangeoffer">[docs]</a>    <span class="k">def</span> <span class="nf">register_exchangeoffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iliability</span><span class="p">,</span> <span class="n">oliability</span><span class="p">,</span> <span class="n">ratio</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct and post a transaction to register an exchange offer.</span>
+
+<span class="sd">        :param id iliability: identifier for the input liability (where payment</span>
+<span class="sd">            is made)</span>
+<span class="sd">        :param id oliability: identifier for the output liability (where goods</span>
+<span class="sd">            are given)</span>
+<span class="sd">        :param str name: an optional name for the asset type, unique for the</span>
+<span class="sd">            current participant</span>
+<span class="sd">        :param str description: an optional description for the asset type</span>
+<span class="sd">        :param int minimum: an optional parameter noting the smallest number of</span>
+<span class="sd">            input assets</span>
+<span class="sd">        :param int maximum: an optional parameter noting the largest number of</span>
+<span class="sd">            input assets</span>
+<span class="sd">        :param execution: optional flag indicating offer execution modifiers</span>
+<span class="sd">        :type execution: one of &#39;Any&#39;, &#39;ExecuteOnce&#39;,</span>
+<span class="sd">            &#39;ExecuteOncePerParticipant&#39;</span>
+
+<span class="sd">        :return: exchange offer id</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;RegisterExchangeOffer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">,</span>
+            <span class="s1">&#39;InputId&#39;</span><span class="p">:</span> <span class="n">iliability</span><span class="p">,</span>
+            <span class="s1">&#39;OutputId&#39;</span><span class="p">:</span> <span class="n">oliability</span><span class="p">,</span>
+            <span class="s1">&#39;Ratio&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">ratio</span><span class="p">),</span>
+            <span class="s1">&#39;Minimum&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;minimum&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="s1">&#39;Maximum&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;maximum&#39;</span><span class="p">,</span> <span class="mi">20000000000</span><span class="p">),</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;Execution&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;execution&#39;</span><span class="p">,</span> <span class="s1">&#39;Any&#39;</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">iliability</span><span class="p">,</span> <span class="n">oliability</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.unregister_exchangeoffer"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.unregister_exchangeoffer">[docs]</a>    <span class="k">def</span> <span class="nf">unregister_exchangeoffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Revoke an exchange offer.</span>
+
+<span class="sd">        :param id objectid: the identifier for the exchange offer</span>
+
+<span class="sd">        :return: unregister transaction identifier</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UnregisterExchangeOffer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_exchangeoffer_name"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_exchangeoffer_name">[docs]</a>    <span class="k">def</span> <span class="nf">update_exchangeoffer_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UpdateExchangeOfferName&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_exchangeoffer_description"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_exchangeoffer_description">[docs]</a>    <span class="k">def</span> <span class="nf">update_exchangeoffer_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">update</span><span class="p">[</span><span class="s1">&#39;ObjectId&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">objectid</span>
+        <span class="n">update</span><span class="p">[</span><span class="s1">&#39;Description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.register_holding"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.register_holding">[docs]</a>    <span class="k">def</span> <span class="nf">register_holding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">asset</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register a holding.</span>
+
+<span class="sd">        :param id account: the identifier the account that scopes the holding</span>
+<span class="sd">        :param id asset: the identifier for the asset to store in the holding</span>
+<span class="sd">        :param int count: the initial number of assets to store in the holding</span>
+<span class="sd">        :param str name: an optional name for the holding, unique for the</span>
+<span class="sd">            current participant</span>
+<span class="sd">        :param str description: an optional description for the holding</span>
+
+<span class="sd">        :return: holding id</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;RegisterHolding&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;AccountId&#39;</span><span class="p">:</span> <span class="n">account</span><span class="p">,</span>
+            <span class="s1">&#39;AssetId&#39;</span><span class="p">:</span> <span class="n">asset</span><span class="p">,</span>
+            <span class="s1">&#39;Count&#39;</span><span class="p">:</span> <span class="n">count</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">description</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">asset</span>
+        <span class="p">])</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.unregister_holding"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.unregister_holding">[docs]</a>    <span class="k">def</span> <span class="nf">unregister_holding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unregister a holding.</span>
+
+<span class="sd">        :param id objectid: the identifier for the holding</span>
+
+<span class="sd">        :return: unregister transaction identifier</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UnregisterHolding&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_holding_name"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_holding_name">[docs]</a>    <span class="k">def</span> <span class="nf">update_holding_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UpdateHoldingName&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_holding_description"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_holding_description">[docs]</a>    <span class="k">def</span> <span class="nf">update_holding_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UpdateHoldingDescription&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.register_liability"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.register_liability">[docs]</a>    <span class="k">def</span> <span class="nf">register_liability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                           <span class="n">account</span><span class="p">,</span>
+                           <span class="n">assettype</span><span class="p">,</span>
+                           <span class="n">guarantor</span><span class="p">,</span>
+                           <span class="n">count</span><span class="p">,</span>
+                           <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                           <span class="n">description</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register a liability.</span>
+
+<span class="sd">        :param id account: the identifier the account that scopes the liability</span>
+<span class="sd">        :param id assettype: the identifier for the asset type to store in the</span>
+<span class="sd">            liability</span>
+<span class="sd">        :param int count: the initial number of assets to store in the</span>
+<span class="sd">            liability</span>
+<span class="sd">        :param str name: an optional name for the liability, unique for the</span>
+<span class="sd">            current participant</span>
+<span class="sd">        :param str description: an optional description for the liability</span>
+
+<span class="sd">        :return: liability id</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;RegisterLiability&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;AccountId&#39;</span><span class="p">:</span> <span class="n">account</span><span class="p">,</span>
+            <span class="s1">&#39;AssetTypeId&#39;</span><span class="p">:</span> <span class="n">assettype</span><span class="p">,</span>
+            <span class="s1">&#39;GuarantorId&#39;</span><span class="p">:</span> <span class="n">guarantor</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">,</span>
+            <span class="s1">&#39;Count&#39;</span><span class="p">:</span> <span class="n">count</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">description</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">,</span> <span class="n">assettype</span>
+        <span class="p">])</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.unregister_liability"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.unregister_liability">[docs]</a>    <span class="k">def</span> <span class="nf">unregister_liability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unregister a liability.</span>
+
+<span class="sd">        :param id objectid: the identifier for the liability</span>
+
+<span class="sd">        :return: unregister transaction identifier</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UnregisterLiability&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_liability_name"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_liability_name">[docs]</a>    <span class="k">def</span> <span class="nf">update_liability_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UpdateLiabilityName&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_liability_description"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_liability_description">[docs]</a>    <span class="k">def</span> <span class="nf">update_liability_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UpdateLiabilityDescription&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.register_participant"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.register_participant">[docs]</a>    <span class="k">def</span> <span class="nf">register_participant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register a participant with the ledger.</span>
+
+<span class="sd">        :param str name: an optional name for the asset, unique for the current</span>
+<span class="sd">            participant</span>
+<span class="sd">        :param str description: an optional description for the asset</span>
+
+<span class="sd">        :return: participant id</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;RegisterParticipant&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">description</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.unregister_participant"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.unregister_participant">[docs]</a>    <span class="k">def</span> <span class="nf">unregister_participant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unregister a participant.</span>
+
+<span class="sd">        :param id objectid: the identifier for the participant</span>
+
+<span class="sd">        :return: unregister transaction identifier</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UnregisterParticipant&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_participant_name"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_participant_name">[docs]</a>    <span class="k">def</span> <span class="nf">update_participant_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UpdateParticipantName&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_participant_description"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_participant_description">[docs]</a>    <span class="k">def</span> <span class="nf">update_participant_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UpdateParticipantDescription&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.register_selloffer"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.register_selloffer">[docs]</a>    <span class="k">def</span> <span class="nf">register_selloffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iliability</span><span class="p">,</span> <span class="n">oholding</span><span class="p">,</span> <span class="n">ratio</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct and post a transaction to register an SellOffer object</span>
+
+<span class="sd">        :param id iliability: identifier for the input liability (where payment</span>
+<span class="sd">            is made)</span>
+<span class="sd">        :param id oholding: identifier for the output holding (where goods are</span>
+<span class="sd">            given)</span>
+<span class="sd">        :param str name: an optional name for the asset type, unique for the</span>
+<span class="sd">            current participant</span>
+<span class="sd">        :param str description: an optional description for the asset type</span>
+<span class="sd">        :param int minimum: an optional parameter noting the smallest number of</span>
+<span class="sd">            input assets</span>
+<span class="sd">        :param int maximum: an optional parameter noting the largest number of</span>
+<span class="sd">            input assets</span>
+<span class="sd">        :param execution: optional flag indicating offer execution modifiers</span>
+<span class="sd">        :type execution: one of &#39;Any&#39;, &#39;ExecuteOnce&#39;,</span>
+<span class="sd">            &#39;ExecuteOncePerParticipant&#39;</span>
+
+<span class="sd">        :return: exchange offer id</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;RegisterSellOffer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">,</span>
+            <span class="s1">&#39;InputId&#39;</span><span class="p">:</span> <span class="n">iliability</span><span class="p">,</span>
+            <span class="s1">&#39;OutputId&#39;</span><span class="p">:</span> <span class="n">oholding</span><span class="p">,</span>
+            <span class="s1">&#39;Ratio&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">ratio</span><span class="p">),</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;Minimum&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;minimum&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="s1">&#39;Maximum&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;maximum&#39;</span><span class="p">,</span> <span class="mi">2000000000000000</span><span class="p">),</span>
+            <span class="s1">&#39;Execution&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;execution&#39;</span><span class="p">,</span> <span class="s1">&#39;Any&#39;</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">,</span> <span class="n">iliability</span><span class="p">,</span> <span class="n">oholding</span>
+        <span class="p">])</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.unregister_selloffer"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.unregister_selloffer">[docs]</a>    <span class="k">def</span> <span class="nf">unregister_selloffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Revoke a sell offer.</span>
+
+<span class="sd">        :param id objectid: the identifier for the sell offer</span>
+
+<span class="sd">        :return: unregister transaction identifier</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UnregisterSellOffer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_selloffer_name"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_selloffer_name">[docs]</a>    <span class="k">def</span> <span class="nf">update_selloffer_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UpdateSellOfferName&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_selloffer_description"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_selloffer_description">[docs]</a>    <span class="k">def</span> <span class="nf">update_selloffer_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s2">&quot;UpdateSellOfferDescription&quot;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.register_account"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.register_account">[docs]</a>    <span class="k">def</span> <span class="nf">register_account</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register an account with the ledger.</span>
+
+<span class="sd">        :param str name: an optional name for the asset, unique for the current</span>
+<span class="sd">            participant</span>
+<span class="sd">        :param str description: an optional description for the asset</span>
+
+<span class="sd">        :return: account id</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;RegisterAccount&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">,</span> <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.unregister_account"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.unregister_account">[docs]</a>    <span class="k">def</span> <span class="nf">unregister_account</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unregister an account.</span>
+
+<span class="sd">        :param id objectid: the identifier for the account</span>
+
+<span class="sd">        :return: unregister transaction identifier</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UnregisterAccount&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_account_name"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_account_name">[docs]</a>    <span class="k">def</span> <span class="nf">update_account_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UpdateAccountName&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceClient.update_account_description"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_client.html#mktplace.mktplace_client.MarketPlaceClient.update_account_description">[docs]</a>    <span class="k">def</span> <span class="nf">update_account_description</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="s1">&#39;UpdateAccountDescription&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ObjectId&#39;</span><span class="p">:</span> <span class="n">objectid</span><span class="p">,</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="n">description</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sendtxn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

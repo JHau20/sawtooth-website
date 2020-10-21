@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+  <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<head>
+	<meta charset="utf-8">
+	<title>Sawtooth FAQ - Transaction Processing | Hyperledger Sawtooth</title>
+	<meta name="description" content="An enterprise-grade solution for distributed ledgers.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="0.0.0.0/faq/transaction-processing/">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Hyperledger Sawtooth" href="0.0.0.0/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+
+	<!-- Google Analytics
+	-->
+</head>
+
+  <body>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">Hyperledger Sawtooth</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+                        
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/release/">
+					Releases
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/docs/">
+					Docs
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/faq/">
+					FAQ
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/community/">
+					Community
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/contact/">
+					Contact
+				</a>
+			</li>
+			
+			
+			<li>
+				<a class="page-link" href="/examples">
+					Examples
+				</a>
+			</li>
+			<!-- Social icons from Font Awesome, if enabled -->
+			<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/hyperledger/sawtooth-core" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/\%23HyperledgerSawtooth" title="Follow on Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Sawtooth FAQ - Transaction Processing</h1>
+  </header>
+  <section class="post-content"><p class="mininav"><a class="reference external" href="/faq/installation/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/validator/">NEXT</a></p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#does-a-client-send-a-transaction-request-to-all-the-validators-in-the-network" id="id1">Does a client send a transaction request to all the validators in the network?</a></li>
+<li><a class="reference internal" href="#does-sawtooth-have-a-way-to-control-what-participants-have-access-to-what-assets-in-the-business-network-and-under-what-conditions" id="id2">Does Sawtooth have a way to control what participants have access to what assets in the business network and under what conditions?</a></li>
+<li><a class="reference internal" href="#what-transaction-processors-are-required" id="id3">What transaction processors are required?</a></li>
+<li><a class="reference internal" href="#what-does-the-settings-tp-do" id="id4">What does the Settings TP do?</a></li>
+<li><a class="reference internal" href="#is-there-an-example-where-the-settings-tp-is-used-in-another-tp" id="id5">Is there an example where the Settings TP is used in another TP?</a></li>
+<li><a class="reference internal" href="#can-different-validator-nodes-have-different-transaction-processors-running" id="id6">Can different Validator Nodes have different Transaction Processors running?</a></li>
+<li><a class="reference internal" href="#how-do-i-support-multiple-versions-of-a-transaction-processor" id="id7">How do I support multiple versions of a Transaction Processor?</a></li>
+<li><a class="reference internal" href="#how-do-i-support-multiple-transaction-families-in-a-transaction-processor" id="id8">How do I support multiple Transaction Families in a Transaction Processor?</a></li>
+<li><a class="reference internal" href="#how-do-i-upgrade-a-transaction-processor-version" id="id9">How do I upgrade a transaction processor version?</a></li>
+<li><a class="reference internal" href="#can-a-validator-node-have-multiple-tps-processes-running-for-the-same-tf" id="id10">Can a Validator Node have multiple TPs (processes) running for the same TF?</a></li>
+<li><a class="reference internal" href="#what-are-inputs-and-outputs-in-sawtooth" id="id11">What are inputs and outputs in Sawtooth?</a></li>
+<li><a class="reference internal" href="#why-use-round-robin-if-the-transaction-processors-are-identical" id="id12">Why use round-robin if the transaction processors are identical?</a></li>
+<li><a class="reference internal" href="#where-do-i-deploy-transaction-processors" id="id13">Where do I deploy transaction processors?</a></li>
+<li><a class="reference internal" href="#what-happens-if-a-validator-receives-a-transaction-but-does-not-have-a-tp-for-it" id="id14">What happens if a validator receives a transaction but does not have a TP for it?</a></li>
+<li><a class="reference internal" href="#how-can-i-limit-what-transaction-processors-run-on-a-validator-node" id="id15">How can I limit what Transaction Processors run on a Validator Node?</a></li>
+<li><a class="reference internal" href="#where-do-transactions-originate" id="id16">Where do transactions originate?</a></li>
+<li><a class="reference internal" href="#can-the-same-transaction-appear-in-multiple-blocks" id="id17">Can the same transaction appear in multiple blocks?</a></li>
+<li><a class="reference internal" href="#what-mechanism-prevents-a-rogue-tp-from-operating-and-corrupting-data" id="id18">What mechanism prevents a rogue TP from operating and corrupting data?</a></li>
+<li><a class="reference internal" href="#what-does-this-error-mean-processor-debug-executor-transaction-processors-registered-for-processor-type-cryptomoji-0-1" id="id19">What does this error mean: <tt class="docutils literal">processor | <span class="pre">[...</span> DEBUG executor] transaction processors registered for processor type cryptomoji: 0.1?</tt></a></li>
+<li><a class="reference internal" href="#what-does-this-error-mean-processor-authorizationexception-tried-to-get-unauthorized-address" id="id20">What does this error mean: <tt class="docutils literal">processor | { AuthorizationException: Tried to get unauthorized address ...</tt> ?</a></li>
+<li><a class="reference internal" href="#what-does-this-error-mean-applicator-apply-errorstate-get-authorization-error-check-transaction-inputs" id="id21">What does this error mean: <tt class="docutils literal"><span class="pre">applicator-&gt;Apply</span> errorState Get Authorization error. Check transaction inputs.</tt></a></li>
+<li><a class="reference internal" href="#if-you-have-a-large-file-to-store-is-it-best-to-just-record-the-file-hash-and-store-the-file-offline" id="id22">If you have a large file to store, is it best to just record the file hash and store the file offline?</a></li>
+<li><a class="reference internal" href="#if-i-register-a-transaction-processor-to-one-validator-does-the-registration-get-transmitted-to-the-other-validators-in-a-network" id="id23">If I register a transaction processor to one validator, does the registration get transmitted to the other validators in a network?</a></li>
+<li><a class="reference internal" href="#how-do-i-add-a-transaction-processor" id="id24">How do I add a transaction processor?</a></li>
+<li><a class="reference internal" href="#how-do-i-restrict-what-transaction-processors-are-allowed" id="id25">How do I restrict what transaction processors are allowed?</a></li>
+<li><a class="reference internal" href="#how-do-i-add-events-to-the-transaction-processor" id="id26">How do I add events to the transaction processor?</a></li>
+<li><a class="reference internal" href="#what-initial-sawtooth-events-are-available" id="id27">What initial Sawtooth events are available?</a></li>
+<li><a class="reference internal" href="#how-do-i-subscribe-to-sawtooth-events" id="id28">How do I subscribe to Sawtooth events?</a></li>
+<li><a class="reference internal" href="#how-do-i-handle-forks-while-subscribing-to-sawtooth-events" id="id29">How do I handle forks while subscribing to Sawtooth events?</a></li>
+<li><a class="reference internal" href="#why-is-the-apply-method-in-the-tp-handler-called-twice" id="id30">Why is the Apply method in the TP handler called twice?</a></li>
+<li><a class="reference internal" href="#what-does-it-mean-to-be-deterministic" id="id31">What does it mean to be deterministic?</a></li>
+<li><a class="reference internal" href="#do-transaction-processors-run-off-chain-or-on-chain" id="id32">Do Transaction Processors run off-chain or on-chain?</a></li>
+<li><a class="reference internal" href="#my-tp-throws-an-exception-of-type-internalerror-but-the-apply-method-gets-stuck-in-an-endless-loop" id="id33">My TP throws an exception of type <tt class="docutils literal">InternalError</tt>, but the <tt class="docutils literal">Apply</tt> method gets stuck in an endless loop</a></li>
+<li><a class="reference internal" href="#i-get-this-error-when-i-try-to-set-some-sawtooth-settings-chain-head-is-not-set-yet-permit-all" id="id34">I get this error when I try to set some Sawtooth settings: <tt class="docutils literal">Chain head is not set yet. Permit all</tt></a></li>
+<li><a class="reference internal" href="#does-the-transaction-processor-know-the-current-transaction-id" id="id35">Does the Transaction Processor know the current Transaction ID?</a></li>
+<li><a class="reference internal" href="#can-i-run-two-different-transaction-processors-on-the-same-sawtooth-network" id="id36">Can I run two different Transaction Processors on the same Sawtooth Network?</a></li>
+<li><a class="reference internal" href="#what-happens-if-someone-writes-a-fake-transaction-processor-with-the-same-name-version-and-address-space-that-can-access-and-modify-state-data" id="id37">What happens if someone writes a fake Transaction Processor (with the same name, version, and address space) that can access and modify state data?</a></li>
+<li><a class="reference internal" href="#why-is-there-no-timestamp-in-a-transaction-header-or-block" id="id38">Why is there no timestamp in a transaction header or block?</a></li>
+<li><a class="reference internal" href="#does-sawtooth-allow-multiple-digital-signatures-on-a-single-transaction" id="id39">Does Sawtooth allow multiple digital signatures on a single transaction?</a></li>
+<li><a class="reference internal" href="#what-is-the-size-limit-for-a-sawtooth-transaction" id="id40">What is the size limit for a Sawtooth transaction?</a></li>
+<li><a class="reference internal" href="#what-does-this-message-mean-did-not-respond-to-the-ping-removing-transaction-processor" id="id41">What does this message mean: <tt class="docutils literal">Did not respond to the ping, removing transaction processor</tt> ?</a></li>
+<li><a class="reference internal" href="#what-does-this-message-mean-block-rejected-due-to-state-root-hash-mismatch" id="id42">What does this message mean: <tt class="docutils literal">Block . . . rejected due to state root hash mismatch</tt> ?</a></li>
+<li><a class="reference internal" href="#what-does-this-message-mean-have-not-received-a-chain-head-from-peers" id="id43">What does this message mean: <tt class="docutils literal">Have not received a chain head from peers.</tt> ?</a></li>
+<li><a class="reference internal" href="#how-do-i-debug-a-transaction-processor" id="id44">How do I debug a transaction processor?</a></li>
+<li><a class="reference internal" href="#what-does-this-message-mean-failing-transaction-since-it-isn-t-required-in-the-configuration" id="id45">What does this message mean: <tt class="docutils literal">failing transaction ... since it isn't required in the configuration</tt> ?</a></li>
+<li><a class="reference internal" href="#i-noticed-that-tps-on-various-nodes-do-not-process-transactions-in-the-same-order-why" id="id46">I noticed that TPs on various nodes do not process transactions in the same order. Why?</a></li>
+<li><a class="reference internal" href="#what-do-failed-state-root-hash-validation-errors-mean" id="id47">What do <tt class="docutils literal">failed state root hash validation</tt> errors mean?</a></li>
+</ul>
+</div>
+<div class="section" id="does-a-client-send-a-transaction-request-to-all-the-validators-in-the-network">
+<h2><a class="toc-backref" href="#id1">Does a client send a transaction request to all the validators in the network?</a></h2>
+<p>No, it would just need to send the batch to one validator, then that validator will broadcast the batch to the rest of its peers.
+If the validator is down, your connection attempt from the app would fail.
+The app could have error handling to try again (in a retry loop) or try another validator.</p>
+</div>
+<div class="section" id="does-sawtooth-have-a-way-to-control-what-participants-have-access-to-what-assets-in-the-business-network-and-under-what-conditions">
+<h2><a class="toc-backref" href="#id2">Does Sawtooth have a way to control what participants have access to what assets in the business network and under what conditions?</a></h2>
+<p>Blockchains, including Sawtooth, can be deployed as permissioned networks, wherein transactions are visible to the participants of the permissioned network, but not visible to the general public.</p>
+</div>
+<div class="section" id="what-transaction-processors-are-required">
+<h2><a class="toc-backref" href="#id3">What transaction processors are required?</a></h2>
+<p>Just the Settings TP, <tt class="docutils literal">settings</tt> .
+The Validator Registry TP,  <tt class="docutils literal">sawtooth_validator_registry</tt> , is required if you use PoET.</p>
+</div>
+<div class="section" id="what-does-the-settings-tp-do">
+<h2><a class="toc-backref" href="#id4">What does the Settings TP do?</a></h2>
+<p>The Settings TP provides on-chain configs to be applied to the Sawtooth Validators, so that you can change operational parameters without restarting the validators or the whole sawtooth network.
+Also, you could write your own settings-tp, that stores the settings the same way but enforces different rules on how they are updated.</p>
+</div>
+<div class="section" id="is-there-an-example-where-the-settings-tp-is-used-in-another-tp">
+<h2><a class="toc-backref" href="#id5">Is there an example where the Settings TP is used in another TP?</a></h2>
+<p>Yes. check out <tt class="docutils literal">sawtooth.identity.allowed_keys</tt> in the Identity TP:
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-core/blob/master/families/identity/sawtooth_identity/processor/handler.py">https://github.com/hyperledger/sawtooth-core/blob/master/families/identity/sawtooth_identity/processor/handler.py</a></p>
+</div>
+<div class="section" id="can-different-validator-nodes-have-different-transaction-processors-running">
+<h2><a class="toc-backref" href="#id6">Can different Validator Nodes have different Transaction Processors running?</a></h2>
+<p>No. The set of TPs must be the same for all validator nodes in a Sawtooth network.
+The TP versions must also match across nodes--support the same set of ops.
+This is so the transaction and state validation will be successful.</p>
+</div>
+<div class="section" id="how-do-i-support-multiple-versions-of-a-transaction-processor">
+<h2><a class="toc-backref" href="#id7">How do I support multiple versions of a Transaction Processor?</a></h2>
+<p>You have two choices:</p>
+<ul class="simple">
+<li>A single TP can register itself to handle multiple versions. When the TP receives a transaction, it looks at the transaction's version field and decides how to handle it in the Apply() method.</li>
+<li>Multiple TPs, each handling a specific version.</li>
+</ul>
+<p>In any case, all nodes need to support the same set of versions for a specific Transaction Family.</p>
+</div>
+<div class="section" id="how-do-i-support-multiple-transaction-families-in-a-transaction-processor">
+<h2><a class="toc-backref" href="#id8">How do I support multiple Transaction Families in a Transaction Processor?</a></h2>
+<p>This is usually not a preferred best practice.
+But if the functionality of the different TFs are closely related, you can have a TP support multiple TFs. Just have the TP register multiple TFs at startup, instead of just one TF.</p>
+</div>
+<div class="section" id="how-do-i-upgrade-a-transaction-processor-version">
+<h2><a class="toc-backref" href="#id9">How do I upgrade a transaction processor version?</a></h2>
+<p>Bump up the version number of the TP and register with the validator. Submit transactions to the TP with the updated version number. If you want to reuse the existing TP, then you'll need to stop the existing one and register the new one.</p>
+</div>
+<div class="section" id="can-a-validator-node-have-multiple-tps-processes-running-for-the-same-tf">
+<h2><a class="toc-backref" href="#id10">Can a Validator Node have multiple TPs (processes) running for the same TF?</a></h2>
+<p>Yes, one or more TPs, handling the same or different Transaction Families, may be running and register with a validator.
+This is one way to achieve parallelism.
+Another way to achieve parallelism is to write a multi-threaded TP.
+The transactions are sent to transaction processors supporting the same transaction family in a round-robin fashion.</p>
+</div>
+<div class="section" id="what-are-inputs-and-outputs-in-sawtooth">
+<h2><a class="toc-backref" href="#id11">What are inputs and outputs in Sawtooth?</a></h2>
+<p>In a Sawtooth transaction, inputs list what are the inputs for the transaction (what addresses the TP can read). Outputs list what are the outputs for the transaction (what addresses the TP can modify). The inputs and outputs lists are specific to a transaction. See <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/transactions_and_batches.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/transactions_and_batches.html</a></p>
+</div>
+<div class="section" id="why-use-round-robin-if-the-transaction-processors-are-identical">
+<h2><a class="toc-backref" href="#id12">Why use round-robin if the transaction processors are identical?</a></h2>
+<p>This is useful when the when the validator's parallel scheduler is used.
+Multiple transactions can be processed in parallel when the inputs/outputs do not conflict.</p>
+</div>
+<div class="section" id="where-do-i-deploy-transaction-processors">
+<h2><a class="toc-backref" href="#id13">Where do I deploy transaction processors?</a></h2>
+<p>Each validator node runs all transaction processors supported for the Sawtooth network.
+Sawtooth includes features for asynchronously deploying and upgrading the Transaction Processors.
+In a typical deployment you will have multiple Transaction Processors.</p>
+</div>
+<div class="section" id="what-happens-if-a-validator-receives-a-transaction-but-does-not-have-a-tp-for-it">
+<h2><a class="toc-backref" href="#id14">What happens if a validator receives a transaction but does not have a TP for it?</a></h2>
+<p>If a validator receives a transaction that it does not have a transaction processor for, the validator will wait until a TP connects that can handle that transaction.
+The validator will stay online and participate with the network and other services, but it will not be able to validate transactions for which it does not have the associated Transaction Processor.
+That validator would fall behind the rest on the network while it waits.
+Hence it will not update state for any state transitions that include or depend on such transactions <em>until</em> the transaction processor is deployed for that node.
+Once deployed on that validator, the validator will be able to catch up with the network.</p>
+</div>
+<div class="section" id="how-can-i-limit-what-transaction-processors-run-on-a-validator-node">
+<h2><a class="toc-backref" href="#id15">How can I limit what Transaction Processors run on a Validator Node?</a></h2>
+<p>You can also limit which transactions are accepted on the network by setting
+<tt class="docutils literal">sawtooth.validator.transaction_families</tt> If that setting is not set, all transaction processors are accepted.
+This setting is ignored in dev-mode consensus.</p>
+</div>
+<div class="section" id="where-do-transactions-originate">
+<h2><a class="toc-backref" href="#id16">Where do transactions originate?</a></h2>
+<p>From the client. The client sends a transaction to a validator, in a batch with one or more transactions. The transactions are sent to the validator, via the REST API, for the validator to add to the blockchain.</p>
+</div>
+<div class="section" id="can-the-same-transaction-appear-in-multiple-blocks">
+<h2><a class="toc-backref" href="#id17">Can the same transaction appear in multiple blocks?</a></h2>
+<p>No. Each block has a unique set of transaction. A block is composed of batches, which is composed of transactions. Each transaction has a unique ID and appears only once in a blockchain. There may be, however, differences in ordering of blocks at a validator due to scheduling, transaction dependencies, etc.</p>
+</div>
+<div class="section" id="what-mechanism-prevents-a-rogue-tp-from-operating-and-corrupting-data">
+<h2><a class="toc-backref" href="#id18">What mechanism prevents a rogue TP from operating and corrupting data?</a></h2>
+<p>The design is as such that rogue TPs can't harm legitimate TPs. When you run a network of validators, each validator has to have same version of TPs. If a rogue TP is modifying your TPs data, the same TP has to run in the rest of the validators in the network, to be able to affect the blockchain. The validator where the rogue TP is working will constantly fail state validations(Merkle hashes will be different with rest of the network). Hence, the bigger the validator network, the more robust it is against such attacks.</p>
+</div>
+<div class="section" id="what-does-this-error-mean-processor-debug-executor-transaction-processors-registered-for-processor-type-cryptomoji-0-1">
+<h2><a class="toc-backref" href="#id19">What does this error mean: <tt class="docutils literal">processor | <span class="pre">[...</span> DEBUG executor] transaction processors registered for processor type cryptomoji: 0.1?</tt></a></h2>
+<p>It means there is no transaction processor running for your transaction family.</p>
+</div>
+<div class="section" id="what-does-this-error-mean-processor-authorizationexception-tried-to-get-unauthorized-address">
+<h2><a class="toc-backref" href="#id20">What does this error mean: <tt class="docutils literal">processor | { AuthorizationException: Tried to get unauthorized address ...</tt> ?</a></h2>
+<p>It means a the transaction processor tried to access (get/put) a value not in the list of inputs/outputs. This occurs when a client submits a transaction with an inaccurate list of inputs/outputs.</p>
+<p>Make sure the Sawtooth address is the correct length--the address is 70 hex characters, which represent a 35 byte address (including the 6 hex character or 3 byte Transaction Family prefix).</p>
+</div>
+<div class="section" id="what-does-this-error-mean-applicator-apply-errorstate-get-authorization-error-check-transaction-inputs">
+<h2><a class="toc-backref" href="#id21">What does this error mean: <tt class="docutils literal"><span class="pre">applicator-&gt;Apply</span> errorState Get Authorization error. Check transaction inputs.</tt></a></h2>
+<p>See the answer above.</p>
+</div>
+<div class="section" id="if-you-have-a-large-file-to-store-is-it-best-to-just-record-the-file-hash-and-store-the-file-offline">
+<h2><a class="toc-backref" href="#id22">If you have a large file to store, is it best to just record the file hash and store the file offline?</a></h2>
+<p>It depends on your use case. Storing data off-chain has a big downside.
+Although you can confirm it hasn't been tampered with with the on-chain hash, there is nothing stopping the file from disappearing.
+Also, how do you make sure everyone who needs the data can get to it?</p>
+</div>
+<div class="section" id="if-i-register-a-transaction-processor-to-one-validator-does-the-registration-get-transmitted-to-the-other-validators-in-a-network">
+<h2><a class="toc-backref" href="#id23">If I register a transaction processor to one validator, does the registration get transmitted to the other validators in a network?</a></h2>
+<p>No. Your transaction processor must be deployed to all validators. All validators in a network must have the same set of transaction processors.</p>
+</div>
+<div class="section" id="how-do-i-add-a-transaction-processor">
+<h2><a class="toc-backref" href="#id24">How do I add a transaction processor?</a></h2>
+<p>You just start it in for all the validator nodes. The TP needs to connect to <tt class="docutils literal"><span class="pre">tcp://localhost:4004</span></tt> or, if you are using Docker, <tt class="docutils literal"><span class="pre">tcp://validator:4004</span></tt></p>
+</div>
+<div class="section" id="how-do-i-restrict-what-transaction-processors-are-allowed">
+<h2><a class="toc-backref" href="#id25">How do I restrict what transaction processors are allowed?</a></h2>
+<p>By default, any TP can be added to a node without special permission (other than network access). To restrict what TPs can be added to a validator, use <tt class="docutils literal">sawset proposal create</tt> to set <tt class="docutils literal">sawtooth.validator.transaction_families</tt>.
+For details, see <tt class="docutils literal">Configuring the List of Transaction Families</tt> at <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/docker.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/docker.html</a></p>
+</div>
+<div class="section" id="how-do-i-add-events-to-the-transaction-processor">
+<h2><a class="toc-backref" href="#id26">How do I add events to the transaction processor?</a></h2>
+<p>In the TP code, call <tt class="docutils literal">context.add_event()</tt>.
+This adds a an application-specific event.
+In the client code (or other app for listening), subscribe to the event.
+For details, see
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/events_and_transactions_receipts.html#events">https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/events_and_transactions_receipts.html#events</a></p>
+</div>
+<div class="section" id="what-initial-sawtooth-events-are-available">
+<h2><a class="toc-backref" href="#id27">What initial Sawtooth events are available?</a></h2>
+<p>Besides application-specific events, the Sawtooth default events are:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">sawtooth/commit-block</span></tt></dt>
+<dd>Committed block information: block ID, number, sate root hash, and previous block ID</dd>
+<dt><tt class="docutils literal"><span class="pre">sawtooth/state-delta</span></tt></dt>
+<dd>All state changes that occurred for a block at a specific address</dd>
+</dl>
+</div>
+<div class="section" id="how-do-i-subscribe-to-sawtooth-events">
+<h2><a class="toc-backref" href="#id28">How do I subscribe to Sawtooth events?</a></h2>
+<p>See the documentation at
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/event_subscriptions.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/event_subscriptions.html</a>
+Here are examples in Python and Javascript:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/danintel/sawtooth-cookiejar/blob/master/events/events_client.py">https://github.com/danintel/sawtooth-cookiejar/blob/master/events/events_client.py</a></li>
+<li><a class="reference external" href="https://github.com/hyperledger/sawtooth-supply-chain/blob/master/ledger_sync/subscriber/index.js">https://github.com/hyperledger/sawtooth-supply-chain/blob/master/ledger_sync/subscriber/index.js</a></li>
+</ul>
+</div>
+<div class="section" id="how-do-i-handle-forks-while-subscribing-to-sawtooth-events">
+<h2><a class="toc-backref" href="#id29">How do I handle forks while subscribing to Sawtooth events?</a></h2>
+<p>If you get <tt class="docutils literal">fork_detected: true</tt> in the <tt class="docutils literal">state_changes</tt> object,
+you delete or undo events labeled with the blocks that have been removed from history. For example, if you added the events to a local database, remove the rows labeled with the removed blocks. Then apply events forward from the most recent common block.</p>
+</div>
+<div class="section" id="why-is-the-apply-method-in-the-tp-handler-called-twice">
+<h2><a class="toc-backref" href="#id30">Why is the Apply method in the TP handler called twice?</a></h2>
+<p>That is by design. It can be called more than twice.
+For that reason, the TP handler must be deterministic
+(have the same output results given the same input).</p>
+</div>
+<div class="section" id="what-does-it-mean-to-be-deterministic">
+<h2><a class="toc-backref" href="#id31">What does it mean to be deterministic?</a></h2>
+<p>Deterministic means the output never varies, given the same input. That is,</p>
+<ul class="simple">
+<li>serialization must be deterministic, meaning the encoding is always in the same order and always the same for the same data</li>
+<li>timestamps cannot be generated by the TP as they chain (timestamps in a transaction from the client are OK as they don't change for a given transaction)</li>
+<li>counters, likewise, generated by the TP are not allowed (but counters from the client are OK for a given transaction)</li>
+</ul>
+</div>
+<div class="section" id="do-transaction-processors-run-off-chain-or-on-chain">
+<h2><a class="toc-backref" href="#id32">Do Transaction Processors run off-chain or on-chain?</a></h2>
+<p>Sawtooth TPs run off-chain, as a process (or processes).</p>
+</div>
+<div class="section" id="my-tp-throws-an-exception-of-type-internalerror-but-the-apply-method-gets-stuck-in-an-endless-loop">
+<h2><a class="toc-backref" href="#id33">My TP throws an exception of type <tt class="docutils literal">InternalError</tt>, but the <tt class="docutils literal">Apply</tt> method gets stuck in an endless loop</a></h2>
+<p><tt class="docutils literal">InternalError</tt> is supposed to be a transient error (some internal fault like 'out of memory' that is temporary), and may succeed if retried.
+The validator retries the transaction with the TP and results in a loop.
+If the transaction is invalid, you probably want to raise an <tt class="docutils literal">InvalidTransaction</tt> error instead.
+Bottom line&amp;mdash;internal errors are retried, and invalid transactions are not retried.</p>
+</div>
+<div class="section" id="i-get-this-error-when-i-try-to-set-some-sawtooth-settings-chain-head-is-not-set-yet-permit-all">
+<h2><a class="toc-backref" href="#id34">I get this error when I try to set some Sawtooth settings: <tt class="docutils literal">Chain head is not set yet. Permit all</tt></a></h2>
+<p>This error has been seen when the directory or file ownerships are wrong. Try setting ownership as follows: <tt class="docutils literal">chown sawtooth:sawtooth /var/lib/sawtooth /var/lib/sawtooth/*</tt> .
+Then verify with <tt class="docutils literal">ls <span class="pre">-la</span> /var/lib/sawtooth</tt> .
+This error has also been seen because the Settings TP has not been started. Start with <tt class="docutils literal"><span class="pre">settings-tp</span> <span class="pre">-vv</span></tt> .
+Another cause could be because there is no genesis block.</p>
+</div>
+<div class="section" id="does-the-transaction-processor-know-the-current-transaction-id">
+<h2><a class="toc-backref" href="#id35">Does the Transaction Processor know the current Transaction ID?</a></h2>
+<p>Yes. It is available in the header.
+The transaction header_signature is the Transaction ID.</p>
+</div>
+<div class="section" id="can-i-run-two-different-transaction-processors-on-the-same-sawtooth-network">
+<h2><a class="toc-backref" href="#id36">Can I run two different Transaction Processors on the same Sawtooth Network?</a></h2>
+<p>Yes, you can run any number of transaction families, for example, you can r un the Seafood Supply Chain app and Bond Asset Settlement app on the same network.</p>
+</div>
+<div class="section" id="what-happens-if-someone-writes-a-fake-transaction-processor-with-the-same-name-version-and-address-space-that-can-access-and-modify-state-data">
+<h2><a class="toc-backref" href="#id37">What happens if someone writes a fake Transaction Processor (with the same name, version, and address space) that can access and modify state data?</a></h2>
+<p>The fake TP will cause the node to fork and it will be ignored by the rest of the network.</p>
+</div>
+<div class="section" id="why-is-there-no-timestamp-in-a-transaction-header-or-block">
+<h2><a class="toc-backref" href="#id38">Why is there no timestamp in a transaction header or block?</a></h2>
+<p>Using timestamps in a distributed network is troublesome--mostly due to complex clock synchronization issues among peers. You could add a timestamp in your transaction family's transaction payload.</p>
+<p>Sawtooth stores a timestamp in the block if the network is setup to inject BlockInfo transactions using the BlockInfo Transaction Family (which is used for EVM compatibility). See: <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/transaction_family_specifications/blockinfo_transaction_family.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/transaction_family_specifications/blockinfo_transaction_family.html</a></p>
+</div>
+<div class="section" id="does-sawtooth-allow-multiple-digital-signatures-on-a-single-transaction">
+<h2><a class="toc-backref" href="#id39">Does Sawtooth allow multiple digital signatures on a single transaction?</a></h2>
+<p>In Sawtooth the &quot;batch&quot; is the atomic unit of change. This is a collection of one or more individually signed transactions. You could have multiple transactions, each signed by a different party, combined in one batch. This would have a similar effect to what you are talking about I think.
+You can also build whatever app logic you like. So you can require transactions from multiple parties before an action is taken.
+The individual transactions themselves have only one signer.</p>
+</div>
+<div class="section" id="what-is-the-size-limit-for-a-sawtooth-transaction">
+<h2><a class="toc-backref" href="#id40">What is the size limit for a Sawtooth transaction?</a></h2>
+<p>There is no size limit, barring any memory and storage limits for your Sawtooth nodes.</p>
+<p>If you don't want to write a large transaction, you can reference some external source (and also save a checksum). The disadvantage of storing data externally is it's not replicated across nodes and may be lost.</p>
+</div>
+<div class="section" id="what-does-this-message-mean-did-not-respond-to-the-ping-removing-transaction-processor">
+<h2><a class="toc-backref" href="#id41">What does this message mean: <tt class="docutils literal">Did not respond to the ping, removing transaction processor</tt> ?</a></h2>
+<p>This is a message from the Hyperledger Sawtooth blockchain's Validator. A timeout occurred when the Validator was checking connections with all the registered transaction processors. If a transaction processor does not respond, it is removed from the list.</p>
+<p>Some possible causes: the transaction processor (TP) died. Check that the TP process is still running (check in the Docker container if you are running docker). Check network connectivity if the TP is on another host or another virtual machine. Check the message logs. Perhaps the TP is &quot;frozen&quot; or hanging or has a bug. Add logging messages (using <tt class="docutils literal"><span class="pre">LOGGER.info()`</span> for Python or Rust log4rs <span class="pre">``info!()</span></tt>).</p>
+</div>
+<div class="section" id="what-does-this-message-mean-block-rejected-due-to-state-root-hash-mismatch">
+<h2><a class="toc-backref" href="#id42">What does this message mean: <tt class="docutils literal">Block . . . rejected due to state root hash mismatch</tt> ?</a></h2>
+<p>You have a transaction processor that implements some non-deterministic behavior, such as generating a random number in a calculation, or a timestamp, etc.</p>
+</div>
+<div class="section" id="what-does-this-message-mean-have-not-received-a-chain-head-from-peers">
+<h2><a class="toc-backref" href="#id43">What does this message mean: <tt class="docutils literal">Have not received a chain head from peers.</tt> ?</a></h2>
+<p>This message has been seen when a node is not running a needed transaction processor. A new node needs to run all the transaction processors required for all the supported transaction families in this Sawtooth blockchain network.</p>
+</div>
+<div class="section" id="how-do-i-debug-a-transaction-processor">
+<h2><a class="toc-backref" href="#id44">How do I debug a transaction processor?</a></h2>
+<p>One way is to add logging messages
+(using <tt class="docutils literal"><span class="pre">LOGGER.info()`</span> for Python or Rust log4rs <span class="pre">``info!()</span></tt>).
+and sprinkle your code with debug messages, such as <tt class="docutils literal"><span class="pre">LOGGER.info(&quot;Action</span> = <span class="pre">%s.&quot;,</span> action)</tt> in Python (or another language you use for the TP). Start the transaction processor with the <tt class="docutils literal"><span class="pre">-vv</span></tt> or <tt class="docutils literal"><span class="pre">-vvv</span></tt> flags and look for console output.</p>
+</div>
+<div class="section" id="what-does-this-message-mean-failing-transaction-since-it-isn-t-required-in-the-configuration">
+<h2><a class="toc-backref" href="#id45">What does this message mean: <tt class="docutils literal">failing transaction ... since it isn't required in the configuration</tt> ?</a></h2>
+<p>It means you set the <tt class="docutils literal">sawtooth.validator.transaction_families</tt> setting with the Settings TP and did not include the TP name and version for the transaction that failed. The fix is to add the TP name and version to the setting.</p>
+</div>
+<div class="section" id="i-noticed-that-tps-on-various-nodes-do-not-process-transactions-in-the-same-order-why">
+<h2><a class="toc-backref" href="#id46">I noticed that TPs on various nodes do not process transactions in the same order. Why?</a></h2>
+<p>There is no guarantee of sequencing in terms of how different transactions are submitted and executed by the TPs. When transactions read or modify the same portions of state, the validator enforces ordering correctness, even with parallel execution. That is because the validator's scheduler understands the ordering relationship and needs to apply each state transition to the context provided to the next transaction's execution.</p>
+</div>
+<div class="section" id="what-do-failed-state-root-hash-validation-errors-mean">
+<h2><a class="toc-backref" href="#id47">What do <tt class="docutils literal">failed state root hash validation</tt> errors mean?</a></h2>
+<p>You have something non-deterministic happening with your changes to state.
+You should not do non-deterministic actions in your transaction processor such as generating timestamps or random numbers.  The serialization must also be deterministic--the data must always serialize the same.
+You should log the contents of <cite>entries</cite> prior to setState calls in your transaction processor.
+There will likely be a difference between the publishing and validation executions of the transaction (they always need to be identical)</p>
+<p class="mininav"><a class="reference external" href="/faq/installation/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/validator/">NEXT</a></p>
+<p>© Copyright 2018, Intel Corporation.</p>
+</div>
+
+</section>
+</article>
+
+    </div>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text"><p style="font-size: 1.5em;">
+  Hyperledger Sawtooth
+</p> <p>
+  <a href="/" title="Home"><span class="links">Home</span></a>
+  &bull;
+  <a href="/about/" title="About Sawtooth"><span class="links">About</span></a>
+  &bull;
+  <a href="/release/" title="Releases"><span class="links">Releases</span></a>
+  &bull;
+  <a href="/docs/" title="Documentation"><span class="links">Docs</span></a>
+  &bull;
+  <a href="/faq/" title="FAQ"><span class="links">FAQ</span></a>
+  &bull;
+  <a href="/community/" title="Community"><span class="links">Community</span></a>
+  &bull;
+  <a href="/contact/" title="Contact"><span class="links">Contact</span></a>
+</p> <p>
+  Find us: &nbsp;
+  <a href="https://github.com/hyperledger/sawtooth-core/" target="_blank" title="GitHub"><span  class="links">GitHub</span></a>
+  &bull;
+  <a href="https://chat.hyperledger.org/channel/sawtooth" target="_blank" title="#sawtooth chat channel"">Rocket.Chat</a>
+  &bull;
+  <a href="https://twitter.com/search?q=%23HyperledgerSawtooth" target="_blank" title="#sawtooth chat channel"">Twitter</a>
+</p> <p>
+  Examples: &nbsp;
+  <a href="/examples/seafood.html" target="_blank" title="Seafood Supply Chain Traceability">Seafood Supply Chain Traceability</a>
+  &bull;
+  <a href="/examples/bond.html" target="_blank" title="Bond Asset Settlement">Bond Asset Settlement</a>
+  &bull;
+  <a href="/examples/marketplace.html" target="_blank" title="Marketplace Digital Asset Exchange">Marketplace Digital Asset Exchange</a>
+</p> <p>
+  Linux Foundation: &nbsp;
+  <a href="http://www.linuxfoundation.org/privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+  &bull;
+  <a href="http://www.linuxfoundation.org/terms" target="_blank" title="Terms of Service">Terms of Service</a>
+</p> <p>
+  <small class="copyright">Copyright &copy; 2015-2019 contributors to Hyperledger Sawtooth</small>
+</p>
+</p>
+</footer>
+
+
+  </body>
+</html>

@@ -1,0 +1,692 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Transactions and Batches &mdash; Sawtooth v1.2.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Journal" href="journal.html" />
+    <link rel="prev" title="Global State" href="global_state.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../architecture.html">Architecture Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="global_state.html">Global State</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Transactions and Batches</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#transaction-data-structure">Transaction Data Structure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#transaction-header-signature-and-public-keys">Transaction Header, Signature, and Public Keys</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transaction-family">Transaction Family</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dependencies-and-input-output-addresses">Dependencies and Input/Output Addresses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#payload">Payload</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nonce">Nonce</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#batch-data-structure">Batch Data Structure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#batch-header-signature-and-public-keys">Batch Header, Signature, and Public Keys</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transactions">Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#why-batches">Why Batches?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="journal.html">Journal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html">Transaction Scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_network.html">Sawtooth Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="permissioning_requirement.html">Permissioning Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="injecting_batches_block_validation_rules.html">Injecting Batches and On-Chain Block Validation Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_and_transactions_receipts.html">Events and Transaction Receipts</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/pbft/releases/v1.2.2/architecture.html">PBFT Consensus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poet.html">PoET 1.0 Consensus</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../architecture.html">Architecture Guide</a> &raquo;</li>
+        
+      <li>Transactions and Batches</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/architecture/transactions_and_batches.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="transactions-and-batches">
+<h1>Transactions and Batches<a class="headerlink" href="#transactions-and-batches" title="Permalink to this headline">¶</a></h1>
+<p>Modifications to state are performed by creating and applying transactions.  A
+client creates a transaction and submits it to the validator.  The validator
+applies the transaction which causes a change to state.</p>
+<p>Transactions are always wrapped inside of a batch.  All transactions within a
+batch are committed to state together or not at all.  Thus, batches are the
+atomic unit of state change.</p>
+<p>The overall structure of batches and transactions includes Batch, BatchHeader,
+Transaction, and TransactionHeader:</p>
+<a class="reference internal image-reference" href="../_images/arch_batch_and_transaction.svg"><div align="center" class="align-center"><img alt="Transaction and batch entity diagram" src="../_images/arch_batch_and_transaction.svg" width="80%" /></div>
+</a>
+<div class="section" id="transaction-data-structure">
+<h2>Transaction Data Structure<a class="headerlink" href="#transaction-data-structure" title="Permalink to this headline">¶</a></h2>
+<p>Transactions are serialized using Protocol Buffers.  They consist of two
+message types:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">File: protos/transaction.proto</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-protobuf notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">// Copyright 2016 Intel Corporation</span>
+<span class="c1">//</span>
+<span class="c1">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1">// you may not use this file except in compliance with the License.</span>
+<span class="c1">// You may obtain a copy of the License at</span>
+<span class="c1">//</span>
+<span class="c1">//     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">//</span>
+<span class="c1">// Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1">// See the License for the specific language governing permissions and</span>
+<span class="c1">// limitations under the License.</span>
+<span class="c1">// -----------------------------------------------------------------------------</span>
+
+<span class="na">syntax</span> <span class="o">=</span> <span class="s">&quot;proto3&quot;</span><span class="p">;</span>
+
+<span class="k">option</span> <span class="na">java_multiple_files</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="k">option</span> <span class="na">java_package</span> <span class="o">=</span> <span class="s">&quot;sawtooth.sdk.protobuf&quot;</span><span class="p">;</span>
+<span class="k">option</span> <span class="na">go_package</span> <span class="o">=</span> <span class="s">&quot;transaction_pb2&quot;</span><span class="p">;</span>
+
+<span class="kd">message</span> <span class="nc">TransactionHeader</span> <span class="p">{</span>
+    <span class="c1">// Public key for the client who added this transaction to a batch</span>
+    <span class="kt">string</span> <span class="na">batcher_public_key</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// A list of transaction signatures that describe the transactions that</span>
+    <span class="c1">// must be processed before this transaction can be valid</span>
+    <span class="k">repeated</span> <span class="kt">string</span> <span class="na">dependencies</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// The family name correlates to the transaction processor&#39;s family name</span>
+    <span class="c1">// that this transaction can be processed on, for example &#39;intkey&#39;</span>
+    <span class="kt">string</span> <span class="na">family_name</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+    <span class="c1">// The family version correlates to the transaction processor&#39;s family</span>
+    <span class="c1">// version that this transaction can be processed on, for example &quot;1.0&quot;</span>
+    <span class="kt">string</span> <span class="na">family_version</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+    <span class="c1">// A list of addresses that are given to the context manager and control</span>
+    <span class="c1">// what addresses the transaction processor is allowed to read from.</span>
+    <span class="k">repeated</span> <span class="kt">string</span> <span class="na">inputs</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+    <span class="c1">// A random string that provides uniqueness for transactions with</span>
+    <span class="c1">// otherwise identical fields.</span>
+    <span class="kt">string</span> <span class="na">nonce</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+
+    <span class="c1">// A list of addresses that are given to the context manager and control</span>
+    <span class="c1">// what addresses the transaction processor is allowed to write to.</span>
+    <span class="k">repeated</span> <span class="kt">string</span> <span class="na">outputs</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+
+    <span class="c1">//The sha512 hash of the encoded payload</span>
+    <span class="kt">string</span> <span class="na">payload_sha512</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+
+    <span class="c1">// Public key for the client that signed the TransactionHeader</span>
+    <span class="kt">string</span> <span class="na">signer_public_key</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">Transaction</span> <span class="p">{</span>
+    <span class="c1">// The serialized version of the TransactionHeader</span>
+    <span class="kt">bytes</span> <span class="na">header</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// The signature derived from signing the header</span>
+    <span class="kt">string</span> <span class="na">header_signature</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// The payload is the encoded family specific information of the</span>
+    <span class="c1">// transaction. Example cbor({&#39;Verb&#39;: verb, &#39;Name&#39;: name,&#39;Value&#39;: value})</span>
+    <span class="kt">bytes</span> <span class="na">payload</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// A simple list of transactions that needs to be serialized before</span>
+<span class="c1">// it can be transmitted to a batcher.</span>
+<span class="kd">message</span> <span class="nc">TransactionList</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">Transaction</span> <span class="na">transactions</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="transaction-header-signature-and-public-keys">
+<h3>Transaction Header, Signature, and Public Keys<a class="headerlink" href="#transaction-header-signature-and-public-keys" title="Permalink to this headline">¶</a></h3>
+<p>The Transaction header field is a serialized version of a TransactionHeader.
+The header is signed by the signer’s private key (not sent with the
+transaction) and the resulting signature is stored in header_signature.  The
+header is present in the serialized form so that the exact bytes can be
+verified against the signature upon receipt of the Transaction.</p>
+<ul class="simple">
+<li><p>The verification process verifies that the key in signer_public_key signed the
+header bytes resulting in header_signature.</p></li>
+<li><p>The batcher_public_key field must match the public key used to sign the batch
+in which this transaction is contained.</p></li>
+<li><p>The resulting serialized document is signed with the transactor’s private
+ECDSA key using the secp256k1 curve.</p></li>
+</ul>
+<p>The validator expects a normalized 64-byte “compact” signature. This is a
+concatenation of the <cite>R</cite> and <cite>S</cite> fields of the signature. Some libraries will
+include an additional header byte, recovery ID field, or provide DER encoded
+signatures.  Sawtooth will reject the signature if it is anything other than
+64 bytes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The ECDSA signature must be normalized to a “low S” form, which is also
+called a <cite>low-S signature</cite>. (See <a class="reference external" href="https://eklitzke.org/bitcoin-transaction-malleability">Bitcoin Transaction
+Malleability</a> for
+the rationale for this type of normalization.) This implies that the ECDSA
+must compute <cite>(R,S)</cite> and <cite>(R, N-S)</cite>, where <cite>N</cite> is the order of the secp256k1
+curve, and the effective signature is the one with the smallest of <cite>S</cite> and
+<cite>N-S</cite> values (that is, <cite>min(S, N-S)</cite>). Otherwise, Sawtooth will reject the
+transaction signature.</p>
+<p>If you are using the Python3 Sawtooth SDK or other libraries for ECDSA on
+secp256k1 that derive from the Bitcoin secp256k1 library, you don’t have to
+worry about this normalization. However, some libraries do not normalize the
+signature this way (for example, mbed TLS and openSSL).</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The original header bytes as constructed from the sender are used
+for verification of the signature.  It is not considered good practice to
+de-serialize the header (for example, to a Python object) and then
+re-serialize the header with the intent to produce the same byte sequence as
+the original.  Serialization can be sensitive to programming language or
+library, and any deviation would produce a sequence that would not match the
+signature; thus, best practice is to always use the original header bytes for
+verification.</p>
+</div>
+</div>
+<div class="section" id="transaction-family">
+<h3>Transaction Family<a class="headerlink" href="#transaction-family" title="Permalink to this headline">¶</a></h3>
+<p>In Hyperledger Sawtooth, the set of possible transactions are defined by an
+extensible system called transaction families.  Defining and implementing a new
+transaction family adds to the taxonomy of available transactions which can be
+applied. For example, in the language-specific tutorials that show you how to
+write your own transaction family (see the <a class="reference internal" href="../app_developers_guide.html"><span class="doc">Application Developer’s Guide</span></a>), we
+define a transaction family called “xo” which defines a set of transactions for
+playing tic-tac-toe.</p>
+<p>In addition to the name of the transaction family (family_name), each
+transaction specifies a family version string (family_version).  The version
+string enables upgrading a transaction family while coordinating the nodes
+in the network to upgrade.</p>
+</div>
+<div class="section" id="dependencies-and-input-output-addresses">
+<h3>Dependencies and Input/Output Addresses<a class="headerlink" href="#dependencies-and-input-output-addresses" title="Permalink to this headline">¶</a></h3>
+<p>Transactions can depend upon other transactions, which is to say a dependent
+transaction cannot be applied prior to the transaction upon which it depends.</p>
+<p>The dependencies field of a transaction allows explicitly specifying the
+transactions which must be applied prior to the current transaction.  Explicit
+dependencies are useful in situations where transactions have dependencies but
+can not be placed in the same batch (for example, if the transactions are
+submitted at different times).</p>
+<p>To assist in parallel scheduling operations, the inputs and outputs fields of a
+transaction contain state addresses.  The scheduler determines the implicit
+dependencies between transactions based on interaction with state.  The
+addresses may be fully qualified leaf-node addresses or partial prefix
+addresses.  Input addresses are read from the state and output addresses are
+written to state.  While they are specified by the client, input and output
+declarations on the transaction are enforced during transaction execution.
+Partial addresses work as wildcards and allow transactions to specify parts of
+the tree instead of just leaf nodes.</p>
+</div>
+<div class="section" id="payload">
+<h3>Payload<a class="headerlink" href="#payload" title="Permalink to this headline">¶</a></h3>
+<p>The payload is used during transaction execution as a way to convey the change
+which should be applied to state.  Only the transaction family processing the
+transaction will deserialize the payload; to all other components of the
+system, payload is just a sequence of bytes.</p>
+<p>The payload_sha512 field contains a SHA-512 hash of the payload bytes.  As part
+of the header, payload_sha512 is signed and later verified, while the payload
+field is not.  To verify the payload field matches the header, a SHA-512 of the
+payload field can be compared to payload_sha512.</p>
+</div>
+<div class="section" id="nonce">
+<h3>Nonce<a class="headerlink" href="#nonce" title="Permalink to this headline">¶</a></h3>
+<p>The nonce field contains a random string generated by the client.  With the
+nonce present, if two transactions otherwise contain the same fields, the nonce
+ensures they will generate different header signatures.</p>
+</div>
+</div>
+<div class="section" id="batch-data-structure">
+<h2>Batch Data Structure<a class="headerlink" href="#batch-data-structure" title="Permalink to this headline">¶</a></h2>
+<p>Batches are also serialized using Protocol Buffers.  They consist of two
+message types:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">File: protos/batch.proto</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-protobuf notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1">// Copyright 2016 Intel Corporation</span>
+<span class="c1">//</span>
+<span class="c1">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1">// you may not use this file except in compliance with the License.</span>
+<span class="c1">// You may obtain a copy of the License at</span>
+<span class="c1">//</span>
+<span class="c1">//     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">//</span>
+<span class="c1">// Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1">// See the License for the specific language governing permissions and</span>
+<span class="c1">// limitations under the License.</span>
+<span class="c1">// -----------------------------------------------------------------------------</span>
+
+<span class="na">syntax</span> <span class="o">=</span> <span class="s">&quot;proto3&quot;</span><span class="p">;</span>
+
+<span class="k">option</span> <span class="na">java_multiple_files</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="k">option</span> <span class="na">java_package</span> <span class="o">=</span> <span class="s">&quot;sawtooth.sdk.protobuf&quot;</span><span class="p">;</span>
+<span class="k">option</span> <span class="na">go_package</span> <span class="o">=</span> <span class="s">&quot;batch_pb2&quot;</span><span class="p">;</span>
+
+<span class="k">import</span> <span class="s">&quot;transaction.proto&quot;</span><span class="p">;</span>
+
+<span class="kd">message</span> <span class="nc">BatchHeader</span> <span class="p">{</span>
+    <span class="c1">// Public key for the client that signed the BatchHeader</span>
+    <span class="kt">string</span> <span class="na">signer_public_key</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// List of transaction.header_signatures that match the order of</span>
+    <span class="c1">// transactions required for the batch</span>
+    <span class="k">repeated</span> <span class="kt">string</span> <span class="na">transaction_ids</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">Batch</span> <span class="p">{</span>
+    <span class="c1">// The serialized version of the BatchHeader</span>
+    <span class="kt">bytes</span> <span class="na">header</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// The signature derived from signing the header</span>
+    <span class="kt">string</span> <span class="na">header_signature</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// A list of the transactions that match the list of</span>
+    <span class="c1">// transaction_ids listed in the batch header</span>
+    <span class="k">repeated</span> <span class="n">Transaction</span> <span class="na">transactions</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+    <span class="c1">// A debugging flag which indicates this batch should be traced through the</span>
+    <span class="c1">// system, resulting in a higher level of debugging output.</span>
+    <span class="kt">bool</span> <span class="na">trace</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">BatchList</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">Batch</span> <span class="na">batches</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="batch-header-signature-and-public-keys">
+<h3>Batch Header, Signature, and Public Keys<a class="headerlink" href="#batch-header-signature-and-public-keys" title="Permalink to this headline">¶</a></h3>
+<p>Following the pattern presented in the Transaction data structure, the Batch
+header field is a serialized version of a BatchHeader.  The header is signed by
+the signer’s private key (not sent with the batch) and the resulting signature
+is stored in header_signature.  The header is present in the serialized form so
+that the exact bytes can be verified against the signature upon receipt of the
+Batch.</p>
+<p>The resulting serialized document is signed with the transactor’s private
+ECDSA key using the secp256k1 curve.</p>
+<p>The validator expects a normalized 64-byte “compact” signature. This is a
+concatenation of the <cite>R</cite> and <cite>S</cite> fields of the signature. Some libraries will
+include an additional header byte, recovery ID field, or provide DER encoded
+signatures.  Sawtooth will reject the signature if it is anything other than
+64 bytes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The ECDSA signature must be normalized to a “low S” form, which is also
+called a <cite>low-S signature</cite>. (See <a class="reference external" href="https://eklitzke.org/bitcoin-transaction-malleability">Bitcoin Transaction
+Malleability</a> for
+the rationale for this type of normalization.) This implies that the ECDSA
+must compute <cite>(R,S)</cite> and <cite>(R, N-S)</cite>, where <cite>N</cite> is the order of the secp256k1
+curve, and the effective signature is the one with the smallest of <cite>S</cite> and
+<cite>N-S</cite> values (that is, <cite>min(S, N-S)</cite>). Otherwise, Sawtooth will reject the
+transaction signature.</p>
+<p>If you are using the Python3 Sawtooth SDK or other libraries for ECDSA on
+secp256k1 that derive from the Bitcoin secp256k1 library, you don’t have to
+worry about this normalization. However, some libraries do not normalize the
+signature this way (for example, mbed TLS and openSSL).</p>
+</div>
+</div>
+<div class="section" id="transactions">
+<h3>Transactions<a class="headerlink" href="#transactions" title="Permalink to this headline">¶</a></h3>
+<p>The transactions field contains a list of Transactions which make up the batch.
+Transactions are applied in the order listed.  The transaction_ids field
+contains a list of Transaction header_signatures and must be the same order as
+the transactions field.</p>
+</div>
+</div>
+<div class="section" id="why-batches">
+<h2>Why Batches?<a class="headerlink" href="#why-batches" title="Permalink to this headline">¶</a></h2>
+<p>As we have stated above, a batch is the atomic unit of change in the system.
+If a batch has been applied, all transactions will have been applied in the
+order contained within the batch.  If a batch has not been applied (maybe
+because one of the transactions is invalid), then none of the transactions will
+be applied.</p>
+<p>This greatly simplifies dependency management from a client perspective, since
+transactions within a batch do not need explicit dependencies to be declared
+between them.  As a result, the usefulness of explicit dependencies (contained
+in the dependencies field on a Transaction) are constrained to dependencies
+where the transactions cannot be placed in the same batch.</p>
+<p>Batches solve an important problem which cannot be solved with explicit
+dependencies.  Suppose we have transactions A, B, and C and that the desired
+behavior is A, B, C be applied in that order, and if any of them are invalid,
+none of them should be applied.  If we attempted to solve this using only
+dependencies, we might attempt a relationship between them such as: C depends
+on B, B depends on A, and A depends on C.  However, the dependencies field
+cannot be used to represent this relationship, since dependencies enforce order
+and the above is cyclic (and thus cannot be ordered).</p>
+<p>Transactions from multiple transaction families can also be batched together,
+which further encourages reuse of transaction families.  For example,
+transactions for a configuration or identity transaction family could be
+batched with application-specific transactions.</p>
+<p>Transactions and batches can also be signed by different keys.  For example, a
+browser application can sign the transaction and a server-side component can
+add transactions and create the batch and sign the batch.  This enables
+interesting application patterns, including aggregation of transactions from
+multiple transactors into an atomic operation (the batch).</p>
+<p>There is an important restriction enforced between transactions and batches,
+which is that the transaction must contain the public key of the batch signer
+in the batcher_public_key field.  This is to prevent transactions from being reused
+separate from the intended batch.  So, for example, unless you have the
+batcher’s private key, it is not possible to take transactions from a batch and
+repackage them into a new batch, omitting some of the transactions.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="journal.html" class="btn btn-neutral float-right" title="Journal" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="global_state.html" class="btn btn-neutral float-left" title="Global State" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

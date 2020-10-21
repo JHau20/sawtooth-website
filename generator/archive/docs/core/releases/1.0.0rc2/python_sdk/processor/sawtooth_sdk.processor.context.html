@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module sawtooth_sdk.processor.context</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="sawtooth_sdk.html"><font color="#ffffff">sawtooth_sdk</font></a>.<a href="sawtooth_sdk.processor.html"><font color="#ffffff">processor</font></a>.context</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/project/sawtooth-core/sdk/python/sawtooth_sdk/processor/context.py">/project/sawtooth-core/sdk/python/sawtooth_sdk/processor/context.py</a></font></td></tr></table>
+    <p><tt>#&nbsp;Copyright&nbsp;2016&nbsp;Intel&nbsp;Corporation<br>
+#<br>
+#&nbsp;Licensed&nbsp;under&nbsp;the&nbsp;Apache&nbsp;License,&nbsp;Version&nbsp;2.0&nbsp;(the&nbsp;"License");<br>
+#&nbsp;you&nbsp;may&nbsp;not&nbsp;use&nbsp;this&nbsp;file&nbsp;except&nbsp;in&nbsp;compliance&nbsp;with&nbsp;the&nbsp;License.<br>
+#&nbsp;You&nbsp;may&nbsp;obtain&nbsp;a&nbsp;copy&nbsp;of&nbsp;the&nbsp;License&nbsp;at<br>
+#<br>
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a><br>
+#<br>
+#&nbsp;Unless&nbsp;required&nbsp;by&nbsp;applicable&nbsp;law&nbsp;or&nbsp;agreed&nbsp;to&nbsp;in&nbsp;writing,&nbsp;software<br>
+#&nbsp;distributed&nbsp;under&nbsp;the&nbsp;License&nbsp;is&nbsp;distributed&nbsp;on&nbsp;an&nbsp;"AS&nbsp;IS"&nbsp;BASIS,<br>
+#&nbsp;WITHOUT&nbsp;WARRANTIES&nbsp;OR&nbsp;CONDITIONS&nbsp;OF&nbsp;ANY&nbsp;KIND,&nbsp;either&nbsp;express&nbsp;or&nbsp;implied.<br>
+#&nbsp;See&nbsp;the&nbsp;License&nbsp;for&nbsp;the&nbsp;specific&nbsp;language&nbsp;governing&nbsp;permissions&nbsp;and<br>
+#&nbsp;limitations&nbsp;under&nbsp;the&nbsp;License.<br>
+#&nbsp;------------------------------------------------------------------------------</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="sawtooth_sdk.protobuf.events_pb2.html">sawtooth_sdk.protobuf.events_pb2</a><br>
+</td><td width="25%" valign=top><a href="sawtooth_sdk.protobuf.state_context_pb2.html">sawtooth_sdk.protobuf.state_context_pb2</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="sawtooth_sdk.processor.context.html#Context">Context</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Context">class <strong>Context</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Context">Context</a>&nbsp;provides&nbsp;an&nbsp;interface&nbsp;for&nbsp;getting,&nbsp;setting,&nbsp;and&nbsp;deleting<br>
+validator&nbsp;state.&nbsp;All&nbsp;validator&nbsp;interactions&nbsp;by&nbsp;a&nbsp;handler&nbsp;should&nbsp;be<br>
+through&nbsp;a&nbsp;<a href="#Context">Context</a>&nbsp;instance.<br>
+&nbsp;<br>
+Attributes:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_stream&nbsp;(sawtooth.client.stream.Stream):&nbsp;client&nbsp;grpc&nbsp;communication<br>
+&nbsp;&nbsp;&nbsp;&nbsp;_context_id&nbsp;(str):&nbsp;the&nbsp;context_id&nbsp;passed&nbsp;in&nbsp;from&nbsp;the&nbsp;validator<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Context-__init__"><strong>__init__</strong></a>(self, stream, context_id)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Context-add_event"><strong>add_event</strong></a>(self, event_type, attributes=None, data=None, timeout=None)</dt><dd><tt>Add&nbsp;a&nbsp;new&nbsp;event&nbsp;to&nbsp;the&nbsp;execution&nbsp;result&nbsp;for&nbsp;this&nbsp;transaction.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;event_type&nbsp;(str):&nbsp;This&nbsp;is&nbsp;used&nbsp;to&nbsp;subscribe&nbsp;to&nbsp;events.&nbsp;It&nbsp;should&nbsp;be<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;globally&nbsp;unique&nbsp;and&nbsp;describe&nbsp;what,&nbsp;in&nbsp;general,&nbsp;has&nbsp;occured.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;attributes&nbsp;(list&nbsp;of&nbsp;(str,&nbsp;str)&nbsp;tuples):&nbsp;Additional&nbsp;information<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;about&nbsp;the&nbsp;event&nbsp;that&nbsp;is&nbsp;transparent&nbsp;to&nbsp;the&nbsp;validator.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Attributes&nbsp;can&nbsp;be&nbsp;used&nbsp;by&nbsp;subscribers&nbsp;to&nbsp;filter&nbsp;the&nbsp;type&nbsp;of<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;events&nbsp;they&nbsp;receive.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;(bytes):&nbsp;Additional&nbsp;information&nbsp;about&nbsp;the&nbsp;event&nbsp;that&nbsp;is&nbsp;opaque<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;the&nbsp;validator.</tt></dd></dl>
+
+<dl><dt><a name="Context-add_receipt_data"><strong>add_receipt_data</strong></a>(self, data, timeout=None)</dt><dd><tt>Add&nbsp;a&nbsp;blob&nbsp;to&nbsp;the&nbsp;execution&nbsp;result&nbsp;for&nbsp;this&nbsp;transaction.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;(bytes):&nbsp;The&nbsp;data&nbsp;to&nbsp;add.</tt></dd></dl>
+
+<dl><dt><a name="Context-delete_state"><strong>delete_state</strong></a>(self, addresses, timeout=None)</dt><dd><tt>delete_state&nbsp;requests&nbsp;that&nbsp;each&nbsp;of&nbsp;the&nbsp;provided&nbsp;addresses&nbsp;be&nbsp;unset<br>
+in&nbsp;validator&nbsp;state.&nbsp;A&nbsp;list&nbsp;of&nbsp;successfully&nbsp;deleted&nbsp;addresses<br>
+is&nbsp;returned.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;addresses&nbsp;(list):&nbsp;list&nbsp;of&nbsp;addresses&nbsp;to&nbsp;delete<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;optional&nbsp;timeout,&nbsp;in&nbsp;seconds<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;addresses&nbsp;(list):&nbsp;a&nbsp;list&nbsp;of&nbsp;addresses&nbsp;that&nbsp;were&nbsp;deleted<br>
+&nbsp;<br>
+Raises:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;AuthorizationException</tt></dd></dl>
+
+<dl><dt><a name="Context-get_state"><strong>get_state</strong></a>(self, addresses, timeout=None)</dt><dd><tt>get_state&nbsp;queries&nbsp;the&nbsp;validator&nbsp;state&nbsp;for&nbsp;data&nbsp;at&nbsp;each&nbsp;of&nbsp;the<br>
+addresses&nbsp;in&nbsp;the&nbsp;given&nbsp;list.&nbsp;The&nbsp;addresses&nbsp;that&nbsp;have&nbsp;been&nbsp;set<br>
+are&nbsp;returned&nbsp;in&nbsp;a&nbsp;list.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;addresses&nbsp;(list):&nbsp;the&nbsp;addresses&nbsp;to&nbsp;fetch<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;optional&nbsp;timeout,&nbsp;in&nbsp;seconds<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;results&nbsp;(list):&nbsp;a&nbsp;list&nbsp;of&nbsp;Entries&nbsp;(address,&nbsp;data),&nbsp;for&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;addresses&nbsp;that&nbsp;have&nbsp;a&nbsp;value<br>
+&nbsp;<br>
+Raises:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;AuthorizationException</tt></dd></dl>
+
+<dl><dt><a name="Context-set_state"><strong>set_state</strong></a>(self, entries, timeout=None)</dt><dd><tt>set_state&nbsp;requests&nbsp;that&nbsp;each&nbsp;address&nbsp;in&nbsp;the&nbsp;provided&nbsp;dictionary&nbsp;be<br>
+set&nbsp;in&nbsp;validator&nbsp;state&nbsp;to&nbsp;its&nbsp;corresponding&nbsp;value.&nbsp;A&nbsp;list&nbsp;is<br>
+returned&nbsp;containing&nbsp;the&nbsp;successfully&nbsp;set&nbsp;addresses.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;entries&nbsp;(dict):&nbsp;dictionary&nbsp;where&nbsp;addresses&nbsp;are&nbsp;the&nbsp;keys&nbsp;and&nbsp;data&nbsp;is<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;value.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;optional&nbsp;timeout,&nbsp;in&nbsp;seconds<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;addresses&nbsp;(list):&nbsp;a&nbsp;list&nbsp;of&nbsp;addresses&nbsp;that&nbsp;were&nbsp;set<br>
+&nbsp;<br>
+Raises:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;AuthorizationException</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>

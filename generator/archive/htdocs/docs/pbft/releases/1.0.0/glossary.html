@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Glossary &mdash; Sawtooth PBFT v1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Installing and Testing PBFT" href="installing-and-running-pbft.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Sawtooth PBFT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-sawtooth-pbft.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using-pbft-consensus.html">Using PBFT Consensus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">PBFT Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuring-pbft.html">Configuring PBFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-and-running-pbft.html">Installing and Testing PBFT</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sawtooth PBFT</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Glossary</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/glossary.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="glossary">
+<h1>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h1>
+<dl class="glossary">
+<dt id="term-block">Block</dt><dd><p>Part of the <a class="reference external" href="https://en.wikipedia.org/wiki/Blockchain">blockchain</a>
+that contains one or more operations (called <cite>transactions</cite>) and a link to
+the previous block.</p>
+</dd>
+<dt id="term-client">Client</dt><dd><p>Machine that sends requests to and receives replies from the network of
+Sawtooth nodes. PBFT has no direct interaction with clients; the validator
+bundles all client requests into blocks and sends them through the
+consensus API to the consensus engine.</p>
+</dd>
+<dt id="term-consensus-api">Consensus API</dt><dd><p>Sawtooth component that abstracts consensus-related interactions between
+the validator and a consensus engine. The consensus API allows <cite>dynamic
+consensus</cite>, a feature that allows a choice of consensus for a Sawtooth
+network.</p>
+</dd>
+<dt id="term-consensus-engine">Consensus engine</dt><dd><p>Component that provides consensus functionality for a Sawtooth
+network. The consensus engine communicates with the validator through
+the consensus API.</p>
+</dd>
+<dt id="term-consensus-seal">Consensus seal</dt><dd><p>Proof that a block went through consensus.</p>
+</dd>
+<dt id="term-leader">Leader</dt><dd><p>See <a class="reference internal" href="#term-primary-node"><span class="xref std std-term">primary node</span></a>.</p>
+</dd>
+<dt id="term-member-node">Member node</dt><dd><p>Sawtooth node that participates in PBFT consensus. Membership is controlled
+by the on-chain setting <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code>. Each member
+node is either a <a class="reference internal" href="#term-primary-node"><span class="xref std std-term">primary node</span></a> or a <a class="reference internal" href="#term-secondary-node"><span class="xref std std-term">secondary node</span></a>.</p>
+</dd>
+<dt id="term-message">Message</dt><dd><p>Consensus-related information that nodes send to each other. For more
+information, see <a class="reference internal" href="architecture.html#consensus-messages-label"><span class="std std-ref">Consensus Messages</span></a>.</p>
+</dd>
+<dt id="term-node">Node</dt><dd><p>Virtual or physical machine running all the components necessary for a
+working Sawtooth blockchain: a validator, an optional REST API, at least
+one transaction processor, and the PBFT consensus engine.</p>
+<p>The <a class="reference external" href="http://pmg.csail.mit.edu/papers/osdi99.pdf">original PBFT paper</a>
+uses the terms <cite>server</cite> or <cite>replica</cite> instead of <cite>node</cite>.</p>
+</dd>
+<dt id="term-primary-node">Primary node</dt><dd><p>Node that directs the consensus process for the network. (The other nodes
+in the network participate as secondary nodes.) The primary node creates
+each block and publishes it to the network, then starts the consensus
+process for the block.</p>
+</dd>
+<dt id="term-secondary-node">Secondary node</dt><dd><p>Auxiliary node used for consensus. A Sawtooth network using PBFT consensus
+has one <a class="reference internal" href="#term-primary-node"><span class="xref std std-term">primary node</span></a>; all other nodes are secondary nodes.</p>
+<p>The <a class="reference external" href="http://pmg.csail.mit.edu/papers/osdi99.pdf">original PBFT paper</a>
+uses the term <cite>backup</cite> instead of <cite>secondary node</cite>.</p>
+</dd>
+<dt id="term-transaction-processor">Transaction processor</dt><dd><p>Sawtooth component that validates transactions and updates state based on
+rules defined by the associated <cite>transaction family</cite>. (These rules specify
+the business logic, also called a <cite>smart contract</cite>, for the transaction
+processor.) For more information, see <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/transaction_family_specifications.html">“Transaction Family Specifications”
+in the Hyperledger Sawtooth
+documentation</a>.</p>
+</dd>
+<dt id="term-validator">Validator</dt><dd><p>Sawtooth component that is responsible for interactions with the
+blockchain. The validator interacts with the consensus engine through the
+consensus API.</p>
+</dd>
+<dt id="term-view">View</dt><dd><p>The period of time when the current primary node is in charge. The
+view changes at regular intervals (controlled by the on-chain setting
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.forced_view_change_interval</span></code>), and when the
+primary node is deemed faulty. For more information, see
+<a class="reference internal" href="architecture.html#view-changes-choosing-primary-label"><span class="std std-ref">View Changes: Choosing a New Primary</span></a>.</p>
+</dd>
+</dl>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="installing-and-running-pbft.html" class="btn btn-neutral float-left" title="Installing and Testing PBFT" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018 Bitwise IO, Inc
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

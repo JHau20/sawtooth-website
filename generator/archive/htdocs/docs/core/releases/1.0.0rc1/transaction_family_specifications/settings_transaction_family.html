@@ -1,0 +1,573 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Settings Transaction Family Specification &mdash; Sawtooth v1.0.0rc1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc1 documentation" href="../index.html"/>
+        <link rel="up" title="Transaction Family Specifications" href="../transaction_family_specifications.html"/>
+        <link rel="next" title="Identity Transaction Family Specification" href="identity_transaction_family.html"/>
+        <link rel="prev" title="Transaction Family Specifications" href="../transaction_family_specifications.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Settings Transaction Family Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#state">State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#settings">Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#definition-of-setting-entries">Definition of Setting Entries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sawtooth-settings-vote-proposals">sawtooth.settings.vote.proposals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#addressing">Addressing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transaction-header">Transaction Header</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#inputs-and-outputs">Inputs and Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#family">Family</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#encoding">Encoding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#execution">Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="identity_transaction_family.html">Identity Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blockinfo_transaction_family.html">BlockInfo Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integerkey_transaction_family.html">IntegerKey Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xo_transaction_family.html">XO Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_registry_transaction_family.html">Validator Registry Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smallbank_transaction_family.html">Smallbank Transaction Family Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../transaction_family_specifications.html">Transaction Family Specifications</a> &raquo;</li>
+        
+      <li>Settings Transaction Family Specification</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/transaction_family_specifications/settings_transaction_family.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="settings-transaction-family-specification">
+<h1>Settings Transaction Family Specification<a class="headerlink" href="#settings-transaction-family-specification" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The settings transaction family provides a methodology for storing on-chain
+configuration settings.</p>
+<p>The settings stored in state as a result of this transaction family play a
+critical role in the operation of a validator. For example, the consensus
+module uses these settings; in the case of PoET, one cross-network setting is
+target wait time (which must be the same across validators), and this setting
+is stored as sawtooth.poet.target_wait_time.  Other parts of the system use
+these settings similarly; for example, the list of enabled transaction
+families is used by the transaction processing platform.</p>
+<p>In addition, pluggable components such as transaction family implementations
+can use the settings during their execution.</p>
+<p>This design supports two authorization options: a) a single authorized key
+which can make changes, and b) multiple authorized keys.  In the case of
+multiple keys, a percentage of votes signed by the keys is required to make a
+change.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">While usable in a production sense, this transaction family also serves as
+a reference specification and implementation.  The authorization scheme
+here provides a simple voting mechanism; another authorization scheme may
+be better in practice.  Implementations which use a different
+authorization scheme can replace this implementation by adhering to the
+same addressing scheme and content format for settings.  (For example, the
+location of PoET settings can not change, or the PoET consensus module
+will not be able to find them.)</p>
+</div>
+</div>
+<div class="section" id="state">
+<h2>State<a class="headerlink" href="#state" title="Permalink to this headline">¶</a></h2>
+<p>This section describes in detail how settings are stored and addressed using
+the settings transaction family.</p>
+<p>The setting data consists of setting/value pairs. A setting is the name for the
+item of configuration data. The value is the data in the form of a string.</p>
+<div class="section" id="settings">
+<h3>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h3>
+<p>Settings are namespaced using dots:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="79%" />
+<col width="21%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Setting (Examples)</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sawtooth.poet.target_wait_time</td>
+<td>5</td>
+</tr>
+<tr class="row-odd"><td>sawtooth.validator.max_transactions_per_block</td>
+<td>1000</td>
+</tr>
+</tbody>
+</table>
+<p>The settings transaction family uses the following settings for its own configuration:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Setting (Settings)</th>
+<th class="head">Value Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sawtooth.settings.vote.authorized_keys</td>
+<td>List of public keys allowed to vote</td>
+</tr>
+<tr class="row-odd"><td>sawtooth.settings.vote.approval_threshold</td>
+<td>Minimum number of votes required to accept or reject a proposal (default: 1)</td>
+</tr>
+<tr class="row-even"><td>sawtooth.settings.vote.proposals</td>
+<td>A list of proposals to make settings changes (see note)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><em>sawtooth.settings.vote.proposals</em> is a base64 encoded string of the
+protobuf message <em>SettingCandidates</em>. This setting cannot be modified
+by a proposal or a vote.</p>
+</div>
+</div>
+<div class="section" id="definition-of-setting-entries">
+<h3>Definition of Setting Entries<a class="headerlink" href="#definition-of-setting-entries" title="Permalink to this headline">¶</a></h3>
+<p>The following protocol buffers definition defines setting entries:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">File: sawtooth-core/protos/setting.proto</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="c1">// Setting Container for the resulting state</span>
+<span class="kd">message</span> <span class="nc">Setting</span> <span class="p">{</span>
+    <span class="c1">// Contains a setting entry (or entries, in the case of collisions).</span>
+    <span class="kd">message</span> <span class="nc">Entry</span> <span class="p">{</span>
+        <span class="kt">string</span> <span class="na">key</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="kt">string</span> <span class="na">value</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// List of setting entries - more than one implies a state key collision</span>
+    <span class="k">repeated</span> <span class="n">Entry</span> <span class="na">entries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="sawtooth-settings-vote-proposals">
+<h3>sawtooth.settings.vote.proposals<a class="headerlink" href="#sawtooth-settings-vote-proposals" title="Permalink to this headline">¶</a></h3>
+<p>The setting &#8216;sawtooth.settings.vote.proposals&#8217; is stored as defined by the
+following protocol buffers definition. The value returned by this  setting is
+a base64 encoded <em>SettingCandidates</em> message:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">File: sawtooth-core/families/settings/protos/settings.proto</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="c1">// Contains the vote counts for a given proposal.</span>
+<span class="kd">message</span> <span class="nc">SettingCandidate</span> <span class="p">{</span>
+    <span class="c1">// An individual vote record</span>
+    <span class="kd">message</span> <span class="nc">VoteRecord</span> <span class="p">{</span>
+        <span class="c1">// The public key of the voter</span>
+        <span class="kt">string</span> <span class="na">public_key</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="c1">// The voter&#39;s actual vote</span>
+        <span class="n">SettingVote.Vote</span> <span class="na">vote</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="p">}</span>
+
+    <span class="c1">// The proposal id, a hash of the original proposal</span>
+    <span class="kt">string</span> <span class="na">proposal_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// The active propsal</span>
+    <span class="n">SettingProposal</span> <span class="na">proposal</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// list of votes</span>
+    <span class="k">repeated</span> <span class="n">VoteRecord</span> <span class="na">votes</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Contains all the setting candidates up for vote.</span>
+<span class="kd">message</span> <span class="nc">SettingCandidates</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">SettingCandidate</span> <span class="na">candidates</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="addressing">
+<h3>Addressing<a class="headerlink" href="#addressing" title="Permalink to this headline">¶</a></h3>
+<p>When a setting is read or changed, it is accessed by addressing it using the
+following algorithm:</p>
+<p>Setting keys are broken into four parts, based on the dots in the string. For
+example, the address for the key <cite>a.b.c</cite> is computed based on <cite>a</cite>, <cite>b</cite>, <cite>c</cite> and
+the empty string.  A longer key, for example <cite>a.b.c.d.e</cite>, is still broken into
+four parts, but the remain pieces are in the last part: <cite>a</cite>, <cite>b</cite>, <cite>c</cite> and <cite>d.e</cite>.</p>
+<p>Each of these pieces has a short hash computed (the first 16 characters of its
+SHA256 hash in hex) and is joined into a single address, with the settings
+namespace (<cite>000000</cite>) added at the beginning.</p>
+<p>For example, the setting <em>sawtooth.settings.vote.proposals</em> could be set like
+this:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;000000&#39;</span> <span class="o">+</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="s1">&#39;sawtooth&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">16</span><span class="p">]</span> <span class="o">+</span> \
+<span class="go">    hashlib.sha256(&#39;config&#39;.encode()).hexdigest()[:16] + \</span>
+<span class="go">    hashlib.sha256(&#39;vote&#39;.encode()).hexdigest()[:16] + \</span>
+<span class="go">    hashlib.sha256(&#39;proposals&#39;.encode()).hexdigest()[:16]</span>
+<span class="go">&#39;000000a87cb5eafdcca6a8b79606fb3afea5bdab274474a6aa82c1c0cbf0fbcaf64c0b&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="transaction-payload">
+<h2>Transaction Payload<a class="headerlink" href="#transaction-payload" title="Permalink to this headline">¶</a></h2>
+<p>Setting transaction family payloads are defined by the following protocol
+buffers code:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">File: sawtooth-core/families/settings/protos/settings.proto</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="c1">// Setting Payload</span>
+<span class="c1">// - Contains either a proposal or a vote.</span>
+<span class="kd">message</span> <span class="nc">SettingPayload</span> <span class="p">{</span>
+    <span class="c1">// The action indicates data is contained within this payload</span>
+    <span class="kd">enum</span> <span class="n">Action</span> <span class="p">{</span>
+        <span class="c1">// A proposal action - data will be a SettingProposal</span>
+        <span class="na">PROPOSE</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+        <span class="c1">// A vote action - data will be a SettingVote</span>
+        <span class="na">VOTE</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// The action of this payload</span>
+    <span class="n">Action</span> <span class="na">action</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// The content of this payload</span>
+    <span class="kt">bytes</span> <span class="na">data</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Setting Proposal</span>
+<span class="c1">//</span>
+<span class="c1">// This message proposes a change in a setting value.</span>
+<span class="kd">message</span> <span class="nc">SettingProposal</span> <span class="p">{</span>
+    <span class="c1">// The setting key.  E.g. sawtooth.consensus.module</span>
+    <span class="kt">string</span> <span class="na">setting</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// The setting value. E.g. &#39;poet&#39;</span>
+    <span class="kt">string</span> <span class="na">value</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// allow duplicate proposals with different hashes</span>
+    <span class="c1">// randomly created by the client</span>
+    <span class="kt">string</span> <span class="na">nonce</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Setting Vote</span>
+<span class="c1">//</span>
+<span class="c1">// In ballot mode, a propsal must be voted on.  This message indicates an</span>
+<span class="c1">// acceptance or rejection of a proposal, where the proposal is identified</span>
+<span class="c1">// by its id.</span>
+<span class="kd">message</span> <span class="nc">SettingVote</span> <span class="p">{</span>
+    <span class="kd">enum</span> <span class="n">Vote</span> <span class="p">{</span>
+        <span class="na">ACCEPT</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="na">REJECT</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// The id of the proposal, as found in the</span>
+    <span class="c1">// sawtooth.settings.vote.proposals setting field</span>
+    <span class="kt">string</span> <span class="na">proposal_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="n">Vote</span> <span class="na">vote</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="transaction-header">
+<h2>Transaction Header<a class="headerlink" href="#transaction-header" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="inputs-and-outputs">
+<h3>Inputs and Outputs<a class="headerlink" href="#inputs-and-outputs" title="Permalink to this headline">¶</a></h3>
+<p>The inputs for config family transactions must include:</p>
+<ul class="simple">
+<li>the address of <em>sawtooth.settings.vote.proposals</em></li>
+<li>the address of <em>sawtooth.settings.vote.authorized_keys</em></li>
+<li>the address of <em>sawtooth.settings.vote.approval_threshold</em></li>
+<li>the address of the setting being changed</li>
+</ul>
+<p>The outputs for config family transactions must include:</p>
+<ul class="simple">
+<li>the address of <em>sawtooth.settings.vote.proposals</em></li>
+<li>the address of the setting being changed</li>
+</ul>
+</div>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<p>None.</p>
+</div>
+<div class="section" id="family">
+<h3>Family<a class="headerlink" href="#family" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>family_name: &#8220;sawtooth_settings&#8221;</li>
+<li>family_version: &#8220;1.0&#8221;</li>
+</ul>
+</div>
+<div class="section" id="encoding">
+<h3>Encoding<a class="headerlink" href="#encoding" title="Permalink to this headline">¶</a></h3>
+<p>The encoding field must be set to &#8220;application/protobuf&#8221;.</p>
+</div>
+</div>
+<div class="section" id="execution">
+<h2>Execution<a class="headerlink" href="#execution" title="Permalink to this headline">¶</a></h2>
+<p>Initially, the transaction processor gets the current values of
+<em>sawtooth.settings.vote.authorized_keys</em> from the state.</p>
+<p>The public key of the transaction signer is checked against the values in
+the list of authorized keys.  If it is empty, no settings can be proposed,
+save for the authorized keys.</p>
+<p>A Propose action is validated.  If it fails, it is considered an invalid
+transaction.  A <em>proposal_id</em> is calculated by taking the sha256 hash of
+the raw <em>SettingProposal</em> bytes as they exist in the payload.  Duplicate
+<em>proposal_ids</em> causes an invalid transaction. The proposal will be
+recorded in the <em>SettingProposals</em> stored in <em>sawtooth.settings.vote.proposals</em>,
+with one &#8220;accept&#8221; vote counted.  The transaction processor outputs a
+<em>DEBUG</em>-level logging message similar to</p>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="s2">&quot;Adding proposal </span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proposal_id</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">proposal_data</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>A Vote action is validated, checking to see if <em>proposal_id</em> exists, and
+the public key of the transaction has not already voted.  The value of
+<em>sawtooth.settings.vote.approval_threshold</em> is read from the state.</p>
+<ul class="simple">
+<li>If the &#8220;accept&#8221; vote count is equal to or above the approval threshold,
+the proposal is applied to the state. This results in the above INFO message
+being logged. The proposal is deleted from the <em>SettingProposals</em> record.</li>
+<li>If the &#8220;reject&#8221; vote count is equal to or above the approval threshold, then
+it is deleted from <em>sawtooth.settings.vote.proposals</em> and an appropriate debug
+logging message logged.</li>
+</ul>
+<p>Otherwise, the vote is recorded in the list of <em>sawtooth.settings.vote.proposals</em>
+by the public key and vote pair.</p>
+<p>Validation of configuration settings is as follows:</p>
+<ul class="simple">
+<li><em>sawtooth.settings.vote.approval_threshold</em> must be a positive integer and
+must be between 1 (the default) and the number of authorized keys, inclusive</li>
+<li><em>sawtooth.settings.vote.proposals</em> may not be set by a proposal</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="identity_transaction_family.html" class="btn btn-neutral float-right" title="Identity Transaction Family Specification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../transaction_family_specifications.html" class="btn btn-neutral" title="Transaction Family Specifications" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.0rc1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

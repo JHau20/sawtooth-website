@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Scenarios &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../index.html"/>
+        <link rel="up" title="Sawtooth Lake Bond Family User’s Guide" href="../users_guide.html"/>
+        <link rel="next" title="btp CLI Reference" href="cli.html"/>
+        <link rel="prev" title="UI Reference" href="ui_reference.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../bond_family_guide.html">Bond Family Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../users_guide.html">Sawtooth Lake Bond Family User&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ui_reference.html">UI Reference</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Scenarios</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#scenario-a">Scenario A</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scenario-b">Scenario B</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cli.html">btp CLI Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sysadmin_guide.html">Sawtooth Lake Bond Family System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design.html">Sawtooth Lake Bond Family Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bond_workload_simulator.html">Sawtooth Lake Bond Family Workload Simulator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../bond_family_guide.html">Bond Family Guide</a> &raquo;</li>
+        
+          <li><a href="../users_guide.html">Sawtooth Lake Bond Family User&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Scenarios</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/bond_family_guide/users_guide/scenarios.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scenarios">
+<h1>Scenarios<a class="headerlink" href="#scenarios" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="scenario-a">
+<h2>Scenario A<a class="headerlink" href="#scenario-a" title="Permalink to this headline">¶</a></h2>
+<p>Scenario A is the issuance of a corporate bond along with the order of the
+bond and settlement.</p>
+<p><strong>Issuing a corporate bond</strong></p>
+<ul class="simple">
+<li>Agent</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="61%" />
+<col width="39%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><dl class="first last docutils">
+<dt>Start at the Create Bond tab.</dt>
+<dd>All fields not mentioned are optional</dd>
+</dl>
+</td>
+<td><img alt="bond_screen" src="../../_images/bond_screen.png" /></td>
+</tr>
+<tr class="row-even"><td colspan="2">&#160;</td>
+</tr>
+<tr class="row-odd"><td colspan="2"><img alt="issuer" src="../../_images/issuer.png" /></td>
+</tr>
+<tr class="row-even"><td colspan="2">Choose an issuer of the bond.</td>
+</tr>
+<tr class="row-odd"><td colspan="2">&#160;</td>
+</tr>
+<tr class="row-even"><td colspan="2"><img alt="cusip" src="../../_images/cusip_or_isin.png" /></td>
+</tr>
+<tr class="row-odd"><td colspan="2">Enter either a valid Cusip or Isin.</td>
+</tr>
+<tr class="row-even"><td colspan="2">&#160;</td>
+</tr>
+<tr class="row-odd"><td colspan="2"><img alt="matdate" src="../../_images/maturitydate.png" /></td>
+</tr>
+<tr class="row-even"><td colspan="2">Enter a maturity date in the future.</td>
+</tr>
+<tr class="row-odd"><td colspan="2">&#160;</td>
+</tr>
+<tr class="row-even"><td colspan="2"><img alt="facevalue" src="../../_images/facevalue.png" /></td>
+</tr>
+<tr class="row-odd"><td colspan="2">Enter the face value, and amount outstanding.</td>
+</tr>
+<tr class="row-even"><td colspan="2">&#160;</td>
+</tr>
+<tr class="row-odd"><td colspan="2"><img alt="coupon" src="../../_images/coupon.png" /></td>
+</tr>
+<tr class="row-even"><td colspan="2">Enter the coupon details.</td>
+</tr>
+<tr class="row-odd"><td colspan="2">&#160;</td>
+</tr>
+<tr class="row-even"><td colspan="2"><img alt="clickbond" src="../../_images/clickbond.png" /> <img alt="toastbond" src="../../_images/toastbond.png" /></td>
+</tr>
+<tr class="row-odd"><td colspan="2">Click the Create Bond button.</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>Trader</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="58%" />
+<col width="42%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td colspan="2"><img alt="bondquote" src="../../_images/bondquote.png" /></td>
+</tr>
+<tr class="row-even"><td colspan="2">A quote has been made on the bond just issued</td>
+</tr>
+<tr class="row-odd"><td colspan="2">&#160;</td>
+</tr>
+<tr class="row-even"><td colspan="2"><img alt="viewquotes" src="../../_images/viewquotes.png" /></td>
+</tr>
+<tr class="row-odd"><td colspan="2">Click on View Quotes and see the View
+Quotes screen</td>
+</tr>
+<tr class="row-even"><td colspan="2">&#160;</td>
+</tr>
+<tr class="row-odd"><td>Click either Buy or Sell</td>
+<td><img alt="buysell" src="../../_images/buy_or_sell.png" /></td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>View the Buy/Sell screen</td>
+<td><img alt="buyscreen" src="../../_images/buyscreen.png" /></td>
+</tr>
+<tr class="row-even"><td colspan="2">&#160;</td>
+</tr>
+<tr class="row-odd"><td colspan="2"><img alt="buyorder" src="../../_images/buyorder.png" /></td>
+</tr>
+<tr class="row-even"><td colspan="2">Make either a market or a limit order</td>
+</tr>
+<tr class="row-odd"><td colspan="2">&#160;</td>
+</tr>
+<tr class="row-even"><td colspan="2"><img alt="marketorder" src="../../_images/market_order.png" /></td>
+</tr>
+<tr class="row-odd"><td colspan="2">Since it was a market order, it was matched on the next block.</td>
+</tr>
+<tr class="row-even"><td colspan="2">&#160;</td>
+</tr>
+<tr class="row-odd"><td colspan="2"><img alt="settled" src="../../_images/settled.png" /></td>
+</tr>
+<tr class="row-even"><td colspan="2">Press settle and the system settles the transaction.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="scenario-b">
+<h2>Scenario B<a class="headerlink" href="#scenario-b" title="Permalink to this headline">¶</a></h2>
+<p>Scenario B involves a trader purchasing a US Treasury Bond</p>
+<ul class="simple">
+<li>Trader</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><img alt="search" src="../../_images/govtsearch.png" /></td>
+</tr>
+<tr class="row-even"><td>Search for Treasury bonds and press View Quotes.</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+</tr>
+<tr class="row-even"><td><img alt="govtbuy" src="../../_images/govtbuy.png" /></td>
+</tr>
+<tr class="row-odd"><td>After choosing Buy while viewing quotes, submit a Buy order.</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><img alt="matched" src="../../_images/govtmatched.png" /></td>
+</tr>
+<tr class="row-even"><td>The system matches the order with a quote.</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+</tr>
+<tr class="row-even"><td><img alt="settle" src="../../_images/govtsettled.png" /></td>
+</tr>
+<tr class="row-odd"><td>Press settle and the system settles the transaction.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="cli.html" class="btn btn-neutral float-right" title="btp CLI Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ui_reference.html" class="btn btn-neutral" title="UI Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

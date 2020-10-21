@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["file_descriptor_proto",""]],"struct":[["GenesisData","Generated files are compatible only with the same version of protobuf runtime."]]});

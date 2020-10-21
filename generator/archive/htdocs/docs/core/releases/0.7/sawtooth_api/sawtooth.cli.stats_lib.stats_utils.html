@@ -1,0 +1,449 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.cli.stats_lib.stats_utils module &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="sawtooth.cli.stats_lib package" href="sawtooth.cli.stats_lib.html"/>
+        <link rel="next" title="sawtooth.cli.stats_lib.stats_writers module" href="sawtooth.cli.stats_lib.stats_writers.html"/>
+        <link rel="prev" title="sawtooth.cli.stats_lib.stats_print module" href="sawtooth.cli.stats_lib.stats_print.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/architecture_overview.html">Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/sawtooth_vagrant.html">Vagrant</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">Distributed Ledger Python API</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="sawtooth.html">sawtooth package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="sawtooth.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sawtooth.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/web_api/index.html">Distributed Ledger Web API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/validator_network_launcher.html">The Validator Network Launcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/workload_simulator.html">The Workload Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/signing_transactions.html">Signing Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="modules.html">Distributed Ledger Python API</a> &raquo;</li>
+        
+          <li><a href="sawtooth.html">sawtooth package</a> &raquo;</li>
+        
+          <li><a href="sawtooth.cli.html">sawtooth.cli package</a> &raquo;</li>
+        
+          <li><a href="sawtooth.cli.stats_lib.html">sawtooth.cli.stats_lib package</a> &raquo;</li>
+        
+      <li>sawtooth.cli.stats_lib.stats_utils module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sawtooth_api/sawtooth.cli.stats_lib.stats_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-sawtooth.cli.stats_lib.stats_utils">
+<span id="sawtooth-cli-stats-lib-stats-utils-module"></span><h1>sawtooth.cli.stats_lib.stats_utils module<a class="headerlink" href="#module-sawtooth.cli.stats_lib.stats_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.stats_utils.ValidatorCommunications">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.stats_utils.</code><code class="descname">ValidatorCommunications</code><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#ValidatorCommunications"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.ValidatorCommunications" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.ValidatorCommunications.get_request">
+<code class="descname">get_request</code><span class="sig-paren">(</span><em>path</em>, <em>ccb=None</em>, <em>ecb=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#ValidatorCommunications.get_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.ValidatorCommunications.get_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.stats_utils.StatsModule">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.stats_utils.</code><code class="descname">StatsModule</code><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#StatsModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.StatsModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.StatsModule.initialize">
+<code class="descname">initialize</code><span class="sig-paren">(</span><em>module_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#StatsModule.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.StatsModule.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.StatsModule.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#StatsModule.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.StatsModule.connect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.StatsModule.collect">
+<code class="descname">collect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#StatsModule.collect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.StatsModule.collect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.StatsModule.process">
+<code class="descname">process</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#StatsModule.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.StatsModule.process" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.StatsModule.analyze">
+<code class="descname">analyze</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#StatsModule.analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.StatsModule.analyze" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.StatsModule.report">
+<code class="descname">report</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#StatsModule.report"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.StatsModule.report" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.StatsModule.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#StatsModule.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.StatsModule.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.StatsModule.get_module">
+<code class="descname">get_module</code><span class="sig-paren">(</span><em>class_reference</em>, <em>default=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#StatsModule.get_module"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.StatsModule.get_module" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.stats_utils.DictWalker">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.stats_utils.</code><code class="descname">DictWalker</code><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#DictWalker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.DictWalker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.DictWalker.walk">
+<code class="descname">walk</code><span class="sig-paren">(</span><em>data_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#DictWalker.walk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.DictWalker.walk" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.DictWalker.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#DictWalker.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.DictWalker.get_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.DictWalker.get_names">
+<code class="descname">get_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#DictWalker.get_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.DictWalker.get_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.stats_utils.TransactionRate">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.stats_utils.</code><code class="descname">TransactionRate</code><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#TransactionRate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.TransactionRate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.TransactionRate.calculate_txn_rate">
+<code class="descname">calculate_txn_rate</code><span class="sig-paren">(</span><em>current_block_count</em>, <em>current_txn_count</em>, <em>window_size=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#TransactionRate.calculate_txn_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.TransactionRate.calculate_txn_rate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>current_block_count</strong> &#8211; current number of committed blocks</li>
+<li><strong>current_txn_count</strong> &#8211; current number of committed transactions</li>
+<li><strong>window_size</strong> &#8211; number of blocks to average over</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Synopsis:</dt>
+<dd>Each time the block count changes, a snapshot of the
+current number of committed txns and current time is placed in
+the queue.  If there are two or more entries in the queue, the
+average txn rate and average block commit time is calculated.
+If there are more than window_size transactions in the queue,
+the oldest entry is popped from the queue.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">average number of transactions per second
+avg_block_time: average block commit time</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">avg_txn_rate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.stats_utils.StatsCollector">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.stats_utils.</code><code class="descname">StatsCollector</code><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#StatsCollector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.StatsCollector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.StatsCollector.get_names">
+<code class="descname">get_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#StatsCollector.get_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.StatsCollector.get_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns: All data element names as list - for csv writer (header)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.StatsCollector.get_data">
+<code class="descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#StatsCollector.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.StatsCollector.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns: All data element values in list - for csv writer</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.StatsCollector.get_data_as_dict">
+<code class="descname">get_data_as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#StatsCollector.get_data_as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.StatsCollector.get_data_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns: returns platform stats as dictionary - for stats web interface</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.stats_utils.StatsCollector.pprint_stats">
+<code class="descname">pprint_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#StatsCollector.pprint_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.StatsCollector.pprint_stats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sawtooth.cli.stats_lib.stats_utils.get_public_attrs_as_dict">
+<code class="descclassname">sawtooth.cli.stats_lib.stats_utils.</code><code class="descname">get_public_attrs_as_dict</code><span class="sig-paren">(</span><em>class_instance</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#get_public_attrs_as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.get_public_attrs_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sawtooth.cli.stats_lib.stats_utils.named_tuple_init">
+<code class="descclassname">sawtooth.cli.stats_lib.stats_utils.</code><code class="descname">named_tuple_init</code><span class="sig-paren">(</span><em>named_tuple</em>, <em>default=0</em>, <em>defaults=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#named_tuple_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.named_tuple_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the instance rather than the named tuple itself because
+some values have to be initialized at runtime
+:param named_tuple: named tuple instance of which is to be returned
+:param default: default value to be applied to all fields
+:param defaults: dict of default values to be applied to specified fields</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">an initialized instance of the named_tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.stats_utils.SignalHandler">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.stats_utils.</code><code class="descname">SignalHandler</code><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/stats_utils.html#SignalHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.stats_utils.SignalHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sawtooth.cli.stats_lib.stats_utils.StatsModule" title="sawtooth.cli.stats_lib.stats_utils.StatsModule"><code class="xref py py-class docutils literal"><span class="pre">sawtooth.cli.stats_lib.stats_utils.StatsModule</span></code></a></p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sawtooth.cli.stats_lib.stats_writers.html" class="btn btn-neutral float-right" title="sawtooth.cli.stats_lib.stats_writers module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sawtooth.cli.stats_lib.stats_print.html" class="btn btn-neutral" title="sawtooth.cli.stats_lib.stats_print module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

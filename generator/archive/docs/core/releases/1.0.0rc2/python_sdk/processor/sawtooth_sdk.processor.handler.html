@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module sawtooth_sdk.processor.handler</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="sawtooth_sdk.html"><font color="#ffffff">sawtooth_sdk</font></a>.<a href="sawtooth_sdk.processor.html"><font color="#ffffff">processor</font></a>.handler</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/project/sawtooth-core/sdk/python/sawtooth_sdk/processor/handler.py">/project/sawtooth-core/sdk/python/sawtooth_sdk/processor/handler.py</a></font></td></tr></table>
+    <p><tt>#&nbsp;Copyright&nbsp;2017&nbsp;Intel&nbsp;Corporation<br>
+#<br>
+#&nbsp;Licensed&nbsp;under&nbsp;the&nbsp;Apache&nbsp;License,&nbsp;Version&nbsp;2.0&nbsp;(the&nbsp;"License");<br>
+#&nbsp;you&nbsp;may&nbsp;not&nbsp;use&nbsp;this&nbsp;file&nbsp;except&nbsp;in&nbsp;compliance&nbsp;with&nbsp;the&nbsp;License.<br>
+#&nbsp;You&nbsp;may&nbsp;obtain&nbsp;a&nbsp;copy&nbsp;of&nbsp;the&nbsp;License&nbsp;at<br>
+#<br>
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a><br>
+#<br>
+#&nbsp;Unless&nbsp;required&nbsp;by&nbsp;applicable&nbsp;law&nbsp;or&nbsp;agreed&nbsp;to&nbsp;in&nbsp;writing,&nbsp;software<br>
+#&nbsp;distributed&nbsp;under&nbsp;the&nbsp;License&nbsp;is&nbsp;distributed&nbsp;on&nbsp;an&nbsp;"AS&nbsp;IS"&nbsp;BASIS,<br>
+#&nbsp;WITHOUT&nbsp;WARRANTIES&nbsp;OR&nbsp;CONDITIONS&nbsp;OF&nbsp;ANY&nbsp;KIND,&nbsp;either&nbsp;express&nbsp;or&nbsp;implied.<br>
+#&nbsp;See&nbsp;the&nbsp;License&nbsp;for&nbsp;the&nbsp;specific&nbsp;language&nbsp;governing&nbsp;permissions&nbsp;and<br>
+#&nbsp;limitations&nbsp;under&nbsp;the&nbsp;License.<br>
+#&nbsp;------------------------------------------------------------------------------</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="abc.html">abc</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="sawtooth_sdk.processor.handler.html#TransactionHandler">TransactionHandler</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="TransactionHandler">class <strong>TransactionHandler</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#TransactionHandler">TransactionHandler</a>&nbsp;is&nbsp;the&nbsp;Abstract&nbsp;Base&nbsp;Class&nbsp;that&nbsp;defines&nbsp;the&nbsp;business<br>
+logic&nbsp;for&nbsp;a&nbsp;new&nbsp;transaction&nbsp;family.<br>
+&nbsp;<br>
+The&nbsp;family_name,&nbsp;family_versions,&nbsp;and&nbsp;namespaces&nbsp;properties&nbsp;are<br>
+used&nbsp;by&nbsp;the&nbsp;processor&nbsp;to&nbsp;route&nbsp;processing&nbsp;requests&nbsp;to&nbsp;the&nbsp;handler.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="TransactionHandler-apply"><strong>apply</strong></a>(self, transaction, context)</dt><dd><tt>Apply&nbsp;is&nbsp;the&nbsp;single&nbsp;method&nbsp;where&nbsp;all&nbsp;the&nbsp;business&nbsp;logic&nbsp;for&nbsp;a<br>
+transaction&nbsp;family&nbsp;is&nbsp;defined.&nbsp;The&nbsp;method&nbsp;will&nbsp;be&nbsp;called&nbsp;by&nbsp;the<br>
+transaction&nbsp;processor&nbsp;upon&nbsp;receiving&nbsp;a&nbsp;TpProcessRequest&nbsp;that&nbsp;the<br>
+handler&nbsp;understands&nbsp;and&nbsp;will&nbsp;pass&nbsp;in&nbsp;the&nbsp;TpProcessRequest&nbsp;and&nbsp;an<br>
+initialized&nbsp;instance&nbsp;of&nbsp;the&nbsp;Context&nbsp;type.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>family_name</strong></dt>
+<dd><tt>family_name&nbsp;should&nbsp;return&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;transaction&nbsp;family&nbsp;that&nbsp;this<br>
+handler&nbsp;can&nbsp;process,&nbsp;e.g.&nbsp;"intkey"</tt></dd>
+</dl>
+<dl><dt><strong>family_versions</strong></dt>
+<dd><tt>family_versions&nbsp;should&nbsp;return&nbsp;a&nbsp;list&nbsp;of&nbsp;versions&nbsp;this&nbsp;transaction<br>
+family&nbsp;handler&nbsp;can&nbsp;process,&nbsp;e.g.&nbsp;["1.0"]</tt></dd>
+</dl>
+<dl><dt><strong>namespaces</strong></dt>
+<dd><tt>namespaces&nbsp;should&nbsp;return&nbsp;a&nbsp;list&nbsp;containing&nbsp;all&nbsp;the&nbsp;handler's<br>
+namespaces,&nbsp;e.g.&nbsp;["abcdef"]</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset({'apply', 'family_name', 'family_versions', 'namespaces'})</dl>
+
+</td></tr></table></td></tr></table>
+</body></html>

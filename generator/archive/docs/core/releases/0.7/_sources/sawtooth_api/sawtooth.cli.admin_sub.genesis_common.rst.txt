@@ -1,0 +1,7 @@
+sawtooth\.cli\.admin\_sub\.genesis\_common module
+=================================================
+
+.. automodule:: sawtooth.cli.admin_sub.genesis_common
+    :members:
+    :undoc-members:
+    :show-inheritance:

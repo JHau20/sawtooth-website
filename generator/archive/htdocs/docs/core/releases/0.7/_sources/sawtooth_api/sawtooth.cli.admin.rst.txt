@@ -1,0 +1,7 @@
+sawtooth\.cli\.admin module
+===========================
+
+.. automodule:: sawtooth.cli.admin
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,308 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Docker &mdash; Sawtooth v0.8.11 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.11 documentation" href="../index.html"/>
+        <link rel="up" title="Core Developer’s Guide" href="../core_developers_guide.html"/>
+        <link rel="next" title="Signing Transactions" href="signing_transactions.html"/>
+        <link rel="prev" title="The Workload Generator" href="intkey_workload.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.11
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../solidity_developers_guide.html">Solidity Developers Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="environment_setup.html">Environment Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intkey_workload.html">The Workload Generator</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#layout-of-the-docker-subdirectory">Layout of the docker subdirectory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="signing_transactions.html">Signing Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../core_developers_guide.html">Core Developer&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Docker</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/core_developers_guide/sawtooth_docker.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="docker">
+<h1>Docker<a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Docker is a tool that allows for portable, containerized instances of
+applications. It ensures repeatability and consistency across deployments
+and platforms.</p>
+<p>The included Dockerfiles are intended to make working with the Sawtooth
+platform easy, whether you&#8217;re a core developer or someone who&#8217;s just interested
+in trying it out.</p>
+</div>
+<div class="section" id="layout-of-the-docker-subdirectory">
+<h2>Layout of the docker subdirectory<a class="headerlink" href="#layout-of-the-docker-subdirectory" title="Permalink to this headline">¶</a></h2>
+<p>The docker subdirectory is structured as follows:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">ci/</span>
+<span class="go"> sawtooth-settings-tp</span>
+<span class="go"> sawtooth-intkey-tp-python</span>
+<span class="go"> ...</span>
+<span class="go"> sawtooth-validator</span>
+
+<span class="go">docker/</span>
+<span class="go"> compose/</span>
+<span class="go"> sawtooth-dev-go</span>
+<span class="go"> sawtooth-dev-java</span>
+<span class="go"> sawtooth-dev-javascript</span>
+<span class="go"> sawtooth-dev-python</span>
+<span class="go"> ...</span>
+<span class="go"> sawtooth-int-rest-api</span>
+<span class="go"> sawtooth-int-settings-tp</span>
+<span class="go"> ...</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>compose/</dt>
+<dd>Contains docker compose files for easily bringing up validator networks and
+connected transaction processors.</dd>
+<dt>sawtooth-dev-*</dt>
+<dd>Dockerfiles used for Hyperledger Sawtooth development in a given language. The
+default command for each image is to run the build commands needed to run the
+code in that language. These Dockerfiles are also used for local testing.</dd>
+<dt>sawtooth-int-*</dt>
+<dd>Dockerfiles used for testing Hyperledger Sawtooth in an installed environment.
+They copy in build artifacts from a local copy of the repository and install
+them.</dd>
+<dt>sawtooth-*</dt>
+<dd>Dockerfiles that build images with Hyperledger Sawtooth installed from the
+Hyperledger Sawtooth package repository. (<a class="reference external" href="http://repo.sawtooth.me">http://repo.sawtooth.me</a>) These
+Dockerfiles do not make any assumptions about the build or runtime
+environments.</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="signing_transactions.html" class="btn btn-neutral float-right" title="Signing Transactions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="intkey_workload.html" class="btn btn-neutral" title="The Workload Generator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.11',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

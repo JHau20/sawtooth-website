@@ -1,0 +1,7 @@
+sawtooth\.cli\.admin\_sub\.poet1\_genesis module
+================================================
+
+.. automodule:: sawtooth.cli.admin_sub.poet1_genesis
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,553 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Configuring and Deploying Sawtooth Raft &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Troubleshooting and Common Issues" href="troubleshooting.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuring and Deploying Sawtooth Raft</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#validator-peering-requirements">Validator Peering Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#on-chain-settings">On-Chain Settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#required-settings">Required Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optional-settings">Optional Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#starting-a-raft-engine">Starting a Raft Engine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-the-state-storage-directory">Configuring the State Storage Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logging-configuration">Logging Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#connecting-to-the-validator">Connecting to the Validator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#verifying-raft-is-running">Verifying Raft Is running</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#starting-a-multi-node-raft-network">Starting a Multi-Node Raft Network</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#starting-the-network">Starting the Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#starting-the-admin-service">Starting the Admin Service</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#starting-the-nodes">Starting the Nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stopping-and-restarting-nodes-on-a-network">Stopping and Restarting Nodes On a Network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#verifying-the-network-is-ready">Verifying the Network Is Ready</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#applying-workload-on-a-network">Applying Workload On a Network</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#changing-network-membership">Changing Network Membership</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#adding-a-node">Adding a Node</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#removing-a-node">Removing a Node</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting and Common Issues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="contents.html">Docs</a> &raquo;</li>
+        
+      <li>Configuring and Deploying Sawtooth Raft</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/configuring_deploying.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="configuring-and-deploying-sawtooth-raft">
+<h1>Configuring and Deploying Sawtooth Raft<a class="headerlink" href="#configuring-and-deploying-sawtooth-raft" title="Permalink to this headline">¶</a></h1>
+<p>This guide assumes previous experience with creating and deploying Sawtooth
+networks; if you are unfamiliar with Sawtooth, please see the <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide.html">Application
+Developer’s Guide</a> and <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide.html">System Administrator’s Guide</a> in the Sawtooth Core
+documentation.</p>
+<p>This guide also requires a basic understanding of the Raft consensus algorithm;
+if you are not familiar with Raft, please see the <a class="reference external" href="https://raft.github.io/">Raft</a> webpage.</p>
+<div class="section" id="validator-peering-requirements">
+<span id="validator-peering-requirements-label"></span><h2>Validator Peering Requirements<a class="headerlink" href="#validator-peering-requirements" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth Raft requires a fully-peered network where all nodes are able to
+communicate with all other nodes. This is necessary to establish a leader
+through the election process, as well as to maintain leadership through regular
+heartbeat messages. If a Raft network is not fully-peered, leadership election
+may fail due to some nodes being unable to communicate with one another.</p>
+<p>In order to achieve a fully-peered network, the list of peers that comprise the
+network will need to be known and maintained at all times. This means that Raft
+networks do not support open membership; an administrator must explicitly add or
+remove nodes to change membership (see <a class="reference internal" href="#changing-network-membership">Changing Network Membership</a> for more
+details).</p>
+<p>To setup a fully-peered network, all validators must be started with the
+following two options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--peering</span> <span class="pre">static</span></code> - Informs the validator to connect with all of the
+specified peers.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--peers</span> <span class="pre">{peers_list}</span></code> - Provides the list of peers for the validator to
+connect to, where <cite>{peers_list}</cite> is the list of public endpoints for all other
+previously started validators.</p></li>
+</ul>
+<p>For example, if there are two validators already running with public endpoints
+<code class="docutils literal notranslate"><span class="pre">203.0.113.1:8800</span></code> and <code class="docutils literal notranslate"><span class="pre">203.0.113.2:8800</span></code>, a new validator would be started
+with the options <code class="docutils literal notranslate"><span class="pre">--peering</span> <span class="pre">static</span> <span class="pre">--peers</span>
+<span class="pre">tcp://203.0.113.1:8800,tcp://203.0.113.2:8800</span></code>.</p>
+<p>Since peering is bi-directional, when a new validator connects with existing
+validators, the existing validators will be fully peered as well. For example,
+to startup a 3 node network where the nodes have endpoints <code class="docutils literal notranslate"><span class="pre">alpha</span></code>, <code class="docutils literal notranslate"><span class="pre">beta</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">gamma</span></code>, you would do the following:</p>
+<ol class="arabic simple">
+<li><p>Startup the alpha validator with no peers specified (but <code class="docutils literal notranslate"><span class="pre">--peering</span> <span class="pre">static</span></code>
+should still be used)</p></li>
+<li><p>Startup the beta validator with <code class="docutils literal notranslate"><span class="pre">--peers</span> <span class="pre">tcp://alpha:8800</span></code></p></li>
+<li><p>Startup the gamma validator with <code class="docutils literal notranslate"><span class="pre">--peers</span> <span class="pre">tcp://alpha:8800,tcp://beta:8800</span></code></p></li>
+</ol>
+</div>
+<div class="section" id="on-chain-settings">
+<h2>On-Chain Settings<a class="headerlink" href="#on-chain-settings" title="Permalink to this headline">¶</a></h2>
+<p>When starting a fresh network with the Sawtooth Raft consensus engine, the
+required settings below (and the desired optional settings) should be set in the
+genesis block.</p>
+<div class="section" id="required-settings">
+<h3>Required Settings<a class="headerlink" href="#required-settings" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.algorithm.name</span></code> - Tells the network the name of the
+consensus engine to use. Must be set to <code class="docutils literal notranslate"><span class="pre">raft</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.algorithm.version</span></code> - Tells the network the version of
+the consensus engine to use. Must match the version of Raft being used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.raft.peers</span></code> - A JSON list of public keys of all
+validators in the network, formatted as hex strings.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.raft.peers</span></code> setting is extremely important, since the
+Raft engine uses it as its source-of-truth for which nodes to communicate with.
+When a Raft engine starts initially, it checks the setting to determine which
+nodes are in the network. This setting is also used to add or remove nodes from
+the Raft network as covered in the <a class="reference internal" href="#changing-network-membership">Changing Network Membership</a> section. As an
+example, the value of <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.raft.peers</span></code> would be formatted like
+this:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+  <span class="s2">&quot;dc26a7099e81bb02869cc8ae57da030fbe4cf276b38ab37d2cc815fec63a14ab&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;df8e8388ced559bd35c2b05199ca9f8fbebb420979715003355dcb7363016c1d&quot;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="optional-settings">
+<h3>Optional Settings<a class="headerlink" href="#optional-settings" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.raft.heartbeat_tick</span></code> - Determines the interval at which
+the leader sends heartbeat messages to all other nodes. Default is <code class="docutils literal notranslate"><span class="pre">2</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.raft.election_tick</span></code> - Determines the timeout after which
+nodes can start new elections if no messages have been received from the
+leader. Default is <code class="docutils literal notranslate"><span class="pre">20</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.raft.period</span></code> - Determines the length of time (in
+milliseconds) that the consensus engine will wait between initializing and
+finalizing a block. Default is <code class="docutils literal notranslate"><span class="pre">3000</span></code>.</p></li>
+</ul>
+<p>These optional settings should only be set <cite>before</cite> any Raft engines have
+started up; if they are changed on a running network and a new node is started,
+these values will be different on the new engine than the rest of the network,
+which could result in unpredictable behavior.</p>
+</div>
+</div>
+<div class="section" id="starting-a-raft-engine">
+<h2>Starting a Raft Engine<a class="headerlink" href="#starting-a-raft-engine" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="configuring-the-state-storage-directory">
+<h3>Configuring the State Storage Directory<a class="headerlink" href="#configuring-the-state-storage-directory" title="Permalink to this headline">¶</a></h3>
+<p>The Raft engine stores its state on the file system; by default, it uses the
+<code class="docutils literal notranslate"><span class="pre">/var/lib/sawtooth-raft</span></code> directory, but this can be changed by setting the
+<code class="docutils literal notranslate"><span class="pre">SAWTOOTH_RAFT_HOME</span></code> environment variable to the desired path.</p>
+</div>
+<div class="section" id="logging-configuration">
+<h3>Logging Configuration<a class="headerlink" href="#logging-configuration" title="Permalink to this headline">¶</a></h3>
+<p>Sawtooth Raft logs to the console by default, but supports
+configurable logging through the <a class="reference external" href="https://github.com/sfackler/log4rs">log4rs</a> and <a class="reference external" href="https://github.com/im-0/log4rs-syslog">log4rs-syslog</a> libraries. The
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-raft">sawtooth-raft repository</a> provides an example logging configuration file that
+demonstrates how to configure Raft to use syslog (<code class="docutils literal notranslate"><span class="pre">logging/syslog.yaml</span></code>). For
+more examples of logging configuration files, please see the
+<a class="reference external" href="https://docs.rs/log4rs/0.8.0/log4rs/">log4rs documentation</a>.</p>
+<p>The Raft engine provides the <code class="docutils literal notranslate"><span class="pre">-L</span></code> option for specifying a logging
+configuration YAML file. For example, to start Raft with the provided syslog
+configuration, you would provide the option <code class="docutils literal notranslate"><span class="pre">-L</span> <span class="pre">logging/syslog.yaml</span></code>.</p>
+<p>Sawtooth Raft also supports configurable logging verbosity at run-time. By
+default, it logs with the <code class="docutils literal notranslate"><span class="pre">WARN</span></code> logging level (or the logging level specified
+in the configuration file), but this can be changed by providing one or more
+verbosity flags on startup:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-v</span></code> - <code class="docutils literal notranslate"><span class="pre">INFO</span></code> logging level</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-vv</span></code> - <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> logging level</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-vvv</span></code> - <code class="docutils literal notranslate"><span class="pre">TRACE</span></code> logging level</p></li>
+</ul>
+</div>
+<div class="section" id="connecting-to-the-validator">
+<h3>Connecting to the Validator<a class="headerlink" href="#connecting-to-the-validator" title="Permalink to this headline">¶</a></h3>
+<p>When a Sawtooth Raft engine is started, it must be connected to the validator,
+which can be done using the <code class="docutils literal notranslate"><span class="pre">--connect</span></code> command line option. For example, if
+the validator is running on host <code class="docutils literal notranslate"><span class="pre">203.0.113.0</span></code> and is using the default
+consensus port <code class="docutils literal notranslate"><span class="pre">5050</span></code>, then the Raft engine should be started with <code class="docutils literal notranslate"><span class="pre">--connect</span>
+<span class="pre">tcp://127.0.0.1:5050</span></code>. If this option is not specified, Sawtooth Raft will
+attempt to connect with the default validator address: <code class="docutils literal notranslate"><span class="pre">tcp://localhost:5050</span></code>.</p>
+</div>
+<div class="section" id="verifying-raft-is-running">
+<h3>Verifying Raft Is running<a class="headerlink" href="#verifying-raft-is-running" title="Permalink to this headline">¶</a></h3>
+<p>This section assumes that Raft is being run with logging level <code class="docutils literal notranslate"><span class="pre">INFO</span></code>.</p>
+<p>When the Sawtooth Raft process starts initially, you will see a message that
+indicates the version of the Raft engine and the validator endpoint that it is
+attempting to connect to:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">INFO  | sawtooth_raft:84     | Sawtooth Raft Engine (X.Y.Z)</span>
+<span class="go">INFO  | sawtooth_raft:90     | Raft Node connecting to &#39;tcp://validator:5050&#39;</span>
+</pre></div>
+</div>
+<p>This indicates that the Raft process has started; however, it does not indicate
+that the Raft engine itself is running. The Raft engine waits until the genesis
+block has been received and committed by the validator before running. Once the
+genesis block has been committed, you will see a message in the validator’s logs
+indicating that the Raft engine has been registered:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Consensus engine registered: sawtooth-raft-engine X.Y.Z</span>
+</pre></div>
+</div>
+<p>If you do not see the message above in the validator logs, make sure that the
+Raft engine is properly connecting to the validator (see <a class="reference internal" href="#connecting-to-the-validator">Connecting to the
+Validator</a>) and that the validator has committed the genesis block with the
+required Raft settings (see <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/creating_genesis_block.html">Creating the Genesis Block</a> in the Sawtooth Core
+documentation).</p>
+<p>Once the consensus engine is running and connected to the validator, you will
+see a message in the Raft log that displays the configuration values that are
+being used by the Raft engine, similar to this one:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">INFO  | sawtooth_raft::engin | Raft Engine Config Loaded: RaftEngineConfig { peers: [026c49c05b153ca92e2fae01fea85663ae397eb435cc7744907edfe839e84fb288], period: 3s, raft: { election_tick: 20, heartbeat_tick: 2, applied: 0 }, storage: cached storage: file-system backed persistent storage }</span>
+</pre></div>
+</div>
+<p>You should also see a group of messages that indicate if the node has been
+elected leader, similar to this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">INFO  | raft::raft:833       | [15456778813275318575] became follower at term 0</span>
+<span class="go">INFO  | raft::raft:433       | [15456778813275318575] newRaft [peers: [15456778813275318575], term: 0, commit: 0, applied: 0, last_index: 0, last_term: 0]</span>
+<span class="go">INFO  | raft::raft:833       | [15456778813275318575] became follower at term 1</span>
+<span class="go">INFO  | raft::raft:1120      | [15456778813275318575] is starting a new election at term 1</span>
+<span class="go">INFO  | raft::raft:848       | [15456778813275318575] became candidate at term 2</span>
+<span class="go">INFO  | raft::raft:950       | [15456778813275318575] received MsgRequestVoteResponse from 15456778813275318575 at term 2</span>
+<span class="go">INFO  | raft::raft:891       | [15456778813275318575] became leader at term 2</span>
+</pre></div>
+</div>
+<p>At this point, the Raft engine is running and ready to handle blocks.</p>
+</div>
+</div>
+<div class="section" id="starting-a-multi-node-raft-network">
+<h2>Starting a Multi-Node Raft Network<a class="headerlink" href="#starting-a-multi-node-raft-network" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://github.com/hyperledger/sawtooth-raft">sawtooth-raft repository</a> provides a set of Docker Compose files in the
+<code class="docutils literal notranslate"><span class="pre">adhoc</span></code> directory that allow one to quickly and easily setup a Raft network
+using Docker. The compose files in this directory are designed to make manual,
+ad-hoc deployments and testing of Sawtooth Raft networks simpler.</p>
+<div class="section" id="starting-the-network">
+<h3>Starting the Network<a class="headerlink" href="#starting-the-network" title="Permalink to this headline">¶</a></h3>
+<p>Make sure you have all the Docker images you need:</p>
+<ul class="simple">
+<li><p>sawtooth-validator (&gt;= v1.1)</p></li>
+<li><p>sawtooth-rest-api</p></li>
+<li><p>sawtooth-intkey-tp-python</p></li>
+<li><p>sawtooth-intkey-workload</p></li>
+<li><p>sawtooth-settings-tp</p></li>
+</ul>
+<p>To build these from <a class="reference external" href="https://github.com/hyperledger/sawtooth-core">sawtooth-core</a>, run the following:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker-compose -f docker-compose-installed.yaml build <span class="se">\</span>
+    validator <span class="se">\</span>
+    rest-api <span class="se">\</span>
+    intkey-tp-python <span class="se">\</span>
+    intkey-workload <span class="se">\</span>
+    settings-tp
+</pre></div>
+</div>
+<div class="section" id="starting-the-admin-service">
+<h4>Starting the Admin Service<a class="headerlink" href="#starting-the-admin-service" title="Permalink to this headline">¶</a></h4>
+<p>This compose file creates the shared network and volume required for the
+validator network to communicate.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker-compose -f admin.yaml up -d
+</pre></div>
+</div>
+</div>
+<div class="section" id="starting-the-nodes">
+<h4>Starting the Nodes<a class="headerlink" href="#starting-the-nodes" title="Permalink to this headline">¶</a></h4>
+<p>If N is the number of nodes you want to create, startup N-1 nodes with the
+<code class="docutils literal notranslate"><span class="pre">node.yaml</span></code> compose file. For each node, you will need to select a unique name
+and provide this with the <code class="docutils literal notranslate"><span class="pre">-p</span></code> option. Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker-compose -p alpha -f node.yaml up
+</pre></div>
+</div>
+<p>Note that you can include the <code class="docutils literal notranslate"><span class="pre">-d</span></code> flag to create all nodes from a single
+terminal.</p>
+<p>For the last node, do the same as above, but also set the <code class="docutils literal notranslate"><span class="pre">GENESIS</span></code> environment
+variable. Example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nv">GENESIS</span><span class="o">=</span><span class="m">1</span> docker-compose -p genesis -f node.yaml up
+</pre></div>
+</div>
+<p>Note that each time a node is started, it adds itself to the list of nodes that
+all new nodes will connect to. This means that if you mess something up starting
+a node, you may need to start over. To do this, use <code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">down</span></code> for
+each node you started, passing the appropriate <code class="docutils literal notranslate"><span class="pre">-p</span></code> value; then do
+<code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">-f</span> <span class="pre">admin.yaml</span> <span class="pre">down</span></code>.</p>
+</div>
+<div class="section" id="stopping-and-restarting-nodes-on-a-network">
+<h4>Stopping and Restarting Nodes On a Network<a class="headerlink" href="#stopping-and-restarting-nodes-on-a-network" title="Permalink to this headline">¶</a></h4>
+<p>To stop a node on a network, you need to stop the containers for that node
+<strong>without removing them</strong>. If you remove the containers, then that node is gone
+for good. To avoid for this, do <strong>NOT</strong> use <code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">down</span></code>.</p>
+<p>If you are attached to the containers, you can press CTRL+C to stop the node’s
+containers.</p>
+<p>If you are not attached to the containers, use the command <code class="docutils literal notranslate"><span class="pre">docker-compose</span>
+<span class="pre">stop</span></code> with the appropriate <code class="docutils literal notranslate"><span class="pre">-p</span></code> flag.</p>
+<p>After you have stopped a node, you can use <code class="docutils literal notranslate"><span class="pre">docker-compose</span> <span class="pre">start</span></code> with the
+appropriate <code class="docutils literal notranslate"><span class="pre">-p</span></code> flag to restart the stopped node.</p>
+</div>
+<div class="section" id="verifying-the-network-is-ready">
+<h4>Verifying the Network Is Ready<a class="headerlink" href="#verifying-the-network-is-ready" title="Permalink to this headline">¶</a></h4>
+<p>When the network is setup correctly, Raft will elect a node as leader. If all
+nodes are peered properly, you should also see a group of messages in the logs
+of each Raft engine that indicate if the node has been elected leader or if it
+has voted for another node as leader. On a leader node, the logs will look
+similar to this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">INFO  | raft::raft:833       | [12797589408118497989] became follower at term 0</span>
+<span class="go">INFO  | raft::raft:433       | [12797589408118497989] newRaft [peers: [9142281103993713288, 12797589408118497989], term: 0, commit: 0, applied: 0, last_index: 0, last_term: 0]</span>
+<span class="go">INFO  | raft::raft:833       | [12797589408118497989] became follower at term 1</span>
+<span class="go">INFO  | raft::raft:1120      | [12797589408118497989] is starting a new election at term 1</span>
+<span class="go">INFO  | raft::raft:848       | [12797589408118497989] became candidate at term 2</span>
+<span class="go">INFO  | raft::raft:950       | [12797589408118497989] received MsgRequestVoteResponse from 12797589408118497989 at term 2</span>
+<span class="go">INFO  | raft::raft:927       | [12797589408118497989] [logterm: 1, index: 2] sent MsgRequestVote request to 9142281103993713288 at term 2</span>
+<span class="go">INFO  | raft::raft:950       | [12797589408118497989] received MsgRequestVoteResponse from 9142281103993713288 at term 2</span>
+<span class="go">INFO  | raft::raft:1648      | [12797589408118497989] [quorum:2] has received 2 MsgRequestVoteResponse votes and 0 vote rejections</span>
+<span class="go">INFO  | raft::raft:891       | [12797589408118497989] became leader at term 2</span>
+</pre></div>
+</div>
+<p>On a node that becomes a follower and votes for another node, the logs will look
+like this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">INFO  | raft::raft:833       | [9142281103993713288] became follower at term 0</span>
+<span class="go">INFO  | raft::raft:433       | [9142281103993713288] newRaft [peers: [9142281103993713288, 12797589408118497989], term: 0, commit: 0, applied: 0, last_index: 0, last_term: 0]</span>
+<span class="go">INFO  | raft::raft:833       | [9142281103993713288] became follower at term 1</span>
+<span class="go">INFO  | raft::raft:1014      | [9142281103993713288] [term: 1] received a MsgRequestVote message with higher term from 12797589408118497989 [term: 2]</span>
+<span class="go">INFO  | raft::raft:833       | [9142281103993713288] became follower at term 2</span>
+<span class="go">INFO  | raft::raft:1181      | [9142281103993713288] [logterm: 1, index: 2, vote: 0] cast MsgRequestVote for 12797589408118497989 [logterm: 1, index: 2] at term 2</span>
+</pre></div>
+</div>
+<p>This indicates that a leader has been elected and that the network is ready.</p>
+</div>
+<div class="section" id="applying-workload-on-a-network">
+<h4>Applying Workload On a Network<a class="headerlink" href="#applying-workload-on-a-network" title="Permalink to this headline">¶</a></h4>
+<p>A workload generator can be started against the network using the
+<code class="docutils literal notranslate"><span class="pre">workload.yaml</span></code> compose file. To change the rate from the default, set the
+<code class="docutils literal notranslate"><span class="pre">RATE</span></code> environment variable prior to running the compose command.</p>
+<p>For example, to start a workload of 2 TPS against the network, do:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nv">RATE</span><span class="o">=</span><span class="m">2</span> docker-compose -f workload.yaml up
+</pre></div>
+</div>
+<p>To stop the workload, simply do:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker-compose -f workload.yaml down
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="changing-network-membership">
+<h2>Changing Network Membership<a class="headerlink" href="#changing-network-membership" title="Permalink to this headline">¶</a></h2>
+<p>Even though membership of a Sawtooth Raft network is not open, it does support
+changes. Membership is changed by updating the <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.raft.peers</span></code>
+on-chain setting to add a new node or remove an existing node. The leader
+monitors this setting; when it detects that a new key is present (adding a node)
+or that a key has been deleted (removing a node), it stops publishing blocks
+and proposes the configuration change to the network.</p>
+<p>Due to limitations in the raft-rs library, only one node may be added or removed
+at a time. This means that the updated value of
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.raft.peers</span></code> may have a single key removed <strong>OR</strong> it may
+have a single key added, but not both. If the leader detects that more than one
+node’s membership has changed, it will report an error and shutdown.</p>
+<div class="section" id="adding-a-node">
+<h3>Adding a Node<a class="headerlink" href="#adding-a-node" title="Permalink to this headline">¶</a></h3>
+<p>The new Sawtooth Raft engine should be started before the update to the on-chain
+setting is made. Once the setting is updated to include the public key of the
+new node and the network has been made aware of the change, the leader will
+begin to send messages to the new node and bring it into consensus with the rest
+of the network.</p>
+</div>
+<div class="section" id="removing-a-node">
+<h3>Removing a Node<a class="headerlink" href="#removing-a-node" title="Permalink to this headline">¶</a></h3>
+<p>The on-chain setting should be updated before the node is shutdown. When the
+setting has been updated to no longer include the old node’s public key, the
+leader will stop sending messages to the node and ignore any messages from it.
+Once this happens, the node can be shutdown safely since it is no longer
+participating in the network.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="troubleshooting.html" class="btn btn-neutral float-right" title="Troubleshooting and Common Issues" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="introduction.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2018, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

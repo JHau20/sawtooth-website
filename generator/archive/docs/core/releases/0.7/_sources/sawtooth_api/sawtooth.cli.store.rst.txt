@@ -1,0 +1,7 @@
+sawtooth\.cli\.store module
+===========================
+
+.. automodule:: sawtooth.cli.store
+    :members:
+    :undoc-members:
+    :show-inheritance:

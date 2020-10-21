@@ -1,0 +1,7 @@
+sawtooth\.cli\.docker module
+============================
+
+.. automodule:: sawtooth.cli.docker
+    :members:
+    :undoc-members:
+    :show-inheritance:

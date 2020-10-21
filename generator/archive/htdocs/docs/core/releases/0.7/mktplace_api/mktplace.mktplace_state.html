@@ -1,0 +1,439 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mktplace.mktplace_state module &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="mktplace package" href="mktplace.html"/>
+        <link rel="next" title="mktplace.mktplace_token_store module" href="mktplace.mktplace_token_store.html"/>
+        <link rel="prev" title="mktplace.mktplace_config module" href="mktplace.mktplace_config.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_data_model.html">MarketPlace Data Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_messages.html">MarketPlace Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_transactions.html">MarketPlace Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_transactions.html#marketplace-transaction-updates">MarketPlace Transaction Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_initial_state.html">MarketPlace Initial State</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">MarketPlace Python API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="mktintegration.html">mktintegration package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mktmain.html">mktmain package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="mktplace.html">mktplace package</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mktplace.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="mktplace.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktclient.html">MarketPlace Client Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="modules.html">MarketPlace Python API</a> &raquo;</li>
+        
+          <li><a href="mktplace.html">mktplace package</a> &raquo;</li>
+        
+      <li>mktplace.mktplace_state module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/mktplace_api/mktplace.mktplace_state.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-mktplace.mktplace_state">
+<span id="mktplace-mktplace-state-module"></span><h1>mktplace.mktplace_state module<a class="headerlink" href="#module-mktplace.mktplace_state" title="Permalink to this headline">¶</a></h1>
+<p>Wrapper for the market place state</p>
+<dl class="class">
+<dt id="mktplace.mktplace_state.Filters">
+<em class="property">class </em><code class="descclassname">mktplace.mktplace_state.</code><code class="descname">Filters</code><a class="reference internal" href="../_modules/mktplace/mktplace_state.html#Filters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_state.Filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A class that wraps a number of useful lambda expressions that
+can be used for the lambdafilter function on MarketPlaceState
+collections.</p>
+<dl class="staticmethod">
+<dt id="mktplace.mktplace_state.Filters.matchvalue">
+<em class="property">static </em><code class="descname">matchvalue</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_state.html#Filters.matchvalue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_state.Filters.matchvalue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicate: match objects that have the given field and the
+value for the field matches the given value</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="mktplace.mktplace_state.Filters.references">
+<em class="property">static </em><code class="descname">references</code><span class="sig-paren">(</span><em>field</em>, <em>idlist</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_state.html#Filters.references"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_state.Filters.references" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicte: match objects that have the given field and the
+value for the field references one of the objects in the list</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="mktplace.mktplace_state.Filters.matchtype">
+<em class="property">static </em><code class="descname">matchtype</code><span class="sig-paren">(</span><em>objtype</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_state.html#Filters.matchtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_state.Filters.matchtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicate: match objects with the given type</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="mktplace.mktplace_state.Filters.offers">
+<em class="property">static </em><code class="descname">offers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_state.html#Filters.offers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_state.Filters.offers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicate: match objects with either ExchangeOffer or SellOffer type</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="mktplace.mktplace_state.Filters.holdings">
+<em class="property">static </em><code class="descname">holdings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_state.html#Filters.holdings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_state.Filters.holdings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicate: match objects with either Holding or Liability type</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="mktplace.mktplace_state.MarketPlaceState">
+<em class="property">class </em><code class="descclassname">mktplace.mktplace_state.</code><code class="descname">MarketPlaceState</code><span class="sig-paren">(</span><em>baseurl</em>, <em>creator=None</em>, <em>creator_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_state.html#MarketPlaceState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_state.MarketPlaceState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mktplace.mktplace_communication.html#mktplace.mktplace_communication.MarketPlaceCommunication" title="mktplace.mktplace_communication.MarketPlaceCommunication"><code class="xref py py-class docutils literal"><span class="pre">mktplace.mktplace_communication.MarketPlaceCommunication</span></code></a></p>
+<p>A class to wrap the current ledger state for a market place. Retrieves
+the state from a validator and builds maps for names and ids. Exports
+methods for querying state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>baseurl</strong> (<em>url</em>) &#8211; the base URL for a Sawtooth Lake validator that
+supports an HTTP interface</li>
+<li><strong>creator</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the identifier for the participant generating
+transactions</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><p class="first last"><strong>State</strong> (<em>dict</em>) &#8211; The key/value store associated with the head of the
+ledger, for the MarketPlace store, keys are object identifiers and the
+values are the current state of each object.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mktplace.mktplace_state.MarketPlaceState.n2i">
+<code class="descname">n2i</code><span class="sig-paren">(</span><em>name</em>, <em>obj_type</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_state.html#MarketPlaceState.n2i"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_state.MarketPlaceState.n2i" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a name into an identifier. The name can take one of these
+forms:
+&#64; &#8211; resolves to the identifier for creator
+///&lt;IDENTIFIER&gt;  &#8211; resolves to the identifier
+//&lt;CREATOR&gt;/&lt;PATH&gt; &#8211; fully qualified name
+/&lt;PATH&gt; &#8211; resolve relative to the current creator if specified</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>str</em>) &#8211; object name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">object identifier</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_state.MarketPlaceState.i2n">
+<code class="descname">i2n</code><span class="sig-paren">(</span><em>objectid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_state.html#MarketPlaceState.i2n"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_state.MarketPlaceState.i2n" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct the fully qualified name for an object</p>
+<p>If the object does not have a name the format will be ///&lt;IDENTIFIER&gt;
+If the object is a participant the format will be //&lt;NAME&gt;
+Otherwise the format will be //&lt;CREATOR NAME&gt;/&lt;NAME&gt;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>objectid</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; identifier for the object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the fully qualified name for the object</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_state.MarketPlaceState.fetch">
+<code class="descname">fetch</code><span class="sig-paren">(</span><em>store='MarketPlaceTransaction'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_state.html#MarketPlaceState.fetch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_state.MarketPlaceState.fetch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the current state from the validator. Rebuild
+the name, type, and id maps for the resulting objects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>store</strong> (<em>str</em>) &#8211; optional, the name of the marketplace store to
+retrieve</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_state.MarketPlaceState.path">
+<code class="descname">path</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_state.html#MarketPlaceState.path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_state.MarketPlaceState.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to retrieve the value of a property of an object in the
+saved state</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>-- '.' separate expression for extracting a value from state</strong> (<a class="reference internal" href="#mktplace.mktplace_state.MarketPlaceState.path" title="mktplace.mktplace_state.MarketPlaceState.path"><em>path</em></a>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_state.MarketPlaceState.lambdafilter">
+<code class="descname">lambdafilter</code><span class="sig-paren">(</span><em>*predicates</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_state.html#MarketPlaceState.lambdafilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_state.MarketPlaceState.lambdafilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply a series of predicates to state objects. Predicates are
+lambda expressions on the data of an object. See the Filters class
+for tools for creating lambda expressions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>predicates</strong> (<em>list of lambda functions</em>) &#8211; a list of predicates used to filter the set of
+objects</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a list of object identifiers</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of identifiers</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_state.MarketPlaceState.list">
+<code class="descname">list</code><span class="sig-paren">(</span><em>objtype=None</em>, <em>creator=None</em>, <em>name=None</em>, <em>fields=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_state.html#MarketPlaceState.list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_state.MarketPlaceState.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple filter for common query operations on the current state</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mktplace.mktplace_token_store.html" class="btn btn-neutral float-right" title="mktplace.mktplace_token_store module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mktplace.mktplace_config.html" class="btn btn-neutral" title="mktplace.mktplace_config module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

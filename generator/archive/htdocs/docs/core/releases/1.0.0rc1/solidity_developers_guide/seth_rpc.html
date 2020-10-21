@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Seth-RPC &mdash; Sawtooth v1.0.0rc1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc1 documentation" href="../index.html"/>
+        <link rel="up" title="Solidity Developers Guide" href="../solidity_developers_guide.html"/>
+        <link rel="next" title="Core Developer’s Guide" href="../core_developers_guide.html"/>
+        <link rel="prev" title="Seth Transaction Receipts and Events" href="seth_transaction_receipts_and_events.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../solidity_developers_guide.html">Solidity Developers Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="seth_transaction_receipts_and_events.html">Seth Transaction Receipts and Events</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Seth-RPC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cli-design">CLI Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rpc-calls">RPC Calls</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#transaction-calls">Transaction Calls</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#account-calls">Account Calls</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#block-calls">Block Calls</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#network-calls">Network Calls</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#log-calls">Log Calls</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../solidity_developers_guide.html">Solidity Developers Guide</a> &raquo;</li>
+        
+      <li>Seth-RPC</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/solidity_developers_guide/seth_rpc.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="seth-rpc">
+<h1>Seth-RPC<a class="headerlink" href="#seth-rpc" title="Permalink to this headline">¶</a></h1>
+<p>In order to make the Seth Transaction Family useful to existing Solidity
+developers, a layer in the Ethereum application stack needs to be identified
+where Sawtooth can be positioned. The JSON-RPC interface provided by all
+existing Ethereum clients, including the Go Ethereum client geth, has been
+identified as the best layer to make the change. It is the interface over which
+tools and libraries used by Solidity developers and front-end Javascript
+developers interact with an Ethereum network. The most popular tool using this
+interface is the Ethereum JavaScript API. It will be used to test that the
+interface is functioning correctly.</p>
+<p>The seth-rpc server will provide this JSON-RPC interface for connecting
+Ethereum JavaScript API to a Sawtooth validator and the Seth Transaction Family.</p>
+<a class="reference internal image-reference" href="../_images/seth_JSON_RPC.svg"><div align="center" class="align-center"><img alt="Seth JSON RPC Diagram" src="../_images/seth_JSON_RPC.svg" width="80%" /></div>
+</a>
+<p>In order to keep the seth-rpc server focused and optimized as an adapter, it
+exists as a separate process from the existing seth client. However, the
+seth-rpc server and the seth client share configuration and key storage to
+simplify interactions between the two.</p>
+<div class="section" id="cli-design">
+<h2>CLI Design<a class="headerlink" href="#cli-design" title="Permalink to this headline">¶</a></h2>
+<p>The seth-rpc server shall support the following command line interface:</p>
+<p>Usage: seth-rpc [options]</p>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--connect <var>&lt;validator-url&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Connect to the validator at the given URL.</td></tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>&#8211;bind &lt;endpoint&gt;...       Bind to the following addresses and accept JSON-RPC</dt>
+<dd>requests on it.</dd>
+</dl>
+</div>
+<div class="section" id="rpc-calls">
+<h2>RPC Calls<a class="headerlink" href="#rpc-calls" title="Permalink to this headline">¶</a></h2>
+<p>The following RPC calls will be partially supported.</p>
+<div class="section" id="transaction-calls">
+<h3>Transaction Calls<a class="headerlink" href="#transaction-calls" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>eth_getTransactionCount</li>
+<li>eth_getBlockTransactionCountByHash</li>
+<li>eth_getBlockTransactionCountByNumber</li>
+<li>eth_sendTransaction</li>
+<li>eth_sendRawTransaction</li>
+<li>eth_getTransactionByHash</li>
+<li>eth_getTransactionByBlockHashAndIndex</li>
+<li>eth_getTransactionByBlockNumberAndIndex</li>
+<li>eth_getTransactionReceipt</li>
+<li>eth_gasPrice</li>
+<li>eth_estimateGas</li>
+</ul>
+</div>
+<div class="section" id="account-calls">
+<h3>Account Calls<a class="headerlink" href="#account-calls" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>eth_getBalance</li>
+<li>eth_getStorageAt</li>
+<li>eth_getCode</li>
+<li>eth_sign</li>
+<li>eth_call</li>
+<li>eth_accounts</li>
+</ul>
+</div>
+<div class="section" id="block-calls">
+<h3>Block Calls<a class="headerlink" href="#block-calls" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>eth_blockNumber</li>
+<li>eth_getBlockByHash</li>
+<li>eth_getBlockByNumber</li>
+</ul>
+</div>
+<div class="section" id="network-calls">
+<h3>Network Calls<a class="headerlink" href="#network-calls" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>net_version</li>
+<li>net_peerCount</li>
+<li>net_listening</li>
+</ul>
+</div>
+<div class="section" id="log-calls">
+<h3>Log Calls<a class="headerlink" href="#log-calls" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>eth_newFilter</li>
+<li>eth_newBlockFilter</li>
+<li>eth_newPendingTransactionFilter</li>
+<li>eth_uninstallFilter</li>
+<li>eth_getFilterChanges</li>
+<li>eth_getFilterLogs</li>
+<li>eth_getLogs</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../core_developers_guide.html" class="btn btn-neutral float-right" title="Core Developer’s Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="seth_transaction_receipts_and_events.html" class="btn btn-neutral" title="Seth Transaction Receipts and Events" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.0rc1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,516 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Building and Submitting Transactions &mdash; Sawtooth v1.0.0rc7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc7 documentation" href="../index.html"/>
+        <link rel="up" title="JavaScript SDK" href="../app_developers_guide/javascript_sdk.html"/>
+        <link rel="next" title="Transaction Processor Tutorial JavaScript" href="sdk_TP_tutorial_js.html"/>
+        <link rel="prev" title="JavaScript SDK" href="../app_developers_guide/javascript_sdk.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/sdk_table.html">Available SDKs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/installing_sawtooth.html">Installing and Running Sawtooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/example_transaction_processors.html">Example Transaction Processors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/intro_xo_transaction_family.html">Introduction to the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/java_sdk.html">Java SDK</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../app_developers_guide/javascript_sdk.html">JavaScript SDK</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Building and Submitting Transactions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#creating-a-private-key-and-signer">Creating a Private Key and Signer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#encoding-your-payload">Encoding Your Payload</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#building-the-transaction">Building the Transaction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#building-the-batch">Building the Batch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submitting-batches-to-the-validator">Submitting Batches to the Validator</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sdk_TP_tutorial_js.html">Transaction Processor Tutorial  JavaScript</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/python_sdk.html">Python SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/testing.html">Testing a Transaction Processor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../app_developers_guide/no_sdk.html">Development Without an SDK</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide/javascript_sdk.html">JavaScript SDK</a> &raquo;</li>
+        
+      <li>Building and Submitting Transactions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_autogen/sdk_submit_tutorial_js.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="building-and-submitting-transactions">
+<h1>Building and Submitting Transactions<a class="headerlink" href="#building-and-submitting-transactions" title="Permalink to this headline">¶</a></h1>
+<p>The process of encoding information to be submitted to a distributed ledger is
+generally non-trivial. A series of cryptographic safeguards are used to
+confirm identity and data validity. <em>Hyperledger Sawtooth</em> is no different, but
+the JavaScript SDK does provide client functionality that abstracts away
+most of these details, and greatly simplifies the process of making changes to
+the blockchain.</p>
+<div class="section" id="creating-a-private-key-and-signer">
+<h2>Creating a Private Key and Signer<a class="headerlink" href="#creating-a-private-key-and-signer" title="Permalink to this headline">¶</a></h2>
+<p>In order to confirm your identity and sign the information you send to the
+validator, you will need a 256-bit key. Sawtooth uses the secp256k1 ECDSA
+standard for signing, which means that almost any set of 32 bytes is a valid
+key. It is fairly simple to generate a valid key using the SDK&#8217;s <em>signing</em>
+module.</p>
+<p>A <em>Signer</em> wraps a private key and provides some convenient methods for signing
+bytes and getting the private key&#8217;s associated public key.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="p">{</span><span class="nx">createContext</span><span class="p">,</span> <span class="nx">CryptoFactory</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;sawtooth-sdk/signing&#39;</span><span class="p">)</span>
+
+<span class="kr">const</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">createContext</span><span class="p">(</span><span class="s1">&#39;secp256k1&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">privateKey</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">newRandomPrivateKey</span><span class="p">()</span>
+<span class="kr">const</span> <span class="nx">signer</span> <span class="o">=</span> <span class="nx">CryptoFactory</span><span class="p">(</span><span class="nx">context</span><span class="p">).</span><span class="nx">newSigner</span><span class="p">(</span><span class="nx">privateKey</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This key is the <strong>only</strong> way to prove your identity on the blockchain. Any
+person possessing it will be able to sign Transactions using your identity,
+and there is no way to recover it if lost. It is very important that any
+private key is kept secret and secure.</p>
+</div>
+</div>
+<div class="section" id="encoding-your-payload">
+<h2>Encoding Your Payload<a class="headerlink" href="#encoding-your-payload" title="Permalink to this headline">¶</a></h2>
+<p>Transaction payloads are composed of binary-encoded data that is opaque to the
+validator. The logic for encoding and decoding them rests entirely within the
+particular Transaction Processor itself. As a result, there are many possible
+formats, and you will have to look to the definition of the Transaction
+Processor itself for that information. As an example, the <em>IntegerKey</em>
+Transaction Processor uses a payload of three key/value pairs encoded as
+<a class="reference external" href="https://en.wikipedia.org/wiki/CBOR">CBOR</a>. Creating one might look like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">cbor</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;cbor&#39;</span><span class="p">)</span>
+
+<span class="kr">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">Verb</span><span class="o">:</span> <span class="s1">&#39;set&#39;</span><span class="p">,</span>
+    <span class="nx">Name</span><span class="o">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span>
+    <span class="nx">Value</span><span class="o">:</span> <span class="mi">42</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">payloadBytes</span> <span class="o">=</span> <span class="nx">cbor</span><span class="p">.</span><span class="nx">encode</span><span class="p">(</span><span class="nx">payload</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="building-the-transaction">
+<h2>Building the Transaction<a class="headerlink" href="#building-the-transaction" title="Permalink to this headline">¶</a></h2>
+<p><em>Transactions</em> are the basis for individual changes of state to the Sawtooth
+blockchain. They are composed of a binary payload, a binary-encoded
+<em>TransactionHeader</em> with some cryptographic safeguards and metadata about how
+it should be handled, and a signature of that header. It would be worthwhile
+to familiarize yourself with the information in
+<a class="reference internal" href="../architecture/transactions_and_batches.html"><span class="doc">Transactions and Batches!</span></a>, particularly the definition of
+TransactionHeaders.</p>
+<div class="section" id="create-the-transaction-header">
+<h3>1. Create the Transaction Header<a class="headerlink" href="#create-the-transaction-header" title="Permalink to this headline">¶</a></h3>
+<p>A TransactionHeader contains information for routing a transaction to the
+correct transaction processor, what input and output state addresses are
+involved, references to prior transactions it depends on, and the public keys
+associated with the its signature. The header references the payload through a
+SHA-512 hash of the payload bytes.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="p">{</span><span class="nx">createHash</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;crypto&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">protobuf</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;sawtooth-sdk&#39;</span><span class="p">)</span>
+
+<span class="kr">const</span> <span class="nx">transactionHeaderBytes</span> <span class="o">=</span> <span class="nx">protobuf</span><span class="p">.</span><span class="nx">TransactionHeader</span><span class="p">.</span><span class="nx">encode</span><span class="p">({</span>
+    <span class="nx">familyName</span><span class="o">:</span> <span class="s1">&#39;intkey&#39;</span><span class="p">,</span>
+    <span class="nx">familyVersion</span><span class="o">:</span> <span class="s1">&#39;1.0&#39;</span><span class="p">,</span>
+    <span class="nx">inputs</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;1cf1266e282c41be5e4254d8820772c5518a2c5a8c0c7f7eda19594a7eb539453e1ed7&#39;</span><span class="p">],</span>
+    <span class="nx">outputs</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;1cf1266e282c41be5e4254d8820772c5518a2c5a8c0c7f7eda19594a7eb539453e1ed7&#39;</span><span class="p">],</span>
+    <span class="nx">signerPublicKey</span><span class="o">:</span> <span class="nx">signer</span><span class="p">.</span><span class="nx">getPublicKey</span><span class="p">().</span><span class="nx">asHex</span><span class="p">(),</span>
+    <span class="c1">// In this example, we&#39;re signing the batch with the same private key,</span>
+    <span class="c1">// but the batch can be signed by another party, in which case, the</span>
+    <span class="c1">// public key will need to be associated with that key.</span>
+    <span class="nx">batcherPublicKey</span><span class="o">:</span> <span class="nx">signer</span><span class="p">.</span><span class="nx">getPublicKey</span><span class="p">().</span><span class="nx">asHex</span><span class="p">(),</span>
+    <span class="c1">// In this example, there are no dependencies.  This list should include</span>
+    <span class="c1">// an previous transaction header signatures that must be applied for</span>
+    <span class="c1">// this transaction to successfully commit.</span>
+    <span class="c1">// For example,</span>
+    <span class="c1">// dependencies: [&#39;540a6803971d1880ec73a96cb97815a95d374cbad5d865925e5aa0432fcf1931539afe10310c122c5eaae15df61236079abbf4f258889359c4d175516934484a&#39;],</span>
+    <span class="nx">dependencies</span><span class="o">:</span> <span class="p">[],</span>
+    <span class="nx">payloadSha512</span><span class="o">:</span> <span class="nx">createHash</span><span class="p">(</span><span class="s1">&#39;sha512&#39;</span><span class="p">).</span><span class="nx">update</span><span class="p">(</span><span class="nx">payloadBytes</span><span class="p">).</span><span class="nx">digest</span><span class="p">(</span><span class="s1">&#39;hex&#39;</span><span class="p">)</span>
+<span class="p">}).</span><span class="nx">finish</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Remember that a <em>batcher public_key</em> is the hex public key matching the private
+key that will later be used to sign a Transaction&#8217;s Batch, and
+<em>dependencies</em> are the <em>header signatures</em> of Transactions that must be
+committed before this one (see <em>TransactionHeaders</em> in
+<a class="reference internal" href="../architecture/transactions_and_batches.html"><span class="doc">Transactions and Batches!</span></a>).</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The <em>inputs</em> and <em>outputs</em> are the state addresses a Transaction is allowed
+to read from or write to. With the Transaction above, we referenced the
+specific address where the value of  <code class="docutils literal"><span class="pre">'foo'</span></code> is stored.  Whenever possible,
+specific addresses should be used, as this will allow the validator to
+schedule transaction processing more efficiently.</p>
+<p class="last">Note that the methods for assigning and validating addresses are entirely up
+to the Transaction Processor. In the case of IntegerKey, there are <a class="reference external" href="../transaction_family_specifications/integerkey_transaction_family.html#addressing">specific
+rules to generate valid addresses</a>, which must be followed or
+Transactions will be rejected. You will need to follow the addressing rules
+for whichever Transaction Family you are working with.</p>
+</div>
+</div>
+<div class="section" id="create-the-transaction">
+<h3>2. Create the Transaction<a class="headerlink" href="#create-the-transaction" title="Permalink to this headline">¶</a></h3>
+<p>Once the TransactionHeader is constructed, its bytes are then used to create a
+signature.  This header signature also acts as the ID of the transaction.  The
+header bytes, the header signature, and the payload bytes are all used to
+construct the complete Transaction.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">signature</span> <span class="o">=</span> <span class="nx">signer</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">transactionHeaderBytes</span><span class="p">)</span>
+
+<span class="kr">const</span> <span class="nx">transaction</span> <span class="o">=</span> <span class="nx">protobuf</span><span class="p">.</span><span class="nx">Transaction</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+    <span class="nx">header</span><span class="o">:</span> <span class="nx">transactionHeaderBytes</span><span class="p">,</span>
+    <span class="nx">headerSignature</span><span class="o">:</span> <span class="nx">signature</span><span class="p">,</span>
+    <span class="nx">payload</span><span class="o">:</span> <span class="nx">payloadBytes</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="optional-encode-the-transaction-s">
+<h3>3. (optional) Encode the Transaction(s)<a class="headerlink" href="#optional-encode-the-transaction-s" title="Permalink to this headline">¶</a></h3>
+<p>If the same machine is creating Transactions and Batches there is no need to
+encode the Transaction instances. However, in the use case where Transactions
+are being batched externally, they must be serialized before being transmitted
+to the batcher. The JavaScript SDK offers two options for this. One or more
+Transactions can be combined into a serialized <em>TransactionList</em> method, or can
+be serialized as a single Transaction.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">txnListBytes</span> <span class="o">=</span> <span class="nx">protobuf</span><span class="p">.</span><span class="nx">TransactionList</span><span class="p">.</span><span class="nx">encode</span><span class="p">([</span>
+    <span class="nx">transaction1</span><span class="p">,</span>
+    <span class="nx">transaction2</span>
+<span class="p">]).</span><span class="nx">finish</span><span class="p">()</span>
+
+<span class="kr">const</span> <span class="nx">txnBytes2</span> <span class="o">=</span> <span class="nx">transaction</span><span class="p">.</span><span class="nx">finish</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="building-the-batch">
+<h2>Building the Batch<a class="headerlink" href="#building-the-batch" title="Permalink to this headline">¶</a></h2>
+<p>Once you have one or more Transaction instances ready, they must be wrapped in a
+<em>Batch</em>. Batches are the atomic unit of change in Sawtooth&#8217;s state. When a Batch
+is submitted to a validator each Transaction in it will be applied (in order),
+or <em>no</em> Transactions will be applied. Even if your Transactions are not
+dependent on any others, they cannot be submitted directly to the validator.
+They must all be wrapped in a Batch.</p>
+<div class="section" id="create-the-batchheader">
+<h3>1. Create the BatchHeader<a class="headerlink" href="#create-the-batchheader" title="Permalink to this headline">¶</a></h3>
+<p>Similar to the TransactionHeader, there is a <em>BatchHeader</em> for each Batch.
+As Batches are much simpler than Transactions, a BatchHeader needs only  the
+public key of the signer and the list of Transaction IDs, in the same order they
+are listed in the Batch.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">transactions</span> <span class="o">=</span> <span class="p">[</span><span class="nx">transaction</span><span class="p">]</span>
+
+<span class="kr">const</span> <span class="nx">batchHeaderBytes</span> <span class="o">=</span> <span class="nx">protobuf</span><span class="p">.</span><span class="nx">BatchHeader</span><span class="p">.</span><span class="nx">encode</span><span class="p">({</span>
+    <span class="nx">signerPublicKey</span><span class="o">:</span> <span class="nx">signer</span><span class="p">.</span><span class="nx">getPublicKey</span><span class="p">().</span><span class="nx">asHex</span><span class="p">(),</span>
+    <span class="nx">transactionIds</span><span class="o">:</span> <span class="nx">transactions</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">txn</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">txn</span><span class="p">.</span><span class="nx">headerSignature</span><span class="p">),</span>
+<span class="p">}).</span><span class="nx">finish</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-the-batch">
+<h3>2. Create the Batch<a class="headerlink" href="#create-the-batch" title="Permalink to this headline">¶</a></h3>
+<p>Using the SDK, creating a Batch is similar to creating a transaction.  The
+header is signed, and the resulting signature acts as the Batch&#8217;s ID.  The Batch
+is then constructed out of the header bytes, the header signature, and the
+transactions that make up the batch.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">signature</span> <span class="o">=</span> <span class="nx">signer</span><span class="p">.</span><span class="nx">sign</span><span class="p">(</span><span class="nx">batchHeaderBytes</span><span class="p">)</span>
+
+<span class="kr">const</span> <span class="nx">batch</span> <span class="o">=</span> <span class="nx">protobuf</span><span class="p">.</span><span class="nx">Batch</span><span class="p">.</span><span class="nx">create</span><span class="p">({</span>
+    <span class="nx">header</span><span class="o">:</span> <span class="nx">batchHeaderBytes</span><span class="p">,</span>
+    <span class="nx">headerSignature</span><span class="o">:</span> <span class="nx">signature</span><span class="p">,</span>
+    <span class="nx">transactions</span><span class="o">:</span> <span class="nx">transactions</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="encode-the-batch-es-in-a-batchlist">
+<h3>3. Encode the Batch(es) in a BatchList<a class="headerlink" href="#encode-the-batch-es-in-a-batchlist" title="Permalink to this headline">¶</a></h3>
+<p>In order to submit Batches to the validator, they  must be collected into a
+<em>BatchList</em>.  Multiple batches can be submitted in one BatchList, though the
+Batches themselves don&#8217;t necessarily need to depend on each other. Unlike
+Batches, a BatchList is not atomic. Batches from other clients may be
+interleaved with yours.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">batchListBytes</span> <span class="o">=</span> <span class="nx">protobuf</span><span class="p">.</span><span class="nx">BatchList</span><span class="p">.</span><span class="nx">encode</span><span class="p">({</span>
+    <span class="nx">batches</span><span class="o">:</span> <span class="p">[</span><span class="nx">batch</span><span class="p">]</span>
+<span class="p">}).</span><span class="nx">finish</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note, if the transaction creator is using a different private key than the
+batcher, the <em>batcher public_key</em> must have been specified for every Transaction,
+and must have been generated from the private key being used to sign the
+Batch, or validation will fail.</p>
+</div>
+</div>
+</div>
+<div class="section" id="submitting-batches-to-the-validator">
+<h2>Submitting Batches to the Validator<a class="headerlink" href="#submitting-batches-to-the-validator" title="Permalink to this headline">¶</a></h2>
+<p>The prescribed way to submit Batches to the validator is via the REST API.
+This is an independent process that runs alongside a validator, allowing clients
+to communicate using HTTP/JSON standards. Simply send a <em>POST</em> request to the
+<em>/batches</em> endpoint, with a <em>&#8220;Content-Type&#8221;</em> header of
+<em>&#8220;application/octet-stream&#8221;</em>, and the <em>body</em> as a serialized <em>BatchList</em>.</p>
+<p>There are a many ways to make an HTTP request, and hopefully the submission
+process is fairly straightforward from here, but as an example, this is what it
+might look if you sent the request from the same JavaScript process that
+prepared the BatchList:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">)</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">({</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://rest.api.domain/batches&#39;</span><span class="p">,</span>
+    <span class="nx">body</span><span class="o">:</span> <span class="nx">batchListBytes</span><span class="p">,</span>
+    <span class="nx">headers</span><span class="o">:</span> <span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/octet-stream&#39;</span><span class="p">}</span>
+<span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">)</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p>And here is what it would look like if you saved the binary to a file, and then
+sent it from the command line with <code class="docutils literal"><span class="pre">curl</span></code>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">)</span>
+
+<span class="kr">const</span> <span class="nx">fileStream</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="s1">&#39;intkey.batches&#39;</span><span class="p">)</span>
+<span class="nx">fileStream</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">batchListBytes</span><span class="p">)</span>
+<span class="nx">fileStream</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>% curl --request POST <span class="se">\</span>
+    --header <span class="s2">&quot;Content-Type: application/octet-stream&quot;</span> <span class="se">\</span>
+    --data-binary @intkey.batches <span class="se">\</span>
+    <span class="s2">&quot;http://rest.api.domain/batches&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sdk_TP_tutorial_js.html" class="btn btn-neutral float-right" title="Transaction Processor Tutorial JavaScript" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../app_developers_guide/javascript_sdk.html" class="btn btn-neutral" title="JavaScript SDK" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.0rc7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

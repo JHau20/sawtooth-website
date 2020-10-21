@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>About Sawtooth Networks &mdash; Sawtooth v1.2.3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using Docker for a Sawtooth Test Network" href="docker_test_network.html" />
+    <link rel="prev" title="Creating a Sawtooth Test Network" href="creating_sawtooth_network.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Transaction Family Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_sawtooth.html">Setting Up a Sawtooth Node for Testing</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="creating_sawtooth_network.html">Creating a Sawtooth Test Network</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">About Sawtooth Networks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="docker_test_network.html">Using Docker for a Sawtooth Test Network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="kubernetes_test_network.html">Using Kubernetes for a Sawtooth Test Network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ubuntu_test_network.html">Using Ubuntu for a Sawtooth Test Network</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Playing with the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_the_sdks.html">Using the Sawtooth SDKs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_restriction.html">Namespace Restriction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_subscriptions.html">Subscribing to Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="creating_sawtooth_network.html">Creating a Sawtooth Test Network</a> &raquo;</li>
+        
+      <li>About Sawtooth Networks</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/about_sawtooth_networks.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="about-sawtooth-networks">
+<h1>About Sawtooth Networks<a class="headerlink" href="#about-sawtooth-networks" title="Permalink to this headline">¶</a></h1>
+<p id="about-sawtooth-networks-start-do-not-remove">In a Sawtooth network, each host system (physical computer, virtual machine,
+set of Docker containers, or Kubernetes pod) is a Sawtooth node that runs one
+validator, an optional REST API, a consensus engine, and a set of transaction
+processors.</p>
+<p>The first node creates the <a class="reference internal" href="../glossary.html#term-genesis-block"><span class="xref std std-term">genesis block</span></a>, which specifies the initial
+on-chain settings for the network. The other nodes access those settings when
+they join the network.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The example environment includes the Sawtooth REST API on all validator
+nodes. However, an application could provide a custom REST API (or no REST
+API). See
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-supply-chain">Sawtooth Supply Chain</a>
+for an example of a custom REST API.</p>
+<p>This environment also runs a consensus engine on each node. The consensus
+engine could run on a separate system, as long as it is reachable from the
+Sawtooth node.  This guide does not describe how to set up a consensus
+engine on a different system.</p>
+</div>
+<p>A Sawtooth network has the following requirements:</p>
+<ul class="simple">
+<li><p>Each node must run the same <a class="reference internal" href="../glossary.html#term-consensus-engine"><span class="xref std std-term">consensus engine</span></a>. The procedures in this
+guide show you how to configure <a class="reference internal" href="../glossary.html#term-pbft-consensus"><span class="xref std std-term">PBFT</span></a> or
+<a class="reference internal" href="../glossary.html#term-poet-consensus"><span class="xref std std-term">PoET</span></a> consensus. For more information, see
+<a class="reference internal" href="../sysadmin_guide/about_dynamic_consensus.html"><span class="doc">About Dynamic Consensus</span></a>.</p></li>
+<li><p>Each node must run the same set of transaction processors as all other nodes
+in the network.</p></li>
+<li><p>Each node must advertise a routable address. The Docker and Kubernetes
+platforms provide preconfigured settings. For the Ubuntu platform, you must
+configure network settings before starting the validator.</p></li>
+<li><p>The authorization type must be the same on all nodes: either <code class="docutils literal notranslate"><span class="pre">trust</span></code>
+(default) or <code class="docutils literal notranslate"><span class="pre">challenge</span></code>. This application development environment uses
+<code class="docutils literal notranslate"><span class="pre">trust</span></code> authorization.</p></li>
+<li><p>The first node on the network must create the <a class="reference internal" href="../glossary.html#term-genesis-block"><span class="xref std std-term">genesis block</span></a>, which
+includes the on-chain configuration settings that will be available to the
+other nodes when they join the network.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The first Sawtooth node on the network has no special meaning, other than
+being the node that created the genesis block. Sawtooth has no concept of a
+“head node” or “master node”. Once multiple nodes are up and running, each
+node has the same genesis block and treats all other nodes as peers.</p>
+</div>
+<span class="target" id="about-sawtooth-networks-end-not-remove"></span></div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="docker_test_network.html" class="btn btn-neutral float-right" title="Using Docker for a Sawtooth Test Network" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="creating_sawtooth_network.html" class="btn btn-neutral float-left" title="Creating a Sawtooth Test Network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

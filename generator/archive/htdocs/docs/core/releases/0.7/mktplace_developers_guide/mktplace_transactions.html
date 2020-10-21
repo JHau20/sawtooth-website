@@ -1,0 +1,667 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MarketPlace Transactions &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="MarketPlace Developer’s Guide" href="../mktplace_developers_guide.html"/>
+        <link rel="next" title="MarketPlace Initial State" href="mktplace_initial_state.html"/>
+        <link rel="prev" title="MarketPlace Messages" href="mktplace_messages.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="mktplace_data_model.html">MarketPlace Data Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mktplace_messages.html">MarketPlace Messages</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MarketPlace Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#marketplace-transaction-updates">MarketPlace Transaction Updates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#register-participant">Register Participant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#register-account">Register Account</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#register-asset-type">Register Asset Type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#register-asset">Register Asset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#register-holding">Register Holding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#register-liability">Register Liability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#register-exchangeoffer">Register ExchangeOffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#register-selloffer">Register SellOffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unregister-all-objects">Unregister All Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exchange">Exchange</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mktplace_initial_state.html">MarketPlace Initial State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_api/modules.html">MarketPlace Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mktclient.html">MarketPlace Client Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a> &raquo;</li>
+        
+      <li>MarketPlace Transactions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/mktplace_developers_guide/mktplace_transactions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="marketplace-transactions">
+<span id="mktplace-transactions-label"></span><h1>MarketPlace Transactions<a class="headerlink" href="#marketplace-transactions" title="Permalink to this headline">¶</a></h1>
+<p>All MarketPlace transactions have the following fields:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Dependencies:</th><td class="field-body">a list of transaction identifiers that must be
+committed to the log before this transaction is committed</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Nonce:</th><td class="field-body">a uniquifier for the transaction, we use a wallclock time
+stamp though any float value will suffice; it is the creator of the
+transaction that is responsible for choosing a value that will result
+in unique signatures.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Signature:</th><td class="field-body">the signature of the transaction content only; the
+signature of the transaction is computed over the CBOR encoding of
+the transaction with keys sorted alphabetically</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">TransactionType:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">the name of the transaction family, all MarketPlace
+transactions use &#8220;/MarketPlaceTransaction&#8221; as the TransactionType.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Update:</th><td class="field-body">information about the actual change that will be applied to
+the MarketPlace ledger.</td>
+</tr>
+</tbody>
+</table>
+<p>There are no optional fields in MarketPlace transactions. A value must
+be specified for every field for the purposes of consistency in
+signing. The MarketPlace Client API provides a simple means for filling
+in reasonable default values, but other clients must ensure that the
+serialized object contains values for all specified fields.</p>
+</div>
+<div class="section" id="marketplace-transaction-updates">
+<h1>MarketPlace Transaction Updates<a class="headerlink" href="#marketplace-transaction-updates" title="Permalink to this headline">¶</a></h1>
+<p>The Update object contains an UpdateType field that describes the change
+to be applied to the ledger. There are three basic types of updates. The
+first to add or remove objects from the ledger:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Register:</th><td class="field-body">Create a new object. All register updates have a name and
+description field. The name field must be unique for a particular
+creator. All updates except the update used to register a new
+participant must have a creator field that containts the participant
+identifier for the player creating the object.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Unregister:</th><td class="field-body">Destroy an existing object. Unregister updates all
+contain one field, the object identifier of the object to destroy.</td>
+</tr>
+</tbody>
+</table>
+<p>The final type of update, Exchange, transfers the balance from one
+holding/liability object to another through a series of offers.</p>
+<div class="section" id="register-participant">
+<h2>Register Participant<a class="headerlink" href="#register-participant" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Update&quot;</span> <span class="o">:</span>
+<span class="p">{</span>
+  <span class="s2">&quot;UpdateType&quot;</span><span class="o">:</span> <span class="s2">&quot;/mktplace.transactions.ParticipantUpdate/Register&quot;</span>
+  <span class="s2">&quot;Description&quot;</span><span class="o">:</span> <span class="s2">&quot;MarketPlace Participant&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="s2">&quot;market&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="register-account">
+<h2>Register Account<a class="headerlink" href="#register-account" title="Permalink to this headline">¶</a></h2>
+<p>The fields for account registration include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">CreatorID:</th><td class="field-body">the identifier for the participant requesting creation of
+the new object</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Update&quot;</span> <span class="o">:</span>
+<span class="p">{</span>
+  <span class="s2">&quot;CreatorID&quot;</span><span class="o">:</span> <span class="s2">&quot;1b452fc363a3e024&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Description&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="s2">&quot;/private/account&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;UpdateType&quot;</span><span class="o">:</span> <span class="s2">&quot;/mktplace.transactions.AccountUpdate/Register&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="register-asset-type">
+<h2>Register Asset Type<a class="headerlink" href="#register-asset-type" title="Permalink to this headline">¶</a></h2>
+<p>The fields for asset type registration include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">CreatorID:</th><td class="field-body">The identifier for the participant requesting creation of
+the new object</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Update&quot;</span><span class="o">:</span>
+<span class="p">{</span>
+  <span class="s2">&quot;CreatorID&quot;</span><span class="o">:</span> <span class="s2">&quot;1b452fc363a3e024&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Description&quot;</span><span class="o">:</span> <span class="s2">&quot;Currency asset type&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="s2">&quot;/asset-type/currency&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;UpdateType&quot;</span><span class="o">:</span> <span class="s2">&quot;/mktplace.transactions.AssetTypeUpdate/Register&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="register-asset">
+<h2>Register Asset<a class="headerlink" href="#register-asset" title="Permalink to this headline">¶</a></h2>
+<p>The fields for asset registration include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">CreatorID:</th><td class="field-body">The identifier for the participant requesting creation of
+the new object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">AssetTypeID:</th><td class="field-body">The identifier for the asset type, the only participant
+allowed to create an asset with the type is the participant who
+created the type</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Update&quot;</span><span class="o">:</span>
+<span class="p">{</span>
+  <span class="s2">&quot;AssetTypeID&quot;</span><span class="o">:</span> <span class="s2">&quot;77dfddc9936745fc&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;CreatorID&quot;</span><span class="o">:</span> <span class="s2">&quot;1b452fc363a3e024&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Description&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="s2">&quot;/asset/currency/mikel&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;UpdateType&quot;</span><span class="o">:</span> <span class="s2">&quot;/mktplace.transactions.AssetUpdate/Register&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="register-holding">
+<h2>Register Holding<a class="headerlink" href="#register-holding" title="Permalink to this headline">¶</a></h2>
+<p>The fields for holding registration include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">CreatorID:</th><td class="field-body">The identifier for the participant requesting creation of
+the new object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">AssetID:</th><td class="field-body">The identifier for the asset stored in the holding</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Count:</th><td class="field-body">The number of assets stored in the holding</td>
+</tr>
+<tr class="field-even field"><th class="field-name">AccountID:</th><td class="field-body">The identifier for the account used to manage the holding</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Update&quot;</span><span class="o">:</span>
+<span class="p">{</span>
+  <span class="s2">&quot;AssetID&quot;</span><span class="o">:</span> <span class="s2">&quot;b6bdf0368de9855a&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Count&quot;</span><span class="o">:</span> <span class="mi">1000000</span><span class="p">,</span>
+  <span class="s2">&quot;CreatorID&quot;</span><span class="o">:</span> <span class="s2">&quot;1b452fc363a3e024&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Description&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="s2">&quot;/private/holding/currency/mikel&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;UpdateType&quot;</span><span class="o">:</span> <span class="s2">&quot;/mktplace.transactions.HoldingUpdate/Register&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;AccountID&quot;</span><span class="o">:</span> <span class="s2">&quot;bb3613256325c35a&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="register-liability">
+<h2>Register Liability<a class="headerlink" href="#register-liability" title="Permalink to this headline">¶</a></h2>
+<p>The fields for liability registration include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">CreatorID:</th><td class="field-body">The identifier for the participant requesting creation of
+the new object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">AssetTypeID:</th><td class="field-body">The identifier for the asset stored in the holding</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Count:</th><td class="field-body">The number of assets stored in the holding</td>
+</tr>
+<tr class="field-even field"><th class="field-name">AccountID:</th><td class="field-body">The identifier for the account used to manage the holding</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">GuarantorID:</th><td class="field-body">The identifier for the participant who guarantees the
+liability</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Update&quot;</span><span class="o">:</span>
+<span class="p">{</span>
+  <span class="s2">&quot;AssetTypeID&quot;</span><span class="o">:</span> <span class="s2">&quot;b6bdf0368de9855a&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Count&quot;</span><span class="o">:</span> <span class="mi">1000000</span><span class="p">,</span>
+  <span class="s2">&quot;GuarantorID&quot;</span><span class="o">:</span> <span class="s2">&quot;1b452fc363a3e024&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;CreatorID&quot;</span><span class="o">:</span> <span class="s2">&quot;1b452fc363a3e024&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Description&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="s2">&quot;/private/holding/currency/mikel&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;UpdateType&quot;</span><span class="o">:</span> <span class="s2">&quot;/mktplace.transactions.LiabilityUpdate/Register&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;AccountID&quot;</span><span class="o">:</span> <span class="s2">&quot;bb3613256325c35a&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="register-exchangeoffer">
+<h2>Register ExchangeOffer<a class="headerlink" href="#register-exchangeoffer" title="Permalink to this headline">¶</a></h2>
+<p>The fields for registration of a SellOffer include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">CreatorID:</th><td class="field-body"><p class="first">The identifier for the participant requesting creation of
+the new object</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">InputID:</th><td class="field-body"><p class="first">The identifier for the holding (or liability) into which
+assets will be transferred (e.g. the holding where payment is
+received)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">OutputID:</th><td class="field-body"><p class="first">The identifier for the holding (or liability) from which
+assets will be tranferred (e.g. the holding for assets being
+purchased)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Ratio:</th><td class="field-body"><p class="first">The number of output assets transferred per input asset</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Minimum:</th><td class="field-body"><p class="first">the smallest number of acceptable instances that can be
+transferred into the input holding for the offer to be valid,
+minimum must strictly be smaller than maximum</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Maximum:</th><td class="field-body"><p class="first">the largest number of acceptable instances that can
+be transferred into the input holding in one transaction for the
+offer to be valid, maximum must strictly be larger than minimum</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Execution:</th><td class="field-body"><p class="first">a modifier that defines additional conditions for
+execution of the offer, it may have one of the following values:</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">ExecuteOncePerParticipant:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">the offer may be executed by a participant at most one time</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ExecuteOnce:</th><td class="field-body">the offer may be executed at most one time</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Any:</th><td class="field-body">the offer may be executed as often as appropriate</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Update&quot;</span><span class="o">:</span>
+<span class="p">{</span>
+  <span class="s2">&quot;CreatorID&quot;</span><span class="o">:</span> <span class="s2">&quot;5863bd0527ca2143&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Description&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;InputID&quot;</span><span class="o">:</span> <span class="s2">&quot;53434b20963cb525&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="s2">&quot;/offer/buyback/bills&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;OutputID&quot;</span><span class="o">:</span> <span class="s2">&quot;cc007e32955254a7&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Ratio&quot;</span><span class="o">:</span> <span class="mi">93</span><span class="p">,</span>
+  <span class="s2">&quot;Execution&quot;</span><span class="o">:</span> <span class="s2">&quot;Any&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Maximum&quot;</span><span class="o">:</span> <span class="mi">1000000000</span><span class="p">,</span>
+  <span class="s2">&quot;Minimum&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">&quot;UpdateType&quot;</span><span class="o">:</span> <span class="s2">&quot;/mktplace.transactions.ExchangeOfferUpdate/Register&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="register-selloffer">
+<h2>Register SellOffer<a class="headerlink" href="#register-selloffer" title="Permalink to this headline">¶</a></h2>
+<p>The fields for registration of a SellOffer include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">CreatorID:</th><td class="field-body"><p class="first">The identifier for the participant requesting creation of
+the new object</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">InputID:</th><td class="field-body"><p class="first">The identifier for the holding (or liability) into which
+assets will be transferred (e.g. the holding where payment is
+received)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">OutputID:</th><td class="field-body"><p class="first">The identifier for the holding from which assets will be
+tranferred (e.g. the holding for assets being purchased)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Ratio:</th><td class="field-body"><p class="first">The number of output assets transferred per input asset</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Minimum:</th><td class="field-body"><p class="first">the smallest number of acceptable instances that can be
+transferred into the input holding for the offer to be valid,
+minimum must strictly be smaller than maximum</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Maximum:</th><td class="field-body"><p class="first">the largest number of acceptable instances that can
+be transferred into the input holding in one transaction for the
+offer to be valid, maximum must strictly be larger than minimum</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Execution:</th><td class="field-body"><p class="first">a modifier that defines additional conditions for
+execution of the offer, it may have one of the following values:</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">ExecuteOncePerParticipant:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">the offer may be executed by a participant at most one time</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ExecuteOnce:</th><td class="field-body">the offer may be executed at most one time</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Any:</th><td class="field-body">the offer may be executed as often as appropriate</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Update&quot;</span><span class="o">:</span>
+<span class="p">{</span>
+  <span class="s2">&quot;CreatorID&quot;</span><span class="o">:</span> <span class="s2">&quot;5863bd0527ca2143&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Description&quot;</span><span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;InputID&quot;</span><span class="o">:</span> <span class="s2">&quot;53434b20963cb525&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="s2">&quot;/offer/buyback/bills&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;OutputID&quot;</span><span class="o">:</span> <span class="s2">&quot;cc007e32955254a7&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Ratio&quot;</span><span class="o">:</span> <span class="mi">93</span><span class="p">,</span>
+  <span class="s2">&quot;Execution&quot;</span><span class="o">:</span> <span class="s2">&quot;Any&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Maximum&quot;</span><span class="o">:</span> <span class="mi">1000000000</span><span class="p">,</span>
+  <span class="s2">&quot;Minimum&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s2">&quot;UpdateType&quot;</span><span class="o">:</span> <span class="s2">&quot;/mktplace.transactions.SellOfferUpdate/Register&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="unregister-all-objects">
+<h2>Unregister All Objects<a class="headerlink" href="#unregister-all-objects" title="Permalink to this headline">¶</a></h2>
+<p>The fields used to unregister an object are consistent across all object
+types and include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">CreatorID:</th><td class="field-body">The identifier for the participant requesting creation of
+the new object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ObjectID:</th><td class="field-body">The identifier for the object to unregister</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Update&quot;</span><span class="o">:</span>
+<span class="p">{</span>
+  <span class="s2">&quot;CreatorID&quot;</span><span class="o">:</span> <span class="s2">&quot;5863bd0527ca2143&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;ObjectID&quot;</span><span class="o">:</span> <span class="s2">&quot;ad8d6a71827e9be0&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;UpdateType&quot;</span><span class="o">:</span> <span class="s2">&quot;/mktplace.transactions.SellOfferUpdate/Unregister&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exchange">
+<h2>Exchange<a class="headerlink" href="#exchange" title="Permalink to this headline">¶</a></h2>
+<p>The exchange update transfers balances between holdings. The exchange
+starts from an initial holding/liability and passes through a specified
+series of sell offers until the final transfer is made. Asset types must
+be consistent across each transfer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">InitialLiabilityID:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">the identifier for the initial holding/liability
+from which assets are transferred (e.g. from which payment is made)</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">FinalLiabilityID:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">the identifier for the holding/liability into which
+assets are ultimately transferred (e.g. the holding where goods
+purchased are placed)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">InitialCount:</th><td class="field-body">the number of assets to transfer out of the initial
+liability (e.g. the amount paid)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">OfferIDList:</th><td class="field-body">a list of identifiers for sell offers that will be
+applied in order to tranfer assets.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Update&quot;</span><span class="o">:</span>
+<span class="p">{</span>
+  <span class="s2">&quot;FinalLiabilityID&quot;</span><span class="o">:</span> <span class="s2">&quot;8a67d29135306115&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;InitialCount&quot;</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="s2">&quot;InitialLiabilityID&quot;</span><span class="o">:</span> <span class="s2">&quot;84272ffad75a8043&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;OfferIDList&quot;</span><span class="o">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;UpdateType&quot;</span><span class="o">:</span> <span class="s2">&quot;/mktplace.transactions.ExchangeUpdate/Exchange&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mktplace_initial_state.html" class="btn btn-neutral float-right" title="MarketPlace Initial State" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mktplace_messages.html" class="btn btn-neutral" title="MarketPlace Messages" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

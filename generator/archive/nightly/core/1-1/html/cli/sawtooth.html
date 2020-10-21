@@ -1,0 +1,1004 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="sawtooth-validator" href="sawtooth-validator.html" />
+    <link rel="prev" title="CLI Command Reference" href="../cli.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../cli.html">CLI Command Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">sawtooth</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-batch">sawtooth batch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-batch-list">sawtooth batch list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-batch-show">sawtooth batch show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-batch-status">sawtooth batch status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-batch-submit">sawtooth batch submit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-block">sawtooth block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-block-list">sawtooth block list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-block-show">sawtooth block show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-identity">sawtooth identity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-identity-policy">sawtooth identity policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-identity-policy-create">sawtooth identity policy create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-identity-policy-list">sawtooth identity policy list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-identity-role">sawtooth identity role</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-identity-role-create">sawtooth identity role create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-identity-role-list">sawtooth identity role list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-keygen">sawtooth keygen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-peer">sawtooth peer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-peer-list">sawtooth peer list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-settings">sawtooth settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-settings-list">sawtooth settings list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-state">sawtooth state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-state-list">sawtooth state list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-state-show">sawtooth state show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-status">sawtooth status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-status-show">sawtooth status show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-transaction">sawtooth transaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-transaction-list">sawtooth transaction list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-transaction-show">sawtooth transaction show</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sawtooth-validator.html">sawtooth-validator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawtooth-rest-api.html">sawtooth-rest-api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawadm.html">sawadm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawnet.html">sawnet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawset.html">sawset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity-tp.html">identity-tp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intkey.html">intkey</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings-tp.html">settings-tp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xo.html">xo</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../cli.html">CLI Command Reference</a> &raquo;</li>
+        
+      <li>sawtooth</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cli/sawtooth.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sawtooth">
+<span id="sawtooth-cli-reference-label"></span><h1>sawtooth<a class="headerlink" href="#sawtooth" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span></code> command is the usual way to interact with validators or
+validator networks.</p>
+<p>This command has a multi-level structure. It starts with the base call to
+<code class="docutils literal notranslate"><span class="pre">sawtooth</span></code>. Next is a top-level subcommand such as <code class="docutils literal notranslate"><span class="pre">block</span></code> or <code class="docutils literal notranslate"><span class="pre">state</span></code>.
+Each top-level subcommand has additional subcommands that specify the
+operation to perform, such as <code class="docutils literal notranslate"><span class="pre">list</span></code> or <code class="docutils literal notranslate"><span class="pre">create</span></code>.  The subcommands have
+options and arguments that control their behavior. For example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth state list --format csv
+</pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth [-h] [-v] [-V]</span>
+<span class="go">                {batch,block,identity,keygen,peer,status,settings,state,transaction}</span>
+<span class="go">                ...</span>
+
+<span class="go">Provides subcommands to configure, manage, and use Sawtooth components.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {batch,block,identity,keygen,peer,status,settings,state,transaction}</span>
+<span class="go">    batch               Displays information about batches and submit new</span>
+<span class="go">                        batches</span>
+<span class="go">    block               Displays information on blocks in the current</span>
+<span class="go">                        blockchain</span>
+<span class="go">    identity            Works with optional roles, policies, and permissions</span>
+<span class="go">    keygen              Creates user signing keys</span>
+<span class="go">    peer                Displays information about validator peers</span>
+<span class="go">    status              Displays information about validator status</span>
+<span class="go">    settings            Displays on-chain settings</span>
+<span class="go">    state               Displays information on the entries in state</span>
+<span class="go">    transaction         Shows information on transactions in the current chain</span>
+</pre></div>
+</div>
+<div class="section" id="sawtooth-batch">
+<h2>sawtooth batch<a class="headerlink" href="#sawtooth-batch" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">batch</span></code> subcommands display information about the
+Batches in the current blockchain and submit Batches to the validator
+via the REST API. A Batch is a group of interdependent transactions
+that is the atomic unit of change in Sawtooth. For more information,
+see “Transactions and Batches!”</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth batch [-h] {list,show,status,submit} ...</span>
+
+<span class="go">Provides subcommands to display Batch information and submit Batches to the</span>
+<span class="go">validator via the REST API.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {list,show,status,submit}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-batch-list">
+<h2>sawtooth batch list<a class="headerlink" href="#sawtooth-batch-list" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">batch</span> <span class="pre">list</span></code> subcommand queries the specified Sawtooth
+REST API (default: <code class="docutils literal notranslate"><span class="pre">http://localhost:8008</span></code>) for a list of Batches in
+the current blockchain. It returns the id of each Batch, the public
+key of each signer, and the number of transactions in each Batch.</p>
+<p>By default, this information is displayed as a white-space delimited
+table intended for display, but other plain-text formats (CSV, JSON,
+and YAML) are available and can be piped into a file for further
+processing.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth batch list [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                           [-F {csv,json,yaml,default}]</span>
+
+<span class="go">Displays all information about all committed Batches for the specified validator, including the Batch id, public keys of all signers, and number of transactions in each Batch.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of the validator&#39;s REST API (default:</span>
+<span class="go">                        http://localhost:8008)</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        specify the user to authorize request</span>
+<span class="go">  -F {csv,json,yaml,default}, --format {csv,json,yaml,default}</span>
+<span class="go">                        choose the output format</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-batch-show">
+<h2>sawtooth batch show<a class="headerlink" href="#sawtooth-batch-show" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">batch</span> <span class="pre">show</span></code> subcommand queries the Sawtooth REST API
+for a specific batch in the current blockchain. It returns complete
+information for this batch in either YAML (default) or JSON format.
+Use the <code class="docutils literal notranslate"><span class="pre">--key</span></code> option to narrow the returned
+information to just the value of a single key, either from the batch
+or its header.</p>
+<p>This subcommand requires the URL of the REST API (default:
+<code class="docutils literal notranslate"><span class="pre">http://localhost:8008</span></code>), and can specify a <cite>username</cite>:<cite>password</cite>
+combination when the REST API is behind a Basic Auth proxy.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth batch show [-h] [--url URL] [-u USERNAME[:PASSWORD]] [-k KEY]</span>
+<span class="go">                           [-F {yaml,json}]</span>
+<span class="go">                           batch_id</span>
+
+<span class="go">Displays information for the specified Batch.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  batch_id              id (header_signature) of the batch</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of the validator&#39;s REST API (default:</span>
+<span class="go">                        http://localhost:8008)</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        specify the user to authorize request</span>
+<span class="go">  -k KEY, --key KEY     show a single property from the block or header</span>
+<span class="go">  -F {yaml,json}, --format {yaml,json}</span>
+<span class="go">                        choose the output format (default: yaml)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-batch-status">
+<h2>sawtooth batch status<a class="headerlink" href="#sawtooth-batch-status" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">batch</span> <span class="pre">status</span></code> subcommand queries the Sawtooth REST API
+for the committed status of one or more batches, which are specified
+as a list of comma-separated Batch ids. The output is in either YAML
+(default) or JSON format, and includes the ids of any invalid
+transactions with an error message explaining why they are invalid.
+The <code class="docutils literal notranslate"><span class="pre">--wait</span></code> option indicates that results should not be returned
+until processing is complete, with an optional timeout value specified
+in seconds.</p>
+<p>This subcommand requires the URL of the REST API (default:
+<code class="docutils literal notranslate"><span class="pre">http://localhost:8008</span></code>), and can specify a <cite>username</cite>:<cite>password</cite>
+combination when the REST API is behind a Basic Auth proxy.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth batch status [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                             [--wait [WAIT]] [-F {yaml,json}]</span>
+<span class="go">                             batch_ids</span>
+
+<span class="go">Displays the status of the specified Batch id or ids.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  batch_ids             single batch id or comma-separated list of batch ids</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of the validator&#39;s REST API (default:</span>
+<span class="go">                        http://localhost:8008)</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        specify the user to authorize request</span>
+<span class="go">  --wait [WAIT]         set time, in seconds, to wait for commit</span>
+<span class="go">  -F {yaml,json}, --format {yaml,json}</span>
+<span class="go">                        choose the output format (default: yaml)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-batch-submit">
+<h2>sawtooth batch submit<a class="headerlink" href="#sawtooth-batch-submit" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">batch</span> <span class="pre">submit</span></code> subcommand sends one or more Batches to
+the Sawtooth REST API to be submitted to the validator. The input is a
+binary file with a binary-encoded <code class="docutils literal notranslate"><span class="pre">BatchList</span></code> protobuf, which can
+contain one or more batches with any number of transactions. The
+<code class="docutils literal notranslate"><span class="pre">--wait</span></code> option indicates that results should not be returned until
+processing is complete, with an optional timeout specified in seconds.</p>
+<p>This subcommand requires the URL of the REST API (default:
+<code class="docutils literal notranslate"><span class="pre">http://localhost:8008</span></code>), and can specify a <cite>username</cite>:<cite>password</cite>
+combination when the REST API is behind a Basic Auth proxy.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth batch submit [-h] [--url URL] [-u USERNAME[:PASSWORD]] [-v]</span>
+<span class="go">                             [-V] [--wait [WAIT]] [-f FILENAME]</span>
+<span class="go">                             [--batch-size-limit BATCH_SIZE_LIMIT]</span>
+
+<span class="go">Sends Batches to the REST API to be submitted to the validator. The input must</span>
+<span class="go">be a binary file containing a binary-encoded BatchList of one or more batches</span>
+<span class="go">with any number of transactions.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of the validator&#39;s REST API (default:</span>
+<span class="go">                        http://localhost:8008)</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        specify the user to authorize request</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+<span class="go">  --wait [WAIT]         set time, in seconds, to wait for batches to commit</span>
+<span class="go">  -f FILENAME, --filename FILENAME</span>
+<span class="go">                        specify location of input file</span>
+<span class="go">  --batch-size-limit BATCH_SIZE_LIMIT</span>
+<span class="go">                        set maximum batch size; batches are split for</span>
+<span class="go">                        processing if they exceed this size</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-block">
+<h2>sawtooth block<a class="headerlink" href="#sawtooth-block" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">block</span></code> subcommands display information about the
+blocks in the current blockchain.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth block [-h] {list,show} ...</span>
+
+<span class="go">Provides subcommands to display information about the blocks in the current</span>
+<span class="go">blockchain.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help   show this help message and exit</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {list,show}</span>
+<span class="go">    list       Displays information for all blocks on the current blockchain</span>
+<span class="go">    show       Displays information about the specified block on the current</span>
+<span class="go">               blockchain</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-block-list">
+<h2>sawtooth block list<a class="headerlink" href="#sawtooth-block-list" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">block</span> <span class="pre">list</span></code> subcommand queries the Sawtooth REST API
+(default: <code class="docutils literal notranslate"><span class="pre">http://localhost:8008</span></code>) for a list of blocks in the
+current chain. Using the <code class="docutils literal notranslate"><span class="pre">--count</span></code> option, the number of blocks returned can
+be configured. It returns the id and number of each block, the public key of
+each signer, and the number of transactions and batches in each.</p>
+<p>By default, this information is displayed as a white-space delimited
+table intended for display, but other plain-text formats (CSV, JSON,
+and YAML) are available and can be piped into a file for further
+processing.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth block list [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                           [-F {csv,json,yaml,default}] [-n COUNT]</span>
+
+<span class="go">Displays information for all blocks on the current blockchain, including the block id and number, public keys all of allsigners, and number of transactions and batches.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of the validator&#39;s REST API (default:</span>
+<span class="go">                        http://localhost:8008)</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        specify the user to authorize request</span>
+<span class="go">  -F {csv,json,yaml,default}, --format {csv,json,yaml,default}</span>
+<span class="go">                        choose the output format</span>
+<span class="go">  -n COUNT, --count COUNT</span>
+<span class="go">                        the number of blocks to list</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-block-show">
+<h2>sawtooth block show<a class="headerlink" href="#sawtooth-block-show" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">block</span> <span class="pre">show</span></code> subcommand queries the Sawtooth REST API
+for a specific block in the current blockchain. It returns complete
+information for this block in either YAML (default) or JSON format.
+Using the <code class="docutils literal notranslate"><span class="pre">--key</span></code> option, it is possible to narrow the returned
+information to just the value of a single key, either from the block,
+or its header.</p>
+<p>This subcommand requires the URL of the REST API (default:
+<code class="docutils literal notranslate"><span class="pre">http://localhost:8008</span></code>), and can specify a <cite>username</cite>:<cite>password</cite>
+combination when the REST API is behind a Basic Auth proxy.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth block show [-h] [--url URL] [-u USERNAME[:PASSWORD]] [-k KEY]</span>
+<span class="go">                           [-F {yaml,json}]</span>
+<span class="go">                           block_id</span>
+
+<span class="go">Displays information about the specified block on the current blockchain.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  block_id              id (header_signature) of the block</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of the validator&#39;s REST API (default:</span>
+<span class="go">                        http://localhost:8008)</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        specify the user to authorize request</span>
+<span class="go">  -k KEY, --key KEY     show a single property from the block or header</span>
+<span class="go">  -F {yaml,json}, --format {yaml,json}</span>
+<span class="go">                        choose the output format (default: yaml)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-identity">
+<h2>sawtooth identity<a class="headerlink" href="#sawtooth-identity" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth supports an identity system that provides an extensible role-
+and policy-based system for defining permissions in a way which can be
+used by other pieces of the architecture. This includes the existing
+permissioning components for transactor key and validator key; in the
+future, this feature may also be used by transaction family
+implementations. The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">identity</span></code> subcommands can be used to
+view the current roles and policy set in state, create new roles, and
+new policies.</p>
+<p>Note that only the public keys stored in the setting
+sawtooth.identity.allowed_keys are allowed to submit identity
+transactions. Use the <code class="docutils literal notranslate"><span class="pre">sawset</span></code> commands to change this
+setting.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity [-h] {policy,role} ...</span>
+
+<span class="go">Provides subcommands to work with roles and policies.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {policy,role}</span>
+<span class="go">    policy       Provides subcommands to display existing policies and create</span>
+<span class="go">                 new policies</span>
+<span class="go">    role         Provides subcommands to display existing roles and create new</span>
+<span class="go">                 roles</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-identity-policy">
+<h2>sawtooth identity policy<a class="headerlink" href="#sawtooth-identity-policy" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">identity</span> <span class="pre">policy</span></code> subcommands are used to display the
+current policies stored in state and to create new policies.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity policy [-h] {create,list} ...</span>
+
+<span class="go">Provides subcommands to list the current policies stored in state and to</span>
+<span class="go">create new policies.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+
+<span class="go">policy:</span>
+<span class="go">  {create,list}</span>
+<span class="go">    create       Creates batches of sawtooth-identity transactions for setting</span>
+<span class="go">                 a policy</span>
+<span class="go">    list         Lists the current policies</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-identity-policy-create">
+<h2>sawtooth identity policy create<a class="headerlink" href="#sawtooth-identity-policy-create" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">identity</span> <span class="pre">policy</span> <span class="pre">create</span></code> subcommand creates a new
+policy that can then be set to a role. The policy should contain at
+least one “rule” (<code class="docutils literal notranslate"><span class="pre">PERMIT_KEY</span></code> or <code class="docutils literal notranslate"><span class="pre">DENY_KEY</span></code>). Note that all
+policies have an assumed last rule to deny all. This subcommand can
+also be used to change the policy that is already set to a role
+without having to also reset the role.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity policy create [-h] [-k KEY] [-o OUTPUT | --url URL]</span>
+<span class="go">                                       [--wait WAIT]</span>
+<span class="go">                                       name rule [rule ...]</span>
+
+<span class="go">Creates a policy that can be set to a role or changes a policy without</span>
+<span class="go">resetting the role.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name                  name of the new policy</span>
+<span class="go">  rule                  rule with the format &quot;PERMIT_KEY &lt;key&gt;&quot; or &quot;DENY_KEY</span>
+<span class="go">                        &lt;key&gt; (multiple &quot;rule&quot; arguments can be specified)</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -k KEY, --key KEY     specify the signing key for the resulting batches</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        specify the output filename for the resulting batches</span>
+<span class="go">  --url URL             identify the URL of a validator&#39;s REST API</span>
+<span class="go">  --wait WAIT           set time, in seconds, to wait for the policy to commit</span>
+<span class="go">                        when submitting to the REST API.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-identity-policy-list">
+<h2>sawtooth identity policy list<a class="headerlink" href="#sawtooth-identity-policy-list" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">identity</span> <span class="pre">policy</span> <span class="pre">list</span></code> subcommand lists the policies
+that are currently set in state. This list can be used to figure out
+which policy name should be set for a new role.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity policy list [-h] [--url URL]</span>
+<span class="go">                                     [--format {default,csv,json,yaml}]</span>
+
+<span class="go">Lists the policies that are currently set in state.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of a validator&#39;s REST API</span>
+<span class="go">  --format {default,csv,json,yaml}</span>
+<span class="go">                        choose the output format</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-identity-role">
+<h2>sawtooth identity role<a class="headerlink" href="#sawtooth-identity-role" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">identity</span> <span class="pre">role</span></code> subcommands are used to list the
+current roles stored in state and to create new roles.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity role [-h] {create,list} ...</span>
+
+<span class="go">Provides subcommands to list the current roles stored in state and to create</span>
+<span class="go">new roles.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+
+<span class="go">role:</span>
+<span class="go">  {create,list}</span>
+<span class="go">    create       Creates a new role that can be used to enforce permissions</span>
+<span class="go">    list         Lists the current keys and values of roles</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-identity-role-create">
+<h2>sawtooth identity role create<a class="headerlink" href="#sawtooth-identity-role-create" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">identity</span> <span class="pre">role</span> <span class="pre">create</span></code> subcommand creates a new role
+that can be used to enforce permissions. The policy argument
+identifies the policy that the role is restricted to. This policy must
+already exist and be stored in state. Use <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">identity</span> <span class="pre">policy</span>
+<span class="pre">list</span></code> to display the existing policies. The role name should
+reference an action that can be taken on the network. For example, the
+role named <code class="docutils literal notranslate"><span class="pre">transactor.transaction_signer</span></code> controls who is allowed
+to sign transactions.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity role create [-h] [-k KEY] [--wait WAIT]</span>
+<span class="go">                                     [-o OUTPUT | --url URL]</span>
+<span class="go">                                     name policy</span>
+
+<span class="go">Creates a new role that can be used to enforce permissions.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name                  name of the role</span>
+<span class="go">  policy                identify policy that role will be restricted to</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -k KEY, --key KEY     specify the signing key for the resulting batches</span>
+<span class="go">  --wait WAIT           set time, in seconds, to wait for a role to commit</span>
+<span class="go">                        when submitting to the REST API.</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        specify the output filename for the resulting batches</span>
+<span class="go">  --url URL             the URL of a validator&#39;s REST API</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-identity-role-list">
+<h2>sawtooth identity role list<a class="headerlink" href="#sawtooth-identity-role-list" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">identity</span> <span class="pre">role</span> <span class="pre">list</span></code> subcommand displays the roles that
+are currently set in state. This list can be used to determine which
+permissions are being enforced on the network. The output includes
+which policy the roles are set to.</p>
+<p>By default, this information is displayed as a white-space delimited
+table intended for display, but other plain-text formats (CSV, JSON,
+and YAML) are available and can be piped into a file for further
+processing.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity role list [-h] [--url URL]</span>
+<span class="go">                                   [--format {default,csv,json,yaml}]</span>
+
+<span class="go">Displays the roles that are currently set in state.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of a validator&#39;s REST API</span>
+<span class="go">  --format {default,csv,json,yaml}</span>
+<span class="go">                        choose the output format</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-keygen">
+<h2>sawtooth keygen<a class="headerlink" href="#sawtooth-keygen" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">keygen</span></code> subcommand generates a private key file and a public key
+file so that users can sign Sawtooth transactions and batches. These
+files are stored in the <code class="docutils literal notranslate"><span class="pre">&lt;key-dir&gt;</span></code> directory in <code class="docutils literal notranslate"><span class="pre">&lt;key_name&gt;.priv</span></code>
+and <code class="docutils literal notranslate"><span class="pre">&lt;key_dir&gt;/&lt;key_name&gt;.pub</span></code>. By default, <code class="docutils literal notranslate"><span class="pre">&lt;key_dir&gt;</span></code> is
+<code class="docutils literal notranslate"><span class="pre">~/.sawtooth</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;key_name&gt;</span></code> is <code class="docutils literal notranslate"><span class="pre">$USER</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth keygen [-h] [-v] [-V] [--key-dir KEY_DIR] [--force] [-q]</span>
+<span class="go">                       [key_name]</span>
+
+<span class="go">Generates keys with which the user can sign transactions and batches.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  key_name           specify the name of the key to create</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help         show this help message and exit</span>
+<span class="go">  -v, --verbose      enable more verbose output</span>
+<span class="go">  -V, --version      display version information</span>
+<span class="go">  --key-dir KEY_DIR  specify the directory for the key files</span>
+<span class="go">  --force            overwrite files if they exist</span>
+<span class="go">  -q, --quiet        do not display output</span>
+
+<span class="go">The private and public key files are stored in &lt;key-dir&gt;/&lt;key-name&gt;.priv and</span>
+<span class="go">&lt;key-dir&gt;/&lt;key-name&gt;.pub. &lt;key-dir&gt; defaults to ~/.sawtooth and &lt;key-name&gt;</span>
+<span class="go">defaults to $USER.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-peer">
+<h2>sawtooth peer<a class="headerlink" href="#sawtooth-peer" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">peer</span></code> subcommand displays the addresses of a specified
+validator’s peers.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth peer [-h] {list} ...</span>
+
+<span class="go">Provides a subcommand to list a validator&#39;s peers</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help  show this help message and exit</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {list}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-peer-list">
+<h2>sawtooth peer list<a class="headerlink" href="#sawtooth-peer-list" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">peer</span> <span class="pre">list</span></code> subcommand displays the addresses of a
+specified validator’s peers.</p>
+<p>This subcommand requires the URL of the REST API (default:
+<code class="docutils literal notranslate"><span class="pre">http://localhost:8008</span></code>), and can specify a <cite>username</cite>:<cite>password</cite>
+combination when the REST API is behind a Basic Auth proxy.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth peer list [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                          [-F {csv,json,yaml,default}]</span>
+
+<span class="go">Displays the addresses of the validators with which a specified validator is</span>
+<span class="go">peered.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of the validator&#39;s REST API (default:</span>
+<span class="go">                        http://localhost:8008)</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        specify the user to authorize request</span>
+<span class="go">  -F {csv,json,yaml,default}, --format {csv,json,yaml,default}</span>
+<span class="go">                        choose the output format</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-settings">
+<h2>sawtooth settings<a class="headerlink" href="#sawtooth-settings" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">settings</span></code> subcommand displays the values of currently
+active on-chain settings.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth settings [-h] {list} ...</span>
+
+<span class="go">Displays the values of currently active on-chain settings.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help  show this help message and exit</span>
+
+<span class="go">settings:</span>
+<span class="go">  {list}</span>
+<span class="go">    list      Lists the current keys and values of on-chain settings</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-settings-list">
+<h2>sawtooth settings list<a class="headerlink" href="#sawtooth-settings-list" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">settings</span> <span class="pre">list</span></code> subcommand displays the current keys
+and values of on-chain settings.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth settings list [-h] [--url URL] [--filter FILTER]</span>
+<span class="go">                              [--format {default,csv,json,yaml}]</span>
+
+<span class="go">List the current keys and values of on-chain settings. The content can be</span>
+<span class="go">exported to various formats for external consumption.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of a validator&#39;s REST API</span>
+<span class="go">  --filter FILTER       filters keys that begin with this value</span>
+<span class="go">  --format {default,csv,json,yaml}</span>
+<span class="go">                        choose the output format</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-state">
+<h2>sawtooth state<a class="headerlink" href="#sawtooth-state" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">state</span></code> subcommands display information about the
+entries in the current blockchain state.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth state [-h] {list,show} ...</span>
+
+<span class="go">Provides subcommands to display information about the state entries in the</span>
+<span class="go">current blockchain state.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help   show this help message and exit</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {list,show}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-state-list">
+<h2>sawtooth state list<a class="headerlink" href="#sawtooth-state-list" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">state</span> <span class="pre">list</span></code> subcommand queries the Sawtooth REST API
+for a list of all state entries in the current blockchain state. This subcommand
+returns the address of each entry, its size in bytes, and the
+byte-encoded data it contains. It also returns the head block for
+which this data is valid.</p>
+<p>To control the state that is returned, use the <code class="docutils literal notranslate"><span class="pre">subtree</span></code>
+argument to specify an address prefix as a filter or a block id to use
+as the chain head.</p>
+<p>By default, this information is displayed as a white-space delimited
+table intended for display, but other plain-text formats (CSV, JSON,
+and YAML) are available and can be piped into a file for further
+processing.</p>
+<p>This subcommand requires the URL of the REST API (default:
+<code class="docutils literal notranslate"><span class="pre">http://localhost:8008</span></code>), and can specify a <cite>username</cite>:<cite>password</cite>
+combination when the REST API is behind a Basic Auth proxy.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth state list [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                           [-F {csv,json,yaml,default}] [--head HEAD]</span>
+<span class="go">                           [subtree]</span>
+
+<span class="go">Lists all state entries in the current blockchain.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  subtree               address of a subtree to filter the list by</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of the validator&#39;s REST API (default:</span>
+<span class="go">                        http://localhost:8008)</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        specify the user to authorize request</span>
+<span class="go">  -F {csv,json,yaml,default}, --format {csv,json,yaml,default}</span>
+<span class="go">                        choose the output format</span>
+<span class="go">  --head HEAD           specify the id of the block to set as the chain head</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-state-show">
+<h2>sawtooth state show<a class="headerlink" href="#sawtooth-state-show" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">state</span> <span class="pre">show</span></code> subcommand queries the Sawtooth REST API
+for a specific state entry (address) in the current blockchain state.
+It returns the data stored at this state address and the id of the
+chain head for which this data is valid. This data is byte-encoded per
+the logic of the transaction family that created it, and must be
+decoded using that same logic.</p>
+<p>This subcommand requires the URL of the REST API (default:
+<code class="docutils literal notranslate"><span class="pre">http://localhost:8008</span></code>), and can specify a <cite>username</cite>:<cite>password</cite>
+combination when the REST API is behind a Basic Auth proxy.</p>
+<p>By default, the peers are displayed as a CSV string, but other
+plain-text formats (JSON, and YAML) are available and can be piped
+into a file for further processing.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth state show [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                           [--head HEAD]</span>
+<span class="go">                           address</span>
+
+<span class="go">Displays information for the specified state address in the current blockchain.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  address               address of the leaf</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of the validator&#39;s REST API (default:</span>
+<span class="go">                        http://localhost:8008)</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        specify the user to authorize request</span>
+<span class="go">  --head HEAD           specify the id of the block to set as the chain head</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-status">
+<h2>sawtooth status<a class="headerlink" href="#sawtooth-status" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">status</span></code> subcommands display information related to a
+validator’s status.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth status [-h] {show} ...</span>
+
+<span class="go">Provides a subcommand to show a validator&#39;s status</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help  show this help message and exit</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {show}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-status-show">
+<h2>sawtooth status show<a class="headerlink" href="#sawtooth-status-show" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">status</span></code> subcommand displays information related to a
+validator’s current status, including its public network endpoint and
+its peers.</p>
+<p>This subcommand requires the URL of the REST API (default:
+<code class="docutils literal notranslate"><span class="pre">http://localhost:8008</span></code>), and can specify a <cite>username</cite>:<cite>password</cite>
+combination when the REST API is behind a Basic Auth proxy.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth status show [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                            [-F {csv,json,yaml,default}]</span>
+
+<span class="go">Displays information about the status of a validator.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of the validator&#39;s REST API (default:</span>
+<span class="go">                        http://localhost:8008)</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        specify the user to authorize request</span>
+<span class="go">  -F {csv,json,yaml,default}, --format {csv,json,yaml,default}</span>
+<span class="go">                        choose the output format</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-transaction">
+<h2>sawtooth transaction<a class="headerlink" href="#sawtooth-transaction" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">transaction</span></code> subcommands display information about the
+transactions in the current blockchain.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth transaction [-h] {list,show} ...</span>
+
+<span class="go">Provides subcommands to display information about the transactions in the</span>
+<span class="go">current blockchain.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help   show this help message and exit</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {list,show}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-transaction-list">
+<h2>sawtooth transaction list<a class="headerlink" href="#sawtooth-transaction-list" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">transaction</span> <span class="pre">list</span></code> subcommand queries the Sawtooth REST
+API (default: <code class="docutils literal notranslate"><span class="pre">http://localhost:8008</span></code>) for a list of transactions in
+the current blockchain. It returns the id of each transaction, its
+family and version, the size of its payload, and the data in the
+payload itself.</p>
+<p>By default, this information is displayed as a white-space delimited
+table intended for display, but other plain-text formats (CSV, JSON,
+and YAML) are available and can be piped into a file for further
+processing.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth transaction list [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                                 [-F {csv,json,yaml,default}]</span>
+
+<span class="go">Lists all transactions in the current blockchain.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of the validator&#39;s REST API (default:</span>
+<span class="go">                        http://localhost:8008)</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        specify the user to authorize request</span>
+<span class="go">  -F {csv,json,yaml,default}, --format {csv,json,yaml,default}</span>
+<span class="go">                        choose the output format</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtooth-transaction-show">
+<h2>sawtooth transaction show<a class="headerlink" href="#sawtooth-transaction-show" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">transaction</span> <span class="pre">show</span></code> subcommand queries the Sawtooth REST
+API for a specific transaction in the current blockchain. It returns
+complete information for this transaction in either YAML (default) or
+JSON format. Use the <code class="docutils literal notranslate"><span class="pre">--key</span></code> option to narrow the
+returned information to just the value of a single key, either from
+the transaction or its header.</p>
+<p>This subcommand requires the URL of the REST API (default:
+<code class="docutils literal notranslate"><span class="pre">http://localhost:8008</span></code>), and can specify a <cite>username</cite>:<cite>password</cite>
+combination when the REST API is behind a Basic Auth proxy.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth transaction show [-h] [--url URL] [-u USERNAME[:PASSWORD]]</span>
+<span class="go">                                 [-k KEY] [-F {yaml,json}]</span>
+<span class="go">                                 transaction_id</span>
+
+<span class="go">Displays information for the specified transaction.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  transaction_id        id (header_signature) of the transaction</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of the validator&#39;s REST API (default:</span>
+<span class="go">                        http://localhost:8008)</span>
+<span class="go">  -u USERNAME[:PASSWORD], --user USERNAME[:PASSWORD]</span>
+<span class="go">                        specify the user to authorize request</span>
+<span class="go">  -k KEY, --key KEY     show a single property from the block or header</span>
+<span class="go">  -F {yaml,json}, --format {yaml,json}</span>
+<span class="go">                        choose the output format (default: yaml)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sawtooth-validator.html" class="btn btn-neutral float-right" title="sawtooth-validator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../cli.html" class="btn btn-neutral float-left" title="CLI Command Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

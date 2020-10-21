@@ -1,0 +1,1004 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MarketPlace Data Model &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="MarketPlace Developer’s Guide" href="../mktplace_developers_guide.html"/>
+        <link rel="next" title="MarketPlace Messages" href="mktplace_messages.html"/>
+        <link rel="prev" title="MarketPlace Developer’s Guide" href="../mktplace_developers_guide.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MarketPlace Data Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#participant">Participant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#account">Account</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#assettype">AssetType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#asset">Asset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#holding">Holding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#liability">Liability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exchangeoffer">ExchangeOffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#selloffer">SellOffer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mktplace_messages.html">MarketPlace Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mktplace_transactions.html">MarketPlace Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mktplace_transactions.html#marketplace-transaction-updates">MarketPlace Transaction Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mktplace_initial_state.html">MarketPlace Initial State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_api/modules.html">MarketPlace Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mktclient.html">MarketPlace Client Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a> &raquo;</li>
+        
+      <li>MarketPlace Data Model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/mktplace_developers_guide/mktplace_data_model.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="marketplace-data-model">
+<span id="mktplace-data-model-label"></span><h1>MarketPlace Data Model<a class="headerlink" href="#marketplace-data-model" title="Permalink to this headline">¶</a></h1>
+<p>As with other transaction families built on the Sawtooth Lake platform,
+the MarketPlace Transaction Family is defined by an ordered log of
+transactions. The implicit data model underlying the transaction family
+provides a means for understanding and enforcing consistency in the
+transaction log. This section describes the data model.</p>
+<p>Every object in the implicit data model is referenced by an identifier
+equivalent to the identifier of the transaction used to create the
+object. The transaction identifier is a SHA256 hash of the message
+signature.</p>
+<p>Note that the authoritative log of transactions and the cached state of
+objects associated with the log can be retrieved through the
+<a class="reference internal" href="../sawtooth_developers_guide/web_api/index.html#web-api-index-label"><span class="std std-ref">Distributed Ledger Web API</span></a>.</p>
+<div class="section" id="participant">
+<h2>Participant<a class="headerlink" href="#participant" title="Permalink to this headline">¶</a></h2>
+<p>A participant object refers to an organization or an
+individual. Conceptually, the participant object refers to the &#8220;owner&#8221;
+of an asset. Participants can create assets (and asset types), own
+assets, offer to exchange assets, and transfer ownership to another
+participant.</p>
+<p>The current model for a participant is very simple: it is a means of
+capturing the information necessary to authorize transactions on assets
+owned by the participant.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Participant&quot;</span> <span class="o">:</span>
+<span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span> <span class="o">:</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;address&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span>  <span class="s2">&quot;ADDRESS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;name&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;description&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The properties of a Participant include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">address:</th><td class="field-body">a unique derivation of the verifying key (public key)
+for the transaction used to register the participant; the address
+provides a means of verifying the identity of participants for
+future transaction verification and authorization</td>
+</tr>
+<tr class="field-even field"><th class="field-name">name:</th><td class="field-body">a unique name for the participant chosen by the person or
+organization creating the participant, names are constructed from
+printable ascii characters with the exception of &#8216;/&#8217;</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">description:</th><td class="field-body">an optional property for describing in human
+readable form who or what the participant represents</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="account">
+<h2>Account<a class="headerlink" href="#account" title="Permalink to this headline">¶</a></h2>
+<p>An account object represents a collection of holdings and liabilities
+with at most one holding for each asset and at most one liability for
+each asset type. An account is useful primarily as a means of managing
+asset aggregation.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Account&quot;</span> <span class="o">:</span>
+<span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span> <span class="o">:</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;description&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;creator&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Participant&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The properties of a Account include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">name:</th><td class="field-body">a unique name for the object chosen by the person or
+organization creating the participant, names are constructed from
+printable ascii characters and must begin with &#8216;/&#8217;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body">an optional property for describing in human
+readable form who or what the object represents</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">creator:</th><td class="field-body">the identifier of the participant who registered the
+account object</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="assettype">
+<h2>AssetType<a class="headerlink" href="#assettype" title="Permalink to this headline">¶</a></h2>
+<p>An AssetType is a descriptor for a class of Assets. The creator of an
+AssetType is granted the right to create Assets of the type and assign
+them to owners within a Holding. If the Restricted flag is True (it is
+True by default), then the creator of the AssetType is the only
+participant who can create Assets of that type. This would be
+appropriate, for example, for controlling creation of private stock
+certificates. If the Restricted flag is False, then any Participant can
+create Assets of that type and assign ownership to a participant within
+a Holding. This would be appropriate for broad asset types like &#8220;brown
+eggs&#8221; where many Participants are likely to create Assets of the type.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;AssetType&quot;</span> <span class="o">:</span>
+<span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span> <span class="o">:</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;description&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;creator&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Participant&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;restricted&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The properties of a AssetType include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">name:</th><td class="field-body">a unique name for the object chosen by the person or
+organization creating the participant, names are constructed from
+printable ascii characters and must begin with &#8216;/&#8217;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body">an optional property for describing in human
+readable form who or what the object represents</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">creator:</th><td class="field-body">the identifier of the participant who registered the
+account object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">restricted:</th><td class="field-body">a flag to indicate whether the creator of the asset
+type (if the flag is True) or other participants (if the flag is
+False) can create assets of the type</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="asset">
+<h2>Asset<a class="headerlink" href="#asset" title="Permalink to this headline">¶</a></h2>
+<p>An Asset is an instance of an Asset Type. It is intended to represent a
+&#8220;thing&#8221; to which value and ownership can be ascribed. Assets may be
+strictly intrinsic to the MarketPlace such as instances of a virtual
+currency or MarketPlace tokens. Alternatively, assets may provide a
+MarketPlace handle for digital or physical objects that exist outside of
+the MarketPlace.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Asset&quot;</span> <span class="o">:</span>
+<span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span> <span class="o">:</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;description&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;creator&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Participant&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;asset-type&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#AssetType&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;restricted&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;consumable&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;divisible&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;default&quot;</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The properties of a Asset include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">name:</th><td class="field-body">a unique name for the object chosen by the person or
+organization creating the participant, names are constructed from
+printable ascii characters and must begin with &#8216;/&#8217;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body">an optional property for describing in human
+readable form who or what the object represents</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">creator:</th><td class="field-body">the identifier of the participant who registered the
+account object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">asset-type:</th><td class="field-body">the identifier of the asset type from which the
+asset was created</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">restricted:</th><td class="field-body">a flag to indicate whether the creator of the asset
+(if the flag is True) or other participants (if the flag is
+False) can create Holdings for the asset with non-zero counts</td>
+</tr>
+<tr class="field-even field"><th class="field-name">consumable:</th><td class="field-body">a flag to indicate whether assets are transferred
+(if the flag is True) or copied (if the flag is False); Holdings
+with non-consumable assets always have an instance count of zero
+or one since a non-consumable asset can be copied infinitely</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">divisible:</th><td class="field-body">a flag to indicate whether fractional portions of
+assets are acceptable (if the flag is True)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="holding">
+<h2>Holding<a class="headerlink" href="#holding" title="Permalink to this headline">¶</a></h2>
+<p>A Holding object represents ownership of a collection of asset
+instances and controls the right to transfer assets to a new owner. Any
+participant can create an empty (i.e. the instance-count property is 0)
+holding for any asset. An empty Holding represents a container into
+which assets may be transferred. To create a holding with instance-count
+greater than 0, the creator of the holding must be the creator of the
+asset or the asset must be non-restricted.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Holding&quot;</span> <span class="o">:</span>
+<span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span> <span class="o">:</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;description&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;creator&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Participant&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;account&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Account&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;asset&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Asset&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;instance-count&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The properties of a Holding include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">name:</th><td class="field-body">a unique name for the object chosen by the person or
+organization creating the participant, names are constructed from
+printable ascii characters and must begin with &#8216;/&#8217;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body">an optional property for describing in human
+readable form who or what the object represents</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">creator:</th><td class="field-body">the identifier of the participant who registered the
+account object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">account:</th><td class="field-body">the identifier of the account used to scope the holding</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">asset:</th><td class="field-body">the identifier of the asset that is held</td>
+</tr>
+<tr class="field-even field"><th class="field-name">instance-count:</th><td class="field-body">the number of instances of the asset being held</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="liability">
+<h2>Liability<a class="headerlink" href="#liability" title="Permalink to this headline">¶</a></h2>
+<p>Like a Holding, a Liability represents ownership though in the case of a
+Liability ownership is of a debt or financial obligation. Where a
+Holding captures ownership of specific asset instances, a Liability
+captures a promise or guarantee for future ownership transfer of a
+specific kind of asset.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;Liability&quot;</span> <span class="o">:</span>
+<span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span> <span class="o">:</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;description&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;creator&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Participant&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;account&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Account&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;asset-type&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#AssetType&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;instance-count&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;guarantor&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Participant&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The properties of a Liability include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">name:</th><td class="field-body">a unique name for the object chosen by the person or
+organization creating the participant, names are constructed from
+printable ascii characters and must begin with &#8216;/&#8217;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body">an optional property for describing in human
+readable form who or what the object represents</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">creator:</th><td class="field-body">the identifier of the participant who registered the
+account object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">account:</th><td class="field-body">the identifier of the account used to scope the holding</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">asset-type:</th><td class="field-body">the identifier of the asset types</td>
+</tr>
+<tr class="field-even field"><th class="field-name">instance-count:</th><td class="field-body">the number of instances of the asset being held</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="exchangeoffer">
+<h2>ExchangeOffer<a class="headerlink" href="#exchangeoffer" title="Permalink to this headline">¶</a></h2>
+<p>An ExchangeOffer represents an offer to exchange assets or liabilities
+of one type for assets or liabilities of another type. Assets or
+liabilities are received into an input holding or liability. The ratio
+expresses the number of assets to be transferred out for every one that
+is transferred in.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;ExchangeOffer&quot;</span> <span class="o">:</span>
+<span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span> <span class="o">:</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;description&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;creator&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Participant&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;input&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;oneOf&quot;</span> <span class="o">:</span> <span class="p">[</span>
+                <span class="p">{</span> <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Liability&quot;</span><span class="p">},</span>
+                <span class="p">{</span> <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Holding&quot;</span> <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;output&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;oneOf&quot;</span> <span class="o">:</span> <span class="p">[</span>
+                <span class="p">{</span> <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Liability&quot;</span><span class="p">},</span>
+                <span class="p">{</span> <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Holding&quot;</span> <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;ratio&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="kr">float</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;minimum&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="kr">int</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;maximum&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="kr">int</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;execution&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;oneOf&quot;</span> <span class="o">:</span> <span class="p">[</span> <span class="s2">&quot;ExecuteOnce&quot;</span><span class="p">,</span> <span class="s2">&quot;ExecuteOncePerParticipant&quot;</span><span class="p">,</span> <span class="s2">&quot;Any&quot;</span> <span class="p">],</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The properties of an ExchangeOffer include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">name:</th><td class="field-body"><p class="first">a unique name for the object chosen by the person or
+organization creating the participant, names are constructed from
+printable ascii characters and must begin with &#8216;/&#8217;</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body"><p class="first">an optional property for describing in human
+readable form who or what the object represents</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">creator:</th><td class="field-body"><p class="first">the identifier of the participant who registered the
+account object</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">input:</th><td class="field-body"><p class="first">a Holding or Liability into which &#8220;payment&#8221; is made, this
+defines the kind of asset that will be received by the creator of
+the offer</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">output:</th><td class="field-body"><p class="first">a Holding or Liability from which goods will be
+transferred, this defines the kind of asset that will be given by
+the creator of the offer, the creator of the offer must be the
+same as the creator of the holding or liability</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ratio:</th><td class="field-body"><p class="first">the number of instances to transfer from the output
+holding for each instance deposited into the input holding</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">minimum:</th><td class="field-body"><p class="first">the smallest number of acceptable instances that can be
+transferred into the input holding for the offer to be valid</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">maximum:</th><td class="field-body"><p class="first">the largest number of acceptable instances that can
+be transferred into the input holding in one transaction for the
+offer to be valid</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">execution:</th><td class="field-body"><p class="first">a modifier that defines additional conditions for
+execution of the offer, it may have one of the following values:</p>
+<dl class="last docutils">
+<dt>ExecuteOncePerParticipant</dt>
+<dd><p class="first last">the offer may be executed by a participant at most one time</p>
+</dd>
+<dt>ExecuteOnce</dt>
+<dd><p class="first last">the offer may be executed at most one time</p>
+</dd>
+<dt>Any</dt>
+<dd><p class="first last">the offer may be executed as often as appropriate</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="selloffer">
+<h2>SellOffer<a class="headerlink" href="#selloffer" title="Permalink to this headline">¶</a></h2>
+<p>A SellOffer is identical to an ExchangeOffer except that assets must be
+transferred out from a Holding.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;SellOffer&quot;</span> <span class="o">:</span>
+<span class="p">{</span>
+    <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span> <span class="o">:</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;description&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;creator&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Participant&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;input&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;oneOf&quot;</span> <span class="o">:</span> <span class="p">[</span>
+                <span class="p">{</span> <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Liability&quot;</span><span class="p">},</span>
+                <span class="p">{</span> <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Holding&quot;</span> <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;output&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;format&quot;</span> <span class="o">:</span> <span class="s2">&quot;IDENTIFIER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;$ref&quot;</span> <span class="o">:</span> <span class="s2">&quot;#Holding&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;ratio&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="kr">float</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">true</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;minimum&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="kr">int</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;maximum&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="kr">int</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">},</span>
+
+        <span class="s2">&quot;execution&quot;</span> <span class="o">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span> <span class="o">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;oneOf&quot;</span> <span class="o">:</span> <span class="p">[</span> <span class="s2">&quot;ExecuteOnce&quot;</span><span class="p">,</span> <span class="s2">&quot;ExecuteOncePerParticipant&quot;</span><span class="p">,</span> <span class="s2">&quot;Any&quot;</span> <span class="p">],</span>
+            <span class="s2">&quot;required&quot;</span> <span class="o">:</span> <span class="kc">false</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The properties of a SellOffer include:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">name:</th><td class="field-body"><p class="first">a unique name for the object chosen by the person or
+organization creating the participant, names are constructed from
+printable ascii characters and must begin with &#8216;/&#8217;</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">description:</th><td class="field-body"><p class="first">an optional property for describing in human
+readable form who or what the object represents</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">creator:</th><td class="field-body"><p class="first">the identifier of the participant who registered the
+account object</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">input:</th><td class="field-body"><p class="first">a Holding or Liability into which &#8220;payment&#8221; is made, this
+defines the kind of asset that will be received by the creator of
+the offer</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">output:</th><td class="field-body"><p class="first">a Holding from which goods will be transferred, this
+defines the kind of asset that will be given by the creator of the
+offer, the creator of the offer must be the same as the creator of
+the holding</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ratio:</th><td class="field-body"><p class="first">the number of instances to transfer from the output
+holding for each instance deposited into the input holding</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">minimum:</th><td class="field-body"><p class="first">the smallest number of acceptable instances that can be
+transferred into the input holding for the offer to be valid</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">maximum:</th><td class="field-body"><p class="first">the largest number of acceptable instances that can
+be transferred into the input holding in one transaction for the
+offer to be valid</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">execution:</th><td class="field-body"><p class="first">a modifier that defines additional conditions for
+execution of the offer, it may have one of the following values:</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">ExecuteOncePerParticipant:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body">the offer may be executed by a
+participant at most one time</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ExecuteOnce:</th><td class="field-body">the offer may be executed at most one time</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Any:</th><td class="field-body">the offer may be executed as often as appropriate</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mktplace_messages.html" class="btn btn-neutral float-right" title="MarketPlace Messages" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../mktplace_developers_guide.html" class="btn btn-neutral" title="MarketPlace Developer’s Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

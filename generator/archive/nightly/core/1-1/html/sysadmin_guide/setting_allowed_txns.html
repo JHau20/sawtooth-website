@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Setting the Allowed Transaction Types (Optional) &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using a Proxy Server to Authorize the REST API" href="rest_auth_proxy.html" />
+    <link rel="prev" title="Testing Sawtooth Functionality" href="testing_sawtooth.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="setting_up_sawtooth_poet-sim.html">Setting Up a Sawtooth Node</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_permissions.html">Configuring Validator and Transactor Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grafana_configuration.html">Using Grafana to Display Sawtooth Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_sawtooth.html">About Sawtooth Configuration Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator’s Guide</a> &raquo;</li>
+        
+      <li>Setting the Allowed Transaction Types (Optional)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/setting_allowed_txns.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="setting-the-allowed-transaction-types-optional">
+<h1>Setting the Allowed Transaction Types (Optional)<a class="headerlink" href="#setting-the-allowed-transaction-types-optional" title="Permalink to this headline">¶</a></h1>
+<p>By default, a validator accepts transactions from any transaction processor.
+However, Sawtooth allows you to limit the types of transactions that can be
+submitted.</p>
+<p>This setting, <code class="docutils literal notranslate"><span class="pre">sawtooth.validator.transaction_families</span></code>, improves the
+Sawtooth network’s security by ignoring any unrecognized transaction processors.
+It is an on-chain setting, which means that the change is submitted on one node;
+the other nodes in the network apply the settings change when they receive the
+block with this transaction. Note that the
+<a class="reference internal" href="../transaction_family_specifications/settings_transaction_family.html"><span class="doc">Settings transaction processor</span></a>
+is required to handle on-chain configuration settings.</p>
+<p>In this procedure, you will configure the validator network to limit the
+accepted transaction types to those from the Identity, IntegerKey, Settings, and
+PoET Validator Registry transaction processors.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>For the environment described in this guide, you  <strong>must</strong> run this procedure
+on the same node that created the genesis block, because the <code class="docutils literal notranslate"><span class="pre">sawset</span>
+<span class="pre">proposal</span> <span class="pre">create</span></code> command requires the validator key that was generated on
+that node.</p>
+</div>
+<ol class="arabic">
+<li><p>Open a terminal window on the “genesis node” (the Sawtooth node that created
+the genesis block in a previous procedure).</p></li>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">sawset</span></code> command to create and submit a batch of transactions that
+changes the allowed transaction types.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo sawset proposal create --key /etc/sawtooth/keys/validator.priv <span class="se">\</span>
+sawtooth.validator.transaction_families<span class="o">=</span><span class="s1">&#39;[{&quot;family&quot;:&quot;sawtooth_identity&quot;, &quot;version&quot;:&quot;1.0&quot;}, {&quot;family&quot;:&quot;intkey&quot;, &quot;version&quot;: &quot;1.0&quot;}, {&quot;family&quot;:&quot;sawtooth_settings&quot;, &quot;version&quot;:&quot;1.0&quot;}, {&quot;family&quot;:&quot;sawtooth_validator_registry&quot;, &quot;version&quot;:&quot;1.0&quot;}]&#39;</span>
+</pre></div>
+</div>
+<p>This command sets <code class="docutils literal notranslate"><span class="pre">sawtooth.validator.transaction_families</span></code> to a JSON array
+that specifies the family name and version of each allowed transaction
+processor. For this information, see
+<a class="reference internal" href="../transaction_family_specifications.html"><span class="doc">transaction family specification</span></a>).</p>
+</li>
+<li><p>Run the following command to check the setting change.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth settings list
+</pre></div>
+</div>
+<p>The output should be similar to this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sawtooth.consensus.algorithm.name: PoET</span>
+<span class="go">sawtooth.consensus.algorithm.version: 0.1</span>
+<span class="go">sawtooth.poet.initial_wait_time: 15</span>
+<span class="go">sawtooth.poet.key_block_claim_limit: 100000</span>
+<span class="go">sawtooth.poet.report_public_key_pem: -----BEGIN PUBL...</span>
+<span class="go">sawtooth.poet.target_wait_time: 15</span>
+<span class="go">sawtooth.poet.valid_enclave_basenames: b785c58b77152cb...</span>
+<span class="go">sawtooth.poet.valid_enclave_measurements: c99f21955e38dbb...</span>
+<span class="go">sawtooth.poet.ztest_minimum_win_count: 100000</span>
+<span class="go">sawtooth.publisher.max_batches_per_block: 200</span>
+<span class="go">sawtooth.settings.vote.authorized_keys: 03e27504580fa15...</span>
+<span class="go">sawtooth.validator.transaction_families: [{&quot;family&quot;: &quot;in...</span>
+</pre></div>
+</div>
+</li>
+<li><p>You can also check the log file for the Settings transaction processor,
+<code class="docutils literal notranslate"><span class="pre">/var/log/sawtooth/logs/settings-{xxxxxxx}-debug.log</span></code> for a
+<code class="docutils literal notranslate"><span class="pre">TP_PROCESS_REQUEST</span></code> message. (Note that the Settings log file has a unique
+string in the file name.) The message will resemble this example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[20:07:58.039 [MainThread] core DEBUG] received message of type: TP_PROCESS_REQUEST
+[20:07:58.190 [MainThread] handler INFO] Setting setting sawtooth.validator.transaction_families changed from None to [{&quot;family&quot;: &quot;intkey&quot;, &quot;version&quot;: &quot;1.0&quot;}, {&quot;family&quot;:&quot;sawtooth_settings&quot;, &quot;version&quot;:&quot;1.0&quot;}, {&quot;family&quot;:&quot;sawtooth_validator_registry&quot;, &quot;version&quot;:&quot;1.0&quot;}]&#39;
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rest_auth_proxy.html" class="btn btn-neutral float-right" title="Using a Proxy Server to Authorize the REST API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="testing_sawtooth.html" class="btn btn-neutral float-left" title="Testing Sawtooth Functionality" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

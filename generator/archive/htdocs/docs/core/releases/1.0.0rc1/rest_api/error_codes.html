@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Error Responses &mdash; Sawtooth v1.0.0rc1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc1 documentation" href="../index.html"/>
+        <link rel="up" title="REST API Reference" href="../rest_api.html"/>
+        <link rel="next" title="State Delta Subscriptions via Web Sockets" href="state_delta_websockets.html"/>
+        <link rel="prev" title="Endpoint Specifications" href="endpoint_specs.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../rest_api.html">REST API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="endpoint_specs.html">Endpoint Specifications</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Error Responses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#http-status-codes">HTTP Status Codes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#json-response">JSON Response</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#example-json-response">Example JSON Response</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#error-codes-and-descriptions">Error Codes and Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="state_delta_websockets.html">State Delta Subscriptions via Web Sockets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../rest_api.html">REST API Reference</a> &raquo;</li>
+        
+      <li>Error Responses</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/rest_api/error_codes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="error-responses">
+<h1>Error Responses<a class="headerlink" href="#error-responses" title="Permalink to this headline">¶</a></h1>
+<p>When the REST API encounters a problem, or receives notification that the
+validator has encountered a problem, it will notify clients with both an
+appropriate HTTP status code, and a more detailed JSON response.</p>
+<div class="section" id="http-status-codes">
+<h2>HTTP Status Codes<a class="headerlink" href="#http-status-codes" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="5%" />
+<col width="20%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Code</th>
+<th class="head">Title</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>400</td>
+<td>Bad Request</td>
+<td>The request was malformed in some way, and will need to be modified
+before resubmitting. The accompanying JSON response will have more
+details.</td>
+</tr>
+<tr class="row-odd"><td>404</td>
+<td>Not Found</td>
+<td>The request was well formed, but an identifier specified did not
+correspond to any resource in the validator. Returned by endpoints which
+fetch a single resource. Endpoints which return lists of resources will
+simply return an empty list.</td>
+</tr>
+<tr class="row-even"><td>500</td>
+<td>Internal Server Error</td>
+<td>Something is broken internally in the REST API or the validator. This may
+be a bug, and if reproducable, should be reported.</td>
+</tr>
+<tr class="row-odd"><td>503</td>
+<td>Service Unavailable</td>
+<td>The REST API is unable to communicate with the validator. It may be down.
+You should try your request later.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="json-response">
+<h2>JSON Response<a class="headerlink" href="#json-response" title="Permalink to this headline">¶</a></h2>
+<p>In the case of an error, rather than a <em>data</em> property, the JSON response will
+include a single <em>error</em> property with three values:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>code</em> (integer) - a machine readable error code</li>
+<li><em>title</em> (string) - a short headline for the error</li>
+<li><em>message</em> (string) - a longer human readable description of what went wrong</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">While the title and message may change in the future, <strong>the error code is
+fixed</strong>, and will always refer to this particular problem.</p>
+</div>
+<div class="section" id="example-json-response">
+<h3>Example JSON Response<a class="headerlink" href="#example-json-response" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;error&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;code&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Submitted Batches Invalid&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;The submitted BatchList is invalid. It was poorly formed, or has an invalid signature.&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="error-codes-and-descriptions">
+<h2>Error Codes and Descriptions<a class="headerlink" href="#error-codes-and-descriptions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="5%" />
+<col width="20%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Code</th>
+<th class="head">Title</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>10</td>
+<td>Unknown Validator Error</td>
+<td>An unknown error occurred with the validator while processing the
+request. This may be a bug, and if reproducable, should be reported.</td>
+</tr>
+<tr class="row-odd"><td>15</td>
+<td>Validator Not Ready</td>
+<td>The validator has no genesis block, and so cannot be queried. Wait for
+genesis to be completed and resubmit. If you are running the validator,
+ensure it was set up properly.</td>
+</tr>
+<tr class="row-even"><td>17</td>
+<td>Validator Timed Out</td>
+<td>The request timed out while waiting for a response from the validator. It
+may not be running, or have encountered an internal error. The request
+may or may not have been processed.</td>
+</tr>
+<tr class="row-odd"><td>18</td>
+<td>Validator Disconnected</td>
+<td>The validator sent a disconnect signal while processing the response, and
+is no longer available. Try your request again later.</td>
+</tr>
+<tr class="row-even"><td>20</td>
+<td>Invalid Validator Response</td>
+<td>The validator sent back a response which was not serialized properly
+and could not be decoded. There may be a problem with the validator.</td>
+</tr>
+<tr class="row-odd"><td>21</td>
+<td>Invalid Resource Header</td>
+<td>The validator sent back a resource with a header that could not be
+decoded. There may be a problem with the validator, or the data may
+have been corrupted.</td>
+</tr>
+<tr class="row-even"><td>27</td>
+<td>Unable to Fetch Statuses</td>
+<td>The validator should always return some status for every batch
+requested. An unknown error caused statuses to be missing, and should be
+reported.</td>
+</tr>
+<tr class="row-odd"><td>30</td>
+<td>Submitted Batches Invalid</td>
+<td>The submitted BatchList failed initial validation by the validator. It
+may have a bad signature, or be poorly formed.</td>
+</tr>
+<tr class="row-even"><td>34</td>
+<td>No Batches Submitted</td>
+<td>The BatchList Protobuf submitted was empty and contained no Batches. All
+submissions to the validator must include at least one Batch.</td>
+</tr>
+<tr class="row-odd"><td>35</td>
+<td>Protobuf Not Decodable</td>
+<td>The REST API was unable to decode the submitted Protobuf binary. It is
+poorly formed, and has not been submitted to the validator.</td>
+</tr>
+<tr class="row-even"><td>42</td>
+<td>Wrong Content Type (submit batches)</td>
+<td>POST requests to submit a BatchList must have a &#8216;Content-Type&#8217; header of
+&#8216;application/octet-stream&#8217;.</td>
+</tr>
+<tr class="row-odd"><td>43</td>
+<td>Wrong Content Type (fetch statuses)</td>
+<td>If using a POST request to fetch batch statuses, the &#8216;Content-Type&#8217;
+header must be &#8216;application/json&#8217;.</td>
+</tr>
+<tr class="row-even"><td>46</td>
+<td>Bad Status Request</td>
+<td>The body of the POST request to fetch batch statuses was poorly formed.
+It must be a JSON formatted array of string-formatted batch ids, with at
+least one id.</td>
+</tr>
+<tr class="row-odd"><td>50</td>
+<td>Head Not Found</td>
+<td>A &#8216;head&#8217; query parameter was used, but the block id specified does not
+correspond to any block in the validator.</td>
+</tr>
+<tr class="row-even"><td>53</td>
+<td>Invalid Count Query</td>
+<td>The &#8216;count&#8217; query parameter must be a positive, non-zero integer.</td>
+</tr>
+<tr class="row-odd"><td>54</td>
+<td>Invalid Paging Query</td>
+<td>The validator rejected the paging request submitted. One or more of the
+&#8216;min&#8217;, &#8216;max&#8217;, or &#8216;count&#8217; query parameters were invalid or out of range.</td>
+</tr>
+<tr class="row-even"><td>57</td>
+<td>Invalid Sort Query</td>
+<td>The validator rejected the sort request submitted. Most likely one of
+the keys specified was not found in the resources sorted.</td>
+</tr>
+<tr class="row-odd"><td>60</td>
+<td>Invalid Resource Id</td>
+<td>A submitted block, batch, or transaction id was invalid. All such
+resources are identified by 128 character hex-strings.</td>
+</tr>
+<tr class="row-even"><td>62</td>
+<td>Invalid State Address</td>
+<td>The state address submitted was invalid. Returned when attempting to
+fetch a particular &#8220;leaf&#8221; from the state tree. When fetching specific
+state data, the full 70-character address must be used.</td>
+</tr>
+<tr class="row-odd"><td>66</td>
+<td>Id Query Invalid or Missing</td>
+<td>If using a GET request to fetch batch statuses, an &#8216;id&#8217; query parameter
+must be specified, with a comma-separated list of at least one batch id.</td>
+</tr>
+<tr class="row-even"><td>70</td>
+<td>Block Not Found</td>
+<td>There is no block with the id specified in the blockchain.</td>
+</tr>
+<tr class="row-odd"><td>71</td>
+<td>Batch Not Found</td>
+<td>There is no batch with the id specified in the blockchain.</td>
+</tr>
+<tr class="row-even"><td>72</td>
+<td>Transaction Not Found</td>
+<td>There is no transaction with the id specified in the blockchain.</td>
+</tr>
+<tr class="row-odd"><td>75</td>
+<td>State Not Found</td>
+<td>There is no state data at the address specified.</td>
+</tr>
+<tr class="row-even"><td>80</td>
+<td>Transaction Receipt Not Found</td>
+<td>There is no transaction receipt for the transaction id specified in the
+receipt store.</td>
+</tr>
+<tr class="row-odd"><td>81</td>
+<td>Wrong Content Type</td>
+<td>Requests for transaction receipts sent as a POST must have a
+&#8216;Content-Type&#8217; header of &#8216;application/json&#8217;.</td>
+</tr>
+<tr class="row-even"><td>82</td>
+<td>Bad Receipts Request</td>
+<td>Requests for transaction receipts sent as a POST must have a JSON
+formatted body with an array of at least one id string.</td>
+</tr>
+<tr class="row-odd"><td>83</td>
+<td>Id Query Invalid or Missing</td>
+<td>Requests for transaction receipts sent as a GET request must have an &#8216;id&#8217;
+query parameter with a comma-separated list of at least one transaction
+id.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="state_delta_websockets.html" class="btn btn-neutral float-right" title="State Delta Subscriptions via Web Sockets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="endpoint_specs.html" class="btn btn-neutral" title="Endpoint Specifications" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.0rc1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,671 @@
+use 'godoc cmd/sawtooth_sdk/signing' for documentation on the sawtooth_sdk/signing command 
+
+<!--
+	Copyright 2009 The Go Authors. All rights reserved.
+	Use of this source code is governed by a BSD-style
+	license that can be found in the LICENSE file.
+-->
+<!--
+	Note: Static (i.e., not template-generated) href and id
+	attributes start with "pkg-" to make it impossible for
+	them to conflict with generated attributes (some of which
+	correspond to Go identifiers).
+-->
+
+	<script type='text/javascript'>
+	document.ANALYSIS_DATA = ;
+	document.CALLGRAPH = ;
+	</script>
+
+	
+		
+		<div id="short-nav">
+			<dl>
+			<dd><code>import "sawtooth_sdk/signing"</code></dd>
+			</dl>
+			<dl>
+			<dd><a href="#pkg-overview" class="overviewLink">Overview</a></dd>
+			<dd><a href="#pkg-index" class="indexLink">Index</a></dd>
+			
+			
+			</dl>
+		</div>
+		<!-- The package's Name is printed as title by the top-level template -->
+		<div id="pkg-overview" class="toggleVisible">
+			<div class="collapsed">
+				<h2 class="toggleButton" title="Click to show Overview section">Overview ▹</h2>
+			</div>
+			<div class="expanded">
+				<h2 class="toggleButton" title="Click to hide Overview section">Overview ▾</h2>
+				
+			</div>
+		</div>
+		
+
+		<div id="pkg-index" class="toggleVisible">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Index section">Index ▹</h2>
+		</div>
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Index section">Index ▾</h2>
+
+		<!-- Table of contents for API; must be named manual-nav to turn off auto nav. -->
+			<div id="manual-nav">
+			<dl>
+			
+			
+			
+			
+				
+				<dd><a href="#Context">type Context</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#CreateContext">func CreateContext(algorithmName string) Context</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#NewSecp256k1Context">func NewSecp256k1Context() Context</a></dd>
+				
+				
+			
+				
+				<dd><a href="#CryptoFactory">type CryptoFactory</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#NewCryptoFactory">func NewCryptoFactory(context Context) *CryptoFactory</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#CryptoFactory.GetContext">func (self *CryptoFactory) GetContext() Context</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#CryptoFactory.NewSigner">func (self *CryptoFactory) NewSigner(private_key PrivateKey) *Signer</a></dd>
+				
+			
+				
+				<dd><a href="#PrivateKey">type PrivateKey</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#NewSecp256k1PrivateKey">func NewSecp256k1PrivateKey(private_key []byte) PrivateKey</a></dd>
+				
+				
+			
+				
+				<dd><a href="#PublicKey">type PublicKey</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#NewSecp256k1PublicKey">func NewSecp256k1PublicKey(public_key []byte) PublicKey</a></dd>
+				
+				
+			
+				
+				<dd><a href="#Secp256k1Context">type Secp256k1Context</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Secp256k1Context.GetAlgorithmName">func (self *Secp256k1Context) GetAlgorithmName() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Secp256k1Context.GetPublicKey">func (self *Secp256k1Context) GetPublicKey(private_key PrivateKey) PublicKey</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Secp256k1Context.NewRandomPrivateKey">func (self *Secp256k1Context) NewRandomPrivateKey() PrivateKey</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Secp256k1Context.Sign">func (self *Secp256k1Context) Sign(message []byte, private_key PrivateKey) []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Secp256k1Context.Verify">func (self *Secp256k1Context) Verify(signature []byte, message []byte, public_key PublicKey) bool</a></dd>
+				
+			
+				
+				<dd><a href="#Secp256k1PrivateKey">type Secp256k1PrivateKey</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#PemToSecp256k1PrivateKey">func PemToSecp256k1PrivateKey(pem string, password string) (*Secp256k1PrivateKey, error)</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Secp256k1PrivateKey.AsBytes">func (self *Secp256k1PrivateKey) AsBytes() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Secp256k1PrivateKey.AsHex">func (self *Secp256k1PrivateKey) AsHex() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Secp256k1PrivateKey.GetAlgorithmName">func (self *Secp256k1PrivateKey) GetAlgorithmName() string</a></dd>
+				
+			
+				
+				<dd><a href="#Secp256k1PublicKey">type Secp256k1PublicKey</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Secp256k1PublicKey.AsBytes">func (self *Secp256k1PublicKey) AsBytes() []byte</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Secp256k1PublicKey.AsHex">func (self *Secp256k1PublicKey) AsHex() string</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Secp256k1PublicKey.GetAlgorithmName">func (self *Secp256k1PublicKey) GetAlgorithmName() string</a></dd>
+				
+			
+				
+				<dd><a href="#Signer">type Signer</a></dd>
+				
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Signer.GetPublicKey">func (self *Signer) GetPublicKey() PublicKey</a></dd>
+				
+					
+					<dd>&nbsp; &nbsp; <a href="#Signer.Sign">func (self *Signer) Sign(message []byte) []byte</a></dd>
+				
+			
+			
+			</dl>
+			</div><!-- #manual-nav -->
+
+		
+
+		
+			<h4>Package files</h4>
+			<p>
+			<span style="font-size:90%">
+			
+				<a href="/src/sawtooth_sdk/signing/core.go">core.go</a>
+			
+				<a href="/src/sawtooth_sdk/signing/pem_loader.go">pem_loader.go</a>
+			
+				<a href="/src/sawtooth_sdk/signing/secp256k1.go">secp256k1.go</a>
+			
+			</span>
+			</p>
+		
+		</div><!-- .expanded -->
+		</div><!-- #pkg-index -->
+
+		<div id="pkg-callgraph" class="toggle" style="display: none">
+		<div class="collapsed">
+			<h2 class="toggleButton" title="Click to show Internal Call Graph section">Internal call graph ▹</h2>
+		</div> <!-- .expanded -->
+		<div class="expanded">
+			<h2 class="toggleButton" title="Click to hide Internal Call Graph section">Internal call graph ▾</h2>
+			<p>
+			  In the call graph viewer below, each node
+			  is a function belonging to this package
+			  and its children are the functions it
+			  calls&mdash;perhaps dynamically.
+			</p>
+			<p>
+			  The root nodes are the entry points of the
+			  package: functions that may be called from
+			  outside the package.
+			  There may be non-exported or anonymous
+			  functions among them if they are called
+			  dynamically from another package.
+			</p>
+			<p>
+			  Click a node to visit that function's source code.
+			  From there you can visit its callers by
+			  clicking its declaring <code>func</code>
+			  token.
+			</p>
+			<p>
+			  Functions may be omitted if they were
+			  determined to be unreachable in the
+			  particular programs or tests that were
+			  analyzed.
+			</p>
+			<!-- Zero means show all package entry points. -->
+			<ul style="margin-left: 0.5in" id="callgraph-0" class="treeview"></ul>
+		</div>
+		</div> <!-- #pkg-callgraph -->
+
+		
+		
+		
+		
+			
+			
+			<h2 id="Context">type <a href="/src/target/core.go?s=1432:2071#L41">Context</a></h2>
+			<pre>type Context interface {
+    <span class="comment">// Returns the algorithm name used for this context.</span>
+    GetAlgorithmName() <a href="/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Generates a new random private key.</span>
+    NewRandomPrivateKey() <a href="#PrivateKey">PrivateKey</a>
+
+    <span class="comment">// Produces a public key for the given private key.</span>
+    GetPublicKey(private_key <a href="#PrivateKey">PrivateKey</a>) <a href="#PublicKey">PublicKey</a>
+
+    <span class="comment">// Sign uses the given private key to calculate a signature for</span>
+    <span class="comment">// the given data.</span>
+    Sign(message []<a href="/pkg/builtin/#byte">byte</a>, private_key <a href="#PrivateKey">PrivateKey</a>) []<a href="/pkg/builtin/#byte">byte</a>
+
+    <span class="comment">// Verify uses the given public key to verify that the given</span>
+    <span class="comment">// signature was created from the given data using the associated</span>
+    <span class="comment">// private key.</span>
+    Verify(signature []<a href="/pkg/builtin/#byte">byte</a>, message []<a href="/pkg/builtin/#byte">byte</a>, public_key <a href="#PublicKey">PublicKey</a>) <a href="/pkg/builtin/#bool">bool</a>
+}</pre>
+			<p>
+A context for a cryptographic signing algorithm.
+</p>
+
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="CreateContext">func <a href="/src/target/core.go?s=2112:2160#L62">CreateContext</a></h3>
+				<pre>func CreateContext(algorithmName <a href="/pkg/builtin/#string">string</a>) <a href="#Context">Context</a></pre>
+				<p>
+Returns a Context instance by name.
+</p>
+
+				
+				
+			
+				
+				<h3 id="NewSecp256k1Context">func <a href="/src/target/secp256k1.go?s=2496:2530#L89">NewSecp256k1Context</a></h3>
+				<pre>func NewSecp256k1Context() <a href="#Context">Context</a></pre>
+				<p>
+Returns a new secp256k1 context.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="CryptoFactory">type <a href="/src/target/core.go?s=2750:2796#L91">CryptoFactory</a></h2>
+			<pre>type CryptoFactory struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}</pre>
+			<p>
+A factory for generating Signers.
+</p>
+
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewCryptoFactory">func <a href="/src/target/core.go?s=2843:2896#L96">NewCryptoFactory</a></h3>
+				<pre>func NewCryptoFactory(context <a href="#Context">Context</a>) *<a href="#CryptoFactory">CryptoFactory</a></pre>
+				<p>
+Creates a factory for generating Signers.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="CryptoFactory.GetContext">func (*CryptoFactory) <a href="/src/target/core.go?s=3000:3047#L101">GetContext</a></h3>
+				<pre>func (self *<a href="#CryptoFactory">CryptoFactory</a>) GetContext() <a href="#Context">Context</a></pre>
+				<p>
+Returns the context that backs this Factory instance.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="CryptoFactory.NewSigner">func (*CryptoFactory) <a href="/src/target/core.go?s=3125:3193#L106">NewSigner</a></h3>
+				<pre>func (self *<a href="#CryptoFactory">CryptoFactory</a>) NewSigner(private_key <a href="#PrivateKey">PrivateKey</a>) *<a href="#Signer">Signer</a></pre>
+				<p>
+Creates a new Signer for the given private key.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="PrivateKey">type <a href="/src/target/core.go?s=802:1040#L14">PrivateKey</a></h2>
+			<pre>type PrivateKey interface {
+    <span class="comment">// Returns the algorithm name used for this private key.</span>
+    GetAlgorithmName() <a href="/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Returns the private key encoded as a hex string.</span>
+    AsHex() <a href="/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Returns the private key bytes.</span>
+    AsBytes() []<a href="/pkg/builtin/#byte">byte</a>
+}</pre>
+			<p>
+A private key instance. The underlying content is dependent on
+implementation.
+</p>
+
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewSecp256k1PrivateKey">func <a href="/src/target/secp256k1.go?s=988:1046#L27">NewSecp256k1PrivateKey</a></h3>
+				<pre>func NewSecp256k1PrivateKey(private_key []<a href="/pkg/builtin/#byte">byte</a>) <a href="#PrivateKey">PrivateKey</a></pre>
+				<p>
+Creates a PrivateKey instance from private key bytes.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="PublicKey">type <a href="/src/target/core.go?s=1126:1360#L27">PublicKey</a></h2>
+			<pre>type PublicKey interface {
+    <span class="comment">// Returns the algorithm name used for this public key.</span>
+    GetAlgorithmName() <a href="/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Returns the public key encoded as a hex string.</span>
+    AsHex() <a href="/pkg/builtin/#string">string</a>
+
+    <span class="comment">// Returns the public key bytes.</span>
+    AsBytes() []<a href="/pkg/builtin/#byte">byte</a>
+}</pre>
+			<p>
+A public key instance. The underlying content is dependent on
+implementation.
+</p>
+
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="NewSecp256k1PublicKey">func <a href="/src/target/secp256k1.go?s=1895:1950#L63">NewSecp256k1PublicKey</a></h3>
+				<pre>func NewSecp256k1PublicKey(public_key []<a href="/pkg/builtin/#byte">byte</a>) <a href="#PublicKey">PublicKey</a></pre>
+				<p>
+Creates a PublicKey instance from public key bytes.
+</p>
+
+				
+				
+			
+
+			
+		
+			
+			
+			<h2 id="Secp256k1Context">type <a href="/src/target/secp256k1.go?s=2397:2458#L84">Secp256k1Context</a></h2>
+			<pre>type Secp256k1Context struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}</pre>
+			
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Secp256k1Context.GetAlgorithmName">func (*Secp256k1Context) <a href="/src/target/secp256k1.go?s=2613:2668#L94">GetAlgorithmName</a></h3>
+				<pre>func (self *<a href="#Secp256k1Context">Secp256k1Context</a>) GetAlgorithmName() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Returns the string &#34;secp256k1&#34;.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Secp256k1Context.GetPublicKey">func (*Secp256k1Context) <a href="/src/target/secp256k1.go?s=2958:3034#L106">GetPublicKey</a></h3>
+				<pre>func (self *<a href="#Secp256k1Context">Secp256k1Context</a>) GetPublicKey(private_key <a href="#PrivateKey">PrivateKey</a>) <a href="#PublicKey">PublicKey</a></pre>
+				<p>
+Produces a public key for the given private key.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Secp256k1Context.NewRandomPrivateKey">func (*Secp256k1Context) <a href="/src/target/secp256k1.go?s=2743:2805#L99">NewRandomPrivateKey</a></h3>
+				<pre>func (self *<a href="#Secp256k1Context">Secp256k1Context</a>) NewRandomPrivateKey() <a href="#PrivateKey">PrivateKey</a></pre>
+				<p>
+Generates a new random secp256k1 private key.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Secp256k1Context.Sign">func (*Secp256k1Context) <a href="/src/target/secp256k1.go?s=3448:3529#L118">Sign</a></h3>
+				<pre>func (self *<a href="#Secp256k1Context">Secp256k1Context</a>) Sign(message []<a href="/pkg/builtin/#byte">byte</a>, private_key <a href="#PrivateKey">PrivateKey</a>) []<a href="/pkg/builtin/#byte">byte</a></pre>
+				<p>
+Sign uses the given private key to calculate a signature for the
+given data. A sha256 hash of the data is first calculated and this
+is what is actually signed. Returns the signature as bytes using
+the compact serialization (which is just (r, s)).
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Secp256k1Context.Verify">func (*Secp256k1Context) <a href="/src/target/secp256k1.go?s=3998:4095#L137">Verify</a></h3>
+				<pre>func (self *<a href="#Secp256k1Context">Secp256k1Context</a>) Verify(signature []<a href="/pkg/builtin/#byte">byte</a>, message []<a href="/pkg/builtin/#byte">byte</a>, public_key <a href="#PublicKey">PublicKey</a>) <a href="/pkg/builtin/#bool">bool</a></pre>
+				<p>
+Verify uses the given public key to verify that the given signature
+was created from the given data using the associated private key. A
+sha256 hash of the data is calculated first and this is what is
+actually used to verify the signature.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Secp256k1PrivateKey">type <a href="/src/target/secp256k1.go?s=874:929#L22">Secp256k1PrivateKey</a></h2>
+			<pre>type Secp256k1PrivateKey struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}</pre>
+			
+
+			
+
+			
+
+			
+			
+			
+
+			
+				
+				<h3 id="PemToSecp256k1PrivateKey">func <a href="/src/target/secp256k1.go?s=1162:1250#L32">PemToSecp256k1PrivateKey</a></h3>
+				<pre>func PemToSecp256k1PrivateKey(pem <a href="/pkg/builtin/#string">string</a>, password <a href="/pkg/builtin/#string">string</a>) (*<a href="#Secp256k1PrivateKey">Secp256k1PrivateKey</a>, <a href="/pkg/builtin/#error">error</a>)</pre>
+				<p>
+PemToSecp256k1PrivateKey converts a PEM string to a private key.
+</p>
+
+				
+				
+			
+
+			
+				
+				<h3 id="Secp256k1PrivateKey.AsBytes">func (*Secp256k1PrivateKey) <a href="/src/target/secp256k1.go?s=1684:1733#L52">AsBytes</a></h3>
+				<pre>func (self *<a href="#Secp256k1PrivateKey">Secp256k1PrivateKey</a>) AsBytes() []<a href="/pkg/builtin/#byte">byte</a></pre>
+				<p>
+Returns the bytes of the private key.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Secp256k1PrivateKey.AsHex">func (*Secp256k1PrivateKey) <a href="/src/target/secp256k1.go?s=1545:1592#L47">AsHex</a></h3>
+				<pre>func (self *<a href="#Secp256k1PrivateKey">Secp256k1PrivateKey</a>) AsHex() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Returns the private key as a hex-encoded string.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Secp256k1PrivateKey.GetAlgorithmName">func (*Secp256k1PrivateKey) <a href="/src/target/secp256k1.go?s=1409:1467#L42">GetAlgorithmName</a></h3>
+				<pre>func (self *<a href="#Secp256k1PrivateKey">Secp256k1PrivateKey</a>) GetAlgorithmName() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Returns the string &#34;secp256k1&#34;.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Secp256k1PublicKey">type <a href="/src/target/secp256k1.go?s=1785:1838#L58">Secp256k1PublicKey</a></h2>
+			<pre>type Secp256k1PublicKey struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}</pre>
+			
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Secp256k1PublicKey.AsBytes">func (*Secp256k1PublicKey) <a href="/src/target/secp256k1.go?s=2301:2349#L78">AsBytes</a></h3>
+				<pre>func (self *<a href="#Secp256k1PublicKey">Secp256k1PublicKey</a>) AsBytes() []<a href="/pkg/builtin/#byte">byte</a></pre>
+				<p>
+Returns the bytes of the public key.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Secp256k1PublicKey.AsHex">func (*Secp256k1PublicKey) <a href="/src/target/secp256k1.go?s=2165:2211#L73">AsHex</a></h3>
+				<pre>func (self *<a href="#Secp256k1PublicKey">Secp256k1PublicKey</a>) AsHex() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Returns the public key as a hex-encoded string.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Secp256k1PublicKey.GetAlgorithmName">func (*Secp256k1PublicKey) <a href="/src/target/secp256k1.go?s=2031:2088#L68">GetAlgorithmName</a></h3>
+				<pre>func (self *<a href="#Secp256k1PublicKey">Secp256k1PublicKey</a>) GetAlgorithmName() <a href="/pkg/builtin/#string">string</a></pre>
+				<p>
+Returns the string &#34;secp256k1&#34;.
+</p>
+
+				
+				
+				
+			
+		
+			
+			
+			<h2 id="Signer">type <a href="/src/target/core.go?s=2332:2399#L73">Signer</a></h2>
+			<pre>type Signer struct {
+    <span class="comment">// contains filtered or unexported fields</span>
+}</pre>
+			<p>
+A convenient wrapper of Context and PrivateKey.
+</p>
+
+
+			
+
+			
+
+			
+			
+			
+
+			
+
+			
+				
+				<h3 id="Signer.GetPublicKey">func (*Signer) <a href="/src/target/core.go?s=2587:2631#L84">GetPublicKey</a></h3>
+				<pre>func (self *<a href="#Signer">Signer</a>) GetPublicKey() <a href="#PublicKey">PublicKey</a></pre>
+				<p>
+Returns the public key for this Signer instance.
+</p>
+
+				
+				
+				
+			
+				
+				<h3 id="Signer.Sign">func (*Signer) <a href="/src/target/core.go?s=2429:2476#L79">Sign</a></h3>
+				<pre>func (self *<a href="#Signer">Signer</a>) Sign(message []<a href="/pkg/builtin/#byte">byte</a>) []<a href="/pkg/builtin/#byte">byte</a></pre>
+				<p>
+Signs the given message.
+</p>
+
+				
+				
+				
+			
+		
+	
+
+	
+
+
+
+
+

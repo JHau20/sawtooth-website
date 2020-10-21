@@ -1,0 +1,482 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>IntegerKey CLI (intkey) &mdash; Sawtooth v1.0.0rc7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc7 documentation" href="../index.html"/>
+        <link rel="up" title="CLI Reference" href="../cli.html"/>
+        <link rel="next" title="XO CLI" href="xo.html"/>
+        <link rel="prev" title="REST API CLI (sawtooth-rest-api)" href="rest_api.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../cli.html">CLI Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sawtooth.html">Sawtooth CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawadm.html">Sawtooth Admin CLI (sawadm)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawnet.html">Sawtooth Network CLI (sawnet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawset.html">Sawtooth Config CLI (sawset)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poet.html">PoET CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator.html">Validator CLI (sawtooth-validator)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API CLI (sawtooth-rest-api)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">IntegerKey CLI (intkey)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#intkey">intkey</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intkey-set">intkey set</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intkey-inc">intkey inc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intkey-dec">intkey dec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intkey-show">intkey show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#intkey-list">intkey list</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="xo.html">XO CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings-tp.html">Settings Transaction Processor CLI (sawtooth-settings)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity-tp.html">Identity Transaction Processor CLI (identity-tp)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../cli.html">CLI Reference</a> &raquo;</li>
+        
+      <li>IntegerKey CLI (intkey)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cli/intkey.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="integerkey-cli-intkey">
+<span id="intkey-cli-reference-label"></span><h1>IntegerKey CLI (intkey)<a class="headerlink" href="#integerkey-cli-intkey" title="Permalink to this headline">¶</a></h1>
+<p>The IntegerKey CLI, <code class="docutils literal"><span class="pre">intkey</span></code>, provides functions that can be used to test
+deployed ledgers.</p>
+<div class="section" id="intkey">
+<h2>intkey<a class="headerlink" href="#intkey" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">intkey</span></code> command provides subcommands to set, increment, and
+decrement the value of entries stored in a state dictionary.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: intkey [-h] [-v] [-V]</span>
+<span class="go">              {set,inc,dec,show,list,generate,load,populate,create_batch,workload}</span>
+<span class="go">              ...</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {set,inc,dec,show,list,generate,load,populate,create_batch,workload}</span>
+<span class="go">    set                 Sets an intkey value</span>
+<span class="go">    inc                 Increments an intkey value</span>
+<span class="go">    dec                 Decrements an intkey value</span>
+<span class="go">    show                Displays the specified intkey value</span>
+<span class="go">    list                Displays all intkey values</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="intkey-set">
+<h2>intkey set<a class="headerlink" href="#intkey-set" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">intkey</span> <span class="pre">set</span></code> subcommand sets a key (<cite>name</cite>) to the specified value.
+This transaction will fail if the value is less than 0 or greater than
+2<sup>32</sup> - 1.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: intkey set [-h] [-v] [-V] [--url URL] [--keyfile KEYFILE]</span>
+<span class="go">                  [--wait [WAIT]]</span>
+<span class="go">                  name value</span>
+
+<span class="go">Sends an intkey transaction to set &lt;name&gt; to &lt;value&gt;.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name               name of key to set</span>
+<span class="go">  value              amount to set</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help         show this help message and exit</span>
+<span class="go">  -v, --verbose      enable more verbose output</span>
+<span class="go">  -V, --version      display version information</span>
+<span class="go">  --url URL          specify URL of REST API</span>
+<span class="go">  --keyfile KEYFILE  identify file containing user&#39;s private key</span>
+<span class="go">  --wait [WAIT]      set time, in seconds, to wait for transaction to commit</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="intkey-inc">
+<h2>intkey inc<a class="headerlink" href="#intkey-inc" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">intkey</span> <span class="pre">inc</span></code> subcommand increments a key (<cite>name</cite>) by the specified value.
+This transaction will fail if the key is not set or if the resulting value
+would exceed 2<sup>32</sup> - 1.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: intkey inc [-h] [-v] [-V] [--url URL] [--keyfile KEYFILE]</span>
+<span class="go">                  [--wait [WAIT]]</span>
+<span class="go">                  name value</span>
+
+<span class="go">Sends an intkey transaction to increment &lt;name&gt; by &lt;value&gt;.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name               identify name of key to increment</span>
+<span class="go">  value              specify amount to increment</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help         show this help message and exit</span>
+<span class="go">  -v, --verbose      enable more verbose output</span>
+<span class="go">  -V, --version      display version information</span>
+<span class="go">  --url URL          specify URL of REST API</span>
+<span class="go">  --keyfile KEYFILE  identify file containing user&#39;s private key</span>
+<span class="go">  --wait [WAIT]      set time, in seconds, to wait for transaction to commit</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="intkey-dec">
+<h2>intkey dec<a class="headerlink" href="#intkey-dec" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">intkey</span> <span class="pre">dec</span></code> subcommand decrements a key (<cite>name</cite>) by the specified value.
+This transaction will fail if the key is not set or if the resulting value
+would be less than 0.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: intkey dec [-h] [-v] [-V] [--url URL] [--keyfile KEYFILE]</span>
+<span class="go">                  [--wait [WAIT]]</span>
+<span class="go">                  name value</span>
+
+<span class="go">Sends an intkey transaction to decrement &lt;name&gt; by &lt;value&gt;.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name               identify name of key to decrement</span>
+<span class="go">  value              amount to decrement</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help         show this help message and exit</span>
+<span class="go">  -v, --verbose      enable more verbose output</span>
+<span class="go">  -V, --version      display version information</span>
+<span class="go">  --url URL          specify URL of REST API</span>
+<span class="go">  --keyfile KEYFILE  identify file containing user&#39;s private key</span>
+<span class="go">  --wait [WAIT]      set time, in seconds, to wait for transaction to commit</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="intkey-show">
+<h2>intkey show<a class="headerlink" href="#intkey-show" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">intkey</span> <span class="pre">show</span></code> subcommand displays the value of the specified key (<cite>name</cite>).</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: intkey show [-h] [-v] [-V] [--url URL] name</span>
+
+<span class="go">Shows the value of the key &lt;name&gt;.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name           name of key to show</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  enable more verbose output</span>
+<span class="go">  -V, --version  display version information</span>
+<span class="go">  --url URL      specify URL of REST API</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="intkey-list">
+<h2>intkey list<a class="headerlink" href="#intkey-list" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">intkey</span> <span class="pre">list</span></code> subcommand displays the value of all keys.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: intkey list [-h] [-v] [-V] [--url URL]</span>
+
+<span class="go">Shows the values of all keys in intkey state.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  enable more verbose output</span>
+<span class="go">  -V, --version  display version information</span>
+<span class="go">  --url URL      specify URL of REST API</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="xo.html" class="btn btn-neutral float-right" title="XO CLI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rest_api.html" class="btn btn-neutral" title="REST API CLI (sawtooth-rest-api)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.0rc7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+sawtooth\.manage\.node module
+=============================
+
+.. automodule:: sawtooth.manage.node
+    :members:
+    :undoc-members:
+    :show-inheritance:

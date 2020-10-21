@@ -1,0 +1,7 @@
+mktplace\.transactions\.sell\_offer\_update module
+==================================================
+
+.. automodule:: mktplace.transactions.sell_offer_update
+    :members:
+    :undoc-members:
+    :show-inheritance:

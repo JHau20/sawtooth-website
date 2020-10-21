@@ -1,0 +1,452 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sabre CLI Reference &mdash; Sawtooth Sabre v0.6.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Smart Permissions" href="smart_permissions.html" />
+    <link rel="prev" title="Sabre Application Developer’s Guide" href="application_developer_guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Sawtooth Sabre
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.6.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sabre_transaction_family.html">Sabre Transaction Family</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application_developer_guide.html">Sabre Application Developer’s Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sabre CLI Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sabre">sabre</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sabre-cr">sabre cr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sabre-upload">sabre upload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sabre-ns">sabre ns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sabre-perm">sabre perm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sabre-exec">sabre exec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sabre-sp">sabre sp</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="smart_permissions.html">Smart Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_compatibility.html">Sabre and Sawtooth Version Compatibility</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sawtooth Sabre</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Sabre CLI Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/sabre_cli.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sabre-cli-reference">
+<h1>Sabre CLI Reference<a class="headerlink" href="#sabre-cli-reference" title="Permalink to this headline">¶</a></h1>
+<p>The Sabre CLI provides a way to upload and execute Sabre smart contracts from
+the command line. It also provides the ability to manage namespace registries
+and their permissions.</p>
+<div class="section" id="sabre">
+<h2>sabre<a class="headerlink" href="#sabre" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">sabre</span></code> is the top level command for Sabre. It contains the following
+subcommands: <code class="docutils literal notranslate"><span class="pre">cr</span></code>, <code class="docutils literal notranslate"><span class="pre">upload</span></code>, <code class="docutils literal notranslate"><span class="pre">ns</span></code>, <code class="docutils literal notranslate"><span class="pre">perm</span></code>, and <code class="docutils literal notranslate"><span class="pre">exec</span></code>. The subcommands
+have options and arguments that control their behavior. All subcommands include
+<code class="docutils literal notranslate"><span class="pre">-key</span></code>, the name of the signing key, and <code class="docutils literal notranslate"><span class="pre">--url</span></code>, the url to the Sawtooth
+REST API.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sabre-cli 0.6.0</span>
+<span class="go">Sawtooth Sabre CLI</span>
+
+<span class="go">USAGE:</span>
+<span class="go">    sabre &lt;SUBCOMMAND&gt;</span>
+
+<span class="go">FLAGS:</span>
+<span class="go">    -h, --help       Prints help information</span>
+<span class="go">    -V, --version    Prints version information</span>
+
+<span class="go">SUBCOMMANDS:</span>
+<span class="go">    cr        create, update, or delete a Sabre contract registry</span>
+<span class="go">    exec      execute a Sabre contract</span>
+<span class="go">    help      Prints this message or the help of the given subcommand(s)</span>
+<span class="go">    ns        create, update, or delete a Sabre namespace</span>
+<span class="go">    perm      set or delete a Sabre namespace permission</span>
+<span class="go">    sp        Create, update or delete smart permissions</span>
+<span class="go">    upload    upload a Sabre contract</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sabre-cr">
+<h2>sabre cr<a class="headerlink" href="#sabre-cr" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">cr</span></code> subcommand submits a Sabre transaction that can create, update
+or delete a contract registry.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sabre-cr </span>
+<span class="go">create, update, or delete a Sabre contract registry</span>
+
+<span class="go">USAGE:</span>
+<span class="go">    sabre cr [FLAGS] [OPTIONS] &lt;name&gt;</span>
+
+<span class="go">FLAGS:</span>
+<span class="go">    -c, --create     Create the contract registry</span>
+<span class="go">    -d, --delete     Delete the contract registry</span>
+<span class="go">    -h, --help       Prints help information</span>
+<span class="go">    -u, --update     Update the contract registry</span>
+<span class="go">    -V, --version    Prints version information</span>
+
+<span class="go">OPTIONS:</span>
+<span class="go">    -k, --key &lt;key&gt;           Signing key name</span>
+<span class="go">    -O, --owner &lt;owner&gt;...    Owner of this contract registry</span>
+<span class="go">    -U, --url &lt;url&gt;           URL to the Sawtooth REST API</span>
+<span class="go">        --wait &lt;wait&gt;         A time in seconds to wait for batches to be committed</span>
+
+<span class="go">ARGS:</span>
+<span class="go">    &lt;name&gt;    Name of the contracts in the registry</span>
+</pre></div>
+</div>
+<p>A contract registry can only be created by an administrator. An administrator
+has their public key stored in the setting <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code>. At
+least one <code class="docutils literal notranslate"><span class="pre">--owner</span></code> is required. An owner is identified by their public key
+and is allowed to update and delete contract registries and stored contract
+versions.</p>
+<p>Only an owner or an administrator is allowed to update owners of a contract
+registry or delete a contract registry.</p>
+</div>
+<div class="section" id="sabre-upload">
+<h2>sabre upload<a class="headerlink" href="#sabre-upload" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">upload</span></code> subcommand submits a Sabre transaction that adds a new
+contract.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sabre-upload </span>
+<span class="go">upload a Sabre contract</span>
+
+<span class="go">USAGE:</span>
+<span class="go">    sabre upload [OPTIONS] --filename &lt;filename&gt;</span>
+
+<span class="go">FLAGS:</span>
+<span class="go">    -h, --help       Prints help information</span>
+<span class="go">    -V, --version    Prints version information</span>
+
+<span class="go">OPTIONS:</span>
+<span class="go">    -f, --filename &lt;filename&gt;    Path to Sabre contract definition (*.yaml)</span>
+<span class="go">    -k, --key &lt;key&gt;              Signing key name</span>
+<span class="go">        --url &lt;url&gt;              URL to the Sawtooth REST API</span>
+<span class="go">        --wait &lt;wait&gt;            A time in seconds to wait for batches to be committed</span>
+<span class="go">    -w, --wasm &lt;wasm&gt;            Path to compiled smart contract (*.wasm)</span>
+</pre></div>
+</div>
+<p>The command requires that a path to a contract definition is provided to
+<code class="docutils literal notranslate"><span class="pre">--filename</span></code>. The contract definition should be a yaml file with the
+following information:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;contract name&gt;</span>
+<span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;contract version&gt;</span>
+<span class="nt">wasm</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;path to compiled wasm file&gt;</span>
+<span class="nt">inputs</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">&lt;input addresses&gt;</span>
+<span class="nt">outputs</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">&lt;output addresses&gt;</span>
+</pre></div>
+</div>
+<p>Only an owner of the associated contract registry is allowed to upload
+a new version of a contract.</p>
+</div>
+<div class="section" id="sabre-ns">
+<h2>sabre ns<a class="headerlink" href="#sabre-ns" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">ns</span></code> subcommand submits a Sabre transaction that can create, update
+or delete a namespace registry.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sabre-ns </span>
+<span class="go">create, update, or delete a Sabre namespace</span>
+
+<span class="go">USAGE:</span>
+<span class="go">    sabre ns [FLAGS] [OPTIONS] &lt;namespace&gt;</span>
+
+<span class="go">FLAGS:</span>
+<span class="go">    -c, --create     Create the namespace</span>
+<span class="go">    -d, --delete     Delete the namespace</span>
+<span class="go">    -h, --help       Prints help information</span>
+<span class="go">    -u, --update     Update the namespace</span>
+<span class="go">    -V, --version    Prints version information</span>
+
+<span class="go">OPTIONS:</span>
+<span class="go">    -k, --key &lt;key&gt;           Signing key name</span>
+<span class="go">    -O, --owner &lt;owner&gt;...    Owner of this namespace</span>
+<span class="go">    -U, --url &lt;url&gt;           URL to the Sawtooth REST API</span>
+<span class="go">        --wait &lt;wait&gt;         A time in seconds to wait for batches to be committed</span>
+
+<span class="go">ARGS:</span>
+<span class="go">    &lt;namespace&gt;    A global state address prefix (namespace)</span>
+</pre></div>
+</div>
+<p>A namespace registry can only be created by an administrator. An administrator
+has their public key stored in the setting <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code>. At
+least one <code class="docutils literal notranslate"><span class="pre">--owner</span></code> is required. An owner is the public key of those whose
+who are allowed to update and delete namespaces.</p>
+<p>Only an owner or an administrator is allowed to update owners of a namespace
+registry or delete a namespace registry.</p>
+<p>A namespace must be at least 6 characters long.</p>
+</div>
+<div class="section" id="sabre-perm">
+<h2>sabre perm<a class="headerlink" href="#sabre-perm" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">perm</span></code> subcommand submits a Sabre transaction that can create or
+delete a namespace registry permissions.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sabre-perm </span>
+<span class="go">set or delete a Sabre namespace permission</span>
+
+<span class="go">USAGE:</span>
+<span class="go">    sabre perm [FLAGS] [OPTIONS] &lt;namespace&gt; &lt;contract&gt;</span>
+
+<span class="go">FLAGS:</span>
+<span class="go">    -d, --delete     Remove all permissions</span>
+<span class="go">    -h, --help       Prints help information</span>
+<span class="go">    -r, --read       Set read permission</span>
+<span class="go">    -V, --version    Prints version information</span>
+<span class="go">    -w, --write      Set write permission</span>
+
+<span class="go">OPTIONS:</span>
+<span class="go">    -k, --key &lt;key&gt;      Signing key name</span>
+<span class="go">    -U, --url &lt;url&gt;      URL to the Sawtooth REST API</span>
+<span class="go">        --wait &lt;wait&gt;    A time in seconds to wait for batches to be committed</span>
+
+<span class="go">ARGS:</span>
+<span class="go">    &lt;namespace&gt;    A global state address prefix (namespace)</span>
+<span class="go">    &lt;contract&gt;     Name of the contract</span>
+</pre></div>
+</div>
+<p>A namespace registry permissions can only be created by an administrator or an
+owner of the namespace registry. Include <code class="docutils literal notranslate"><span class="pre">--read</span></code> if the contract is
+allowed to read from the namespace and <code class="docutils literal notranslate"><span class="pre">--write</span></code> if the contract is
+allowed to write to the namespace.</p>
+<p>Using <code class="docutils literal notranslate"><span class="pre">--delete</span></code> will remove all permissions for the provided contract name.
+Again a permission can only be deleted by an owner or an administrator.</p>
+</div>
+<div class="section" id="sabre-exec">
+<h2>sabre exec<a class="headerlink" href="#sabre-exec" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">exec</span></code> subcommand submits a Sabre transaction that execute the
+provided payload against an uploaded contract.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sabre-exec </span>
+<span class="go">execute a Sabre contract</span>
+
+<span class="go">USAGE:</span>
+<span class="go">    sabre exec [OPTIONS] --contract &lt;contract&gt; --payload &lt;payload&gt;</span>
+
+<span class="go">FLAGS:</span>
+<span class="go">    -h, --help       Prints help information</span>
+<span class="go">    -V, --version    Prints version information</span>
+
+<span class="go">OPTIONS:</span>
+<span class="go">    -C, --contract &lt;contract&gt;     Name:Version of a Sabre contract</span>
+<span class="go">        --inputs &lt;inputs&gt;...      Input addresses used by the contract</span>
+<span class="go">    -k, --key &lt;key&gt;               Signing key name</span>
+<span class="go">        --outputs &lt;outputs&gt;...    Output addresses used by the contract</span>
+<span class="go">    -p, --payload &lt;payload&gt;       Path to Sabre contract payload</span>
+<span class="go">        --url &lt;url&gt;               URL to the Sawtooth REST API</span>
+<span class="go">        --wait &lt;wait&gt;             A time in seconds to wait for batches to be committed</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--contract</span></code> should be &lt;contract_name:version_number&gt;. The <code class="docutils literal notranslate"><span class="pre">--inputs</span></code>
+and <code class="docutils literal notranslate"><span class="pre">--outputs</span></code> should include any namespaces or addresses that the contract
+needs to have access to. Finally the <code class="docutils literal notranslate"><span class="pre">--payload</span></code> should be a path to
+the file that contains the Sabre contract bytes.</p>
+</div>
+<div class="section" id="sabre-sp">
+<h2>sabre sp<a class="headerlink" href="#sabre-sp" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sabre</span> <span class="pre">sp</span></code> subbcommand submits a Sabre transaction that can create,
+update, or delete smart permissions</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sabre-sp </span>
+<span class="go">Create, update or delete smart permissions</span>
+
+<span class="go">USAGE:</span>
+<span class="go">    sabre sp [OPTIONS] [SUBCOMMAND]</span>
+
+<span class="go">FLAGS:</span>
+<span class="go">    -h, --help       Prints help information</span>
+<span class="go">    -V, --version    Prints version information</span>
+
+<span class="go">OPTIONS:</span>
+<span class="go">    -U, --url &lt;url&gt;      URL to the Sawtooth REST API</span>
+<span class="go">        --wait &lt;wait&gt;    A time in seconds to wait for batches to be committed</span>
+
+<span class="go">SUBCOMMANDS:</span>
+<span class="go">    create    </span>
+<span class="go">    delete    </span>
+<span class="go">    help      Prints this message or the help of the given subcommand(s)</span>
+<span class="go">    update    </span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--filename</span></code> should be the path to a compiled WebAssembly file. The
+<code class="docutils literal notranslate"><span class="pre">--org_id</span></code> is the unique identifier for an organization that has been
+created and registered with the Pike transaction processor.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="smart_permissions.html" class="btn btn-neutral float-right" title="Smart Permissions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="application_developer_guide.html" class="btn btn-neutral float-left" title="Sabre Application Developer’s Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018, Cargill Incorporated
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

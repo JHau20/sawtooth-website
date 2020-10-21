@@ -1,0 +1,30 @@
+sawtooth\_signing package
+=========================
+
+Submodules
+----------
+
+sawtooth\_signing.core module
+-----------------------------
+
+.. automodule:: sawtooth_signing.core
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+sawtooth\_signing.secp256k1 module
+----------------------------------
+
+.. automodule:: sawtooth_signing.secp256k1
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: sawtooth_signing
+    :members:
+    :undoc-members:
+    :show-inheritance:

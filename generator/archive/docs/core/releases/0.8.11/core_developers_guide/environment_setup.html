@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Environment Setup &mdash; Sawtooth v0.8.11 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.11 documentation" href="../index.html"/>
+        <link rel="up" title="Core Developer’s Guide" href="../core_developers_guide.html"/>
+        <link rel="next" title="The Workload Generator" href="intkey_workload.html"/>
+        <link rel="prev" title="Core Developer’s Guide" href="../core_developers_guide.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.11
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../solidity_developers_guide.html">Solidity Developers Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Vagrant</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#layout-of-dev-tools">Layout of Dev Tools</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#layout-in-the-virtual-machine">Layout in the Virtual Machine</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#step-one-clone-repository">Step One: Clone Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-proxy-optional">Configure Proxy (Optional)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-and-run-virtual-machine">Build and Run Virtual Machine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#reset-the-environment-optional">Reset The Environment (Optional)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-components">Build Components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#building-individual-components">Building Individual Components</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#running-tests-optional">Running Tests (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intkey_workload.html">The Workload Generator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawtooth_docker.html">Docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signing_transactions.html">Signing Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../core_developers_guide.html">Core Developer&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Environment Setup</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/core_developers_guide/environment_setup.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="environment-setup">
+<h1>Environment Setup<a class="headerlink" href="#environment-setup" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial walks through the process of setting up a virtual environment
+useful for core development of the Hyperledger Sawtooth distributed ledger using
+Vagrant and VirtualBox. At the end, you will have an environment capable of
+running a validator, transaction processor, and other components. You will
+have cloned the sawtooth-core repository.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>The following tools are required:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.vagrantup.com/downloads.html">Vagrant</a> (1.9.0 or later)</li>
+<li><a class="reference external" href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a> (5.1.16 r113841
+or later)</li>
+</ul>
+<p>These tools are available for the following platforms:</p>
+<ul class="simple">
+<li>Linux</li>
+<li>Windows</li>
+<li>macOS</li>
+</ul>
+<div class="section" id="id1">
+<h3>Vagrant<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Vagrant is a tool which installs and configures virtual development
+environments. It allows development teams to easily specify and share
+consistent virtual machine configurations.</p>
+<p>The dev tools directory (path &#8216;&#8217;sawtooth-core/tools&#8217;&#8216;) of the sawtooth-core
+repository contains a Vagrant configuration which is specifically tailored to
+Sawtooth development.  A new developer with installed copies of Vagrant and
+VirtualBox can clone the sawtooth-core repository and have a functional VM
+which can run validators within a few minutes.</p>
+<p>A quick introduction to using dev tools is available as a
+quickstart in this Developer&#8217;s Guide.</p>
+</div>
+</div>
+<div class="section" id="layout-of-dev-tools">
+<h2>Layout of Dev Tools<a class="headerlink" href="#layout-of-dev-tools" title="Permalink to this headline">¶</a></h2>
+<p>The dev tools directory is structured as follows:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">tools/</span>
+<span class="go">   bootstrap.d/</span>
+<span class="go">   guest-files/</span>
+<span class="go">   plugins/</span>
+<span class="go">   scripts/</span>
+<span class="go">   tests/</span>
+<span class="go">   Vagrantfile</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>Vagrantfile</dt>
+<dd>Vagrantfile is the main configuration file for Vagrant.  It is ruby
+code executed by Vagrant and is executed every time a Vagrant command is
+executed.</dd>
+<dt>bootstrap.d</dt>
+<dd>The bootstrap.d directory contains a set of bash scripts which are
+executed in order during the provisioning step of &#8216;vagrant up&#8217;.  These
+scripts are always executed.</dd>
+<dt>guest-files</dt>
+<dd><p class="first">The guest-files directory contains configuration files which are used by
+the bootstrap.d scripts.</p>
+<p class="last">There is also a local-env.sh script which contains environment specific
+variables for Sawtooth  development, such as PYTHONPATH.</p>
+</dd>
+<dt>plugins</dt>
+<dd>The plugins directory contains bash scripts which can be easily configured
+to execute during the provisioning step of &#8216;vagrant up&#8217;.  These scripts
+run after bootstrap.d scripts.</dd>
+<dt>scripts</dt>
+<dd>This scripts directory contains scripts which are sometimes useful to the
+developer after provisioning has been completed and the developer has a
+shell in the virtual machine.  For example, there are scripts which
+help build Ubuntu packages.</dd>
+<dt>tests</dt>
+<dd>The tests directory includes tests run within the Vagrant environment. These are
+in addition to the unit and integration tests found in the tests directory of
+sawtooth-core and sawtooth-validator.</dd>
+</dl>
+<div class="section" id="layout-in-the-virtual-machine">
+<h3>Layout in the Virtual Machine<a class="headerlink" href="#layout-in-the-virtual-machine" title="Permalink to this headline">¶</a></h3>
+<p>A convenient feature of Vagrant is the easy sharing of directories between
+the host machine and the guest virtual machine. By default the Vagrant
+configuration directory is mounted under /vagrant in the virtual machine.</p>
+<p>In the dev tools configuration a /project mount point is also
+defined which provides access to the Sawtooth repositories.</p>
+</div>
+</div>
+<div class="section" id="step-one-clone-repository">
+<h2>Step One: Clone Repository<a class="headerlink" href="#step-one-clone-repository" title="Permalink to this headline">¶</a></h2>
+<p>You&#8217;ll need to have git installed in order to clone the Sawtooth source
+code repository. You can find up-to-date installation instructions here:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Git install instructions</a></li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When checking out Sawtooth on Windows for use with Vagrant, you should
+take steps to ensure that Windows-style CRLF line endings are not added to
+the code. The bash scripts used by your Vagrant VM will not run correctly
+with CRLF line endings. Git uses a configuration setting, <em>core.autocrlf</em>,
+to control whether or not LF-style line endings are automatically converted
+to CRLF-style line endings. <a class="reference external" href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration">This setting should be set so that
+CRLFs are not introduced into your repository</a>.</p>
+</div>
+<p>Open up a terminal and run the following:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> <span class="nb">cd</span> <span class="nv">$HOME</span>
+<span class="gp">%</span> mkdir project
+<span class="gp">%</span> <span class="nb">cd</span> project
+<span class="gp">%</span> git clone https://github.com/hyperledger/sawtooth-core.git
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>On a Windows environment, the suggested version of the last command
+above is:</p>
+<div class="last highlight-console"><div class="highlight"><pre><span></span><span class="go">C:\&gt; git clone https://github.com/hyperledger/sawtooth-core.git</span>
+<span class="go">--config core.autocrlf=false</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="configure-proxy-optional">
+<h2>Configure Proxy (Optional)<a class="headerlink" href="#configure-proxy-optional" title="Permalink to this headline">¶</a></h2>
+<p>If you are behind a network proxy, follow these steps before continuing:</p>
+<ol class="arabic simple">
+<li>Set the following environment variables:</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>http_proxy</li>
+<li>https_proxy</li>
+</ul>
+</div></blockquote>
+<p>If you are using the Bash shell, run the following commands:</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The example URLs and port numbers used below are examples only.
+Please substitute the actual URL, with actual port numbers, used
+in your environment. Contact your network administrator for the
+information if necessary.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> <span class="nb">export</span> <span class="nv">http_proxy</span><span class="o">=</span>http://example-proxy-server.com:3128
+<span class="gp">%</span> <span class="nb">export</span> <span class="nv">https_proxy</span><span class="o">=</span>https://example-proxy-server.com:3129
+</pre></div>
+</div>
+<p>If you are using Windows, run the following commands:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> <span class="nb">set</span> <span class="nv">http_proxy</span><span class="o">=</span>http://example-proxy-server.com:3128
+<span class="gp">%</span> <span class="nb">set</span> <span class="nv">https_proxy</span><span class="o">=</span>https://example-proxy-server.com:3129
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Install the vagrant-proxyconf plugin:</li>
+</ol>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> <span class="nb">cd</span> sawtooth-core/tools
+<span class="gp">%</span> vagrant plugin install vagrant-proxyconf
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-and-run-virtual-machine">
+<h2>Build and Run Virtual Machine<a class="headerlink" href="#build-and-run-virtual-machine" title="Permalink to this headline">¶</a></h2>
+<p>In order to start the Vagrant VM, run:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> <span class="nb">cd</span> sawtooth-core/tools
+<span class="gp">%</span> vagrant up
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We have encountered an intermittent problem on Windows hosts which
+presents as an &#8216;Operation not permitted&#8217; error in the Vagrant startup
+output. If you encounter this error, perform a &#8216;vagrant destroy&#8217; and
+then run &#8216;vagrant up&#8217; again.</p>
+</div>
+<p>Downloading the Vagrant box file, booting the VM, and running through
+the bootstrap scripts will take several minutes.</p>
+<p>Once the &#8216;vagrant up&#8217; command has finished executing, run:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> vagrant ssh
+</pre></div>
+</div>
+<p>By default, Vagrant sets up ssh keys so that users can log into the VM
+without setting up additional accounts or credentials. The logged in user,
+vagrant (uid 1000), also has permissions to execute sudo with no password
+required. Any number of <cite>vagrant ssh</cite> sessions can be established from the
+host.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Occasionally, the configuration files used to create the Vagrant
+environment change and this can result in Vagrant asking for a password when
+doing <cite>vagrant up</cite> or <cite>vagrant ssh</cite>. This is usually a sign that your
+environment is out of date. If this happens, please follow the instructions
+below to reset your environment. This is especially common when switching
+between versions of Sawtooth, eg. 0.7 -&gt; 0.8.</p>
+</div>
+</div>
+<div class="section" id="reset-the-environment-optional">
+<h2>Reset The Environment (Optional)<a class="headerlink" href="#reset-the-environment-optional" title="Permalink to this headline">¶</a></h2>
+<p>If the VM needs to be reset for any reason, it can be returned to the default
+state by running the following commands from the sawtooth-core/tools directory
+on the host:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> vagrant destroy
+<span class="gp">%</span> vagrant up
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Vagrant destroy will delete all contents within the VM. However,
+/vagrant and /project are shared with the host and will be preserved.</p>
+</div>
+</div>
+<div class="section" id="build-components">
+<h2>Build Components<a class="headerlink" href="#build-components" title="Permalink to this headline">¶</a></h2>
+<p>Some of the components of Sawtooth depend partially on code that must
+first be built. This includes generating protobuf classes
+for each language. To build all of the components of Sawtooth within
+Vagrant, do:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> /project/sawtooth-core/bin/build_all
+</pre></div>
+</div>
+<div class="section" id="building-individual-components">
+<h3>Building Individual Components<a class="headerlink" href="#building-individual-components" title="Permalink to this headline">¶</a></h3>
+<p>If you need to build a component related to a single language or componenent,
+you can save time by running the build command for that component rather than
+<cite>build all</cite>. For example, to build only Python components, run:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> /project/sawtooth-core/bin/build_python
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="running-tests-optional">
+<h2>Running Tests (Optional)<a class="headerlink" href="#running-tests-optional" title="Permalink to this headline">¶</a></h2>
+<p>The automated tests for python and all other languages rely on docker to
+ensure reproducibility. To run the automated tests for python, first run the
+following:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> /project/sawtooth-core/bin/build_all -l python
+</pre></div>
+</div>
+<p>This will create docker images for all the python components and run
+<cite>build_python</cite> inside a build container. You can then run the automated tests
+for python components, while excluding java and javascript components,
+with:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> /project/sawtooth-core/bin/run_tests -x java_sdk -x javascript_sdk
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <cite>run_tests</cite> command provides the -x flag to allow you to exclude
+various components from tests. You can also specify which tests to run
+with the -m flag. Run the command <cite>run_tests -h</cite> for help.</p>
+</div>
+<p>If you are not behind a proxy, you can build and test everything Sawtooth
+has to offer with:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> /project/sawtooth-core/bin/build_all
+<span class="gp">$</span> /project/sawtooth-core/bin/run_tests
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="intkey_workload.html" class="btn btn-neutral float-right" title="The Workload Generator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../core_developers_guide.html" class="btn btn-neutral" title="Core Developer’s Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.11',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

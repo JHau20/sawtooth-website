@@ -1,0 +1,679 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.cli.stats_lib.validator_stats &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>sawtooth.cli.stats_lib.validator_stats</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sawtooth.cli.stats_lib.validator_stats</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.platform_stats</span> <span class="k">import</span> <span class="n">PlatformIntervalStats</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.stats_utils</span> <span class="k">import</span> <span class="n">TransactionRate</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.stats_utils</span> <span class="k">import</span> <span class="n">ValidatorCommunications</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.stats_utils</span> <span class="k">import</span> <span class="n">named_tuple_init</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.stats_utils</span> <span class="k">import</span> <span class="n">StatsCollector</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.stats_utils</span> <span class="k">import</span> <span class="n">StatsModule</span>
+
+
+<div class="viewcode-block" id="StatsClient"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.StatsClient">[docs]</a><span class="k">class</span> <span class="nc">StatsClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val_id</span><span class="p">,</span> <span class="n">fullurl</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_id</span> <span class="o">=</span> <span class="n">val_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">fullurl</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;validator_</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val_id</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ledgerstats</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nodestats</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">validator_stats</span> <span class="o">=</span> <span class="n">ValidatorStats</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">responding</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;WAITING&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response_status</span> <span class="o">=</span> <span class="s2">&quot;- First Contact&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_start</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_complete</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">validator_comm</span> <span class="o">=</span> <span class="n">ValidatorCommunications</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="StatsClient.stats_request"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.StatsClient.stats_request">[docs]</a>    <span class="k">def</span> <span class="nf">stats_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># request stats from specified validator url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">+</span> <span class="s2">&quot;/statistics/all&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validator_comm</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats_completion</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats_error</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_stats_completion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_stats</span><span class="p">,</span> <span class="n">response_code</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_complete</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_complete</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;RESP_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">response_code</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_status</span><span class="p">(</span><span class="n">response_code</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">response_code</span> <span class="ow">is</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">responding</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validator_stats</span><span class="o">.</span><span class="n">update_stats</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">responding</span><span class="p">,</span> <span class="n">json_stats</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">request_start</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">request_complete</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">responding</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validator_stats</span><span class="o">.</span><span class="n">update_stats</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">responding</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">request_start</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">request_complete</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_stats_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">failure</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_complete</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_complete</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;NO_RESP&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">responding</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response_status</span> <span class="o">=</span> <span class="n">failure</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validator_stats</span><span class="o">.</span><span class="n">update_stats</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">responding</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">request_start</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">request_complete</span><span class="p">)</span>
+
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">_update_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response_code</span><span class="p">):</span>
+        <span class="n">response_codes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Informational&quot;</span><span class="p">,</span> <span class="s2">&quot;Successful but not expected 200&quot;</span><span class="p">,</span>
+                          <span class="s2">&quot;Redirection&quot;</span><span class="p">,</span> <span class="s2">&quot;Client Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Server Error&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">response_code</span> <span class="ow">is</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">response_status</span> <span class="o">=</span> <span class="s2">&quot;Successful&quot;</span>
+        <span class="k">elif</span> <span class="n">response_code</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">600</span><span class="p">):</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">response_code</span> <span class="o">/</span> <span class="mi">100</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">response_status</span> <span class="o">=</span> <span class="n">response_codes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">response_status</span> <span class="o">=</span> <span class="s2">&quot;Response Code Unknown&quot;</span></div>
+
+
+<span class="n">ValStatsEx</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;calculated_validator_stats&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;packet_bytes_received_total &#39;</span>
+                                    <span class="s1">&#39;packet_bytes_received_average &#39;</span>
+                                    <span class="s1">&#39;packet_bytes_sent_total &#39;</span>
+                                    <span class="s1">&#39;packet_bytes_sent_average &#39;</span>
+                                    <span class="s1">&#39;average_transaction_rate &#39;</span>
+                                    <span class="s1">&#39;average_block_time&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ValidatorStats"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.ValidatorStats">[docs]</a><span class="k">class</span> <span class="nc">ValidatorStats</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_stats</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_stats_ex</span> <span class="o">=</span> <span class="n">named_tuple_init</span><span class="p">(</span><span class="n">ValStatsEx</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_new_data</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_request_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_end_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">txn_rate</span> <span class="o">=</span> <span class="n">TransactionRate</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">psis</span> <span class="o">=</span> <span class="n">PlatformIntervalStats</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ValidatorStats.update_stats"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.ValidatorStats.update_stats">[docs]</a>    <span class="k">def</span> <span class="nf">update_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">responding</span><span class="p">,</span> <span class="n">json_stats</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">responding</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_new_data</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span> <span class="o">=</span> <span class="n">json_stats</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_request_time</span> <span class="o">=</span> <span class="n">start_time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_end_time</span> <span class="o">=</span> <span class="n">end_time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ValidatorStats.collect"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.ValidatorStats.collect">[docs]</a>    <span class="k">def</span> <span class="nf">collect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_new_data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">val_stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">response_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_end_time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_request_time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_new_data</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="c1"># unpack stats that are delivered as lists of unnamed values</span>
+            <span class="n">bytes_received_total</span><span class="p">,</span> <span class="n">bytes_received_average</span> <span class="o">=</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">val_stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;BytesReceived&quot;</span><span class="p">]</span>
+            <span class="n">bytes_sent_total</span><span class="p">,</span> <span class="n">bytes_sent_average</span> <span class="o">=</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">val_stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;BytesSent&quot;</span><span class="p">]</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">txn_rate</span><span class="o">.</span><span class="n">calculate_txn_rate</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">val_stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">][</span><span class="s2">&quot;CommittedBlockCount&quot;</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">val_stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;CommittedTxnCount&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">val_stats_ex</span> <span class="o">=</span> <span class="n">ValStatsEx</span><span class="p">(</span>
+                <span class="n">bytes_received_total</span><span class="p">,</span>
+                <span class="n">bytes_received_average</span><span class="p">,</span>
+                <span class="n">bytes_sent_total</span><span class="p">,</span>
+                <span class="n">bytes_sent_average</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">txn_rate</span><span class="o">.</span><span class="n">avg_txn_rate</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">txn_rate</span><span class="o">.</span><span class="n">avg_block_time</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">psis</span><span class="o">.</span><span class="n">calculate_interval_stats</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">val_stats</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ValidatorStatsManager"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager">[docs]</a><span class="k">class</span> <span class="nc">ValidatorStatsManager</span><span class="p">(</span><span class="n">StatsModule</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint_manager</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ValidatorStatsManager</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epm</span> <span class="o">=</span> <span class="n">endpoint_manager</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">clients</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">known_endpoint_names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endpoints</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="ValidatorStatsManager.connect"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_client_list</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ValidatorStatsManager.collect"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager.collect">[docs]</a>    <span class="k">def</span> <span class="nf">collect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collect_stats</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ValidatorStatsManager.update_client_list"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager.update_client_list">[docs]</a>    <span class="k">def</span> <span class="nf">update_client_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endpoints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">epm</span><span class="o">.</span><span class="n">endpoints</span>
+        <span class="c1"># add validator stats client for each endpoint name</span>
+        <span class="k">for</span> <span class="n">val_num</span><span class="p">,</span> <span class="n">endpoint</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoints</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">endpoint</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_endpoint_names</span><span class="p">:</span>
+                <span class="n">val_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">known_endpoint_names</span><span class="p">)</span>
+                <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://</span><span class="si">{0}</span><span class="s1">:</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">endpoint</span><span class="p">[</span><span class="s2">&quot;Host&quot;</span><span class="p">],</span> <span class="n">endpoint</span><span class="p">[</span><span class="s2">&quot;HttpPort&quot;</span><span class="p">])</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="n">StatsClient</span><span class="p">(</span><span class="n">val_num</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">endpoint</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">known_endpoint_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">endpoint</span><span class="p">[</span><span class="s2">&quot;Name&quot;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="ValidatorStatsManager.collect_stats"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager.collect_stats">[docs]</a>    <span class="k">def</span> <span class="nf">collect_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># update client stats objects</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">:</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">validator_stats</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
+        <span class="c1"># start a new round of stats collection</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">:</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">stats_request</span><span class="p">()</span></div></div>
+
+<span class="n">SysClient</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;sys_client&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;starttime &#39;</span>
+                                   <span class="s1">&#39;runtime &#39;</span>
+                                   <span class="s1">&#39;known_validators &#39;</span>
+                                   <span class="s1">&#39;active_validators &#39;</span>
+                                   <span class="s1">&#39;avg_client_time &#39;</span>
+                                   <span class="s1">&#39;max_client_time&#39;</span><span class="p">)</span>
+<span class="n">SysBlocks</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;sys_blocks&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;blocks_max_committed &#39;</span>
+                                   <span class="s1">&#39;blocks_max_committed_count &#39;</span>
+                                   <span class="s1">&#39;blocks_min_committed &#39;</span>
+                                   <span class="s1">&#39;blocks_max_pending &#39;</span>
+                                   <span class="s1">&#39;blocks_max_pending_count &#39;</span>
+                                   <span class="s1">&#39;blocks_min_pending &#39;</span>
+                                   <span class="s1">&#39;blocks_max_claimed &#39;</span>
+                                   <span class="s1">&#39;blocks_min_claimed&#39;</span><span class="p">)</span>
+<span class="n">SysTxns</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;sys_txns&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;txns_max_committed &#39;</span>
+                                 <span class="s1">&#39;txns_max_committed_count &#39;</span>
+                                 <span class="s1">&#39;txns_min_committed &#39;</span>
+                                 <span class="s1">&#39;txns_max_pending &#39;</span>
+                                 <span class="s1">&#39;txns_max_pending_count &#39;</span>
+                                 <span class="s1">&#39;txns_min_pending &#39;</span>
+                                 <span class="s1">&#39;txn_rate&#39;</span><span class="p">)</span>
+<span class="n">SysPackets</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;sys_packets&#39;</span><span class="p">,</span>
+                                    <span class="s1">&#39;packets_max_dropped &#39;</span>
+                                    <span class="s1">&#39;packets_min_dropped &#39;</span>
+                                    <span class="s1">&#39;packets_max_duplicates &#39;</span>
+                                    <span class="s1">&#39;packets_min_duplicates &#39;</span>
+                                    <span class="s1">&#39;packets_max_acks_received &#39;</span>
+                                    <span class="s1">&#39;packets_min_acks_received&#39;</span><span class="p">)</span>
+<span class="n">SysMsgs</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;sys_messages&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;msgs_max_handled &#39;</span>
+                                 <span class="s1">&#39;msgs_min_handled &#39;</span>
+                                 <span class="s1">&#39;msgs_max_acked &#39;</span>
+                                 <span class="s1">&#39;msgs_min_acked&#39;</span><span class="p">)</span>
+<span class="n">PoetStats</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;poet_stats&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;avg_local_mean &#39;</span>
+                                   <span class="s1">&#39;max_local_mean &#39;</span>
+                                   <span class="s1">&#39;min_local_mean &#39;</span>
+                                   <span class="s1">&#39;last_unique_blockID&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SystemStats"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.SystemStats">[docs]</a><span class="k">class</span> <span class="nc">SystemStats</span><span class="p">(</span><span class="n">StatsCollector</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SystemStats</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">starttime</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">runtime</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">known_validators</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_validators</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avg_client_time</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_client_time</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txn_rate</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sys_client</span> <span class="o">=</span> <span class="n">named_tuple_init</span><span class="p">(</span>
+            <span class="n">SysClient</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;starttime&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">starttime</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sys_blocks</span> <span class="o">=</span> <span class="n">named_tuple_init</span><span class="p">(</span><span class="n">SysBlocks</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sys_txns</span> <span class="o">=</span> <span class="n">named_tuple_init</span><span class="p">(</span><span class="n">SysTxns</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sys_packets</span> <span class="o">=</span> <span class="n">named_tuple_init</span><span class="p">(</span><span class="n">SysPackets</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sys_msgs</span> <span class="o">=</span> <span class="n">named_tuple_init</span><span class="p">(</span><span class="n">SysMsgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">poet_stats</span> <span class="o">=</span> <span class="n">named_tuple_init</span><span class="p">(</span>
+            <span class="n">PoetStats</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;last_unique_blockID&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">})</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">statslist</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sys_client</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sys_blocks</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sys_txns</span><span class="p">,</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">sys_packets</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sys_msgs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">poet_stats</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_unique_block_id</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># accumulators</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response_times</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_claimed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_committed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_pending</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txns_committed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txns_pending</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">packets_dropped</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">packets_duplicates</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">packets_acks_received</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msgs_handled</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msgs_acked</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_mean</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous_blockid</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avg_local_mean</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="SystemStats.collect_stats"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.SystemStats.collect_stats">[docs]</a>    <span class="k">def</span> <span class="nf">collect_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stats_clients</span><span class="p">):</span>
+        <span class="c1"># must clear the accumulators at start of each sample interval</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_accumulators</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">client</span> <span class="ow">in</span> <span class="n">stats_clients</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">client</span><span class="o">.</span><span class="n">responding</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_append_stats</span><span class="p">(</span><span class="n">client</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_append_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">validator_stats</span><span class="o">.</span><span class="n">val_stats</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">active_validators</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">response_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">validator_stats</span><span class="o">.</span><span class="n">response_time</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_claimed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">][</span><span class="s2">&quot;BlocksClaimed&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_committed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">][</span><span class="s2">&quot;CommittedBlockCount&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_pending</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">][</span><span class="s2">&quot;PendingBlockCount&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txns_committed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;CommittedTxnCount&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txns_pending</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PendingTxnCount&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">packets_dropped</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;DroppedPackets&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">packets_duplicates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;DuplicatePackets&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">packets_acks_received</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;AcksReceived&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msgs_handled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;MessagesHandled&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msgs_acked</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;MessagesAcked&quot;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_mean</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s2">&quot;LocalMeanTime&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous_blockid</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s2">&quot;PreviousBlockID&quot;</span><span class="p">,</span> <span class="s1">&#39;broken&#39;</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SystemStats.calculate_stats"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.SystemStats.calculate_stats">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">runtime</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">starttime</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active_validators</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">avg_client_time</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response_times</span><span class="p">)</span>\
+                <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response_times</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_client_time</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response_times</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">sys_client</span> <span class="o">=</span> <span class="n">SysClient</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">starttime</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">runtime</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">known_validators</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">active_validators</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">avg_client_time</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">max_client_time</span>
+            <span class="p">)</span>
+
+            <span class="n">blocks_max_committed</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks_committed</span><span class="p">)</span>
+            <span class="n">blocks_max_pending</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks_pending</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">sys_blocks</span> <span class="o">=</span> <span class="n">SysBlocks</span><span class="p">(</span>
+                <span class="n">blocks_max_committed</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">blocks_committed</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">blocks_max_committed</span><span class="p">),</span>
+                <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks_committed</span><span class="p">),</span>
+                <span class="n">blocks_max_pending</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">blocks_pending</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">blocks_max_pending</span><span class="p">),</span>
+                <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks_pending</span><span class="p">),</span>
+                <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks_claimed</span><span class="p">),</span>
+                <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blocks_claimed</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="n">txns_max_committed</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txns_committed</span><span class="p">)</span>
+            <span class="n">txns_max_pending</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txns_pending</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">sys_txns</span> <span class="o">=</span> <span class="n">SysTxns</span><span class="p">(</span>
+                <span class="n">txns_max_committed</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">txns_committed</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">txns_max_committed</span><span class="p">),</span>
+                <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txns_committed</span><span class="p">),</span>
+                <span class="n">txns_max_pending</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">txns_pending</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">txns_max_pending</span><span class="p">),</span>
+                <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txns_pending</span><span class="p">),</span>
+                <span class="mi">0</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">sys_packets</span> <span class="o">=</span> <span class="n">SysPackets</span><span class="p">(</span>
+                <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packets_dropped</span><span class="p">),</span>
+                <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packets_dropped</span><span class="p">),</span>
+                <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packets_duplicates</span><span class="p">),</span>
+                <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packets_duplicates</span><span class="p">),</span>
+                <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packets_acks_received</span><span class="p">),</span>
+                <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">packets_acks_received</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">sys_msgs</span> <span class="o">=</span> <span class="n">SysMsgs</span><span class="p">(</span>
+                <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msgs_handled</span><span class="p">),</span>
+                <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msgs_handled</span><span class="p">),</span>
+                <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msgs_acked</span><span class="p">),</span>
+                <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msgs_acked</span><span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">avg_local_mean</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_mean</span><span class="p">)</span> \
+                <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_mean</span><span class="p">)</span>
+
+            <span class="n">unique_blockid_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">previous_blockid</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_unique_block_id</span> <span class="o">=</span> \
+                <span class="n">unique_blockid_list</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_blockid_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">poet_stats</span> <span class="o">=</span> <span class="n">PoetStats</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">avg_local_mean</span><span class="p">,</span>
+                <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_mean</span><span class="p">),</span>
+                <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_mean</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">last_unique_block_id</span>
+            <span class="p">)</span>
+
+            <span class="c1"># because named tuples are immutable,</span>
+            <span class="c1">#  must create new stats list each time stats are updated</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">statslist</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sys_client</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sys_blocks</span><span class="p">,</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">sys_txns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sys_packets</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sys_msgs</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="SystemStats.clear_accumulators"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.SystemStats.clear_accumulators">[docs]</a>    <span class="k">def</span> <span class="nf">clear_accumulators</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_claimed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_committed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks_pending</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txns_committed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txns_pending</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">packets_dropped</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">packets_duplicates</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">packets_acks_received</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msgs_handled</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msgs_acked</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_mean</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous_blockid</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="SystemStats.get_stats_as_dict"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.SystemStats.get_stats_as_dict">[docs]</a>    <span class="k">def</span> <span class="nf">get_stats_as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div></div>
+
+
+<div class="viewcode-block" id="SystemStatsManager"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.SystemStatsManager">[docs]</a><span class="k">class</span> <span class="nc">SystemStatsManager</span><span class="p">(</span><span class="n">StatsModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endpoint_manager</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SystemStatsManager</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vsm</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span> <span class="o">=</span> <span class="n">SystemStats</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SystemStatsManager.initialize"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.SystemStatsManager.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_list</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_list</span> <span class="o">=</span> <span class="n">module_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vsm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">ValidatorStatsManager</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SystemStatsManager.process"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.validator_stats.html#sawtooth.cli.stats_lib.validator_stats.SystemStatsManager.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">known_validators</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vsm</span><span class="o">.</span><span class="n">clients</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">active_validators</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">collect_stats</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vsm</span><span class="o">.</span><span class="n">clients</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">calculate_stats</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

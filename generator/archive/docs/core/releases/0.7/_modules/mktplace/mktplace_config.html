@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mktplace.mktplace_config &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>mktplace.mktplace_config</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mktplace.mktplace_config</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">import</span> <span class="nn">getpass</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">sawtooth.config</span>
+<span class="kn">from</span> <span class="nn">sawtooth.config</span> <span class="k">import</span> <span class="n">AggregateConfig</span>
+<span class="kn">from</span> <span class="nn">sawtooth.config</span> <span class="k">import</span> <span class="n">load_config_files</span>
+
+
+<div class="viewcode-block" id="get_mktplace_configuration"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_config.html#mktplace.mktplace_config.get_mktplace_configuration">[docs]</a><span class="k">def</span> <span class="nf">get_mktplace_configuration</span><span class="p">(</span><span class="n">config_files</span><span class="p">,</span>
+                               <span class="n">options_config</span><span class="p">,</span>
+                               <span class="n">os_name</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                               <span class="n">config_files_required</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">env_config</span> <span class="o">=</span> <span class="n">MarketPlaceEnvConfig</span><span class="p">()</span>
+
+    <span class="n">default_config</span> <span class="o">=</span> <span class="n">MarketPlaceDefaultConfig</span><span class="p">(</span><span class="n">os_name</span><span class="o">=</span><span class="n">os_name</span><span class="p">)</span>
+
+    <span class="n">conf_dir</span> <span class="o">=</span> <span class="n">AggregateConfig</span><span class="p">(</span>
+        <span class="n">configs</span><span class="o">=</span><span class="p">[</span><span class="n">default_config</span><span class="p">,</span> <span class="n">env_config</span><span class="p">,</span> <span class="n">options_config</span><span class="p">])</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;home&#39;</span><span class="p">:</span> <span class="s1">&#39;CurrencyHome&#39;</span><span class="p">})[</span><span class="s1">&#39;ConfigDirectory&#39;</span><span class="p">]</span>
+
+    <span class="n">user_conf_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">),</span> <span class="s2">&quot;.sawtooth&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Determine the configuration file search path</span>
+    <span class="n">search_path</span> <span class="o">=</span> <span class="p">[</span><span class="n">conf_dir</span><span class="p">,</span> <span class="n">user_conf_dir</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;etc&quot;</span><span class="p">)]</span>
+
+    <span class="n">file_configs</span> <span class="o">=</span> <span class="n">load_config_files</span><span class="p">(</span><span class="n">config_files</span><span class="p">,</span> <span class="n">search_path</span><span class="p">,</span>
+                                     <span class="n">config_files_required</span><span class="p">)</span>
+
+    <span class="n">config_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">default_config</span><span class="p">]</span>
+    <span class="n">config_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">file_configs</span><span class="p">)</span>
+    <span class="n">config_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">env_config</span><span class="p">)</span>
+    <span class="n">config_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">options_config</span><span class="p">)</span>
+
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">AggregateConfig</span><span class="p">(</span><span class="n">configs</span><span class="o">=</span><span class="n">config_list</span><span class="p">)</span>
+    <span class="n">resolved</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">resolve</span><span class="p">({</span>
+        <span class="s1">&#39;home&#39;</span><span class="p">:</span> <span class="s1">&#39;CurrencyHome&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;host&#39;</span><span class="p">:</span> <span class="s1">&#39;CurrencyHost&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;node&#39;</span><span class="p">:</span> <span class="s1">&#39;NodeName&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;base&#39;</span><span class="p">:</span> <span class="s1">&#39;BaseDirectory&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;conf_dir&#39;</span><span class="p">:</span> <span class="s1">&#39;ConfigDirectory&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_dir&#39;</span><span class="p">:</span> <span class="s1">&#39;DataDirectory&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;log_dir&#39;</span><span class="p">:</span> <span class="s1">&#39;LogDirectory&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ParticipantName&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;UserName&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;user_conf_dir&#39;</span><span class="p">:</span> <span class="s1">&#39;UserConfigDirectory&#39;</span>
+    <span class="p">})</span>
+    <span class="k">return</span> <span class="n">resolved</span></div>
+
+
+<div class="viewcode-block" id="MarketPlaceDefaultConfig"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_config.html#mktplace.mktplace_config.MarketPlaceDefaultConfig">[docs]</a><span class="k">class</span> <span class="nc">MarketPlaceDefaultConfig</span><span class="p">(</span><span class="n">sawtooth</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">Config</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">os_name</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MarketPlaceDefaultConfig</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;CURRENCYHOME&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;ConfigDirectory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{home}</span><span class="s1">/etc&#39;</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;LogDirectory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{home}</span><span class="s1">/logs&#39;</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;DataDirectory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{home}</span><span class="s1">/data&#39;</span>
+        <span class="k">elif</span> <span class="n">os_name</span> <span class="o">==</span> <span class="s1">&#39;nt&#39;</span><span class="p">:</span>
+            <span class="n">base_dir</span> <span class="o">=</span> <span class="s1">&#39;C:</span><span class="se">\\</span><span class="s1">Program Files (x86)</span><span class="se">\\</span><span class="s1">Intel</span><span class="se">\\</span><span class="s1">sawtooth-validator</span><span class="se">\\</span><span class="s1">&#39;</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;ConfigDirectory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">conf&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_dir</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;LogDirectory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">logs&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_dir</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;DataDirectory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">data&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_dir</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;ConfigDirectory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/etc/sawtooth-validator&#39;</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;LogDirectory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/var/log/sawtooth-validator&#39;</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;DataDirectory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/var/lib/sawtooth-validator&#39;</span>
+
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;BaseDirectory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;CurrencyHost&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;UserConfigDirectory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">),</span> <span class="s2">&quot;.sawtooth&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;User&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getuser</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># currently getpass is broken in the python 2.7 windows distro (pwd</span>
+            <span class="c1"># module not found)</span>
+            <span class="k">if</span> <span class="s1">&#39;USERNAME&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+                <span class="c1"># get it from env instead.</span>
+                <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;User&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;USERNAME&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MarketPlaceEnvConfig"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_config.html#mktplace.mktplace_config.MarketPlaceEnvConfig">[docs]</a><span class="k">class</span> <span class="nc">MarketPlaceEnvConfig</span><span class="p">(</span><span class="n">sawtooth</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">EnvConfig</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MarketPlaceEnvConfig</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">([</span>
+            <span class="p">(</span><span class="s1">&#39;CURRENCYHOME&#39;</span><span class="p">,</span> <span class="s1">&#39;CurrencyHome&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;CURRENCY_CONF_DIR&#39;</span><span class="p">,</span> <span class="s1">&#39;ConfigDirectory&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;CURRENCY_LOG_DIR&#39;</span><span class="p">,</span> <span class="s1">&#39;LogDirectory&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;CURRENCY_DATA_DIR&#39;</span><span class="p">,</span> <span class="s1">&#39;DataDirectory&#39;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s1">&#39;HOSTNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;CurrencyHost&#39;</span><span class="p">)</span>
+        <span class="p">])</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

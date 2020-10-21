@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PoET CLI &mdash; Sawtooth v1.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.1 documentation" href="../index.html"/>
+        <link rel="up" title="CLI Reference" href="../cli.html"/>
+        <link rel="next" title="Validator CLI (sawtooth-validator)" href="validator.html"/>
+        <link rel="prev" title="Sawtooth Config CLI (sawset)" href="sawset.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../cli.html">CLI Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sawtooth.html">Sawtooth CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawadm.html">Sawtooth Admin CLI (sawadm)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawnet.html">Sawtooth Network CLI (sawnet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawset.html">Sawtooth Config CLI (sawset)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">PoET CLI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#poet">poet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#poet-registration">poet registration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#poet-registration-create">poet registration create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#poet-enclave">poet enclave</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="validator.html">Validator CLI (sawtooth-validator)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API CLI (sawtooth-rest-api)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intkey.html">IntegerKey CLI (intkey)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xo.html">XO CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings-tp.html">Settings Transaction Processor CLI (sawtooth-settings)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity-tp.html">Identity Transaction Processor CLI (identity-tp)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../cli.html">CLI Reference</a> &raquo;</li>
+        
+      <li>PoET CLI</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cli/poet.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="poet-cli">
+<span id="poet-cli-reference-label"></span><h1>PoET CLI<a class="headerlink" href="#poet-cli" title="Permalink to this headline">¶</a></h1>
+<p>The PoET CLI initializes the proof-of-elapsed-time consensus mechanism
+for Sawtooth by generating enclave setup information and creating a
+Batch for the genesis block. For more information, see
+<a class="reference internal" href="../architecture/poet.html"><span class="doc">PoET 1.0 Specification</span></a>.</p>
+<div class="section" id="poet">
+<h2>poet<a class="headerlink" href="#poet" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">poet</span></code> command provides subcommands for configuring a node to use
+Sawtooth with the PoET consensus method.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: poet [-h] [-v] [-V] {registration,enclave} ...</span>
+
+<span class="go">Provides subcommands for creating PoET registration.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {registration,enclave}</span>
+<span class="go">    registration        Provides a subcommand for creating PoET registration</span>
+<span class="go">    enclave             Generates enclave setup information</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="poet-registration">
+<h2>poet registration<a class="headerlink" href="#poet-registration" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">poet</span> <span class="pre">registration</span></code> subcommand provides a command to work with
+the PoET validator registry.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: poet registration [-h] {create} ...</span>
+
+<span class="go">Provides a subcommand for creating PoET registration.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help  show this help message and exit</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {create}</span>
+<span class="go">    create    Creates a batch to enroll a validator in the validator registry</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="poet-registration-create">
+<h2>poet registration create<a class="headerlink" href="#poet-registration-create" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">poet</span> <span class="pre">registration</span> <span class="pre">create</span></code> subcommand creates a batch to enroll
+a validator in the network&#8217;s validator registry. It must be run from
+the validator host wishing to enroll.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: poet registration create [-h] [--enclave-module {simulator,sgx}]</span>
+<span class="go">                                [-k KEY] [-o OUTPUT] [-b BLOCK]</span>
+
+<span class="go">Creates a batch to enroll a validator in the validator registry.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --enclave-module {simulator,sgx}</span>
+<span class="go">                        configure the enclave module to use</span>
+<span class="go">  -k KEY, --key KEY     identify file containing transaction signing key</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        change default output file name for resulting batches</span>
+<span class="go">  -b BLOCK, --block BLOCK</span>
+<span class="go">                        specify the most recent block identifier to use as a</span>
+<span class="go">                        sign-up nonce</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="poet-enclave">
+<h2>poet enclave<a class="headerlink" href="#poet-enclave" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">poet</span> <span class="pre">enclave</span></code> subcommand generates enclave setup information.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: poet enclave [-h] [--enclave-module {simulator,sgx}]</span>
+<span class="go">                    {measurement,basename}</span>
+
+<span class="go">Generates enclave setup information.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  {measurement,basename}</span>
+<span class="go">                        enclave characteristic to retrieve</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --enclave-module {simulator,sgx}</span>
+<span class="go">                        identify the enclave module to query</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="validator.html" class="btn btn-neutral float-right" title="Validator CLI (sawtooth-validator)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sawset.html" class="btn btn-neutral" title="Sawtooth Config CLI (sawset)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

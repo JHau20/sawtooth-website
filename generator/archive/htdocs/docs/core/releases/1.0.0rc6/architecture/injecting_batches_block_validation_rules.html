@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Injecting Batches and On-Chain Block Validation Rules &mdash; Sawtooth v1.0.0rc6 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc6 documentation" href="../index.html"/>
+        <link rel="up" title="Architecture" href="../architecture.html"/>
+        <link rel="next" title="Events and Transaction Receipts" href="events_and_transactions_receipts.html"/>
+        <link rel="prev" title="Permissioning Requirements" href="permissioning_requirement.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../architecture.html">Architecture</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="global_state.html">Global State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transactions_and_batches.html">Transactions and Batches!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="journal.html">Journal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html">Transaction Scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poet.html">PoET 1.0 Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_network.html">Validator Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="permissioning_requirement.html">Permissioning Requirements</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Injecting Batches and On-Chain Block Validation Rules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#batchinjector-interface">BatchInjector Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#on-chain-configuration">On-Chain Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#on-chain-validation-rules">On-Chain Validation Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-blockinfoinjector">Example: BlockInfoInjector</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="events_and_transactions_receipts.html">Events and Transaction Receipts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../architecture.html">Architecture</a> &raquo;</li>
+        
+      <li>Injecting Batches and On-Chain Block Validation Rules</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/architecture/injecting_batches_block_validation_rules.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="injecting-batches-and-on-chain-block-validation-rules">
+<h1>Injecting Batches and On-Chain Block Validation Rules<a class="headerlink" href="#injecting-batches-and-on-chain-block-validation-rules" title="Permalink to this headline">¶</a></h1>
+<p>Injecting transactions into blocks by the validator is required to support a
+variety of use cases such as:</p>
+<ul class="simple">
+<li>Setting information in state for use by transaction processors that cannot
+reasonably be provided with every transaction. For example, setting the block
+number or timestamp.</li>
+<li>Automatically submitting transactions in response to a particular state. For
+example, submitting bond quote matching transactions.</li>
+<li>Testing automation. For example, programming the compute time of test
+transactions to increase after a certain number of batches.</li>
+</ul>
+<p>Imposing a set of rules on the relationships between transactions, or
+inter-transaction validation, is also required for some use cases.
+Two examples of inter-transaction validation would be:</p>
+<ul class="simple">
+<li>Only N of transaction type X may be included in a block.</li>
+<li>Transaction type X may only occur at position Y in a block.</li>
+</ul>
+<div class="section" id="batchinjector-interface">
+<h2>BatchInjector Interface<a class="headerlink" href="#batchinjector-interface" title="Permalink to this headline">¶</a></h2>
+<p>The BatchInjector class supports injecting transactions into blocks:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">interface</span> <span class="n">BatchInjector</span><span class="p">:</span>
+  <span class="o">//</span> <span class="n">Called</span> <span class="n">when</span> <span class="n">a</span> <span class="n">new</span> <span class="n">block</span> <span class="ow">is</span> <span class="n">created</span> <span class="ow">and</span> <span class="n">before</span> <span class="nb">any</span> <span class="n">batches</span> <span class="n">are</span> <span class="n">added</span><span class="o">.</span> <span class="n">A</span> <span class="nb">list</span> <span class="n">of</span>
+  <span class="o">//</span> <span class="n">batches</span> <span class="n">to</span> <span class="n">insert</span> <span class="n">at</span> <span class="n">the</span> <span class="n">beginning</span> <span class="n">of</span> <span class="n">the</span> <span class="n">block</span> <span class="n">must</span> <span class="n">be</span> <span class="n">returned</span><span class="o">.</span> <span class="n">A</span> <span class="n">StateView</span>
+  <span class="o">//</span> <span class="ow">is</span> <span class="n">provided</span> <span class="k">for</span> <span class="n">inspecting</span> <span class="n">state</span> <span class="k">as</span> <span class="n">of</span> <span class="n">the</span> <span class="n">previous</span> <span class="n">block</span><span class="o">.</span>
+  <span class="n">block_start</span><span class="p">(</span><span class="n">string</span> <span class="n">previous_block_id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="o">&lt;</span><span class="n">Batch</span><span class="o">&gt;</span>
+
+  <span class="o">//</span> <span class="n">Called</span> <span class="n">before</span> <span class="n">inserting</span> <span class="n">the</span> <span class="n">incoming</span> <span class="n">batch</span> <span class="n">into</span> <span class="n">the</span> <span class="n">pending</span> <span class="n">queue</span> <span class="k">for</span> <span class="n">the</span>
+  <span class="o">//</span> <span class="n">given</span> <span class="n">block</span><span class="o">.</span> <span class="n">A</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">batches</span> <span class="n">to</span> <span class="n">insert</span> <span class="n">before</span> <span class="n">this</span> <span class="n">batch</span> <span class="n">must</span> <span class="n">be</span> <span class="n">returned</span><span class="o">.</span>
+  <span class="n">before_batch</span><span class="p">(</span><span class="n">string</span> <span class="n">previous_block_id</span><span class="p">,</span> <span class="n">Batch</span> <span class="n">batch</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="o">&lt;</span><span class="n">Batch</span><span class="o">&gt;</span>
+
+  <span class="o">//</span> <span class="n">Called</span> <span class="n">after</span> <span class="n">inserting</span> <span class="n">the</span> <span class="n">incoming</span> <span class="n">batch</span> <span class="n">into</span> <span class="n">the</span> <span class="n">pending</span> <span class="n">queue</span> <span class="k">for</span> <span class="n">the</span>
+  <span class="o">//</span> <span class="n">given</span> <span class="n">block</span><span class="o">.</span> <span class="n">A</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">batches</span> <span class="n">to</span> <span class="n">insert</span> <span class="n">after</span> <span class="n">this</span> <span class="n">batch</span> <span class="n">must</span> <span class="n">be</span> <span class="n">returned</span><span class="o">.</span>
+  <span class="n">after_batch</span><span class="p">(</span><span class="n">string</span> <span class="n">previous_block_id</span><span class="p">,</span> <span class="n">Batch</span> <span class="n">batch</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="o">&lt;</span><span class="n">Batch</span><span class="o">&gt;</span>
+
+  <span class="o">//</span> <span class="n">Called</span> <span class="n">just</span> <span class="n">before</span> <span class="n">finalizing</span> <span class="ow">and</span> <span class="n">completing</span> <span class="n">a</span> <span class="n">Block</span><span class="o">.</span> <span class="n">An</span> <span class="n">ordered</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">batches</span>
+  <span class="o">//</span> <span class="n">that</span> <span class="n">will</span> <span class="n">be</span> <span class="n">committed</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">block</span> <span class="ow">is</span> <span class="n">passed</span> <span class="ow">in</span><span class="o">.</span> <span class="n">A</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">batches</span> <span class="n">to</span> <span class="n">insert</span> <span class="n">at</span>
+  <span class="o">//</span> <span class="n">the</span> <span class="n">end</span> <span class="n">of</span> <span class="n">the</span> <span class="n">block</span> <span class="n">must</span> <span class="n">be</span> <span class="n">returned</span><span class="o">.</span>
+  <span class="n">block_end</span><span class="p">(</span><span class="n">string</span> <span class="n">previous_block_id</span><span class="p">,</span> <span class="nb">list</span><span class="o">&lt;</span><span class="n">Batch</span><span class="o">&gt;</span> <span class="n">batches</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="o">&lt;</span><span class="n">Batch</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The Journal will call each of the methods at the appropriate times for all
+included BatchInjectors, thus injecting batches into the new block.</p>
+</div>
+<div class="section" id="on-chain-configuration">
+<h2>On-Chain Configuration<a class="headerlink" href="#on-chain-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The set of BatchInjectors to load is configured with an on-chain setting; this
+is similar to configuring the consensus module loaded by the validator.
+The sawtooth.validator.batch_injectors setting key stores a comma-separated list
+of batch injectors to load.  This list is parsed by the validator at the
+beginning of block publishing for each block and the appropriate injectors are
+loaded.</p>
+<p>This setting is controlled using the existing Settings Transaction Family. Take
+care when when updating this setting, because an incorrect value may cause
+transaction families to behave incorrectly.</p>
+</div>
+<div class="section" id="on-chain-validation-rules">
+<h2>On-Chain Validation Rules<a class="headerlink" href="#on-chain-validation-rules" title="Permalink to this headline">¶</a></h2>
+<p>An on-chain setting holds a set of validation rules that are enforced for
+each block. On-chain validation rules will be stored as a string in the setting
+key sawtooth.validator.block_validation_rules. Rules will be enforced by the
+block validator.</p>
+<p>A simple syntax will be used for specifying validations rules as defined by
+the following.</p>
+<ul class="simple">
+<li>A validation rule consists of a name followed by a colon and a comma-separated
+list of arguments: <code class="docutils literal"><span class="pre">rulename:arg,arg,...,arg</span></code></li>
+<li>Separate multiple rules with semicolons:
+<code class="docutils literal"><span class="pre">rulename1:arg,arg,...,arg;rulename2:arg,arg,...,arg</span></code></li>
+<li>Spaces, tabs, and newlines are ignored.</li>
+</ul>
+<p>The following rules are defined:</p>
+<dl class="docutils">
+<dt>NofX</dt>
+<dd>Only N transaction of transaction type X may be included in a block. The first
+argument must be an integer. The second argument is the name of a transaction
+family. For example, the string
+<code class="docutils literal"><span class="pre">NofX:2,intkey</span></code> means allow only two IntegerKey transactions per block.</dd>
+<dt>XatY</dt>
+<dd>A transaction of type X must be in the block at position Y. The first argument
+is interpreted as the name of a transaction family. The second argument must
+be interpretable as an integer and defines the index of the transaction in
+the block that must be checked. Negative numbers can be used and count
+backwards from the last transaction in the block. The first transaction in the
+block has index 0. The last transaction in the block has index -1. If abs(Y)
+is larger than the number of transactions per block, then there would not be
+a transaction of type X at Y and the block would be invalid. For example, the
+string <code class="docutils literal"><span class="pre">XatY:intkey,0</span></code> means the first transaction in the block must be an
+IntegerKey transaction.</dd>
+<dt>local</dt>
+<dd>A transaction must be signed by the same key as the block. This rule takes a
+list of transaction indices in the block and enforces the rule on each. This
+rule is useful in combination with the other rules to ensure a client is not
+submitting transactions that should only be injected by the winning validator.</dd>
+</dl>
+</div>
+<div class="section" id="example-blockinfoinjector">
+<h2>Example: BlockInfoInjector<a class="headerlink" href="#example-blockinfoinjector" title="Permalink to this headline">¶</a></h2>
+<p>The BlockInfoInjector inserts a BlockInfo transaction at the beginning of every
+block. The transaction updates state with information about the block that was
+just committed as well as a timestamp. For more information, see the
+<a class="reference internal" href="../transaction_family_specifications/blockinfo_transaction_family.html"><span class="doc">BlockInfo Transaction Family</span></a></p>
+<p>The following validation rules are added to the set of on-chain validation rules
+in order to prevent bad actors from injecting incorrect but valid BlockInfo
+transactions. The rules require that only one BlockInfo transaction is included
+per block, that the transaction is at the beginning of the block, and that the
+transaction is signed by the same key that signed the block.</p>
+<ul class="simple">
+<li>NofX:1,block_info;</li>
+<li>XatY:block_info,0;</li>
+<li>local:0</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="events_and_transactions_receipts.html" class="btn btn-neutral float-right" title="Events and Transaction Receipts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="permissioning_requirement.html" class="btn btn-neutral" title="Permissioning Requirements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.0rc6',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

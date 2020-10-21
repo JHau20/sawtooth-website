@@ -1,0 +1,652 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mktplace.transactions.exchange_update &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>mktplace.transactions.exchange_update</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mktplace.transactions.exchange_update</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth.exceptions</span> <span class="k">import</span> <span class="n">InvalidTransactionError</span>
+
+<span class="kn">from</span> <span class="nn">journal.transaction</span> <span class="k">import</span> <span class="n">Update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">asset_type_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">asset_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">exchange_offer_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">holding_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">liability_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">market_place_object_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">participant_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">sell_offer_update</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_LiabilityInformation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load_from_store</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">objectid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a tuple with information about the holding or liability</span>
+<span class="sd">        identified by objectid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">types</span> <span class="o">=</span> <span class="p">[</span><span class="n">holding_update</span><span class="o">.</span><span class="n">HoldingObject</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">,</span>
+                 <span class="n">liability_update</span><span class="o">.</span><span class="n">LiabilityObject</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">]</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">market_place_object_update</span><span class="o">.</span><span class="n">MarketPlaceObject</span><span class="o">.</span><span class="n">get_valid_object</span><span class="p">(</span>
+            <span class="n">store</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">types</span><span class="p">)</span>
+
+        <span class="n">creatorid</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;creator&#39;</span><span class="p">)</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">)</span>
+        <span class="n">otype</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;object-type&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">otype</span> <span class="o">==</span> <span class="n">holding_update</span><span class="o">.</span><span class="n">HoldingObject</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">:</span>
+            <span class="n">asset</span> <span class="o">=</span> <span class="n">asset_update</span><span class="o">.</span><span class="n">AssetObject</span><span class="o">.</span><span class="n">load_from_store</span><span class="p">(</span><span class="n">store</span><span class="p">,</span>
+                                                             <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;asset&#39;</span><span class="p">))</span>
+            <span class="n">assettype</span> <span class="o">=</span> <span class="n">asset_type_update</span><span class="o">.</span><span class="n">AssetTypeObject</span><span class="o">.</span><span class="n">load_from_store</span><span class="p">(</span>
+                <span class="n">store</span><span class="p">,</span> <span class="n">asset</span><span class="o">.</span><span class="n">AssetTypeID</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">otype</span> <span class="o">==</span> <span class="n">liability_update</span><span class="o">.</span><span class="n">LiabilityObject</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">:</span>
+            <span class="n">asset</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">assettype</span> <span class="o">=</span> <span class="n">asset_type_update</span><span class="o">.</span><span class="n">AssetTypeObject</span><span class="o">.</span><span class="n">load_from_store</span><span class="p">(</span>
+                <span class="n">store</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;asset-type&#39;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">objectid</span><span class="p">,</span> <span class="n">creatorid</span><span class="p">,</span> <span class="n">otype</span><span class="p">,</span> <span class="n">asset</span><span class="p">,</span> <span class="n">assettype</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">creatorid</span><span class="p">,</span> <span class="n">otype</span><span class="p">,</span> <span class="n">asset</span><span class="p">,</span> <span class="n">assettype</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+        <span class="c1"># this is not going to work for liabilities yet so just fail early</span>
+        <span class="k">assert</span> <span class="n">otype</span> <span class="o">==</span> <span class="n">holding_update</span><span class="o">.</span><span class="n">HoldingObject</span><span class="o">.</span><span class="n">ObjectTypeName</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ObjectID</span> <span class="o">=</span> <span class="n">objectid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span> <span class="o">=</span> <span class="n">creatorid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypeName</span> <span class="o">=</span> <span class="n">otype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Asset</span> <span class="o">=</span> <span class="n">asset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AssetID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Asset</span><span class="o">.</span><span class="n">ObjectID</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Asset</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AssetType</span> <span class="o">=</span> <span class="n">assettype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AssetTypeID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AssetType</span><span class="o">.</span><span class="n">ObjectID</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Count</span> <span class="o">=</span> <span class="n">count</span>
+
+    <span class="k">def</span> <span class="nf">test_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">change</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the current asset/asset type count to see if the transfer can</span>
+<span class="sd">        succeed. This is a simple check for now, but needs to accommodate</span>
+<span class="sd">        non-consumable assets later.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># an asset that is consumable must be replaced if it is moved from</span>
+        <span class="c1"># one holding to another</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Asset</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">Asset</span><span class="o">.</span><span class="n">Consumable</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">change</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Count</span>
+
+        <span class="c1"># an asset that is not consumable can be moved so long as there is</span>
+        <span class="c1"># at least one instance in the holding</span>
+        <span class="k">return</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">Count</span>
+
+    <span class="k">def</span> <span class="nf">inc_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">change</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">market_place_object_update</span><span class="o">.</span><span class="n">MarketPlaceObject</span><span class="o">.</span><span class="n">get_valid_object</span><span class="p">(</span>
+            <span class="n">store</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">)</span>
+
+        <span class="c1"># we manage the counts for consumable assets, for non-consumable</span>
+        <span class="c1"># assets we simply indicate that we have at least one copy of the</span>
+        <span class="c1"># asset (which can be reproduced at need)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Asset</span><span class="o">.</span><span class="n">Consumable</span><span class="p">:</span>
+            <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">change</span><span class="p">)</span>
+            <span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+
+    <span class="k">def</span> <span class="nf">dec_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">change</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">market_place_object_update</span><span class="o">.</span><span class="n">MarketPlaceObject</span><span class="o">.</span><span class="n">get_valid_object</span><span class="p">(</span>
+            <span class="n">store</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">)</span>
+
+        <span class="c1"># if the asset is consumable then we need to manage the counts</span>
+        <span class="c1"># explicitly for non-consumable assets the count is never decremented,</span>
+        <span class="c1"># once an asset is in a holding it is there forever</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Asset</span><span class="o">.</span><span class="n">Consumable</span><span class="p">:</span>
+            <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">change</span><span class="p">)</span>
+
+            <span class="c1"># there are at least a couple cases where this might actually</span>
+            <span class="c1"># happen and we should find another way to test... for example,</span>
+            <span class="c1"># circular or multiple withdrawals from a holding/liability within</span>
+            <span class="c1"># a single transaction</span>
+            <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span>
+
+            <span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+
+
+<span class="k">class</span> <span class="nc">_OfferInformation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load_from_store</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">offerid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a tuple with information about the sell or exchange offer</span>
+<span class="sd">        identified by offerid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">types</span> <span class="o">=</span> <span class="p">[</span><span class="n">exchange_offer_update</span><span class="o">.</span><span class="n">ExchangeOfferObject</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">,</span>
+                 <span class="n">sell_offer_update</span><span class="o">.</span><span class="n">SellOfferObject</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">]</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">market_place_object_update</span><span class="o">.</span><span class="n">MarketPlaceObject</span><span class="o">.</span><span class="n">get_valid_object</span><span class="p">(</span>
+            <span class="n">store</span><span class="p">,</span> <span class="n">offerid</span><span class="p">,</span> <span class="n">types</span><span class="p">)</span>
+
+        <span class="n">otype</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;object-type&#39;</span><span class="p">)</span>
+        <span class="n">iinfo</span> <span class="o">=</span> <span class="n">_LiabilityInformation</span><span class="o">.</span><span class="n">load_from_store</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">))</span>
+        <span class="n">oinfo</span> <span class="o">=</span> <span class="n">_LiabilityInformation</span><span class="o">.</span><span class="n">load_from_store</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">))</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ratio&#39;</span><span class="p">))</span>
+        <span class="n">minimum</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;minimum&#39;</span><span class="p">))</span>
+        <span class="n">maximum</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;maximum&#39;</span><span class="p">))</span>
+        <span class="n">execution</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;execution&#39;</span><span class="p">)</span>
+        <span class="n">estate</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;execution-state&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">offerid</span><span class="p">,</span> <span class="n">otype</span><span class="p">,</span> <span class="n">iinfo</span><span class="p">,</span> <span class="n">oinfo</span><span class="p">,</span> <span class="n">ratio</span><span class="p">,</span> <span class="n">minimum</span><span class="p">,</span> <span class="n">maximum</span><span class="p">,</span>
+                   <span class="n">execution</span><span class="p">,</span> <span class="n">estate</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">otype</span><span class="p">,</span> <span class="n">iinfo</span><span class="p">,</span> <span class="n">oinfo</span><span class="p">,</span> <span class="n">ratio</span><span class="p">,</span> <span class="n">minimum</span><span class="p">,</span> <span class="n">maximum</span><span class="p">,</span>
+                 <span class="n">execution</span><span class="p">,</span> <span class="n">estate</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ObjectID</span> <span class="o">=</span> <span class="n">objectid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ObjectTypeName</span> <span class="o">=</span> <span class="n">otype</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PayeeInfo</span> <span class="o">=</span> <span class="n">iinfo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PayerInfo</span> <span class="o">=</span> <span class="n">oinfo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Ratio</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Minimum</span> <span class="o">=</span> <span class="n">minimum</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Maximum</span> <span class="o">=</span> <span class="n">maximum</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Execution</span> <span class="o">=</span> <span class="n">execution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ExecutionState</span> <span class="o">=</span> <span class="n">estate</span>
+
+    <span class="k">def</span> <span class="nf">record_participant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">payer</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Record the ID of the payer of the transaction in order to ensure that</span>
+<span class="sd">        the transaction executes at most one time. Called as a trigger.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            store -- current cached state</span>
+<span class="sd">            payer -- liability info for the source of assets being fed into</span>
+<span class="sd">                this offer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">payer</span><span class="o">.</span><span class="n">CreatorID</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ExecutionState</span><span class="p">[</span><span class="s1">&#39;ParticipantList&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ExecutionState</span><span class="p">[</span><span class="s1">&#39;ParticipantList&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">payer</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">)</span>
+
+            <span class="n">types</span> <span class="o">=</span> <span class="p">[</span><span class="n">exchange_offer_update</span><span class="o">.</span><span class="n">ExchangeOfferObject</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">,</span>
+                     <span class="n">sell_offer_update</span><span class="o">.</span><span class="n">SellOfferObject</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">]</span>
+            <span class="n">obj</span> <span class="o">=</span> \
+                <span class="n">market_place_object_update</span><span class="o">.</span><span class="n">MarketPlaceObject</span><span class="o">.</span><span class="n">get_valid_object</span><span class="p">(</span>
+                    <span class="n">store</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">,</span> <span class="n">types</span><span class="p">)</span>
+            <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;execution-state&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ExecutionState</span>
+
+            <span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+
+    <span class="k">def</span> <span class="nf">drop_offer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove the offer from the database, called as a trigger when the offer</span>
+<span class="sd">        execution method is &#39;ExecuteOnce&#39;</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            store -- current cached state</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">triggers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">payer</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Execution</span> <span class="o">==</span> <span class="s1">&#39;ExecuteOnce&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">drop_offer</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">Execution</span> <span class="o">==</span> <span class="s1">&#39;ExecuteOncePerParticipant&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">record_participant</span><span class="p">,</span> <span class="n">payer</span><span class="o">=</span><span class="n">payer</span><span class="p">)]</span>
+
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">test_offer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">payer</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply offer specific conditions to the transaction.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            count -- the number of assets being fed into the offer</span>
+<span class="sd">            payer -- liability info for the source of assets being fed into</span>
+<span class="sd">                this offer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># First Test: we can only move holdings to holdings and liabilities to</span>
+        <span class="c1"># liabilities</span>
+        <span class="k">if</span> <span class="n">payer</span><span class="o">.</span><span class="n">ObjectTypeName</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PayeeInfo</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;mismatch in holding types; </span><span class="si">%s</span><span class="s1"> != </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                        <span class="n">payer</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PayeeInfo</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Second Test: if we are moving between holdings then the assets must</span>
+        <span class="c1"># match</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">PayeeInfo</span><span class="o">.</span><span class="n">ObjectTypeName</span> <span class="o">==</span> \
+                <span class="n">holding_update</span><span class="o">.</span><span class="n">HoldingObject</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">payer</span><span class="o">.</span><span class="n">AssetID</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PayeeInfo</span><span class="o">.</span><span class="n">AssetID</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;mismatch in asset identifiers; </span><span class="si">%s</span><span class="s1"> != </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                            <span class="n">payer</span><span class="o">.</span><span class="n">AssetID</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PayeeInfo</span><span class="o">.</span><span class="n">AssetID</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Third Test: if we are moving between liabilities then the asset types</span>
+        <span class="c1"># must match</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">PayeeInfo</span><span class="o">.</span><span class="n">ObjectTypeName</span> <span class="o">==</span> \
+                <span class="n">liability_update</span><span class="o">.</span><span class="n">LiabilityObject</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">payer</span><span class="o">.</span><span class="n">AssetTypeID</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PayeeInfo</span><span class="o">.</span><span class="n">AssetTypeID</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;mismatch in asset type identifiers; </span><span class="si">%s</span><span class="s1"> != </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                            <span class="n">payer</span><span class="o">.</span><span class="n">AssetID</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PayeeInfo</span><span class="o">.</span><span class="n">AssetID</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Fourth Test: If a minimum or maximum count has been set, then we must</span>
+        <span class="c1"># respect it</span>
+        <span class="k">if</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">Minimum</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">Maximum</span> <span class="o">&lt;</span> <span class="n">count</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;count too big or too small; </span><span class="si">%d</span><span class="s1"> &lt;= </span><span class="si">%d</span><span class="s1"> &lt;= </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">Minimum</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Maximum</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Fifth Test: If the ExecuteOncePerParticipant modifier has been set,</span>
+        <span class="c1"># then make sure that this particular participant has not executed this</span>
+        <span class="c1"># offer in the past</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Execution</span> <span class="o">==</span> <span class="s1">&#39;ExecuteOncePerParticipant&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">payer</span><span class="o">.</span><span class="n">CreatorID</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ExecutionState</span><span class="p">[</span><span class="s1">&#39;ParticipantList&#39;</span><span class="p">]:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;attempt to double spend offer </span><span class="si">%s</span><span class="s1"> by </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">,</span> <span class="n">payer</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+
+<span class="k">class</span> <span class="nc">_Adjustment</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oinfo</span><span class="p">,</span> <span class="n">iinfo</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">triggers</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an Adjustment object from liability information for payer</span>
+<span class="sd">        (input) and payee (output)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PayerInfo</span> <span class="o">=</span> <span class="n">oinfo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PayeeInfo</span> <span class="o">=</span> <span class="n">iinfo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Count</span> <span class="o">=</span> <span class="n">count</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Triggers</span> <span class="o">=</span> <span class="n">triggers</span><span class="p">[:]</span>
+
+    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;apply adjustment, </span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">, </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">PayerInfo</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">,</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">PayeeInfo</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Count</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PayerInfo</span><span class="o">.</span><span class="n">dec_count</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Count</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PayeeInfo</span><span class="o">.</span><span class="n">inc_count</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Count</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">trigger</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Triggers</span><span class="p">:</span>
+            <span class="n">trigger</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Exchange"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.exchange_update.html#mktplace.transactions.exchange_update.Exchange">[docs]</a><span class="k">class</span> <span class="nc">Exchange</span><span class="p">(</span><span class="n">Update</span><span class="p">):</span>
+    <span class="n">UpdateType</span> <span class="o">=</span> <span class="s1">&#39;Exchange&#39;</span>
+    <span class="n">CreatorType</span> <span class="o">=</span> <span class="n">participant_update</span><span class="o">.</span><span class="n">ParticipantObject</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">update_type</span><span class="p">,</span>
+                 <span class="n">initial_liability_id</span><span class="p">,</span>
+                 <span class="n">final_liability_id</span><span class="p">,</span>
+                 <span class="n">offer_id_list</span><span class="p">,</span>
+                 <span class="n">initial_count</span><span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">Exchange</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">update_type</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initial_liability_id</span> <span class="o">=</span> <span class="n">initial_liability_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_final_liability_id</span> <span class="o">=</span> <span class="n">final_liability_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_offer_id_list</span> <span class="o">=</span> <span class="n">offer_id_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initial_count</span> <span class="o">=</span> <span class="n">initial_count</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adjustment_list</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">References</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_initial_liability_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_final_liability_id</span><span class="p">]</span> \
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_offer_id_list</span>
+
+<div class="viewcode-block" id="Exchange.build_adjustment_list"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.exchange_update.html#mktplace.transactions.exchange_update.Exchange.build_adjustment_list">[docs]</a>    <span class="k">def</span> <span class="nf">build_adjustment_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build a list of adjustments that will be applied to the ledger as a</span>
+<span class="sd">        result of this update</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">adjustment_list</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Create the initial source of assets</span>
+        <span class="n">payer</span> <span class="o">=</span> <span class="n">_LiabilityInformation</span><span class="o">.</span><span class="n">load_from_store</span><span class="p">(</span>
+            <span class="n">store</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_initial_liability_id</span>
+        <span class="p">)</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_initial_count</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;count of objects transferred goes to 0&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">payer</span><span class="o">.</span><span class="n">test_count</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;insufficient initial funds in </span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1"> of </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                        <span class="n">payer</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">,</span> <span class="n">payer</span><span class="o">.</span><span class="n">Count</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">adjustments</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">offerid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_offer_id_list</span><span class="p">:</span>
+
+            <span class="n">offer</span> <span class="o">=</span> <span class="n">_OfferInformation</span><span class="o">.</span><span class="n">load_from_store</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">offerid</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">offer</span><span class="o">.</span><span class="n">test_offer</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">payer</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s1">&#39;add adjustment from offer </span><span class="si">%s</span><span class="s1"> based on ratio </span><span class="si">%s</span><span class="s1">, current &#39;</span>
+                <span class="s1">&#39;count is </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                <span class="n">offer</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">,</span> <span class="n">offer</span><span class="o">.</span><span class="n">Ratio</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+            <span class="n">adjustments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_Adjustment</span><span class="p">(</span><span class="n">payer</span><span class="p">,</span> <span class="n">offer</span><span class="o">.</span><span class="n">PayeeInfo</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span>
+                                           <span class="n">offer</span><span class="o">.</span><span class="n">triggers</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">payer</span><span class="p">)))</span>
+
+            <span class="n">payer</span> <span class="o">=</span> <span class="n">offer</span><span class="o">.</span><span class="n">PayerInfo</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span> <span class="o">*</span> <span class="n">offer</span><span class="o">.</span><span class="n">Ratio</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;count of objects transferred goes to 0&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">payer</span><span class="o">.</span><span class="n">test_count</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;insufficient funds for offer </span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1"> of </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                            <span class="n">payer</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">,</span> <span class="n">payer</span><span class="o">.</span><span class="n">Count</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Create the final destination for all of the transfers</span>
+        <span class="n">payee</span> <span class="o">=</span> <span class="n">_LiabilityInformation</span><span class="o">.</span><span class="n">load_from_store</span><span class="p">(</span><span class="n">store</span><span class="p">,</span>
+                                                      <span class="bp">self</span><span class="o">.</span><span class="n">_final_liability_id</span><span class="p">)</span>
+        <span class="n">adjustments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_Adjustment</span><span class="p">(</span><span class="n">payer</span><span class="p">,</span> <span class="n">payee</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="p">[]))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">adjustment_list</span> <span class="o">=</span> <span class="n">adjustments</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Exchange.check_valid"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.exchange_update.html#mktplace.transactions.exchange_update.Exchange.check_valid">[docs]</a>    <span class="k">def</span> <span class="nf">check_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">txn</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;market update: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+        <span class="c1"># check to make sure that the originator has permission to decrement</span>
+        <span class="c1"># the InitialLiability</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">liability_update</span><span class="o">.</span><span class="n">LiabilityObject</span><span class="o">.</span><span class="n">is_valid_object</span><span class="p">(</span>
+                <span class="n">store</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initial_liability_id</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span>
+                <span class="s2">&quot;Initial Liability does not reference a liability&quot;</span><span class="p">)</span>
+
+        <span class="c1"># verify that the originator of the transaction is the owner of the</span>
+        <span class="c1"># source liability</span>
+        <span class="n">payer</span> <span class="o">=</span> <span class="n">_LiabilityInformation</span><span class="o">.</span><span class="n">load_from_store</span><span class="p">(</span>
+            <span class="n">store</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_initial_liability_id</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorType</span><span class="o">.</span><span class="n">is_valid_creator</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">payer</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">,</span>
+                                                 <span class="n">txn</span><span class="o">.</span><span class="n">OriginatorID</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> does not have permission to transfer assets from &#39;</span>
+                <span class="s1">&#39;liability </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                <span class="n">payer</span><span class="o">.</span><span class="n">CreatorID</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initial_liability_id</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span><span class="s2">&quot;Payer is not a valid Creator &quot;</span>
+                                          <span class="s2">&quot;or does not have access to &quot;</span>
+                                          <span class="s2">&quot;liability&quot;</span><span class="p">)</span>
+
+        <span class="c1"># check to make sure that the originator has permission to increment</span>
+        <span class="c1"># the FinalLiability</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">liability_update</span><span class="o">.</span><span class="n">LiabilityObject</span><span class="o">.</span><span class="n">is_valid_object</span><span class="p">(</span>
+                <span class="n">store</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_final_liability_id</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span>
+                <span class="s2">&quot;Final liability does not reference a liability&quot;</span><span class="p">)</span>
+
+        <span class="c1"># ensure that all of the offers are valid</span>
+        <span class="n">offermap</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">offerid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_offer_id_list</span><span class="p">:</span>
+            <span class="c1"># make sure the offerid references a valid offer, note that a</span>
+            <span class="c1"># selloffer is really just a subclass of exchangeoffer so a</span>
+            <span class="c1"># selloffer is a valid exchange offer</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">exchange_offer_update</span><span class="o">.</span><span class="n">ExchangeOfferObject</span><span class="o">.</span><span class="n">is_valid_object</span><span class="p">(</span>
+                    <span class="n">store</span><span class="p">,</span> <span class="n">offerid</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span>
+                    <span class="s2">&quot;Offerid </span><span class="si">{}</span><span class="s2"> is not an ExchangeOffer&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">offerid</span><span class="p">)))</span>
+            <span class="c1"># ensure that there are no duplicates in the list, duplicates can</span>
+            <span class="c1"># cause of tests for validity to fail</span>
+            <span class="k">if</span> <span class="n">offerid</span> <span class="ow">in</span> <span class="n">offermap</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;duplicate offers not allowed in an exchange; </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                            <span class="n">offerid</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span><span class="s2">&quot;Duplicate offers not allowed&quot;</span><span class="p">)</span>
+            <span class="n">offermap</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">offerid</span><span class="p">)</span>
+
+        <span class="c1"># and finally build the adjustment lists to make sure that all of the</span>
+        <span class="c1"># adjustments are valid</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_adjustment_list</span><span class="p">(</span><span class="n">store</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;failed to build the adjustment list&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span>
+                <span class="s2">&quot;Failed to build the adjustment list&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Exchange.apply"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.exchange_update.html#mktplace.transactions.exchange_update.Exchange.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">txn</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">adjustment_list</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">build_adjustment_list</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">adjustment</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">adjustment_list</span><span class="p">:</span>
+            <span class="n">adjustment</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">store</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

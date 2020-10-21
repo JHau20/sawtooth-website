@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+  <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<head>
+	<meta charset="utf-8">
+	<title>Sawtooth FAQ - Hyperledger Sawtooth in General | Hyperledger Sawtooth</title>
+	<meta name="description" content="An enterprise-grade solution for distributed ledgers.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="0.0.0.0/faq/sawtooth/">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Hyperledger Sawtooth" href="0.0.0.0/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+
+	<!-- Google Analytics
+	-->
+</head>
+
+  <body>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">Hyperledger Sawtooth</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+                        
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/release/">
+					Releases
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/docs/">
+					Docs
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/faq/">
+					FAQ
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/community/">
+					Community
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/contact/">
+					Contact
+				</a>
+			</li>
+			
+			
+			<li>
+				<a class="page-link" href="/examples">
+					Examples
+				</a>
+			</li>
+			<!-- Social icons from Font Awesome, if enabled -->
+			<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/hyperledger/sawtooth-core" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/\%23HyperledgerSawtooth" title="Follow on Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Sawtooth FAQ - Hyperledger Sawtooth in General</h1>
+  </header>
+  <section class="post-content"><p class="mininav"><a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/installation/">NEXT</a></p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-is-sawtooth" id="id1">What is Sawtooth?</a></li>
+<li><a class="reference internal" href="#what-are-some-useful-sawtooth-links" id="id2">What are some useful Sawtooth links?</a></li>
+<li><a class="reference internal" href="#where-are-some-good-introductory-videos" id="id3">Where are some good introductory videos?</a></li>
+<li><a class="reference internal" href="#where-are-some-good-advanced-videos" id="id4">Where are some good advanced videos?</a></li>
+<li><a class="reference internal" href="#what-courses-are-available-on-hyperledger-sawtooth" id="id5">What courses are available on Hyperledger Sawtooth?</a></li>
+<li><a class="reference internal" href="#what-sawtooth-exams-are-available" id="id6">What Sawtooth exams are available?</a></li>
+<li><a class="reference internal" href="#are-there-any-example-applications-based-on-sawtooth" id="id7">Are there any example applications based on Sawtooth?</a></li>
+<li><a class="reference internal" href="#are-there-any-live-demos-of-a-sawtooth-application" id="id8">Are there any live demos of a Sawtooth Application?</a></li>
+<li><a class="reference internal" href="#what-is-the-hyperledger-sawtooth-application-developers-forum" id="id9">What is the Hyperledger Sawtooth Application Developers Forum?</a></li>
+<li><a class="reference internal" href="#what-is-the-difference-between-hyperledger-and-sawtooth" id="id10">What is the difference between Hyperledger and Sawtooth?</a></li>
+<li><a class="reference internal" href="#what-is-the-difference-between-sawtooth-sawtooth-lake-and-hyperledger-sawtooth" id="id11">What is the difference between Sawtooth, Sawtooth Lake, and Hyperledger Sawtooth?</a></li>
+<li><a class="reference internal" href="#what-is-the-difference-between-hyperledger-sawtooth-and-hyperledger-fabric" id="id12">What is the difference between Hyperledger Sawtooth and Hyperledger Fabric?</a></li>
+<li><a class="reference internal" href="#what-differentiates-sawtooth-from-other-blockchains" id="id13">What differentiates Sawtooth from other blockchains?</a></li>
+<li><a class="reference internal" href="#should-i-use-sawtooth-or-other-blockchain-software-for-my-application" id="id14">Should I use Sawtooth or other blockchain software for my application?</a></li>
+<li><a class="reference internal" href="#how-does-a-blockchain-differ-from-a-database" id="id15">How does a blockchain differ from a database?</a></li>
+<li><a class="reference internal" href="#does-sawtooth-focus-on-developing-blockchain-solutions-for-sustainable-fishing" id="id16">Does Sawtooth focus on developing blockchain solutions for sustainable fishing?</a></li>
+<li><a class="reference internal" href="#what-does-an-immutable-blockchain-mean" id="id17">What does an immutable blockchain mean?</a></li>
+<li><a class="reference internal" href="#how-do-i-tell-what-version-of-sawtooth-is-running" id="id18">How do I tell what version of Sawtooth is running?</a></li>
+<li><a class="reference internal" href="#what-s-the-difference-between-the-sawtooth-sawadm-sawnet-and-sawset-commands" id="id19">What's the difference between the <tt class="docutils literal">sawtooth</tt>, <tt class="docutils literal">sawadm</tt>, <tt class="docutils literal">sawnet</tt>, and <tt class="docutils literal">sawset</tt> commands?</a></li>
+<li><a class="reference internal" href="#must-software-developed-with-sawtooth-be-open-source" id="id20">Must software developed with Sawtooth be open source?</a></li>
+<li><a class="reference internal" href="#can-i-copy-a-sawtooth-core-source-file-to-include-with-my-project" id="id21">Can I copy a Sawtooth Core source file to include with my project?</a></li>
+<li><a class="reference internal" href="#i-get-a-usage-error-running-sawnet-peers-or-sawnet-list-blocks" id="id22">I get a usage error running <tt class="docutils literal">sawnet peers</tt> or <tt class="docutils literal">sawnet <span class="pre">list-blocks</span></tt></a></li>
+<li><a class="reference internal" href="#how-do-i-detect-a-forked-blockchain-in-a-sawtooth-network" id="id23">How do I detect a forked blockchain in a Sawtooth network?</a></li>
+<li><a class="reference internal" href="#what-does-failed-to-reach-common-ancestor-mean-from-sawnet-compare-chains" id="id24">What does <tt class="docutils literal">Failed to reach common ancestor</tt> mean from <tt class="docutils literal">sawnet <span class="pre">compare-chains</span></tt>?</a></li>
+<li><a class="reference internal" href="#does-hyperledger-composer-support-sawtooth" id="id25">Does Hyperledger Composer support Sawtooth?</a></li>
+<li><a class="reference internal" href="#does-hyperledger-explorer-support-sawtooth" id="id26">Does Hyperledger Explorer support Sawtooth?</a></li>
+<li><a class="reference internal" href="#how-do-i-setup-and-use-sawtooth-explorer" id="id27">How do I setup and use Sawtooth Explorer?</a></li>
+<li><a class="reference internal" href="#how-do-i-report-a-bug" id="id28">How do I report a bug?</a></li>
+<li><a class="reference internal" href="#how-do-i-report-a-security-bug" id="id29">How do I report a security bug?</a></li>
+<li><a class="reference internal" href="#what-encryption-algorithms-are-used-by-sawtooth" id="id30">What encryption algorithms are used by Sawtooth?</a></li>
+<li><a class="reference internal" href="#can-you-explain-global-state-with-an-example" id="id31">Can you explain Global State with an example?</a></li>
+<li><a class="reference internal" href="#what-is-the-difference-between-the-merkle-radix-trie-and-the-blockchain" id="id32">What is the difference between the Merkle Radix Trie and the blockchain?</a></li>
+<li><a class="reference internal" href="#are-32-byte-ids-within-a-transaction-family-large-enough-to-avoid-collisions" id="id33">Are 32-byte IDs within a transaction family large enough to avoid collisions?</a></li>
+<li><a class="reference internal" href="#why-is-sawtooth-capable-of-supporting-large-network-populations-of-nodes" id="id34">Why is Sawtooth capable of supporting large network populations of nodes?</a></li>
+<li><a class="reference internal" href="#is-there-a-sawtooth-security-evaluation" id="id35">Is there a Sawtooth security evaluation?</a></li>
+<li><a class="reference internal" href="#are-there-any-examples-of-sawtooth-permissions" id="id36">Are there any examples of Sawtooth permissions?</a></li>
+<li><a class="reference internal" href="#does-sawtooth-restore-state-when-a-peer-restarts-or-when-a-peer-is-out-of-sync-with-the-network" id="id37">Does Sawtooth restore state when a peer restarts or when a peer is out-of-sync with the network?</a></li>
+<li><a class="reference internal" href="#when-content-at-an-address-is-changed-several-times-by-the-transactions-in-a-block-what-appears-in-the-state-merkle-tree" id="id38">When content at an address is changed several times by the transactions in a block, what appears in the state (Merkle Tree)?</a></li>
+<li><a class="reference internal" href="#in-order-to-create-a-sawtooth-application-do-i-need-to-clone-and-modify-the-entire-sawtooth-core-repository" id="id39">In order to create a Sawtooth application, do I need to clone and modify the entire <tt class="docutils literal"><span class="pre">sawtooth-core</span></tt> repository?</a></li>
+<li><a class="reference internal" href="#what-is-sawtooth-global-state-agreement" id="id40">What is Sawtooth <em>global state agreement</em>?</a></li>
+<li><a class="reference internal" href="#how-can-cpu-vulnerabilities-such-as-spectre-and-meltdown-impact-sawtooth" id="id41">How can CPU vulnerabilities such as Spectre and Meltdown impact Sawtooth?</a></li>
+<li><a class="reference internal" href="#are-docker-containers-required-to-run-sawtooth" id="id42">Are Docker containers required to run Sawtooth?</a></li>
+<li><a class="reference internal" href="#what-cloud-services-support-sawtooth-blockchain" id="id43">What cloud services support Sawtooth Blockchain?</a></li>
+<li><a class="reference internal" href="#does-sawtooth-support-ethereum" id="id44">Does Sawtooth support Ethereum?</a></li>
+<li><a class="reference internal" href="#does-sawtooth-use-blockchain-mining" id="id45">Does Sawtooth use blockchain mining?</a></li>
+<li><a class="reference internal" href="#what-is-the-head-node-or-master-node-in-sawtooth" id="id46">What is the &quot;head node&quot; or &quot;master node&quot; in Sawtooth?</a></li>
+<li><a class="reference internal" href="#what-is-a-sawtooth-role" id="id47">What is a Sawtooth Role?</a></li>
+<li><a class="reference internal" href="#what-sawtooth-roles-are-defined" id="id48">What Sawtooth Roles are defined?</a></li>
+</ul>
+</div>
+<div class="section" id="what-is-sawtooth">
+<h2><a class="toc-backref" href="#id1">What is Sawtooth?</a></h2>
+<p>Hyperledger Sawtooth is a modular enterprise blockchain platform for building, deploying, and running distributed ledgers.
+The design philosophy targets keeping ledgers distributed and making smart contracts safe, particularly for enterprise use.
+Hyperledger Sawtooth includes a novel consensus algorithm, Proof of Elapsed Time (PoET), which targets large distributed validator populations with minimal resource consumption.
+No special hardware is required to run Sawtooth or PoET.</p>
+</div>
+<div class="section" id="what-are-some-useful-sawtooth-links">
+<h2><a class="toc-backref" href="#id2">What are some useful Sawtooth links?</a></h2>
+<dl class="docutils">
+<dt>Sawtooth introduction</dt>
+<dd><a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/introduction.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/introduction.html</a></dd>
+<dt>Sawtooth introduction and download</dt>
+<dd><a class="reference external" href="https://www.hyperledger.org/projects/sawtooth">https://www.hyperledger.org/projects/sawtooth</a></dd>
+<dt>GitHub repository for Sawtooth Core</dt>
+<dd><a class="reference external" href="https://github.com/hyperledger/sawtooth-core">https://github.com/hyperledger/sawtooth-core</a></dd>
+<dt>Sawtooth documentation, with several guides and references, including:</dt>
+<dd><a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/">https://sawtooth.hyperledger.org/docs/core/nightly/master/</a></dd>
+<dt>Sawtooth Application Developer's Guide</dt>
+<dd><a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide.html</a></dd>
+<dt>Sawtooth Architecture</dt>
+<dd><a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture.html</a></dd>
+<dt>Sawtooth White Paper</dt>
+<dd><a class="reference external" href="https://www.hyperledger.org/wp-content/uploads/2018/01/Hyperledger_Sawtooth_WhitePaper.pdf">https://www.hyperledger.org/wp-content/uploads/2018/01/Hyperledger_Sawtooth_WhitePaper.pdf</a></dd>
+<dt>Sawtooth chat main channel (several others Sawtooth channels exist here)</dt>
+<dd><a class="reference external" href="https://chat.hyperledger.org/channel/sawtooth">https://chat.hyperledger.org/channel/sawtooth</a></dd>
+<dt>Sawtooth mailing list (not as popular as the chat channel above)</dt>
+<dd><a class="reference external" href="https://lists.hyperledger.org/g/sawtooth">https://lists.hyperledger.org/g/sawtooth</a></dd>
+<dt>Official Sawtooth FAQ</dt>
+<dd><a class="reference external" href="https://www.hyperledger.org/wp-content/uploads/2018/01/Hyperledger_Sawtooth_FAQ.pdf">https://www.hyperledger.org/wp-content/uploads/2018/01/Hyperledger_Sawtooth_FAQ.pdf</a></dd>
+<dt>Sawtooth FAQ</dt>
+<dd><a class="reference external" href="https://github.com/danintel/sawtooth-faq">https://github.com/danintel/sawtooth-faq</a></dd>
+</dl>
+</div>
+<div class="section" id="where-are-some-good-introductory-videos">
+<h2><a class="toc-backref" href="#id3">Where are some good introductory videos?</a></h2>
+<dl class="docutils">
+<dt>Hyperledger Sawtooth 1.0: Market Significance &amp; Technical Overview (Hyperledger, 2018, 61:27) (free registration required):</dt>
+<dd><a class="reference external" href="https://gateway.on24.com/wcc/gateway/linux/1101876/1585244/hyperledger-sawtooth-v10-market-significance-and-technical-overview">https://gateway.on24.com/wcc/gateway/linux/1101876/1585244/hyperledger-sawtooth-v10-market-significance-and-technical-overview</a>
+<a class="reference external" href="https://www.hyperledger.org/resources/webinars">https://www.hyperledger.org/resources/webinars</a></dd>
+<dt>Hyperledger Sawtooth 1.0 Architecture and App Development (Bitwise IO, 2018, 31:26):</dt>
+<dd><a class="reference external" href="https://youtu.be/uBebFQM49Xk">https://youtu.be/uBebFQM49Xk</a></dd>
+<dt>You can find several more here:</dt>
+<dd><a class="reference external" href="https://www.youtube.com/results?search_query=Hyperledger+Sawtooth">https://www.youtube.com/results?search_query=Hyperledger+Sawtooth</a></dd>
+</dl>
+</div>
+<div class="section" id="where-are-some-good-advanced-videos">
+<h2><a class="toc-backref" href="#id4">Where are some good advanced videos?</a></h2>
+<p>A list of Hyperledger Sawtooth <a class="reference external" href="/faq/videos/">videos</a> (mostly Sawtooth Technical Forum recordings) are at
+<a class="reference external" href="https://github.com/danintel/sawtooth-faq/blob/master/settings.rst">https://github.com/danintel/sawtooth-faq/blob/master/settings.rst</a></p>
+</div>
+<div class="section" id="what-courses-are-available-on-hyperledger-sawtooth">
+<h2><a class="toc-backref" href="#id5">What courses are available on Hyperledger Sawtooth?</a></h2>
+<ul class="simple">
+<li>B9Lab has a five-week Sawtooth Developer training course.  See <a class="reference external" href="https://academy.b9lab.com/courses/B9lab/current-sawtooth-course">https://academy.b9lab.com/courses/B9lab/current-sawtooth-course</a></li>
+<li>EdX has a &quot;Blockchain for Business&quot; course that reviews Blockchain technology and includes an introduction to Sawtooth and other Hyperledger blockchain software. See
+<a class="reference external" href="https://www.edx.org/course/blockchain-business-introduction-linuxfoundationx-lfs171x-0">https://www.edx.org/course/blockchain-business-introduction-linuxfoundationx-lfs171x-0</a></li>
+<li>A self-study set of PDF slides, with a simple supply chain application as an example, is at <a class="reference external" href="https://github.com/hyperledger/education-sawtooth-simple-supply">https://github.com/hyperledger/education-sawtooth-simple-supply</a></li>
+<li>A self-paced course is Cryptomoji, which where students extend a Cryptokitties clone,  <a class="reference external" href="https://github.com/hyperledger/education-cryptomoji">https://github.com/hyperledger/education-cryptomoji</a></li>
+<li>The Kerala Blockchain Academy offers a Certified Hyperledger Sawtooth Developer (CHD) program at IITM-K, India. See <a class="reference external" href="http://www.iiitmk.ac.in/kba/">http://www.iiitmk.ac.in/kba/</a></li>
+<li>Blockchain Educators offers a Certified Hyperledger Sawtooth Administrator (CHSA) course. See <a class="reference external" href="https://www.blockchaineducators.org/hyperledger/">https://www.blockchaineducators.org/hyperledger/</a></li>
+</ul>
+</div>
+<div class="section" id="what-sawtooth-exams-are-available">
+<h2><a class="toc-backref" href="#id6">What Sawtooth exams are available?</a></h2>
+<p>A Certified Hyperledger Sawtooth Administrator (CHSA) exam is available at
+<a class="reference external" href="https://www.hyperledger.org/resources/training/hyperledger-sawtooth-certification">https://www.hyperledger.org/resources/training/hyperledger-sawtooth-certification</a></p>
+</div>
+<div class="section" id="are-there-any-example-applications-based-on-sawtooth">
+<h2><a class="toc-backref" href="#id7">Are there any example applications based on Sawtooth?</a></h2>
+<dl class="docutils">
+<dt>A simple application that implements a cookie jar showing just the Sawtooth API:</dt>
+<dd><a class="reference external" href="https://github.com/danintel/sawtooth-cookiejar">https://github.com/danintel/sawtooth-cookiejar</a></dd>
+<dt>A example application that implements a simple wallet application:</dt>
+<dd><a class="reference external" href="https://github.com/askmish/sawtooth-simplewallet">https://github.com/askmish/sawtooth-simplewallet</a></dd>
+<dt>A more complex example that implements a supply chain example and demonstrates many of the key concepts behind the implementation of a complete Sawtooth application:</dt>
+<dd><a class="reference external" href="https://github.com/hyperledger/sawtooth-supply-chain">https://github.com/hyperledger/sawtooth-supply-chain</a></dd>
+<dt>An example application that shows how to  exchange quantities of customized &quot;Assets&quot; with other users on the blockchain:</dt>
+<dd><a class="reference external" href="https://github.com/hyperledger/sawtooth-marketplace">https://github.com/hyperledger/sawtooth-marketplace</a></dd>
+</dl>
+</div>
+<div class="section" id="are-there-any-live-demos-of-a-sawtooth-application">
+<h2><a class="toc-backref" href="#id8">Are there any live demos of a Sawtooth Application?</a></h2>
+<p>Yes. A Sawtooth Supply Chain demo, AssetTrack is at <a class="reference external" href="https://demo.bitwise.io/">https://demo.bitwise.io/</a> .
+Another demo, for tracking fish, is at <a class="reference external" href="https://demo.bitwise.io/fish/">https://demo.bitwise.io/fish/</a> .
+A Sawbucks demo is at <a class="reference external" href="https://demo.bitwise.io/sawbucks/">https://demo.bitwise.io/sawbucks/</a> .
+A Supply Chain Traceability demo is at <a class="reference external" href="https://provenance.sawtooth.me/">https://provenance.sawtooth.me/</a> .
+The source and docs are at <a class="reference external" href="https://github.com/hyperledger/sawtooth-marketplace/">https://github.com/hyperledger/sawtooth-marketplace/</a></p>
+</div>
+<div class="section" id="what-is-the-hyperledger-sawtooth-application-developers-forum">
+<h2><a class="toc-backref" href="#id9">What is the Hyperledger Sawtooth Application Developers Forum?</a></h2>
+<p>It is to provide opportunities to discuss technical application development questions with developers experienced with Hyperledger Sawtooth.
+The forum is held on Wednesdays 9-10am Central Time using Zoom video conferencing. An Asia-time friendly Developers Forum is held Thursday at 2pm India Time.
+For details and current contact information for both forums, see
+<a class="reference external" href="https://chat.hyperledger.org/channel/sawtooth">https://chat.hyperledger.org/channel/sawtooth</a> for details.</p>
+</div>
+<div class="section" id="what-is-the-difference-between-hyperledger-and-sawtooth">
+<h2><a class="toc-backref" href="#id10">What is the difference between Hyperledger and Sawtooth?</a></h2>
+<ul class="simple">
+<li>Sawtooth (or Hyperledger Sawtooth) is a blockchain implementation initially contributed by Intel Corporation and now maintained by the Sawtooth community. Sawtooth does not have to be deployed on Intel hardware; however, Sawtooth does include the optional PoET consensus module, which uses Intel SGX to provide an efficient, Byzantine Fault Tolerant consensus mechanism that does not rely on expensive and inefficient mining algorithms. See <a class="reference external" href="https://www.hyperledger.org/projects/sawtooth">https://www.hyperledger.org/projects/sawtooth</a></li>
+<li>Hyperledger is a consortium that includes Sawtooth as well as other blockchain implementations. &quot;Hyperledger is an open source collaborative effort created to advance cross-industry blockchain technologies. It is a global collaboration, hosted by The Linux Foundation&quot; See <a class="reference external" href="https://www.hyperledger.org/">https://www.hyperledger.org/</a>.</li>
+</ul>
+</div>
+<div class="section" id="what-is-the-difference-between-sawtooth-sawtooth-lake-and-hyperledger-sawtooth">
+<h2><a class="toc-backref" href="#id11">What is the difference between Sawtooth, Sawtooth Lake, and Hyperledger Sawtooth?</a></h2>
+<p>Sawtooth Lake was Intel's original code name for its blockchain research project, named after a lake in the Sawtooth Mountains of central Idaho. After it was contributed to the Linux Foundation's Hyperledger consortium, the name was changed to Hyperledger Sawtooth. Sawtooth is just shorthand for Hyperledger Sawtooth and are the same thing.</p>
+</div>
+<div class="section" id="what-is-the-difference-between-hyperledger-sawtooth-and-hyperledger-fabric">
+<h2><a class="toc-backref" href="#id12">What is the difference between Hyperledger Sawtooth and Hyperledger Fabric?</a></h2>
+<p>Hyperledger Sawtooth and Fabric are two independent implementations of a blockchain under the Linux Foundation's Hyperledger Blockchain project.
+Here are some differences:</p>
+<ul class="simple">
+<li>Fabric's Smart Contract must be written in GoLang or Javascript. Sawtooth transaction processors can be written in multiple languages, such as Rust, Python, Go, or JavaScript. SDKs for other languages are being added</li>
+<li>Fabric has &quot;endorsing peers&quot; and ordering services to pre-process transactions. Sawtooth has a validator that handles everything from validating the transactions and distributing the transaction to peer nodes</li>
+<li>Fabric stores data in a leveldb or couchdb, with a separate ledger per channel. Sawtooth stores all data in a central lmdb database with each transaction family using a separate address prefix.</li>
+<li>Fabric has multiple components, including Orderers, Peers, CAs, CouchDB, and Tools. Sawtooth has the Sawtooth Validator and a Transaction Processor for each Transaction Family. The Validator's REST API communicates with a client</li>
+</ul>
+<p>Based on
+<a class="reference external" href="https://www.skcript.com/svr/hyperledger-fabric-to-sawtooth">https://www.skcript.com/svr/hyperledger-fabric-to-sawtooth</a></p>
+</div>
+<div class="section" id="what-differentiates-sawtooth-from-other-blockchains">
+<h2><a class="toc-backref" href="#id13">What differentiates Sawtooth from other blockchains?</a></h2>
+<p>This includes:</p>
+<ul class="simple">
+<li>State agreement, which assures each node has cryptographically-verifiable, identical copies of the blockchain</li>
+<li>novel Byzantine Fault Tolerant (BFT) consensus, through PoET</li>
+<li>Unpluggable consensus on-the-fly (without restarting)</li>
+<li>Multi-language SDK support (Python, Go, Javascript, Rust, with more being added)</li>
+<li>Parallel transaction processing</li>
+</ul>
+<p>For more on Sawtooth differentiation and philosophy, see
+<a class="reference external" href="https://www.hyperledger.org/blog/2016/11/02/meet-sawtooth-lake">https://www.hyperledger.org/blog/2016/11/02/meet-sawtooth-lake</a></p>
+</div>
+<div class="section" id="should-i-use-sawtooth-or-other-blockchain-software-for-my-application">
+<h2><a class="toc-backref" href="#id14">Should I use Sawtooth or other blockchain software for my application?</a></h2>
+<p>You should look for existing blockchain platforms that will fit your use case, sort them out by features, maturity (are they production ready?), and community support. We hope Sawtooth fits your needs.</p>
+</div>
+<div class="section" id="how-does-a-blockchain-differ-from-a-database">
+<h2><a class="toc-backref" href="#id15">How does a blockchain differ from a database?</a></h2>
+<ul class="simple">
+<li>A database has one master copy. A blockchain has multiple authoritative copies</li>
+<li>A database can be changed after a commit. A blockchain's records are immutable and cannot be undone after a commit</li>
+<li>A database must have a trusted central authority</li>
+</ul>
+</div>
+<div class="section" id="does-sawtooth-focus-on-developing-blockchain-solutions-for-sustainable-fishing">
+<h2><a class="toc-backref" href="#id16">Does Sawtooth focus on developing blockchain solutions for sustainable fishing?</a></h2>
+<p>No. The Seafood Supply Chain application is a proof-of-concept. Sawtooth is a general-purpose enterprise blockchain platform.</p>
+</div>
+<div class="section" id="what-does-an-immutable-blockchain-mean">
+<h2><a class="toc-backref" href="#id17">What does an immutable blockchain mean?</a></h2>
+<p>It means that blocks already committed cannot be &quot;undone&quot; or deleted. The block's transactions are in the blockchain forever. The only way to undo a transaction is to add another transaction to reverse a previous transaction. So if the value of <tt class="docutils literal">a=1</tt> and a transaction sets <tt class="docutils literal">a=2</tt>, the only way to undo it is to set <tt class="docutils literal">a=1</tt> again. However regardless of what the current value of <tt class="docutils literal">a</tt> is, all three of those transactions are permanently a part of the blockchain. The record of them will never be lost, and in fact you could rewind state to what it was in previous blocks if you needed.</p>
+<p>This is different from immutable variables. The difference is that with blockchain <em>transactions</em> are immutable. With some programming languages (such as Rust), <em>variables</em> are immutable.</p>
+</div>
+<div class="section" id="how-do-i-tell-what-version-of-sawtooth-is-running">
+<h2><a class="toc-backref" href="#id18">How do I tell what version of Sawtooth is running?</a></h2>
+<pre class="code sh literal-block">
+$ sawtooth --version
+sawtooth-cli <span class="operator">(</span>Hyperledger Sawtooth<span class="operator">)</span> version <span class="literal number">1</span>.1.2
+</pre>
+</div>
+<div class="section" id="what-s-the-difference-between-the-sawtooth-sawadm-sawnet-and-sawset-commands">
+<h2><a class="toc-backref" href="#id19">What's the difference between the <tt class="docutils literal">sawtooth</tt>, <tt class="docutils literal">sawadm</tt>, <tt class="docutils literal">sawnet</tt>, and <tt class="docutils literal">sawset</tt> commands?</a></h2>
+<dl class="docutils">
+<dt><tt class="docutils literal">sawadm</tt></dt>
+<dd>Administration tasks such as creating the genesis batch file or validator key generation</dd>
+<dt><tt class="docutils literal">sawnet</tt></dt>
+<dd>Interact with Sawtooth network, such as comparing chains across nodes</dd>
+<dt><tt class="docutils literal">sawset</tt></dt>
+<dd>Change genesis block settings or views, create, and vote on new block proposals</dd>
+<dt><tt class="docutils literal">sawtooth</tt></dt>
+<dd>Interact with a Sawtooth validator, such as batches, blocks, identity, keygen, peers, settings, state, and transaction information</dd>
+</dl>
+<p>For more information, see the Sawtooth CLI Command Reference at <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/cli.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/cli.html</a></p>
+</div>
+<div class="section" id="must-software-developed-with-sawtooth-be-open-source">
+<h2><a class="toc-backref" href="#id20">Must software developed with Sawtooth be open source?</a></h2>
+<p>IANAL; however, Sawtooth is released under the Apache 2 license, a permissive license, and so should be able to be used in both open and closed source applications.</p>
+</div>
+<div class="section" id="can-i-copy-a-sawtooth-core-source-file-to-include-with-my-project">
+<h2><a class="toc-backref" href="#id21">Can I copy a Sawtooth Core source file to include with my project?</a></h2>
+<p>Yes, if you follow the Apache 2 license terms, which include requiring preserving copyright and license notices.
+Sawtooth depends on other runtime software that has separate terms.</p>
+</div>
+<div class="section" id="i-get-a-usage-error-running-sawnet-peers-or-sawnet-list-blocks">
+<h2><a class="toc-backref" href="#id22">I get a usage error running <tt class="docutils literal">sawnet peers</tt> or <tt class="docutils literal">sawnet <span class="pre">list-blocks</span></tt></a></h2>
+<p>These commands were added after the Sawtooth 1.0.5 release and are not available in earlier releases.</p>
+</div>
+<div class="section" id="how-do-i-detect-a-forked-blockchain-in-a-sawtooth-network">
+<h2><a class="toc-backref" href="#id23">How do I detect a forked blockchain in a Sawtooth network?</a></h2>
+<p>Use <cite>sawnet compare-chains</cite> and look for a different set of block(s) at
+the head of the chains.
+This is distinct from the case where one node has a blockchain that's not
+up-to-date, but has conflicting heads (&quot;forked&quot;).
+Forking can occur if the Sawtooth network is partitioned and cannot fully communicate.
+It can also be the result of a bug in transaction processing
+(for example, transactions don't serialize in a deterministic way).</p>
+</div>
+<div class="section" id="what-does-failed-to-reach-common-ancestor-mean-from-sawnet-compare-chains">
+<h2><a class="toc-backref" href="#id24">What does <tt class="docutils literal">Failed to reach common ancestor</tt> mean from <tt class="docutils literal">sawnet <span class="pre">compare-chains</span></tt>?</a></h2>
+<p>It means the blockchains have no blocks in common, including the genesis block. This usually happens when a second node is added with its own genesis node. Only the first node in a Sawtooth network should be created with a genesis block.</p>
+</div>
+<div class="section" id="does-hyperledger-composer-support-sawtooth">
+<h2><a class="toc-backref" href="#id25">Does Hyperledger Composer support Sawtooth?</a></h2>
+<p>No. IBM has also reduced Composer development to maintenance mode. See:
+<a class="reference external" href="https://lists.hyperledger.org/g/composer/message/125">https://lists.hyperledger.org/g/composer/message/125</a></p>
+</div>
+<div class="section" id="does-hyperledger-explorer-support-sawtooth">
+<h2><a class="toc-backref" href="#id26">Does Hyperledger Explorer support Sawtooth?</a></h2>
+<p>No, not now. There is a Sawtooth Explorer at
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-explorer">https://github.com/hyperledger/sawtooth-explorer</a>
+It may or may not be merged with Hyperledger Explorer in the future.
+Sawtooth Explorer provides visibility into the Sawtooth blockchain for node operators.</p>
+</div>
+<div class="section" id="how-do-i-setup-and-use-sawtooth-explorer">
+<h2><a class="toc-backref" href="#id27">How do I setup and use Sawtooth Explorer?</a></h2>
+<ul class="simple">
+<li>Install, configure, and run Hyperledger Sawtooth</li>
+<li>Clone Sawtooth Explorer with <tt class="docutils literal">git clone <span class="pre">https://github.com/hyperledger/sawtooth-explorer</span></tt></li>
+<li><tt class="docutils literal">cd <span class="pre">sawtooth-explorer</span></tt></li>
+<li>In file <tt class="docutils literal">docker/nginx.conf</tt>, change <tt class="docutils literal">proxy_pass</tt> to <tt class="docutils literal"><span class="pre">http://localhost:8008</span></tt></li>
+<li>In file <tt class="docutils literal">src/environments/environment.ts</tt>, change <tt class="docutils literal">apiURL</tt> to <tt class="docutils literal"><span class="pre">http://&lt;host-ip-address&gt;:8090</span></tt> (change to your hostname or IP address)</li>
+<li>Start Sawtooth Explorer with <tt class="docutils literal"><span class="pre">docker-compose</span> up</tt></li>
+<li>In a web browser, navigate to <a class="reference external" href="http:/">http:/</a>/&lt;host-ip-address&gt;:8090 (change to your hostname or IP address)</li>
+<li>You can now see the transactions/batches that you submit from the client to Sawtooth in the Explorer user interface</li>
+<li>More details are at <a class="reference external" href="https://github.com/hyperledger/sawtooth-explorer">https://github.com/hyperledger/sawtooth-explorer</a></li>
+</ul>
+</div>
+<div class="section" id="how-do-i-report-a-bug">
+<h2><a class="toc-backref" href="#id28">How do I report a bug?</a></h2>
+<p>Use the JIRA bug tracking system at
+<a class="reference external" href="https://jira.hyperledger.org/projects/STL/issues/STL-51?filter=allopenissues">https://jira.hyperledger.org/projects/STL/issues/STL-51?filter=allopenissues</a>
+You need an account, which you create with the Linux foundation at
+<a class="reference external" href="https://identity.linuxfoundation.org/">https://identity.linuxfoundation.org/</a>, then login with that account.</p>
+</div>
+<div class="section" id="how-do-i-report-a-security-bug">
+<h2><a class="toc-backref" href="#id29">How do I report a security bug?</a></h2>
+<p>For security bugs only, send an email to <a class="reference external" href="mailto:security&#64;hyperledger.org">security&#64;hyperledger.org</a></p>
+</div>
+<div class="section" id="what-encryption-algorithms-are-used-by-sawtooth">
+<h2><a class="toc-backref" href="#id30">What encryption algorithms are used by Sawtooth?</a></h2>
+<ul class="simple">
+<li>Transaction signing with ECDSA 256-bit key using curve secp256k1 (same as Bitcoin)</li>
+<li>ZeroMQ (ZMQ or 0MQ) used for communications. ZMQ uses CurveZMQ for encryption and authentication, which uses ECDH 256-bit key with curve Curve25519 for key agreement.</li>
+<li>PoET uses AES-GCM to encrypt its monotonic counter</li>
+<li>Names are hashed with SHA-512 or SHA-256</li>
+</ul>
+</div>
+<div class="section" id="can-you-explain-global-state-with-an-example">
+<h2><a class="toc-backref" href="#id31">Can you explain Global State with an example?</a></h2>
+<p>Global state is where sawtooth and TPs read/write blockchain data. Examples are a-plenty if you look at the github repo examples (intkey, XO, etc.)
+The &quot;state&quot; is implemented as a Radix Merkle Trie over the LMDB database, where the 'keys' are 35 bytes (70 characters) and the scheme for the keys is up to the TP developer. The first 3 bytes (6 chars) of the key identifies a unique TP namespace and it is recommended to avoid colliding with other TP namespaces.
+To enable your TP to read/write (or in context parlance &quot;get/set&quot;) data at addresses, you need to specify those addresses <em>a priori</em> in the Transaction inputs/outputs. Otherwise you will get Authorization errors. The addresses your TP will read or write to need to be deterministic.</p>
+<p>Using the SimpleWallet application as an example (see example application links above), the blockchain will contain transactions showing deposits, withdrawals and transfers between accounts. The global state will contain the balance in the different accounts corresponding at the current point in time, after all transactions in the chain have been processed.</p>
+</div>
+<div class="section" id="what-is-the-difference-between-the-merkle-radix-trie-and-the-blockchain">
+<h2><a class="toc-backref" href="#id32">What is the difference between the Merkle Radix Trie and the blockchain?</a></h2>
+<p>The blockchain itself just stores transactions, not state, so reading the data in the last block does not say much by itself. Data in the blockchain is also immutable and can never change (except by adding new blocks). The radix trie is a different data structure that is used to make fast queries to the state. The root of the Merkle Trie is a hash. One can easily identify if something changed when the root hash changes. The Merkle Trie addressing allows quick retrieval at an address and partial queries of address prefixes.</p>
+</div>
+<div class="section" id="are-32-byte-ids-within-a-transaction-family-large-enough-to-avoid-collisions">
+<h2><a class="toc-backref" href="#id33">Are 32-byte IDs within a transaction family large enough to avoid collisions?</a></h2>
+<p>Yes. If they are being generated with a random distribution, the chances are vanishingly rare. A UUID is only 16-bytes and if you generated a billion per second, it would take 100 years before you would expect 50% odds of a collision.</p>
+</div>
+<div class="section" id="why-is-sawtooth-capable-of-supporting-large-network-populations-of-nodes">
+<h2><a class="toc-backref" href="#id34">Why is Sawtooth capable of supporting large network populations of nodes?</a></h2>
+<p>One of the reasons is the homogeneous nature of Sawtooth Nodes. You don't have different nodes with specialized functions, so it's easy to setup and manage many nodes. Secondly, and more importantly, the PoET consensus mechanism has been designed for large networks. It's not very efficient in small networks and you'll likely get much better performance with other mechanisms in a small network, but PoET handles large populations easily.</p>
+</div>
+<div class="section" id="is-there-a-sawtooth-security-evaluation">
+<h2><a class="toc-backref" href="#id35">Is there a Sawtooth security evaluation?</a></h2>
+<p>Yes. This is a pre-1.0 release audit, that was required to be a part of the Linux Foundation's Hyperledger project. See
+<a class="reference external" href="https://www.hyperledger.org/blog/2018/05/22/hyperledger-sawtooth-security-audit">https://www.hyperledger.org/blog/2018/05/22/hyperledger-sawtooth-security-audit</a></p>
+</div>
+<div class="section" id="are-there-any-examples-of-sawtooth-permissions">
+<h2><a class="toc-backref" href="#id36">Are there any examples of Sawtooth permissions?</a></h2>
+<ul class="simple">
+<li>off-chain permissioning is in <tt class="docutils literal">/etc/sawtooth/validator.toml</tt> (see <tt class="docutils literal">validator.toml.example</tt> )</li>
+<li>on-chaining permissioning is recorded on-chain. See block 0 for examples, such as <tt class="docutils literal">sawtooth.settings.vote.authorized_keys</tt></li>
+<li>transaction key permissioning controls what clients can submit transactions, based on signing keys (<tt class="docutils literal">transactor.transaction_signer</tt>, <tt class="docutils literal"><span class="pre">transaction.transaction_signer.&lt;name</span> of TP&gt;</tt>, <tt class="docutils literal">transactor.batch_signer</tt> )</li>
+<li>validation key permissioning controls what nodes are allowed to connect to the Sawtooth network</li>
+<li>transaction family permissioning controls what TFs are supported by this Sawtooth network, <tt class="docutils literal">sawtooth.validator.transaction_families</tt></li>
+<li>then there are policies and roles from the optional Sawtooth Identity Transaction Processor, documented at <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/transaction_family_specifications/identity_transaction_family.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/transaction_family_specifications/identity_transaction_family.html</a></li>
+</ul>
+</div>
+<div class="section" id="does-sawtooth-restore-state-when-a-peer-restarts-or-when-a-peer-is-out-of-sync-with-the-network">
+<h2><a class="toc-backref" href="#id37">Does Sawtooth restore state when a peer restarts or when a peer is out-of-sync with the network?</a></h2>
+<p>Yes.</p>
+</div>
+<div class="section" id="when-content-at-an-address-is-changed-several-times-by-the-transactions-in-a-block-what-appears-in-the-state-merkle-tree">
+<h2><a class="toc-backref" href="#id38">When content at an address is changed several times by the transactions in a block, what appears in the state (Merkle Tree)?</a></h2>
+<p>The only thing that hits state is the aggregate (final) set of address changes due to the transactions in the block. If multiple transactions in a single block modify an address, there will only be one 'set'. You could see the transaction level changes in the receipts if you needed to.</p>
+</div>
+<div class="section" id="in-order-to-create-a-sawtooth-application-do-i-need-to-clone-and-modify-the-entire-sawtooth-core-repository">
+<h2><a class="toc-backref" href="#id39">In order to create a Sawtooth application, do I need to clone and modify the entire <tt class="docutils literal"><span class="pre">sawtooth-core</span></tt> repository?</a></h2>
+<p>No. It can be done that way, but it's not recommended.
+All you need to write is the client application and the Transaction Processor.
+The core Sawtooth functionality should be installed as packages instead of being built from source and integrated with your application.
+Here's some simple sample applications that are in standalone source repositories:</p>
+<ul class="simple">
+<li>Simple Wallet, <a class="reference external" href="https://github.com/askmish/sawtooth-simplewallet">https://github.com/askmish/sawtooth-simplewallet</a></li>
+<li>Cookie Jar, <a class="reference external" href="https://github.com/danintel/sawtooth-cookiejar">https://github.com/danintel/sawtooth-cookiejar</a></li>
+<li>Cryptomoji,  <a class="reference external" href="https://github.com/hyperledger/education-cryptomoji">https://github.com/hyperledger/education-cryptomoji</a> A self-paced course using a Cryptokitties clone written in Sawtooth</li>
+<li>Simple Supply Chain, <a class="reference external" href="https://github.com/hyperledger/education-sawtooth-simple-supply">https://github.com/hyperledger/education-sawtooth-simple-supply</a>  This will be the example in a future edX.org course on Sawtooth app development</li>
+</ul>
+</div>
+<div class="section" id="what-is-sawtooth-global-state-agreement">
+<h2><a class="toc-backref" href="#id40">What is Sawtooth <em>global state agreement</em>?</a></h2>
+<p>Sawtooth writes state to a verifiable structure called a <em>Radix Merkle Trie</em> and the verification part (the root hash) is included in the consensus process. That means that agreement is not just on the ordering of transactions but also on the resulting contents of the entire database.</p>
+<p>This guards against a variety of possible failures during the application of a transaction (e.g. different library version installed, a write failure, a local database corruption, numerical representation differences).</p>
+<p>Of course the feature is mainly targeted at protecting the integrity of a production network, but it is also helpful during development. Running applications over test networks can help identify nondeterminism and that will only be apparent if you form consensus over state.</p>
+</div>
+<div class="section" id="how-can-cpu-vulnerabilities-such-as-spectre-and-meltdown-impact-sawtooth">
+<h2><a class="toc-backref" href="#id41">How can CPU vulnerabilities such as Spectre and Meltdown impact Sawtooth?</a></h2>
+<p>Sawtooth is a CPU-agnostic blockchain platform. It includes an optional TEE/SGX feature which enhances BFT protections for PoET. PoET is designed following a defense-in-depth approach. There are three or so mechanisms that work in different aspects of the protocol independently from the TEE. This includes three tests performed by PoET:</p>
+<ul class="simple">
+<li>c-test: A node must wait c blocks after admission before its blocks will be accepted - this is to prevent trying to game identities and some obscure corner scenarios.</li>
+<li>K-test: The node can publish at most K blocks before its peers require it to recertify itself.</li>
+<li>z-test: And perhaps most importantly a node may not publish at frequency greater than z</li>
+</ul>
+<p>Finally, should a node run a compromised consensus protocol, the main characteristic at risk would be <em>fairness</em>. It would not be able to impact <em>correctness</em> network-wide. That is, it cannot publish invalid transactions. If it does the other nodes will just reject those transactions and the associated block(s) and they will not commit network-wide.</p>
+</div>
+<div class="section" id="are-docker-containers-required-to-run-sawtooth">
+<h2><a class="toc-backref" href="#id42">Are Docker containers required to run Sawtooth?</a></h2>
+<p>Docker is a quick and easy way to get Sawtooth up and running.
+However, unlike other Hyperledger ledgers, Sawtooth does not require Docker.
+Follow the instructions to run on Ubuntu at
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/ubuntu.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/ubuntu.html</a>
+For specific apps, you can run without docker by manually running commands in a <tt class="docutils literal">Dockerfile</tt> as follows:</p>
+<ul class="simple">
+<li>Install Sawtooth on an Ubuntu following the instructions in the <em>Sawtooth Applications Developer's Guide</em></li>
+<li>Create the Genesis Block. See Guide in previous step</li>
+<li>Install required packages listed under the RUN line in the <tt class="docutils literal">Dockerfile</tt> for each container</li>
+<li>Install your application's transaction processor and client.</li>
+<li>Make sure your client app connects to the REST API at <tt class="docutils literal"><span class="pre">http://localhost:8008</span></tt> instead of <tt class="docutils literal"><span class="pre">http://rest-api:8008</span></tt></li>
+<li>Make sure your transaction processor connects to <tt class="docutils literal"><span class="pre">tcp://localhost:4004</span></tt> instead of <tt class="docutils literal"><span class="pre">tcp://validator:4004</span></tt></li>
+<li>Start the Validator, REST API, and Settings TP:
+<tt class="docutils literal">sudo <span class="pre">-u</span> sawtooth <span class="pre">sawtooth-validator</span> <span class="pre">-vv</span> &amp;</tt>
+<tt class="docutils literal">sudo <span class="pre">-u</span> sawtooth <span class="pre">sawtooth-rest-api</span> <span class="pre">-vvv</span> &amp;</tt>
+<tt class="docutils literal">sudo <span class="pre">-u</span> sawtooth <span class="pre">settings-tp</span> <span class="pre">-vv</span> &amp;</tt></li>
+<li>Start your application-specific transaction processor(s). See the <tt class="docutils literal">CMD</tt> line in the <tt class="docutils literal">Dockerfile</tt> for your TP</li>
+<li>Start your application client (see <tt class="docutils literal">CMD</tt> in your client <tt class="docutils literal">Dockerfile</tt>)</li>
+</ul>
+</div>
+<div class="section" id="what-cloud-services-support-sawtooth-blockchain">
+<h2><a class="toc-backref" href="#id43">What cloud services support Sawtooth Blockchain?</a></h2>
+<p>AWS offers Sawtooth, and other cloud providers plan to offer Sawtooth on their cloud service.</p>
+</div>
+<div class="section" id="does-sawtooth-support-ethereum">
+<h2><a class="toc-backref" href="#id44">Does Sawtooth support Ethereum?</a></h2>
+<p>Yes, through Seth, Sawtooth's Ethereum-compatible Transaction Processor. It implements a Ethereum Virtual Machine (EVM) so Seth can run Ethereum Dapps written in Solidity. Seth uses Hyperledger Burrow as the code base.</p>
+</div>
+<div class="section" id="does-sawtooth-use-blockchain-mining">
+<h2><a class="toc-backref" href="#id45">Does Sawtooth use blockchain mining?</a></h2>
+<p>No. There is no inherent need to incentivize miners in a private/permissioned blockchain. Part of the permissioned model is that everyone involved has a personal stake in the verifying the data, so you do not need to pay them. This contrasts with a public deployment where you are asking strangers to verify the data for you. In that case you probably do need to incentivize them somehow, and a currency is a common way to do so.</p>
+</div>
+<div class="section" id="what-is-the-head-node-or-master-node-in-sawtooth">
+<h2><a class="toc-backref" href="#id46">What is the &quot;head node&quot; or &quot;master node&quot; in Sawtooth?</a></h2>
+<p>Sawtooth has no concept of a &quot;head node&quot; or &quot;master node&quot;.
+Once multiple nodes are up and running, each node has the same genesis block (block 0) and treats all other nodes as peers.
+The first validator node on the network has no special meaning, other than being the node that created the genesis block.</p>
+</div>
+<div class="section" id="what-is-a-sawtooth-role">
+<h2><a class="toc-backref" href="#id47">What is a Sawtooth Role?</a></h2>
+<p>A Role is a set if permissions. Identities could be assigned one or more roles. A role is a convenient shorthand because role(s) can be assigned to several identities rather than tediously assigning individual permissions to each identity.
+See <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/configuring_permissions.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/configuring_permissions.html</a></p>
+</div>
+<div class="section" id="what-sawtooth-roles-are-defined">
+<h2><a class="toc-backref" href="#id48">What Sawtooth Roles are defined?</a></h2>
+<dl class="docutils">
+<dt>transactor</dt>
+<dd>who can sign transactions and batches</dd>
+<dt>transactor.batch_signer</dt>
+<dd>who can sign batches</dd>
+<dt>transactor.transaction_signer</dt>
+<dd>who can sign transactions</dd>
+<dt>transaction.transaction_signer.&lt;transaction processor name&gt;</dt>
+<dd>who can sign transactions for a specific TP</dd>
+<dt>network</dt>
+<dd>nodes authorized to make peer requests</dd>
+<dt>network.consensus</dt>
+<dd>nodes authorized to broadcast new blocks with Gossip</dd>
+</dl>
+<p class="mininav"><a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/installation/">NEXT</a></p>
+<p>© Copyright 2018, Intel Corporation.</p>
+</div>
+
+</section>
+</article>
+
+    </div>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text"><p style="font-size: 1.5em;">
+  Hyperledger Sawtooth
+</p> <p>
+  <a href="/" title="Home"><span class="links">Home</span></a>
+  &bull;
+  <a href="/about/" title="About Sawtooth"><span class="links">About</span></a>
+  &bull;
+  <a href="/release/" title="Releases"><span class="links">Releases</span></a>
+  &bull;
+  <a href="/docs/" title="Documentation"><span class="links">Docs</span></a>
+  &bull;
+  <a href="/faq/" title="FAQ"><span class="links">FAQ</span></a>
+  &bull;
+  <a href="/community/" title="Community"><span class="links">Community</span></a>
+  &bull;
+  <a href="/contact/" title="Contact"><span class="links">Contact</span></a>
+</p> <p>
+  Find us: &nbsp;
+  <a href="https://github.com/hyperledger/sawtooth-core/" target="_blank" title="GitHub"><span  class="links">GitHub</span></a>
+  &bull;
+  <a href="https://chat.hyperledger.org/channel/sawtooth" target="_blank" title="#sawtooth chat channel"">Rocket.Chat</a>
+  &bull;
+  <a href="https://twitter.com/search?q=%23HyperledgerSawtooth" target="_blank" title="#sawtooth chat channel"">Twitter</a>
+</p> <p>
+  Examples: &nbsp;
+  <a href="/examples/seafood.html" target="_blank" title="Seafood Supply Chain Traceability">Seafood Supply Chain Traceability</a>
+  &bull;
+  <a href="/examples/bond.html" target="_blank" title="Bond Asset Settlement">Bond Asset Settlement</a>
+  &bull;
+  <a href="/examples/marketplace.html" target="_blank" title="Marketplace Digital Asset Exchange">Marketplace Digital Asset Exchange</a>
+</p> <p>
+  Linux Foundation: &nbsp;
+  <a href="http://www.linuxfoundation.org/privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+  &bull;
+  <a href="http://www.linuxfoundation.org/terms" target="_blank" title="Terms of Service">Terms of Service</a>
+</p> <p>
+  <small class="copyright">Copyright &copy; 2015-2019 contributors to Hyperledger Sawtooth</small>
+</p>
+</p>
+</footer>
+
+
+  </body>
+</html>

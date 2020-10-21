@@ -1,0 +1,627 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PBFT Architecture &mdash; Sawtooth PBFT v1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Configuring PBFT" href="configuring-pbft.html" />
+    <link rel="prev" title="Using PBFT Consensus" href="using-pbft-consensus.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Sawtooth PBFT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-sawtooth-pbft.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using-pbft-consensus.html">Using PBFT Consensus</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PBFT Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#network-overview">Network Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fault-tolerance">Fault Tolerance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#view-changes-choosing-a-new-primary">View Changes: Choosing a New Primary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sequence-numbers">Sequence Numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#information-storage">Information Storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#network-configuration">Network Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#consensus-messages">Consensus Messages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#message-definitions">Message Definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#message-types">Message Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pbft-operation">PBFT Operation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#initialization">Initialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#normal-mode">Normal Mode</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#procedure">Procedure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#log-pruning">Log Pruning</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#view-changing-mode">View Changing Mode</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuring-pbft.html">Configuring PBFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-and-running-pbft.html">Installing and Testing PBFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sawtooth PBFT</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>PBFT Architecture</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/architecture.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pbft-architecture">
+<h1>PBFT Architecture<a class="headerlink" href="#pbft-architecture" title="Permalink to this headline">¶</a></h1>
+<p>The Sawtooth PBFT algorithm is a voting-based consensus algorithm with Byzantine
+fault tolerance, which ensures <a class="reference external" href="https://en.wikipedia.org/wiki/Liveness#Liveness_and_safety">safety and liveness</a>.
+The network can tolerate a certain number of “bad” nodes. As long as this number
+is not exceeded, the network will work properly. In addition, blocks committed
+by nodes are final, so there are no forks in the network.</p>
+<p>The nodes on the network send many messages to reach consensus, commit blocks,
+and maintain a healthy leader node, called a <cite>primary node</cite>. The network
+switches to a new primary (called a <cite>view change</cite>) at regular intervals, as well
+as when the current primary is faulty.</p>
+<ul class="simple">
+<li><p>The primary node builds and publishes blocks.</p></li>
+<li><p>The other nodes (called <cite>secondary nodes</cite>) vote on blocks and the health of
+the leader.</p></li>
+</ul>
+<p>Sawtooth PBFT runs on each node in the network as a <cite>consensus engine</cite>, a
+separate process that handles consensus-related functionality and communicates
+with the validator through the consensus API.</p>
+<p>The following sections describe Sawtooth PBFT architecture:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#network-overview-label"><span class="std std-ref">Network overview</span></a>: Describes PBFT fault
+tolerance, view changes, sequence numbers, and the information stored
+by each node</p></li>
+<li><p><a class="reference internal" href="#consensus-messages-label"><span class="std std-ref">Consensus messages</span></a>: Explains consensus
+message structures and message types</p></li>
+<li><p><a class="reference internal" href="#pbft-operation-label"><span class="std std-ref">Sawtooth PBFT operation</span></a>: Shows how the
+algorithm handles initialization, normal mode (block processing), and view
+changes</p></li>
+</ul>
+<div class="section" id="network-overview">
+<span id="network-overview-label"></span><h2>Network Overview<a class="headerlink" href="#network-overview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fault-tolerance">
+<h3>Fault Tolerance<a class="headerlink" href="#fault-tolerance" title="Permalink to this headline">¶</a></h3>
+<p>A PBFT network consists of nodes that are ordered from 0 to <cite>n-1</cite>, where
+<cite>n</cite> is the total number of nodes in the network. The
+<a class="reference internal" href="configuring-pbft.html#on-chain-settings-label"><span class="std std-ref">on-chain setting</span></a> <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code>
+lists all PBFT member nodes and determines the node order.</p>
+<p>The PBFT algorithm guarantees network <a class="reference external" href="https://en.wikipedia.org/wiki/Liveness#Liveness_and_safety">safety</a>
+as long as the number of faulty nodes remains below the required percentage.
+The maximum number of faulty nodes that the network can tolerate is determined
+by the formula <img class="math" src="_images/math/b157d3a3418154e40cc4f002b113fa4f8bbddf5d.png" alt="f = \frac{n - 1}{3}"/>. In other words, no more than one
+third of the nodes (rounded down) can be unreachable or dishonest at any given
+time.</p>
+<p>For example, a four-node network can tolerate one faulty node. (PBFT requires a
+minimum of four nodes in order to maintain Byzantine fault tolerance.)
+Increasing the size of the network reduces the likelihood that all
+<img class="math" src="_images/math/df3ec34933c592952b5cb8c7e14a12c7aa05aee0.png" alt="\frac{n - 1}{3}"/> nodes would be faulty at the same time.</p>
+</div>
+<div class="section" id="view-changes-choosing-a-new-primary">
+<span id="view-changes-choosing-primary-label"></span><h3>View Changes: Choosing a New Primary<a class="headerlink" href="#view-changes-choosing-a-new-primary" title="Permalink to this headline">¶</a></h3>
+<p>A <cite>view</cite> is the period of time that a given node is the primary, so a <cite>view
+change</cite> means switching to a different primary node. The next primary is
+selected in a round-robin (circular) fashion, according to the order of nodes
+listed in the <a class="reference internal" href="configuring-pbft.html#on-chain-settings-label"><span class="std std-ref">on-chain setting</span></a>
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code>.</p>
+<p>In a four-node network, for example, the first node (node 0) is the primary at
+view 0, the second node (node 1) is the primary at view 1, and so on.  When the
+network gets to view 4, it will return to node 0 as the primary.</p>
+<p>The algorithm uses the formula <cite>p = v mod n</cite> to determine the next
+primary. In this formula, <cite>p</cite> is the primary, <cite>v</cite> is the view number, and <cite>n</cite> is
+the total number of nodes in the network. For example, if a four-node network is
+at view 7, the formula <cite>7 mod 4</cite> determines that node 3 is the primary.</p>
+<p>The Sawtooth PBFT algorithm changes the primary at regular intervals, as well as
+when the secondary nodes determine that the current primary is faulty.
+See <a class="reference internal" href="#view-changing-mode-label"><span class="std std-ref">View Changing Mode</span></a> for a description of this process.</p>
+</div>
+<div class="section" id="sequence-numbers">
+<h3>Sequence Numbers<a class="headerlink" href="#sequence-numbers" title="Permalink to this headline">¶</a></h3>
+<p>In addition to moving through a series of views, the network moves through a
+series of <cite>sequence numbers</cite>. In Sawtooth PBFT, a node’s sequence number is
+the same as the block number of the next block in the chain. For example, a node
+that is on sequence number 10 has already committed block 9 and is evaluating
+block 10.</p>
+<p>Also, each message includes a sequence number that indicates which block the
+message is for. For example, a message with sequence number 10 applies to block
+number 10.</p>
+</div>
+<div class="section" id="information-storage">
+<span id="node-storage-label"></span><h3>Information Storage<a class="headerlink" href="#information-storage" title="Permalink to this headline">¶</a></h3>
+<p>Each node stores several key pieces of information as part of its state:</p>
+<ul class="simple">
+<li><p>List of PBFT member nodes in the network (from
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code>)</p></li>
+<li><p>Current view number, which identifies the primary node</p></li>
+<li><p>Current sequence number, which is also the number of the block being processed</p></li>
+<li><p>The current head of the chain</p></li>
+<li><p>If in normal mode, the step of the algorithm it’s on
+(see <a class="reference internal" href="#normal-mode-label"><span class="std std-ref">Normal Mode</span></a>)</p></li>
+<li><p>Log of all blocks it has received</p></li>
+<li><p>Log of all messages it has received</p></li>
+</ul>
+</div>
+<div class="section" id="network-configuration">
+<span id="network-config-label"></span><h3>Network Configuration<a class="headerlink" href="#network-configuration" title="Permalink to this headline">¶</a></h3>
+<p>Sawtooth PBFT configures the network with on-chain settings, which are processed
+by the <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/transaction_family_specifications/settings_transaction_family.html">Settings transaction processor</a> (or an equivalent).</p>
+<p>These settings list each node in the network, set the view-change interval (how
+often the primary changes), and specify other items such as the block publishing
+frequency, timeout periods, and message log size.
+For more information, see <a class="reference internal" href="configuring-pbft.html"><span class="doc">Configuring PBFT</span></a>.</p>
+</div>
+</div>
+<div class="section" id="consensus-messages">
+<span id="consensus-messages-label"></span><h2>Consensus Messages<a class="headerlink" href="#consensus-messages" title="Permalink to this headline">¶</a></h2>
+<p>All PBFT consensus messages are serialized as <a class="reference external" href="https://developers.google.com/protocol-buffers/">protobufs (protocol buffers)</a>.</p>
+<p>When a node receives a new consensus message from another node, it parses the
+protobuf into a native Rust struct (<code class="docutils literal notranslate"><span class="pre">ParsedMessage</span></code>) that allows for easier
+handling of the message. After parsing, the node performs a series of checks to
+ensure the validity of the message:</p>
+<ol class="arabic simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">signer_id</span></code> of the PBFT message must match the <code class="docutils literal notranslate"><span class="pre">signer_id</span></code> of the
+<code class="docutils literal notranslate"><span class="pre">PeerMessage</span></code> that contains it.</p></li>
+<li><p>The message must be from a known PBFT member (the <code class="docutils literal notranslate"><span class="pre">signer_id</span></code> of the PBFT
+message must be in the <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code> list)</p></li>
+</ol>
+<p>The first check verifies that the PBFT message was created and signed by the
+node that it claims to be from. The <code class="docutils literal notranslate"><span class="pre">PeerMessage</span></code>, which acts as a wrapper for
+the PBFT message, contains a signature of the PBFT message and a <code class="docutils literal notranslate"><span class="pre">signer_id</span></code>;
+this signature and ID are verified by the validator to ensure that the contents
+of the <code class="docutils literal notranslate"><span class="pre">PeerMessage</span></code> are legitimate. PBFT then ensures that the <code class="docutils literal notranslate"><span class="pre">signer_id</span></code>
+of the PBFT message matches the one the validator used, which guarantees the
+origin of the PBFT message.</p>
+<p>The second check ensures that only nodes that are accepted members of the PBFT
+network are able to participate in the consensus process.</p>
+<p>Any messages that fail to parse or pass the required checks are ignored. If a
+message is successfully parsed and passes verification, it is passed to a
+handler for that specific message type (see <a class="reference internal" href="#pbft-arch-message-types"><span class="std std-ref">Message Types</span></a>),
+where it may go through further checks, be stored in the message log, or trigger
+some actions.</p>
+<div class="section" id="message-definitions">
+<h3>Message Definitions<a class="headerlink" href="#message-definitions" title="Permalink to this headline">¶</a></h3>
+<p>Most Sawtooth PBFT messages use the <code class="docutils literal notranslate"><span class="pre">PbftMessage</span></code> protobuf, as shown below.
+The <code class="docutils literal notranslate"><span class="pre">PbftNewView</span></code>, <code class="docutils literal notranslate"><span class="pre">PbftSignedVote</span></code>, and <code class="docutils literal notranslate"><span class="pre">PbftSeal</span></code> protobufs are
+structurally different from <code class="docutils literal notranslate"><span class="pre">PbftMessage</span></code> and are used for messages that
+require different sets of data to be exchanged.</p>
+<p>Sawtooth PBFT also uses some of the message types defined in the consensus API,
+such as <code class="docutils literal notranslate"><span class="pre">BlockNew</span></code> and <code class="docutils literal notranslate"><span class="pre">BlockCommit</span></code>. These messages are called “updates” to
+distinguish them from the PBFT-specific messages. For more information on the
+consensus API’s <code class="docutils literal notranslate"><span class="pre">Update</span></code> messages, see the <a class="reference external" href="https://github.com/hyperledger/sawtooth-rfcs/blob/master/text/0004-consensus-api.md#updates">Consensus API RFC</a>.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="c1">// Represents all common information used in a PBFT message</span>
+<span class="kd">message</span> <span class="nc">PbftMessageInfo</span> <span class="p">{</span>
+  <span class="c1">// Type of the message</span>
+  <span class="kt">string</span> <span class="na">msg_type</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// View number</span>
+  <span class="kt">uint64</span> <span class="na">view</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="c1">// Sequence number</span>
+  <span class="kt">uint64</span> <span class="na">seq_num</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+  <span class="c1">// Node who signed the message</span>
+  <span class="kt">bytes</span> <span class="na">signer_id</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="c1">// A generic PBFT message (PrePrepare, Prepare, Commit, ViewChange, SealRequest)</span>
+<span class="kd">message</span> <span class="nc">PbftMessage</span> <span class="p">{</span>
+  <span class="c1">// Message information</span>
+  <span class="n">PbftMessageInfo</span> <span class="na">info</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// The block this message is for</span>
+  <span class="kt">bytes</span> <span class="na">block_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// A message sent by the new primary to signify that the new view should be</span>
+<span class="c1">// started</span>
+<span class="kd">message</span> <span class="nc">PbftNewView</span> <span class="p">{</span>
+  <span class="c1">// Message information</span>
+  <span class="n">PbftMessageInfo</span> <span class="na">info</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// A list of ViewChange messages to prove this view change (must contain at</span>
+  <span class="c1">// least 2f messages)</span>
+  <span class="k">repeated</span> <span class="n">PbftSignedVote</span> <span class="na">view_changes</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">PbftSignedVote</span> <span class="p">{</span>
+  <span class="c1">// Serialized ConsensusPeerMessage header</span>
+  <span class="kt">bytes</span> <span class="na">header_bytes</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// Signature of the serialized ConsensusPeerMessageHeader</span>
+  <span class="kt">bytes</span> <span class="na">header_signature</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="c1">// Serialized PBFT message</span>
+  <span class="kt">bytes</span> <span class="na">message_bytes</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">PbftSeal</span> <span class="p">{</span>
+  <span class="c1">// Message information</span>
+  <span class="n">PbftMessageInfo</span> <span class="na">info</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// ID of the block this seal verifies</span>
+  <span class="kt">bytes</span> <span class="na">block_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="c1">// A list of Commit votes to prove the block commit (must contain at least 2f</span>
+  <span class="c1">// votes)</span>
+  <span class="k">repeated</span> <span class="n">PbftSignedVote</span> <span class="na">commit_votes</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="message-types">
+<span id="pbft-arch-message-types"></span><h3>Message Types<a class="headerlink" href="#message-types" title="Permalink to this headline">¶</a></h3>
+<p>A Sawtooth PBFT message has one of the following types:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">PrePrepare</span></code>: Sent by the primary node after it has published a new block</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Prepare</span></code>: Broadcast by every node in the <code class="docutils literal notranslate"><span class="pre">Preparing</span></code> phase</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Commit</span></code>: Broadcast by every node in the <code class="docutils literal notranslate"><span class="pre">Committing</span></code> phase</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ViewChange</span></code>: Sent by any node that suspects that the primary is faulty</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NewView</span></code>: Sent by the node that will be the new primary to complete a view
+change</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Seal</span></code>: Proves that a block was committed after <code class="docutils literal notranslate"><span class="pre">2f</span> <span class="pre">+</span> <span class="pre">1</span></code> nodes agreed to
+commit it</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SealRequest</span></code>: Sent by a node that is requesting a consensus seal for the
+block that was committed at a given sequence number</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="pbft-operation">
+<span id="pbft-operation-label"></span><h2>PBFT Operation<a class="headerlink" href="#pbft-operation" title="Permalink to this headline">¶</a></h2>
+<p>The Sawtooth PBFT algorithm starts with initialization, then operates in one of
+two modes:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#normal-mode-label"><span class="std std-ref">Normal mode</span></a> for processing blocks</p></li>
+<li><p><a class="reference internal" href="#view-changing-mode-label"><span class="std std-ref">View Changing mode</span></a> for switching to a
+different primary node</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The original PBFT definition includes a checkpointing procedure that is
+responsible for garbage collection of the log. Sawtooth PBFT does not
+implement this checkpointing procedure; instead, it cleans the log
+periodically during its normal operation. For more information, see
+<a class="reference internal" href="#log-pruning-label"><span class="std std-ref">Log Pruning</span></a>.</p>
+</div>
+<div class="section" id="initialization">
+<h3>Initialization<a class="headerlink" href="#initialization" title="Permalink to this headline">¶</a></h3>
+<p>When the Sawtooth PBFT consensus engine starts, it does the following:</p>
+<ul class="simple">
+<li><p>Loads its configuration</p></li>
+<li><p>Initializes its state and message log</p></li>
+<li><p>Establishes timers and counters</p></li>
+</ul>
+</div>
+<div class="section" id="normal-mode">
+<span id="normal-mode-label"></span><h3>Normal Mode<a class="headerlink" href="#normal-mode" title="Permalink to this headline">¶</a></h3>
+<p>In Normal mode, nodes check blocks and approve them to be committed to the
+blockchain. The Sawtooth PBFT algorithm usually operates in normal mode unless a
+<a class="reference internal" href="#view-changing-mode-label"><span class="std std-ref">view change</span></a> is necessary.</p>
+<div class="section" id="procedure">
+<h4>Procedure<a class="headerlink" href="#procedure" title="Permalink to this headline">¶</a></h4>
+<p>The normal mode proceeds as follows:</p>
+<ol class="arabic">
+<li><p>All nodes begin in the <code class="docutils literal notranslate"><span class="pre">PrePreparing</span></code> phase; the purpose of this phase is
+for the primary to publish a new block and endorse the block with a
+<code class="docutils literal notranslate"><span class="pre">PrePrepare</span></code> message.</p>
+<ul class="simple">
+<li><p>The primary node will send a request to its validator to initialize a new
+block. After a configurable timeout (determined by the
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.block_publishing_delay</span></code> setting), the primary will send
+a request to the validator to finalize the block and broadcast it to the
+network.</p></li>
+<li><p>After receiving the block in a <code class="docutils literal notranslate"><span class="pre">BlockNew</span></code> update and ensuring that the
+block is valid, all nodes will store the block in their PBFT logs.</p></li>
+<li><p>After receiving the <code class="docutils literal notranslate"><span class="pre">BlockNew</span></code> update, the primary will broadcast a
+<code class="docutils literal notranslate"><span class="pre">PrePrepare</span></code> message for that block to all of the nodes in the network.
+When the nodes receive this <code class="docutils literal notranslate"><span class="pre">PrePrepare</span></code> message, they will make sure it
+is valid; if it is, they will add it to their respective logs and move on
+to the <code class="docutils literal notranslate"><span class="pre">Preparing</span></code> phase.</p></li>
+</ul>
+</li>
+<li><p>In the <code class="docutils literal notranslate"><span class="pre">Preparing</span></code> phase, all secondary nodes (not the primary) broadcast a
+<code class="docutils literal notranslate"><span class="pre">Prepare</span></code> message that matches the accepted <code class="docutils literal notranslate"><span class="pre">PrePrepare</span></code> message. Each
+node will then add its own <code class="docutils literal notranslate"><span class="pre">Prepare</span></code> to its log, then accept <code class="docutils literal notranslate"><span class="pre">Prepare</span></code>
+messages from other nodes and add them to its log. Once a node has <code class="docutils literal notranslate"><span class="pre">2f</span> <span class="pre">+</span> <span class="pre">1</span></code>
+<code class="docutils literal notranslate"><span class="pre">Prepare</span></code> messages in its log that match the accepted <code class="docutils literal notranslate"><span class="pre">PrePrepare</span></code>, it
+will move on to the <code class="docutils literal notranslate"><span class="pre">Committing</span></code> phase.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Committing</span></code> phase is similar to the <code class="docutils literal notranslate"><span class="pre">Preparing</span></code> phase; nodes
+broadcast a <code class="docutils literal notranslate"><span class="pre">Commit</span></code> message to all nodes in the network, wait until there
+are <code class="docutils literal notranslate"><span class="pre">2f</span> <span class="pre">+</span> <span class="pre">1</span></code> <code class="docutils literal notranslate"><span class="pre">Commit</span></code> messages in their logs, then move on to the
+<code class="docutils literal notranslate"><span class="pre">Finishing</span></code> phase. The only major difference between the <code class="docutils literal notranslate"><span class="pre">Preparing</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Committing</span></code> phases is that in the <code class="docutils literal notranslate"><span class="pre">Committing</span></code> phase, the primary node
+is allowed to broadcast a message.</p></li>
+<li><p>Once in the <code class="docutils literal notranslate"><span class="pre">Finishing</span></code> phase, each node will tell its validator to commit
+the block for which they have a matching <code class="docutils literal notranslate"><span class="pre">PrePrepare</span></code>, <code class="docutils literal notranslate"><span class="pre">2f</span> <span class="pre">+</span> <span class="pre">1</span></code>
+<code class="docutils literal notranslate"><span class="pre">Prepare</span></code> messages, and <code class="docutils literal notranslate"><span class="pre">2f</span> <span class="pre">+</span> <span class="pre">1</span></code> <code class="docutils literal notranslate"><span class="pre">Commit</span></code> messages. The node will then
+wait for a <code class="docutils literal notranslate"><span class="pre">BlockCommit</span></code> notification from its validator to signal that the
+block has been successfully committed to the chain. After receiving this
+confirmation, the node will update its state as follows:</p>
+<ul class="simple">
+<li><p>Increment its sequence number by 1</p></li>
+<li><p>Update its current chain head to the block that was just committed</p></li>
+<li><p>Reset its phase to <code class="docutils literal notranslate"><span class="pre">PrePreparing</span></code></p></li>
+</ul>
+<p>Finally, the primary node will initialize a new block to start the process
+all over again.</p>
+</li>
+</ol>
+<p>This diagram summarizes the four Normal mode phases, the messages sent, and the
+interactions with the validators. N1 is the primary node; N2, N3, and N4 are
+secondary nodes.</p>
+<div class="figure align-default">
+<img alt="PBFT normal operation procedure" src="_images/normal_mode_procedure.png" />
+</div>
+</div>
+<div class="section" id="log-pruning">
+<span id="log-pruning-label"></span><h4>Log Pruning<a class="headerlink" href="#log-pruning" title="Permalink to this headline">¶</a></h4>
+<p>Sawtooth PBFT does not implement a checkpointing procedure (garbage collection
+of the log). Instead, each node cleans the log periodically during normal
+operation.</p>
+<p>Log size is controlled on each node with the <code class="docutils literal notranslate"><span class="pre">--max_log_size</span></code> option when
+starting the PBFT consensus engine (see <a class="reference internal" href="configuring-pbft.html#cli-options-label"><span class="std std-ref">PBFT Command-Line Options</span></a>). When a
+block is committed, each node compares the size of its log against the maximum
+size. If the log exceeds this value, Sawtooth PBFT uses these rules to prune the
+log:</p>
+<ul class="simple">
+<li><p>Keep blocks and messages for the sequence number of the block that was just
+committed, plus those for any higher (newer) sequence numbers</p></li>
+<li><p>Delete blocks and messages for all lower (earlier) sequence numbers</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="view-changing-mode">
+<span id="view-changing-mode-label"></span><h3>View Changing Mode<a class="headerlink" href="#view-changing-mode" title="Permalink to this headline">¶</a></h3>
+<p>A <cite>view change</cite> switches to a different primary node. A node starts a new view
+change if any of the following occur:</p>
+<ul class="simple">
+<li><p>The <cite>idle timeout</cite> expires - when a node enters the <code class="docutils literal notranslate"><span class="pre">PrePreparing</span></code> phase,
+it will start its idle timeout. If the node receives a new block and a
+matching <code class="docutils literal notranslate"><span class="pre">PrePrepare</span></code> from the primary for its current sequence number
+before the timeout expires, it will stop the timeout; if not, the node will
+initiate a view change when the timeout expires.</p></li>
+<li><p>The <cite>commit timeout</cite> expires - when a node enters the <code class="docutils literal notranslate"><span class="pre">Preparing</span></code> phase, it
+will start its commit timeout. If the node is able to move on to the
+<code class="docutils literal notranslate"><span class="pre">Finishing</span></code> phase and send a request to the validator to commit the block
+before the timeout expires, it will stop the timeout; if not, the node will
+initiate a view change when the timeout expires.</p></li>
+<li><p>The <cite>view change timeout</cite> expires - when a node starts a view change to view
+<code class="docutils literal notranslate"><span class="pre">v</span></code>, it will start a view change timeout. If the node is able to complete
+the view change before the timeout expires, it will stop the timeout; if not,
+it will initiate a new view change to view <code class="docutils literal notranslate"><span class="pre">v</span> <span class="pre">+</span> <span class="pre">1</span></code>.</p></li>
+<li><p>Multiple <code class="docutils literal notranslate"><span class="pre">PrePrepare</span></code> messages are received for the same view and sequence
+number but different blocks - this indicates the primary is faulty, since
+this behavior is invalid.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">Prepare</span></code> message is received from the primary - this indicates the
+primary is faulty, since this behavior is invalid.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">+</span> <span class="pre">1</span></code> <code class="docutils literal notranslate"><span class="pre">ViewChange</span></code> messages are received for the same view - this
+ensures that a node does not wait too long to start a view change; since only
+<code class="docutils literal notranslate"><span class="pre">f</span></code> nodes (at most) can be faulty at any given time, if more than <code class="docutils literal notranslate"><span class="pre">f</span></code>
+nodes decide to start a view change, other nodes can safely join them to
+perform that view change.</p></li>
+</ul>
+<p>To start a view change, a node will do the following:</p>
+<ol class="arabic simple">
+<li><p>Update its mode to <code class="docutils literal notranslate"><span class="pre">ViewChanging(v)</span></code>, where <code class="docutils literal notranslate"><span class="pre">v</span></code> is the view the node is
+changing to</p></li>
+<li><p>Stop both the idle and and commit timeouts, since these are not needed again
+until after the view change</p></li>
+<li><p>Stop the view change timeout if it’s been started; it will be restarted with a
+new value later</p></li>
+<li><p>Broadcast a <code class="docutils literal notranslate"><span class="pre">ViewChange</span></code> message for the new view</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">ViewChange</span></code> messages are accepted and added to the log if they satisfy these
+criteria:</p>
+<ul class="simple">
+<li><p>They are for a later view than the node’s current view</p></li>
+<li><p>If the node is in the mode <code class="docutils literal notranslate"><span class="pre">ViewChanging(v)</span></code>, the view in the message must
+be greater than or equal to <code class="docutils literal notranslate"><span class="pre">v</span></code></p></li>
+</ul>
+<p>Once a node has received <code class="docutils literal notranslate"><span class="pre">2f</span> <span class="pre">+</span> <span class="pre">1</span></code> <code class="docutils literal notranslate"><span class="pre">ViewChange</span></code> messages for the new view, it
+will start its view change timeout; this timeout ensures that the new primary
+starts the new view in a timely manner. The duration of the timeout is
+calculated based on a base duration (determined by the
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.view_change_duration</span></code> setting) using the formula:
+<img class="math" src="_images/math/e4909f0968cc4401bf10a11fe45c5acc74683389.png" alt="(DesiredViewNumber - CurrentViewNumber) * ViewChangeDuration"/>.</p>
+<p>When the primary for the new view receives <code class="docutils literal notranslate"><span class="pre">2f</span> <span class="pre">+</span> <span class="pre">1</span></code> <code class="docutils literal notranslate"><span class="pre">ViewChange</span></code> messages,
+it will broadcast a <code class="docutils literal notranslate"><span class="pre">NewView</span></code> message to the network, signifying that the view
+change is complete. As a proof that this view change is valid, the primary will
+include <code class="docutils literal notranslate"><span class="pre">2f</span> <span class="pre">+</span> <span class="pre">1</span></code> signed <code class="docutils literal notranslate"><span class="pre">ViewChange</span></code> messages from other nodes in the
+<code class="docutils literal notranslate"><span class="pre">NewView</span></code> message (the primary’s own “vote” is implicit), which will be
+validated by the other nodes.</p>
+<p>If a node receives the new primary’s valid <code class="docutils literal notranslate"><span class="pre">NewView</span></code> message before its view
+change timeout expires, it will:</p>
+<ol class="arabic simple">
+<li><p>Stop the view change timeout</p></li>
+<li><p>Update its view to match the new value</p></li>
+<li><p>Revert back to Normal mode</p></li>
+</ol>
+<p>However, if a node’s view change timeout expires before it receives a
+<code class="docutils literal notranslate"><span class="pre">NewView</span></code>, it will stop the timeout and initiate a brand new view change for
+view <code class="docutils literal notranslate"><span class="pre">v</span> <span class="pre">+</span> <span class="pre">1</span></code> (where <code class="docutils literal notranslate"><span class="pre">v</span></code> is the view it was attempting to change to before).</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="configuring-pbft.html" class="btn btn-neutral float-right" title="Configuring PBFT" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="using-pbft-consensus.html" class="btn btn-neutral float-left" title="Using PBFT Consensus" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018 Bitwise IO, Inc
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

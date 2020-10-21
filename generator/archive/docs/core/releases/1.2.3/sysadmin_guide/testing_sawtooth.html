@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Testing Sawtooth Functionality &mdash; Sawtooth v1.2.3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PBFT Only: Updating the PBFT Member List" href="pbft_updating_member_list.html" />
+    <link rel="prev" title="Running Sawtooth as a Service" href="systemd.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="setting_up_sawtooth_network.html">Setting Up a Sawtooth Network</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="installation.html">Installing Hyperledger Sawtooth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generating_keys.html">Generating User and Validator Keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="creating_genesis_block.html">Creating the Genesis Block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="off_chain_settings.html">Changing Off-chain Settings with Configuration Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="systemd.html">Running Sawtooth as a Service</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Testing Sawtooth Functionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pbft_updating_member_list.html">PBFT Only: Updating the PBFT Member List</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setting_allowed_txns.html">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_authorized_users.html">Adding Authorized Users for Settings Proposals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_permissions.html">Configuring Validator and Transactor Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grafana_configuration.html">Using Grafana to Display Sawtooth Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_dynamic_consensus.html">About Dynamic Consensus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pbft_adding_removing_node.html">Adding or Removing a PBFT Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_sawtooth.html">About Sawtooth Configuration Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator’s Guide</a> &raquo;</li>
+        
+          <li><a href="setting_up_sawtooth_network.html">Setting Up a Sawtooth Network</a> &raquo;</li>
+        
+      <li>Testing Sawtooth Functionality</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/testing_sawtooth.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="testing-sawtooth-functionality">
+<h1>Testing Sawtooth Functionality<a class="headerlink" href="#testing-sawtooth-functionality" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These instructions have been tested on Ubuntu 18.04 (Bionic) only.</p>
+</div>
+<p><strong>Test a single node</strong></p>
+<p>After <a class="reference internal" href="systemd.html"><span class="doc">starting Sawtooth services</span></a> on one node, you can use any
+or all of the following commands to test basic Sawtooth functionality.</p>
+<ul>
+<li><p>Confirm that the REST API is reachable.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl http://localhost:8008/blocks
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Sawtooth environment described this guide runs a local REST API on
+each node. For a node that is not running a local REST API,
+replace <code class="docutils literal notranslate"><span class="pre">localhost:8008</span></code> with the externally advertised IP address and
+port.</p>
+</div>
+<p>You should see a JSON response that is similar to this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">{</span>
+<span class="go">  &quot;data&quot;: [</span>
+<span class="go">    {</span>
+<span class="go">      &quot;batches&quot;: [</span>
+<span class="go">        {</span>
+<span class="go">          &quot;header&quot;: {</span>
+<span class="go">            &quot;signer_public_key&quot;: . . .</span>
+</pre></div>
+</div>
+<p>If not, check the status of the REST API service and restart it, if necessary.</p>
+</li>
+</ul>
+<ul>
+<li><p>Check the list of blocks on the blockchain.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth block list
+</pre></div>
+</div>
+<p>For the first node on a network, this list will contain only a few blocks.
+If this node has joined an existing network, the block list could be quite
+long. In both cases, the list should end with output that resembles this
+example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">NUM  BLOCK_ID                                                                                                                          BATS  TXNS  SIGNER</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">2    f40b90d06b4a9074af2ab09e0187223da7466be75ec0f472f2edd5f22960d76e402e6c07c90b7816374891d698310dd25d9b88dce7dbcba8219d9f7c9cae1861  3     3     02e56e...</span>
+<span class="go">1    4d7b3a2e6411e5462d94208a5bb83b6c7652fa6f4c2ada1aa98cabb0be34af9d28cf3da0f8ccf414aac2230179becade7cdabbd0976c4846990f29e1f96000d6  1     1     034aad...</span>
+<span class="go">0    0fb3ebf6fdc5eef8af600eccc8d1aeb3d2488992e17c124b03083f3202e3e6b9182e78fef696f5a368844da2a81845df7c3ba4ad940cee5ca328e38a0f0e7aa0  3     11    034aad...</span>
+</pre></div>
+</div>
+<p>Block 0 is the <a class="reference internal" href="../glossary.html#term-genesis-block"><span class="xref std std-term">genesis block</span></a>. The other two blocks contain the
+initial transactions for on-chain settings, such as setting the consensus
+algorithm.</p>
+</li>
+</ul>
+<ul>
+<li><p>(PBFT only) Ensure that the on-chain setting
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code> lists the validator public keys of all
+PBFT member nodes on the network.</p>
+<ol class="loweralpha">
+<li><p>Connect to the first node (the one that created the genesis
+block).</p></li>
+<li><p>Display the on-chain settings.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth settings list
+</pre></div>
+</div>
+</li>
+<li><p>In the output, look for <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code> and
+verify that it includes the public key for each node.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sawtooth.consensus.pbft.members=[&quot;03e27504580fa15...</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">sawset</span> <span class="pre">proposal</span> <span class="pre">create</span></code> command to change this
+setting. For more information, see
+<a class="reference internal" href="pbft_adding_removing_node.html"><span class="doc">Adding or Removing a PBFT Node</span></a>.</p>
+</div>
+</li>
+</ol>
+</li>
+</ul>
+<p><strong>Test the network</strong></p>
+<p>For the remaining steps, multiple nodes in the network must be running. If this
+node is the first one in the network, wait until other nodes have joined the
+network before continuing.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>PBFT requires at least four nodes.</p></li>
+<li><p>PoET requires at least three nodes.</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic">
+<li><p>To check whether peering has occurred on the network, submit a peers query
+to the REST API on this node.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl http://localhost:8008/peers
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If this node is not running a local REST API, replace
+<code class="docutils literal notranslate"><span class="pre">localhost:8008</span></code> with the externally advertised IP address and port
+of the REST API.</p>
+</div>
+<p>You should see a JSON response that includes the IP address and port for
+the validator and REST API, as in this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">{</span>
+<span class="go">    &quot;data&quot;: [</span>
+<span class="go">    &quot;tcp://validator-1:8800&quot;,</span>
+<span class="go">  ],</span>
+<span class="go">  &quot;link&quot;: &quot;http://rest-api:8008/peers&quot;</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>If this query returns a 503 error, the node has not yet peered with the
+Sawtooth network. Repeat the query until you see the JSON response.</p>
+</li>
+<li><p>(Optional) You can run the following Sawtooth commands to show the other
+nodes on the network.</p>
+<ul class="simple">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">peer</span> <span class="pre">list</span></code> to show the peers of this node.</p></li>
+<li><p>(Release 1.1 and later) Run <code class="docutils literal notranslate"><span class="pre">sawnet</span> <span class="pre">peers</span> <span class="pre">list</span></code> to display a complete
+graph of peers on the network.</p></li>
+</ul>
+<p>If there are problems, check the validator and REST API configuration files
+for errors in the IP addresses, ports, or peer settings. For more
+information, see <a class="reference internal" href="configuring_sawtooth.html"><span class="doc">About Sawtooth Configuration Files</span></a>.</p>
+</li>
+<li><p>Make sure that new blocks of transactions are added to the blockchain.</p>
+<ol class="loweralpha">
+<li><p>Use the IntegerKey transaction processor to submit a test transaction.
+The following command uses <code class="docutils literal notranslate"><span class="pre">intkey</span></code> (the command-line client for
+IntegerKey) to set a key named <code class="docutils literal notranslate"><span class="pre">MyKey</span></code> to the value 999.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> intkey <span class="nb">set</span> MyKey <span class="m">999</span>
+</pre></div>
+</div>
+</li>
+<li><p>Next, check that this transaction appears on the blockchain.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> intkey show MyKey
+<span class="go">MyKey: 999</span>
+</pre></div>
+</div>
+</li>
+<li><p>Repeat the <code class="docutils literal notranslate"><span class="pre">block</span> <span class="pre">list</span></code> command to verify that there is now one more
+block on the blockchain, as in this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth block list
+
+<span class="go">NUM  BLOCK_ID                                                                                                                          BATS  TXNS  SIGNER</span>
+<span class="go">N    1b7f121a82e73ba0e7f73de3e8b46137a2e47b9a2d2e6566275b5ee45e00ee5a06395e11c8aef76ff0230cbac0c0f162bb7be626df38681b5b1064f9c18c76e5  3     3     02d87a...</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">.</span>
+<span class="go">2    f40b90d06b4a9074af2ab09e0187223da7466be75ec0f472f2edd5f22960d76e402e6c07c90b7816374891d698310dd25d9b88dce7dbcba8219d9f7c9cae1861  3     3     02e56e...</span>
+<span class="go">1    4d7b3a2e6411e5462d94208a5bb83b6c7652fa6f4c2ada1aa98cabb0be34af9d28cf3da0f8ccf414aac2230179becade7cdabbd0976c4846990f29e1f96000d6  1     1     034aad...</span>
+<span class="go">0    0fb3ebf6fdc5eef8af600eccc8d1aeb3d2488992e17c124b03083f3202e3e6b9182e78fef696f5a368844da2a81845df7c3ba4ad940cee5ca328e38a0f0e7aa0  3     11    034aad...</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>If there is a problem, examine the logs for the validator, REST API, and
+transaction processors for possible clues. For more information, see
+<a class="reference internal" href="log_configuration.html"><span class="doc">Log Configuration File</span></a>.</p>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For help with problems, see the <a class="reference external" href="https://sawtooth.hyperledger.org/faq/">Hyperledger Sawtooth FAQ</a>
+or ask a question on the Hyperledger Chat <a class="reference external" href="https://chat.hyperledger.org/channel/sawtooth">#sawtooth channel</a>.</p>
+</div>
+<p>After verifying that Sawtooth is running correctly, you can continue with
+the optional configuration and customization steps that are described in the
+following procedures.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pbft_updating_member_list.html" class="btn btn-neutral float-right" title="PBFT Only: Updating the PBFT Member List" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="systemd.html" class="btn btn-neutral float-left" title="Running Sawtooth as a Service" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

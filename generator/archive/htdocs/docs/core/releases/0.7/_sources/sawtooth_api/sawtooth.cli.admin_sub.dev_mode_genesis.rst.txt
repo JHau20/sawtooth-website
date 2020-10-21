@@ -1,0 +1,7 @@
+sawtooth\.cli\.admin\_sub\.dev\_mode\_genesis module
+====================================================
+
+.. automodule:: sawtooth.cli.admin_sub.dev_mode_genesis
+    :members:
+    :undoc-members:
+    :show-inheritance:

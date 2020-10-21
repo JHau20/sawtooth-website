@@ -1,0 +1,511 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using Grafana to Display Sawtooth Metrics &mdash; Sawtooth v1.2.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="About Dynamic Consensus" href="about_dynamic_consensus.html" />
+    <link rel="prev" title="Configuring Validator and Transactor Permissions" href="configuring_permissions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="setting_up_sawtooth_network.html">Setting Up a Sawtooth Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setting_allowed_txns.html">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_authorized_users.html">Adding Authorized Users for Settings Proposals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_permissions.html">Configuring Validator and Transactor Permissions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using Grafana to Display Sawtooth Metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-up-influxdb">Set Up InfluxDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-and-configure-grafana">Install and Configure Grafana</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-the-sawtooth-validator-for-grafana">Configure the Sawtooth Validator for Grafana</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-the-sawtooth-rest-api-for-grafana">Configure the Sawtooth REST API for Grafana</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-telegraf">Configure Telegraf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="about_dynamic_consensus.html">About Dynamic Consensus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pbft_adding_removing_node.html">Adding or Removing a PBFT Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_sawtooth.html">About Sawtooth Configuration Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator’s Guide</a> &raquo;</li>
+        
+      <li>Using Grafana to Display Sawtooth Metrics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/grafana_configuration.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-grafana-to-display-sawtooth-metrics">
+<h1>Using Grafana to Display Sawtooth Metrics<a class="headerlink" href="#using-grafana-to-display-sawtooth-metrics" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These instructions have been tested on Ubuntu 18.04 (Bionic) only.</p>
+</div>
+<p>This procedure describes how to display Sawtooth metrics with
+<a class="reference external" href="https://grafana.com">Grafana</a>, using
+<a class="reference external" href="https://www.influxdata.com/time-series-platform/influxdb/">InfluxDB</a>
+to store the metrics data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This procedure is for a Ubuntu environment. For a Sawtooth network in Docker
+containers, there are additional steps to change the configuration of the
+validator and REST API containers. This guide does not describe these steps.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>Docker Engine must be installed</p></li>
+<li><p>One or more Sawtooth nodes must be configured and in a runnable state</p></li>
+<li><p>Download the
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-core">hyperledger/sawtooth-core</a>
+repository from GitHub with this command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone https://github.com/hyperledger/sawtooth-core.git
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="set-up-influxdb">
+<h2>Set Up InfluxDB<a class="headerlink" href="#set-up-influxdb" title="Permalink to this headline">¶</a></h2>
+<p>InfluxDB is used to store Sawtooth metrics data.</p>
+<ol class="arabic">
+<li><p>Pull the InfluxDB Docker image from Docker Hub.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker pull influxdb
+</pre></div>
+</div>
+</li>
+<li><p>Create an InfluxDB data directory to provide persistent storage on the local
+file system.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This step creates the directory <code class="docutils literal notranslate"><span class="pre">/var/lib/influx-data</span></code>. If this path is
+not appropriate for your host operating system, change the path here and
+in the next command.</p>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo mkdir /var/lib/influx-data
+</pre></div>
+</div>
+</li>
+<li><p>Start an InfluxDB Docker container. This command exposes port 8086 to the
+network and uses the persistent storage created in the previous step. It also
+configures the database name (<code class="docutils literal notranslate"><span class="pre">metrics</span></code>) and creates two users for
+InfluxDB, <code class="docutils literal notranslate"><span class="pre">admin</span></code> and <code class="docutils literal notranslate"><span class="pre">lrdata</span></code>.</p>
+<p>In the following command, replace <code class="docutils literal notranslate"><span class="pre">{admin-pw}</span></code> and <code class="docutils literal notranslate"><span class="pre">{lrdata-pw}</span></code> with
+unique passwords for the <code class="docutils literal notranslate"><span class="pre">admin</span></code> and <code class="docutils literal notranslate"><span class="pre">lrdata</span></code> users. Remember to properly
+escape any special characters in these passwords, such as <code class="docutils literal notranslate"><span class="pre">,&#64;!$</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker run -d -p <span class="m">8086</span>:8086 -v /var/lib/influx-data:/var/lib/influxdb <span class="se">\</span>
+ -e <span class="nv">INFLUXDB_DB</span><span class="o">=</span>metrics -e <span class="nv">INFLUXDB_HTTP_AUTH_ENABLED</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+ -e <span class="nv">INFLUXDB_ADMIN_USER</span><span class="o">=</span>admin -e <span class="nv">INFLUXDB_ADMIN_PASSWORD</span><span class="o">=</span><span class="s1">&#39;{admin-pw}&#39;</span> <span class="se">\</span>
+ -e <span class="nv">INFLUXDB_USER</span><span class="o">=</span>lrdata -e <span class="nv">INFLUXDB_USER_PASSWORD</span><span class="o">=</span><span class="s1">&#39;{lrdata-pw}&#39;</span> <span class="se">\</span>
+ --name sawtooth-stats-influxdb influxdb
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="install-and-configure-grafana">
+<h2>Install and Configure Grafana<a class="headerlink" href="#install-and-configure-grafana" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>Build the Grafana Docker image from the Dockerfile that is included in the
+<code class="docutils literal notranslate"><span class="pre">sawtooth-core</span></code> repository.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> sawtooth-core/docker
+<span class="gp">$</span> docker build . -f grafana/sawtooth-stats-grafana <span class="se">\</span>
+ -t sawtooth-stats-grafana
+</pre></div>
+</div>
+</li>
+<li><p>Run the Grafana container.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker run -d -p <span class="m">3000</span>:3000 --name sawtooth-stats-grafana <span class="se">\</span>
+ sawtooth-stats-grafana
+</pre></div>
+</div>
+</li>
+<li><p>Open the Grafana web page at <code class="docutils literal notranslate"><span class="pre">http://{host}:3000</span></code>.</p>
+<p>In this URL, replace <code class="docutils literal notranslate"><span class="pre">{host}</span></code> with the IP or Fully Qualified Domain Name
+(FQDN) of the system running the Grafana Docker container.</p>
+</li>
+<li><p>On the Grafana web page, log in as user <code class="docutils literal notranslate"><span class="pre">admin</span></code> with the password <code class="docutils literal notranslate"><span class="pre">admin</span></code>.</p></li>
+<li><p>Change the admin password. First, click on the Grafana spiral icon at the
+top left of the web page and go to “Admin / Profile”. Next, click on
+“Change Password”.</p></li>
+<li><p>Configure Grafana to use InfluxDB as a data source.</p>
+<ol class="loweralpha simple">
+<li><p>Click on the Grafana spiral icon at the top left of the web page and go to
+“Data Sources”.</p></li>
+<li><p>Click on “Metrics”.</p></li>
+<li><p>Change the URL to the host server (IP or FQDN) running the InfluxDB
+Docker container.</p></li>
+<li><p>Under “InfluxDB Details”, set <code class="docutils literal notranslate"><span class="pre">INFLUXDB_USER</span></code> to <code class="docutils literal notranslate"><span class="pre">lrdata</span></code>. For
+<code class="docutils literal notranslate"><span class="pre">INFLUXDB_USER_PASSWORD</span></code>, enter the <code class="docutils literal notranslate"><span class="pre">lrdata</span></code> password that was defined
+when you set up InfluxDB.</p></li>
+<li><p>Click “Save &amp; Test”.</p></li>
+</ol>
+</li>
+<li><p>(Sawtooth 1.0.* releases only) Import the Grafana 1.0 dashboard.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Skip this step for Sawtooth release 1.1 and later, which can use the
+dashboard that is included in the Grafana Docker container from git
+master.</p>
+</div>
+<ol class="loweralpha simple">
+<li><p>Use one of these methods to get the 1.0 dashboard:</p>
+<ul class="simple">
+<li><p>Find the dashboard in the 1-0 branch at
+<code class="docutils literal notranslate"><span class="pre">sawtooth-core/docker/grafana/dashboards/sawtooth_performance.json</span></code></p></li>
+<li><p>Download the dashboard from GitHub at this location:
+<a class="reference external" href="https://raw.githubusercontent.com/hyperledger/sawtooth-core/1-0/docker/grafana/dashboards/sawtooth_performance.json">hyperledger/sawtooth-core/1-0/docker/grafana/dashboards/sawtooth_performance.json</a></p></li>
+</ul>
+</li>
+<li><p>Click on the Grafana spiral logo and mouse over “Dashboards”, then click
+“Import”.</p></li>
+<li><p>Click “Upload .json file”.</p></li>
+<li><p>Navigate to the location of <code class="docutils literal notranslate"><span class="pre">sawtooth_performance.json</span></code>.</p></li>
+<li><p>Select “metrics” in the drop-down menu and click “Import”.</p></li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section" id="configure-the-sawtooth-validator-for-grafana">
+<h2>Configure the Sawtooth Validator for Grafana<a class="headerlink" href="#configure-the-sawtooth-validator-for-grafana" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth-validator</span></code> process reports metrics for the Sawtooth validator.
+Use the validator configuration file, <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/validator.toml</span></code>, to
+specify the validator settings for Grafana.</p>
+<ol class="arabic">
+<li><p>If the validator configuration file doesn’t exist yet, copy the template
+from <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/validator.toml.example</span></code> to
+<code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/validator.toml</span></code>. For more information, see
+<a class="reference internal" href="configuring_sawtooth/validator_configuration_file.html"><span class="doc">Validator Configuration File</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The default config directory is <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/</span></code>. For information on
+finding the config directory in a non-default location, see
+<a class="reference internal" href="configuring_sawtooth/path_configuration_file.html"><span class="doc">Path Configuration File</span></a>.</p>
+</div>
+</li>
+<li><p>Edit <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/validator.toml</span></code>. Change the following settings to the
+values that you defined when you set up InfluxDB:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">opentsdb_url</span></code>: Enter the IP or FQDN:port to the InfluxDB instance</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">opentsdb_db</span></code>: Enter <code class="docutils literal notranslate"><span class="pre">metrics</span></code> (the value of <code class="docutils literal notranslate"><span class="pre">INFLUXDB_DB</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">opentsdb_username</span></code>: Enter <code class="docutils literal notranslate"><span class="pre">lrdata</span></code> (the <code class="docutils literal notranslate"><span class="pre">INFLUXDB_USER</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">opentsdb_password</span></code>: Enter the password for <code class="docutils literal notranslate"><span class="pre">INFLUXDB_USER_PASSWORD</span></code></p></li>
+</ul>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># The host and port for Open TSDB database used for metrics</span>
+<span class="na">opentsdb_url</span> <span class="o">=</span> <span class="s">&quot;http://{host}:8086&quot;</span>
+
+<span class="c1"># The name of the database used for storing metrics</span>
+<span class="na">opentsdb_db</span> <span class="o">=</span> <span class="s">&quot;metrics&quot;</span>
+
+<span class="na">opentsdb_username</span>  <span class="o">=</span> <span class="s">&quot;lrdata&quot;</span>
+
+<span class="na">opentsdb_password</span>  <span class="o">=</span> <span class="s">&quot;{lrdata-pw}&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">opentsdb_url</span></code>, be sure to replace  the existing host name with the
+IP or FQDN of the system running the InfluxDB Docker container.</p>
+</div>
+</li>
+<li><p>Restart the validator for these changes to take effect.</p>
+<ul>
+<li><p>If the validator was started as a <code class="docutils literal notranslate"><span class="pre">systemd</span></code> service:</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl restart sawtooth-validator
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>To restart <code class="docutils literal notranslate"><span class="pre">sawtooth-validator</span></code> on the command line, see the appropriate
+procedure in the Application Developer’s Guide: either
+<a class="reference internal" href="../app_developers_guide/ubuntu.html"><span class="doc">Using Ubuntu for a Single Sawtooth Node</span></a> or <a class="reference internal" href="../app_developers_guide/ubuntu_test_network.html#proc-multi-ubuntu-label"><span class="std std-ref">Using Ubuntu for a Sawtooth Test Network</span></a>.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="configure-the-sawtooth-rest-api-for-grafana">
+<h2>Configure the Sawtooth REST API for Grafana<a class="headerlink" href="#configure-the-sawtooth-rest-api-for-grafana" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth-rest-api</span></code> process reports metrics for the Sawtooth REST API.
+Use the REST API configuration file, <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/rest_api.toml</span></code>, to specify
+the REST API settings for Grafana.</p>
+<ol class="arabic">
+<li><p>If the REST API configuration file doesn’t exist yet, copy the template from
+<code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/rest_api.toml.example</span></code> to <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/rest_api.toml</span></code>.
+For more information, see
+<a class="reference internal" href="configuring_sawtooth/rest_api_configuration_file.html"><span class="doc">REST API Configuration File</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The default config directory is <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/</span></code>. For information on
+finding the config directory in a non-default location, see
+<a class="reference internal" href="configuring_sawtooth/path_configuration_file.html"><span class="doc">Path Configuration File</span></a>.</p>
+</div>
+</li>
+<li><p>Modify <code class="docutils literal notranslate"><span class="pre">opentsdb_url</span></code>, <code class="docutils literal notranslate"><span class="pre">opentsdb_db</span></code>, <code class="docutils literal notranslate"><span class="pre">opentsdb_username</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">opentsdb_password</span></code> to match the values used for the validator.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">opentsdb_url</span> <span class="o">=</span> <span class="s">&quot;http://{host}:8086&quot;</span>
+
+<span class="c1"># The name of the database used for storing metrics</span>
+<span class="na">opentsdb_db</span> <span class="o">=</span> <span class="s">&quot;metrics&quot;</span>
+
+<span class="na">opentsdb_username</span> <span class="o">=</span> <span class="s">&quot;lrdata&quot;</span>
+<span class="na">opentsdb_password</span>  <span class="o">=</span> <span class="s">&quot;{lrdata-pw}&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Restart the REST API (<code class="docutils literal notranslate"><span class="pre">sawtooth-rest-api</span></code>) for these changes to take effect.</p>
+<ul>
+<li><p>If the REST API was started as a <code class="docutils literal notranslate"><span class="pre">systemd</span></code> service:</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl restart sawtooth-rest-api
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>To restart <code class="docutils literal notranslate"><span class="pre">sawtooth-rest-api</span></code> on the command line, see the appropriate
+procedure in the Application Developer’s Guide: either
+<a class="reference internal" href="../app_developers_guide/ubuntu.html"><span class="doc">Using Ubuntu for a Single Sawtooth Node</span></a> or <a class="reference internal" href="../app_developers_guide/ubuntu_test_network.html#proc-multi-ubuntu-label"><span class="std std-ref">Using Ubuntu for a Sawtooth Test Network</span></a>.
+<a class="reference internal" href="../app_developers_guide/ubuntu_test_network.html#proc-multi-ubuntu-label"><span class="std std-ref">Using Ubuntu for a Sawtooth Test Network</span></a>.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="configure-telegraf">
+<h2>Configure Telegraf<a class="headerlink" href="#configure-telegraf" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.influxdata.com/time-series-platform/telegraf/">Telegraf</a> runs on
+the Sawtooth nodes to send operating system and hardware metrics to InfluxDB.</p>
+<ol class="arabic">
+<li><p>Install Telegraf from the InfluxData repository.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl -sL https://repos.influxdata.com/influxdb.key <span class="p">|</span>  sudo apt-key add -
+<span class="gp">$</span> sudo apt-add-repository <span class="s2">&quot;deb https://repos.influxdata.com/ubuntu bionic stable&quot;</span>
+<span class="gp">$</span> sudo apt-get update
+<span class="gp">$</span> sudo apt-get install telegraf
+</pre></div>
+</div>
+</li>
+<li><p>Edit <code class="docutils literal notranslate"><span class="pre">/etc/telegraf/telegraf.conf</span></code> to configure Telegraf.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo vi /etc/telegraf/telegraf.conf
+</pre></div>
+</div>
+</li>
+<li><p>Under <code class="docutils literal notranslate"><span class="pre">[[outputs.influxdb]]</span></code>, change the following settings to match the
+values that you defined when you set up InfluxDB.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">urls</span> <span class="o">=</span> <span class="s">[&quot;http://{host}:8086&quot;]</span>
+<span class="na">database</span> <span class="o">=</span> <span class="s">&quot;metrics&quot;</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">&quot;lrdata&quot;</span>
+<span class="na">password</span> <span class="o">=</span> <span class="s">&quot;{lrdata-pw}&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Be sure to replace <code class="docutils literal notranslate"><span class="pre">{host}</span></code> with the IP or FQDN of the system running
+the InfluxDB Docker container.</p>
+</div>
+</li>
+<li><p>Restart the Telegraf service.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl restart telegraf
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="about_dynamic_consensus.html" class="btn btn-neutral float-right" title="About Dynamic Consensus" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="configuring_permissions.html" class="btn btn-neutral float-left" title="Configuring Validator and Transactor Permissions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

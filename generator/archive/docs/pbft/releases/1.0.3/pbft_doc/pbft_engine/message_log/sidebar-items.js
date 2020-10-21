@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["PbftLog","Struct for storing messages that a PbftNode receives"]]});

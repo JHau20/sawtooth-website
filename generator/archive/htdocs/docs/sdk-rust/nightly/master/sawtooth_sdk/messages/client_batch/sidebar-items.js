@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ClientBatchGetResponse_Status",""],["ClientBatchListResponse_Status",""]],"fn":[["file_descriptor_proto",""]],"struct":[["ClientBatchGetRequest",""],["ClientBatchGetResponse",""],["ClientBatchListRequest","Generated files are compatible only with the same version of protobuf runtime."],["ClientBatchListResponse",""]]});

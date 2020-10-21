@@ -1,0 +1,7 @@
+mktplace\.transactions\.market\_place\_object\_update module
+============================================================
+
+.. automodule:: mktplace.transactions.market_place_object_update
+    :members:
+    :undoc-members:
+    :show-inheritance:

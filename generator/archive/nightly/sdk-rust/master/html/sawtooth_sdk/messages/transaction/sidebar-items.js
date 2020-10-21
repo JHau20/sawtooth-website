@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["file_descriptor_proto",""]],"struct":[["Transaction",""],["TransactionHeader","Generated files are compatible only with the same version of protobuf runtime."],["TransactionList",""]]});

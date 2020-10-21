@@ -1,0 +1,30 @@
+sawtooth package
+================
+
+.. automodule:: sawtooth
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    sawtooth.cli
+    sawtooth.manage
+
+Submodules
+----------
+
+.. toctree::
+
+   sawtooth.client
+   sawtooth.config
+   sawtooth.endpoint_client
+   sawtooth.exceptions
+   sawtooth.simulator
+   sawtooth.simulator_cli
+   sawtooth.simulator_workload
+   sawtooth.validator_config
+

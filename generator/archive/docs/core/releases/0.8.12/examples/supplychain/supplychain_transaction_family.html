@@ -1,0 +1,564 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Supply Chain Transaction Family &mdash; Sawtooth v0.8.12 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.12 documentation" href="../../index.html"/>
+        <link rel="up" title="SupplyChain Example" href="overview.html"/>
+        <link rel="next" title="Endpoint Specifications" href="rest_api/endpoint_specs.html"/>
+        <link rel="prev" title="SupplyChain Example" href="overview.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.12
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../solidity_developers_guide.html">Solidity Developers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="overview.html">SupplyChain Example</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="overview.html#supplychain-overview">SupplyChain Overview</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="overview.html#supplychain-transaction-family">SupplyChain Transaction Family</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Supply Chain Transaction Family</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="overview.html#supplychain-rest-api">SupplyChain REST API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../private_utxo/overview.html">Private UTXO Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../examples.html">Examples</a> &raquo;</li>
+        
+          <li><a href="overview.html">SupplyChain Example</a> &raquo;</li>
+        
+      <li>Supply Chain Transaction Family</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/examples/supplychain/supplychain_transaction_family.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="supply-chain-transaction-family">
+<h1>Supply Chain Transaction Family<a class="headerlink" href="#supply-chain-transaction-family" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Supply Chain Transaction Processor (SCTP) provides a mechanism for
+storing records of asset ownership. The SCTP tracks records, which correlate
+to a real world item. Every Record has an owner and a custodian, which can
+be the same Agent. The owner is the Agent the legally owns the good. The
+custodian is the Agent that is in possession of the good, which may be a
+warehousing service, transportation service, etc. Agents are actors in the
+system that can manipulate the Records by updating them or transferring
+their role to other Agents. Agents are identified by their public key and
+authenticated by the signature on the transactions they submit. Transfer of
+roles (Owner, Custodian) between Agents is done via an Application process,
+where the Agent wishing to assume the role applies for the new role and the
+Agent in the role currently can either accept or reject that Application.</p>
+<p>This is a proof of concept Transaction Processor that is actively being
+developed. As such it has not been thoroughly tested and there will potentially
+be breaking changes made to it.</p>
+</div>
+<div class="section" id="state">
+<h2>State<a class="headerlink" href="#state" title="Permalink to this headline">¶</a></h2>
+<p>This section describes in detail how SCTP objects are stored and addressed in
+the global state. All objects in state are stored as encoded Protobufs. Each
+type of object below is stored in containers at nodes in the Merkle trie. The
+address of the Merkle nodes is detailed below in the addressing section. The
+entry at the nodes is a container object that allows for multiple items to be
+stored at that node if there is an address collision. All items stored in state
+include their natural key. When an address collision occurs the items stored at
+the address are searched to find the item with the natural key that matches the
+key being searched for.</p>
+<p>SCTP stores the following data objects:</p>
+<div class="section" id="agent">
+<h3>Agent<a class="headerlink" href="#agent" title="Permalink to this headline">¶</a></h3>
+<p>Agents represent owners or custodian of goods in the system. All agents must
+be registered in the system before they can interact with records.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">Agent</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// the hex-encoded public key of the Agent</span>
+    <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// a human readable name</span>
+<span class="p">}</span>
+
+<span class="c1">// Container for on-chain Agents.</span>
+<span class="c1">// Allows multiple to be saved at a single address in case of hash collision.</span>
+<span class="kd">message</span> <span class="nc">AgentContainer</span> <span class="p">{</span>
+    <span class="c1">// List of Agents - more than one implies a state address collision</span>
+    <span class="k">repeated</span> <span class="n">Agent</span> <span class="na">entries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="application">
+<h3>Application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h3>
+<p>An Application is an offer from an agent to change the Custodian or Owner field
+of a Record. Agents can only have one open application of a type at a time.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">Application</span> <span class="p">{</span>
+
+    <span class="kt">string</span> <span class="na">record_identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// the natural key of the record</span>
+    <span class="kt">string</span> <span class="na">applicant</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// public key of the applicant</span>
+    <span class="kt">int64</span> <span class="na">creation_time</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+    <span class="c1">// Whether the application is a request for ownership or custodianship</span>
+    <span class="kd">enum</span> <span class="n">Type</span> <span class="p">{</span>
+        <span class="na">OWNER</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="na">CUSTODIAN</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Type</span> <span class="na">type</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+    <span class="c1">// The current acceptance status of the Application</span>
+    <span class="kd">enum</span> <span class="n">Status</span> <span class="p">{</span>
+        <span class="na">OPEN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="na">CANCELED</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="na">REJECTED</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="na">ACCEPTED</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Status</span> <span class="na">status</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+    <span class="kt">string</span> <span class="na">terms</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span> <span class="c1">// the terms of the application. Human readable.</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">ApplicationContainer</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">Application</span> <span class="na">entries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="record">
+<h3>Record<a class="headerlink" href="#record" title="Permalink to this headline">¶</a></h3>
+<p>A record represents a good or material that is being tracked in the system.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">Record</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// the natural key of the record, serial number or</span>
+    <span class="c1">// attached sensor identifier</span>
+
+    <span class="kt">int64</span> <span class="na">creation_time</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// the time the record was created</span>
+
+    <span class="kd">message</span> <span class="nc">AgentRecord</span> <span class="p">{</span>
+        <span class="kt">string</span> <span class="na">agent_identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// the public key of the agent</span>
+        <span class="kt">int64</span> <span class="na">start_time</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// the time the agent started in the role</span>
+    <span class="p">}</span>
+    <span class="k">repeated</span> <span class="n">AgentRecord</span> <span class="na">owners</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// list of the owners, ordered from oldest</span>
+    <span class="c1">// to newest. The first by definition is the creator of the record.</span>
+    <span class="c1">// The last is the current owner of the record.</span>
+    <span class="k">repeated</span> <span class="n">AgentRecord</span> <span class="na">custodians</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// ordered list of custodians.</span>
+    <span class="c1">// Same ordering as the owners list.</span>
+
+    <span class="kt">bool</span> <span class="na">final</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// is the record finalized, finalized records cannot be</span>
+    <span class="c1">// changed.</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">RecordContainer</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">Record</span> <span class="na">entries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="addressing">
+<h3>Addressing<a class="headerlink" href="#addressing" title="Permalink to this headline">¶</a></h3>
+<p>When a setting is read or changed, it is accessed by addressing it using the
+following algorithm:</p>
+<dl class="docutils">
+<dt>The SCTP uses these three namespaces to store the corresponding objects:</dt>
+<dd><ul class="first last simple">
+<li>supplychain.agent</li>
+<li>supplychain.application</li>
+<li>supplychain.record</li>
+</ul>
+</dd>
+</dl>
+<p>The strings are converted to a Merkle prefix by taking the first 6 characters
+of the hex encoded SHA-512 hash of the string.</p>
+<p>Agent addresses are generated with <code class="docutils literal"><span class="pre">sha512(agent_pub_key)</span></code>, and prepended
+with the <code class="docutils literal"><span class="pre">supplychain.agent</span></code> namespace.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">address</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">(</span><span class="n">public_key</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">64</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Applications are stored using the Record address and the
+<code class="docutils literal"><span class="pre">supplychain.application</span></code> namespace. This stores all applications for a
+record at the same address. The correct Application must be searched for using
+the <code class="docutils literal"><span class="pre">public_key</span></code> of the applicant, the Application type, and the Application
+status.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">address_addr</span> <span class="o">=</span> <span class="n">namespace</span> <span class="o">+</span> <span class="n">sha512</span><span class="p">(</span><span class="n">record_identifier</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">64</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Record addresses are a generated SHA-512 hash of the record&#8217;s natural key
+prepended with the <code class="docutils literal"><span class="pre">supplychain.record</span></code> namespace.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">address</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">(</span><span class="n">record_identifier</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">64</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="transactions">
+<h2>Transactions<a class="headerlink" href="#transactions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="transaction-headers">
+<h3>Transaction Headers<a class="headerlink" href="#transaction-headers" title="Permalink to this headline">¶</a></h3>
+<p>The settings for the common Sawtooth transaction header fields.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nx">family_name</span><span class="o">:</span> <span class="s2">&quot;sawtooth_supplychain&quot;</span>
+    <span class="nx">family_version</span><span class="o">:</span> <span class="s2">&quot;0.5&quot;</span>
+    <span class="nx">encoding</span><span class="o">:</span> <span class="s2">&quot;application/protobuf&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="inputs-and-outputs">
+<h4>Inputs and Outputs<a class="headerlink" href="#inputs-and-outputs" title="Permalink to this headline">¶</a></h4>
+<p>The inputs for Supply Chain family transactions must include:
+- The address of the object the transaction is operating on if it is a Record
+operation
+- Any Agents involved in the operation</p>
+<p>The outputs for Supply Chain family transactions must include:
+- The address of the object the transaction is operating on if it is a Record
+operation
+- Any Agents involved in the operation</p>
+</div>
+<div class="section" id="dependencies">
+<h4>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h4>
+<p>Transactions should be batched and specify any transactions that they expect
+to be committed as dependencies.</p>
+</div>
+</div>
+</div>
+<div class="section" id="transaction-payload">
+<h2>Transaction Payload<a class="headerlink" href="#transaction-payload" title="Permalink to this headline">¶</a></h2>
+<p>All SCTP transactions are wrapped in a payload object that allows for the items
+to be dispatched to the correct handling logic.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">SupplyChainPayload</span> <span class="p">{</span>
+    <span class="c1">// Describes the action this payload is initiating.</span>
+    <span class="c1">// Used to &quot;route&quot; the data to the proper handler.</span>
+    <span class="kd">enum</span> <span class="n">Action</span> <span class="p">{</span>
+        <span class="na">AGENT_CREATE</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="na">APPLICATION_CREATE</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="na">APPLICATION_ACCEPT</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="na">APPLICATION_REJECT</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="na">APPLICATION_CANCEL</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+        <span class="na">RECORD_CREATE</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+        <span class="na">RECORD_FINALIZE</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">Action</span> <span class="na">action</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="kt">bytes</span> <span class="na">data</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="agent-transactions">
+<h3>Agent Transactions<a class="headerlink" href="#agent-transactions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="create-agent">
+<h4>Create Agent<a class="headerlink" href="#create-agent" title="Permalink to this headline">¶</a></h4>
+<p>Register a signing participant that can update Records and Applications. The
+<code class="docutils literal"><span class="pre">signer_pubkey</span></code> in the transaction header will be used as the Agent&#8217;s public
+key.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">AgentCreatePayload</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="record-operations">
+<h3>Record Operations<a class="headerlink" href="#record-operations" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="create-record">
+<h4>Create Record<a class="headerlink" href="#create-record" title="Permalink to this headline">¶</a></h4>
+<p>Create a record of an item to be tracked. The current Owner and Custodian is
+set to the signer of this transaction.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">RecordCreatePayload</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">int64</span> <span class="na">creation_time</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-application">
+<h4>Create Application<a class="headerlink" href="#create-application" title="Permalink to this headline">¶</a></h4>
+<p>Create a request for transfer of ownership or custodianship of the record.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">ApplicationCreatePayload</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">record_identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">int64</span> <span class="na">creation_time</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">Application.Type</span> <span class="na">type</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="kt">string</span> <span class="na">terms</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="accept-application">
+<h4>Accept Application<a class="headerlink" href="#accept-application" title="Permalink to this headline">¶</a></h4>
+<p>Accept an Application for transfer of ownership or custodianship of a Record.
+Must be submitted by the current Owner or Custodian.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">ApplicationAcceptPayload</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">record_identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">string</span> <span class="na">applicant</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">Application.Type</span> <span class="na">type</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="kt">int64</span> <span class="na">timestamp</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reject-application">
+<h4>Reject Application<a class="headerlink" href="#reject-application" title="Permalink to this headline">¶</a></h4>
+<p>Reject an Application for transfer of ownership or custodianship of the
+record. Must be submitted by the current Owner or Custodian depending on
+Application type.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">ApplicationRejectPayload</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">record_identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">string</span> <span class="na">applicant</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">Application.Type</span> <span class="na">type</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cancel-application">
+<h4>Cancel Application<a class="headerlink" href="#cancel-application" title="Permalink to this headline">¶</a></h4>
+<p>Cancel an Application for transfer of ownership or custodianship of the record.
+Must be submitted by the applicant.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">ApplicationCancelPayload</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">record_identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">string</span> <span class="na">applicant</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">Application.Type</span> <span class="na">type</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="finalize-record">
+<h4>Finalize Record<a class="headerlink" href="#finalize-record" title="Permalink to this headline">¶</a></h4>
+<p>Mark the record as final (no longer able to be updated). The Owner must be
+the current Custodian and this transaction must be signed by the Owner.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">RecordFinalizePayload</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="execution">
+<h2>Execution<a class="headerlink" href="#execution" title="Permalink to this headline">¶</a></h2>
+<p>Agents can only be created by transactions signed with their private key.</p>
+<p>Records exist in an active modifiable state until they are finalized. Once a
+Record is finalized, it can be thought of as destroyed. A finalized item
+has either been consumed in manufacturing, lost, or the victim of an
+unfortunate accident.</p>
+<p>Applications can only be created by the applying Agent and then transitioned
+to either an Accepted state, which means the proposal has been executed and the
+role on the Record has been updated, or a closed state (Rejected/Canceled) if
+either of the Agents involved do not want the application.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rest_api/endpoint_specs.html" class="btn btn-neutral float-right" title="Endpoint Specifications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="overview.html" class="btn btn-neutral" title="SupplyChain Example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'v0.8.12',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+sawtooth\.manage\.wrap module
+=============================
+
+.. automodule:: sawtooth.manage.wrap
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SupplyChain Example &mdash; Sawtooth v0.8.8 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.8 documentation" href="../../index.html"/>
+        <link rel="up" title="Examples" href="../../examples.html"/>
+        <link rel="next" title="Supply Chain Transaction Family" href="supplychain_transaction_family.html"/>
+        <link rel="prev" title="Examples" href="../../examples.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.8
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">SupplyChain Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#supplychain-overview">SupplyChain Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#agents">Agents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#records">Records</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#supplychain-transaction-family">SupplyChain Transaction Family</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="supplychain_transaction_family.html">Supply Chain Transaction Family</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#supplychain-rest-api">SupplyChain REST API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="rest_api/endpoint_specs.html">Endpoint Specifications</a></li>
+<li class="toctree-l4"><a class="reference internal" href="rest_api/error_codes.html">SupplyChain Error Responses</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../private_utxo/overview.html">Private UTXO Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../examples.html">Examples</a> &raquo;</li>
+        
+      <li>SupplyChain Example</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/examples/supplychain/overview.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="supplychain-example">
+<h1>SupplyChain Example<a class="headerlink" href="#supplychain-example" title="Permalink to this headline">¶</a></h1>
+<p>This example provides the infrastructure necessary to track physical objects in
+a real-world supply chain on the Sawtooth Ledger. Records are tracked on the
+Ledger, and are uniquely linked to the physical objects they represent.</p>
+<div class="section" id="supplychain-overview">
+<h2>SupplyChain Overview<a class="headerlink" href="#supplychain-overview" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="agents">
+<h3>Agents<a class="headerlink" href="#agents" title="Permalink to this headline">¶</a></h3>
+<p>Agents represent actors in the system. An Agent is expected most commonly to
+represent a company. Agents are identified by their public keys and any
+transactions an agent submits must be signed by the agent. Agents serve two
+roles in the system: owners and custodians. Owners are Agents that are the
+legal holders of the physical object a record represents. Custodians are Agents
+that have possesion of the physical object that a Record represents. Custodians
+may be transportation, logistics, warehousing companies, or any other company
+that has entered into an agreement to care for the item.</p>
+<p>The ledger representation of &#8220;Agents&#8221; is:</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="c1">// Agents are essentially public keys registered with a human readable name on</span>
+<span class="c1">// the chain. They will be able to create Records and submit Applications for</span>
+<span class="c1">// ownership or custodianship.</span>
+<span class="kd">message</span> <span class="nc">Agent</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// the hex-encoded public key of the Agent</span>
+    <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// a human readable name</span>
+<span class="p">}</span>
+
+<span class="c1">// Container for on-chain Agents.</span>
+<span class="c1">// Allows multiple to be saved at a single address in case of hash collision.</span>
+<span class="kd">message</span> <span class="nc">AgentContainer</span> <span class="p">{</span>
+    <span class="c1">// List of Agents - more than one implies a state address collision</span>
+    <span class="k">repeated</span> <span class="n">Agent</span> <span class="na">entries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="records">
+<h3>Records<a class="headerlink" href="#records" title="Permalink to this headline">¶</a></h3>
+<p>Records represent physical objects in the world. Records are identified in the
+system by <a class="reference external" href="https://en.wikipedia.org/wiki/Natural_key">natural keys</a>. These
+natural keys could be the serial number of the object, the RFID tag number,
+etc.</p>
+<p>Records keep a list of all the Owners and Custodians that have possessed the
+item: these records are stored in chronological order from oldest to most
+recent. The most recent is the current Agent in that role.</p>
+<p>Records may also be finalized. When a record is finalized it means the physical
+item has been consumed or destroyed and there can be no more updates to the
+Record.</p>
+<p>The ledger representation of &#8220;Records&#8221; is:</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="c1">// A Record tracks a physical item with a history of its owners and custodians.</span>
+<span class="kd">message</span> <span class="nc">Record</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// the natural key of the record, serial number or</span>
+    <span class="c1">// attached sensor identifier</span>
+
+    <span class="kt">int64</span> <span class="na">creation_time</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// the time the record was created</span>
+
+    <span class="kd">message</span> <span class="nc">AgentRecord</span> <span class="p">{</span>
+        <span class="kt">string</span> <span class="na">agent_identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// the public key of the agent</span>
+        <span class="kt">int64</span> <span class="na">start_time</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// the time the agent started in the role</span>
+    <span class="p">}</span>
+    <span class="k">repeated</span> <span class="n">AgentRecord</span> <span class="na">owners</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// list of the owners, ordered from oldest</span>
+    <span class="c1">// to newest. The first by definition is the creator of the record.</span>
+    <span class="c1">// The last is the current owner of the record.</span>
+    <span class="k">repeated</span> <span class="n">AgentRecord</span> <span class="na">custodians</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// ordered list of custodians.</span>
+    <span class="c1">// Same ordering as the owners list.</span>
+
+    <span class="kt">bool</span> <span class="na">final</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// is the record finalized, finalized records cannot be</span>
+    <span class="c1">// changed.</span>
+<span class="p">}</span>
+
+<span class="c1">// Container for on-chain Records.</span>
+<span class="c1">// Allows multiple to be saved at a single address in case of hash collision.</span>
+<span class="kd">message</span> <span class="nc">RecordContainer</span> <span class="p">{</span>
+    <span class="c1">// List of Records - more than one implies a state address collision</span>
+    <span class="k">repeated</span> <span class="n">Record</span> <span class="na">entries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="applications">
+<h3>Applications<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h3>
+<p>Applications are the mechanism that Agents use to change roles (Owner or
+Custodian). Agents that wish to assume a new role for a Record create a new
+application that specifies the desired role. The current Agent in that role
+must then accept the Application before the  Record is updated. This allows
+both Agents to assert their agreement to the change before the update is made.
+The applicant(proposing Agent) may cancel the Application or the current Agent
+may reject the Application if it is not wanted.</p>
+<p>The ledger representation of &#8220;Applications&#8221; is:</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="c1">// Applications are a request for ownership or custodianship of a Record.</span>
+<span class="kd">message</span> <span class="nc">Application</span> <span class="p">{</span>
+
+    <span class="kt">string</span> <span class="na">record_identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// the natural key of the record</span>
+    <span class="kt">string</span> <span class="na">applicant</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// public key of the applicant</span>
+    <span class="kt">int64</span> <span class="na">creation_time</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+    <span class="c1">// Whether this Application is a request for ownership or custodianship</span>
+    <span class="kd">enum</span> <span class="n">Type</span> <span class="p">{</span>
+        <span class="na">OWNER</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="na">CUSTODIAN</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Type</span> <span class="na">type</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+    <span class="c1">// The current acceptance status</span>
+    <span class="kd">enum</span> <span class="n">Status</span> <span class="p">{</span>
+        <span class="na">OPEN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="na">CANCELED</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="na">REJECTED</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="na">ACCEPTED</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Status</span> <span class="na">status</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+    <span class="kt">string</span> <span class="na">terms</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span> <span class="c1">// human readable terms</span>
+<span class="p">}</span>
+
+<span class="c1">// Container for on-chain Applications.</span>
+<span class="c1">// Allows multiple to be saved at a single address in case of hash collision.</span>
+<span class="kd">message</span> <span class="nc">ApplicationContainer</span> <span class="p">{</span>
+    <span class="c1">// List of Applications - more than one implies a state address collision</span>
+    <span class="k">repeated</span> <span class="n">Application</span> <span class="na">entries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="supplychain-transaction-family">
+<h2>SupplyChain Transaction Family<a class="headerlink" href="#supplychain-transaction-family" title="Permalink to this headline">¶</a></h2>
+<p>The SupplyChain Transaction Family is implemented by a Transaction Processor
+that manages ledger(global state) representation and integrity.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="supplychain_transaction_family.html">Supply Chain Transaction Family</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="supplychain_transaction_family.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supplychain_transaction_family.html#state">State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supplychain_transaction_family.html#transactions">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supplychain_transaction_family.html#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="supplychain_transaction_family.html#execution">Execution</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="supplychain-rest-api">
+<h2>SupplyChain REST API<a class="headerlink" href="#supplychain-rest-api" title="Permalink to this headline">¶</a></h2>
+<p>The SupplyChain REST API implements a domain specific api for clients to
+query SupplyChain Ledger state.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rest_api/endpoint_specs.html">Endpoint Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest_api/error_codes.html">SupplyChain Error Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rest_api/error_codes.html#http-status-codes">HTTP Status Codes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api/error_codes.html#json-response">JSON Response</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api/error_codes.html#error-codes-and-descriptions">Error Codes and Descriptions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="supplychain_transaction_family.html" class="btn btn-neutral float-right" title="Supply Chain Transaction Family" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../../examples.html" class="btn btn-neutral" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'v0.8.8',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

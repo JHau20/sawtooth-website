@@ -1,0 +1,711 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Seth Transaction Family Specification &mdash; Sawtooth v1.0.0rc1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc1 documentation" href="../index.html"/>
+        <link rel="up" title="Transaction Family Specifications" href="../transaction_family_specifications.html"/>
+        <link rel="next" title="Validator Registry Transaction Family Specification" href="validator_registry_transaction_family.html"/>
+        <link rel="prev" title="XO Transaction Family Specification" href="xo_transaction_family.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../solidity_developers_guide.html">Solidity Developers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="settings_transaction_family.html">Settings Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity_transaction_family.html">Identity Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blockinfo_transaction_family.html">BlockInfo Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integerkey_transaction_family.html">IntegerKey Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xo_transaction_family.html">XO Transaction Family Specification</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Seth Transaction Family Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#state">State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#accounts">Accounts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#account-storage-format">Account Storage Format</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#addressing">Addressing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#evm-prefix">EVM Prefix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#account-addresses">Account Addresses</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#execution">Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="validator_registry_transaction_family.html">Validator Registry Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smallbank_transaction_family.html">Smallbank Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="track_and_trade_transaction_family.html">Track and Trade Transaction Family Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../transaction_family_specifications.html">Transaction Family Specifications</a> &raquo;</li>
+        
+      <li>Seth Transaction Family Specification</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/transaction_family_specifications/sawtooth_burrow_evm_family.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="seth-transaction-family-specification">
+<h1>Seth Transaction Family Specification<a class="headerlink" href="#seth-transaction-family-specification" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Seth transaction family enables the creation and execution
+of smart contracts within the Hyperledger Sawtooth framework. It integrates the
+Hyperledger Burrow implementation of the Ethereum Virtual Machine (EVM) into
+the Hyperledger Sawtooth framework using the Sawtooth Go SDK.</p>
+<p>The primary problems to solve in order to integrate the Burrow EVM into
+Sawtooth are:</p>
+<ol class="arabic">
+<li><p class="first">Define and implement an efficient mapping between EVM World State addresses
+and Sawtooth Global State addresses.</p>
+</li>
+<li><p class="first">Define and implement an efficient method for maintaining accounts and
+account storage in Sawtooth Global State.</p>
+</li>
+<li><p class="first">Define and implement an “EVM-Wrapper” at the Transaction Processor level for
+handling additional “Ethereum-like” and “Burrow-like” features not
+implemented by the EVM, including:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>Handling account creation transactions and storing the resulting code in
+global state.</li>
+<li>Managing and enforcing account permissions.</li>
+<li>Maintaining account balances and transferring funds between accounts.</li>
+<li>Checking transaction nonces against account nonces and deriving new
+contract account addresses.</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Define and implement an efficient API for:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>Submitting transactions to the network that load and execute EVM byte
+code in a way that is compatible with existing tools.</li>
+<li>Querying state using smart contracts without requiring that state be
+modified.</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Define and implement an event subscription system for monitoring the EVM
+namespace that can be used with solidity events.</p>
+</li>
+</ol>
+<p>This spec assumes a basic knowledge of Ethereum, Hyperledger Burrow, and
+Hyperledger Sawtooth.</p>
+<p>For more information on Ethereum and the EVM, see the <a class="reference external" href="https://ethereum.github.io/yellowpaper/paper.pdf">Ethereum Yellow Paper</a>.</p>
+<p>For more information on <a class="reference external" href="https://github.com/hyperledger/burrow">Hyperledger Burrow</a>, check out the project.</p>
+</div>
+<div class="section" id="state">
+<h2>State<a class="headerlink" href="#state" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="accounts">
+<h3>Accounts<a class="headerlink" href="#accounts" title="Permalink to this headline">¶</a></h3>
+<p>State associated with the Seth Transaction Family shall consist
+of a set of accounts. Similar to Ethereum, two types of accounts shall be
+defined:</p>
+<ul class="simple">
+<li>Externally Owned Accounts (EOAs)</li>
+<li>Contract Accounts (CAs)</li>
+</ul>
+<p>EOAs are accounts that are owned by an external actor (ultimately a person).
+They are created implicitly whenever a private key is generated. Upon
+submission of the first transaction by an EOA, the account is initialized in
+state.</p>
+<p>CAs are created and owned by other accounts (either an EOA or another CA). All
+CAs are ultimately associated with an EOA.</p>
+<p>For more information on Ethereum Accounts, see the <a class="reference external" href="http://ethdocs.org/en/latest/account-management.html#accounts">Ethereum Documentation</a>.</p>
+</div>
+<div class="section" id="account-storage-format">
+<h3>Account Storage Format<a class="headerlink" href="#account-storage-format" title="Permalink to this headline">¶</a></h3>
+<p>Accounts and any associated account storage shall be stored in global state
+using the following protobuf message format:</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">EvmEntry</span> <span class="p">{</span>
+    <span class="n">EvmStateAccount</span> <span class="na">account</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">repeated</span> <span class="n">EvmStorage</span> <span class="na">storage</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">EvmStateAccount</span> <span class="p">{</span>
+    <span class="kt">bytes</span> <span class="na">address</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">int64</span> <span class="na">balance</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="kt">bytes</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="kt">int64</span> <span class="na">nonce</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="n">EvmPermissions</span> <span class="na">permissions</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">EvmPermissions</span> <span class="p">{</span>
+  <span class="c1">// Bit array where true means &quot;has permission&quot; and false means &quot;doesn&#39;t have</span>
+  <span class="c1">// permission&quot;</span>
+  <span class="kt">uint64</span> <span class="na">perms</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// Bit array where true means &quot;the permission has been set&quot; and false means</span>
+  <span class="c1">// &quot;the permission has not been set&quot;.</span>
+  <span class="kt">uint64</span> <span class="na">set_bit</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+ <span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">EvmStorage</span> <span class="p">{</span>
+    <span class="kt">bytes</span> <span class="na">key</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">bytes</span> <span class="na">value</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The following fields defined above shall be ignored for this version of the
+spec, but will be used in later versions:</p>
+<ul class="simple">
+<li>balance - Since this version of the spec does not include an incentive system
+or associated cryptocurrency, maintaining a balance isn’t meaningful.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="addressing">
+<h2>Addressing<a class="headerlink" href="#addressing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="evm-prefix">
+<h3>EVM Prefix<a class="headerlink" href="#evm-prefix" title="Permalink to this headline">¶</a></h3>
+<p>All data associated with the Seth Transaction Family shall be
+stored under the prefix formed by taking the first 3 bytes of the SHA512 hash
+of the UTF-8 encoded string “seth”. This shall be referred to as the EVM
+prefix.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">(</span><span class="s1">&#39;seth&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+<span class="go">&#39;a68b06&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="account-addresses">
+<h3>Account Addresses<a class="headerlink" href="#account-addresses" title="Permalink to this headline">¶</a></h3>
+<p>The address of an account depends on which type of account it is:</p>
+<ul class="simple">
+<li>EOA - Given an EOA’s private key, the address is the, “rightmost 160-bits of
+the Keccak hash of the corresponding ECDSA public key,” from the yellow paper.
+The “Keccak hash” shall be taken to mean SHA3.</li>
+<li>CA - The address of a CA is the last 20 bytes of the 256-byte SHA3 hash of
+the byte array formed by concatenating the sender address and the big endian
+encoding of the sender’s current nonce. In other words, the address of a CA is
+derived from hashing the creating accounts address and its nonce.</li>
+</ul>
+<p>Accounts in the above format shall be stored in global state at the address
+formed by concatenating the EVM prefix, address of the account, and enough 0’s
+to form a valid global state address.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">state_address</span> <span class="o">=</span> <span class="s1">&#39;a84eda&#39;</span> <span class="o">+</span> <span class="n">account_address</span> <span class="o">+</span> <span class="s1">&#39;0&#39;</span><span class="o">*</span><span class="mi">12</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="transaction-payload">
+<h2>Transaction Payload<a class="headerlink" href="#transaction-payload" title="Permalink to this headline">¶</a></h2>
+<p>The transaction payload closely follows the structure as defined by the EVM
+yellow paper, section 4.3 (“The Transaction”). In the Seth
+Transaction Family, the transaction payload shall be represented using the
+following protobuf message:</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">SethTransaction</span> <span class="p">{</span>
+  <span class="kd">enum</span> <span class="n">TransactionType</span> <span class="p">{</span>
+    <span class="na">DEFAULT</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="na">CREATE_EXTERNAL_ACCOUNT</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="na">CREATE_CONTRACT_ACCOUNT</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="na">MESSAGE_CALL</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="na">SET_PERMISSIONS</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">TransactionType</span> <span class="na">transaction_type</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// To eliminate the need for two deserialization steps, all types of</span>
+  <span class="c1">// transactions are included as fields, but only the field indicated by the</span>
+  <span class="c1">// transaction type should be set.</span>
+  <span class="n">CreateExternalAccountTxn</span> <span class="na">create_external_account</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">CreateContractAccountTxn</span> <span class="na">create_contract_account</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="n">MessageCallTxn</span> <span class="na">message_call</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="n">SetPermissionsTxn</span> <span class="na">set_permissions</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The following are the representation of the different transaction types that
+can be included in the above SethTransaction:</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="c1">// The following transactions have fields that correspond to the transaction</span>
+<span class="c1">// structure defined at: https://ethereum.github.io/yellowpaper/paper.pdf</span>
+<span class="c1">// Quoted descriptions are from this paper.</span>
+
+<span class="kd">message</span> <span class="nc">CreateExternalAccountTxn</span> <span class="p">{</span>
+  <span class="c1">// &quot;...the number of transactions sent by the sender; formally T_n.&quot;</span>
+  <span class="kt">uint64</span> <span class="na">nonce</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// &quot;...the 160-bit address of the message call&#39;s recipient or, for a</span>
+  <span class="c1">// contract creation transaction, {}, used here to denote (the empty byte</span>
+  <span class="c1">// array); formally T_t.&quot;</span>
+  <span class="kt">bytes</span> <span class="k">to</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="c1">// The Burrow-EVM permissions to assign to the new account</span>
+  <span class="n">EvmPermissions</span> <span class="na">permissions</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">CreateContractAccountTxn</span> <span class="p">{</span>
+  <span class="c1">// &quot;...the number of transactions sent by the sender; formally T_n.&quot;</span>
+  <span class="kt">uint64</span> <span class="na">nonce</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// &quot;...the number of Wei to be paid per unit of gas for all computation</span>
+  <span class="c1">// costs incurred as a result of the execution of this transaction;</span>
+  <span class="c1">// formally T_p.&quot;</span>
+  <span class="kt">uint64</span> <span class="na">gas_price</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="c1">// &quot;...the maximum amount of gas that should be used in executing this</span>
+  <span class="c1">// transaction. This is paid up-front, before any computation is done and</span>
+  <span class="c1">// may not be increased later; formally T_g&quot;</span>
+  <span class="kt">uint64</span> <span class="na">gas_limit</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+  <span class="c1">// &quot;...the number of Wei to be transferred to the message call&#39;s recipient</span>
+  <span class="c1">// or, in the case of contract creation, as an endowment to the newly</span>
+  <span class="c1">// created account; formally T_v.&quot;</span>
+  <span class="kt">uint64</span> <span class="na">value</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+  <span class="c1">// &quot;An unlimited size byte array specifying the EVM-code for the account</span>
+  <span class="c1">// initialisation procedure, formally T_i.&quot;</span>
+  <span class="c1">//</span>
+  <span class="c1">// This should only be set if this is a contract creation transaction.</span>
+  <span class="kt">bytes</span> <span class="na">init</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+  <span class="c1">// The Burrow-EVM permissions to assign to this account</span>
+  <span class="n">EvmPermissions</span> <span class="na">permissions</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">MessageCallTxn</span> <span class="p">{</span>
+  <span class="c1">// &quot;...the number of transactions sent by the sender; formally T_n.&quot;</span>
+  <span class="kt">uint64</span> <span class="na">nonce</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// &quot;...the number of Wei to be paid per unit of gas for all computation</span>
+  <span class="c1">// costs incurred as a result of the execution of this transaction;</span>
+  <span class="c1">// formally T_p.&quot;</span>
+  <span class="kt">uint64</span> <span class="na">gas_price</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="c1">// &quot;...the maximum amount of gas that should be used in executing this</span>
+  <span class="c1">// transaction. This is paid up-front, before any computation is done and</span>
+  <span class="c1">// may not be increased later; formally T_g&quot;</span>
+  <span class="kt">uint64</span> <span class="na">gas_limit</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+  <span class="c1">// &quot;...the 160-bit address of the message call&#39;s recipient or, for a</span>
+  <span class="c1">// contract creation transaction, {}, used here to denote (the empty byte</span>
+  <span class="c1">// array); formally T_t.&quot;</span>
+  <span class="kt">bytes</span> <span class="k">to</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+  <span class="c1">// &quot;...the number of Wei to be transferred to the message call&#39;s recipient</span>
+  <span class="c1">// or, in the case of contract creation, as an endowment to the newly</span>
+  <span class="c1">// created account; formally T_v.&quot;</span>
+  <span class="kt">uint64</span> <span class="na">value</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+  <span class="c1">// &quot;An unlimited size byte array specifying the input data of the message</span>
+  <span class="c1">// call, formally T_d.&quot;</span>
+  <span class="c1">//</span>
+  <span class="c1">// This should only be set if this is a message call transaction.</span>
+  <span class="kt">bytes</span> <span class="na">data</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">SetPermissionsTxn</span> <span class="p">{</span>
+  <span class="c1">// &quot;...the number of transactions sent by the sender; formally T_n.&quot;</span>
+  <span class="kt">uint64</span> <span class="na">nonce</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// &quot;...the 160-bit address of the message call&#39;s recipient or, for a</span>
+  <span class="c1">// contract creation transaction, {}, used here to denote (the empty byte</span>
+  <span class="c1">// array); formally T_t.&quot;</span>
+  <span class="kt">bytes</span> <span class="k">to</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="c1">// The Burrow-EVM permissions to assign to this account</span>
+  <span class="n">EvmPermissions</span> <span class="na">permissions</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The following fields defined above shall be ignored for this version of the
+spec, but will be used in later versions:</p>
+<ul class="simple">
+<li>gas_price - Since this version of the spec does not include an incentive
+system or account balances, a gas_price is not meaningful since there is
+nothing to purchase gas with. Instead, the client supplied gas_limit will
+serve to limit the amount of gas used by a given transaction.</li>
+<li>value - Since this version of the spec does not include an incentive system
+or account balances, transferring value between accounts is not meaningful.</li>
+</ul>
+</div>
+<div class="section" id="execution">
+<h2>Execution<a class="headerlink" href="#execution" title="Permalink to this headline">¶</a></h2>
+<p>Transaction execution shall follow a simplified version of the Ethereum model
+described below:</p>
+<ol class="arabic">
+<li><p class="first">The payload will be unpacked and validated. If the payload is missing or the
+payload is malformed in anyway, the transaction is invalid.</p>
+</li>
+<li><p class="first">The header of the transaction is checked. If the header is malformed or does
+not have a public key, the transaction is invalid.</p>
+</li>
+<li><p class="first">The sender address shall be calculated by taking the rightmost 160 bits of
+the SHA3 hash of the public key used to submit the transaction. This public
+key is included in the transaction header. If the public key cannot be
+decoded or the sender cannot be determined from the public key, the
+transaction is invalid.</p>
+</li>
+<li><p class="first">If the transaction type is MESSAGE_CALL,</p>
+<blockquote>
+<div><ol class="loweralpha">
+<li><p class="first">The sender’s account will be retrieved from state using the sender
+address. If the account does not exist, the transaction is invalid.</p>
+</li>
+<li><p class="first">Check that the account has permissions to make message calls. If the
+account does not have permissions, the transaction is invalid.</p>
+</li>
+<li><p class="first">Check that the nonce in the transaction matches the nonce stored in state
+for the account. If it does not, the transaction is invalid.</p>
+</li>
+<li><p class="first">The receiver’s account will be retrieved from state using the address in
+the <cite>to</cite> field. If the address is invalid, the account does not exist, or
+the account does not contain any code, the transaction is invalid.</p>
+</li>
+<li><p class="first">The EVM will be called using:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The sender account for the <cite>caller</cite> argument</li>
+<li>The receiver account for the <cite>callee</cite> argument</li>
+<li>The <cite>code</cite> field in the receiver’s account for the <cite>code</cite> argument</li>
+<li>The <cite>data</cite> field in the transaction payload for the <cite>input</cite> argument.
+If no data field is set, the transaction is invalid.</li>
+<li>0 for the <cite>value</cite> argument.</li>
+<li>The <cite>gas_limit</cite> field in the transaction payload for the <cite>gas</cite>
+argument.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">The resulting output from the EVM shall be stored in a
+SethTransactionReceipt.</p>
+</li>
+<li><p class="first">The sender nonce is incremented.</p>
+</li>
+<li><p class="first">The sender and receiver accounts and associated storage shall be pushed
+to state.</p>
+</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">If the transaction is CREATE_CONTRACT_ACCOUNT,</p>
+<blockquote>
+<div><ol class="loweralpha">
+<li><p class="first">The sender’s account will be retrieved from state using the sender
+address. If the account does not exist, the transaction is invalid.</p>
+</li>
+<li><p class="first">Check that the account has permissions to make contract accounts. If the
+account does not have permissions, the transaction is invalid.</p>
+</li>
+<li><p class="first">Check that the nonce in the transaction matches the nonce stored in state
+for the account. If it does not, the transaction is invalid.</p>
+</li>
+<li><p class="first">A Contract Account shall be created at a new address derived from the
+sender account as described above. The sender account’s nonce shall then
+be incremented.</p>
+</li>
+<li><p class="first">Validate that that creating account has permissions to set permissions
+if permissions are included. If it does not have permission the
+transaction is invalid.</p>
+</li>
+<li><p class="first">If the <cite>init</cite> field is set in the transaction payload, the EVM will be
+called using:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The sender account for the <cite>caller</cite> and <cite>callee</cite> arguments</li>
+<li>The <cite>init</cite> field for the <cite>code</cite> argument</li>
+<li><cite>nil</cite> for the <cite>input</cite> argument.</li>
+<li>0 for the <cite>value</cite> argument.</li>
+<li>The <cite>gas_limit</cite> field in the transaction payload for the <cite>gas</cite>
+argument.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">The resulting output from the EVM shall be stored in the <cite>code</cite> field of
+the newly created account and shall be stored in a
+SethTransactionReceipt.</p>
+</li>
+<li><p class="first">The sender account, newly created account, and permissions shall be
+pushed to state.</p>
+</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">If the transaction is CREATE_EXTERNAL_ACCOUNT and the sender is new,</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>A External Account address shall be created. If an account already
+exists at that address, the transaction is invalid.</li>
+<li>Check global permissions to see if the account can be created. If the
+account cannot be created, the transaction is invalid. New accounts
+inherit global permissions. If global permissions are not set, give
+account all permissions.</li>
+<li>The resulting output shall be stored in the <cite>code</cite> field of
+the newly created account and shall be stored in a
+SethTransactionReceipt.</li>
+<li>The sender account, newly created account, and any permissions shall be
+pushed to state.</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">If the transaction is CREATE_EXTERNAL_ACCOUNT and the sender exists,</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>If the sender exists and wants to make more accounts, check that the
+creating account has permissions to make accounts. If the account does
+not have permissions, the transaction is invalid.</li>
+<li>Check that the nonce in the transaction matches the nonce stored in
+state for the account. If it does not, the transaction is invalid.</li>
+<li>A External Account address shall be created. If an account already
+exists at that address, the transaction is invalid.</li>
+<li>Validate that that creating account has permissions to set permissions
+if permissions are included. If it does not have permission the
+transaction is invalid.</li>
+<li>The resulting output shall be stored in the <cite>code</cite> field of
+the newly created account and shall be stored in a
+SethTransactionReceipt.</li>
+<li>The sender nonce is incremented.</li>
+<li>The sender account, newly created account, and any permissions shall be
+pushed to state.</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">If the transaction is SET_PERMISSIONS,</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>Check that permissions are set in the transaction. If there are not
+any permissions, the transaction is invalid.</li>
+<li>The sender’s account will be retrieved from state using the sender
+address. If the account does not exist, the transaction is invalid.</li>
+<li>Check that the account has permissions to make contract accounts. If the
+account does not have permissions, the transaction is invalid.</li>
+<li>Check that the nonce in the transaction matches the nonce stored in state
+for the account. If it does not, the transaction is invalid.</li>
+<li>Construct the address for the receiver for the permission change. If the
+the address cannot be constructed, the transaction is invalid.</li>
+<li>If the receiver does not exist, the transaction is invalid.</li>
+<li>The sender nonce is incremented.</li>
+<li>The sender account, receiver account permissions shall be
+pushed to state.</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">If an error occurs while the EVM is executing, the transaction is invalid.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="validator_registry_transaction_family.html" class="btn btn-neutral float-right" title="Validator Registry Transaction Family Specification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="xo_transaction_family.html" class="btn btn-neutral" title="XO Transaction Family Specification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.0rc1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

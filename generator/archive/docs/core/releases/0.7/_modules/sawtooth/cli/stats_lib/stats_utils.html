@@ -1,0 +1,581 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.cli.stats_lib.stats_utils &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>sawtooth.cli.stats_lib.stats_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sawtooth.cli.stats_lib.stats_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="k">import</span> <span class="n">reactor</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="k">import</span> <span class="n">Agent</span>
+<span class="kn">from</span> <span class="nn">twisted.web.client</span> <span class="k">import</span> <span class="n">readBody</span>
+<span class="kn">from</span> <span class="nn">twisted.web.http_headers</span> <span class="k">import</span> <span class="n">Headers</span>
+
+
+<div class="viewcode-block" id="ValidatorCommunications"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.ValidatorCommunications">[docs]</a><span class="k">class</span> <span class="nc">ValidatorCommunications</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">reactor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">completion_callback</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_callback</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_path</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_type</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_name</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_message</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">responding</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">json_stats</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response_code</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ValidatorCommunications.get_request"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.ValidatorCommunications.get_request">[docs]</a>    <span class="k">def</span> <span class="nf">get_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">ccb</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ecb</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">completion_callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_completion_default</span> <span class="k">if</span> <span class="n">ccb</span> <span class="ow">is</span> <span class="kc">None</span> \
+            <span class="k">else</span> <span class="n">ccb</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_default</span> <span class="k">if</span> <span class="n">ecb</span> <span class="ow">is</span> <span class="kc">None</span> \
+            <span class="k">else</span> <span class="n">ecb</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">request</span><span class="p">(</span>
+            <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
+            <span class="n">path</span><span class="p">,</span>
+            <span class="n">Headers</span><span class="p">({</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;sawtooth stats collector&#39;</span><span class="p">]}),</span>
+            <span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_request</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addErrback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_error</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">d</span></div>
+
+    <span class="k">def</span> <span class="nf">_handle_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">responding</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response_code</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">code</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">readBody</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_body</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+    <span class="k">def</span> <span class="nf">_handle_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">response_code</span> <span class="ow">is</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">json_stats</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">json_stats</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">completion_callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">json_stats</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">response_code</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_handle_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">failure</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_value</span> <span class="o">=</span> <span class="n">failure</span><span class="o">.</span><span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_type</span> <span class="o">=</span> <span class="n">failure</span><span class="o">.</span><span class="n">type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_name</span> <span class="o">=</span> <span class="n">failure</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_message</span> <span class="o">=</span> <span class="n">failure</span><span class="o">.</span><span class="n">getErrorMessage</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_callback</span><span class="p">(</span><span class="n">failure</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_completion_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ValidatorCommunications.get_request() &quot;</span>
+              <span class="s2">&quot;default completion handler&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_error_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ValidatorCommunications.get_request() &quot;</span>
+              <span class="s2">&quot;default error handler&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StatsModule"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsModule">[docs]</a><span class="k">class</span> <span class="nc">StatsModule</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="StatsModule.initialize"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsModule.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_list</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="StatsModule.connect"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsModule.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="StatsModule.collect"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsModule.collect">[docs]</a>    <span class="k">def</span> <span class="nf">collect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="StatsModule.process"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsModule.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="StatsModule.analyze"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsModule.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="StatsModule.report"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsModule.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="StatsModule.stop"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsModule.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="StatsModule.get_module"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsModule.get_module">[docs]</a>    <span class="k">def</span> <span class="nf">get_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_reference</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">module</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="n">class_reference</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">module</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;module not found&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">default</span></div></div>
+
+
+<div class="viewcode-block" id="DictWalker"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.DictWalker">[docs]</a><span class="k">class</span> <span class="nc">DictWalker</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unique_name_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unique_name_with_comma_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># generates a new set of key/value pairs</span>
+        <span class="c1"># each time walk() is called</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="c1"># contains a set of keys ordered by entry order</span>
+        <span class="c1"># that persists across calls to walk() - this lets you discover</span>
+        <span class="c1"># (and remember) new keys as the appear in the data stream</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">value_type_error_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value_has_comma_error_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="DictWalker.walk"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.DictWalker.walk">[docs]</a>    <span class="k">def</span> <span class="nf">walk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_traverse_dict</span><span class="p">(</span><span class="n">data_dict</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_traverse_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dict</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data_dict</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_traverse_dict</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">value_type_error_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;value_type_error&quot;</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">value_has_comma_error</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;value_comma_error&quot;</span>
+
+                <span class="n">unique_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unique_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name_list</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">unique_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">name_has_comma_error_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">unique_name_with_comma_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unique_name</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">unique_name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unique_name</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">unique_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">[</span><span class="n">unique_name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">name_list</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_list</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+<div class="viewcode-block" id="DictWalker.get_data"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.DictWalker.get_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># retrieve data using names so it is always reported in the same order</span>
+        <span class="c1"># this is important when using get_data() and get_names()</span>
+        <span class="c1"># to write header and data to csv file to ensure headers and data</span>
+        <span class="c1"># are written in the same order even if the source dictionary changes</span>
+        <span class="c1"># size (which it will - at minimum validators do not all process</span>
+        <span class="c1"># the same messages</span>
+        <span class="n">data_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;no_val&quot;</span><span class="p">)</span>
+            <span class="n">data_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data_list</span></div>
+
+<div class="viewcode-block" id="DictWalker.get_names"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.DictWalker.get_names">[docs]</a>    <span class="k">def</span> <span class="nf">get_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">name_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
+            <span class="n">name_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">name_list</span></div>
+
+    <span class="k">def</span> <span class="nf">_unique_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name_list</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">name_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">name</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">s</span></div>
+
+
+<div class="viewcode-block" id="TransactionRate"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.TransactionRate">[docs]</a><span class="k">class</span> <span class="nc">TransactionRate</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txn_history</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">deque</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous_block_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avg_txn_rate</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avg_block_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_txn_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="TransactionRate.calculate_txn_rate"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.TransactionRate.calculate_txn_rate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_txn_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_block_count</span><span class="p">,</span> <span class="n">current_txn_count</span><span class="p">,</span>
+                           <span class="n">window_size</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            current_block_count: current number of committed blocks</span>
+<span class="sd">            current_txn_count: current number of committed transactions</span>
+<span class="sd">            window_size: number of blocks to average over</span>
+
+<span class="sd">        Synopsis:</span>
+<span class="sd">            Each time the block count changes, a snapshot of the</span>
+<span class="sd">            current number of committed txns and current time is placed in</span>
+<span class="sd">            the queue.  If there are two or more entries in the queue, the</span>
+<span class="sd">            average txn rate and average block commit time is calculated.</span>
+<span class="sd">            If there are more than window_size transactions in the queue,</span>
+<span class="sd">            the oldest entry is popped from the queue.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            avg_txn_rate: average number of transactions per second</span>
+<span class="sd">            avg_block_time: average block commit time</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">current_block_count</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_block_count</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">previous_block_count</span> <span class="o">=</span> <span class="n">current_block_count</span>
+            <span class="n">current_block_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">txn_history</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">current_txn_count</span><span class="p">,</span> <span class="n">current_block_time</span><span class="p">])</span>
+            <span class="c1"># if less than 2 samples, can&#39;t do anything</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txn_history</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">avg_txn_rate</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">avg_block_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">avg_txn_rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">avg_block_time</span>
+            <span class="c1"># otherwise calculate from tip to tail; current is tip, [0] is tail</span>
+            <span class="n">past_txn_count</span><span class="p">,</span> <span class="n">past_block_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">txn_history</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">window_time</span> <span class="o">=</span> <span class="n">current_block_time</span> <span class="o">-</span> <span class="n">past_block_time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">window_txn_count</span> <span class="o">=</span> <span class="n">current_txn_count</span> <span class="o">-</span> <span class="n">past_txn_count</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">avg_txn_rate</span> <span class="o">=</span> \
+                <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">window_txn_count</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_time</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">avg_block_time</span> <span class="o">=</span> \
+                <span class="bp">self</span><span class="o">.</span><span class="n">window_time</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txn_history</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># if more than &quot;window_size&quot; samples, discard oldest</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txn_history</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">window_size</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">txn_history</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">avg_txn_rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">avg_block_time</span></div></div>
+
+
+<div class="viewcode-block" id="StatsCollector"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsCollector">[docs]</a><span class="k">class</span> <span class="nc">StatsCollector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statslist</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="StatsCollector.get_names"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsCollector.get_names">[docs]</a>    <span class="k">def</span> <span class="nf">get_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns: All data element names as list - for csv writer (header)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">statslist</span><span class="p">:</span>
+            <span class="n">statname</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">stat</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">stat</span><span class="o">.</span><span class="n">_fields</span><span class="p">:</span>
+                <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">statname</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">names</span></div>
+
+<div class="viewcode-block" id="StatsCollector.get_data"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsCollector.get_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns: All data element values in list - for csv writer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">statslist</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">stat</span><span class="p">:</span>
+                <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">values</span></div>
+
+<div class="viewcode-block" id="StatsCollector.get_data_as_dict"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsCollector.get_data_as_dict">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_as_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns: returns platform stats as dictionary - for stats web interface</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p_stats</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">statslist</span><span class="p">:</span>
+            <span class="n">statname</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">stat</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="n">p_stats</span><span class="p">[</span><span class="n">statname</span><span class="p">]</span> <span class="o">=</span> <span class="n">stat</span><span class="o">.</span><span class="n">_asdict</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">p_stats</span></div>
+
+<div class="viewcode-block" id="StatsCollector.pprint_stats"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsCollector.pprint_stats">[docs]</a>    <span class="k">def</span> <span class="nf">pprint_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">p_stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_as_dict</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">p_stats</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="get_public_attrs_as_dict"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.get_public_attrs_as_dict">[docs]</a><span class="k">def</span> <span class="nf">get_public_attrs_as_dict</span><span class="p">(</span><span class="n">class_instance</span><span class="p">):</span>
+    <span class="c1"># walk dictionary of class instance objects</span>
+    <span class="c1"># filter out built-in attributes, private attributes, functions</span>
+    <span class="c1"># requires private attributes to start with underscore</span>
+    <span class="n">stats</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">class_instance</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span> <span class="ow">and</span> \
+                <span class="ow">not</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="ow">and</span> \
+                <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+            <span class="n">stats</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">stats</span></div>
+
+
+<div class="viewcode-block" id="named_tuple_init"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.named_tuple_init">[docs]</a><span class="k">def</span> <span class="nf">named_tuple_init</span><span class="p">(</span><span class="n">named_tuple</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">defaults</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Initialize the instance rather than the named tuple itself because</span>
+<span class="sd">    some values have to be initialized at runtime</span>
+<span class="sd">    Args:</span>
+<span class="sd">        named_tuple: named tuple instance of which is to be returned</span>
+<span class="sd">        default: default value to be applied to all fields</span>
+<span class="sd">        defaults: dict of default values to be applied to specified fields</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        an initialized instance of the named_tuple</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">nt</span> <span class="o">=</span> <span class="n">named_tuple</span>
+    <span class="n">default_map</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">nt</span><span class="o">.</span><span class="n">_fields</span><span class="p">:</span>
+        <span class="n">default_map</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">default</span>
+
+    <span class="k">if</span> <span class="n">defaults</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">defaults</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">default_map</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+
+    <span class="n">nti</span> <span class="o">=</span> <span class="n">named_tuple</span><span class="p">(</span><span class="o">**</span><span class="n">default_map</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">nti</span></div>
+
+
+<div class="viewcode-block" id="SignalHandler"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.SignalHandler">[docs]</a><span class="k">class</span> <span class="nc">SignalHandler</span><span class="p">(</span><span class="n">StatsModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SignalHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sig_user1</span> <span class="o">=</span> <span class="kc">False</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

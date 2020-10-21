@@ -1,0 +1,312 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installing and Testing PBFT &mdash; Sawtooth PBFT latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Glossary" href="glossary.html" />
+    <link rel="prev" title="Configuring PBFT" href="configuring-pbft.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Sawtooth PBFT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-sawtooth-pbft.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using-pbft-consensus.html">Using PBFT Consensus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">PBFT Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuring-pbft.html">Configuring PBFT</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installing and Testing PBFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sawtooth PBFT</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Installing and Testing PBFT</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/installing-and-running-pbft.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installing-and-testing-pbft">
+<h1>Installing and Testing PBFT<a class="headerlink" href="#installing-and-testing-pbft" title="Permalink to this headline">¶</a></h1>
+<p>This procedure describes how to install PBFT, start a four-node network in
+Docker containers, and run a basic liveness test.</p>
+<p><strong>Prerequisites:</strong> <a class="reference external" href="https://www.docker.com/">Docker and Docker Compose</a> must
+be installed.</p>
+<ol class="arabic">
+<li><p>Clone the PBFT repository.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone https://github.com/hyperledger/sawtooth-pbft.git
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Run the following commands to install the dependencies for PBFT and connect
+to the interactive shell container, <code class="docutils literal notranslate"><span class="pre">sawtooth-dev-pbft</span></code>.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> sawtooth-pbft
+<span class="gp">$</span> docker build . -f Dockerfile -t sawtooth-dev-pbft
+<span class="gp">$</span> docker run -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/project/sawtooth-pbft -it sawtooth-dev-pbft bash
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you have already configured a <code class="docutils literal notranslate"><span class="pre">cargo-registry</span></code> Docker volume, use
+the following <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code> command to speed up the build time in the
+next step.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> docker run -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/project/sawtooth-pbft <span class="se">\</span>
+-v cargo-registry:/root/.cargo/registry <span class="se">\</span>
+-it sawtooth-dev-pbft bash
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</li>
+<li><p>Build the PBFT project.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cargo build
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>After the project has finished building, exit the <code class="docutils literal notranslate"><span class="pre">sawtooth-dev-pbft</span></code>
+shell container.</p></li>
+<li><p>Run the PBFT test script on your host system from the <code class="docutils literal notranslate"><span class="pre">sawtooth-pbft</span></code>
+directory.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">%</span> bin/run_docker_test tests/test_liveness.yaml
+</pre></div>
+</div>
+</div></blockquote>
+<p>This command builds several Docker images, starts up a network of four
+Sawtooth nodes with PBFT consensus, then goes through a liveness test of
+55 blocks, as defined in the Docker Compose file <code class="docutils literal notranslate"><span class="pre">test_liveness.yaml</span></code>.
+The default log level is <code class="docutils literal notranslate"><span class="pre">INFO</span></code>, so the test script displays a large amount
+of information as it executes.</p>
+<p>Tips:</p>
+<ul class="simple">
+<li><p>This script has several options, such as <code class="docutils literal notranslate"><span class="pre">--clean</span></code>, <code class="docutils literal notranslate"><span class="pre">--no-build</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">--timeout</span></code>. For more information, execute <code class="docutils literal notranslate"><span class="pre">run_docker_test</span> <span class="pre">--help</span></code>.</p></li>
+<li><p>To run a different test, specify a different Compose file for
+<code class="docutils literal notranslate"><span class="pre">run_docker_test</span></code>. The <code class="docutils literal notranslate"><span class="pre">sawtooth-pbft/tests/</span></code> directory includes several
+Docker Compose files for testing, such as <code class="docutils literal notranslate"><span class="pre">grafana.yaml</span></code>, <code class="docutils literal notranslate"><span class="pre">client.yaml</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">pbft_unit_tests.yaml</span></code>.</p></li>
+<li><p>To adjust the <span class="xref std std-ref">&lt;on-chain-settings-label&gt;</span>, edit the testing Compose
+file and change the <code class="docutils literal notranslate"><span class="pre">sawset</span> <span class="pre">proposal</span> <span class="pre">create</span></code> parameter for the genesis
+validator container (<code class="docutils literal notranslate"><span class="pre">validator-0</span></code>). For more information, see
+<a class="reference internal" href="configuring-pbft.html#on-chain-settings-label"><span class="std std-ref">PBFT On-Chain Settings</span></a>. This example shows the settings in
+<code class="docutils literal notranslate"><span class="pre">test_liveness.yaml</span></code>:</p></li>
+</ul>
+<blockquote>
+<div><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">validator-0</span>
+   <span class="l l-Scalar l-Scalar-Plain">...</span>
+   <span class="l l-Scalar l-Scalar-Plain">sawset proposal create \</span>
+     <span class="l l-Scalar l-Scalar-Plain">...</span>
+     <span class="l l-Scalar l-Scalar-Plain">sawtooth.consensus.algorithm.name=pbft \</span>
+     <span class="l l-Scalar l-Scalar-Plain">sawtooth.consensus.algorithm.version=1.0 \</span>
+     <span class="l l-Scalar l-Scalar-Plain">sawtooth.consensus.pbft.members=\\[&#39;\\\&quot;&#39;$$(cat /etc/sawtooth/keys/validator.pub)&#39;\\\&quot;&#39;,&#39;\\\&quot;&#39;$$(cat /etc/sawtooth/keys/validator-1.pub)&#39;\\\&quot;&#39;,&#39;\\\&quot;&#39;$$(cat /etc/sawtooth/keys/validator-2.pub)&#39;\\\&quot;&#39;,&#39;\\\&quot;&#39;$$(cat /etc/sawtooth/keys/validator-3.pub)&#39;\\\&quot;&#39;\\] \</span>
+   <span class="l l-Scalar l-Scalar-Plain">...</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul>
+<li><p>To adjust the <span class="xref std std-ref">&lt;cli-options-label&gt;</span>, edit the testing Compose file and
+change the options used with the <code class="docutils literal notranslate"><span class="pre">pbft-engine</span></code> command for each PBFT
+container. For more information, see <span class="xref std std-ref">&lt;cli-options-label&gt;</span>. This
+example shows the options in <code class="docutils literal notranslate"><span class="pre">test_liveness.yaml</span></code> for the <code class="docutils literal notranslate"><span class="pre">pbft-0</span></code>
+container:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">pbft-0</span>
+  <span class="l l-Scalar l-Scalar-Plain">...</span>
+  <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./target/debug/pbft-engine --connect tcp://validator-0:5050 -vv</span>
+  <span class="l l-Scalar l-Scalar-Plain">...</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="glossary.html" class="btn btn-neutral float-right" title="Glossary" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="configuring-pbft.html" class="btn btn-neutral float-left" title="Configuring PBFT" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018 Bitwise IO, Inc
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

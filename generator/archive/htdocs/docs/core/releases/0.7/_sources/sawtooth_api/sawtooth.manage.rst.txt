@@ -1,0 +1,22 @@
+sawtooth\.manage package
+========================
+
+.. automodule:: sawtooth.manage
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+
+   sawtooth.manage.daemon
+   sawtooth.manage.docker
+   sawtooth.manage.node
+   sawtooth.manage.simple
+   sawtooth.manage.subproc
+   sawtooth.manage.utils
+   sawtooth.manage.vnm
+   sawtooth.manage.wrap
+

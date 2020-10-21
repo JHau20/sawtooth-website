@@ -1,0 +1,416 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>processor.context &mdash; Sawtooth v1.0.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.2 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>processor.context</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for processor.context</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">sawtooth_sdk.protobuf.validator_pb2</span> <span class="k">import</span> <span class="n">Message</span>
+<span class="kn">from</span> <span class="nn">sawtooth_sdk.protobuf</span> <span class="k">import</span> <span class="n">state_context_pb2</span>
+<span class="kn">from</span> <span class="nn">sawtooth_sdk.protobuf</span> <span class="k">import</span> <span class="n">events_pb2</span>
+<span class="kn">from</span> <span class="nn">sawtooth_sdk.processor.exceptions</span> <span class="k">import</span> <span class="n">InternalError</span>
+<span class="kn">from</span> <span class="nn">sawtooth_sdk.processor.exceptions</span> <span class="k">import</span> <span class="n">AuthorizationException</span>
+
+
+<div class="viewcode-block" id="Context"><a class="viewcode-back" href="../../sdks/python_sdk/processor.html#processor.context.Context">[docs]</a><span class="k">class</span> <span class="nc">Context</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Context provides an interface for getting, setting, and deleting</span>
+<span class="sd">    validator state. All validator interactions by a handler should be</span>
+<span class="sd">    through a Context instance.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _stream (sawtooth.client.stream.Stream): client grpc communication</span>
+<span class="sd">        _context_id (str): the context_id passed in from the validator</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">,</span> <span class="n">context_id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stream</span> <span class="o">=</span> <span class="n">stream</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_context_id</span> <span class="o">=</span> <span class="n">context_id</span>
+
+<div class="viewcode-block" id="Context.get_state"><a class="viewcode-back" href="../../sdks/python_sdk/processor.html#processor.context.Context.get_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addresses</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get_state queries the validator state for data at each of the</span>
+<span class="sd">        addresses in the given list. The addresses that have been set</span>
+<span class="sd">        are returned in a list.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            addresses (list): the addresses to fetch</span>
+<span class="sd">            timeout: optional timeout, in seconds</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            results (list): a list of Entries (address, data), for the</span>
+<span class="sd">            addresses that have a value</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AuthorizationException</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpStateGetRequest</span><span class="p">(</span>
+            <span class="n">context_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_context_id</span><span class="p">,</span>
+            <span class="n">addresses</span><span class="o">=</span><span class="n">addresses</span><span class="p">)</span>
+        <span class="n">response_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="o">.</span><span class="n">send</span><span class="p">(</span>
+            <span class="n">Message</span><span class="o">.</span><span class="n">TP_STATE_GET_REQUEST</span><span class="p">,</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">())</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span><span class="o">.</span><span class="n">content</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpStateGetResponse</span><span class="p">()</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span><span class="n">response_string</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> \
+                <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpStateGetResponse</span><span class="o">.</span><span class="n">AUTHORIZATION_ERROR</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AuthorizationException</span><span class="p">(</span>
+                <span class="s1">&#39;Tried to get unauthorized address: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">addresses</span><span class="p">))</span>
+        <span class="n">entries</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">entries</span> <span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">entries</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
+<div class="viewcode-block" id="Context.set_state"><a class="viewcode-back" href="../../sdks/python_sdk/processor.html#processor.context.Context.set_state">[docs]</a>    <span class="k">def</span> <span class="nf">set_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        set_state requests that each address in the provided dictionary be</span>
+<span class="sd">        set in validator state to its corresponding value. A list is</span>
+<span class="sd">        returned containing the successfully set addresses.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            entries (dict): dictionary where addresses are the keys and data is</span>
+<span class="sd">                the value.</span>
+<span class="sd">            timeout: optional timeout, in seconds</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            addresses (list): a list of addresses that were set</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AuthorizationException</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state_entries</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpStateEntry</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">entries</span><span class="p">[</span><span class="n">e</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">entries</span>
+        <span class="p">]</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpStateSetRequest</span><span class="p">(</span>
+            <span class="n">entries</span><span class="o">=</span><span class="n">state_entries</span><span class="p">,</span>
+            <span class="n">context_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_context_id</span><span class="p">)</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpStateSetResponse</span><span class="p">()</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">TP_STATE_SET_REQUEST</span><span class="p">,</span>
+                              <span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> \
+                <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpStateSetResponse</span><span class="o">.</span><span class="n">AUTHORIZATION_ERROR</span><span class="p">:</span>
+            <span class="n">addresses</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">address</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">]</span>
+            <span class="k">raise</span> <span class="n">AuthorizationException</span><span class="p">(</span>
+                <span class="s1">&#39;Tried to set unauthorized address: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">addresses</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">addresses</span></div>
+
+<div class="viewcode-block" id="Context.delete_state"><a class="viewcode-back" href="../../sdks/python_sdk/processor.html#processor.context.Context.delete_state">[docs]</a>    <span class="k">def</span> <span class="nf">delete_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addresses</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        delete_state requests that each of the provided addresses be unset</span>
+<span class="sd">        in validator state. A list of successfully deleted addresses</span>
+<span class="sd">        is returned.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            addresses (list): list of addresses to delete</span>
+<span class="sd">            timeout: optional timeout, in seconds</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            addresses (list): a list of addresses that were deleted</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AuthorizationException</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpStateDeleteRequest</span><span class="p">(</span>
+            <span class="n">context_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_context_id</span><span class="p">,</span>
+            <span class="n">addresses</span><span class="o">=</span><span class="n">addresses</span><span class="p">)</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpStateDeleteResponse</span><span class="p">()</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">Message</span><span class="o">.</span><span class="n">TP_STATE_DELETE_REQUEST</span><span class="p">,</span>
+                              <span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> \
+                <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpStateDeleteResponse</span><span class="o">.</span><span class="n">AUTHORIZATION_ERROR</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">AuthorizationException</span><span class="p">(</span>
+                <span class="s1">&#39;Tried to delete unauthorized address: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">addresses</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">addresses</span></div>
+
+<div class="viewcode-block" id="Context.add_receipt_data"><a class="viewcode-back" href="../../sdks/python_sdk/processor.html#processor.context.Context.add_receipt_data">[docs]</a>    <span class="k">def</span> <span class="nf">add_receipt_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a blob to the execution result for this transaction.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (bytes): The data to add.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpReceiptAddDataRequest</span><span class="p">(</span>
+            <span class="n">context_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_context_id</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpReceiptAddDataResponse</span><span class="p">()</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="o">.</span><span class="n">send</span><span class="p">(</span>
+                <span class="n">Message</span><span class="o">.</span><span class="n">TP_RECEIPT_ADD_DATA_REQUEST</span><span class="p">,</span>
+                <span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpReceiptAddDataResponse</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InternalError</span><span class="p">(</span>
+                <span class="s2">&quot;Failed to add receipt data: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">data</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="Context.add_event"><a class="viewcode-back" href="../../sdks/python_sdk/processor.html#processor.context.Context.add_event">[docs]</a>    <span class="k">def</span> <span class="nf">add_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_type</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a new event to the execution result for this transaction.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            event_type (str): This is used to subscribe to events. It should be</span>
+<span class="sd">                globally unique and describe what, in general, has occured.</span>
+<span class="sd">            attributes (list of (str, str) tuples): Additional information</span>
+<span class="sd">                about the event that is transparent to the validator.</span>
+<span class="sd">                Attributes can be used by subscribers to filter the type of</span>
+<span class="sd">                events they receive.</span>
+<span class="sd">            data (bytes): Additional information about the event that is opaque</span>
+<span class="sd">                to the validator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">attributes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">attributes</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">event</span> <span class="o">=</span> <span class="n">events_pb2</span><span class="o">.</span><span class="n">Event</span><span class="p">(</span>
+            <span class="n">event_type</span><span class="o">=</span><span class="n">event_type</span><span class="p">,</span>
+            <span class="n">attributes</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">events_pb2</span><span class="o">.</span><span class="n">Event</span><span class="o">.</span><span class="n">Attribute</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">attributes</span>
+            <span class="p">],</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpEventAddRequest</span><span class="p">(</span>
+            <span class="n">context_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_context_id</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="n">event</span><span class="p">)</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpEventAddResponse</span><span class="p">()</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">ParseFromString</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stream</span><span class="o">.</span><span class="n">send</span><span class="p">(</span>
+                <span class="n">Message</span><span class="o">.</span><span class="n">TP_EVENT_ADD_REQUEST</span><span class="p">,</span>
+                <span class="n">request</span><span class="p">)</span><span class="o">.</span><span class="n">result</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">state_context_pb2</span><span class="o">.</span><span class="n">TpEventAddResponse</span><span class="o">.</span><span class="n">ERROR</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InternalError</span><span class="p">(</span>
+                <span class="s2">&quot;Failed to add event: (</span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">event_type</span><span class="p">,</span> <span class="n">attributes</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'v1.0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

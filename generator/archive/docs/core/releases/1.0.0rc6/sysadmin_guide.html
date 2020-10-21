@@ -1,0 +1,290 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>System Administrator’s Guide &mdash; Sawtooth v1.0.0rc6 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc6 documentation" href="index.html"/>
+        <link rel="next" title="Installing Hyperledger Sawtooth" href="sysadmin_guide/installation.html"/>
+        <link rel="prev" title="Subscribing to Events" href="app_developers_guide/event_subscriptions.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">System Administrator&#8217;s Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/installation.html">Installing Hyperledger Sawtooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/systemd.html">Running Sawtooth as a Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth.html">Configuring Sawtooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/permissioning.html">Permissioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configure_sgx.html">Using Sawtooth with the SGX Implementation of PoET</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="contents.html">Docs</a> &raquo;</li>
+        
+      <li>System Administrator&#8217;s Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/sysadmin_guide.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="system-administrator-s-guide">
+<h1>System Administrator&#8217;s Guide<a class="headerlink" href="#system-administrator-s-guide" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide/installation.html">Installing Hyperledger Sawtooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide/systemd.html">Running Sawtooth as a Service</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/systemd.html#viewing-console-output">Viewing Console Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/systemd.html#create-genesis-block">Create Genesis Block</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/systemd.html#running-sawtooth">Running Sawtooth</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth.html">Configuring Sawtooth</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/validator_configuration_file.html">Validator Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/rest_api_configuration_file.html">REST API Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/cli_configuration.html">Sawtooth CLI Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/poet_sgx_enclave_configuration_file.html">PoET SGX Enclave Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/path_configuration_file.html">Path Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/identity_tp_configuration.html">Identity Transaction Processor Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/settings_tp_configuration.html">Settings Transaction Processor Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/xo_tp_configuration.html">XO Transaction Processor Configuration File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/log_configuration.html">Log Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide/rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/rest_auth_proxy.html#forwarding-url-info-with-headers">Forwarding URL Info with Headers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/rest_auth_proxy.html#apache-proxy-setup-guide">Apache Proxy Setup Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide/permissioning.html">Permissioning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/permissioning.html#transactor-permissioning">Transactor Permissioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/permissioning.html#validator-key-permissioning">Validator Key Permissioning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide/configure_sgx.html">Using Sawtooth with the SGX Implementation of PoET</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configure_sgx.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configure_sgx.html#install-sgx-psw">Install SGX/PSW</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configure_sgx.html#configuring-sawtooth-to-use-sgx">Configuring Sawtooth to Use SGX</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sysadmin_guide/installation.html" class="btn btn-neutral float-right" title="Installing Hyperledger Sawtooth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="app_developers_guide/event_subscriptions.html" class="btn btn-neutral" title="Subscribing to Events" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'v1.0.0rc6',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

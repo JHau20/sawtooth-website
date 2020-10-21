@@ -1,0 +1,548 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="Marketplace Navigator User’s Guide" href="../mktnav_users_guide.html"/>
+        <link rel="next" title="Scenarios" href="scenarios.html"/>
+        <link rel="prev" title="Marketplace Navigator User’s Guide" href="../mktnav_users_guide.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#before-you-begin">Before You Begin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#navigator-tasks">Navigator Tasks</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#account-creation-and-setup">Account Creation and Setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#creating-assets-and-holdings">Creating Assets and Holdings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#offers-and-transactions">Offers and Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-participant">Creating a Participant</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#creating-a-participant-with-a-new-key">Creating a Participant with a New Key</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#creating-a-participant-with-an-existing-key">Creating a Participant with an Existing Key</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#signing-in-an-existing-participant">Signing in an Existing Participant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-an-asset">Creating an Asset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-holding">Creating a Holding</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-an-offer">Creating an Offer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#accepting-an-offer">Accepting an Offer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#chaining-offers-arbitrage">Chaining Offers (Arbitrage)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#transfering-assets-directly">Transfering Assets Directly</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="scenarios.html">Scenarios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference.html">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/mktnav_users_guide/tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Marketplace Navigator is a browser-based GUI designed to be used with the Sawtooth Lake Marketplace transaction family. It allows users to easily register <em>Participants</em>, create and exchange <em>Assets</em> and <em>Holdings</em>, and even view the current state of the blockchain.</p>
+</div>
+<div class="section" id="before-you-begin">
+<h2>Before You Begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h2>
+<p>This guide covers the use of the Navigator UI, not the initial setup, or the intricacies of running your own validators. For developers running these systems for the first time, begin with the <a class="reference internal" href="../tutorial.html"><span class="doc">CLI tutorial</span></a>, and refer to the the readme files in the <code class="docutils literal"><span class="pre">/navigator</span></code> directory.</p>
+</div>
+<div class="section" id="navigator-tasks">
+<h2>Navigator Tasks<a class="headerlink" href="#navigator-tasks" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="account-creation-and-setup">
+<h3>Account Creation and Setup<a class="headerlink" href="#account-creation-and-setup" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="#creating-a-participant">Creating a Participant</a></li>
+<li><a class="reference internal" href="#signing-in-an-existing-participant">Signing in an Existing Participant</a></li>
+</ul>
+</div>
+<div class="section" id="creating-assets-and-holdings">
+<h3>Creating Assets and Holdings<a class="headerlink" href="#creating-assets-and-holdings" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="#creating-an-asset">Creating an Asset</a></li>
+<li><a class="reference internal" href="#creating-a-holding">Creating a Holding</a></li>
+</ul>
+</div>
+<div class="section" id="offers-and-transactions">
+<h3>Offers and Transactions<a class="headerlink" href="#offers-and-transactions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="#creating-an-offer">Creating an Offer</a></li>
+<li><a class="reference internal" href="#accepting-an-offer">Accepting an Offer</a></li>
+<li><a class="reference internal" href="#chaining-offers-arbitrage">Chaining Offers (Arbitrage)</a></li>
+<li><a class="reference internal" href="#transfering-assets-directly">Transfering Assets Directly</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="creating-a-participant">
+<h2>Creating a Participant<a class="headerlink" href="#creating-a-participant" title="Permalink to this headline">¶</a></h2>
+<p>The first time you sign into Marketplace Navigator you will be prompted to either create or import a &#8220;Wallet Import Format&#8221; (WIF) key. This is a unique cryptographic string used by the blockchain to authorize transactions, as well as by Marketplace Navigator to confirm your identity and sign you in.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Beware! It is not possible to change or recover this key if it is lost!</p>
+</div>
+</div></blockquote>
+<div class="section" id="creating-a-participant-with-a-new-key">
+<h3>Creating a Participant with a New Key<a class="headerlink" href="#creating-a-participant-with-a-new-key" title="Permalink to this headline">¶</a></h3>
+<p>To create a <em>Participant</em> with a new WIF key:</p>
+<ol class="arabic">
+<li><p class="first">Open Marketplace Navigator in your browser, or sign out of Marketplace Navigator if already signed in. You should see this screen:</p>
+<img alt="Welcome Page" src="../_images/intro.png" />
+</li>
+<li><p class="first">Click <strong>Generate WIF</strong>, and a key will be generated and saved to your browser&#8217;s local storage.</p>
+</li>
+<li><p class="first">Before proceeding to account creation, you must save the generated key by:</p>
+<ul class="simple">
+<li>Clicking <strong>Download Key</strong> to download the key in a text file.</li>
+<li>Or by clicking <strong>Copy Key to Clipboad</strong> to copy the key, which can then be pasted wherever you would like it to be saved.</li>
+</ul>
+</li>
+<li><p class="first">Click <strong>Create Participant</strong>.</p>
+</li>
+<li><p class="first">Enter a <strong>Name</strong> for yourself.</p>
+</li>
+<li><p class="first">(Optional) Enter a <strong>Description</strong>.</p>
+</li>
+<li><p class="first">Click <strong>Submit</strong>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Participants&#8217; names must be unique. If you encounter a server error at this point, it could be caused by using a name that has already been taken.</p>
+</div>
+<ul class="simple">
+<li>If participant creation was successful the provisioning screen should appear:</li>
+</ul>
+<img alt="Provisioning a Participant" src="../_images/provisioning.png" />
+<ul class="simple">
+<li>After several minutes, the participant is fully provisioned, and you will be brought to the user dashboard:</li>
+</ul>
+<img alt="User Dashboard" src="../_images/dashboard.png" />
+</li>
+</ol>
+</div>
+<div class="section" id="creating-a-participant-with-an-existing-key">
+<h3>Creating a Participant with an Existing Key<a class="headerlink" href="#creating-a-participant-with-an-existing-key" title="Permalink to this headline">¶</a></h3>
+<p>Note that this is not the same as <a class="reference internal" href="#signing-in-an-existing-participant">Signing in an Existing Participant</a>, which is described below. If you have previously generated a WIF key you would like to use in creating a <em>new</em> participant, follow these steps:</p>
+<ol class="arabic simple">
+<li>Open Marketplace Navigator as described above.</li>
+<li>Click <strong>Import WIF</strong>.</li>
+<li>Input your WIF key by:<ul>
+<li>Pasting the key into the text box labeled <em>&#8220;Paste WIF key&#8221;</em>.</li>
+<li>Or by clicking <strong>Uploade WIF File</strong>, to upload the <em>&#8221;.wif&#8221;</em> file Marketplace Navigator originally generated, or any plain text file which contains <em>only</em> the WIF key you wish to upload.</li>
+</ul>
+</li>
+<li>Click <strong>Submit</strong>.</li>
+<li>Fill in participant info following the same directions described above (steps 5-7).</li>
+</ol>
+</div>
+</div>
+<div class="section" id="signing-in-an-existing-participant">
+<h2>Signing in an Existing Participant<a class="headerlink" href="#signing-in-an-existing-participant" title="Permalink to this headline">¶</a></h2>
+<p>You can sign in an existing account to Marketplace Navigator using a similar process to <a class="reference internal" href="#creating-a-participant-with-an-existing-key">Creating a Participant with an Existing Key</a> described above. All you need is your WIF key.</p>
+<ol class="arabic simple">
+<li>Open Marketplace Navigator.</li>
+<li>Click <strong>Import WIF</strong>.</li>
+<li>Input your WIF key by:<ul>
+<li>Pasting the key into the text box labeled <em>&#8220;Paste WIF key&#8221;</em>.</li>
+<li>Or clicking <strong>Uploade WIF File</strong>, to upload the <em>&#8221;.wif&#8221;</em> file Marketplace Navigator originally generated, or any plain text file which contains <em>only</em> the WIF key you wish to upload.</li>
+</ul>
+</li>
+<li>Click <strong>Submit</strong>, and you will be taken to the user dashboard.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Beyond this point, the directions all assume you are successfully signed in.</p>
+</div>
+</div>
+<div class="section" id="creating-an-asset">
+<h2>Creating an Asset<a class="headerlink" href="#creating-an-asset" title="Permalink to this headline">¶</a></h2>
+<p><em>Assets</em> are types of goods which can be exchanged on the marketplace. They can include anything from US Dollars, to barrels of oil, to cookies. Assets are further organized into <em>AssetTypes</em>, such as currency or baked goods. Any participant can create new assets and types, and many kinds of markets to be approximated.</p>
+<ol class="arabic">
+<li><p class="first">From the user dashboard, click on the <strong>+</strong> button to the right of the <em>&#8220;Assets&#8221;</em> heading:</p>
+<img alt="Creating an Asset" src="../_images/create_asset.png" />
+</li>
+<li><p class="first">Enter a <strong>Name</strong> for the asset. Like most names in Marketplace, it <em>must</em> begin with a <em>&#8220;/&#8221;</em> character, and generally follows a naming convention similar to a computer directory. For example: <em>&#8220;/currency/usd&#8221;</em>. This field can be left blank, but that will generate a long randomized identifier, and is generally not recommended.</p>
+</li>
+<li><p class="first">(Optional) Enter a <strong>Description</strong>.</p>
+</li>
+<li><p class="first">Enter a <strong>Type</strong> by either:</p>
+<ul>
+<li><p class="first">Selecting an existing asset type from the dropdown menu.</p>
+</li>
+<li><p class="first">Or by using the following directions to create a new asset type:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Click <strong>Add Type</strong>.</li>
+<li>In the pop-up that appears, Enter a <strong>Name</strong>. (the same naming rules apply).</li>
+<li>(Optional) Enter a <strong>Desciption</strong>.</li>
+<li>Select whether or not this asset type should be <em>&#8220;restricted&#8221;</em>. If selected, only the participant who created the type will be able to create new assets with it.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You may click <strong>Discard</strong> to close the <strong>Add Type</strong> pop up.</p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p class="first">Use the checkboxes at the bottom to choose which options should apply to this asset:</p>
+<ul class="simple">
+<li><strong>Restricted</strong> - Only the creating participant will be able to create new <em>Holdings</em> of this asset with quantities greater than zero.</li>
+<li><strong>Consumable</strong> - When spent, this asset is consumed. If disabled, it is effectively infinite.</li>
+<li><strong>Divisible</strong> - This asset can exist in fractional form. In other words, it will be possible to exchange half of one (or less).</li>
+</ul>
+</li>
+<li><p class="first">Click <strong>Submit</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="creating-a-holding">
+<h2>Creating a Holding<a class="headerlink" href="#creating-a-holding" title="Permalink to this headline">¶</a></h2>
+<p><em>Holdings</em> are containers where actual quantities of specific <em>Assets</em> are held. Each may only hold one kind of asset, and in order to execute <em>Exchanges</em>, participants must have holdings in both the assets they are providing and receiving.</p>
+<ol class="arabic">
+<li><p class="first">From the user dashboard, click on the <strong>+</strong> button to the right of the <em>&#8220;Holdings&#8221;</em> heading:</p>
+<img alt="Creating an Asset" src="../_images/create_holding.png" />
+</li>
+<li><p class="first">Enter a <strong>Name</strong> for the holding. Once again the name <em>must</em> begin with a <em>&#8220;/&#8221;</em>, and generally follows a convention similar to computer directories, such as <em>&#8220;/accounts/checking&#8221;</em>. If left blank, a random identifier will be generated for the holding.</p>
+</li>
+<li><p class="first">(Optional) Enter a <strong>Description</strong>.</p>
+</li>
+<li><p class="first">Select an <strong>Asset</strong> from the dropdown menu.</p>
+</li>
+<li><p class="first">Enter a <strong>Count</strong> for your holding.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are not the creator of the asset, and that asset is <em>&#8220;restricted&#8221;</em>, you can still create holdings for it, but you must enter a count of zero.</p>
+</div>
+</li>
+<li><p class="first">Click <strong>Submit</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="creating-an-offer">
+<h2>Creating an Offer<a class="headerlink" href="#creating-an-offer" title="Permalink to this headline">¶</a></h2>
+<p><em>Offers</em> are open offers of exchange, which any participant or multiple participants can accept. In order to create an offer you must have <em>Holdings</em> in both the <em>Asset</em> you are providing and the one you expect to receive in return, though the latter can be empty (i.e. have a count of zero).</p>
+<ol class="arabic">
+<li><p class="first">Click on the <strong>Create Offer</strong> button in the top right of your screen.</p>
+</li>
+<li><p class="first">Enter a <strong>Name</strong> for the offer. Once again the name <em>must</em> begin with a <em>&#8220;/&#8221;</em>, and generally follows a convention similar to computer directories, such as <em>&#8220;/orders/cookies&#8221;</em>. If left blank, a random identifier will be generated for the holding.</p>
+</li>
+<li><p class="first">(Optional) Enter a <strong>Description</strong>.</p>
+</li>
+<li><p class="first">Select the <strong>Input</strong> holding from the dropdown. This is where payments you receive will go, and those payments will be of the kind of asset in the holding.</p>
+</li>
+<li><p class="first">Enter the <strong>Amount</strong> of input asset you expect to receive.</p>
+</li>
+<li><p class="first">Select an <strong>Output</strong> holding from the dropdown. This is where the payouts you are offering will come from.</p>
+</li>
+<li><p class="first">Enter an <strong>Amount</strong> for the output asset.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Using the <strong>Amount</strong> fields, you are actually creating an exchange ratio, not a fixed sum. So setting amounts of 50 and 100 is equivalent to 5 and 10, 1 and 2, and so on. There is currently no way to create a fixed indivisible package like &#8220;$10 for half a dozen cookies&#8221;.</p>
+</div>
+</li>
+<li><p class="first">Enter a <strong>Minimum</strong>. This is the lowest quantity of the input asset that can be used to fulfill the offer.</p>
+</li>
+<li><p class="first">Enter a <strong>Maximum</strong>, the highest quantity of an input that can be used.</p>
+</li>
+<li><p class="first">Select how repeatable the offer should be:</p>
+<ul class="simple">
+<li><strong>Any</strong> - the offer can be fulfilled an unlimited number of times (or until the output holding is empty).</li>
+<li><strong>Execute Once</strong> - it is a one time offer, and will close after being fulfilled once.</li>
+<li><strong>Execute Once per Participant</strong> - Each participant in the marketplace may fulfill the offer once.</li>
+</ul>
+</li>
+<li><p class="first">Click <strong>Submit</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="accepting-an-offer">
+<h2>Accepting an Offer<a class="headerlink" href="#accepting-an-offer" title="Permalink to this headline">¶</a></h2>
+<p>In order to accept an offer made by another participant, you must have <em>Holdings</em> for both the <em>Asset</em> you need to pay with, and the asset you expect to receive in return, though it is possible to create the latter as part of the exchange process.</p>
+<ol class="arabic">
+<li><p class="first">From the user dashboard, click on <strong>Latest Open Offers</strong>.</p>
+</li>
+<li><p class="first">From the list that appears, click the <strong>Accept</strong> button next to the offer you wish to accept. This will bring up the <em>&#8220;Execute Exchange&#8221;</em> screen:</p>
+<img alt="Execute Exchange" src="../_images/execute_exchange.png" />
+</li>
+<li><p class="first">Select the <strong>Initial Holding</strong> you would like to pull assets from to fulfill this offer.</p>
+</li>
+<li><p class="first">Select the <strong>Final Output Holding</strong> where you would like to keep the assets you receive.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you would like to store the received assets in a <em>new</em> holding, select <strong>New Holding</strong> from the dropdown, and enter the name of the holding into the text field that appears. As usual, this name must begin with a &#8220;/&#8221;.</p>
+</div>
+</li>
+<li><p class="first">Enter the <strong>Quantity</strong> of exchanges you would like to execute.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In this case, <strong>Quantity</strong> refers not to the count of either asset being transfered, but to the <em>smallest integer expression</em> of the exchange ratio the offer was originally set at. For example, if the offer was originally an 80:100 exchange, the smallest integer expression would be 4:5. So a <strong>Quantity</strong> of 1 would payout 4 of the input, and receive back 5 of the output.</p>
+</div>
+</li>
+<li><p class="first">Click <strong>Accept</strong>.</p>
+</li>
+</ol>
+<div class="section" id="chaining-offers-arbitrage">
+<h3>Chaining Offers (Arbitrage)<a class="headerlink" href="#chaining-offers-arbitrage" title="Permalink to this headline">¶</a></h3>
+<p>It is possible to chain together multiple offers using the <strong>+ Offer</strong> buttons next to the <em>initial holding</em> and <em>final holding</em> dropdowns. This allows you to build a chain of exchanges which can include assets you have no <em>Holdings</em> in. For example, it is possible to trade US Dollars for Euros for some authentic Italian biscotti, even though you have no holding of Euros.</p>
+<ul class="simple">
+<li>Click on either <strong>+ Offer</strong> button, to bring up a dropdown of any available offers with the appropriate asset types.</li>
+<li>Select an offer from the list to add it to the chain.</li>
+<li>The initial <strong>+ Offer</strong> adds offers to the beginning, and the latter adds them to the end.</li>
+<li>After being added, an offer can be removed from the beginning or end with the <strong>- Offer</strong> button that appears.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="transfering-assets-directly">
+<h2>Transfering Assets Directly<a class="headerlink" href="#transfering-assets-directly" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to transfer quantities of <em>Assets</em> directly from one <em>Holding</em> to another directly without creating and accepting offers. The transfer can be internal, sent to another holding you control, like sending USD from your checking to your savings, or external, like a money transfer to a Nigerian prince. The transfers are one way, and always originate from a holding you control.</p>
+<ol class="arabic">
+<li><p class="first">Click on your name in the upper right corner of the screen.</p>
+</li>
+<li><p class="first">Select <strong>Transfer Assets</strong> from the dropdown that appears:</p>
+<img alt="Transferring Assets" src="../_images/transfer_asset.png" />
+</li>
+<li><p class="first">From the <strong>Source</strong> dropdown, select a holding for the assets to originate from.</p>
+</li>
+<li><p class="first">Select a <strong>Participant</strong> to whom you wish to transfer the asset. The default of <em>Self</em> will transfer assets between your own holdings.</p>
+</li>
+<li><p class="first">Select a <strong>Destination</strong> holding from the final dropdown. It will display only holdings that match the kind of asset being transfered and belong to the participant selected.</p>
+</li>
+<li><p class="first">Enter the <strong>Amount</strong> you would like to transfer.</p>
+</li>
+<li><p class="first">Click <strong>Transfer</strong>.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="scenarios.html" class="btn btn-neutral float-right" title="Scenarios" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../mktnav_users_guide.html" class="btn btn-neutral" title="Marketplace Navigator User’s Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

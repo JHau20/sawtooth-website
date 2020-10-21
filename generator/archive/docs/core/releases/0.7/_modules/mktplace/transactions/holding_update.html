@@ -1,0 +1,448 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mktplace.transactions.holding_update &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>mktplace.transactions.holding_update</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mktplace.transactions.holding_update</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">journal</span> <span class="k">import</span> <span class="n">transaction</span>
+<span class="kn">from</span> <span class="nn">sawtooth.exceptions</span> <span class="k">import</span> <span class="n">InvalidTransactionError</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">account_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">asset_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">market_place_object_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">participant_update</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="HoldingObject"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.holding_update.html#mktplace.transactions.holding_update.HoldingObject">[docs]</a><span class="k">class</span> <span class="nc">HoldingObject</span><span class="p">(</span><span class="n">market_place_object_update</span><span class="o">.</span><span class="n">MarketPlaceObject</span><span class="p">):</span>
+    <span class="n">ObjectTypeName</span> <span class="o">=</span> <span class="s1">&#39;Holding&#39;</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="HoldingObject.is_valid_object"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.holding_update.html#mktplace.transactions.holding_update.HoldingObject.is_valid_object">[docs]</a>    <span class="k">def</span> <span class="nf">is_valid_object</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">objectid</span><span class="p">):</span>
+        <span class="n">types</span> <span class="o">=</span> <span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">]</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_valid_object</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">types</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">obj</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">participant_update</span><span class="o">.</span><span class="n">ParticipantObject</span><span class="o">.</span><span class="n">is_valid_object</span><span class="p">(</span>
+                <span class="n">store</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;creator&#39;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">account_update</span><span class="o">.</span><span class="n">AccountObject</span><span class="o">.</span><span class="n">is_valid_object</span><span class="p">(</span>
+                <span class="n">store</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;account&#39;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">asset_update</span><span class="o">.</span><span class="n">AssetObject</span><span class="o">.</span><span class="n">is_valid_object</span><span class="p">(</span>
+                <span class="n">store</span><span class="p">,</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;asset&#39;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">minfo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">minfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">minfo</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HoldingObject</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">objectid</span><span class="p">,</span> <span class="n">minfo</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span> <span class="o">=</span> <span class="n">minfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;creator&#39;</span><span class="p">,</span> <span class="s1">&#39;**UNKNOWN**&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AccountID</span> <span class="o">=</span> <span class="n">minfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;account&#39;</span><span class="p">,</span> <span class="s1">&#39;**UNKNOWN**&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">AssetID</span> <span class="o">=</span> <span class="n">minfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;asset&#39;</span><span class="p">,</span> <span class="s1">&#39;**UNKNOWN**&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">minfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Description</span> <span class="o">=</span> <span class="n">minfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;description&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Name</span> <span class="o">=</span> <span class="n">minfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HoldingObject.dump"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.holding_update.html#mktplace.transactions.holding_update.HoldingObject.dump">[docs]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">HoldingObject</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dump</span><span class="p">()</span>
+
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;creator&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;account&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AccountID</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;asset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">AssetID</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Count</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Description</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Name</span>
+
+        <span class="k">return</span> <span class="n">result</span></div></div>
+
+
+<div class="viewcode-block" id="Register"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.holding_update.html#mktplace.transactions.holding_update.Register">[docs]</a><span class="k">class</span> <span class="nc">Register</span><span class="p">(</span><span class="n">transaction</span><span class="o">.</span><span class="n">Update</span><span class="p">):</span>
+    <span class="n">UpdateType</span> <span class="o">=</span> <span class="s1">&#39;RegisterHolding&#39;</span>
+    <span class="n">ObjectType</span> <span class="o">=</span> <span class="n">HoldingObject</span>
+    <span class="n">CreatorType</span> <span class="o">=</span> <span class="n">participant_update</span><span class="o">.</span><span class="n">ParticipantObject</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">update_type</span><span class="p">,</span>
+                 <span class="n">creator_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">account_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">asset_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Register</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">update_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_creator_id</span> <span class="o">=</span> <span class="n">creator_id</span> <span class="ow">or</span> <span class="s1">&#39;**UNKNOWN**&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_account_id</span> <span class="o">=</span> <span class="n">account_id</span> <span class="ow">or</span> <span class="s1">&#39;**UNKNOWN**&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_asset_id</span> <span class="o">=</span> <span class="n">asset_id</span> <span class="ow">or</span> <span class="s1">&#39;**UNKNOWN**&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">=</span> <span class="n">count</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_description</span> <span class="o">=</span> <span class="n">description</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">References</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_creator_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_account_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asset_id</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Register.check_valid"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.holding_update.html#mktplace.transactions.holding_update.Register.check_valid">[docs]</a>    <span class="k">def</span> <span class="nf">check_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">txn</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">txn</span><span class="o">.</span><span class="n">Identifier</span> <span class="ow">in</span> <span class="n">store</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span>
+                <span class="s2">&quot;ObjectId alread in store&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">market_place_object_update</span><span class="o">.</span><span class="n">global_is_valid_name</span><span class="p">(</span>
+                <span class="n">store</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectType</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_creator_id</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span>
+                <span class="s2">&quot;Name isn&#39;t valid&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">market_place_object_update</span><span class="o">.</span><span class="n">global_is_permitted</span><span class="p">(</span>
+                <span class="n">store</span><span class="p">,</span>
+                <span class="n">txn</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_creator_id</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CreatorType</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span>
+                <span class="s2">&quot;Creator Address not the same as txn.OriginatorID&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">account_update</span><span class="o">.</span><span class="n">AccountObject</span><span class="o">.</span><span class="n">is_valid_object</span><span class="p">(</span><span class="n">store</span><span class="p">,</span>
+                                                            <span class="bp">self</span><span class="o">.</span><span class="n">_account_id</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span>
+                <span class="s2">&quot;AccountID does not reference an Account&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span>
+                <span class="s2">&quot;Count is less than 0&quot;</span><span class="p">)</span>
+
+        <span class="c1"># make sure we have a valid asset</span>
+        <span class="n">asset</span> <span class="o">=</span> <span class="n">asset_update</span><span class="o">.</span><span class="n">AssetObject</span><span class="o">.</span><span class="n">load_from_store</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asset_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">asset</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;invalid asset </span><span class="si">%s</span><span class="s1"> in holding&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asset_id</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span>
+                <span class="s2">&quot;AssetId does not reference an Asset&quot;</span><span class="p">)</span>
+
+        <span class="c1"># if the asset is restricted, then only the creator of the asset can</span>
+        <span class="c1"># create holdings with a count greater than 0</span>
+        <span class="k">if</span> <span class="n">asset</span><span class="o">.</span><span class="n">Restricted</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_creator_id</span> <span class="o">!=</span> <span class="n">asset</span><span class="o">.</span><span class="n">CreatorID</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s1">&#39;instances of a restricted asset </span><span class="si">%s</span><span class="s1"> can only be created &#39;</span>
+                    <span class="s1">&#39;by the owner&#39;</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_asset_id</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span>
+                    <span class="s2">&quot;Instances of a restricted asset </span><span class="si">{}</span><span class="s2"> can only be created &quot;</span>
+                    <span class="s2">&quot;by the owner&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_asset_id</span><span class="p">))</span>
+
+        <span class="c1"># if the asset is not consumable then counts dont matter, the only</span>
+        <span class="c1"># valid counts are 0 or 1</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">asset</span><span class="o">.</span><span class="n">Consumable</span><span class="p">:</span>
+            <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s1">&#39;non consumable assets of type </span><span class="si">%s</span><span class="s1"> are retricted to &#39;</span>
+                    <span class="s1">&#39;a single instance&#39;</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_asset_id</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span>
+                    <span class="s2">&quot;Non consumable assets are restricted to a single &quot;</span>
+                    <span class="s2">&quot;instance&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Register.apply"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.holding_update.html#mktplace.transactions.holding_update.Register.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">txn</span><span class="p">):</span>
+        <span class="n">pobj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectType</span><span class="p">(</span><span class="n">txn</span><span class="o">.</span><span class="n">Identifier</span><span class="p">)</span>
+
+        <span class="n">pobj</span><span class="o">.</span><span class="n">CreatorID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_creator_id</span>
+        <span class="n">pobj</span><span class="o">.</span><span class="n">AccountID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_account_id</span>
+        <span class="n">pobj</span><span class="o">.</span><span class="n">AssetID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_asset_id</span>
+        <span class="n">pobj</span><span class="o">.</span><span class="n">Count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count</span>
+        <span class="n">pobj</span><span class="o">.</span><span class="n">Description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_description</span>
+        <span class="n">pobj</span><span class="o">.</span><span class="n">Name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+        <span class="n">store</span><span class="p">[</span><span class="n">txn</span><span class="o">.</span><span class="n">Identifier</span><span class="p">]</span> <span class="o">=</span> <span class="n">pobj</span><span class="o">.</span><span class="n">dump</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="Unregister"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.holding_update.html#mktplace.transactions.holding_update.Unregister">[docs]</a><span class="k">class</span> <span class="nc">Unregister</span><span class="p">(</span><span class="n">transaction</span><span class="o">.</span><span class="n">Update</span><span class="p">):</span>
+    <span class="n">UpdateType</span> <span class="o">=</span> <span class="s1">&#39;UnregisterHolding&#39;</span>
+    <span class="n">ObjectType</span> <span class="o">=</span> <span class="n">HoldingObject</span>
+    <span class="n">CreatorType</span> <span class="o">=</span> <span class="n">participant_update</span><span class="o">.</span><span class="n">ParticipantObject</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">update_type</span><span class="p">,</span>
+                 <span class="n">object_id</span><span class="p">,</span>
+                 <span class="n">creator_id</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Unregister</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">update_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_object_id</span> <span class="o">=</span> <span class="n">object_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_creator_id</span> <span class="o">=</span> <span class="n">creator_id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">References</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="Unregister.check_valid"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.holding_update.html#mktplace.transactions.holding_update.Unregister.check_valid">[docs]</a>    <span class="k">def</span> <span class="nf">check_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">txn</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">ObjectType</span><span class="o">.</span><span class="n">is_valid_object</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_object_id</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">market_place_object_update</span><span class="o">.</span><span class="n">global_is_permitted</span><span class="p">(</span>
+                <span class="n">store</span><span class="p">,</span>
+                <span class="n">txn</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_creator_id</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">CreatorType</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span>
+                <span class="s2">&quot;Creator Address is not the same as txn.OriginatorID&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Unregister.apply"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.holding_update.html#mktplace.transactions.holding_update.Unregister.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">txn</span><span class="p">):</span>
+        <span class="k">del</span> <span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_object_id</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="UpdateDescription"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.holding_update.html#mktplace.transactions.holding_update.UpdateDescription">[docs]</a><span class="k">class</span> <span class="nc">UpdateDescription</span><span class="p">(</span><span class="n">market_place_object_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="p">):</span>
+    <span class="n">UpdateType</span> <span class="o">=</span> <span class="s1">&#39;UpdateHoldingDescription&#39;</span>
+    <span class="n">ObjectType</span> <span class="o">=</span> <span class="n">HoldingObject</span>
+    <span class="n">CreatorType</span> <span class="o">=</span> <span class="n">participant_update</span><span class="o">.</span><span class="n">ParticipantObject</span></div>
+
+
+<div class="viewcode-block" id="UpdateName"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.holding_update.html#mktplace.transactions.holding_update.UpdateName">[docs]</a><span class="k">class</span> <span class="nc">UpdateName</span><span class="p">(</span><span class="n">market_place_object_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="p">):</span>
+    <span class="n">UpdateType</span> <span class="o">=</span> <span class="s1">&#39;UpdateHoldingName&#39;</span>
+    <span class="n">ObjectType</span> <span class="o">=</span> <span class="n">HoldingObject</span>
+    <span class="n">CreatorType</span> <span class="o">=</span> <span class="n">participant_update</span><span class="o">.</span><span class="n">ParticipantObject</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+  <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<head>
+	<meta charset="utf-8">
+	<title>Sawtooth FAQ - Consensus Algorithms | Hyperledger Sawtooth</title>
+	<meta name="description" content="An enterprise-grade solution for distributed ledgers.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="0.0.0.0/faq/consensus/">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Hyperledger Sawtooth" href="0.0.0.0/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+
+	<!-- Google Analytics
+	-->
+</head>
+
+  <body>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">Hyperledger Sawtooth</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+                        
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/release/">
+					Releases
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/docs/">
+					Docs
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/faq/">
+					FAQ
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/community/">
+					Community
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/contact/">
+					Contact
+				</a>
+			</li>
+			
+			
+			<li>
+				<a class="page-link" href="/examples">
+					Examples
+				</a>
+			</li>
+			<!-- Social icons from Font Awesome, if enabled -->
+			<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/hyperledger/sawtooth-core" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/\%23HyperledgerSawtooth" title="Follow on Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Sawtooth FAQ - Consensus Algorithms</h1>
+  </header>
+  <section class="post-content"><p class="mininav"><a class="reference external" href="/faq/validator/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/client/">NEXT</a></p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-consensus-algorithms-does-sawtooth-support" id="id1">What consensus algorithms does Sawtooth support?</a></li>
+<li><a class="reference internal" href="#will-sawtooth-support-more-consensus-algorithms-in-the-future" id="id2">Will Sawtooth support more consensus algorithms in the future?</a></li>
+<li><a class="reference internal" href="#where-is-raft-documented" id="id3">Where is Raft documented?</a></li>
+<li><a class="reference internal" href="#does-the-pbft-implementation-follow-the-original-paper" id="id4">Does the PBFT implementation follow the original paper?</a></li>
+<li><a class="reference internal" href="#does-the-poet-cft-implement-the-same-consensus-algorithm-as-poet-sgx" id="id5">Does the PoET CFT implement the same consensus algorithm as PoET SGX?</a></li>
+<li><a class="reference internal" href="#for-poet-cft-poet-simulator-should-i-generate-my-own-simulator-rk-pub-pem-file-or-do-i-use-the-one-in-etc-sawtooth" id="id6">For PoET CFT (PoET Simulator), should I generate my own <tt class="docutils literal">simulator_rk_pub.pem</tt> file or do I use the one in <tt class="docutils literal">/etc/sawtooth/</tt> ?</a></li>
+<li><a class="reference internal" href="#what-is-unpluggable-consensus" id="id7">What is unpluggable consensus?</a></li>
+<li><a class="reference internal" href="#can-my-sawtooth-network-have-validators-with-a-mixture-of-poet-sgx-and-poet-cft" id="id8">Can my Sawtooth network have validators with a mixture of PoET SGX and PoET CFT?</a></li>
+<li><a class="reference internal" href="#what-protections-does-poet-cft-have-since-it-is-not-bft" id="id9">What protections does PoET CFT have, since it is not BFT?</a></li>
+<li><a class="reference internal" href="#what-cloud-services-offer-sgx" id="id10">What cloud services offer SGX?</a></li>
+<li><a class="reference internal" href="#does-poet-sgx-function-with-sgx-on-cloud-services" id="id11">Does PoET SGX function with SGX on cloud services?</a></li>
+<li><a class="reference internal" href="#i-get-this-error-during-poet-sgx-registration-machine-requires-update-probably-bios-for-sgx-compliance" id="id12">I get this error during PoET SGX registration: &quot;Machine requires update (probably BIOS) for SGX compliance.&quot;</a></li>
+<li><a class="reference internal" href="#does-sawtooth-require-a-certain-processor-to-be-deployed-on-a-network" id="id13">Does Sawtooth require a certain processor to be deployed on a network?</a></li>
+<li><a class="reference internal" href="#does-sawtooth-require-sgx" id="id14">Does Sawtooth require SGX?</a></li>
+<li><a class="reference internal" href="#how-is-poet-duration-time-computed" id="id15">How is PoET duration time computed?</a></li>
+<li><a class="reference internal" href="#why-does-poet-use-exponentially-distributed-random-variable-function-instead-of-a-uniform-function" id="id16">Why does PoET use exponentially-distributed random variable function instead of a uniform function?</a></li>
+<li><a class="reference internal" href="#where-is-poet-1-0-specification" id="id17">Where is PoET 1.0 Specification?</a></li>
+<li><a class="reference internal" href="#why-is-poet-sgx-byzantine-fault-tolerant" id="id18">Why is PoET SGX Byzantine Fault Tolerant?</a></li>
+<li><a class="reference internal" href="#where-is-the-poet-sgx-enclave-configuration-file" id="id19">Where is the PoET SGX Enclave configuration file?</a></li>
+<li><a class="reference internal" href="#i-run-sudo-u-sawtooth-poet-registration-create-and-get-permission-denied-poet-genesis-batch-error" id="id20">I run <tt class="docutils literal">sudo <span class="pre">-u</span> sawtooth poet registration create . . .</tt> and get <tt class="docutils literal">Permission denied: 'poet_genesis.batch'</tt> error</a></li>
+<li><a class="reference internal" href="#what-does-consensus-not-ready-to-build-candidate-block-mean" id="id21">What does <tt class="docutils literal">Consensus not ready to build candidate block</tt> mean?</a></li>
+<li><a class="reference internal" href="#what-does-failed-to-create-wait-certificate-cannot-create-wait-certificate-because-timer-has-timed-out-mean" id="id22">What does `` Failed to create wait certificate: Cannot create wait certificate because timer has timed out`` mean?</a></li>
+<li><a class="reference internal" href="#how-do-i-change-the-sawtooth-consensus-algorithm" id="id23">How do I change the Sawtooth consensus algorithm?</a></li>
+<li><a class="reference internal" href="#how-do-i-change-the-consensus-algorithm-for-a-network-that-has-forked" id="id24">How do I change the consensus algorithm for a network that has forked?</a></li>
+<li><a class="reference internal" href="#where-can-i-find-information-on-the-proposed-poet2-algorithm" id="id25">Where can I find information on the proposed PoET2 algorithm?</a></li>
+<li><a class="reference internal" href="#what-is-the-intel-platform-developers-kit-for-blockchain-ubuntu" id="id26">What is the Intel Platform Developers Kit for Blockchain - Ubuntu?</a></li>
+<li><a class="reference internal" href="#where-is-the-consensus-engine-api-documented" id="id27">Where is the Consensus Engine API documented?</a></li>
+<li><a class="reference internal" href="#what-are-the-minimum-number-of-nodes-needed-for-poet" id="id28">What are the minimum number of nodes needed for PoET?</a></li>
+<li><a class="reference internal" href="#can-poet-be-configured-for-small-networks" id="id29">Can PoET be configured for small networks?</a></li>
+<li><a class="reference internal" href="#how-should-peer-nodes-be-distributed" id="id30">How should peer nodes be distributed?</a></li>
+<li><a class="reference internal" href="#can-i-restrict-what-validator-nodes-win-consensus" id="id31">Can I restrict what validator nodes win consensus?</a></li>
+<li><a class="reference internal" href="#how-do-i-restart-a-consensus-engine" id="id32">How do I restart a consensus engine?</a></li>
+<li><a class="reference internal" href="#do-i-start-the-consensus-engine-before-or-after-the-validator" id="id33">Do I start the consensus engine before or after the validator?</a></li>
+<li><a class="reference internal" href="#what-can-cause-a-fork-with-poet" id="id34">What can cause a fork with PoET?</a></li>
+<li><a class="reference internal" href="#how-do-i-fix-poet-using-intel-sgx-ias-api-version-2-which-is-end-of-life" id="id35">How do I fix PoET using Intel SGX IAS API version 2, which is end of life?</a></li>
+</ul>
+</div>
+<div class="section" id="what-consensus-algorithms-does-sawtooth-support">
+<h2><a class="toc-backref" href="#id1">What consensus algorithms does Sawtooth support?</a></h2>
+<dl class="docutils">
+<dt>Devmode (name &quot;Devmode&quot;, version 0.1)</dt>
+<dd>Only suitable for testing TPs with single validator deployments. Uses a simplified random-leader algorithm for development and testing. Not for production use</dd>
+<dt>PBFT (name &quot;pbft&quot;, version 0.1)</dt>
+<dd>Leader-based, non-forking consensus algorithm with finality that provides Byzantine Fault Tolerance (BFT). Ideal for smaller, consortium-style networks that do not require open membership.</dd>
+<dt>PoET CFT (name &quot;PoET&quot;, version 0.1)</dt>
+<dd>Also known as PoET Simulator. PoET with a simulated SGX environment. Provides CFT similar to some other blockchains. Requires poet-validator-registry TP. Runs on any processor (does not require Intel or SGX). Has Crash Fault Tolerance (CFT), but is not Byzantine Fault Tolerant (BFT)</dd>
+<dt>PoET SGX (name &quot;PoET&quot;, version 0.1)</dt>
+<dd>Takes advantage of SGX in order to provide consensus with Byzantine Fault Tolerance (BFT), like PoW algorithms have, but at very low CPU usage. PoET SGX is the only algorithm that has hardware requirements (a processor supporting SGX). Currently supported in Sawtooth 1.0 only.</dd>
+<dt>Raft (name &quot;raft&quot;, version 0.1)</dt>
+<dd>Consensus algorithm that elects a leader for a term of arbitrary time. Leader replaced if it times-out. Raft is faster than PoET, but is CFT, not BFT. Also Raft does not fork. For Sawtooth Raft is new and still being stabilized.</dd>
+</dl>
+</div>
+<div class="section" id="will-sawtooth-support-more-consensus-algorithms-in-the-future">
+<h2><a class="toc-backref" href="#id2">Will Sawtooth support more consensus algorithms in the future?</a></h2>
+<p>Yes. With pluggable consensus, the idea is to have a meaningful set of consensus algorithms so the &quot;best fit&quot; can be applied to an application's use case. Raft is a recent addition--still being stabilized. Others are being planned.</p>
+<p>REMME.io has independently implemented Algorand Byzantine Agreement on Sawtooth.</p>
+</div>
+<div class="section" id="where-is-raft-documented">
+<h2><a class="toc-backref" href="#id3">Where is Raft documented?</a></h2>
+<p><a class="reference external" href="https://sawtooth.hyperledger.org/docs/raft/nightly/master/">https://sawtooth.hyperledger.org/docs/raft/nightly/master/</a>
+To use, basically set <tt class="docutils literal">sawtooth.consensus.algorithm</tt> to <tt class="docutils literal">raft</tt> and
+<tt class="docutils literal">sawtooth.consensus.raft.peers</tt> to a list of peer nodes (network public keys).</p>
+</div>
+<div class="section" id="does-the-pbft-implementation-follow-the-original-paper">
+<h2><a class="toc-backref" href="#id4">Does the PBFT implementation follow the original paper?</a></h2>
+<p>Yes, it follows the original 1999 Castro and Liskov paper with some modifications and optimizations.</p>
+</div>
+<div class="section" id="does-the-poet-cft-implement-the-same-consensus-algorithm-as-poet-sgx">
+<h2><a class="toc-backref" href="#id5">Does the PoET CFT implement the same consensus algorithm as PoET SGX?</a></h2>
+<p>Yes--they are same same consensus algorithm. The difference is the
+PoET CFT also simulates the enclave module, allowing PoET to run on non-SGX
+hardware.</p>
+</div>
+<div class="section" id="for-poet-cft-poet-simulator-should-i-generate-my-own-simulator-rk-pub-pem-file-or-do-i-use-the-one-in-etc-sawtooth">
+<h2><a class="toc-backref" href="#id6">For PoET CFT (PoET Simulator), should I generate my own <tt class="docutils literal">simulator_rk_pub.pem</tt> file or do I use the one in <tt class="docutils literal">/etc/sawtooth/</tt> ?</a></h2>
+<p>No, you use the one that is installed. It must match the private key that is in the PoET Simulator. The public key is needed to verify attestation verification reports from PoET.</p>
+</div>
+<div class="section" id="what-is-unpluggable-consensus">
+<h2><a class="toc-backref" href="#id7">What is unpluggable consensus?</a></h2>
+<p>Sawtooth supports unpluggable consensus, meaning you can change the consensus algorithm on the fly,
+at a block boundary.
+Changing consensus on the fly means it is done without stopping validators, flushing state,
+or starting over with a new genesis block.
+It is also called Dynamic Consensus.</p>
+</div>
+<div class="section" id="can-my-sawtooth-network-have-validators-with-a-mixture-of-poet-sgx-and-poet-cft">
+<h2><a class="toc-backref" href="#id8">Can my Sawtooth network have validators with a mixture of PoET SGX and PoET CFT?</a></h2>
+<p>No. You need to pick one consensus for all nodes.
+But you can change consensus after the Sawtooth network has started.</p>
+</div>
+<div class="section" id="what-protections-does-poet-cft-have-since-it-is-not-bft">
+<h2><a class="toc-backref" href="#id9">What protections does PoET CFT have, since it is not BFT?</a></h2>
+<p>It is for systems that do not have SGX and do not require BFT. Both PoET CFT and PoET SGX have tests to guard against bad actors, such as the &quot;Z Test&quot; to check a validator is not winning too frequently.
+PoET CFT simulates the SGX environment and provides CFT.
+That said, PoET SGX is preferred because of the additional SGX protections for generating the wait time.</p>
+</div>
+<div class="section" id="what-cloud-services-offer-sgx">
+<h2><a class="toc-backref" href="#id10">What cloud services offer SGX?</a></h2>
+<p>SGX is available on IBM cloud and Alibaba.
+Early access was available on Microsoft Azure, but not now.</p>
+</div>
+<div class="section" id="does-poet-sgx-function-with-sgx-on-cloud-services">
+<h2><a class="toc-backref" href="#id11">Does PoET SGX function with SGX on cloud services?</a></h2>
+<p>No. For PoET SGX to function, one also needs Platform Services (PSW), which is not available from any cloud provider.
+Instead, one can use PoET CFT, which is also supported.
+But other software software that requires SGX may be deployed on cloud services.</p>
+</div>
+<div class="section" id="i-get-this-error-during-poet-sgx-registration-machine-requires-update-probably-bios-for-sgx-compliance">
+<h2><a class="toc-backref" href="#id12">I get this error during PoET SGX registration: &quot;Machine requires update (probably BIOS) for SGX compliance.&quot;</a></h2>
+<p>During EPID provisioning your computer is trying to get an anonymous credential from Intel. If that process is failing one possibility is that there's a network issue like a proxy. A second possibility is that there's some firmware out of date and so the protocol isn't doing what the backend expects it to. You can check for a firmware / BIOS update for that platform.</p>
+<p>SGX also needs to be enabled in the BIOS menu.</p>
+</div>
+<div class="section" id="does-sawtooth-require-a-certain-processor-to-be-deployed-on-a-network">
+<h2><a class="toc-backref" href="#id13">Does Sawtooth require a certain processor to be deployed on a network?</a></h2>
+<p>No. If you use PoET SGX consensus you need a processor that supports SGX.</p>
+</div>
+<div class="section" id="does-sawtooth-require-sgx">
+<h2><a class="toc-backref" href="#id14">Does Sawtooth require SGX?</a></h2>
+<p>No. SGX is only needed if you use the hardened version of PoET, PoET SGX.
+We also have a version of PoET that just uses conventional software, PoET CFT,
+which runs on a Sawtooth network with any processor.</p>
+</div>
+<div class="section" id="how-is-poet-duration-time-computed">
+<h2><a class="toc-backref" href="#id15">How is PoET duration time computed?</a></h2>
+<p>It is <tt class="docutils literal">duration = random_float(0,1) * local_mean_wait_time</tt></p>
+</div>
+<div class="section" id="why-does-poet-use-exponentially-distributed-random-variable-function-instead-of-a-uniform-function">
+<h2><a class="toc-backref" href="#id16">Why does PoET use exponentially-distributed random variable function instead of a uniform function?</a></h2>
+<p>That is to minimize the number of &quot;collisions&quot; in the distribution of a given round of wait timers generated by the population,
+where &quot;collision&quot; means two or more timers that are near the minimum of the distribution and within some latency threshold.
+The distribution of the random function is shaped by a population estimate of the network, which is determined by examining the last N blocks.
+In an ideal world, you want a distribution where one and only one random wait time is around the desired inter block duration, and then there is a decent sized gap.</p>
+</div>
+<div class="section" id="where-is-poet-1-0-specification">
+<h2><a class="toc-backref" href="#id17">Where is PoET 1.0 Specification?</a></h2>
+<p><a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/poet.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/architecture/poet.html</a></p>
+</div>
+<div class="section" id="why-is-poet-sgx-byzantine-fault-tolerant">
+<h2><a class="toc-backref" href="#id18">Why is PoET SGX Byzantine Fault Tolerant?</a></h2>
+<p>Because the PoET waiting time is enforced with an SGX enclave. There is also more defense-in-depth checks, but that doesn't make it BFT. In comparison, Bitcoin's PoW accomplishes the same thing with repeatedly hashing, which is effectively the same thing (although more wasteful) than PoET's trusted timer. For details, see the PoET 1.0 spec in the link above.</p>
+</div>
+<div class="section" id="where-is-the-poet-sgx-enclave-configuration-file">
+<h2><a class="toc-backref" href="#id19">Where is the PoET SGX Enclave configuration file?</a></h2>
+<p>It is at <tt class="docutils literal">/etc/sawtooth/poet_enclave_sgx.toml</tt> .
+It is only for configuring PoET SGX Enclave, not the PoET CFT (PoET without SGX).
+A sample file is at
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-poet/blob/master/sgx/packaging/poet_enclave_sgx.toml.example">https://github.com/hyperledger/sawtooth-poet/blob/master/sgx/packaging/poet_enclave_sgx.toml.example</a>
+The configuration is documented at
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/configuring_sawtooth/poet_sgx_enclave_configuration_file.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/configuring_sawtooth/poet_sgx_enclave_configuration_file.html</a></p>
+</div>
+<div class="section" id="i-run-sudo-u-sawtooth-poet-registration-create-and-get-permission-denied-poet-genesis-batch-error">
+<h2><a class="toc-backref" href="#id20">I run <tt class="docutils literal">sudo <span class="pre">-u</span> sawtooth poet registration create . . .</tt> and get <tt class="docutils literal">Permission denied: 'poet_genesis.batch'</tt> error</a></h2>
+<p>Change to a sawtooth user-writable directory before running the command and make sure file <cite>poet_genesis.batch</cite> does not already exist: <tt class="docutils literal">cd /tmp; ls poet_genesis.batch</tt></p>
+</div>
+<div class="section" id="what-does-consensus-not-ready-to-build-candidate-block-mean">
+<h2><a class="toc-backref" href="#id21">What does <tt class="docutils literal">Consensus not ready to build candidate block</tt> mean?</a></h2>
+<p>This message is usually an innocuous information message. It usually means that the validator isn't yet registered in the validator registry or that its previous registration has expired and it's waiting for the new one to commit.
+The message occurs after the block publisher polls the consensus interface asking if it is time to build the block. If not enough time has elapsed, it logs that message.</p>
+<p>However, if that message is rampant in the logs on all but one node, that might mean that none of them can register (they are deadlocked when launching a network). There's a few things that can cause that.</p>
+<p>Unlikely but worth mentioning: are you mapping volumes into the containers? If all the validators are trying to use the same data file that would be bad. That would not happen unless all the nodes are on the same host.</p>
+<p>More commonly, the defense-in-depth checks are too stringent during the initial launch. You can relax these parameters (see <a class="reference external" href="/faq/settings/">Settings</a> in this FAQ) or, easier yet, relaunch the network.</p>
+</div>
+<div class="section" id="what-does-failed-to-create-wait-certificate-cannot-create-wait-certificate-because-timer-has-timed-out-mean">
+<h2><a class="toc-backref" href="#id22">What does `` Failed to create wait certificate: Cannot create wait certificate because timer has timed out`` mean?</a></h2>
+<p>It means too much time has elapsed between the creation of the wait timer and the attempt to finalize the block and create the wait certificate.
+Look at the logs for that node and determine when it started to publish the block prior to that error, and see what transpired in between. When the timer expires, the validator is supposed to wrap up the schedule immediately and create the block, so that message is kind of unusual.  In versions of Sawtooth before 1.0, we waited until the entire schedule executed, which could be quite long running, and this message was quite common.</p>
+</div>
+<div class="section" id="how-do-i-change-the-sawtooth-consensus-algorithm">
+<h2><a class="toc-backref" href="#id23">How do I change the Sawtooth consensus algorithm?</a></h2>
+<ul class="simple">
+<li>Install the software package containing the consensus engine you wish to use on all nodes, if it is not already installed.</li>
+<li>Start any consensus-required TPs, if any, on all nodes (for example PoET requires the <tt class="docutils literal">sawtooth_validator_registry</tt> TP).</li>
+<li>Use the <tt class="docutils literal">sawset proposal create</tt> subcommand to modify <tt class="docutils literal">sawtooth.consensus.algorithm</tt> (along with any consensus-required settings). For an example, see <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html</a></li>
+</ul>
+<p>The initial default consensus algorithm is <tt class="docutils literal">devmode</tt>, which is not for production use.</p>
+<dl class="docutils">
+<dt>Here is an example that changes the consensus to Raft:</dt>
+<dd><tt class="docutils literal">sawset proposal create <span class="pre">--url</span> <span class="pre">http://localhost:8008</span> <span class="pre">--key</span> /etc/sawtooth/keys/validator.priv&nbsp; \
+sawtooth.consensus.algorithm=raft sawtooth.consensus.raft.peers=\
+<span class="pre">'[&quot;0276f8fed116837eb7646f800e2dad6d13ad707055923e49df08f47a963547b631&quot;,</span> \
+<span class="pre">&quot;035d8d519a200cdb8085c62d6fb9f2678cf71cbde738101d61c4c8c2e9f2919aa&quot;]'</span></tt></dd>
+</dl>
+</div>
+<div class="section" id="how-do-i-change-the-consensus-algorithm-for-a-network-that-has-forked">
+<h2><a class="toc-backref" href="#id24">How do I change the consensus algorithm for a network that has forked?</a></h2>
+<p>Bring the network down to one node with the preferred blocks and submit
+your consensus change proposal. Bring in the other nodes, with any consensus-required TPs running (for example, PoET requires the Validator Registry TP).</p>
+</div>
+<div class="section" id="where-can-i-find-information-on-the-proposed-poet2-algorithm">
+<h2><a class="toc-backref" href="#id25">Where can I find information on the proposed PoET2 algorithm?</a></h2>
+<p>PoET2 is different from PoET in that it supports SGX without relying on Intel Platform Services Enclave (PSE), making it suitable in cloud environments.
+PoET2 no longer saves anything across reboots (such as the clock, monotonic counters, or a saved ECDSA keypair).
+The PoET2 SGX enclave still generates a signed, random duration value.
+More details and changes are documented in the PoET2 RFC at
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-rfcs/pull/20/files">https://github.com/hyperledger/sawtooth-rfcs/pull/20/files</a>
+A video presentation (2018-08-23) is at
+<a class="reference external" href="https://drive.google.com/drive/folders/0B_NJV6eJXAA1VnFUakRzaG1raXc">https://drive.google.com/drive/folders/0B_NJV6eJXAA1VnFUakRzaG1raXc</a>
+(starting at 7:45)</p>
+</div>
+<div class="section" id="what-is-the-intel-platform-developers-kit-for-blockchain-ubuntu">
+<h2><a class="toc-backref" href="#id26">What is the Intel Platform Developers Kit for Blockchain - Ubuntu?</a></h2>
+<p>The PDK is a small form factor computer with SGX with Ubuntu, Hyperledger Sawtooth, and development software pre-installed. For information, see
+<a class="reference external" href="https://designintools.intel.com/Intel_Platform_Developers_Kit_for_Blockchain_p/q6uidcbkcpdk.htm">https://designintools.intel.com/Intel_Platform_Developers_Kit_for_Blockchain_p/q6uidcbkcpdk.htm</a></p>
+</div>
+<div class="section" id="where-is-the-consensus-engine-api-documented">
+<h2><a class="toc-backref" href="#id27">Where is the Consensus Engine API documented?</a></h2>
+<p>At <a class="reference external" href="https://github.com/hyperledger/sawtooth-rfcs/pull/4">https://github.com/hyperledger/sawtooth-rfcs/pull/4</a>
+See also the &quot;Sawtooth Consensus Engines&quot; video at
+20180426-sawtooth-tech-forum.mp4, starting at 10:00,
+in directory
+<a class="reference external" href="https://drive.google.com/drive/folders/0B_NJV6eJXAA1VnFUakRzaG1raXc">https://drive.google.com/drive/folders/0B_NJV6eJXAA1VnFUakRzaG1raXc</a></p>
+</div>
+<div class="section" id="what-are-the-minimum-number-of-nodes-needed-for-poet">
+<h2><a class="toc-backref" href="#id28">What are the minimum number of nodes needed for PoET?</a></h2>
+<p>PoET needs at least 3 nodes, but works best with at least 5 nodes. This is to avoid Z Test failures (a node winning too frequently). In production, to keep a blockchain safe, more nodes are always better, regardless of the consensus. 10 nodes are good for internal testing. For production, have 2 nodes per identity.</p>
+</div>
+<div class="section" id="can-poet-be-configured-for-small-networks">
+<h2><a class="toc-backref" href="#id29">Can PoET be configured for small networks?</a></h2>
+<p>Yes, for development purposes.
+For production purposes, consider using another consensus algorithm.
+For example, Raft or PBFT handles a small number of nodes nicely.
+We recommend PBFT for small networks.
+Raft is less interesting being CFT and not BFT, and having overall less testing.</p>
+<p>For PoET in a small blockchain network, disable defense-in-depth tests
+for small test networks (say, &lt; ~12 nodes) with:</p>
+<pre class="literal-block">
+sawtooth.poet.block_claim_delay=1
+sawtooth.poet.key_block_claim_limit= 100000
+sawtooth.poet.ztest_minimum_win_count=999999999
+</pre>
+</div>
+<div class="section" id="how-should-peer-nodes-be-distributed">
+<h2><a class="toc-backref" href="#id30">How should peer nodes be distributed?</a></h2>
+<p>Blockchain achieves fault tolerance by having its state (data) completely duplicated among the peer nodes. Best practice means distributing your nodes--geographically and organizationally.
+Distributing nodes on virtual machines sharing the same host does nothing to guard against hardware faults.
+Distributing nodes at the same site does not protect against site outages.</p>
+</div>
+<div class="section" id="can-i-restrict-what-validator-nodes-win-consensus">
+<h2><a class="toc-backref" href="#id31">Can I restrict what validator nodes win consensus?</a></h2>
+<p>No. Every peer node validates blocks and every peer node can publish a block.
+You can write your own plugin consensus module to restrict what peer nodes win. Or modify an existing consensus module to experiment.</p>
+</div>
+<div class="section" id="how-do-i-restart-a-consensus-engine">
+<h2><a class="toc-backref" href="#id32">How do I restart a consensus engine?</a></h2>
+<p>First stop the validator, then restart the consensus engine.
+If you leave the validator engine running, it will not connect to the restarted consensus engine. See <a class="reference external" href="https://jira.hyperledger.org/projects/STL/issues/STL-1465">https://jira.hyperledger.org/projects/STL/issues/STL-1465</a></p>
+</div>
+<div class="section" id="do-i-start-the-consensus-engine-before-or-after-the-validator">
+<h2><a class="toc-backref" href="#id33">Do I start the consensus engine before or after the validator?</a></h2>
+<p>The consensus engine can start before or after the validator.
+The preferred order is to start the validator first, then the consensus engine.
+If you start the consensus engine before the validator, the consensus engine will retry connecting to the validator (through TCP port 5050) until it the consensus engine is successful.</p>
+</div>
+<div class="section" id="what-can-cause-a-fork-with-poet">
+<h2><a class="toc-backref" href="#id34">What can cause a fork with PoET?</a></h2>
+<p>In PoET, forks occur due to a network partition, the size of the network, the time it takes to transfer and validate blocks across the network, and the likelihood that two or more validator will think they have “won” and therefore publish a block during this time period.</p>
+<p>TPs don’t really affect forks, unless they have a severe impact on the validation duration of the block. However, unresolvable forks due to non-determinism, are likely a TP problem.</p>
+</div>
+<div class="section" id="how-do-i-fix-poet-using-intel-sgx-ias-api-version-2-which-is-end-of-life">
+<h2><a class="toc-backref" href="#id35">How do I fix PoET using Intel SGX IAS API version 2, which is end of life?</a></h2>
+<p>For those who are trying to use PoET SGX with IAS, you need to move to the IAS API v3 interface. Basically just go through and change the IAS URLs from <cite>/v2/</cite> to <cite>/v3/</cite>
+The change needs to be made in files <cite>ias_client/sawtooth_ias_client/ias_client.py</cite>
+and <cite>ias_client/tests/unit/test_ias_client.py</cite> .</p>
+<p>The Intel SGX IAS v3 API is at
+<a class="reference external" href="https://software.intel.com/sites/default/files/managed/7e/3b/ias-api-spec.pdf">https://software.intel.com/sites/default/files/managed/7e/3b/ias-api-spec.pdf</a></p>
+<p class="mininav"><a class="reference external" href="/faq/validator/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/client/">NEXT</a></p>
+<p>© Copyright 2018, Intel Corporation.</p>
+</div>
+
+</section>
+</article>
+
+    </div>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text"><p style="font-size: 1.5em;">
+  Hyperledger Sawtooth
+</p> <p>
+  <a href="/" title="Home"><span class="links">Home</span></a>
+  &bull;
+  <a href="/about/" title="About Sawtooth"><span class="links">About</span></a>
+  &bull;
+  <a href="/release/" title="Releases"><span class="links">Releases</span></a>
+  &bull;
+  <a href="/docs/" title="Documentation"><span class="links">Docs</span></a>
+  &bull;
+  <a href="/faq/" title="FAQ"><span class="links">FAQ</span></a>
+  &bull;
+  <a href="/community/" title="Community"><span class="links">Community</span></a>
+  &bull;
+  <a href="/contact/" title="Contact"><span class="links">Contact</span></a>
+</p> <p>
+  Find us: &nbsp;
+  <a href="https://github.com/hyperledger/sawtooth-core/" target="_blank" title="GitHub"><span  class="links">GitHub</span></a>
+  &bull;
+  <a href="https://chat.hyperledger.org/channel/sawtooth" target="_blank" title="#sawtooth chat channel"">Rocket.Chat</a>
+  &bull;
+  <a href="https://twitter.com/search?q=%23HyperledgerSawtooth" target="_blank" title="#sawtooth chat channel"">Twitter</a>
+</p> <p>
+  Examples: &nbsp;
+  <a href="/examples/seafood.html" target="_blank" title="Seafood Supply Chain Traceability">Seafood Supply Chain Traceability</a>
+  &bull;
+  <a href="/examples/bond.html" target="_blank" title="Bond Asset Settlement">Bond Asset Settlement</a>
+  &bull;
+  <a href="/examples/marketplace.html" target="_blank" title="Marketplace Digital Asset Exchange">Marketplace Digital Asset Exchange</a>
+</p> <p>
+  Linux Foundation: &nbsp;
+  <a href="http://www.linuxfoundation.org/privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+  &bull;
+  <a href="http://www.linuxfoundation.org/terms" target="_blank" title="Terms of Service">Terms of Service</a>
+</p> <p>
+  <small class="copyright">Copyright &copy; 2015-2019 contributors to Hyperledger Sawtooth</small>
+</p>
+</p>
+</footer>
+
+
+  </body>
+</html>

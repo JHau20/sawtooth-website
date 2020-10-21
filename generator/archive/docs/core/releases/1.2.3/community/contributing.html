@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Contributing &mdash; Sawtooth v1.2.3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Code of Conduct" href="code_of_conduct.html" />
+    <link rel="prev" title="Tracking Issues" href="issue_tracking.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../community.html">Community</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="join_the_discussion.html">Joining the Discussion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="issue_tracking.html">Tracking Issues</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Contributing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ways-to-contribute-to-hyperledger-sawtooth">Ways to Contribute to Hyperledger Sawtooth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-commit-process">The Commit Process</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="code_of_conduct.html">Code of Conduct</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../community.html">Community</a> &raquo;</li>
+        
+      <li>Contributing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/community/contributing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ways-to-contribute-to-hyperledger-sawtooth">
+<h2>Ways to Contribute to Hyperledger Sawtooth<a class="headerlink" href="#ways-to-contribute-to-hyperledger-sawtooth" title="Permalink to this headline">¶</a></h2>
+<p>Contributions from the development community help improve the capabilities of
+Hyperledger Sawtooth. These contributions are the most effective way to
+make a positive impact on the project.</p>
+<p>Ways you can contribute:</p>
+<ul class="simple">
+<li><p>Bugs or issues: Report problems or defects found when working with Sawtooth</p></li>
+<li><p>Core features and enhancements: Provide expanded capabilities or optimizations</p></li>
+<li><p>Documentation: Improve existing documentation or create new information</p></li>
+<li><p>Tests for events and results: Add functional, performance, or scalability
+tests</p></li>
+</ul>
+<p>Hyperledger Sawtooth issues can be found in <a class="reference internal" href="issue_tracking.html#jira"><span class="std std-ref">Using JIRA</span></a>.  Any unassigned items
+are probably still open. When in doubt, ask on RocketChat about
+a specific JIRA issue (see <a class="reference internal" href="join_the_discussion.html"><span class="doc">Joining the Discussion</span></a>).</p>
+</div>
+<div class="section" id="the-commit-process">
+<h2>The Commit Process<a class="headerlink" href="#the-commit-process" title="Permalink to this headline">¶</a></h2>
+<p>Hyperledger Sawtooth is Apache 2.0 licensed and accepts contributions
+via <a class="reference external" href="https://github.com/hyperledger/sawtooth-core">GitHub</a>
+pull requests. When contributing code, please follow these guidelines:</p>
+<ul class="simple">
+<li><p>Fork the repository and make your changes in a feature branch</p></li>
+<li><p>Include unit and integration tests for any new features and updates
+to existing tests</p></li>
+<li><p>Ensure that the unit and integration tests run successfully. Run both
+of these tests with <code class="docutils literal notranslate"><span class="pre">./bin/run_tests</span></code></p></li>
+<li><p>Check that the lint tests pass by running <code class="docutils literal notranslate"><span class="pre">./bin/run_lint</span> <span class="pre">-s</span> <span class="pre">master</span></code>.</p></li>
+</ul>
+<p><strong>Pull Request Guidelines</strong></p>
+<p>A pull request can contain a single commit or multiple commits. The most
+important guideline is that a single commit should map to a single fix or
+enhancement. Here are some example scenarios:</p>
+<ul class="simple">
+<li><p>If a pull request adds a feature but also fixes two bugs, the pull
+request should have three commits: one commit for the feature change and
+two commits for the bug fixes.</p></li>
+<li><p>If a PR is opened with five commits that contain changes to fix a single
+issue, the PR should be rebased to a single commit.</p></li>
+<li><p>If a PR is opened with several commits, where the first commit fixes one issue
+and the rest fix a separate issue, the PR should be rebased to two
+commits (one for each issue).</p></li>
+</ul>
+<dl class="simple">
+<dt><strong>Important:</strong></dt><dd><p>Your pull request should be rebased against the current master branch. Do
+not merge the current master branch in with your topic branch. Do not use the
+Update Branch button provided by GitHub on the pull request page.</p>
+</dd>
+</dl>
+<p><strong>Commit Messages</strong></p>
+<p>Commit messages should follow common Git conventions, such as using the
+imperative mood, separate subject lines, and a line length of 72 characters.
+These rules are well documented in <a class="reference external" href="https://chris.beams.io/posts/git-commit/#seven-rules">Chris Beam’s blog post</a>.</p>
+<p><strong>Signed-off-by</strong></p>
+<p>Each commit must include a “Signed-off-by” line in the commit message
+(<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-s</span></code>). This sign-off indicates that you agree the commit satisfies
+the <a class="reference external" href="http://developercertificate.org/">Developer Certificate of Origin (DCO)</a>.</p>
+<p><strong>Commit Email Address</strong></p>
+<p>Your commit email address must match your GitHub email address. For more
+information, see
+<a class="reference external" href="https://help.github.com/articles/setting-your-commit-email-address-in-git/">https://help.github.com/articles/setting-your-commit-email-address-in-git/</a></p>
+<p><strong>Important GitHub Requirements</strong></p>
+<p>A pull request cannot merged until it has passed these status checks:</p>
+<ul class="simple">
+<li><p>The build must pass on Jenkins</p></li>
+<li><p>The PR must be approved by at least two reviewers without any
+outstanding requests for changes</p></li>
+</ul>
+<p><strong>Integrating GitHub Commits with JIRA</strong></p>
+<p>You can link JIRA issues to your commits, which  will integrate
+developer activity with the associated issue. JIRA uses the issue key to
+associate the commit with the issue, so that the commit can be summarized in the
+development panel for the JIRA issue.</p>
+<p>When you make a commit, add the JIRA issue key to the end of the commit message
+or to the branch name. Either method should integrate your commit with the JIRA
+issue that it references.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="code_of_conduct.html" class="btn btn-neutral float-right" title="Code of Conduct" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="issue_tracking.html" class="btn btn-neutral float-left" title="Tracking Issues" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

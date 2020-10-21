@@ -1,0 +1,606 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>processor package &mdash; Sawtooth v1.0.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.2 documentation" href="../../index.html"/>
+        <link rel="up" title="SDK API Reference" href="../../sdks.html"/>
+        <link rel="next" title="sawtooth_signing package" href="sawtooth_signing.html"/>
+        <link rel="prev" title="SDK API Reference" href="../../sdks.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../api_references.html">API References</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../sdks.html">SDK API Reference</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../sdks.html#python">Python</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">processor package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sawtooth_signing.html">sawtooth_signing package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../sdks.html#go">Go</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sdks.html#javascript">Javascript</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../rest_api.html">REST API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../api_references.html">API References</a> &raquo;</li>
+        
+          <li><a href="../../sdks.html">SDK API Reference</a> &raquo;</li>
+        
+      <li>processor package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/sdks/python_sdk/processor.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="processor-package">
+<h1>processor package<a class="headerlink" href="#processor-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-processor.config">
+<span id="processor-config-module"></span><h2>processor.config module<a class="headerlink" href="#module-processor.config" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="processor.config.get_config_dir">
+<code class="descclassname">processor.config.</code><code class="descname">get_config_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/config.html#get_config_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.config.get_config_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the sawtooth configuration directory based on the
+SAWTOOTH_HOME environment variable (if set) or OS defaults.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="processor.config.get_log_dir">
+<code class="descclassname">processor.config.</code><code class="descname">get_log_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/config.html#get_log_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.config.get_log_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the configured data directory.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="processor.config.get_log_config">
+<code class="descclassname">processor.config.</code><code class="descname">get_log_config</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/config.html#get_log_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.config.get_log_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log config dictinary if it exists.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="processor.config.get_processor_config">
+<code class="descclassname">processor.config.</code><code class="descname">get_processor_config</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/config.html#get_processor_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.config.get_processor_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log config dictinary if it exists.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-processor.context">
+<span id="processor-context-module"></span><h2>processor.context module<a class="headerlink" href="#module-processor.context" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="processor.context.Context">
+<em class="property">class </em><code class="descclassname">processor.context.</code><code class="descname">Context</code><span class="sig-paren">(</span><em>stream</em>, <em>context_id</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/context.html#Context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.context.Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Context provides an interface for getting, setting, and deleting
+validator state. All validator interactions by a handler should be
+through a Context instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>_stream</strong> (<em>sawtooth.client.stream.Stream</em>) &#8211; client grpc communication</li>
+<li><strong>_context_id</strong> (<em>str</em>) &#8211; the context_id passed in from the validator</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="processor.context.Context.get_state">
+<code class="descname">get_state</code><span class="sig-paren">(</span><em>addresses</em>, <em>timeout=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/context.html#Context.get_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.context.Context.get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>get_state queries the validator state for data at each of the
+addresses in the given list. The addresses that have been set
+are returned in a list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>addresses</strong> (<em>list</em>) &#8211; the addresses to fetch</li>
+<li><strong>timeout</strong> &#8211; optional timeout, in seconds</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a list of Entries (address, data), for the
+addresses that have a value</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">results (list)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">AuthorizationException</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="processor.context.Context.set_state">
+<code class="descname">set_state</code><span class="sig-paren">(</span><em>entries</em>, <em>timeout=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/context.html#Context.set_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.context.Context.set_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>set_state requests that each address in the provided dictionary be
+set in validator state to its corresponding value. A list is
+returned containing the successfully set addresses.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>entries</strong> (<em>dict</em>) &#8211; dictionary where addresses are the keys and data is
+the value.</li>
+<li><strong>timeout</strong> &#8211; optional timeout, in seconds</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a list of addresses that were set</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">addresses (list)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">AuthorizationException</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="processor.context.Context.delete_state">
+<code class="descname">delete_state</code><span class="sig-paren">(</span><em>addresses</em>, <em>timeout=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/context.html#Context.delete_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.context.Context.delete_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>delete_state requests that each of the provided addresses be unset
+in validator state. A list of successfully deleted addresses
+is returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>addresses</strong> (<em>list</em>) &#8211; list of addresses to delete</li>
+<li><strong>timeout</strong> &#8211; optional timeout, in seconds</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a list of addresses that were deleted</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">addresses (list)</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">AuthorizationException</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="processor.context.Context.add_receipt_data">
+<code class="descname">add_receipt_data</code><span class="sig-paren">(</span><em>data</em>, <em>timeout=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/context.html#Context.add_receipt_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.context.Context.add_receipt_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a blob to the execution result for this transaction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>bytes</em>) &#8211; The data to add.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="processor.context.Context.add_event">
+<code class="descname">add_event</code><span class="sig-paren">(</span><em>event_type</em>, <em>attributes=None</em>, <em>data=None</em>, <em>timeout=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/context.html#Context.add_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.context.Context.add_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new event to the execution result for this transaction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>event_type</strong> (<em>str</em>) &#8211; This is used to subscribe to events. It should be
+globally unique and describe what, in general, has occured.</li>
+<li><strong>attributes</strong> (<em>list of</em><em> (</em><em>str</em><em>, </em><em>str</em><em>) </em><em>tuples</em>) &#8211; Additional information
+about the event that is transparent to the validator.
+Attributes can be used by subscribers to filter the type of
+events they receive.</li>
+<li><strong>data</strong> (<em>bytes</em>) &#8211; Additional information about the event that is opaque
+to the validator.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-processor.core">
+<span id="processor-core-module"></span><h2>processor.core module<a class="headerlink" href="#module-processor.core" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="processor.core.TransactionProcessor">
+<em class="property">class </em><code class="descclassname">processor.core.</code><code class="descname">TransactionProcessor</code><span class="sig-paren">(</span><em>url</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/core.html#TransactionProcessor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.core.TransactionProcessor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>TransactionProcessor is a generic class for communicating with a
+validator and routing transaction processing requests to a registered
+handler. It uses ZMQ and channels to handle requests concurrently.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>url</strong> (<em>string</em>) &#8211; The URL of the validator</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="processor.core.TransactionProcessor.zmq_id">
+<code class="descname">zmq_id</code><a class="headerlink" href="#processor.core.TransactionProcessor.zmq_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="processor.core.TransactionProcessor.add_handler">
+<code class="descname">add_handler</code><span class="sig-paren">(</span><em>handler</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/core.html#TransactionProcessor.add_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.core.TransactionProcessor.add_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a transaction family handler
+:param handler: the handler to be added
+:type handler: TransactionHandler</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="processor.core.TransactionProcessor.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/core.html#TransactionProcessor.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.core.TransactionProcessor.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connects the transaction processor to a validator and starts
+listening for requests and routing them to an appropriate
+transaction handler.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="processor.core.TransactionProcessor.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/core.html#TransactionProcessor.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.core.TransactionProcessor.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the connection between the TransactionProcessor and the
+validator.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-processor.exceptions">
+<span id="processor-exceptions-module"></span><h2>processor.exceptions module<a class="headerlink" href="#module-processor.exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="processor.exceptions.InvalidTransaction">
+<em class="property">exception </em><code class="descclassname">processor.exceptions.</code><code class="descname">InvalidTransaction</code><span class="sig-paren">(</span><em>message</em>, <em>extended_data=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/exceptions.html#InvalidTransaction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.exceptions.InvalidTransaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">processor.exceptions._TpResponseError</span></code></p>
+<p>Raised for an Invalid Transaction.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="processor.exceptions.InternalError">
+<em class="property">exception </em><code class="descclassname">processor.exceptions.</code><code class="descname">InternalError</code><span class="sig-paren">(</span><em>message</em>, <em>extended_data=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/exceptions.html#InternalError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.exceptions.InternalError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">processor.exceptions._TpResponseError</span></code></p>
+<p>Raised when an internal error occurs during transaction processing.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="processor.exceptions.AuthorizationException">
+<em class="property">exception </em><code class="descclassname">processor.exceptions.</code><code class="descname">AuthorizationException</code><a class="reference internal" href="../../_modules/processor/exceptions.html#AuthorizationException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.exceptions.AuthorizationException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
+<p>Raised when a authorization error occurs.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="processor.exceptions.LocalConfigurationError">
+<em class="property">exception </em><code class="descclassname">processor.exceptions.</code><code class="descname">LocalConfigurationError</code><a class="reference internal" href="../../_modules/processor/exceptions.html#LocalConfigurationError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.exceptions.LocalConfigurationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
+<p>Raised when a log configuraiton error occurs.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-processor.handler">
+<span id="processor-handler-module"></span><h2>processor.handler module<a class="headerlink" href="#module-processor.handler" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="processor.handler.TransactionHandler">
+<em class="property">class </em><code class="descclassname">processor.handler.</code><code class="descname">TransactionHandler</code><a class="reference internal" href="../../_modules/processor/handler.html#TransactionHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.handler.TransactionHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>TransactionHandler is the Abstract Base Class that defines the business
+logic for a new transaction family.</p>
+<p>The family_name, family_versions, and namespaces properties are
+used by the processor to route processing requests to the handler.</p>
+<dl class="attribute">
+<dt id="processor.handler.TransactionHandler.family_name">
+<code class="descname">family_name</code><a class="headerlink" href="#processor.handler.TransactionHandler.family_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>family_name should return the name of the transaction family that this
+handler can process, e.g. &#8220;intkey&#8221;</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="processor.handler.TransactionHandler.family_versions">
+<code class="descname">family_versions</code><a class="headerlink" href="#processor.handler.TransactionHandler.family_versions" title="Permalink to this definition">¶</a></dt>
+<dd><p>family_versions should return a list of versions this transaction
+family handler can process, e.g. [&#8220;1.0&#8221;]</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="processor.handler.TransactionHandler.namespaces">
+<code class="descname">namespaces</code><a class="headerlink" href="#processor.handler.TransactionHandler.namespaces" title="Permalink to this definition">¶</a></dt>
+<dd><p>namespaces should return a list containing all the handler&#8217;s
+namespaces, e.g. [&#8220;abcdef&#8221;]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="processor.handler.TransactionHandler.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>transaction</em>, <em>context</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/handler.html#TransactionHandler.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.handler.TransactionHandler.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply is the single method where all the business logic for a
+transaction family is defined. The method will be called by the
+transaction processor upon receiving a TpProcessRequest that the
+handler understands and will pass in the TpProcessRequest and an
+initialized instance of the Context type.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-processor.log">
+<span id="processor-log-module"></span><h2>processor.log module<a class="headerlink" href="#module-processor.log" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="processor.log.create_console_handler">
+<code class="descclassname">processor.log.</code><code class="descname">create_console_handler</code><span class="sig-paren">(</span><em>verbose_level</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/log.html#create_console_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.log.create_console_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up the console logging for a transaction processor.
+:param verbose_level: The log level that the console should print out
+:type verbose_level: int</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="processor.log.init_console_logging">
+<code class="descclassname">processor.log.</code><code class="descname">init_console_logging</code><span class="sig-paren">(</span><em>verbose_level=2</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/log.html#init_console_logging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.log.init_console_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up the console logging for a transaction processor.
+:param verbose_level: The log level that the console should print out
+:type verbose_level: int</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="processor.log.log_configuration">
+<code class="descclassname">processor.log.</code><code class="descname">log_configuration</code><span class="sig-paren">(</span><em>log_config=None</em>, <em>log_dir=None</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/processor/log.html#log_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#processor.log.log_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up the loggers for a transaction processor.
+:param log_config: A dictinary of log config options
+:type log_config: dict
+:param log_dir: The log directory&#8217;s path
+:type log_dir: string
+:param name: The name of the expected logging file
+:type name: string</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-processor">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-processor" title="Permalink to this headline">¶</a></h2>
+<p>The processor module defines:</p>
+<p>1. A TransactionHandler interface to be
+used to create new transaction families.</p>
+<p>2. A high-level, general purpose TransactionProcessor to which any
+number of handlers can be added.</p>
+<p>3. A Context class used to abstract getting and setting addresses in
+global validator state.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sawtooth_signing.html" class="btn btn-neutral float-right" title="sawtooth_signing package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../../sdks.html" class="btn btn-neutral" title="SDK API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'v1.0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

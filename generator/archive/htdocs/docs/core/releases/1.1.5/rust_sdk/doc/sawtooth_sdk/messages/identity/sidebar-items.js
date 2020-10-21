@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Policy_EntryType",""]],"fn":[["file_descriptor_proto",""]],"struct":[["Policy",""],["PolicyList",""],["Policy_Entry",""],["Role",""],["RoleList",""]]});

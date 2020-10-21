@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+  <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<head>
+	<meta charset="utf-8">
+	<title>Appendix - Sawtooth Transaction Family Prefixes | Hyperledger Sawtooth</title>
+	<meta name="description" content="An enterprise-grade solution for distributed ledgers.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="0.0.0.0/faq/prefixes/">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Hyperledger Sawtooth" href="0.0.0.0/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+
+	<!-- Google Analytics
+	-->
+</head>
+
+  <body>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">Hyperledger Sawtooth</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+                        
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/release/">
+					Releases
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/docs/">
+					Docs
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/faq/">
+					FAQ
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/community/">
+					Community
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/contact/">
+					Contact
+				</a>
+			</li>
+			
+			
+			<li>
+				<a class="page-link" href="/examples">
+					Examples
+				</a>
+			</li>
+			<!-- Social icons from Font Awesome, if enabled -->
+			<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/hyperledger/sawtooth-core" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/\%23HyperledgerSawtooth" title="Follow on Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Appendix - Sawtooth Transaction Family Prefixes</h1>
+  </header>
+  <section class="post-content"><p class="mininav"><a class="reference external" href="/faq/glossary/">PREVIOUS</a> <a class="reference external" href="/faq/">FAQ</a> <a class="reference external" href="/faq/settings/">NEXT</a></p>
+<p>This is an unofficial list of some Transaction Family (TF) prefixes.
+There is no central registry, most or all of these TFs are found on GitHub
+( <a class="reference external" href="https://github.com/">https://github.com/</a> especially <a class="reference external" href="https://github.com/hyperledger">https://github.com/hyperledger</a> and
+<a class="reference external" href="https://github.com/hyperledger-labs">https://github.com/hyperledger-labs</a> ).</p>
+<p>Sawtooth addresses are 70 hex characters.
+The prefix is either the first 6 characters of the SHA-512 hash of the namespace, or, for some base namespaces, a &quot;hex word&quot;.
+The Sawtooth Validator registry is an outlier. It uses the SHA-256 hash (not SHA-512) and hashes &quot;validator_registry&quot; (not &quot;sawtooth_validator_registry&quot;).
+The remainder of the address is TF-specific and defined for each TF.
+Listing of a TF does not imply endorsement.</p>
+<p>All data payloads are encoded in base64 after serializing.
+Sawtooth headers are serialized with Protobuf.</p>
+<p>For base TF specifications, see
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/transaction_family_specifications/">https://sawtooth.hyperledger.org/docs/core/releases/latest/transaction_family_specifications/</a></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="15%" />
+<col width="11%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">TRANSACTION
+FAMILY NAME</th>
+<th class="head">SERIAL-
+IZATION</th>
+<th class="head">PREFIX</th>
+<th class="head">PREFIX ENCODING</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>settings</td>
+<td>Protobuf</td>
+<td>000000</td>
+<td>Validator settings.  Only required TF</td>
+</tr>
+<tr><td>identity</td>
+<td>Protobuf</td>
+<td>00001d</td>
+<td>Validator Identity for TP/Validator keys</td>
+</tr>
+<tr><td>sawtooth
+_validator
+_registry</td>
+<td>Protobuf</td>
+<td>6a4372</td>
+<td>PoET Validator Registry. Used by PoET
+consensus to track other validators.
+See note above about hash prefix .</td>
+</tr>
+<tr><td>blockinfo</td>
+<td>Protobuf</td>
+<td>00b10c</td>
+<td><p class="first">Validator Block Info.  Used for SETH</p>
+<p>00b10c00 metadata namespace
+info about other namespaces</p>
+<p>00b10c01 block info namespace
+historic block info</p>
+<p class="last">00b10c0100....00&lt;block # in hex&gt;
+info on block at block #</p>
+</td>
+</tr>
+<tr><td>sabre</td>
+<td>Protobuf</td>
+<td><p class="first">00ec00</p>
+<p>00ec01</p>
+<p class="last">00ec02</p>
+</td>
+<td><p class="first">WebAssembly VM: NamespaceRegistry</p>
+<p>Wasm: ContractRegistry</p>
+<p class="last">Wasm: Contracts</p>
+</td>
+</tr>
+<tr><td>seth</td>
+<td>Protobuf</td>
+<td>a68b06</td>
+<td>SETH (Sawtooth Ethereum VM)</td>
+</tr>
+<tr><td>pdo_
+contract_
+instance_
+registry</td>
+<td>Protobuf</td>
+<td>aa2a93</td>
+<td>Private Data Objects (PDO)
+Contract Instance Registry</td>
+</tr>
+<tr><td>pdo_
+contract_
+enclave_
+registry</td>
+<td>Protobuf</td>
+<td>0b936f</td>
+<td>Private Data Objects (PDO)
+Contract Enclave Registry</td>
+</tr>
+<tr><td>ccl_
+contract_
+contract_
+state_
+registry</td>
+<td>Protobuf</td>
+<td>db13a2</td>
+<td>Private Data Objects (PDO)
+Coordination and Commit Log (CCL)
+Contract State Registry</td>
+</tr>
+<tr><td colspan="4"><strong>SOME EXAMPLE TFs</strong></td>
+</tr>
+<tr><td>battleship</td>
+<td>JSON</td>
+<td>6e10df</td>
+<td>Battleship example game</td>
+</tr>
+<tr><td>intkey</td>
+<td>CBOR</td>
+<td>1cf126</td>
+<td>Integer Key. Full production example</td>
+</tr>
+<tr><td>smallbank</td>
+<td>Protobuf</td>
+<td>332514</td>
+<td>Small Bank example app</td>
+</tr>
+<tr><td>xo</td>
+<td>CSV-UTF8</td>
+<td>5b7349</td>
+<td>Tic-tac-toe example game</td>
+</tr>
+<tr><td>supply_chain</td>
+<td>Protobuf</td>
+<td>3400de</td>
+<td>Asset (Fish) Supply Chain example app</td>
+</tr>
+<tr><td>marketplace</td>
+<td>Protobuf</td>
+<td>cd6744</td>
+<td>Marketplace example app</td>
+</tr>
+<tr><td>transfer-
+chain</td>
+<td>JSON-UTF8</td>
+<td>19d832</td>
+<td>Simple Tuna Supply Chain app.
+Used for edX LFS171x class</td>
+</tr>
+<tr><td>simplewallet</td>
+<td>CSV-UTF8</td>
+<td>7e2664</td>
+<td>Simple Wallet minimal example</td>
+</tr>
+<tr><td>cookiejar</td>
+<td>CSV-UTF8</td>
+<td>a4d219</td>
+<td>Cookie Jar minimal example</td>
+</tr>
+<tr><td>simple_
+supply</td>
+<td>Protobuf</td>
+<td>5d6af4</td>
+<td>Simple Supply example used for future
+edX LFS201 class</td>
+</tr>
+<tr><td>pirate-talk</td>
+<td>UTF8</td>
+<td>aaaaaa</td>
+<td>Pirate Talk minimal example</td>
+</tr>
+<tr><td>cookie-maker</td>
+<td>raw</td>
+<td>1a5312</td>
+<td>Cookie Maker minimal example</td>
+</tr>
+<tr><td colspan="4"><strong>SOME THIRD-PARTY PRODUCTION TFs</strong></td>
+</tr>
+<tr><td>rbac</td>
+<td>Protobuf</td>
+<td>8563d0</td>
+<td>T-Mobile NEXT Identity Platform</td>
+</tr>
+<tr><td>sawtoothekyc</td>
+<td>Protobuf</td>
+<td>dbf420</td>
+<td>Primechain Blockchain-eKYC bank records</td>
+</tr>
+<tr><td>pub_key</td>
+<td>Protobuf</td>
+<td>a23be1</td>
+<td>REMME REMChain</td>
+</tr>
+<tr><td>bitagora-
+ballots</td>
+<td>JSON</td>
+<td>b42861</td>
+<td>Bitagora voting ballot</td>
+</tr>
+<tr><td>bitagora-
+polls</td>
+<td>JSON</td>
+<td>154f9c</td>
+<td>Bitagora voting polls</td>
+</tr>
+</tbody>
+</table>
+<p class="mininav"><a class="reference external" href="/faq/glossary/">PREVIOUS</a> <a class="reference external" href="/faq/">FAQ</a> <a class="reference external" href="/faq/settings/">NEXT</a></p>
+<p>© Copyright 2018, Intel Corporation.</p>
+
+</section>
+</article>
+
+    </div>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text"><p style="font-size: 1.5em;">
+  Hyperledger Sawtooth
+</p> <p>
+  <a href="/" title="Home"><span class="links">Home</span></a>
+  &bull;
+  <a href="/about/" title="About Sawtooth"><span class="links">About</span></a>
+  &bull;
+  <a href="/release/" title="Releases"><span class="links">Releases</span></a>
+  &bull;
+  <a href="/docs/" title="Documentation"><span class="links">Docs</span></a>
+  &bull;
+  <a href="/faq/" title="FAQ"><span class="links">FAQ</span></a>
+  &bull;
+  <a href="/community/" title="Community"><span class="links">Community</span></a>
+  &bull;
+  <a href="/contact/" title="Contact"><span class="links">Contact</span></a>
+</p> <p>
+  Find us: &nbsp;
+  <a href="https://github.com/hyperledger/sawtooth-core/" target="_blank" title="GitHub"><span  class="links">GitHub</span></a>
+  &bull;
+  <a href="https://chat.hyperledger.org/channel/sawtooth" target="_blank" title="#sawtooth chat channel"">Rocket.Chat</a>
+  &bull;
+  <a href="https://twitter.com/search?q=%23HyperledgerSawtooth" target="_blank" title="#sawtooth chat channel"">Twitter</a>
+</p> <p>
+  Examples: &nbsp;
+  <a href="/examples/seafood.html" target="_blank" title="Seafood Supply Chain Traceability">Seafood Supply Chain Traceability</a>
+  &bull;
+  <a href="/examples/bond.html" target="_blank" title="Bond Asset Settlement">Bond Asset Settlement</a>
+  &bull;
+  <a href="/examples/marketplace.html" target="_blank" title="Marketplace Digital Asset Exchange">Marketplace Digital Asset Exchange</a>
+</p> <p>
+  Linux Foundation: &nbsp;
+  <a href="http://www.linuxfoundation.org/privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+  &bull;
+  <a href="http://www.linuxfoundation.org/terms" target="_blank" title="Terms of Service">Terms of Service</a>
+</p> <p>
+  <small class="copyright">Copyright &copy; 2015-2019 contributors to Hyperledger Sawtooth</small>
+</p>
+</p>
+</footer>
+
+
+  </body>
+</html>

@@ -1,0 +1,423 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Running Sawtooth as a Service &mdash; Sawtooth v1.2.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Testing Sawtooth Functionality" href="testing_sawtooth.html" />
+    <link rel="prev" title="Changing Off-chain Settings with Configuration Files" href="off_chain_settings.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="setting_up_sawtooth_network.html">Setting Up a Sawtooth Network</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="installation.html">Installing Hyperledger Sawtooth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generating_keys.html">Generating User and Validator Keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="creating_genesis_block.html">Creating the Genesis Block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="off_chain_settings.html">Changing Off-chain Settings with Configuration Files</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Running Sawtooth as a Service</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#start-the-sawtooth-services">Start the Sawtooth Services</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#view-sawtooth-logs">View Sawtooth Logs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stop-or-restart-the-sawtooth-services">Stop or Restart the Sawtooth Services</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="testing_sawtooth.html">Testing Sawtooth Functionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pbft_updating_member_list.html">PBFT Only: Updating the PBFT Member List</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setting_allowed_txns.html">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_authorized_users.html">Adding Authorized Users for Settings Proposals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_permissions.html">Configuring Validator and Transactor Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grafana_configuration.html">Using Grafana to Display Sawtooth Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_dynamic_consensus.html">About Dynamic Consensus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pbft_adding_removing_node.html">Adding or Removing a PBFT Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_sawtooth.html">About Sawtooth Configuration Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator’s Guide</a> &raquo;</li>
+        
+          <li><a href="setting_up_sawtooth_network.html">Setting Up a Sawtooth Network</a> &raquo;</li>
+        
+      <li>Running Sawtooth as a Service</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/systemd.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="running-sawtooth-as-a-service">
+<h1>Running Sawtooth as a Service<a class="headerlink" href="#running-sawtooth-as-a-service" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These instructions have been tested on Ubuntu 18.04 (Bionic) only.</p>
+</div>
+<p>When you installed Sawtooth with <code class="docutils literal notranslate"><span class="pre">apt-get</span></code>, <code class="docutils literal notranslate"><span class="pre">systemd</span></code> units were added for
+the Sawtooth components (validator, REST API, transaction processors, and
+consensus engines). This procedure describes how to use the <code class="docutils literal notranslate"><span class="pre">systemctl</span></code>
+command to start, stop, and restart Sawtooth components as <code class="docutils literal notranslate"><span class="pre">systemd</span></code> services.</p>
+<p>To learn more about <code class="docutils literal notranslate"><span class="pre">systemd</span></code> and the <code class="docutils literal notranslate"><span class="pre">systemctl</span></code> command, see the <a class="reference external" href="https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units">Digital
+Ocean systemctl guide</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each node in the Sawtooth network must run the same set of transaction
+processors. If this node will join an existing Sawtooth network, make sure
+that you know the full list of required transaction processors, and have
+installed any custom transaction processors.</p>
+<p>If necessary, add the additional transaction processors to all <code class="docutils literal notranslate"><span class="pre">systemctl</span></code>
+commands in this procedure.</p>
+</div>
+<div class="section" id="start-the-sawtooth-services">
+<h2>Start the Sawtooth Services<a class="headerlink" href="#start-the-sawtooth-services" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>Start the basic Sawtooth components as services: REST API, validator, and
+transaction processors.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl start sawtooth-rest-api.service
+<span class="gp">$</span> sudo systemctl start sawtooth-validator.service
+<span class="gp">$</span> sudo systemctl start sawtooth-settings-tp.service
+<span class="gp">$</span> sudo systemctl start sawtooth-identity-tp.service
+<span class="gp">$</span> sudo systemctl start sawtooth-intkey-tp-python.service
+</pre></div>
+</div>
+<p>The transaction processors <code class="docutils literal notranslate"><span class="pre">sawtooth-settings-tp</span></code> (Settings) and
+<code class="docutils literal notranslate"><span class="pre">sawtooth-identity-tp</span></code> (Identity) are required.
+<code class="docutils literal notranslate"><span class="pre">sawtooth-intkey-tp-python</span></code> (IntegerKey) is used in a later procedure to
+test basic Sawtooth functionality.</p>
+</li>
+<li><p>Start the consensus-related components as services.</p>
+<ul>
+<li><p>For PBFT:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl start sawtooth-pbft-engine.service
+</pre></div>
+</div>
+</li>
+<li><p>For PoET:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl start sawtooth-poet-validator-registry-tp.service
+<span class="gp">$</span> sudo systemctl start sawtooth-poet-engine.service
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>Verify that all the Sawtooth services are running.</p>
+<ul>
+<li><p>Check the basic services:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl status sawtooth-rest-api.service
+<span class="gp">$</span> sudo systemctl status sawtooth-validator.service
+<span class="gp">$</span> sudo systemctl status sawtooth-settings-tp.service
+<span class="gp">$</span> sudo systemctl status sawtooth-identity-tp.service
+<span class="gp">$</span> sudo systemctl status sawtooth-intkey-tp-python.service
+</pre></div>
+</div>
+</li>
+<li><p>(PBFT only) Check the PBFT consensus service:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl status sawtooth-pbft-engine.service
+</pre></div>
+</div>
+</li>
+<li><p>(PoET only) Check the PoET consensus services:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl status sawtooth-poet-validator-registry-tp.service
+<span class="gp">$</span> sudo systemctl status sawtooth-poet-engine.service
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="view-sawtooth-logs">
+<h2>View Sawtooth Logs<a class="headerlink" href="#view-sawtooth-logs" title="Permalink to this headline">¶</a></h2>
+<p>Use the following command to see the log output that would have been displayed
+on the console if you ran the components manually.</p>
+<ul>
+<li><p>For PBFT:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo journalctl -f <span class="se">\</span>
+-u sawtooth-rest-api <span class="se">\</span>
+-u sawtooth-validator <span class="se">\</span>
+-u sawtooth-settings-tp <span class="se">\</span>
+-u sawtooth-identity-tp <span class="se">\</span>
+-u sawtooth-intkey-tp-python <span class="se">\</span>
+-u sawtooth-pbft-engine
+</pre></div>
+</div>
+</li>
+<li><p>For PoET:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo journalctl -f <span class="se">\</span>
+-u sawtooth-rest-api <span class="se">\</span>
+-u sawtooth-validator <span class="se">\</span>
+-u sawtooth-settings-tp <span class="se">\</span>
+-u sawtooth-identity-tp <span class="se">\</span>
+-u sawtooth-intkey-tp-python <span class="se">\</span>
+-u sawtooth-poet-validator-registry-tp <span class="se">\</span>
+-u sawtooth-poet-engine
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Additional logging output can be found in <code class="docutils literal notranslate"><span class="pre">/var/log/sawtooth/</span></code>. For more
+information, see <a class="reference internal" href="log_configuration.html"><span class="doc">Log Configuration File</span></a>.</p>
+</div>
+<div class="section" id="stop-or-restart-the-sawtooth-services">
+<span id="stop-restart-sawtooth-services-label"></span><h2>Stop or Restart the Sawtooth Services<a class="headerlink" href="#stop-or-restart-the-sawtooth-services" title="Permalink to this headline">¶</a></h2>
+<p>If you need to stop or restart the Sawtooth services for any reason, use the
+following procedures.</p>
+<div class="section" id="stop-sawtooth-services">
+<h3>Stop Sawtooth Services<a class="headerlink" href="#stop-sawtooth-services" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ol class="arabic">
+<li><p>Stop the basic services.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl stop sawtooth-rest-api.service
+<span class="gp">$</span> sudo systemctl stop sawtooth-validator.service
+<span class="gp">$</span> sudo systemctl stop sawtooth-settings-tp.service
+<span class="gp">$</span> sudo systemctl stop sawtooth-identity-tp.service
+<span class="gp">$</span> sudo systemctl stop sawtooth-intkey-tp-python.service
+</pre></div>
+</div>
+</li>
+<li><p>Stop the consensus services.</p>
+<ul>
+<li><p>For PBFT:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl stop sawtooth-pbft-engine.service
+</pre></div>
+</div>
+</li>
+<li><p>For PoET:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl stop sawtooth-poet-validator-registry-tp.service
+<span class="gp">$</span> sudo systemctl stop sawtooth-poet-engine.service
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="restart-sawtooth-services">
+<h3>Restart Sawtooth Services<a class="headerlink" href="#restart-sawtooth-services" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ol class="arabic">
+<li><p>Restart the basic services.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl restart sawtooth-rest-api.service
+<span class="gp">$</span> sudo systemctl restart sawtooth-validator.service
+<span class="gp">$</span> sudo systemctl restart sawtooth-settings-tp.service
+<span class="gp">$</span> sudo systemctl restart sawtooth-identity-tp.service
+<span class="gp">$</span> sudo systemctl restart sawtooth-intkey-tp-python.service
+</pre></div>
+</div>
+</li>
+<li><p>Restart the consensus services.</p>
+<ul>
+<li><p>For PBFT:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl restart sawtooth-pbft-engine.service
+</pre></div>
+</div>
+</li>
+<li><p>For PoET:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl restart sawtooth-poet-validator-registry-tp.service
+<span class="gp">$</span> sudo systemctl restart sawtooth-poet-engine.service
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="testing_sawtooth.html" class="btn btn-neutral float-right" title="Testing Sawtooth Functionality" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="off_chain_settings.html" class="btn btn-neutral float-left" title="Changing Off-chain Settings with Configuration Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

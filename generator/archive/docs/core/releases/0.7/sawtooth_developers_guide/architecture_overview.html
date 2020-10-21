@@ -1,0 +1,472 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Architecture Overview &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="Sawtooth Lake Developer’s Guide" href="../sawtooth_developers_guide.html"/>
+        <link rel="next" title="Vagrant" href="sawtooth_vagrant.html"/>
+        <link rel="prev" title="Sawtooth Lake Developer’s Guide" href="../sawtooth_developers_guide.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Architecture Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-the-sawtooth-lake-distributed-ledger">What is the Sawtooth Lake Distributed Ledger?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#repository-structure">Repository Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#core-architecture">Core Architecture</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ledgers">Ledgers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#journals">Journals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#communication">Communication</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#transaction-family-plugin-architecture">Transaction Family Plugin Architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sawtooth_vagrant.html">Vagrant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_api/modules.html">Distributed Ledger Python API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="web_api/index.html">Distributed Ledger Web API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_network_launcher.html">The Validator Network Launcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="workload_simulator.html">The Workload Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signing_transactions.html">Signing Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Architecture Overview</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sawtooth_developers_guide/architecture_overview.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="architecture-overview">
+<h1>Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-the-sawtooth-lake-distributed-ledger">
+<h2>What is the Sawtooth Lake Distributed Ledger?<a class="headerlink" href="#what-is-the-sawtooth-lake-distributed-ledger" title="Permalink to this headline">¶</a></h2>
+<p>The Sawtooth Lake Distributed Ledger is a software framework for
+constructing decentralized ledgers with extensible transaction
+types. It is comparable to the blockchain ledger that underlies
+Bitcoin. Sawtooth Lake uses a unique mechanism for reaching consensus
+on the validity of the ledger based on trusted code running inside a
+hardware-protected Intel Software Guard Extensions (SGX) enclave.</p>
+<p>One of the initial transaction families supported by Sawtooth Lake is
+the MarketPlace. The MarketPlace Transaction Family establishes the
+concepts of participants, accounts, assets, holdings, liabilities,
+and offers in a decentralized ledger to facilitate the exchange of
+digital assets. The Sawtooth Lake architecture allows the definition
+of additional transaction families or the consumption of an existing
+asset-type agnostic transaction family (like MarketPlace) to meet
+domain-specific needs.</p>
+</div>
+<div class="section" id="repository-structure">
+<h2>Repository Structure<a class="headerlink" href="#repository-structure" title="Permalink to this headline">¶</a></h2>
+<p>One repository contains all of the the code needed:</p>
+<dl class="docutils">
+<dt>sawtooth-core</dt>
+<dd><p class="first">Contains fundamental classes used throughout the Sawtooth Lake project, as well as:</p>
+<ul class="last simple">
+<li>The gossip networking layer</li>
+<li>Basic transaction, block, and message objects</li>
+<li>The base journal implementation</li>
+<li>The PoET journal consensus mechanism</li>
+<li>Built-in transaction families - Endpoint Registry and Integer Key
+Registry</li>
+<li>The implementation of a server, known as the validator<ul>
+<li>acts as a node on the gossip network</li>
+<li>validators exchange and act upon messages, as defined by the core
+classes and via additional plug-in transaction families like the
+MarketPlace Transaction Family</li>
+</ul>
+</li>
+<li>The MarketPlace Transaction Family, located in the extensions
+directory.<ul>
+<li>demonstrates how to inherit and extend base sawtooth-core
+object types to implement a custom transaction family</li>
+<li>includes a command line interface called <em>mktclient</em> for
+interacting with validators running the MarketPlace Transaction
+Family</li>
+<li>useful for buying, selling and trading digital assets</li>
+</ul>
+</li>
+<li>Example code, in the form of games, which demonstrate key concepts of
+Sawtooth Lake</li>
+<li>Tools including a Vagrant environment for easily launching a network of
+validators</li>
+<li>Source files for this documentation</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="core-architecture">
+<h2>Core Architecture<a class="headerlink" href="#core-architecture" title="Permalink to this headline">¶</a></h2>
+<p>The Sawtooth Lake Distributed Ledger consists of three major
+architectural layers: the Ledger layer, the Journal layer, and the
+Communication Layer.</p>
+<a class="reference internal image-reference" href="../_images/arch_overview_layers.png"><img alt="../_images/arch_overview_layers.png" class="align-center" src="../_images/arch_overview_layers.png" style="width: 198.5px; height: 222.5px;" /></a>
+<div class="section" id="ledgers">
+<h3>Ledgers<a class="headerlink" href="#ledgers" title="Permalink to this headline">¶</a></h3>
+<p>Ledgers are a conceptual semantic and data model layer for
+transaction types. Ledgers are described as a &#8216;conceptual&#8217; layer
+because they are implemented as a specialization of existing base
+classes already present in the Communication and Journal layers.</p>
+<a class="reference internal image-reference" href="../_images/arch_overview_ledger.png"><img alt="../_images/arch_overview_ledger.png" class="align-center" src="../_images/arch_overview_ledger.png" style="width: 220.5px; height: 94.5px;" /></a>
+<p>In addition to some in-built system ledgers (Endpoint Registry, and Integer
+Key Registry), implementing new classes in the ledger layer allows for the
+creation of new transaction families. The MarketPlace Transaction Family,
+located in the extensions directory of sawtooth-core, is a good example of how
+the ledger layer can be extended.</p>
+</div>
+<div class="section" id="journals">
+<h3>Journals<a class="headerlink" href="#journals" title="Permalink to this headline">¶</a></h3>
+<p>A journal handles consensus on blocks of identifiers. Identifiers
+reference transactions, which are globally replicated. In order to
+confirm blocks, nodes need a copy of the transaction. In this fashion,
+the journal provides global consensus on block ordering, transaction
+ordering within blocks, and the content of transactions.</p>
+<img alt="../_images/arch_overview_journal.png" src="../_images/arch_overview_journal.png" />
+<p>The journal module in sawtooth-core contains:</p>
+<ul class="simple">
+<li>the implementation of the base transaction and transaction block classes</li>
+<li>the consensus algorithms</li>
+<li>the global store manager</li>
+<li>the block store and key value store</li>
+</ul>
+<p>The consensus journal object is journal.journal_core.Journal in the
+sawtooth-core repository.</p>
+<div class="section" id="consensus-mechanisms">
+<h4>Consensus Mechanisms<a class="headerlink" href="#consensus-mechanisms" title="Permalink to this headline">¶</a></h4>
+<p>Sawtooth Lake implements PoET as a consensus mechanism.</p>
+<div class="section" id="poet-and-sgx">
+<h5>PoET and SGX<a class="headerlink" href="#poet-and-sgx" title="Permalink to this headline">¶</a></h5>
+<p>The Sawtooth Lake Distributed Ledger provides a unique mechanism to
+ensure fairness in the node lottery. Instead of a Proof-of-Work
+competition amongst nodes, Sawtooth Lake implements a
+Proof-of-Elapsed-Time (PoET) algorithm for distributed consensus.
+PoET relies upon a trusted execution environment, Intel&#8217;s Software
+Guard Extensions (SGX), to generate fair, verifiable random wait
+timers and signed certificates of timer expiration. This mechanism
+substantially reduces the computation and energy cost of ensuring
+fair distributed consensus.</p>
+<p>The implementation of PoET in Sawtooth Lake runs in a simulated enclave,
+not a true trusted execution environment. For this reason, attestation
+that wait timers have been fairly generated is not possible. This
+version of PoET is intended for experimental purposes and should not
+be used as the consensus mechanism in any &#8216;production&#8217; environment.</p>
+<p>The PoET implementation is located in sawtooth_validator.consensus.poet0 in
+sawtooth-core.</p>
+</div>
+</div>
+<div class="section" id="transactions">
+<h4>Transactions<a class="headerlink" href="#transactions" title="Permalink to this headline">¶</a></h4>
+<p>A transaction is a set of updates to be applied atomically to a
+ledger. The transaction defines the data model and representation.
+For example, in the IntegerKey Transaction Family (located in
+ledger.transaction.integer_key in sawtooth-core), the
+IntegerKeyTransaction is defined as a list of zero or more updates
+to key value pairs using the defined verbs &#8216;set&#8217;, &#8216;inc&#8217;, and &#8216;dec&#8217;.
+The associated IntegerKeyTransactionMessage wraps the derived
+transaction object in a standard message object. There is typically
+a message type for every transaction type.</p>
+</div>
+<div class="section" id="blocks">
+<h4>Blocks<a class="headerlink" href="#blocks" title="Permalink to this headline">¶</a></h4>
+<p>A block is a set of transactions to be applied to a ledger. Other
+than some specialized transaction block implementations for the
+consensus mechanisms, new transaction block types are not typically
+created. The expectation is that multiple transaction types will
+coexist on single transaction blocks of type
+journal.transaction_block.TransactionBlock. There is typically a
+message type for every transaction block type.</p>
+</div>
+</div>
+<div class="section" id="communication">
+<h3>Communication<a class="headerlink" href="#communication" title="Permalink to this headline">¶</a></h3>
+<p>The gossip protocol enables communication between nodes. It includes
+protocol level connection management and basic flow control on top
+of UDP. A Token Bucket <a class="footnote-reference" href="#id2" id="id1">[1]</a> implementation is used to limit the average
+rate of message transmission.</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="https://en.wikipedia.org/wiki/Token_bucket">https://en.wikipedia.org/wiki/Token_bucket</a></td></tr>
+</tbody>
+</table>
+<img alt="../_images/arch_overview_communication.png" src="../_images/arch_overview_communication.png" />
+<p>Peers in the gossip network are called Nodes. Nodes exchange Messages.
+Message handling upon arrival is dispatched via EventHandlers
+associated with the journal.</p>
+<div class="section" id="messages">
+<h4>Messages<a class="headerlink" href="#messages" title="Permalink to this headline">¶</a></h4>
+<p>Messages represent information to send or receive from peers over the
+gossip network. Messages are serialized and deserialized using a
+standard wire format (either CBOR or JSON).</p>
+<p>Message types include:</p>
+<ul class="simple">
+<li>transaction messages</li>
+<li>transaction block messages</li>
+<li>journal transfer messages</li>
+<li>debug messages (log data)</li>
+<li>connection messages</li>
+<li>shutdown messages</li>
+<li>topology messages</li>
+</ul>
+<p>Messages are used broadly across the architecture for both system
+communication (administrative messages, consensus messages), and for
+transaction-type specific handling.</p>
+</div>
+</div>
+</div>
+<div class="section" id="transaction-family-plugin-architecture">
+<h2>Transaction Family Plugin Architecture<a class="headerlink" href="#transaction-family-plugin-architecture" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned above, the creation of new classes in the conceptual
+&#8216;ledger&#8217; layer allows for the addition of transaction families. Via
+a message handling and dispatch model, new transaction families can
+register themselves with the underlying journal consensus and global
+store mechanisms to allow for arbitrary callbacks on message arrival
+and persistence of the transactions.</p>
+<p>If specialized transaction stores are required, those can also be
+defined and added to the ledger during initialization (via
+register_transaction_types).</p>
+<p>In order to create a basic transaction family, implement the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">register_transaction_types</span><span class="p">(</span><span class="n">ledger</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Register message handlers for defined message types and add a
+transaction store to the ledger for the transaction types.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BasicTransactionMessage</span><span class="p">(</span><span class="n">transaction_message</span><span class="o">.</span><span class="n">TransactionMessage</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>implement __init__</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BasicTransaction</span><span class="p">(</span><span class="n">transaction</span><span class="o">.</span><span class="n">Transaction</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>implement __init__, __str__, is_valid, apply, and dump</p>
+<p>Refer to ledger.transaction.integer_key in sawtooth-core for a
+simple example, or to mktplace.transactions.market_place in
+sawtooth-core/extensions/mktplace for a more substantial example.</p>
+<p>Transaction Families are loaded into the validator in sawtooth-validator
+via the &#8220;TransactionFamilies&#8221; config value (see
+sawtooth-core/validator/etc/txnvalidator.js).</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sawtooth_vagrant.html" class="btn btn-neutral float-right" title="Vagrant" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../sawtooth_developers_guide.html" class="btn btn-neutral" title="Sawtooth Lake Developer’s Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

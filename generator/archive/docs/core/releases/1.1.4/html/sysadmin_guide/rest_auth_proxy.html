@@ -1,0 +1,467 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using a Proxy Server to Authorize the REST API &mdash; Sawtooth v1.1.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Configuring Validator and Transactor Permissions" href="configuring_permissions.html" />
+    <link rel="prev" title="Setting the Allowed Transaction Types (Optional)" href="setting_allowed_txns.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.1.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="setting_up_sawtooth_poet-sim.html">Setting Up a Sawtooth Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setting_allowed_txns.html">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using a Proxy Server to Authorize the REST API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#about-proxying-the-rest-api">About Proxying the REST API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#x-forwarded-headers">“X-Forwarded” Headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#forwarded-headers">“Forwarded” Headers</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#set-up-an-apache-proxy-server-for-the-rest-api">Set Up an Apache Proxy Server for the REST API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_permissions.html">Configuring Validator and Transactor Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grafana_configuration.html">Using Grafana to Display Sawtooth Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_sawtooth.html">About Sawtooth Configuration Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator’s Guide</a> &raquo;</li>
+        
+      <li>Using a Proxy Server to Authorize the REST API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/rest_auth_proxy.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-a-proxy-server-to-authorize-the-rest-api">
+<h1>Using a Proxy Server to Authorize the REST API<a class="headerlink" href="#using-a-proxy-server-to-authorize-the-rest-api" title="Permalink to this headline">¶</a></h1>
+<p>The Sawtooth REST API is designed to be a lightweight shim on top of internal
+communications. When the REST API receives a request, it passes that request to
+the validator without any authorization. While this behavior is appropriate for
+the public nature of blockchains, the lack of authorization might not be
+desirable in some situations. For these cases, you can configure the REST API to
+work behind a proxy server.</p>
+<p>This section explains how the REST API handles proxy server issues, then shows
+how to set up an Apache proxy server for the REST API.</p>
+<div class="section" id="about-proxying-the-rest-api">
+<h2>About Proxying the REST API<a class="headerlink" href="#about-proxying-the-rest-api" title="Permalink to this headline">¶</a></h2>
+<p>In general, putting the REST API behind a proxy server works as expected. The
+REST API has the same behavior as if it were communicating directly with a
+client. The notable exception is how URLs are handled; specifically, the
+<code class="docutils literal notranslate"><span class="pre">link</span></code> parameter that is sent back in the response envelope, and the
+<code class="docutils literal notranslate"><span class="pre">previous</span></code> and <code class="docutils literal notranslate"><span class="pre">next</span></code> links that are sent back with a paging response.</p>
+<p>These URLs are a convenience for clients, but the proxy can destroy crucial URL
+information.  For example, a correct link should look this this:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;link&quot;</span><span class="p">:</span> <span class="s2">&quot;https://hyperledger.org/sawtooth/blocks?head=...&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Instead, the “destroyed” link might look like this:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;link&quot;</span><span class="p">:</span> <span class="s2">&quot;http://localhost:8008/blocks?head=...&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The solution to this problem is to send the destroyed information with HTTP
+request headers. The Sawtooth REST API will properly recognize and parse
+information in both “X-Forwarded” and “Forwarded” headers.</p>
+<div class="section" id="x-forwarded-headers">
+<h3>“X-Forwarded” Headers<a class="headerlink" href="#x-forwarded-headers" title="Permalink to this headline">¶</a></h3>
+<p>Although they aren’t part of any standard, “X-Forwarded” headers are a common
+way to communicate information about a proxy. When the REST API builds a link,
+it looks for the following types of “X-Forwarded” headers:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">X-Forwarded-Host</span></code>:
+Domain name of the proxy server (for example, <code class="docutils literal notranslate"><span class="pre">hyperledger.org</span></code>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">X-Forwarded-Proto</span></code>:
+Protocol/scheme used to make requests (for example, <code class="docutils literal notranslate"><span class="pre">https</span></code>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">X-Forwarded-Path</span></code>:
+Extra path information (for example, <code class="docutils literal notranslate"><span class="pre">/sawtooth</span></code>). This uncommon header is
+implemented by the REST API. It is necessary only if the proxy endpoints do
+not map directly to the REST API endpoints, that is, when
+<code class="docutils literal notranslate"><span class="pre">hyperledger.org/sawtooth/blocks</span></code> does not map to <code class="docutils literal notranslate"><span class="pre">localhost:8008/blocks</span></code>.</li>
+</ul>
+</div>
+<div class="section" id="forwarded-headers">
+<h3>“Forwarded” Headers<a class="headerlink" href="#forwarded-headers" title="Permalink to this headline">¶</a></h3>
+<p>This type of header is less common, but a single “Forwarded” header sends the
+same information as multiple “X-Forwarded” headers.  The “Forwarded” header,
+which is standardized by
+<a class="reference external" href="https://tools.ietf.org/html/rfc7239#section-4">RFC7239</a>, contains
+semicolon-separated key-value pairs, as in this example:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Forwarded: for=196.168.1.1; host=proxy1.com, host=proxy2.com; proto=&quot;https&quot;
+</pre></div>
+</div>
+<p>When the REST API builds a response link, it looks for the following keys:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">host</span></code>:
+Domain name of the proxy server (for example, <code class="docutils literal notranslate"><span class="pre">host=hyperledger.org</span></code>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">proto</span></code>:
+Protocol/scheme used to make requests (for example, <code class="docutils literal notranslate"><span class="pre">proto=https</span></code>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">path</span></code>:
+Extra path information (for example, <code class="docutils literal notranslate"><span class="pre">path=&quot;/sawtooth&quot;</span></code>). This non-standard
+key header is necessary only if the proxy endpoints do not map directly to
+the REST API endpoints, that is, when <code class="docutils literal notranslate"><span class="pre">hyperledger.org/sawtooth/blocks</span></code> does
+not map to <code class="docutils literal notranslate"><span class="pre">localhost:8008/blocks</span></code>.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Any key in a “Forwarded” header can be set multiple times, using commas to
+separate each setting. (See the <code class="docutils literal notranslate"><span class="pre">host</span></code> values in the example above.)
+Repeating a key allows a chain of proxy information to be traced. However,
+the REST API always uses the left-most value for a particular key so that it
+can produce an accurate link for the client.</p>
+</div>
+</div>
+</div>
+<div class="section" id="set-up-an-apache-proxy-server-for-the-rest-api">
+<h2>Set Up an Apache Proxy Server for the REST API<a class="headerlink" href="#set-up-an-apache-proxy-server-for-the-rest-api" title="Permalink to this headline">¶</a></h2>
+<p>This procedure sets up a simple <a class="reference external" href="https://httpd.apache.org/">Apache 2</a> proxy
+server that is secured with Basic Auth and https, then configures the proxy
+server for an instance of the Sawtooth REST API.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This procedure covers only the information for Sawtooth configuration. It
+does not cover other Apache configuration or security settings.</p>
+</div>
+<ol class="arabic">
+<li><p class="first">Install the Apache web server and enable the required modules, then restart
+Apache to load these modules.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get update
+<span class="gp">$</span> sudo apt-get install -y apache2
+<span class="gp">$</span> sudo a2enmod ssl
+<span class="gp">$</span> sudo a2enmod headers
+<span class="gp">$</span> sudo a2enmod proxy_http
+<span class="gp">$</span> sudo systemctl restart apache2
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create a password file for the user <code class="docutils literal notranslate"><span class="pre">sawtooth</span></code>. Enter a new password when
+the <code class="docutils literal notranslate"><span class="pre">htpasswd</span></code> command prompts for it.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo htpasswd -c /etc/apache2/.htpassword sawtooth
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">You can repeat this command to generate passwords for other users, but
+you must omit the <code class="docutils literal notranslate"><span class="pre">-c</span></code> option from the <code class="docutils literal notranslate"><span class="pre">htpasswd</span></code> command. You must
+also remember to authorize those users in the proxy configuration file
+(later in this procedure).</p>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Obtain or create an SSL certificate.</p>
+<ul>
+<li><p class="first">You can use <code class="docutils literal notranslate"><span class="pre">openssl</span></code> to build a self-signed SSL certificate. This
+certificate is not suitable for most HTTP clients, but it is good enough
+for testing purposes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo mkdir /etc/apache2/keys
+<span class="gp">$</span> sudo openssl req -x509 -nodes -days <span class="m">7300</span> -newkey rsa:2048 <span class="se">\</span>
+-subj /C<span class="o">=</span>US/ST<span class="o">=</span>MN/L<span class="o">=</span>Mpls/O<span class="o">=</span>Sawtooth/CN<span class="o">=</span>sawtooth <span class="se">\</span>
+-keyout /etc/apache2/keys/.ssl.key <span class="se">\</span>
+-out /etc/apache2/keys/.ssl.crt
+</pre></div>
+</div>
+</li>
+<li><p class="first">You can get a free trusted certificate from
+<a class="reference external" href="https://letsencrypt.org/">Let’s Encrypt</a>. Follow the instructions at
+<a class="reference external" href="https://letsencrypt.org/getting-started/">letsencrypt.org/getting-started</a>.</p>
+</li>
+</ul>
+</li>
+<li><p class="first">Configure the proxy with settings for the Sawtooth REST API.</p>
+<ol class="loweralpha">
+<li><p class="first">Create an Apache configuration file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo vi /etc/apache2/sites-available/000-sawtooth-rest-api.conf
+</pre></div>
+</div>
+</li>
+<li><p class="first">Add the following contents to this file.</p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;VirtualHost</span> <span class="s">*:443</span><span class="nt">&gt;</span>
+    <span class="nb">ServerName</span> sawtooth
+    <span class="nb">ServerAdmin</span> sawtooth@sawtooth
+    <span class="nb">DocumentRoot</span> <span class="sx">/var/www/html</span>
+
+    <span class="nb">SSLEngine</span> <span class="k">on</span>
+    <span class="nb">SSLCertificateFile</span> <span class="sx">/etc/apache2/keys/.ssl.crt</span>
+    <span class="nb">SSLCertificateKeyFile</span> <span class="sx">/etc/apache2/keys/.ssl.key</span>
+    <span class="nb">RequestHeader</span> set X-Forwarded-Proto <span class="s2">&quot;https&quot;</span>
+
+    <span class="nt">&lt;Location</span> <span class="s">/</span><span class="nt">&gt;</span>
+        <span class="nb">Options</span> Indexes FollowSymLinks
+        <span class="nb">AllowOverride</span> <span class="k">None</span>
+        <span class="nb">AuthType</span> Basic
+        <span class="nb">AuthName</span> <span class="s2">&quot;Enter password&quot;</span>
+        <span class="nb">AuthUserFile</span> <span class="s2">&quot;/etc/apache2/.htpassword&quot;</span>
+        <span class="nb">Require</span> <span class="k">user</span> sawtooth
+        <span class="nb">Require</span> <span class="k">all</span> denied
+    <span class="nt">&lt;/Location&gt;</span>
+<span class="nt">&lt;/VirtualHost&gt;</span>
+
+<span class="nb">ProxyPass</span> <span class="sx">/sawtooth</span> http://localhost:8008
+<span class="nb">ProxyPassReverse</span> <span class="sx">/sawtooth</span> http://localhost:8008
+<span class="nb">RequestHeader</span> set X-Forwarded-Path <span class="s2">&quot;/sawtooth&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Apache automatically sets the “X-Forwarded-Host” header.</p>
+</div>
+</li>
+<li><p class="first">Run the following commands to disable the default Apache landing page and
+enable the new authenticated proxy configuration.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo a2dissite <span class="m">000</span>-default.conf
+<span class="gp">$</span> sudo a2ensite <span class="m">000</span>-sawtooth-rest-api.conf
+</pre></div>
+</div>
+</li>
+<li><p class="first">Restart Apache to apply the changes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl restart apache2
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p class="first">Send some test requests to verify the proxy configuration. This step uses
+<code class="docutils literal notranslate"><span class="pre">curl</span></code> to send requests to the REST API to make sure that everything works.</p>
+<ol class="loweralpha">
+<li><p class="first">Start by querying the REST API directly.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl http://localhost:8008/blocks
+</pre></div>
+</div>
+<p>The response should look like this example:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;link&quot;</span><span class="p">:</span> <span class="s2">&quot;http://localhost:8008/blocks?head=...&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A failed request might mean that the REST API is not running. To restart
+the REST API as a service, see <a class="reference internal" href="systemd.html"><span class="doc">Running Sawtooth as a Service</span></a>.</p>
+</li>
+<li><p class="first">Next, query the proxy without authorization. This command should return
+a <code class="docutils literal notranslate"><span class="pre">401</span></code> error.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl https://localhost/sawtooth/blocks --insecure
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal notranslate"><span class="pre">--insecure</span></code> flag forces <code class="docutils literal notranslate"><span class="pre">curl</span></code> to complete the request even
+if there isn’t an official SSL certificate. It does not bypass
+basic authentication.</p>
+</div>
+</li>
+<li><p class="first">Finally, send a properly authorized request. Replace <code class="docutils literal notranslate"><span class="pre">{password}</span></code> in the
+following example with the password for the <code class="docutils literal notranslate"><span class="pre">sawtooth</span></code> user.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl https://localhost/sawtooth/blocks --insecure -u sawtooth:<span class="o">{</span>password<span class="o">}</span>
+</pre></div>
+</div>
+<p>The response is similar to a direct query response, but <code class="docutils literal notranslate"><span class="pre">link</span></code> shows the
+URL used to send this request.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;link&quot;</span><span class="p">:</span> <span class="s2">&quot;https://localhost/sawtooth/blocks?head=...&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="configuring_permissions.html" class="btn btn-neutral float-right" title="Configuring Validator and Transactor Permissions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="setting_allowed_txns.html" class="btn btn-neutral float-left" title="Setting the Allowed Transaction Types (Optional)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

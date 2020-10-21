@@ -1,0 +1,514 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction to the XO Transaction Family &mdash; Sawtooth v0.8.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.7 documentation" href="../index.html"/>
+        <link rel="up" title="Application Developer’s Guide" href="../app_developers_guide.html"/>
+        <link rel="next" title="Address and Namespace Design" href="address_and_namespace.html"/>
+        <link rel="prev" title="Using Sawtooth on Ubuntu 16.04" href="ubuntu.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installing_sawtooth.html">Installing and Running Sawtooth</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Introduction to the XO Transaction Family</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#what-is-xo">What is XO?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-play-xo">How to play XO</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#game-rules">Game rules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#playing-xo-using-the-command-line-interface">Playing XO using the command-line interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#viewing-the-game-state">Viewing the game state</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#playing-xo-with-the-xo-client-example">Playing XO With The XO Client (Example)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#start-the-necessary-components">Start The Necessary Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-players">Create Players</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-a-game">Create A Game</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#take-a-space-as-player-one">Take A Space As Player One</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#take-a-space-as-player-two">Take A Space As Player Two</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#show-the-current-state-of-the-game-board">Show The Current State Of The Game Board</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#continue-game">Continue Game</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#xo-transaction-family-specification">XO Transaction Family Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">Testing a Transaction Processor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascript_sdk.html">JavaScript SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_sdk.html">Python SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="java_sdk.html">Java SDK</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Introduction to the XO Transaction Family</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/intro_xo_transaction_family.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction-to-the-xo-transaction-family">
+<h1>Introduction to the XO Transaction Family<a class="headerlink" href="#introduction-to-the-xo-transaction-family" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-xo">
+<h2>What is XO?<a class="headerlink" href="#what-is-xo" title="Permalink to this headline">¶</a></h2>
+<p><em>XO</em> is an example transaction family contained within the Sawtooth SDK. It is an
+implementation of the popular game <em>Tic-tac-toe</em> (otherwise known as
+<em>Noughts and Crosses</em> or <em>X&#8217;s and O&#8217;s</em>).</p>
+<p><em>X&#8217;s and O&#8217;s</em>-style games have been played across the world for many centuries. The
+origin of this type of game is unclear; however, some historians believe that the first
+version of <em>Tic-tac-toe</em> may have originated in ancient Egypt. Others believe that the
+modern <em>Tic-tac-toe</em> is an evolution of a game known as <em>Terni Lapilli</em>, which was
+popular within the Roman Empire.</p>
+<p><em>Tic-tac-toe</em> also has historical significance within the field of Computer Science. In
+1952, it became the basis of one of the first-ever video games when
+<a class="reference external" href="https://en.wikipedia.org/wiki/OXO">OXO</a> was developed by Alexander S. Douglas at the
+University of Cambridge. More information regarding the origins and properties of
+<em>Tic-tac-toe</em> can be found <a class="reference external" href="https://en.wikipedia.org/wiki/Tic-tac-toe">here</a>.</p>
+<p><em>XO</em> was chosen as an example transaction family for Sawtooth due to its simplicity,
+global playerbase, and straightforward implementation as a computer program. This example
+transaction family demonstrates the functionality of Sawtooth, and the code that implements
+it serves as a reference for building other transaction processors.</p>
+</div>
+<div class="section" id="how-to-play-xo">
+<h2>How to play XO<a class="headerlink" href="#how-to-play-xo" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="game-rules">
+<h3>Game rules<a class="headerlink" href="#game-rules" title="Permalink to this headline">¶</a></h3>
+<p><em>Tic-tac-toe</em> is a two-player game in which players take turns marking spaces on a 3x3
+grid. Conventionally, <em>player one</em> marks spaces with an &#8216;X&#8217; and <em>player two</em> marks spaces
+with an &#8216;O&#8217;; and <em>player one</em> always takes the first turn.</p>
+<p>A player wins the game by marking 3 spaces in a horizontal, vertical, or diagonal row.
+If all 9 spaces on the grid have been marked but no player has achieved a winning board
+position, the game is considered a draw.</p>
+</div>
+<div class="section" id="playing-xo-using-the-command-line-interface">
+<h3>Playing XO using the command-line interface<a class="headerlink" href="#playing-xo-using-the-command-line-interface" title="Permalink to this headline">¶</a></h3>
+<p>A command-line interface is provided for playing <em>XO</em> which handles the construction and
+submission of transactions. Instructions on how to use the CLI are detailed below:</p>
+<p>Start up a validator, <em>XO</em> transaction processor, and the REST API. For more information
+on configuring and running Sawtooth components, see
+<a class="reference internal" href="installing_sawtooth.html"><span class="doc">Installing and Running Sawtooth</span></a>.</p>
+<p>Each player must initialize <em>XO</em> locally using the <code class="docutils literal"><span class="pre">xo</span> <span class="pre">init</span></code> command. This command
+generates a public and private key pair that is used to identify players on the network.
+It stores this information locally in a file. The <code class="docutils literal"><span class="pre">xo</span> <span class="pre">init</span></code> command has two options:
+<code class="docutils literal"><span class="pre">--username</span></code> and <code class="docutils literal"><span class="pre">--url</span></code>.</p>
+<ul class="simple">
+<li>The <code class="docutils literal"><span class="pre">--username</span></code> option is used locally as a nickname for the key pair. If a
+<code class="docutils literal"><span class="pre">--username</span></code> is not specified, OS environment variables will be parsed to find
+a suitable value.</li>
+<li>The <code class="docutils literal"><span class="pre">--url</span></code> option should be set to the URL of the REST API. The <em>XO</em> client
+will send requests to this URL in order to determine the validity of each move and
+update the game state on the blockchain. If no URL is specified, the URL will
+default to <code class="docutils literal"><span class="pre">http://127.0.0.1:8080</span></code>.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A user can use the <code class="docutils literal"><span class="pre">xo</span> <span class="pre">reset</span></code> command to delete local <em>XO</em> data. This includes
+the saved URL and username.</p>
+</div>
+<p>A user creates a new game using the <code class="docutils literal"><span class="pre">xo</span> <span class="pre">create</span> <span class="pre">[name]</span></code> command.</p>
+<ul class="simple">
+<li>The <em>name</em> argument is the identifier for the new game to be created.</li>
+</ul>
+<p>Players take turns using the <code class="docutils literal"><span class="pre">xo</span> <span class="pre">take</span> <span class="pre">[name]</span> <span class="pre">[space]</span></code> command to mark spaces on
+the grid.</p>
+<ul class="simple">
+<li>The <em>name</em> argument is the identifier for an existing game.</li>
+<li>The <em>space</em> argument is the space that is to be marked, which is an integer in the
+range of 1 through 9.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The first player to issue an <code class="docutils literal"><span class="pre">xo</span> <span class="pre">take</span></code> command to a newly created game is
+recorded by their username as <em>player one</em>. The second player to issue a <code class="docutils literal"><span class="pre">take</span></code>
+command is recorded by their username as <em>player two</em>.</p>
+<p class="last">Each time a user attempts to take a space, the transaction processor will verify
+that their username matches the name of the player whose turn it is. This ensures
+that no player is able to mark a space out of turn.</p>
+</div>
+<p>The <em>XO</em> transaction processor will scan for winning or draw board conditions after
+each turn. If either condition occurs, further <code class="docutils literal"><span class="pre">take</span></code> actions on the finished game
+will not be allowed.</p>
+</div>
+<div class="section" id="viewing-the-game-state">
+<h3>Viewing the game state<a class="headerlink" href="#viewing-the-game-state" title="Permalink to this headline">¶</a></h3>
+<p>The <em>XO</em> CLI also supports commands to view the state of ongoing or finished games.
+These commands are <code class="docutils literal"><span class="pre">xo</span> <span class="pre">show</span> <span class="pre">[game]</span></code> and <code class="docutils literal"><span class="pre">xo</span> <span class="pre">list</span></code></p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">xo</span> <span class="pre">show</span> <span class="pre">[game]</span></code> shows the board of a specified game, as well as data about the
+players and game state.</li>
+<li><code class="docutils literal"><span class="pre">xo</span> <span class="pre">list</span></code> shows a list of all ongoing and finished games.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The <em>XO</em> client optionally supports authentication. If the REST API is connected to
+an authentication proxy, you can point the <em>XO</em> client at it during initialization.
+You must enter your authentication information using the <code class="docutils literal"><span class="pre">--auth-user</span> <span class="pre">[user]</span></code> and
+<code class="docutils literal"><span class="pre">--auth-password</span> <span class="pre">[password]</span></code> options for each <em>XO</em> command.</p>
+<p class="last"><em>Note that the value of</em> <code class="docutils literal"><span class="pre">--auth-user</span></code>
+<em>is not the same username that is entered with the</em> <code class="docutils literal"><span class="pre">--username</span></code>
+<em>option during initialization</em>.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="../cli/xo.html"><span class="doc">xo Family CLIs</span></a></p>
+</div>
+</div>
+</div>
+<div class="section" id="playing-xo-with-the-xo-client-example">
+<h2>Playing XO With The XO Client (Example)<a class="headerlink" href="#playing-xo-with-the-xo-client-example" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have gone through the basics of the <em>XO</em> transaction processor, we are ready
+to play a game. The steps below show you how to set up and play a game using the <em>XO</em> CLI.</p>
+<div class="section" id="start-the-necessary-components">
+<h3>Start The Necessary Components<a class="headerlink" href="#start-the-necessary-components" title="Permalink to this headline">¶</a></h3>
+<p>To play <em>XO</em>, ensure that the following components are running and connected:</p>
+<ol class="arabic simple">
+<li>At least one validator</li>
+<li>An <em>XO</em> family transaction processor</li>
+<li>The REST API</li>
+</ol>
+</div>
+<div class="section" id="create-players">
+<h3>Create Players<a class="headerlink" href="#create-players" title="Permalink to this headline">¶</a></h3>
+<p>Create two players to play the game:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> xo init --username jack
+<span class="gp">$</span> xo init --username jill
+</pre></div>
+</div>
+<p>The command produces output similar to the following for both players:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">set username: jack</span>
+<span class="go">set url: http://127.0.0.1:8080</span>
+<span class="go">writing file: /home/ubuntu/.sawtooth/keys/jack.priv</span>
+<span class="go">writing file: /home/ubuntu/.sawtooth/keys/jack.addr</span>
+<span class="go">set username: jill</span>
+<span class="go">set url: http://127.0.0.1:8080</span>
+<span class="go">writing file: /home/ubuntu/.sawtooth/keys/jill.priv</span>
+<span class="go">writing file: /home/ubuntu/.sawtooth/keys/jill.addr</span>
+</pre></div>
+</div>
+<p>If you are using the <em>XO</em> CLI to play a game on one machine, <code class="docutils literal"><span class="pre">xo</span> <span class="pre">init</span></code> can also be used
+to set the active player. If the above commands are run in the order shown, both players
+will be created, but &#8220;jill&#8221; will be the active player. To switch the active player,
+simply run the <code class="docutils literal"><span class="pre">xo</span> <span class="pre">init</span></code> command again with the name of thedesired player.</p>
+<p>Set &#8220;jack&#8221; as the active player now with:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> xo init --username jack
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-a-game">
+<h3>Create A Game<a class="headerlink" href="#create-a-game" title="Permalink to this headline">¶</a></h3>
+<p>Create a game with the following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> xo create game1
+</pre></div>
+</div>
+<p>To see list of the created games, enter the following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> xo list
+</pre></div>
+</div>
+<p>The command outputs a list of the games that have been created:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">GAME            PLAYER 1        PLAYER 2        BOARD     STATE</span>
+<span class="go">game1                                           --------- P1-NEXT</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="take-a-space-as-player-one">
+<h3>Take A Space As Player One<a class="headerlink" href="#take-a-space-as-player-one" title="Permalink to this headline">¶</a></h3>
+<p>Start playing by taking a space as the first player, &#8220;jack&#8221;:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> xo take game1 <span class="m">4</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The board spaces are numbered from 1 to 9. The upper-left corner is
+number 1, and the lower right corner is number 9.</p>
+</div>
+</div>
+<div class="section" id="take-a-space-as-player-two">
+<h3>Take A Space As Player Two<a class="headerlink" href="#take-a-space-as-player-two" title="Permalink to this headline">¶</a></h3>
+<p>To take a space on the board as <em>player two</em>, &#8220;jill&#8221; needs to be set as the
+active player. Run the following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> xo init --username jill
+</pre></div>
+</div>
+<p>Now take a space on the board as player two:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> xo take game1 <span class="m">3</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-the-current-state-of-the-game-board">
+<h3>Show The Current State Of The Game Board<a class="headerlink" href="#show-the-current-state-of-the-game-board" title="Permalink to this headline">¶</a></h3>
+<p>Whenever you want to see the current state of the game board, enter the
+following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> xo show game1
+</pre></div>
+</div>
+<p>You will see the current state of the board displayed:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">GAME:     : game1</span>
+<span class="go">PLAYER 1  : 024c8f</span>
+<span class="go">PLAYER 2  : 03f8f2</span>
+<span class="go">STATE     : P1-NEXT</span>
+
+<span class="go">    |   | O</span>
+<span class="go"> ---|---|---</span>
+<span class="go">  X |   |</span>
+<span class="go"> ---|---|---</span>
+<span class="go">    |   |</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="continue-game">
+<h3>Continue Game<a class="headerlink" href="#continue-game" title="Permalink to this headline">¶</a></h3>
+<p>You can continue the game until one of the players wins, or
+the game ends in a draw:</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Be sure to switch users before taking each move to simulate two distinct
+users playing.</p>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> xo show game1
+<span class="go">GAME:     : game1</span>
+<span class="go">PLAYER 1  : 024c8f</span>
+<span class="go">PLAYER 2  : 03f8f2</span>
+<span class="go">STATE     : P2-WIN</span>
+
+<span class="go">  X |   | O</span>
+<span class="go"> ---|---|---</span>
+<span class="go">  X | O |</span>
+<span class="go"> ---|---|---</span>
+<span class="go">  O |   | X</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="xo-transaction-family-specification">
+<h2>XO Transaction Family Specification<a class="headerlink" href="#xo-transaction-family-specification" title="Permalink to this headline">¶</a></h2>
+<p>The XO Transaction Family Specification contains technical information about the <em>XO</em>
+transaction family. This specification can be found here:
+<a class="reference internal" href="../transaction_family_specifications/xo_transaction_family.html"><span class="doc">XO Transaction Family Specification</span></a></p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="address_and_namespace.html" class="btn btn-neutral float-right" title="Address and Namespace Design" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ubuntu.html" class="btn btn-neutral" title="Using Sawtooth on Ubuntu 16.04" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

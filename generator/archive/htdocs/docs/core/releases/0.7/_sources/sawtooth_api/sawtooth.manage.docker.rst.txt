@@ -1,0 +1,7 @@
+sawtooth\.manage\.docker module
+===============================
+
+.. automodule:: sawtooth.manage.docker
+    :members:
+    :undoc-members:
+    :show-inheritance:

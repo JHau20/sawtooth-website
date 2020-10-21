@@ -1,0 +1,341 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Configuring PBFT &mdash; Sawtooth PBFT v1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installing and Testing PBFT" href="installing-and-running-pbft.html" />
+    <link rel="prev" title="PBFT Architecture" href="architecture.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Sawtooth PBFT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-sawtooth-pbft.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using-pbft-consensus.html">Using PBFT Consensus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">PBFT Architecture</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuring PBFT</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pbft-command-line-options">PBFT Command-Line Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pbft-on-chain-settings">PBFT On-Chain Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installing-and-running-pbft.html">Installing and Testing PBFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sawtooth PBFT</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Configuring PBFT</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/configuring-pbft.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="configuring-pbft">
+<h1>Configuring PBFT<a class="headerlink" href="#configuring-pbft" title="Permalink to this headline">¶</a></h1>
+<p>Sawtooth PBFT is configured in two ways:</p>
+<ul class="simple">
+<li><p>Local settings - Command-line (CLI) options when running the PBFT executable
+or service</p></li>
+<li><p>Network settings - On-chain settings that are defined for the Sawtooth network</p></li>
+</ul>
+<div class="section" id="pbft-command-line-options">
+<span id="cli-options-label"></span><h2>PBFT Command-Line Options<a class="headerlink" href="#pbft-command-line-options" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth PBFT uses command-line options to provide local configuration. These
+options only affect the local behavior of a PBFT node, not the network as a
+whole. The PBFT consensus engine, <code class="docutils literal notranslate"><span class="pre">pbft-engine</span></code>, has the following
+command-line options:</p>
+<ul>
+<li><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">-C,</span> <span class="pre">--connect</span> <span class="pre">CONNECT</span></code></div>
+<div class="line">(Optional; default <code class="docutils literal notranslate"><span class="pre">tcp://localhost:5050</span></code>)</div>
+<div class="line">Connection endpoint for validator</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">-b,</span> <span class="pre">--exponential-retry-base</span> <span class="pre">BASE</span></code></div>
+<div class="line">(Optional; default 100 ms)</div>
+<div class="line">Base timeout for exponential backoff used for validator requests</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">-m,</span> <span class="pre">--exponential-retry-max</span> <span class="pre">MAX</span></code></div>
+<div class="line">(Optional; default 60000 ms)</div>
+<div class="line">Max timeout for exponential backoff used for validator requests</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">-L,</span> <span class="pre">--log-config</span> <span class="pre">LOG_CONFIG</span></code></div>
+<div class="line">(Optional)</div>
+<div class="line">Path to logging config file; if not present, console logging is used</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">-l,</span> <span class="pre">--max-log-size</span> <span class="pre">MAX_LOG_SIZE</span></code></div>
+<div class="line">(Optional; default 10000 messages)</div>
+<div class="line">How large the PBFT log is allowed to get before being pruned</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">-s,</span> <span class="pre">--storage-location</span> <span class="pre">STORAGE_LOCATION</span></code></div>
+<div class="line">(Optional; default <code class="docutils literal notranslate"><span class="pre">memory</span></code>)</div>
+<div class="line">Where to store PBFT’s state: <code class="docutils literal notranslate"><span class="pre">memory</span></code> or <code class="docutils literal notranslate"><span class="pre">disk+/path/to/file</span></code></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">-u,</span> <span class="pre">--update-recv-timeout</span> <span class="pre">TIMEOUT</span></code></div>
+<div class="line">(Optional; default 10 ms)</div>
+<div class="line">Timeout for receiving an update from the validator</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">-v</span></code></div>
+<div class="line">(Optional)</div>
+<div class="line">Increase output verbosity</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="pbft-on-chain-settings">
+<span id="on-chain-settings-label"></span><h2>PBFT On-Chain Settings<a class="headerlink" href="#pbft-on-chain-settings" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth PBFT includes on-chain settings for network-wide configuration on a
+Hyperledger Sawtooth network. These settings affect how the whole network
+operates, so it is desirable that they be the same on all nodes. The <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/transaction_family_specifications/settings_transaction_family.html">Settings
+transaction processor</a>
+(or an equivalent) is required to process these settings.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To display the existing settings, use <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/cli/sawtooth.html#sawtooth-settings-list">sawtooth settings
+list</a>.</p>
+<p>To change a setting, use <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/cli/sawset.html#sawset-proposal-create">sawset proposal
+create</a>.
+This command requires a signing key (the <code class="docutils literal notranslate"><span class="pre">--key</span></code> option) that specifies the
+public key of a user or validator that has permission to change settings. See
+<code class="docutils literal notranslate"><span class="pre">sawtooth.identity.allowed_keys</span></code> in <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/configuring_permissions.html">Configuring Validator and Transactor
+Permissions</a>.</p>
+</div>
+<ul>
+<li><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.block_publishing_delay</span></code></div>
+<div class="line">(Optional; default 1000 ms)</div>
+<div class="line">How often to try to publish a block.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.commit_timeout</span></code></div>
+<div class="line">(Optional; default 10000 ms)</div>
+<div class="line">How long to wait (after Pre-Preparing) for the node to commit the block</div>
+<div class="line">before determining that the primary node is faulty.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.forced_view_change_interval</span></code></div>
+<div class="line">(Optional; default 100 blocks)</div>
+<div class="line">Number of blocks to commit before forcing a view change.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.idle_timeout</span></code></div>
+<div class="line">(Optional; default 30000 ms)</div>
+<div class="line">How long to wait for the next <code class="docutils literal notranslate"><span class="pre">BlockNew</span></code> and <code class="docutils literal notranslate"><span class="pre">PrePrepare</span></code> messages</div>
+<div class="line">before determining that the primary node is faulty. The idle timeout must be</div>
+<div class="line">longer than the block publishing delay.</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code></div>
+<div class="line">(Required)</div>
+<div class="line">List of validator public keys for the member nodes in the PBFT network,</div>
+<div class="line">as a comma-separated list (in a JSON-formatted string):</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">[public-key-1,</span> <span class="pre">public-key-2,</span> <span class="pre">...,</span> <span class="pre">public-key-n]</span></code></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.view_change_duration</span></code></div>
+<div class="line">(Optional; default 5000 ms)</div>
+<div class="line">How long to wait for a valid <code class="docutils literal notranslate"><span class="pre">NewView</span></code> message before starting the next</div>
+<div class="line">view change. For more information, see <a class="reference internal" href="architecture.html#view-changing-mode-label"><span class="std std-ref">View Changing Mode</span></a>.</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installing-and-running-pbft.html" class="btn btn-neutral float-right" title="Installing and Testing PBFT" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="architecture.html" class="btn btn-neutral float-left" title="PBFT Architecture" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018 Bitwise IO, Inc
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

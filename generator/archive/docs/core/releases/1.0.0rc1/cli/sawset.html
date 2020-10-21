@@ -1,0 +1,492 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sawtooth Config CLI (sawset) &mdash; Sawtooth v1.0.0rc1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc1 documentation" href="../index.html"/>
+        <link rel="up" title="CLI Reference" href="../cli.html"/>
+        <link rel="next" title="PoET CLI" href="poet.html"/>
+        <link rel="prev" title="Sawtooth Admin CLI (sawadm)" href="sawadm.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../cli.html">CLI Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sawtooth.html">Sawtooth CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawadm.html">Sawtooth Admin CLI (sawadm)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Sawtooth Config CLI (sawset)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sawset">sawset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawset-genesis">sawset genesis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawset-proposal">sawset proposal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawset-proposal-create">sawset proposal create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawset-proposal-list">sawset proposal list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawset-proposal-vote">sawset proposal vote</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="poet.html">PoET CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator.html">Validator CLI (sawtooth-validator)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API CLI (sawtooth-rest-api)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intkey.html">IntegerKey CLI (intkey)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xo.html">XO CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings-tp.html">Settings Transaction Processor CLI (sawtooth-settings)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity-tp.html">Identity Transaction Processor CLI (identity-tp)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../cli.html">CLI Reference</a> &raquo;</li>
+        
+      <li>Sawtooth Config CLI (sawset)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cli/sawset.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sawtooth-config-cli-sawset">
+<span id="sawset-reference-label"></span><h1>Sawtooth Config CLI (sawset)<a class="headerlink" href="#sawtooth-config-cli-sawset" title="Permalink to this headline">¶</a></h1>
+<p>The Sawtooth Config CLI, <code class="docutils literal"><span class="pre">sawset</span></code>, is used to work with settings proposals.</p>
+<div class="section" id="sawset">
+<h2>sawset<a class="headerlink" href="#sawset" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth supports storing settings on-chain. The <code class="docutils literal"><span class="pre">sawset</span></code>
+subcommands can be used to view the current proposals, create
+proposals, vote on existing proposals, and produce setting values
+that will be set in the genesis block.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawset [-h] [-v] [-V] {genesis,proposal} ...</span>
+
+<span class="go">Provides subcommands to change genesis block settings and to view, create, and</span>
+<span class="go">vote on settings proposals.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help          show this help message and exit</span>
+<span class="go">  -v, --verbose       enable more verbose output</span>
+<span class="go">  -V, --version       display version information</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {genesis,proposal}</span>
+<span class="go">    genesis           Creates a genesis batch file of settings transactions</span>
+<span class="go">    proposal          Views, creates, or votes on settings change proposals</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawset-genesis">
+<h2>sawset genesis<a class="headerlink" href="#sawset-genesis" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">sawset</span> <span class="pre">genesis</span></code> subcommand creates a Batch of settings
+proposals that can be consumed by <code class="docutils literal"><span class="pre">sawadm</span> <span class="pre">genesis</span></code> and used
+during genesis block construction.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawset genesis [-h] [-k KEY] [-o OUTPUT] [-T APPROVAL_THRESHOLD]</span>
+<span class="go">                      [-A AUTHORIZED_KEY]</span>
+
+<span class="go">Creates a Batch of settings proposals that can be consumed by &quot;sawadm genesis&quot;</span>
+<span class="go">and used during genesis block construction.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -k KEY, --key KEY     specify signing key for resulting batches and initial</span>
+<span class="go">                        authorized key</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        specify the output file for the resulting batches</span>
+<span class="go">  -T APPROVAL_THRESHOLD, --approval-threshold APPROVAL_THRESHOLD</span>
+<span class="go">                        set the number of votes required to enable a setting</span>
+<span class="go">                        change</span>
+<span class="go">  -A AUTHORIZED_KEY, --authorized-key AUTHORIZED_KEY</span>
+<span class="go">                        specify a public key for the user authorized to submit</span>
+<span class="go">                        config transactions</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawset-proposal">
+<h2>sawset proposal<a class="headerlink" href="#sawset-proposal" title="Permalink to this headline">¶</a></h2>
+<p>The Settings transaction processor (<code class="docutils literal"><span class="pre">sawtooth-settings</span></code>) supports a
+simple voting mechanism for applying changes to on-change settings.
+The <code class="docutils literal"><span class="pre">sawset</span> <span class="pre">proposal</span></code> subcommands provide tools to view,
+create and vote on proposed settings.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawset proposal [-h] {create,list,vote} ...</span>
+
+<span class="go">Provides subcommands to view, create, or vote on proposed settings</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help          show this help message and exit</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {create,list,vote}</span>
+<span class="go">    create            Creates proposals for setting changes</span>
+<span class="go">    list              Lists the currently proposed (not active) settings</span>
+<span class="go">    vote              Votes for specific setting change proposals</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawset-proposal-create">
+<h2>sawset proposal create<a class="headerlink" href="#sawset-proposal-create" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">sawset</span> <span class="pre">proposal</span> <span class="pre">create</span></code> subcommand creates proposals
+for settings changes. The change may be applied immediately or after a
+series of votes, depending on the vote threshold setting.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawset proposal create [-h] [-k KEY] [-o OUTPUT | --url URL]</span>
+<span class="go">                              setting [setting ...]</span>
+
+<span class="go">Create proposals for settings changes. The change may be applied immediately</span>
+<span class="go">or after a series of votes, depending on the vote threshold setting.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  setting               configuration setting as key/value pair with the</span>
+<span class="go">                        format &lt;key&gt;=&lt;value&gt;</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -k KEY, --key KEY     specify a signing key for the resulting batches</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        specify the output file for the resulting batches</span>
+<span class="go">  --url URL             identify the URL of a validator&#39;s REST API</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawset-proposal-list">
+<h2>sawset proposal list<a class="headerlink" href="#sawset-proposal-list" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">sawset</span> <span class="pre">proposal</span> <span class="pre">list</span></code> subcommand displays the
+currently proposed settings that are not yet active. This list of
+proposals can be used to find proposals to vote on.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawset proposal list [-h] [--url URL] [--public-key PUBLIC_KEY]</span>
+<span class="go">                            [--filter FILTER]</span>
+<span class="go">                            [--format {default,csv,json,yaml}]</span>
+
+<span class="go">Lists the currently proposed (not active) settings. Use this list of proposals</span>
+<span class="go">to find proposals to vote on.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  --url URL             identify the URL of a validator&#39;s REST API</span>
+<span class="go">  --public-key PUBLIC_KEY</span>
+<span class="go">                        filter proposals from a particular public key</span>
+<span class="go">  --filter FILTER       filter keys that begin with this value</span>
+<span class="go">  --format {default,csv,json,yaml}</span>
+<span class="go">                        choose the output format</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawset-proposal-vote">
+<h2>sawset proposal vote<a class="headerlink" href="#sawset-proposal-vote" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">sawset</span> <span class="pre">proposal</span> <span class="pre">vote</span></code> subcommand votes for a specific
+settings-change proposal. Use <code class="docutils literal"><span class="pre">sawset</span> <span class="pre">proposal</span> <span class="pre">list</span></code> to
+find the proposal id.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawset proposal vote [-h] [--url URL] [-k KEY]</span>
+<span class="go">                            proposal_id {accept,reject}</span>
+
+<span class="go">Votes for a specific settings change proposal. Use &quot;sawset proposal list&quot; to</span>
+<span class="go">find the proposal id.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  proposal_id        identify the proposal to vote on</span>
+<span class="go">  {accept,reject}    specify the value of the vote</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help         show this help message and exit</span>
+<span class="go">  --url URL          identify the URL of a validator&#39;s REST API</span>
+<span class="go">  -k KEY, --key KEY  specify a signing key for the resulting transaction batch</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="poet.html" class="btn btn-neutral float-right" title="PoET CLI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sawadm.html" class="btn btn-neutral" title="Sawtooth Admin CLI (sawadm)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.0rc1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

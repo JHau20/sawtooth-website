@@ -1,0 +1,498 @@
+.. /
+   **********************************************************
+   *                        WARNING!!!                      *
+   * ------------------------------------------------------ *
+   * This is an auto-generated file.  Do NOT modify!        *
+   *                                                        *
+   * Modifications should be made to the original template, *
+   * or to the config file:                                 *
+   *     - source/_templates/sdk_TP_tutorial.rst
+   *     - source/_templates/template_config.yaml           *
+   **********************************************************
+
+
+
+
+*****************************************************
+Transaction Processor: Creating a Transaction Handler
+*****************************************************
+
+A transaction processor has two top-level components:
+
+* Processor class. The SDK provides a general-purpose processor class.
+
+* Handler class. The handler class is application-dependent. It contains the
+  business logic for a particular family of transactions. Multiple handlers
+  can be connected to an instance of the processor class.
+
+Entry Point
+===========
+
+Since a transaction processor is a long running process, it must have an
+entry point.
+
+In the entry point, the ``TransactionProcessor`` class is given the address
+to connect with the validator and the handler class.
+
+
+.. code-block:: javascript
+    :caption: a simplified sawtooth-sdk-javascript/examples/xo/index.js
+
+    const { TransactionProcessor } = require('sawtooth-sdk/processor')
+    const XOHandler = require('./xo_handler')
+
+    // In docker, the address would be the validator's container name
+    // with port 4004
+    const address = 'tcp://127.0.0.1:4004'
+    const transactionProcessor = new TransactionProcessor(address)
+
+    transactionProcessor.addHandler(new XOHandler())
+
+    transactionProcessor.start()
+
+
+Handlers get called in two ways: with an ``apply`` method and with various
+"metadata" methods. The metadata is used to connect the handler to the
+processor. The bulk of the handler, however, is made up of ``apply`` and its
+helper functions.
+
+
+.. code-block:: javascript
+    :caption: sawtooth-sdk-javascript/examples/xo/handler.js XOHandler class
+
+    class XOHandler extends TransactionHandler {
+      constructor () {
+        super(XO_FAMILY, ['1.0'], [XO_NAMESPACE])
+      }
+
+      apply (transactionProcessRequest, context) {
+        //
+
+Note that the ``XOHandler`` class extends the ``TransactionHandler`` class defined in the
+JavaScript SDK.
+
+
+The ``apply`` Method
+====================
+
+``apply`` gets called with two arguments, ``transactionProcessRequest`` and ``stateStore``.
+``transactionProcessRequest`` holds the command that is to be executed (e.g. taking a space or
+creating a game), while ``stateStore`` stores information about the current
+state of the game (e.g. the board layout and whose turn it is).
+
+The transaction contains payload bytes that are opaque to the validator core,
+and transaction family specific. When implementing a transaction handler the
+binary serialization protocol is up to the implementer.
+
+
+To separate details of state encoding and payload handling from validation
+logic, the XO example has ``XoState`` and ``XoPayload`` classes. The
+``XoPayload`` has name, action, and space fields, while the ``XoState``
+contains information about the game name, board, state, and which players are
+playing in the game.
+
+
+Valid actions are: create a new game, take an unoccupied space, and delete a game.
+
+
+.. code-block:: javascript
+    :caption: sawtooth-sdk-javascript/examples/xo/handler.js apply overview
+
+
+    apply (transactionProcessRequest, context) {
+        let payload = XoPayload.fromBytes(transactionProcessRequest.payload)
+        let xoState = new XoState(context)
+        let header = transactionProcessRequest.header
+        let player = header.signerPublicKey
+        if (payload.action === 'create') {
+            ...
+        } else if (payload.action === 'take') {
+            ...
+        } else if (payload.action === 'delete') {
+            ...
+        } else {
+            throw new InvalidTransaction(
+                `Action must be create, delete, or take not ${payload.action}`
+            )
+        }
+    }
+
+
+For every new payload, the transaction processor validates rules surrounding the
+action. If all of the rules validate, then
+state is updated based on whether we are creating a game, deleting a game, or updating the
+game by taking a space.
+
+
+Game Logic
+==========
+
+The XO game logic is described in the XO transaction family specification;
+see :ref:`xo-execution-label`.
+
+The validation rules and state updates that are associated with the ``create``,
+``delete``, and ``take`` actions are shown below.
+
+Create
+------
+
+The ``create`` action has the following implementation:
+
+.. code-block:: javascript
+    :caption: sawtooth-sdk-javascript/examples/xo/handler.js apply 'create'
+
+    if (payload.action === 'create') {
+      return xoState.getGame(payload.name)
+        .then((game) => {
+          if (game !== undefined) {
+            throw new InvalidTransaction('Invalid Action: Game already exists.')
+          }
+
+          let createdGame = {
+            name: payload.name,
+            board: '---------',
+            state: 'P1-NEXT',
+            player1: '',
+            player2: ''
+          }
+
+          _display(`Player ${player.toString().substring(0, 6)} created game ${payload.name}`)
+
+          return xoState.setGame(payload.name, createdGame)
+        })
+    }
+
+
+Delete
+------
+
+The ``delete`` action has the following implementation:
+
+.. code-block:: javascript
+    :caption: sawtooth-sdk-javascript/examples/xo/handler.js apply 'delete'
+
+    if (payload.action === 'delete') {
+      return xoState.getGame(payload.name)
+        .then((game) => {
+          if (game === undefined) {
+            throw new InvalidTransaction(
+              `No game exists with name ${payload.name}: unable to delete`)
+          }
+          return xoState.deleteGame(payload.name)
+        })
+    } else {
+      throw new InvalidTransaction(
+        `Action must be create or take not ${payload.action}`
+      )
+    }
+
+
+Take
+----
+
+The ``take`` action has the following implementation:
+
+
+.. code-block:: none
+    :caption: sawtooth-sdk-javascript/examples/xo/handler.js apply 'take'
+
+    if (payload.action === 'take') {
+      return xoState.getGame(payload.name)
+        .then((game) => {
+          try {
+            parseInt(payload.space)
+          } catch (err) {
+            throw new InvalidTransaction('Space could not be converted as an integer.')
+          }
+
+          if (payload.space < 1 || payload.space > 9) {
+            throw new InvalidTransaction('Invalid space ' + payload.space)
+          }
+
+          if (game === undefined) {
+            throw new InvalidTransaction(
+              'Invalid Action: Take requires an existing game.'
+            )
+          }
+          if (['P1-WIN', 'P2-WIN', 'TIE'].includes(game.state)) {
+            throw new InvalidTransaction('Invalid Action: Game has ended.')
+          }
+
+          if (game.player1 === '') {
+            game.player1 = player
+          } else if (game.player2 === '') {
+            game.player2 = player
+          }
+          let boardList = game.board.split('')
+
+          if (boardList[payload.space - 1] !== '-') {
+            throw new InvalidTransaction('Invalid Action: Space already taken.')
+          }
+
+          if (game.state === 'P1-NEXT' && player === game.player1) {
+            boardList[payload.space - 1] = 'X'
+            game.state = 'P2-NEXT'
+          } else if (
+            game.state === 'P2-NEXT' &&
+            player === game.player2
+          ) {
+            boardList[payload.space - 1] = 'O'
+            game.state = 'P1-NEXT'
+          } else {
+            throw new InvalidTransaction(
+              `Not this player's turn: ${player.toString().substring(0, 6)}`
+            )
+          }
+
+          game.board = boardList.join('')
+
+          if (_isWin(game.board, 'X')) {
+            game.state = 'P1-WIN'
+          } else if (_isWin(game.board, 'O')) {
+            game.state = 'P2-WIN'
+          } else if (game.board.search('-') === -1) {
+            game.state = 'TIE'
+          }
+
+          let playerString = player.toString().substring(0, 6)
+
+          _display(
+            `Player ${playerString} takes space: ${payload.space}\n\n` +
+              _gameToStr(
+                game.board,
+                game.state,
+                game.player1,
+                game.player2,
+                payload.name
+              )
+          )
+
+          return xoState.setGame(payload.name, game)
+        })
+    }
+
+
+Payload
+=======
+
+.. note::
+
+    :doc:`/architecture/transactions_and_batches` contains a detailed
+    description of how transactions are structured and used. Please read
+    this document before proceeding, if you have not reviewed it.
+
+So how do we get data out of the transaction? The transaction consists of a
+header and a payload. The header contains the "signer", which is used to
+identify the current player. The payload will contain an encoding of the game
+name, the action (``create`` a game, ``delete`` a game, ``take`` a space), and
+the space (which will be an empty string if the action isn't ``take``).
+
+An XO transaction request payload consists of the UTF-8 encoding of a
+string with exactly two commas, which is formatted as follows:
+
+``<name>,<action>,<space>``
+
+* ``<name>`` is the game name as a non-empty string not containing the character
+  ``|``. If the action is `create`, the new name must be unique.
+* ``<action>`` is the game action: `create`, `take`, or `delete`
+* ``<space>`` is the location on the board, as an integer between 1-9
+  (inclusive), if the action is `take`
+
+
+.. code-block:: javascript
+    :caption: sawtooth-sdk-javascript/examples/xo/payload.js
+
+    class XoPayload {
+        constructor (name, action, space) {
+            this.name = name
+            this.action = action
+            this.space = space
+        }
+
+        static fromBytes (payload) {
+            payload = payload.toString().split(',')
+            if (payload.length === 3) {
+                let xoPayload = new XoPayload(payload[0], payload[1], payload[2])
+                if (!xoPayload.name) {
+                    throw new InvalidTransaction('Name is required')
+                }
+                if (xoPayload.name.indexOf('|') !== -1) {
+                    throw new InvalidTransaction('Name cannot contain "|"')
+                }
+
+                if (!xoPayload.action) {
+                    throw new InvalidTransaction('Action is required')
+                }
+                return xoPayload
+            } else {
+            throw new InvalidTransaction('Invalid payload serialization')
+            }
+        }
+    }
+
+
+State
+=====
+
+The XoState class turns game information into bytes and stores it in the validator's Radix-Merkle tree,
+turns bytes stored in the validator's Radix-Merkle tree into game information, and does these
+operations with a state storage scheme that handles hash collisions.
+
+An XO state entry consists of the UTF-8 encoding of a string with
+exactly four commas formatted as follows:
+
+``<name>,<board>,<game-state>,<player-key-1>,<player-key-2>``
+
+where
+
+* <name> is a nonempty string not containing `|`,
+* <board> is a string of length 9 containing only `O`, `X`, or `-`,
+* <game-state> is one of the following: `P1-NEXT`, `P2-NEXT`, `P1-WIN`,
+* `P2-WIN`, or `TIE`, and
+* <player-key-1> and <player-key-2> are the (possibly empty) public keys
+* associated with the game's players.
+
+In the event of a hash collision (i.e. two or more state entries
+sharing the same address), the colliding state entries will stored as
+the UTF-8 encoding of the string ``<a-entry>|<b-entry>|...``, where
+<a-entry>, <b-entry>,... are sorted alphabetically.
+
+
+.. code-block:: javascript
+    :caption: sawtooth-sdk-javascript/examples/xo/state.js
+
+    class XoState {
+        constructor (context) {
+            this.context = context
+            this.addressCache = new Map([])
+            this.timeout = 500 // Timeout in milliseconds
+        }
+
+        getGame (name) {
+            return this._loadGames(name).then((games) => games.get(name))
+        }
+
+        setGame (name, game) {
+            let address = _makeXoAddress(name)
+
+            return this._loadGames(name).then((games) => {
+                games.set(name, game)
+                return games
+            }).then((games) => {
+                let data = _serialize(games)
+
+                this.addressCache.set(address, data)
+                let entries = {
+                    [address]: data
+                }
+                return this.context.setState(entries, this.timeout)
+            })
+        }
+
+        deleteGame (name) {
+            let address = _makeXoAddress(name)
+            return this._loadGames(name).then((games) => {
+                games.delete(name)
+
+                if (games.size === 0) {
+                    this.addressCache.set(address, null)
+                    return this.context.deleteState([address], this.timeout)
+                } else {
+                    let data = _serialize(games)
+                    this.addressCache.set(address, data)
+                    let entries = {
+                        [address]: data
+                    }
+                        return this.context.setState(entries, this.timeout)
+                    }
+                })
+            }
+
+        _loadGames (name) {
+            let address = _makeXoAddress(name)
+            if (this.addressCache.has(address)) {
+                if (this.addressCache.get(address) === null) {
+                    return Promise.resolve(new Map([]))
+                } else {
+                    return Promise.resolve(_deserialize(this.addressCache.get(address)))
+                }
+            } else {
+                return this.context.getState([address], this.timeout)
+                    .then((addressValues) => {
+                        if (!addressValues[address].toString()) {
+                            this.addressCache.set(address, null)
+                            return new Map([])
+                        } else {
+                            let data = addressValues[address].toString()
+                            this.addressCache.set(address, data)
+                            return _deserialize(data)
+                        }
+                    })
+                }
+            }
+        }
+
+    const _hash = (x) =>
+        crypto.createHash('sha512').update(x).digest('hex').toLowerCase().substring(0, 64)
+
+    const XO_FAMILY = 'xo'
+
+    const XO_NAMESPACE = _hash(XO_FAMILY).substring(0, 6)
+
+    const _deserialize = (data) => {
+        let gamesIterable = data.split('|').map(x => x.split(','))
+            .map(x => [x[0], {name: x[0], board: x[1], state: x[2], player1: x[3], player2: x[4]}])
+        return new Map(gamesIterable)
+    }
+
+    const _serialize = (games) => {
+        let gameStrs = []
+        for (let nameGame of games) {
+            let name = nameGame[0]
+            let game = nameGame[1]
+            gameStrs.push([name, game.board, game.state, game.player1, game.player2].join(','))
+        }
+
+        gameStrs.sort()
+
+        return Buffer.from(gameStrs.join('|'))
+    }
+
+
+Addressing
+----------
+
+By convention, we'll store game data at an address obtained from hashing the
+game name prepended with some constant.
+
+XO data is stored in state using addresses generated from the XO
+family name and the name of the game being stored. In particular, an
+XO address consists of the first 6 characters of the SHA-512 hash of
+the UTF-8 encoding of the string "xo" (which is "5b7349") plus the
+first 64 characters of the SHA-512 hash of the UTF-8 encoding of the
+game name.
+
+For example, the XO address for a game called "my-game" could be
+generated as follows (in Python):
+
+.. code-block:: pycon
+
+    >>> XO_NAMESPACE = hashlib.sha512('xo'.encode('utf-8')).hexdigest()[:6]
+    >>> XO_NAMESPACE
+    '5b7349'
+    >>> y = hashlib.sha512('my-game'.encode('utf-8')).hexdigest()[:64]
+    >>> y
+    '4d4cffe9cf3fb4e41def5114a323e292af9b0e07925cca6299d671ce7fc7ec37'
+    >>> XO_NAMESPACE+y
+    '5b73494d4cffe9cf3fb4e41def5114a323e292af9b0e07925cca6299d671ce7fc7ec37'
+
+Addressing is implemented as follows:
+
+
+.. code-block:: javascript
+
+    const _makeXoAddress = (x) => XO_NAMESPACE + _hash(x)
+
+
+.. Licensed under Creative Commons Attribution 4.0 International License
+.. https://creativecommons.org/licenses/by/4.0/

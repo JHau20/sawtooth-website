@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+  <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<head>
+	<meta charset="utf-8">
+	<title>Sawtooth FAQ - Using Docker | Hyperledger Sawtooth</title>
+	<meta name="description" content="An enterprise-grade solution for distributed ledgers.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="0.0.0.0/faq/docker/">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Hyperledger Sawtooth" href="0.0.0.0/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+
+	<!-- Google Analytics
+	-->
+</head>
+
+  <body>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">Hyperledger Sawtooth</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+                        
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/release/">
+					Releases
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/docs/">
+					Docs
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/faq/">
+					FAQ
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/community/">
+					Community
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/contact/">
+					Contact
+				</a>
+			</li>
+			
+			
+			<li>
+				<a class="page-link" href="/examples">
+					Examples
+				</a>
+			</li>
+			<!-- Social icons from Font Awesome, if enabled -->
+			<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/hyperledger/sawtooth-core" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/\%23HyperledgerSawtooth" title="Follow on Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Sawtooth FAQ - Using Docker</h1>
+  </header>
+  <section class="post-content"><p class="mininav"><a class="reference external" href="/faq/permissioning/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/upgrade/">NEXT</a></p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#can-i-run-sawtooth-without-docker" id="id1">Can I run Sawtooth without Docker?</a></li>
+<li><a class="reference internal" href="#how-can-i-run-docker-or-docker-compose-without-prefixing-it-with-sudo" id="id2">How can I run <tt class="docutils literal">docker</tt> or <tt class="docutils literal"><span class="pre">docker-compose</span></tt> without prefixing it with <tt class="docutils literal">sudo</tt>?</a></li>
+<li><a class="reference internal" href="#i-get-this-error-running-docker-compose-f-sawtooth-default-yaml-up-error-files-exist-rerun-with-force-to-overwrite-existing-files" id="id3">I get this error running <tt class="docutils literal"><span class="pre">docker-compose</span> <span class="pre">-f</span> <span class="pre">sawtooth-default.yaml</span> up</tt> : <tt class="docutils literal">Error: files exist, rerun with <span class="pre">--force</span> to overwrite existing files</tt></a></li>
+<li><a class="reference internal" href="#i-get-this-error-running-docker-compose-f-sawtooth-default-yaml-up-error-couldn-t-connect-to-docker-daemon-at-http-docker-localhost-is-it-running" id="id4">I get this error running <tt class="docutils literal"><span class="pre">docker-compose</span> <span class="pre">-f</span> <span class="pre">sawtooth-default.yaml</span> up</tt> : <tt class="docutils literal">ERROR: Couldn't connect to Docker daemon at <span class="pre">http+docker://localhost</span> - is it running?</tt></a></li>
+<li><a class="reference internal" href="#i-get-this-error-running-docker-run-hello-world-got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket-at-unix-var-run-docker-sock-get-http-2fvar-2frun-2fdocker-sock-v1-37-containers-json-dial-unix-var-run-docker-sock-connect-permission-denied" id="id5">I get this error running <tt class="docutils literal">docker run <span class="pre">hello-world</span></tt> :  <tt class="docutils literal">Got permission denied while trying to connect to the Docker daemon socket at <span class="pre">unix:///var/run/docker.sock:</span> Get <span class="pre">http://%2Fvar%2Frun%2Fdocker.sock/v1.37/containers/json:</span> dial unix /var/run/docker.sock: connect: permission denied</tt></a></li>
+<li><a class="reference internal" href="#i-get-this-error-running-docker-run-hello-world-docker-error-response-from-daemon-get-https-registry-1-docker-io-v2-net-http-request-canceled-while-waiting-for-connection-client-timeout-exceeded-while-awaiting-headers" id="id6">I get this error running <tt class="docutils literal">docker run <span class="pre">hello-world</span></tt> : <tt class="docutils literal">docker: Error response from daemon: Get <span class="pre">https://registry-1.docker.io/v2/:</span> net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers).</tt></a></li>
+<li><a class="reference internal" href="#i-get-this-error-error-repository-not-found-does-not-exist-or-no-pull-access" id="id7">I get this error: <tt class="docutils literal">ERROR: repository . . . not found: does not exist or no pull access</tt></a></li>
+<li><a class="reference internal" href="#i-get-this-error-error-service-failed-to-build-get-net-http-request-canceled-while-waiting-for-connection" id="id8">I get this error: `` ERROR: Service . . . failed to build: Get . . . net/http: request canceled while waiting for connection``</a></li>
+<li><a class="reference internal" href="#i-get-this-error-running-docker-compose-error-for-validator-cannot-create-container-for-service-validator-conflict-the-container-name-validator-is-already-in-use-by-container" id="id9">I get this error running docker-compose: <tt class="docutils literal">ERROR: for validator&nbsp; Cannot create container for service validator: Conflict. The container name &quot;/validator&quot; is already in use by container ...</tt></a></li>
+<li><a class="reference internal" href="#how-do-i-display-the-logs-for-a-docker-container" id="id10">How do I display the logs for a Docker container?</a></li>
+<li><a class="reference internal" href="#i-get-this-error-running-docker-compose-error-version-in-docker-compose-yaml-is-unsupported" id="id11">I get this error running docker-compose: <tt class="docutils literal">ERROR: Version in <span class="pre">&quot;./docker-compose.yaml&quot;</span> is unsupported.</tt></a></li>
+<li><a class="reference internal" href="#if-i-run-docker-or-docker-compose-it-hangs-and-does-nothing" id="id12">If I run <tt class="docutils literal">docker</tt> or <tt class="docutils literal"><span class="pre">docker-compose</span></tt> it hangs and does nothing.</a></li>
+<li><a class="reference internal" href="#how-do-i-manually-start-and-stop-docker-on-linux" id="id13">How do I manually start and stop docker on Linux?</a></li>
+<li><a class="reference internal" href="#how-do-i-enable-and-disable-automatic-start-of-docker-on-boot-on-linux" id="id14">How do I enable and disable automatic start of docker on boot on Linux?</a></li>
+<li><a class="reference internal" href="#can-i-connect-a-client-to-the-rest-api-running-in-a-docker-container" id="id15">Can I connect a client to the REST API running in a Docker container?</a></li>
+<li><a class="reference internal" href="#can-i-connect-a-transaction-processor-to-the-validator-running-in-a-docker-container" id="id16">Can I connect a transaction processor to the validator running in a Docker container?</a></li>
+<li><a class="reference internal" href="#i-get-you-cannot-remove-a-running-container-error-removing-docker-containers" id="id17">I get <tt class="docutils literal">You cannot remove a running container</tt> error removing docker containers</a></li>
+<li><a class="reference internal" href="#how-do-i-run-sawtooth-with-kubernetes" id="id18">How do I run Sawtooth with Kubernetes?</a></li>
+<li><a class="reference internal" href="#can-docker-run-inside-a-virtual-machine" id="id19">Can Docker run inside a virtual machine?</a></li>
+<li><a class="reference internal" href="#how-do-i-persist-data-on-docker-containers" id="id20">How do I persist data on Docker containers?</a></li>
+<li><a class="reference internal" href="#i-get-this-error-running-docker-error-manifest-for-hyperledger-sawtooth-validator-1-2-not-found" id="id21">I get this error running Docker: <tt class="docutils literal">ERROR: manifest for <span class="pre">hyperledger/sawtooth-validator:1.2</span> not found</tt></a></li>
+<li><a class="reference internal" href="#why-doesn-t-sawtooth-default-poet-yaml-start-the-network-successfully-on-subsequent-runs" id="id22">Why doesn't sawtooth-default-poet.yaml start the network successfully on subsequent runs ?</a></li>
+</ul>
+</div>
+<div class="section" id="can-i-run-sawtooth-without-docker">
+<h2><a class="toc-backref" href="#id1">Can I run Sawtooth without Docker?</a></h2>
+<p>Yes.</p>
+</div>
+<div class="section" id="how-can-i-run-docker-or-docker-compose-without-prefixing-it-with-sudo">
+<h2><a class="toc-backref" href="#id2">How can I run <tt class="docutils literal">docker</tt> or <tt class="docutils literal"><span class="pre">docker-compose</span></tt> without prefixing it with <tt class="docutils literal">sudo</tt>?</a></h2>
+<p>Sometimes, adding your login to group <tt class="docutils literal">docker</tt> is recommended, such as with command: <tt class="docutils literal">sudo usermod <span class="pre">-aG</span> docker $USER</tt> . However, this gives <tt class="docutils literal">$USER</tt> root-equivalent permissions. A better alternate is to define an alias for docker and docker-compose and add to your ~/.bashrc file:</p>
+<pre class="code sh literal-block">
+<span class="name builtin">alias</span> <span class="name variable">docker</span><span class="operator">=</span><span class="literal string single">'sudo docker'</span>
+<span class="name builtin">alias</span> docker-compose<span class="operator">=</span><span class="literal string single">'sudo docker-compose'</span>
+</pre>
+<p>For details, see <a class="reference external" href="https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user">https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user</a></p>
+</div>
+<div class="section" id="i-get-this-error-running-docker-compose-f-sawtooth-default-yaml-up-error-files-exist-rerun-with-force-to-overwrite-existing-files">
+<h2><a class="toc-backref" href="#id3">I get this error running <tt class="docutils literal"><span class="pre">docker-compose</span> <span class="pre">-f</span> <span class="pre">sawtooth-default.yaml</span> up</tt> : <tt class="docutils literal">Error: files exist, rerun with <span class="pre">--force</span> to overwrite existing files</tt></a></h2>
+<p>This occurs when docker was not halted cleanly. Run the following first:</p>
+<pre class="code sh literal-block">
+sudo docker-compose -f sawtooth-default.yaml down
+</pre>
+<p>Then this:</p>
+<pre class="code sh literal-block">
+sudo docker-compose -f sawtooth-default.yaml up
+</pre>
+<p>An alternate solution is to force it to ignore the existing files:</p>
+<pre class="code sh literal-block">
+docker-compose -f docker/compose/sawtooth-default.yaml up --force
+</pre>
+</div>
+<div class="section" id="i-get-this-error-running-docker-compose-f-sawtooth-default-yaml-up-error-couldn-t-connect-to-docker-daemon-at-http-docker-localhost-is-it-running">
+<h2><a class="toc-backref" href="#id4">I get this error running <tt class="docutils literal"><span class="pre">docker-compose</span> <span class="pre">-f</span> <span class="pre">sawtooth-default.yaml</span> up</tt> : <tt class="docutils literal">ERROR: Couldn't connect to Docker daemon at <span class="pre">http+docker://localhost</span> - is it running?</tt></a></h2>
+<p>If it's at a non-standard location, specify the URL with the DOCKER_HOST environment variable.</p>
+<p>You may not have enough permission to run. Try prefixing with sudo: <tt class="docutils literal">sudo <span class="pre">docker-compose</span> ...</tt>
+To determine if sure docker is running and to start Docker, type:</p>
+<pre class="code sh literal-block">
+service docker status
+sudo service docker start
+</pre>
+</div>
+<div class="section" id="i-get-this-error-running-docker-run-hello-world-got-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket-at-unix-var-run-docker-sock-get-http-2fvar-2frun-2fdocker-sock-v1-37-containers-json-dial-unix-var-run-docker-sock-connect-permission-denied">
+<h2><a class="toc-backref" href="#id5">I get this error running <tt class="docutils literal">docker run <span class="pre">hello-world</span></tt> :  <tt class="docutils literal">Got permission denied while trying to connect to the Docker daemon socket at <span class="pre">unix:///var/run/docker.sock:</span> Get <span class="pre">http://%2Fvar%2Frun%2Fdocker.sock/v1.37/containers/json:</span> dial unix /var/run/docker.sock: connect: permission denied</tt></a></h2>
+<p>Try running with sudo. For example: sudo docker run hello-world.
+Here's a few aliases you can add to your <tt class="docutils literal"><span class="pre">~/.bashrc</span></tt> file:</p>
+<pre class="code sh literal-block">
+<span class="name builtin">alias</span> <span class="name variable">docker</span><span class="operator">=</span><span class="literal string single">'sudo docker'</span>
+<span class="name builtin">alias</span> docker-compose<span class="operator">=</span><span class="literal string single">'sudo docker-compose'</span>
+</pre>
+</div>
+<div class="section" id="i-get-this-error-running-docker-run-hello-world-docker-error-response-from-daemon-get-https-registry-1-docker-io-v2-net-http-request-canceled-while-waiting-for-connection-client-timeout-exceeded-while-awaiting-headers">
+<h2><a class="toc-backref" href="#id6">I get this error running <tt class="docutils literal">docker run <span class="pre">hello-world</span></tt> : <tt class="docutils literal">docker: Error response from daemon: Get <span class="pre">https://registry-1.docker.io/v2/:</span> net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers).</tt></a></h2>
+<p>If it worked before, first try restarting docker:</p>
+<pre class="code sh literal-block">
+sudo service docker start<span class="punctuation">;</span> sudo service docker stop
+</pre>
+<p>If you are behind a network firewall, it is usually a proxy problem.
+Proxy configurations are firewall-dependent, but this might serve as a pattern:</p>
+<pre class="literal-block">
+# /etc/default/docker
+export http_proxy=&quot;http://proxy.mycompany.com:911/&quot;
+export https_proxy=&quot;https://proxy.mycompany.com:912/&quot;
+export no_proxy=&quot;.mycompany.com,10.0.0.0/8,192.168.0.0/16,localhost,127.0.0.0/8&quot;
+</pre>
+</div>
+<div class="section" id="i-get-this-error-error-repository-not-found-does-not-exist-or-no-pull-access">
+<h2><a class="toc-backref" href="#id7">I get this error: <tt class="docutils literal">ERROR: repository . . . not found: does not exist or no pull access</tt></a></h2>
+<p>Also a proxy problem--see the answer above.</p>
+</div>
+<div class="section" id="i-get-this-error-error-service-failed-to-build-get-net-http-request-canceled-while-waiting-for-connection">
+<h2><a class="toc-backref" href="#id8">I get this error: `` ERROR: Service . . . failed to build: Get . . . net/http: request canceled while waiting for connection``</a></h2>
+<p>Also a proxy problem--see the answer above.</p>
+</div>
+<div class="section" id="i-get-this-error-running-docker-compose-error-for-validator-cannot-create-container-for-service-validator-conflict-the-container-name-validator-is-already-in-use-by-container">
+<h2><a class="toc-backref" href="#id9">I get this error running docker-compose: <tt class="docutils literal">ERROR: for validator&nbsp; Cannot create container for service validator: Conflict. The container name &quot;/validator&quot; is already in use by container ...</tt></a></h2>
+<p>The container already exists. You need to remove or rename it. To remove:</p>
+<pre class="code sh literal-block">
+sudo docker ps -a <span class="comment single"># list container IDs
+</span>sudo docker stop &lt;container ID&gt;
+sudo docker rm &lt;container ID&gt;
+</pre>
+</div>
+<div class="section" id="how-do-i-display-the-logs-for-a-docker-container">
+<h2><a class="toc-backref" href="#id10">How do I display the logs for a Docker container?</a></h2>
+<p>Use the <tt class="docutils literal">sudo docker logs</tt> command followed by the container name.
+The container name may be found with the <tt class="docutils literal">sudo docker ps</tt> command.
+For example: <tt class="docutils literal">sudo docker logs validator</tt> display the log for the container named <tt class="docutils literal">validator</tt> .</p>
+</div>
+<div class="section" id="i-get-this-error-running-docker-compose-error-version-in-docker-compose-yaml-is-unsupported">
+<h2><a class="toc-backref" href="#id11">I get this error running docker-compose: <tt class="docutils literal">ERROR: Version in <span class="pre">&quot;./docker-compose.yaml&quot;</span> is unsupported.</tt></a></h2>
+<p>You may be running an old version of Docker, perhaps from your Linux package manager. Instead, install Docker from docker.com. Sawtooth requires Docker Engine 17.03.0-ce or better. For Docker CE for Ubuntu, use <a class="reference external" href="https://docs.docker.com/install/linux/docker-ce/ubuntu/">https://docs.docker.com/install/linux/docker-ce/ubuntu/</a>
+Here's a sample script that installs Docker CE on Ubuntu:
+<a class="reference external" href="https://gist.github.com/askmish/76e348e34d93fc22926d7d9379a0fd08">https://gist.github.com/askmish/76e348e34d93fc22926d7d9379a0fd08</a></p>
+</div>
+<div class="section" id="if-i-run-docker-or-docker-compose-it-hangs-and-does-nothing">
+<h2><a class="toc-backref" href="#id12">If I run <tt class="docutils literal">docker</tt> or <tt class="docutils literal"><span class="pre">docker-compose</span></tt> it hangs and does nothing.</a></h2>
+<p>The docker daemons may not be running. To check, run:</p>
+<pre class="code sh literal-block">
+$ ps -ef <span class="punctuation">|</span> grep dockerd
+</pre>
+<p>To start, run:</p>
+<pre class="code sh literal-block">
+$ sudo systemctl restart docker.service
+</pre>
+</div>
+<div class="section" id="how-do-i-manually-start-and-stop-docker-on-linux">
+<h2><a class="toc-backref" href="#id13">How do I manually start and stop docker on Linux?</a></h2>
+<pre class="code sh literal-block">
+$ sudo service docker start
+$ service docker status
+$ sudo service docker stop
+</pre>
+</div>
+<div class="section" id="how-do-i-enable-and-disable-automatic-start-of-docker-on-boot-on-linux">
+<h2><a class="toc-backref" href="#id14">How do I enable and disable automatic start of docker on boot on Linux?</a></h2>
+<pre class="code sh literal-block">
+$ sudo systemctl <span class="name builtin">enable</span> docker
+$ systemctl status docker
+$ sudo systemctl disable docker
+</pre>
+</div>
+<div class="section" id="can-i-connect-a-client-to-the-rest-api-running-in-a-docker-container">
+<h2><a class="toc-backref" href="#id15">Can I connect a client to the REST API running in a Docker container?</a></h2>
+<p>Yes. The <tt class="docutils literal"><span class="pre">docker-compose.yaml</span></tt> needs the following lines for the REST container:</p>
+<pre class="literal-block">
+expose:
+  - 8008
+ports:
+  - '8008:8008'
+</pre>
+<p>Then connect your client to processor to port <tt class="docutils literal"><span class="pre">http://localhost:4040</span></tt>
+This might be a command line option for the client
+(for example, <tt class="docutils literal">intkey <span class="pre">--url</span> <span class="pre">http://localhost:4040</span></tt>).
+Otherwise, you need to modify the source if the REST API URL is hard-coded
+for your client.</p>
+</div>
+<div class="section" id="can-i-connect-a-transaction-processor-to-the-validator-running-in-a-docker-container">
+<h2><a class="toc-backref" href="#id16">Can I connect a transaction processor to the validator running in a Docker container?</a></h2>
+<p>Yes. The <tt class="docutils literal"><span class="pre">docker-compose.yaml</span></tt> needs the following lines for the validator container (which maps Docker container TCP port 4004 to external port 4040):</p>
+<pre class="literal-block">
+expose:
+  - 4004
+ports:
+  - '4040:4004'
+</pre>
+<p>Then connect your transaction processor to port <tt class="docutils literal"><span class="pre">tcp://localhost:4040</span></tt>
+If the port is mapped to 4004 (that is, not mapped to 4040), use <tt class="docutils literal"><span class="pre">tcp://localhost:4040</span></tt>
+The port might be a command line option for the TP.
+(for example, <tt class="docutils literal"><span class="pre">intkey-tp-python</span> <span class="pre">-v</span> <span class="pre">tcp://localhost:4040</span></tt> ).
+Otherwise, you need to modify the source if the validator port is hard-coded
+for your TP.</p>
+</div>
+<div class="section" id="i-get-you-cannot-remove-a-running-container-error-removing-docker-containers">
+<h2><a class="toc-backref" href="#id17">I get <tt class="docutils literal">You cannot remove a running container</tt> error removing docker containers</a></h2>
+<p>Before running <tt class="docutils literal">docker rm $(docker ps <span class="pre">-aq)</span></tt>, first stop the running containers with
+<tt class="docutils literal">sudo docker stop $(docker ps <span class="pre">-q)</span></tt></p>
+</div>
+<div class="section" id="how-do-i-run-sawtooth-with-kubernetes">
+<h2><a class="toc-backref" href="#id18">How do I run Sawtooth with Kubernetes?</a></h2>
+<p>Kubernetes requires VirtualBox or some other virtual machine software.
+Documentation on using Kubernetes with Minikube for Sawtooth on Linux or Mac hosts is available here:
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/kubernetes.html">https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/kubernetes.html</a>
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html#kubernetes-start-a-multiple-node-sawtooth-network">https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html#kubernetes-start-a-multiple-node-sawtooth-network</a></p>
+</div>
+<div class="section" id="can-docker-run-inside-a-virtual-machine">
+<h2><a class="toc-backref" href="#id19">Can Docker run inside a virtual machine?</a></h2>
+<p>Yes. For example, I run Docker with Sawtooth containers on a VirtualBox virtual machine instance on a Windows 10 host.</p>
+</div>
+<div class="section" id="how-do-i-persist-data-on-docker-containers">
+<h2><a class="toc-backref" href="#id20">How do I persist data on Docker containers?</a></h2>
+<p>You add an external volume. You make a directory for your volume and add it using <tt class="docutils literal">volumes:</tt> in your Docker .yaml file. For a Sawtooth-specific tutorial, see this blog: <a class="reference external" href="http://goshtastic.blogspot.com/2018/04/making-new-transaction-family-on.html">http://goshtastic.blogspot.com/2018/04/making-new-transaction-family-on.html</a>
+Also see the Docker storage documentation at <a class="reference external" href="https://docs.docker.com/storage/">https://docs.docker.com/storage/</a></p>
+<p>If you do not <tt class="docutils literal">down</tt> the container or reboot the Docker host, the container will not be destroyed.</p>
+<p>For a list of directories used by Sawtooth, see <a class="reference external" href="https://github.com/danintel/sawtooth-faq/blob/master/validator.rst#what-files-does-sawtooth-use">https://github.com/danintel/sawtooth-faq/blob/master/validator.rst#what-files-does-sawtooth-use</a>
+It is best to set <cite>$SAWTOOTH_HOME</cite> so all the configuration and data is under one root directory.</p>
+</div>
+<div class="section" id="i-get-this-error-running-docker-error-manifest-for-hyperledger-sawtooth-validator-1-2-not-found">
+<h2><a class="toc-backref" href="#id21">I get this error running Docker: <tt class="docutils literal">ERROR: manifest for <span class="pre">hyperledger/sawtooth-validator:1.2</span> not found</tt></a></h2>
+<p>You are following instructions for the unreleased Sawtooth <tt class="docutils literal">nightly</tt> build. There are no Docker images for the nightly build. Instead use the <tt class="docutils literal">latest</tt> build documentation at <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide.html</a></p>
+</div>
+<div class="section" id="why-doesn-t-sawtooth-default-poet-yaml-start-the-network-successfully-on-subsequent-runs">
+<h2><a class="toc-backref" href="#id22">Why doesn't sawtooth-default-poet.yaml start the network successfully on subsequent runs ?</a></h2>
+<p>The root cause is the stale volume mounted, these are mounted for storing
+sawtooth keys in order to share between the containers. If you observe the error
+in subsequent runs that means these mounted volumes are left behind. The command
+&quot;docker-compose down&quot; does not remove the stale volumes mounted. To solve the
+problem, you can prune the volume as well and not just down the containers.
+For example the following removes containers and volumes</p>
+<pre class="literal-block">
+docker-compose down -v
+</pre>
+<p class="mininav"><a class="reference external" href="/faq/permissioning/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/upgrade/">NEXT</a></p>
+<p>© Copyright 2018, Intel Corporation.</p>
+</div>
+
+</section>
+</article>
+
+    </div>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text"><p style="font-size: 1.5em;">
+  Hyperledger Sawtooth
+</p> <p>
+  <a href="/" title="Home"><span class="links">Home</span></a>
+  &bull;
+  <a href="/about/" title="About Sawtooth"><span class="links">About</span></a>
+  &bull;
+  <a href="/release/" title="Releases"><span class="links">Releases</span></a>
+  &bull;
+  <a href="/docs/" title="Documentation"><span class="links">Docs</span></a>
+  &bull;
+  <a href="/faq/" title="FAQ"><span class="links">FAQ</span></a>
+  &bull;
+  <a href="/community/" title="Community"><span class="links">Community</span></a>
+  &bull;
+  <a href="/contact/" title="Contact"><span class="links">Contact</span></a>
+</p> <p>
+  Find us: &nbsp;
+  <a href="https://github.com/hyperledger/sawtooth-core/" target="_blank" title="GitHub"><span  class="links">GitHub</span></a>
+  &bull;
+  <a href="https://chat.hyperledger.org/channel/sawtooth" target="_blank" title="#sawtooth chat channel"">Rocket.Chat</a>
+  &bull;
+  <a href="https://twitter.com/search?q=%23HyperledgerSawtooth" target="_blank" title="#sawtooth chat channel"">Twitter</a>
+</p> <p>
+  Examples: &nbsp;
+  <a href="/examples/seafood.html" target="_blank" title="Seafood Supply Chain Traceability">Seafood Supply Chain Traceability</a>
+  &bull;
+  <a href="/examples/bond.html" target="_blank" title="Bond Asset Settlement">Bond Asset Settlement</a>
+  &bull;
+  <a href="/examples/marketplace.html" target="_blank" title="Marketplace Digital Asset Exchange">Marketplace Digital Asset Exchange</a>
+</p> <p>
+  Linux Foundation: &nbsp;
+  <a href="http://www.linuxfoundation.org/privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+  &bull;
+  <a href="http://www.linuxfoundation.org/terms" target="_blank" title="Terms of Service">Terms of Service</a>
+</p> <p>
+  <small class="copyright">Copyright &copy; 2015-2019 contributors to Hyperledger Sawtooth</small>
+</p>
+</p>
+</footer>
+
+
+  </body>
+</html>

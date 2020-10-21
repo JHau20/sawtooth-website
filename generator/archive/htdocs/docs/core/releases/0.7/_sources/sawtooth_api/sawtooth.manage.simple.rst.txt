@@ -1,0 +1,7 @@
+sawtooth\.manage\.simple module
+===============================
+
+.. automodule:: sawtooth.manage.simple
+    :members:
+    :undoc-members:
+    :show-inheritance:

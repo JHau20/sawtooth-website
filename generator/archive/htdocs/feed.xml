@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hyperledger Sawtooth</title>
+    <atom:link href="0.0.0.0/feed.xml" rel="self" type="application/rss+xml"/>
+    <media:license type="text/html" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</media:license>
+    <link>0.0.0.0/</link>
+    <description>An enterprise-grade solution for distributed ledgers.</description>
+    <pubDate>Sun, 18 Oct 2020 03:40:11 +0000</pubDate>
+    
+      <item>
+        <title>Hyperledger Fabric &amp; Sawtooth Certification Exams Coming Soon!</title>
+        <link>0.0.0.0/certification/hyperledger/2018/09/19/exams_coming_soon.html</link>
+        <guid isPermaLink="true">0.0.0.0/certification/hyperledger/2018/09/19/exams_coming_soon.html</guid>
+        <description>&lt;p&gt;Excerpt from
+&lt;a href=&quot;https://www.hyperledger.org/blog/2018/09/05/hyperledger-fabric-sawtooth-certification-exams-coming-soon&quot;&gt;hyperledger.org&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;We strongly believe in helping organizations and developers overcome obstacles
+to blockchain adoption by investing in training and certification courses for
+Hyperledger. That’s why we’re thrilled to announce that Certified Hyperledger
+Fabric Administrator and Certified Hyperledger Sawtooth Administrator exams will
+be released later this year!&lt;/p&gt;
+
+&lt;p&gt;Below is more information on the certification exams:&lt;/p&gt;
+
+&lt;p&gt;Certified Hyperledger Fabric Administrator&lt;/p&gt;
+
+&lt;p&gt;The Certified Hyperledger Fabric Administrator (CHFA) can effectively build a
+secure Hyperledger Fabric network for commercial deployment. To pass the exam,
+professionals must demonstrate the ability to install, configure, operate,
+manage, and troubleshoot the nodes on that network. Completion of LFD271 may
+help serve as preparation for the CHFA exam, but is not required.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 19 Sep 2018 00:00:00 +0000</pubDate>
+      </item>
+    
+  </channel>
+</rss>

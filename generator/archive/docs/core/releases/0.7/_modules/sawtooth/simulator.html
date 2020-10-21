@@ -1,0 +1,596 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.simulator &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>sawtooth.simulator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sawtooth.simulator</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span><span class="p">,</span> <span class="n">deque</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="k">import</span> <span class="n">task</span>
+<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="k">import</span> <span class="n">reactor</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth.client</span> <span class="k">import</span> <span class="n">TransactionStatus</span>
+<span class="kn">from</span> <span class="nn">sawtooth.exceptions</span> <span class="k">import</span> <span class="n">MessageException</span>
+<span class="kn">from</span> <span class="nn">sawtooth.endpoint_client</span> <span class="k">import</span> <span class="n">EndpointClient</span>
+
+
+<span class="n">PendingTransaction</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;PendingTransaction&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;client&#39;</span><span class="p">])</span>
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SawtoothWorkloadSimulator"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.SawtoothWorkloadSimulator">[docs]</a><span class="k">class</span> <span class="nc">SawtoothWorkloadSimulator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_loop</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_base_validator</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Simulator&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_throttling</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+        <span class="c1"># For now, let&#39;s try 20 maximum outstanding work requests.  Through</span>
+        <span class="c1"># experimentation it appears that the twisted reactor main thread pool</span>
+        <span class="c1"># has 10 threads.  We are going to allow twice as many outstanding</span>
+        <span class="c1"># work requests before we start to throttle them.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maximum_outstanding_requests</span> <span class="o">=</span> <span class="mi">20</span>
+
+        <span class="c1"># These attributes need to be protected by self._lock.  Ensure</span>
+        <span class="c1"># that any threaded access grabs the lock before reading/writing.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pending_transactions</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validators</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_performing_discovery</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_number_of_outstanding_requests</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_submitted_transactions_sample</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_committed_transactions_sample</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Used to calculate rough approximations of transactions/minute.</span>
+        <span class="c1"># We&#39;ll set it to a real time later.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_time_since_last_check</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_submitted_transaction_samples</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_committed_transaction_samples</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+
+        <span class="c1"># Dynamically load the workload class&#39; module and create a workload</span>
+        <span class="c1"># generator</span>
+        <span class="n">components</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Simulator&#39;</span><span class="p">,</span> <span class="s1">&#39;workload&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">components</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+                            <span class="n">fromlist</span><span class="o">=</span><span class="p">[</span><span class="n">components</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="n">workload</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">components</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_workload</span> <span class="o">=</span> <span class="n">workload</span><span class="p">(</span><span class="n">delegate</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+
+        <span class="c1"># Prime the workload generator with the validators we currently know</span>
+        <span class="c1"># about</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_discover_validators</span><span class="p">()</span>
+
+        <span class="c1"># Give the workload generator one last chance to set up anything</span>
+        <span class="c1"># before we start the simulator loop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_workload</span><span class="o">.</span><span class="n">on_will_start</span><span class="p">()</span>
+
+        <span class="c1"># Set up the looping call for stepping through the simulator.  The</span>
+        <span class="c1"># provided rate is the number of transactions per minute, so we</span>
+        <span class="c1"># calculate the number of seconds between transactions and that</span>
+        <span class="c1"># becomes the loop rate.</span>
+        <span class="n">rate</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">&#39;Simulator&#39;</span><span class="p">,</span> <span class="s1">&#39;rate&#39;</span><span class="p">)</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Simulator will generate </span><span class="si">%d</span><span class="s1"> transaction(s)/minute&#39;</span><span class="p">,</span> <span class="n">rate</span><span class="p">)</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">LoopingCall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_simulator_loop</span><span class="p">)</span>
+        <span class="n">deferred</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mf">60.0</span> <span class="o">/</span> <span class="n">rate</span><span class="p">,</span> <span class="n">now</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">deferred</span><span class="o">.</span><span class="n">addCallback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loop_cleanup</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_frequency</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">&#39;Simulator&#39;</span><span class="p">,</span> <span class="s1">&#39;update_frequency&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Set up the looping call for discovering validators.  The provided</span>
+        <span class="c1"># rate is in minutes between checks, so convert to seconds.</span>
+        <span class="n">discover</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">&#39;Simulator&#39;</span><span class="p">,</span> <span class="s1">&#39;discover&#39;</span><span class="p">)</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Simulator will discover validators every </span><span class="si">%d</span><span class="s1"> minute(s)&#39;</span><span class="p">,</span>
+                    <span class="n">discover</span><span class="p">)</span>
+        <span class="n">loop</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">LoopingCall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_discover_validators_loop</span><span class="p">)</span>
+        <span class="n">loop</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">discover</span> <span class="o">*</span> <span class="mi">60</span><span class="p">,</span> <span class="n">now</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SawtoothWorkloadSimulator.run"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.SawtoothWorkloadSimulator.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># pylint: disable=no-self-use</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_time_since_last_check</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_simulator_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+            <span class="c1"># Check the time.  If at least a update_frequency seconds</span>
+            <span class="c1"># has passed since we have last report transactions/minute,</span>
+            <span class="c1"># then let&#39;s do so</span>
+            <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">delta</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time_since_last_check</span>
+            <span class="k">if</span> <span class="n">delta</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_frequency</span><span class="p">:</span>
+                <span class="c1"># Take the samples and normalize to a minute.</span>
+                <span class="n">sample</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">*</span> \
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_submitted_transactions_sample</span> <span class="o">/</span> <span class="n">delta</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_submitted_transaction_samples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s1">&#39;Transaction submission rate for last sample period is &#39;</span>
+                    <span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1"> tpm&#39;</span><span class="p">,</span>
+                    <span class="n">sample</span><span class="p">)</span>
+
+                <span class="n">sample</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">*</span> \
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_committed_transactions_sample</span> <span class="o">/</span> <span class="n">delta</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_committed_transaction_samples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s1">&#39;Transaction commit rate for last sample period is &#39;</span>
+                    <span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1"> tpm&#39;</span><span class="p">,</span>
+                    <span class="n">sample</span><span class="p">)</span>
+
+                <span class="c1"># We are going to only use at most the last 10 samples to</span>
+                <span class="c1"># calculate the moving average</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_submitted_transaction_samples</span><span class="p">)</span> <span class="o">==</span> <span class="mi">11</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_submitted_transaction_samples</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_committed_transaction_samples</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s1">&#39;Transaction submission rate for last </span><span class="si">%d</span><span class="s1"> sample(s) &#39;</span>
+                    <span class="s1">&#39;is </span><span class="si">%.2f</span><span class="s1"> tpm&#39;</span><span class="p">,</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_submitted_transaction_samples</span><span class="p">),</span>
+                    <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_submitted_transaction_samples</span><span class="p">)</span> <span class="o">/</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_submitted_transaction_samples</span><span class="p">))</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s1">&#39;Transaction commit rate for last </span><span class="si">%d</span><span class="s1"> sample(s) &#39;</span>
+                    <span class="s1">&#39;is </span><span class="si">%.2f</span><span class="s1"> tpm&#39;</span><span class="p">,</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_committed_transaction_samples</span><span class="p">),</span>
+                    <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_committed_transaction_samples</span><span class="p">)</span> <span class="o">/</span>
+                    <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_committed_transaction_samples</span><span class="p">))</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">_submitted_transactions_sample</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_committed_transactions_sample</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_time_since_last_check</span> <span class="o">=</span> <span class="n">now</span>
+
+            <span class="c1"># Only push work off to a worker thread if we have not hit the</span>
+            <span class="c1"># maximum number of outstanding requests.  If we have hit the</span>
+            <span class="c1"># maximum number then there really is no use issuing another</span>
+            <span class="c1"># transaction as the validators are not keeping up right now.</span>
+            <span class="c1"># Throttle back a little bit and let them catch their breath.</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_number_of_outstanding_requests</span> \
+                    <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maximum_outstanding_requests</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_is_throttling</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_number_of_outstanding_requests</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="c1"># If there are pending transactions, then pull off the first</span>
+                <span class="c1"># one.</span>
+                <span class="n">transaction</span> <span class="o">=</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_pending_transactions</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span> \
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pending_transactions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+
+                <span class="c1"># Let a worker thread work handle the actual work as we don&#39;t</span>
+                <span class="c1"># want to block the main reactor thread.</span>
+                <span class="n">reactor</span><span class="o">.</span><span class="n">callInThread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_check_on_transaction</span><span class="p">,</span> <span class="n">transaction</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Only print a message when we first detect we are throttling.</span>
+                <span class="c1"># There&#39;s no use continuing to spew the messages to the log for</span>
+                <span class="c1"># every time we detect it.</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_throttling</span><span class="p">:</span>
+                    <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="s1">&#39;Simulator is throttling work requests as the number &#39;</span>
+                        <span class="s1">&#39;of outstanding work requests has reached its limit &#39;</span>
+                        <span class="s1">&#39;of </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_maximum_outstanding_requests</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_is_throttling</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_discover_validators_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Discovering validators may take a while, so push it off into</span>
+        <span class="c1"># another thread so we don&#39;t block the reactor main thread and thus</span>
+        <span class="c1"># our simulator.</span>
+        <span class="c1">#</span>
+        <span class="c1"># Because discovery may be time consuming, we are not going to</span>
+        <span class="c1"># allow multiple discoveries to occur at the same time as we would</span>
+        <span class="c1"># prefer that our worker threads be issuing transactions.</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_performing_discovery</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_is_performing_discovery</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">reactor</span><span class="o">.</span><span class="n">callInThread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_discover_validators</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_check_on_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">):</span>
+        <span class="c1"># If the transaction is not None, then we will check it status and</span>
+        <span class="c1"># perform the appropriate callback into the workload generator</span>
+        <span class="k">if</span> <span class="n">transaction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># pylint: disable=bare-except</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">status</span> <span class="o">=</span> \
+                    <span class="n">transaction</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get_transaction_status</span><span class="p">(</span>
+                        <span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">TransactionStatus</span><span class="o">.</span><span class="n">committed</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_committed_transactions_sample</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_workload</span><span class="o">.</span><span class="n">on_transaction_committed</span><span class="p">(</span><span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">status</span> <span class="o">==</span> <span class="n">TransactionStatus</span><span class="o">.</span><span class="n">server_busy</span><span class="p">:</span>
+                    <span class="c1"># If the server is busy, we are going to take a short</span>
+                    <span class="c1"># breather from issuing transactions and place this</span>
+                    <span class="c1"># at the end of the pending transactions to give the</span>
+                    <span class="c1"># validator time to catch up.</span>
+                    <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+                        <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                            <span class="s1">&#39;Validator </span><span class="si">%s</span><span class="s1"> is responding as busy&#39;</span><span class="p">,</span>
+                            <span class="n">transaction</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_pending_transactions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># If the workload generator wants the pending</span>
+                    <span class="c1"># transaction to be checked again, we are going to make</span>
+                    <span class="c1"># sure that the transaction is checked on the next</span>
+                    <span class="c1"># &quot;step&quot; as this is the oldest transaction.</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workload</span><span class="o">.</span><span class="n">on_transaction_not_yet_committed</span><span class="p">(</span>
+                            <span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+                        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_pending_transactions</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="n">MessageException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="c1"># A MessageException means that we cannot talk to the</span>
+                <span class="c1"># validator.  In that case, we are going to remove it</span>
+                <span class="c1"># from the list of validators and immediately let the</span>
+                <span class="c1"># workload generator know that it has gone away.</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Validator </span><span class="si">%s</span><span class="s1"> not responding: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                            <span class="n">transaction</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span>
+                            <span class="n">e</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">transaction</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">base_url</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validators</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_remove_unresponsive_validator</span><span class="p">(</span>
+                        <span class="n">transaction</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">base_url</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="c1"># Something has gone really wrong.  Print out a traceback</span>
+                <span class="c1"># and then stop the reactor, which stops the simulator.</span>
+                <span class="c1"># We do it this way because twisted seems to want to catch</span>
+                <span class="c1"># the exception and print the traceback, but it doesn&#39;t appear</span>
+                <span class="c1"># to want to stop the reactor (maybe because we have another</span>
+                <span class="c1"># loop running in the reactor).</span>
+                <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+        <span class="c1"># If the transaction ID is None, then it means there were no</span>
+        <span class="c1"># transactions to check during the reactor loop callback that fired</span>
+        <span class="c1"># off this method.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_workload</span><span class="o">.</span><span class="n">on_all_transactions_committed</span><span class="p">()</span>
+
+        <span class="c1"># Now that we are done, we can decrement the number of outstanding</span>
+        <span class="c1"># work requests.</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_number_of_outstanding_requests</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">_discover_validators</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Find out which validators are in the network currently.  Because</span>
+        <span class="c1"># validators can crash and other validators don&#39;t reflect that in</span>
+        <span class="c1"># their endpoint registry, we are going to treat this like a depth</span>
+        <span class="c1"># first search.  We&#39;ll start with the list of candidate validators</span>
+        <span class="c1"># we know about and then as we discover new ones, we add them to</span>
+        <span class="c1"># the list of candidates.  If we don&#39;t have any validators, we will</span>
+        <span class="c1"># rely on the base validator to prime the list for us.</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+            <span class="n">discovered</span> <span class="o">=</span> \
+                <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_validators</span><span class="p">)</span> \
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_validators</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_validator</span><span class="p">]</span>
+
+        <span class="n">validators</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">candidates</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">discovered</span><span class="p">)</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Grab a candidate to query</span>
+            <span class="n">candidate</span> <span class="o">=</span> <span class="n">candidates</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Get the validators that this candidate knows about.  For the</span>
+                <span class="c1"># validators not in the discovered list:</span>
+                <span class="c1"># - add the ones not already in the candidate list to the</span>
+                <span class="c1">#   candidates</span>
+                <span class="c1"># - add all newly-discovered validators to the discovered</span>
+                <span class="n">new_validators</span> <span class="o">=</span> \
+                    <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span>
+                     <span class="ow">in</span> <span class="n">EndpointClient</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span><span class="o">.</span><span class="n">get_validator_url_list</span><span class="p">()</span>
+                     <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">discovered</span><span class="p">]</span>
+                <span class="n">candidates</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">new_validators</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">])</span>
+                <span class="n">discovered</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">new_validators</span><span class="p">)</span>
+
+                <span class="c1"># Since this candidate responded, add it to the list of</span>
+                <span class="c1"># validators</span>
+                <span class="n">validators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">MessageException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Failed to get endpoint registry from validator &#39;</span>
+                            <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                            <span class="n">candidate</span><span class="p">,</span>
+                            <span class="n">e</span><span class="p">)</span>
+
+        <span class="c1"># Determine which validators have been discovered and removed since</span>
+        <span class="c1"># the last time</span>
+        <span class="n">discovered</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">validators</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validators</span><span class="p">]</span>
+        <span class="n">removed</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validators</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">validators</span><span class="p">]</span>
+
+        <span class="c1"># First let the workload generator know about additions then removals</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Discovered </span><span class="si">%d</span><span class="s1"> new validators&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">discovered</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">validator</span> <span class="ow">in</span> <span class="n">discovered</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Discovered a new validator: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">validator</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_workload</span><span class="o">.</span><span class="n">on_validator_discovered</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Removed </span><span class="si">%d</span><span class="s1"> non-responsive validators&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">removed</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">validator</span> <span class="ow">in</span> <span class="n">removed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_remove_unresponsive_validator</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
+
+        <span class="c1"># Save off the list of validators and reset the discovery flag</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;Running simulated workload on </span><span class="si">%d</span><span class="s1"> validators&#39;</span><span class="p">,</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">validators</span><span class="p">))</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_validators</span> <span class="o">=</span> <span class="n">validators</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_is_performing_discovery</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_remove_unresponsive_validator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validator</span><span class="p">):</span>
+        <span class="c1"># Iterate through all pending transactions and purge the ones that</span>
+        <span class="c1"># were submitted to the client representing this validator as it is a</span>
+        <span class="c1"># waste to check on them.  Let the workload generator know that the</span>
+        <span class="c1"># validator has been removed and then remove it from the list of</span>
+        <span class="c1"># known validators.</span>
+        <span class="c1">#</span>
+        <span class="c1"># If the validator happens to come back, we will pick it up again</span>
+        <span class="c1"># later when discovering validators.</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Remove validator: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">validator</span><span class="p">)</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pending_transactions</span> <span class="o">=</span> \
+                <span class="n">deque</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_transactions</span>
+                     <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">base_url</span> <span class="o">!=</span> <span class="n">validator</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">validator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validators</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_validators</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_workload</span><span class="o">.</span><span class="n">on_validator_removed</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SawtoothWorkloadSimulator.on_new_transaction"><a class="viewcode-back" href="../../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.SawtoothWorkloadSimulator.on_new_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">on_new_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called by the workload generator to let the simulator know that a new</span>
+<span class="sd">        transaction should be tracked.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            transaction_id: The ID for the new transaction</span>
+<span class="sd">            client: The validator to which the transaction has been submitted.</span>
+<span class="sd">              This object should support the public methods in SawtoothClient.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Nothing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">transaction_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_submitted_transactions_sample</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_pending_transactions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">PendingTransaction</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">transaction_id</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">_loop_cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_workload</span><span class="o">.</span><span class="n">on_will_stop</span><span class="p">()</span>
+        <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

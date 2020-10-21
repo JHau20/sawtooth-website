@@ -1,0 +1,514 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mktmain.client_cli module &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="mktmain package" href="mktmain.html"/>
+        <link rel="next" title="mktplace package" href="mktplace.html"/>
+        <link rel="prev" title="mktmain package" href="mktmain.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_data_model.html">MarketPlace Data Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_messages.html">MarketPlace Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_transactions.html">MarketPlace Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_transactions.html#marketplace-transaction-updates">MarketPlace Transaction Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_initial_state.html">MarketPlace Initial State</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">MarketPlace Python API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="mktintegration.html">mktintegration package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="mktmain.html">mktmain package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="mktmain.html#submodules">Submodules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mktplace.html">mktplace package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktclient.html">MarketPlace Client Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="modules.html">MarketPlace Python API</a> &raquo;</li>
+        
+          <li><a href="mktmain.html">mktmain package</a> &raquo;</li>
+        
+      <li>mktmain.client_cli module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/mktplace_api/mktmain.client_cli.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-mktmain.client_cli">
+<span id="mktmain-client-cli-module"></span><h1>mktmain.client_cli module<a class="headerlink" href="#module-mktmain.client_cli" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="mktmain.client_cli.create_console_handler">
+<code class="descclassname">mktmain.client_cli.</code><code class="descname">create_console_handler</code><span class="sig-paren">(</span><em>verbose_level</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#create_console_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.create_console_handler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mktmain.client_cli.setup_loggers">
+<code class="descclassname">mktmain.client_cli.</code><code class="descname">setup_loggers</code><span class="sig-paren">(</span><em>verbose_level=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#setup_loggers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.setup_loggers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="mktmain.client_cli.ClientController">
+<em class="property">class </em><code class="descclassname">mktmain.client_cli.</code><code class="descname">ClientController</code><span class="sig-paren">(</span><em>client</em>, <em>echo=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">cmd.Cmd</span></code></p>
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.precmd">
+<code class="descname">precmd</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.precmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.precmd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.postcmd">
+<code class="descname">postcmd</code><span class="sig-paren">(</span><em>flag</em>, <em>line</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.postcmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.postcmd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.help_names">
+<code class="descname">help_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.help_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.help_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.help_symbols">
+<code class="descname">help_symbols</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.help_symbols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.help_symbols" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_sleep">
+<code class="descname">do_sleep</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_sleep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_sleep" title="Permalink to this definition">¶</a></dt>
+<dd><p>sleep &lt;seconds&gt; &#8211; command to pause processing for a time (seconds).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_waitforcommit">
+<code class="descname">do_waitforcommit</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_waitforcommit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_waitforcommit" title="Permalink to this definition">¶</a></dt>
+<dd><p>wait &#8211; wait for a transaction to commit</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_map">
+<code class="descname">do_map</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_map" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>map &#8211; assign a value to a symbol that can be retrieved with a</dt>
+<dd>$expansion</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_echo">
+<code class="descname">do_echo</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_echo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_echo" title="Permalink to this definition">¶</a></dt>
+<dd><p>echo &#8211; expand local $symbols</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_dump">
+<code class="descname">do_dump</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>dump &#8211; display information about an object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_tokenstore">
+<code class="descname">do_tokenstore</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_tokenstore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_tokenstore" title="Permalink to this definition">¶</a></dt>
+<dd><p>tokenstore &#8211; set the token store used to pay for transactions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_state">
+<code class="descname">do_state</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_state" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>state &#8211; access elements of the state</dt>
+<dd>state fetch &#8211; retrieve the current version of the ledger state
+state value &#8211; get the value associated with a field in state
+state query &#8211; find object that match specific criteria
+state byname &#8211; find the identifier for an object using its
+name and type</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_exchange">
+<code class="descname">do_exchange</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_exchange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_exchange" title="Permalink to this definition">¶</a></dt>
+<dd><p>exchange &#8211; execute an marketplace exchange transaction</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_account">
+<code class="descname">do_account</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_account"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_account" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>account &#8211; register or unregister an account</dt>
+<dd>account reg &#8211; register a new account
+account unr &#8211; unregister an existing account</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_asset">
+<code class="descname">do_asset</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_asset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_asset" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>asset &#8211; register or unregister an asset</dt>
+<dd>asset reg &#8211; register the asset
+asset unr &#8211; unregister the asset</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_assettype">
+<code class="descname">do_assettype</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_assettype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_assettype" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>assettype &#8211; register or unregister an asset type</dt>
+<dd>assettype reg &#8211; register the asset type
+assettype unr &#8211; unregister the asset type</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_exchangeoffer">
+<code class="descname">do_exchangeoffer</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_exchangeoffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_exchangeoffer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>exchangeoffer &#8211; register or unregister an exchange offer</dt>
+<dd>exchangeoffer reg &#8211; register a new exchange offer
+exchangeoffer unr &#8211; unregister an existing exchange offer</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_holding">
+<code class="descname">do_holding</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_holding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_holding" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>holding &#8211; register or unregister a holding</dt>
+<dd>holding reg &#8211; register a new holding
+holding unr &#8211; unregister an existing holding</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_liability">
+<code class="descname">do_liability</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_liability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_liability" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>liability &#8211; register or unregister a liability</dt>
+<dd>liability reg &#8211; register a new liability
+liability unr &#8211; unregister an existing liability</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_participant">
+<code class="descname">do_participant</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_participant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_participant" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>participant &#8211; register or unregister a participant</dt>
+<dd>participant reg &#8211; register a new participant
+participant unr &#8211; unregister an existing participant</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_selloffer">
+<code class="descname">do_selloffer</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_selloffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_selloffer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>selloffer &#8211; register or unregister a sell offer</dt>
+<dd>selloffer reg &#8211; register a new sell offer
+selloffer unr &#8211; unregister an existing sell offer</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_holdings">
+<code class="descname">do_holdings</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_holdings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_holdings" title="Permalink to this definition">¶</a></dt>
+<dd><p>holdings &#8211; informative list of information about holdings</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_offers">
+<code class="descname">do_offers</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_offers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_offers" title="Permalink to this definition">¶</a></dt>
+<dd><p>offers == informative list of available offers</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_session">
+<code class="descname">do_session</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_session" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>session &#8211; create or delete a session</dt>
+<dd>session create &#8211; create a new pre-validation session
+session delete &#8211; delete the pre-validation session</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_exit">
+<code class="descname">do_exit</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_exit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_exit" title="Permalink to this definition">¶</a></dt>
+<dd><p>exit &#8211; shutdown the simulator and exit the command loop</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktmain.client_cli.ClientController.do_EOF">
+<code class="descname">do_EOF</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#ClientController.do_EOF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.ClientController.do_EOF" title="Permalink to this definition">¶</a></dt>
+<dd><p>exit &#8211; shutdown the simulator and exit the command loop</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="mktmain.client_cli.parse_script_file">
+<code class="descclassname">mktmain.client_cli.</code><code class="descname">parse_script_file</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#parse_script_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.parse_script_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mktmain.client_cli.verify_key">
+<code class="descclassname">mktmain.client_cli.</code><code class="descname">verify_key</code><span class="sig-paren">(</span><em>creator</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#verify_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.verify_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mktmain.client_cli.local_main">
+<code class="descclassname">mktmain.client_cli.</code><code class="descname">local_main</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#local_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.local_main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mktmain.client_cli.parse_command_line">
+<code class="descclassname">mktmain.client_cli.</code><code class="descname">parse_command_line</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#parse_command_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.parse_command_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mktmain.client_cli.get_configuration">
+<code class="descclassname">mktmain.client_cli.</code><code class="descname">get_configuration</code><span class="sig-paren">(</span><em>args</em>, <em>os_name='posix'</em>, <em>config_files_required=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#get_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.get_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mktmain.client_cli.log_configuration">
+<code class="descclassname">mktmain.client_cli.</code><code class="descname">log_configuration</code><span class="sig-paren">(</span><em>cfg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#log_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.log_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mktmain.client_cli.read_key_file">
+<code class="descclassname">mktmain.client_cli.</code><code class="descname">read_key_file</code><span class="sig-paren">(</span><em>keyfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#read_key_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.read_key_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mktmain.client_cli.main">
+<code class="descclassname">mktmain.client_cli.</code><code class="descname">main</code><span class="sig-paren">(</span><em>args=['-b', 'html', '-W', '-d', 'build/doctrees', 'source', 'build/html']</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktmain/client_cli.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktmain.client_cli.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mktplace.html" class="btn btn-neutral float-right" title="mktplace package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mktmain.html" class="btn btn-neutral" title="mktmain package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

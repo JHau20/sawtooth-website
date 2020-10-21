@@ -1,0 +1,952 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Track and Trade Transaction Family Specification &mdash; Sawtooth v0.8.11 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.11 documentation" href="../index.html"/>
+        <link rel="up" title="Transaction Family Specifications" href="../transaction_family_specifications.html"/>
+        <link rel="next" title="Examples" href="../examples.html"/>
+        <link rel="prev" title="Smallbank Transaction Family Specification" href="smallbank_transaction_family.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.11
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../solidity_developers_guide.html">Solidity Developers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="settings_transaction_family.html">Settings Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity_transaction_family.html">Identity Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="blockinfo_transaction_family.html">BlockInfo Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integerkey_transaction_family.html">IntegerKey Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xo_transaction_family.html">XO Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawtooth_burrow_evm_family.html">Seth Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_registry_transaction_family.html">Validator Registry Transaction Family Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smallbank_transaction_family.html">Smallbank Transaction Family Specification</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Track and Trade Transaction Family Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#state">State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#records">Records</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#properties">Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#record-types">Record Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#agents">Agents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#proposals">Proposals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#addressing">Addressing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#transactions">Transactions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-agent">Create Agent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-record">Create Record</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#finalize-record">Finalize Record</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-record-type">Create Record Type</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#update-properties">Update Properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-proposal">Create Proposal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#answer-proposal">Answer Proposal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#revoke-reporter">Revoke Reporter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../transaction_family_specifications.html">Transaction Family Specifications</a> &raquo;</li>
+        
+      <li>Track and Trade Transaction Family Specification</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/transaction_family_specifications/track_and_trade_transaction_family.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="track-and-trade-transaction-family-specification">
+<h1>Track and Trade Transaction Family Specification<a class="headerlink" href="#track-and-trade-transaction-family-specification" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Track and Trade (T&amp;T) transaction family allows users to track
+goods as they move through a supply chain. Records for goods include a
+history of ownership and custodianship, as well as histories for a
+variety of properties such as temperature and location. These
+properties are managed through a user-specifiable system of record
+types.</p>
+</div>
+<div class="section" id="state">
+<h2>State<a class="headerlink" href="#state" title="Permalink to this headline">¶</a></h2>
+<p>All T&amp;T objects are serialized using Protocol Buffers before being
+stored in state. These objects include: Agents, Properties
+(accompanied by their auxiliary PropertyPage objects), Proposals,
+Records, and RecordTypes. As described in the <a class="reference internal" href="#addressing">Addressing</a> section
+below, these objects are stored in separate sub-namespaces under the
+T&amp;T namespace. To handle hash collisions, all objects are stored in
+lists within protobuf &#8220;Container&#8221; objects.</p>
+<div class="section" id="records">
+<h3>Records<a class="headerlink" href="#records" title="Permalink to this headline">¶</a></h3>
+<p>Records represent the goods being tracked by Track and Trade. Almost
+every transaction references some Record.</p>
+<p>A Record contains a unique identifier, the name of a RecordType, and
+lists containing the history of its owners and custodians. It also
+contains a <code class="docutils literal"><span class="pre">final</span></code> flag indicating whether further updates can be
+made to the Record and its Properties. If this flag is set to true,
+then no further updates can be made to the Record, including changing
+its <code class="docutils literal"><span class="pre">final</span></code> flag.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">Record</span> <span class="p">{</span>
+    <span class="kd">message</span> <span class="nc">AssociatedAgent</span> <span class="p">{</span>
+        <span class="c1">// The Agent&#39;s public key</span>
+        <span class="kt">string</span> <span class="na">agent_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="c1">// Approximately when this agent was associated, as a Unix UTC timestamp</span>
+        <span class="kt">uint64</span> <span class="na">timestamp</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// The unique user-defined natural key which identifies the</span>
+    <span class="c1">// object in the real world (for example, a serial number)</span>
+    <span class="kt">string</span> <span class="na">identifier</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="kt">string</span> <span class="na">record_type</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// Ordered oldest to newest by timestamp</span>
+    <span class="k">repeated</span> <span class="n">AssociatedAgent</span> <span class="na">owners</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="k">repeated</span> <span class="n">AssociatedAgent</span> <span class="na">custodians</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+    <span class="c1">// Flag indicating whether the Record can be updated. If it is set</span>
+    <span class="c1">// to true, then the record has been finalized and no further</span>
+    <span class="c1">// changes can be made to it or its Properties.</span>
+    <span class="kt">bool</span> <span class="na">final</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note that while information about a Record&#8217;s owners and custodians are
+included in the object, information about its Properties are stored
+separately (see the <a class="reference internal" href="#properties">Properties</a> section below).</p>
+<p>Records whose addresses collide are stored in a list alphabetically by
+identifier.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">RecordContainer</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">Record</span> <span class="na">entries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="properties">
+<span id="id1"></span><h3>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h3>
+<p>Historical data pertaining to a particular data field of a tracked
+object are stored as Properties, represented as a list of values
+accompanied by a timestamp and a reporter identifier.</p>
+<p>The whole history of updates to Record data is stored in current state
+because this allows for more flexibility in writing transaction rules.
+For example, in a fish track-and-trade system, there might be a rule
+that no fish can be exchanged whose temperature has gone above 40
+degrees. This means, however, that it would be impractical to store
+all of a Record&#8217;s data at one address, since adding a single update
+would require reading the entire history of each of the Record&#8217;s
+Properties out of state, adding the update, then writing it all back.</p>
+<p>To solve this problem, Properties are stored in their own namespace
+derived from their name and associated Record. Since some Properties
+may have thousands of updates, four characters are reserved at the end
+of that namespace in order to paginate a Property&#8217;s history. The
+Property itself (along with name, Record identifier, authorized
+reporters, and paging information) is stored at the namespace ending
+in <code class="docutils literal"><span class="pre">0000</span></code>. The namespaces ending in <code class="docutils literal"><span class="pre">0001</span></code> to <code class="docutils literal"><span class="pre">ffff</span></code> will each
+store a PropertyPage containing up to 256 reported values (which
+include timestamps and their reporter&#8217;s identity). Any Transaction
+updating the value of a Property first reads out the PropertyContainer
+object at <code class="docutils literal"><span class="pre">0000</span></code> and then reads out the appropriate
+PropertyPageContainer before adding the update and writing the new
+PropertyPageContainer back to state.</p>
+<p>The Transaction Processor treats these pages as a ring buffer, so that
+when page <code class="docutils literal"><span class="pre">ffff</span></code> is filled, the next update will erase the entries
+at page <code class="docutils literal"><span class="pre">0001</span></code> and be stored there, and subsequent page-filling will
+continue to overwrite the next oldest page. This ensures no Property
+ever runs out of space for new updates. Under this scheme, 16^2 *
+(16^4 - 1) = 16776960 entries can be stored before older updates are
+overwritten.</p>
+<p>Updates to Properties can have one of the following protobuf types:
+<code class="docutils literal"><span class="pre">bytes</span></code>, <code class="docutils literal"><span class="pre">string</span></code>, <code class="docutils literal"><span class="pre">sint64</span></code>, <code class="docutils literal"><span class="pre">float</span></code>, or <code class="docutils literal"><span class="pre">Location</span></code> (see the
+section on <a class="reference internal" href="#recordtypes">RecordTypes</a> below). The type of an update is indicated by
+a tag belonging to the PropertySchema object.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">Property</span> <span class="p">{</span>
+    <span class="kd">message</span> <span class="nc">Reporter</span> <span class="p">{</span>
+        <span class="c1">// The public key of the Agent authorized to report updates.</span>
+        <span class="kt">string</span> <span class="na">public_key</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="c1">// A flag indicating whether the reporter is authorized to</span>
+        <span class="c1">// send updates. When a reporter is added, this is set to</span>
+        <span class="c1">// true, and a `RevokeReporter` transaction sets it to false.</span>
+        <span class="kt">bool</span> <span class="na">authorized</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+        <span class="c1">// An update must be stored with some way of identifying which</span>
+        <span class="c1">// Agent sent it. Storing a full public key for each update would</span>
+        <span class="c1">// be wasteful, so instead Reporters are identified by their index</span>
+        <span class="c1">// in the `reporters` field.</span>
+        <span class="kt">uint32</span> <span class="na">index</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// The name of the Property, e.g. &quot;temperature&quot;. This must be unique</span>
+    <span class="c1">// among Properties.</span>
+    <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// The natural key of the Property&#39;s associated Record.</span>
+    <span class="kt">string</span> <span class="na">record_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// The Property&#39;s type (int, string, etc.)</span>
+    <span class="n">PropertySchema.DataType</span> <span class="na">data_type</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+    <span class="c1">// The Reporters authorized to send updates, sorted by index. New</span>
+    <span class="c1">// Reporters should be given an index equal to the number of</span>
+    <span class="c1">// Reporters already authorized.</span>
+    <span class="k">repeated</span> <span class="n">Reporter</span> <span class="na">reporters</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+    <span class="c1">// The page to which new updates are added. This number represents</span>
+    <span class="c1">// the last 4 hex characters of the page&#39;s address. Consequently,</span>
+    <span class="c1">// it should not exceed 16^4 = 65536.</span>
+    <span class="kt">uint32</span> <span class="na">current_page</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+    <span class="c1">// A flag indicating whether the first 16^4 pages have been filled.</span>
+    <span class="c1">// This is used to calculate the last four hex characters of the</span>
+    <span class="c1">// address of the page containing the earliest updates. When it is</span>
+    <span class="c1">// false, the earliest page&#39;s address will end in &quot;0001&quot;. When it is</span>
+    <span class="c1">// true, the earliest page&#39;s address will be one more than the</span>
+    <span class="c1">// current_page, or &quot;0001&quot; if the current_page is &quot;ffff&quot;.</span>
+    <span class="kt">bool</span> <span class="na">wrapped</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">PropertyPage</span> <span class="p">{</span>
+    <span class="kd">message</span> <span class="nc">ReportedValue</span> <span class="p">{</span>
+        <span class="c1">// The index of the reporter id in reporters field</span>
+        <span class="kt">uint32</span> <span class="na">reporter_index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="c1">// Approximately when this value was reported, as a Unix UTC timestamp</span>
+        <span class="kt">uint64</span> <span class="na">timestamp</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+        <span class="c1">// The type-specific value of the update. Only one of these</span>
+        <span class="c1">// fields should be used, and it should match the type</span>
+        <span class="c1">// specified for this Property in the RecordType.</span>
+        <span class="kt">bytes</span> <span class="na">bytes_value</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+        <span class="kt">string</span> <span class="na">string_value</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+        <span class="kt">sint64</span> <span class="na">int_value</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
+        <span class="kt">float</span> <span class="na">float_value</span> <span class="o">=</span> <span class="mi">14</span><span class="p">;</span>
+        <span class="n">Location</span> <span class="na">location_value</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// The name of the page&#39;s associated Property and the record_id of</span>
+    <span class="c1">// its associated Record. These are required to distinguish pages</span>
+    <span class="c1">// with colliding addresses.</span>
+    <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">string</span> <span class="na">record_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// ReportedValues are sorted first by timestamp, then by reporter_index.</span>
+    <span class="k">repeated</span> <span class="n">ReportedValue</span> <span class="na">reported_values</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Properties and PropertyPages whose addresses collide are stored in
+lists alphabetized by Property name.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">PropertyContainer</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">Property</span> <span class="na">entries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">PropertyPageContainer</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">PropertyPage</span> <span class="na">entries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="record-types">
+<span id="recordtypes"></span><h3>Record Types<a class="headerlink" href="#record-types" title="Permalink to this headline">¶</a></h3>
+<p>In order to validate incoming tracking data, Records are assigned a
+RecordType at creation. A RecordType is a user-defined list of
+PropertySchemas, each of which has a name and data type.
+PropertySchemas may be designated as <code class="docutils literal"><span class="pre">required</span></code>. A required Property
+must be initialized with a value at the time of a Record&#8217;s creation.
+For example, a <code class="docutils literal"><span class="pre">Fish</span></code> type might list <code class="docutils literal"><span class="pre">species</span></code> as required, but
+not <code class="docutils literal"><span class="pre">temperature</span></code>, since temperature wouldn&#8217;t be known until
+measurements were taken. Properties not specified at Record creation
+are initialized as empty lists.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">PropertySchema</span> <span class="p">{</span>
+    <span class="kd">enum</span> <span class="n">DataType</span> <span class="p">{</span>
+        <span class="na">BYTES</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="na">STRING</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="na">INT</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="na">FLOAT</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="na">LOCATION</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// The name of the property, e.g. &quot;temperature&quot;</span>
+    <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// The Property&#39;s type (int, string, etc.)</span>
+    <span class="n">DataType</span> <span class="na">data_type</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// A flag indicating whether initial values must be provided for the</span>
+    <span class="c1">// Property when a Record is created.</span>
+    <span class="kt">bool</span> <span class="k">required</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kd">message</span> <span class="nc">RecordType</span> <span class="p">{</span>
+    <span class="c1">// A unique human-readable designation for the RecordType</span>
+    <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">repeated</span> <span class="n">PropertySchema</span> <span class="na">properties</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Each Record will have exactly the Properties listed in its type. New
+Records cannot be created without a type; consequently, a
+type-creation transaction must be executed before any Records can be
+created.</p>
+<p>RecordTypes whose addresses collide are stored in a list alphabetized
+by name.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">RecordTypeContainer</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">RecordType</span> <span class="na">entries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Because it is expected to be used for many RecordTypes, a dedicated
+Location protobuf message is used, the values of which are latitude
+and longitude.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">Location</span> <span class="p">{</span>
+      <span class="c1">// Coordinates are expected to be in millionths of a degree</span>
+      <span class="kt">sint64</span> <span class="na">latitude</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="kt">sint64</span> <span class="na">longitude</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="agents">
+<h3>Agents<a class="headerlink" href="#agents" title="Permalink to this headline">¶</a></h3>
+<p>Agents are entities that can send transactions affecting Records. This
+could include not only humans and companies that act as owners and
+custodians of objects being tracked, but also autonomous sensors
+sending transactions that update Records&#8217; data. All Agents must be
+created (registered on-chain) before interacting with Records.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">Agent</span> <span class="p">{</span>
+    <span class="c1">// The Agent&#39;s public key. This must be unique.</span>
+    <span class="kt">string</span> <span class="na">public_key</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// A human-readable name identifying the Agent.</span>
+    <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// Approximately when the Agent was registered, as a Unix UTC timestamp</span>
+    <span class="kt">uint64</span> <span class="na">timestamp</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Agents whose keys have the same hash are stored in a list alphabetized
+by public key.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">AgentContainer</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">Agent</span> <span class="na">entries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="proposals">
+<h3>Proposals<a class="headerlink" href="#proposals" title="Permalink to this headline">¶</a></h3>
+<p>A Proposal is an offer from the owner or custodian of a Record to
+authorize another Agent as an owner, custodian, or reporter for that
+Record. Proposals are tagged as being for transfer of ownership,
+transfer of custodianship, or authorization of a reporter for some
+Properties. Proposals are also tagged as being open, accepted,
+rejected, or canceled. There cannot be more than one open Proposal for
+a specified role for each combination of Record, receiving Agent, and
+issuing Agent.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">Proposal</span> <span class="p">{</span>
+    <span class="kd">enum</span> <span class="n">Role</span> <span class="p">{</span>
+        <span class="na">OWNER</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="na">CUSTODIAN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="na">REPORTER</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">enum</span> <span class="n">Status</span> <span class="p">{</span>
+        <span class="na">OPEN</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="na">ACCEPTED</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="na">REJECTED</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="na">CANCELED</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// The id of the Record with which this Proposal deals</span>
+    <span class="kt">string</span> <span class="na">record_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// Approximately when this proposal was created, as a Unix UTC timestamp</span>
+    <span class="kt">uint64</span> <span class="na">timestamp</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// The public key of the Agent that created the Proposal</span>
+    <span class="kt">string</span> <span class="na">issuing_agent</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+    <span class="c1">// The public key of the Agent to which the Proposal is addressed</span>
+    <span class="kt">string</span> <span class="na">receiving_agent</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+    <span class="c1">// Whether the Proposal is for transfer of ownership or</span>
+    <span class="c1">// custodianship or reporter authorization</span>
+    <span class="n">Role</span> <span class="na">role</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+    <span class="c1">// The names of properties for which the reporter is being authorized</span>
+    <span class="c1">// (empty for owner or custodian transfers)</span>
+    <span class="k">repeated</span> <span class="kt">string</span> <span class="na">properties</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+
+    <span class="c1">// Whether the Proposal is open, accepted, rejected, or canceled.</span>
+    <span class="c1">// For a given Record and receiving Agent, there can be only one</span>
+    <span class="c1">// open Proposal at a time for each role.</span>
+    <span class="n">Status</span> <span class="na">status</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+
+    <span class="c1">// human-readable terms of transfer</span>
+    <span class="kt">string</span> <span class="na">terms</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Proposals with the same address are stored in a list sorted
+alphabetically first by <code class="docutils literal"><span class="pre">record_id</span></code>, then by <code class="docutils literal"><span class="pre">receiving_agent</span></code>,
+then by <code class="docutils literal"><span class="pre">timestamp</span></code> (earliest to v0.8.11).</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">ProposalContainer</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">Proposal</span> <span class="na">entries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="addressing">
+<span id="id2"></span><h3>Addressing<a class="headerlink" href="#addressing" title="Permalink to this headline">¶</a></h3>
+<p>T&amp;T objects are stored under the namespace obtained by taking the
+first six characters of the SHA-512 hash of the string
+<code class="docutils literal"><span class="pre">track_and_trade</span></code>:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">get_hash</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_hash</span><span class="p">(</span><span class="s1">&#39;track_and_trade&#39;</span><span class="p">)[:</span><span class="mi">6</span><span class="p">]</span>
+<span class="go">&#39;1c1108&#39;</span>
+</pre></div>
+</div>
+<p>After its namespace prefix, the next two characters of a T&amp;T object&#8217;s
+address are a string based on the object&#8217;s type:</p>
+<ul class="simple">
+<li>Agent: <code class="docutils literal"><span class="pre">ae</span></code></li>
+<li>Property / PropertyPage: <code class="docutils literal"><span class="pre">ea</span></code></li>
+<li>Proposal: <code class="docutils literal"><span class="pre">aa</span></code></li>
+<li>Record: <code class="docutils literal"><span class="pre">ec</span></code></li>
+<li>Record Type: <code class="docutils literal"><span class="pre">ee</span></code></li>
+</ul>
+<p>The remaining 62 characters of an object&#8217;s address are determined by
+its type:</p>
+<ul class="simple">
+<li>Agent: the first 62 characters of the hash of its public key.</li>
+<li>Property: the concatenation of the following:<ul>
+<li>The first 36 characters of the hash of the identifier of its
+associated Record plus the first 22 characters of the hash of its
+Property name.</li>
+<li>The string <code class="docutils literal"><span class="pre">0000</span></code>.</li>
+</ul>
+</li>
+<li>PropertyPage: the address of the page to which updates are to be
+written is the concatenation of the following:<ul>
+<li>The first 36 characters of the hash of the identifier of its
+associated Record.</li>
+<li>The first 22 characters of the hash of its Property name.</li>
+<li>The hex representation of the <code class="docutils literal"><span class="pre">current_page</span></code> of its associated
+Property left-padded to length 4 with 0s.</li>
+</ul>
+</li>
+<li>Proposal: the concatenation of the following:<ul>
+<li>The first 36 characters of the hash of the identifier of
+its associated Record.</li>
+<li>The first 22 characters of its <code class="docutils literal"><span class="pre">receiving_agent</span></code>.</li>
+<li>The first 4 characters of the hash of its <code class="docutils literal"><span class="pre">timestamp</span></code>.</li>
+</ul>
+</li>
+<li>Record: the first 62 characters of the hash of its identifier.</li>
+<li>Record Type: the first 62 characters of the hash of the name of the
+type.</li>
+</ul>
+<p>For example, if <code class="docutils literal"><span class="pre">fish-456</span></code> is a Record with a <code class="docutils literal"><span class="pre">temperature</span></code>
+Property and a <code class="docutils literal"><span class="pre">current_page</span></code> of 28, the address for that
+PropertyPage is:</p>
+<div class="highlight-pycon"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_hash</span><span class="p">(</span><span class="s1">&#39;track_and_trade&#39;</span><span class="p">)[:</span><span class="mi">6</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;ea&#39;</span>  <span class="o">+</span> <span class="n">get_hash</span><span class="p">(</span><span class="s1">&#39;fish-456&#39;</span><span class="p">)[:</span><span class="mi">36</span><span class="p">]</span> <span class="o">+</span> <span class="n">get_hash</span><span class="p">(</span><span class="s1">&#39;temperature&#39;</span><span class="p">)[:</span><span class="mi">22</span><span class="p">]</span> <span class="o">+</span> <span class="nb">hex</span><span class="p">(</span><span class="mi">28</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="go">&#39;1c1108ea840d00edc7507ed05cfb86938e3624ada6c7f08bfeb8fd09b963f81f9d001c&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="transactions">
+<h2>Transactions<a class="headerlink" href="#transactions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="transaction-payload">
+<h3>Transaction Payload<a class="headerlink" href="#transaction-payload" title="Permalink to this headline">¶</a></h3>
+<p>All T&amp;T transactions are wrapped in a tagged payload object to allow
+for the transaction to be dispatched to appropriate handling logic.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">TTPayload</span> <span class="p">{</span>
+    <span class="kd">enum</span> <span class="n">Action</span> <span class="p">{</span>
+        <span class="na">CREATE_AGENT</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="na">CREATE_RECORD</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="na">FINALIZE_RECORD</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="na">CREATE_RECORD_TYPE</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+        <span class="na">UPDATE_PROPERTIES</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+        <span class="na">CREATE_PROPOSAL</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+        <span class="na">ANSWER_PROPOSAL</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+        <span class="na">REVOKE_REPORTER</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">Action</span> <span class="na">action</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// Approximately when transaction was submitted, as a Unix UTC timestamp</span>
+    <span class="kt">uint64</span> <span class="na">timestamp</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="n">CreateAgentAction</span> <span class="na">create_agent</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="n">CreateRecordAction</span> <span class="na">create_record</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="n">FinalizeRecordAction</span> <span class="na">finalize_record</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="n">CreateRecordTypeAction</span> <span class="na">create_record_type</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+    <span class="n">UpdatePropertiesAction</span> <span class="na">update_properties</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+    <span class="n">CreateProposalAction</span> <span class="na">create_proposal</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+    <span class="n">AnswerProposalAction</span> <span class="na">answer_proposal</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+    <span class="n">RevokeReporterAction</span> <span class="na">revoke_reporter</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Any transaction is invalid if its timestamp is greater than the
+validator&#8217;s system time.</p>
+</div>
+<div class="section" id="create-agent">
+<h3>Create Agent<a class="headerlink" href="#create-agent" title="Permalink to this headline">¶</a></h3>
+<p>Create an Agent that can interact with Records. The <code class="docutils literal"><span class="pre">signer_pubkey</span></code>
+in the transaction header is used as the Agent&#8217;s public key.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">CreateAgentAction</span> <span class="p">{</span>
+   <span class="c1">// The human-readable name of the Agent, not necessarily unique</span>
+   <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A CreateAgent transaction is invalid if there is already an Agent with
+the signer&#8217;s public key or if the name is the empty string.</p>
+</div>
+<div class="section" id="create-record">
+<span id="createrecord"></span><h3>Create Record<a class="headerlink" href="#create-record" title="Permalink to this headline">¶</a></h3>
+<p>When an Agent creates a Record, the Record is initialized with that
+Agent as both owner and custodian. Any Properties required of the
+Record by its RecordType must have initial values provided.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">PropertyValue</span> <span class="p">{</span>
+    <span class="c1">// The name of the property being set</span>
+    <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">PropertySchema.DataType</span> <span class="na">data_type</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// The type-specific value to initialize or update a Property. Only</span>
+    <span class="c1">// one of these fields should be used, and it should match the type</span>
+    <span class="c1">// specified for this Property in the RecordType.</span>
+    <span class="kt">bytes</span> <span class="na">bytes_value</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+    <span class="kt">string</span> <span class="na">string_value</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+    <span class="kt">sint64</span> <span class="na">int_value</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="na">float_value</span> <span class="o">=</span> <span class="mi">14</span><span class="p">;</span>
+    <span class="n">Location</span> <span class="na">location_value</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">CreateRecordAction</span> <span class="p">{</span>
+    <span class="c1">// The natural key of the Record</span>
+    <span class="kt">string</span> <span class="na">record_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// The name of the RecordType this Record belongs to</span>
+    <span class="kt">string</span> <span class="na">record_type</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="k">repeated</span> <span class="n">PropertyValue</span> <span class="na">properties</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A CreateRecord transaction is invalid if one of the following
+conditions occurs:</p>
+<ul class="simple">
+<li>The signer is not registered as an Agent.</li>
+<li>The identifier is the empty string.</li>
+<li>The identifier belongs to an existing Record.</li>
+<li>A valid RecordType is not specified.</li>
+<li>Initial values are not provided for all of the Properties specified
+as required by the RecordType.</li>
+<li>Initial values of the wrong type are provided.</li>
+</ul>
+</div>
+<div class="section" id="finalize-record">
+<h3>Finalize Record<a class="headerlink" href="#finalize-record" title="Permalink to this headline">¶</a></h3>
+<p>A FinalizeRecord Transaction sets a Record’s <code class="docutils literal"><span class="pre">final</span></code> flag to true. A
+finalized Record and its Properties cannot be updated. A Record cannot
+be finalized except by its owner, and cannot be finalized if the owner
+and custodian are not the same.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">FinalizeRecordAction</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">record_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A FinalizeRecord transaction is invalid if one of the following
+conditions occurs:</p>
+<ul class="simple">
+<li>The Record it targets does not exist.</li>
+<li>The Record it targets is already final.</li>
+<li>The signer is not both the Record&#8217;s owner and custodian.</li>
+</ul>
+</div>
+<div class="section" id="create-record-type">
+<h3>Create Record Type<a class="headerlink" href="#create-record-type" title="Permalink to this headline">¶</a></h3>
+<p>The payload of the Transaction that creates RecordTypes is the same as
+the RecordType object itself: it has a name and a list of Properties.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">CreateRecordTypeAction</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">repeated</span> <span class="n">PropertySchema</span> <span class="na">properties</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A CreateRecordType transaction is invalid if one of the following
+conditions occurs:</p>
+<ul class="simple">
+<li>The signer is not registered as an Agent.</li>
+<li>Its list of Properties is empty.</li>
+<li>The name of the RecordType is the empty string.</li>
+<li>A RecordType with its name already exists.</li>
+</ul>
+</div>
+<div class="section" id="update-properties">
+<h3>Update Properties<a class="headerlink" href="#update-properties" title="Permalink to this headline">¶</a></h3>
+<p>An UpdateProperties transaction contains a <code class="docutils literal"><span class="pre">record_id</span></code> and a list of
+PropertyValues (see <a class="reference internal" href="#createrecord">CreateRecord</a> above). It can only be (validly)
+sent by an Agent authorized to report on the Property.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">UpdatePropertiesAction</span> <span class="p">{</span>
+    <span class="c1">// The natural key of the Record</span>
+    <span class="kt">string</span> <span class="na">record_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">repeated</span> <span class="n">PropertyValue</span> <span class="na">properties</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>An UpdateProperties transaction is invalid if one of the following
+conditions occurs:</p>
+<ul class="simple">
+<li>The Record does not exist.</li>
+<li>The Record is final.</li>
+<li>Its signer is not authorized to report on that Record.</li>
+<li>None of the provided PropertyValues match the types specified in the
+Record&#8217;s RecordType.</li>
+</ul>
+</div>
+<div class="section" id="create-proposal">
+<h3>Create Proposal<a class="headerlink" href="#create-proposal" title="Permalink to this headline">¶</a></h3>
+<p>A CreateProposal transaction creates an open Proposal concerning some
+Record from the signer to the receiving Agent. This Proposal can be
+for transfer of ownership, transfer of custodianship, or authorization
+to report. If it is a reporter authorization Proposal, a nonempty list
+of Property names must be included.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">CreateProposalPayload</span> <span class="p">{</span>
+    <span class="kd">enum</span> <span class="n">Role</span> <span class="p">{</span>
+        <span class="na">OWNER</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="na">CUSTODIAN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="na">REPORTER</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">string</span> <span class="na">record_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// The public key of the Agent to whom the Proposal is sent</span>
+    <span class="c1">// (must be different from the Agent sending the Proposal).</span>
+    <span class="kt">string</span> <span class="na">receiving_agent</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+    <span class="k">repeated</span> <span class="kt">string</span> <span class="na">properties</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+    <span class="n">Role</span> <span class="na">role</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A CreateProposal transaction is invalid if one of the following
+conditions occurs:</p>
+<ul class="simple">
+<li>The signer is not the owner and the Proposal is for transfer of
+ownership or reporter authorization.</li>
+<li>The signer is not the custodian and the Proposal is for transfer of
+custodianship.</li>
+<li>The receiving Agent is not registered (the signer must be registered
+as well, but this is implied by the previous two conditions).</li>
+<li>There is already an open Proposal for the Record and receiving Agent
+for the specified role.</li>
+<li>The Record is final.</li>
+<li>The Proposal is for reporter authorization and the list of Property
+names is empty.</li>
+</ul>
+</div>
+<div class="section" id="answer-proposal">
+<h3>Answer Proposal<a class="headerlink" href="#answer-proposal" title="Permalink to this headline">¶</a></h3>
+<p>An Agent who is the receiving Agent for a Proposal for some Record can
+accept or reject that Proposal, marking the Proposal&#8217;s status as
+<code class="docutils literal"><span class="pre">accepted</span></code> or <code class="docutils literal"><span class="pre">rejected</span></code>. The Proposal&#8217;s <code class="docutils literal"><span class="pre">issuing_agent</span></code> cannot
+accept or reject it, but can cancel it. This will mark the Proposal&#8217;s
+status as <code class="docutils literal"><span class="pre">canceled</span></code> rather than <code class="docutils literal"><span class="pre">rejected</span></code>.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">AnswerProposalPayload</span> <span class="p">{</span>
+    <span class="kd">enum</span> <span class="n">Role</span> <span class="p">{</span>
+        <span class="na">OWNER</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="na">CUSTODIAN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="na">REPORTER</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">enum</span> <span class="n">Response</span> <span class="p">{</span>
+        <span class="na">ACCEPT</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="na">REJECT</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="na">CANCEL</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">string</span> <span class="na">record_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">string</span> <span class="na">receiving_agent</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">Role</span> <span class="na">role</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="n">Response</span> <span class="na">response</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Proposals can conflict, in the sense that a Record&#8217;s owner might have
+opened ownership transfer Proposals with several Agents at once. These
+Proposals will not be closed if one of them is accepted. Instead, an
+<code class="docutils literal"><span class="pre">accept</span></code> answer will check to verify that the issuing Agent is still
+the owner or custodian of the Record.</p>
+<p>An AnswerProposal transaction is invalid if one of the following
+conditions occurs:</p>
+<ul class="simple">
+<li>There is no Proposal for that receiving agent, record, and role.</li>
+<li>The signer is not the receiving or issuing Agent of the Proposal.</li>
+<li>The signer is the receiving Agent and answers <code class="docutils literal"><span class="pre">cancel</span></code>.</li>
+<li>The signer is the issuing Agent and answers anything other than
+<code class="docutils literal"><span class="pre">cancel</span></code>.</li>
+<li>The response is <code class="docutils literal"><span class="pre">accept</span></code>, but the issuing Agent is no longer the
+owner or custodian (as appropriate to the role) of the Record.</li>
+</ul>
+</div>
+<div class="section" id="revoke-reporter">
+<h3>Revoke Reporter<a class="headerlink" href="#revoke-reporter" title="Permalink to this headline">¶</a></h3>
+<p>The owner of a Record can send a RevokeReporter transaction to remove
+a reporter&#8217;s authorization to report on one or more Properties for
+that Record. This creates a Proposal which is immediately closed and
+marked as accepted.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">RevokeReporterPayload</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">record_id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">string</span> <span class="na">reporter_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// the Properties for which the reporter&#39;s authorization is revoked</span>
+    <span class="k">repeated</span> <span class="kt">string</span> <span class="na">properties</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A RevokeReporter transaction is invalid if one of the following
+conditions occurs:</p>
+<ul class="simple">
+<li>The Record does not exist.</li>
+<li>The Record is final.</li>
+<li>The signer is not the Record&#8217;s owner.</li>
+<li>The reporter whose authorization is to be revoked is not an
+authorized reporter for the Record.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="smallbank_transaction_family.html" class="btn btn-neutral" title="Smallbank Transaction Family Specification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.11',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

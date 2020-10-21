@@ -1,0 +1,993 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.cli.stats_lib.print_views &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>sawtooth.cli.stats_lib.print_views</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sawtooth.cli.stats_lib.print_views</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<div class="viewcode-block" id="SummaryView"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.print_views.html#sawtooth.cli.stats_lib.print_views.SummaryView">[docs]</a><span class="k">class</span> <span class="nc">SummaryView</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">console_print</span><span class="p">,</span> <span class="n">print_manager</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span> <span class="o">=</span> <span class="n">console_print</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span> <span class="o">=</span> <span class="n">print_manager</span><span class="o">.</span><span class="n">system_stats</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform_stats</span> <span class="o">=</span> <span class="n">print_manager</span><span class="o">.</span><span class="n">platform_stats</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topology_stats</span> <span class="o">=</span> <span class="n">print_manager</span><span class="o">.</span><span class="n">topology_stats</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span> <span class="o">=</span> <span class="n">print_manager</span><span class="o">.</span><span class="n">branch_manager</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_view_mode</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="SummaryView.print_summary"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.print_views.html#sawtooth.cli.stats_lib.print_views.SummaryView.print_summary">[docs]</a>    <span class="k">def</span> <span class="nf">print_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view_mode</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_view_mode</span> <span class="o">=</span> <span class="n">view_mode</span>
+        <span class="n">validator_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{1:9d}</span><span class="s1"> </span><span class="si">{2:16.16}</span><span class="s1"> </span><span class="si">{3:9d}</span><span class="s1"> </span><span class="si">{4:16.16}</span><span class="s1"> </span><span class="si">{5:9.3f}</span><span class="s1"> </span><span class="si">{6:16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:9.3f}</span><span class="s1"> </span><span class="si">{8:16.16}</span><span class="s1"> </span><span class="si">{9:9d}</span><span class="s1"> </span><span class="si">{10:19.19}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="n">validator_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s2">&quot;Validators:&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_client</span><span class="o">.</span><span class="n">known_validators</span><span class="p">,</span> <span class="s2">&quot;known&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_client</span><span class="o">.</span><span class="n">active_validators</span><span class="p">,</span> <span class="s2">&quot;responding&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_client</span><span class="o">.</span><span class="n">avg_client_time</span><span class="p">,</span> <span class="s2">&quot;avg time(s)&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_client</span><span class="o">.</span><span class="n">max_client_time</span><span class="p">,</span> <span class="s2">&quot;max time(s)&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_client</span><span class="o">.</span><span class="n">runtime</span><span class="p">,</span> <span class="s2">&quot;run time(s)&quot;</span><span class="p">))</span>
+
+        <span class="n">blocks_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{1:9d}</span><span class="s1"> </span><span class="si">{2:16.16}</span><span class="s1"> </span><span class="si">{3:9d}</span><span class="s1"> </span><span class="si">{4:16.16}</span><span class="s1"> </span><span class="si">{5:9d}</span><span class="s1"> </span><span class="si">{6:16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:9d}</span><span class="s1"> </span><span class="si">{8:16.16}</span><span class="s1"> </span><span class="si">{9:9d}</span><span class="s1"> </span><span class="si">{10:19.19}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="n">blocks_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s2">&quot;Blocks:&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_blocks</span><span class="o">.</span><span class="n">blocks_max_committed</span><span class="p">,</span> <span class="s2">&quot;max committed&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_blocks</span><span class="o">.</span><span class="n">blocks_min_committed</span><span class="p">,</span> <span class="s2">&quot;min committed&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_blocks</span><span class="o">.</span><span class="n">blocks_max_pending</span><span class="p">,</span> <span class="s2">&quot;max pending&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_blocks</span><span class="o">.</span><span class="n">blocks_min_pending</span><span class="p">,</span> <span class="s2">&quot;min pending&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_blocks</span><span class="o">.</span><span class="n">blocks_max_claimed</span><span class="p">,</span> <span class="s2">&quot;max claimed&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_blocks</span><span class="o">.</span><span class="n">blocks_min_claimed</span><span class="p">,</span> <span class="s2">&quot;min claimed&quot;</span><span class="p">))</span>
+
+        <span class="n">txns_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{1:9d}</span><span class="s1"> </span><span class="si">{2:16.16}</span><span class="s1"> </span><span class="si">{3:9d}</span><span class="s1"> </span><span class="si">{4:16.16}</span><span class="s1"> </span><span class="si">{5:9d}</span><span class="s1"> </span><span class="si">{6:16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:9d}</span><span class="s1"> </span><span class="si">{8:16.16}</span><span class="s1"> </span><span class="si">{9:9d}</span><span class="s1"> </span><span class="si">{10:19.19}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="n">txns_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s2">&quot;Transactions:&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_txns</span><span class="o">.</span><span class="n">txns_max_committed</span><span class="p">,</span> <span class="s2">&quot;max committed&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_txns</span><span class="o">.</span><span class="n">txns_min_committed</span><span class="p">,</span> <span class="s2">&quot;min committed&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_txns</span><span class="o">.</span><span class="n">txns_max_pending</span><span class="p">,</span> <span class="s2">&quot;max pending&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_txns</span><span class="o">.</span><span class="n">txns_min_pending</span><span class="p">,</span> <span class="s2">&quot;min pending&quot;</span><span class="p">,</span>
+            <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;rate (t/s)&quot;</span><span class="p">))</span>
+
+        <span class="n">pkt_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{1:9d}</span><span class="s1"> </span><span class="si">{2:16.16}</span><span class="s1"> </span><span class="si">{3:9d}</span><span class="s1"> </span><span class="si">{4:16.16}</span><span class="s1"> </span><span class="si">{5:9d}</span><span class="s1"> </span><span class="si">{6:16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:9d}</span><span class="s1"> </span><span class="si">{8:16.16}</span><span class="s1"> </span><span class="si">{9:9d}</span><span class="s1"> </span><span class="si">{10:19.19}</span><span class="s1"> </span><span class="si">{11:9d}</span><span class="s1"> </span><span class="si">{12:17.17}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="n">pkt_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s2">&quot;Packet totals:&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_packets</span><span class="o">.</span><span class="n">packets_max_dropped</span><span class="p">,</span> <span class="s2">&quot;max dropped&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_packets</span><span class="o">.</span><span class="n">packets_min_dropped</span><span class="p">,</span> <span class="s2">&quot;min dropped&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_packets</span><span class="o">.</span><span class="n">packets_max_duplicates</span><span class="p">,</span>
+            <span class="s2">&quot;max duplicated&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_packets</span><span class="o">.</span><span class="n">packets_min_duplicates</span><span class="p">,</span>
+            <span class="s2">&quot;min duplicated&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_packets</span><span class="o">.</span><span class="n">packets_max_acks_received</span><span class="p">,</span>
+            <span class="s2">&quot;max acks rcvd&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_packets</span><span class="o">.</span><span class="n">packets_min_acks_received</span><span class="p">,</span>
+            <span class="s2">&quot;min acks rcvd&quot;</span><span class="p">))</span>
+
+        <span class="n">msg_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{1:9d}</span><span class="s1"> </span><span class="si">{2:16.16}</span><span class="s1"> </span><span class="si">{3:9d}</span><span class="s1"> </span><span class="si">{4:16.16}</span><span class="s1"> </span><span class="si">{5:9d}</span><span class="s1"> </span><span class="si">{6:16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:9d}</span><span class="s1"> </span><span class="si">{8:16.16}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="n">msg_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s2">&quot;Message totals:&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_msgs</span><span class="o">.</span><span class="n">msgs_max_handled</span><span class="p">,</span> <span class="s2">&quot;max handled&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_msgs</span><span class="o">.</span><span class="n">msgs_min_handled</span><span class="p">,</span> <span class="s2">&quot;min handled&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_msgs</span><span class="o">.</span><span class="n">msgs_max_acked</span><span class="p">,</span> <span class="s2">&quot;max acked&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_msgs</span><span class="o">.</span><span class="n">msgs_min_acked</span><span class="p">,</span> <span class="s2">&quot;min acked&quot;</span><span class="p">))</span>
+
+        <span class="n">platform_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{1:9.2f}</span><span class="s1"> </span><span class="si">{2:16.16}</span><span class="s1"> </span><span class="si">{3:9.2f}</span><span class="s1"> </span><span class="si">{4:16.16}</span><span class="s1"> </span><span class="si">{5:9d}</span><span class="s1"> </span><span class="si">{6:16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:9d}</span><span class="s1"> </span><span class="si">{8:16.16}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="n">platform_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s2">&quot;Platform:&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">platform_stats</span><span class="o">.</span><span class="n">platform_stats</span><span class="o">.</span><span class="n">cpu_stats</span><span class="o">.</span><span class="n">percent</span><span class="p">,</span>
+            <span class="s2">&quot;cpu pct&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">platform_stats</span><span class="o">.</span><span class="n">platform_stats</span><span class="o">.</span><span class="n">vmem_stats</span><span class="o">.</span><span class="n">percent</span><span class="p">,</span>
+            <span class="s2">&quot;vmem pct&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">platform_stats</span><span class="o">.</span><span class="n">platform_interval_stats</span><span class="o">.</span><span class="n">intv_net_bytes_sent</span><span class="p">,</span>
+            <span class="s2">&quot;ntwrk bytes tx&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">platform_stats</span><span class="o">.</span><span class="n">platform_interval_stats</span><span class="o">.</span><span class="n">intv_net_bytes_recv</span><span class="p">,</span>
+            <span class="s2">&quot;ntwrk bytes rx&quot;</span><span class="p">))</span>
+
+        <span class="n">topo_1_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{1:9d}</span><span class="s1"> </span><span class="si">{2:16.16}</span><span class="s1"> </span><span class="si">{3:9d}</span><span class="s1"> </span><span class="si">{4:16.16}</span><span class="s1"> </span><span class="si">{5:9d}</span><span class="s1"> </span><span class="si">{6:16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:9d}</span><span class="s1"> </span><span class="si">{8:16.16}</span><span class="s1"> </span><span class="si">{9:9.2f}</span><span class="s1"> </span><span class="si">{10:19.19}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="n">topo_1_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s2">&quot;Topology:&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topology_stats</span><span class="o">.</span><span class="n">connected_component_count</span><span class="p">,</span> <span class="s2">&quot;components&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topology_stats</span><span class="o">.</span><span class="n">node_count</span><span class="p">,</span> <span class="s2">&quot;nodes&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topology_stats</span><span class="o">.</span><span class="n">edge_count</span><span class="p">,</span> <span class="s2">&quot;edges&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topology_stats</span><span class="o">.</span><span class="n">maximum_degree</span><span class="p">,</span> <span class="s2">&quot;max peers&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topology_stats</span><span class="o">.</span><span class="n">minimum_degree</span><span class="p">,</span> <span class="s2">&quot;min peers&quot;</span><span class="p">))</span>
+
+        <span class="n">topo_2_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{1:9.2f}</span><span class="s1"> </span><span class="si">{2:16.16}</span><span class="s1"> </span><span class="si">{3:9d}</span><span class="s1"> </span><span class="si">{4:16.16}</span><span class="s1"> </span><span class="si">{5:9d}</span><span class="s1"> </span><span class="si">{6:16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:9.2f}</span><span class="s1"> </span><span class="si">{8:16.16}</span><span class="s1"> </span><span class="si">{9:9.2f}</span><span class="s1"> </span><span class="si">{10:19.19}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="n">topo_2_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s2">&quot;Topology:&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topology_stats</span><span class="o">.</span><span class="n">average_shortest_path_length</span><span class="p">,</span>
+            <span class="s2">&quot;avg shortest pth&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topology_stats</span><span class="o">.</span><span class="n">maximum_shortest_path_length</span><span class="p">,</span>
+            <span class="s2">&quot;max shortest pth&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topology_stats</span><span class="o">.</span><span class="n">minimum_connectivity</span><span class="p">,</span>
+            <span class="s2">&quot;min connectivity&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topology_stats</span><span class="o">.</span><span class="n">maximum_degree_centrality</span><span class="p">,</span>
+            <span class="s2">&quot;max degree cent&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">topology_stats</span><span class="o">.</span><span class="n">maximum_between_centrality</span><span class="p">,</span>
+            <span class="s2">&quot;max between cent&quot;</span><span class="p">))</span>
+
+        <span class="n">branch_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{1:9d}</span><span class="s1"> </span><span class="si">{2:16.16}</span><span class="s1"> </span><span class="si">{3:9d}</span><span class="s1"> </span><span class="si">{4:16.16}</span><span class="s1"> </span><span class="si">{5:9d}</span><span class="s1"> </span><span class="si">{6:16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:9d}</span><span class="s1"> </span><span class="si">{8:16.16}</span><span class="s1"> </span><span class="si">{9:9d}</span><span class="s1"> </span><span class="si">{10:19.19}</span><span class="s1"> </span><span class="si">{11:9d}</span><span class="s1"> </span><span class="si">{12:17.17}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="n">branch_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s2">&quot;Branch:&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">bm_stats</span><span class="o">.</span><span class="n">identified</span><span class="p">,</span> <span class="s2">&quot;identified&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">bm_stats</span><span class="o">.</span><span class="n">active</span><span class="p">,</span> <span class="s2">&quot;active&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">bm_stats</span><span class="o">.</span><span class="n">longest</span><span class="p">,</span> <span class="s2">&quot;longest&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">bm_stats</span><span class="o">.</span><span class="n">longest_active</span><span class="p">,</span> <span class="s2">&quot;longest active&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">bm_stats</span><span class="o">.</span><span class="n">next_longest_active</span><span class="p">,</span>
+            <span class="s2">&quot;next longest active&quot;</span><span class="p">,</span>
+            <span class="c1"># self.bm.bm_stats.validators, &quot;validator count&quot;))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">bm_stats</span><span class="o">.</span><span class="n">blocks_processed</span><span class="p">,</span> <span class="s2">&quot;blocks processed&quot;</span><span class="p">))</span>
+
+        <span class="n">fork_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{1:9}</span><span class="s1"> </span><span class="si">{2:16.16}</span><span class="s1"> </span><span class="si">{3:9d}</span><span class="s1"> </span><span class="si">{4:16.16}</span><span class="s1"> </span><span class="si">{5:9d}</span><span class="s1"> </span><span class="si">{6:16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:9d}</span><span class="s1"> </span><span class="si">{8:16.16}</span><span class="s1"> </span><span class="si">{9:9d}</span><span class="s1"> </span><span class="si">{10:19.19}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="n">fork_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s2">&quot;Fork:&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">f_stats</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">f_stats</span><span class="o">.</span><span class="n">fork_count</span><span class="p">,</span> <span class="s2">&quot;fork count&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">f_stats</span><span class="o">.</span><span class="n">parent_count</span><span class="p">,</span> <span class="s2">&quot;parent forks&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">f_stats</span><span class="o">.</span><span class="n">child_count</span><span class="p">,</span> <span class="s2">&quot;child forks&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">branch_manager</span><span class="o">.</span><span class="n">f_stats</span><span class="o">.</span><span class="n">longest_child_fork_length</span><span class="p">,</span>
+            <span class="s2">&quot;longest child fork&quot;</span><span class="p">))</span>
+
+        <span class="n">poet_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{1:9.2f}</span><span class="s1"> </span><span class="si">{2:16.16}</span><span class="s1"> </span><span class="si">{3:9.2f}</span><span class="s1"> </span><span class="si">{4:16.16}</span><span class="s1"> </span><span class="si">{5:9.2f}</span><span class="s1"> </span><span class="si">{6:16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:&gt;26.16}</span><span class="s1"> </span><span class="si">{8:22.22}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="n">poet_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s2">&quot;Poet:&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">poet_stats</span><span class="o">.</span><span class="n">avg_local_mean</span><span class="p">,</span> <span class="s2">&quot;avg local mean&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">poet_stats</span><span class="o">.</span><span class="n">max_local_mean</span><span class="p">,</span> <span class="s2">&quot;max local mean&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">poet_stats</span><span class="o">.</span><span class="n">min_local_mean</span><span class="p">,</span> <span class="s2">&quot;min local mean&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">poet_stats</span><span class="o">.</span><span class="n">last_unique_blockID</span><span class="p">,</span>
+            <span class="s2">&quot;last unique block ID&quot;</span><span class="p">))</span>
+
+        <span class="n">view_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{1:&gt;9}</span><span class="s1"> </span><span class="si">{2:16.16}</span><span class="s1"> </span><span class="si">{3:&gt;9}</span><span class="s1"> </span><span class="si">{4:16.16}</span><span class="s1"> </span><span class="si">{5:&gt;9}</span><span class="s1"> </span><span class="si">{6:16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:&gt;9}</span><span class="s1"> </span><span class="si">{8:16.16}</span><span class="s1"> </span><span class="si">{9:&gt;9}</span><span class="s1"> </span><span class="si">{10:19.19}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="n">view_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s2">&quot;View:&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;(g)&quot;</span><span class="p">,</span> <span class="s2">&quot;general&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;(t)&quot;</span><span class="p">,</span> <span class="s2">&quot;transaction&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;(k)&quot;</span><span class="p">,</span> <span class="s2">&quot;packet&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;(c)&quot;</span><span class="p">,</span> <span class="s2">&quot;consensus&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;(o)&quot;</span><span class="p">,</span> <span class="s2">&quot;topology&quot;</span><span class="p">))</span>
+
+        <span class="n">view_formatter_2</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{1:&gt;9}</span><span class="s1"> </span><span class="si">{2:16.16}</span><span class="s1"> </span><span class="si">{3:&gt;9}</span><span class="s1"> </span><span class="si">{4:16.16}</span><span class="s1"> </span><span class="si">{5:&gt;9}</span><span class="s1"> </span><span class="si">{6:16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:&gt;9}</span><span class="s1"> </span><span class="si">{8:16.16}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="n">view_formatter_2</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s2">&quot;(</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_view_mode</span><span class="p">),</span>
+            <span class="s2">&quot;(p)&quot;</span><span class="p">,</span> <span class="s2">&quot;platform&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;(n)&quot;</span><span class="p">,</span> <span class="s2">&quot;network&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;(b)&quot;</span><span class="p">,</span> <span class="s2">&quot;branch&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;(f)&quot;</span><span class="p">,</span> <span class="s2">&quot;fork&quot;</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="ValidatorBaseView"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.print_views.html#sawtooth.cli.stats_lib.print_views.ValidatorBaseView">[docs]</a><span class="k">class</span> <span class="nc">ValidatorBaseView</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">console_print</span><span class="p">,</span> <span class="n">clients</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span> <span class="o">=</span> <span class="n">console_print</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clients</span> <span class="o">=</span> <span class="n">clients</span>
+
+<div class="viewcode-block" id="ValidatorBaseView.print_view"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.print_views.html#sawtooth.cli.stats_lib.print_views.ValidatorBaseView.print_view">[docs]</a>    <span class="k">def</span> <span class="nf">print_view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_print_headers</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">client</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_print_body</span><span class="p">(</span><span class="n">client</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_print_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_print_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">validator_stats</span><span class="o">.</span><span class="n">val_stats</span>
+        <span class="n">stats_ex</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">validator_stats</span><span class="o">.</span><span class="n">val_stats_ex</span>
+        <span class="k">if</span> <span class="n">client</span><span class="o">.</span><span class="n">responding</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_responding</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">stats_ex</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_not_responding</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_responding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">stats_ex</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_not_responding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="GeneralView"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.print_views.html#sawtooth.cli.stats_lib.print_views.GeneralView">[docs]</a><span class="k">class</span> <span class="nc">GeneralView</span><span class="p">(</span><span class="n">ValidatorBaseView</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">console_print</span><span class="p">,</span> <span class="n">clients</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GeneralView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">console_print</span><span class="p">,</span> <span class="n">clients</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;5}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:&gt;8}</span><span class="s1"> </span><span class="si">{3:&gt;7}</span><span class="s1"> </span><span class="si">{4:&gt;9}</span><span class="s1"> </span><span class="si">{5:&gt;7}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:&gt;11}</span><span class="s1"> </span><span class="si">{7:&gt;7}</span><span class="s1"> </span><span class="si">{8:&gt;9}</span><span class="s1"> </span><span class="si">{9:&gt;7}</span><span class="s1"> </span><span class="si">{10:&gt;8}</span><span class="s1">  </span><span class="si">{11:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{12:&gt;18.18}</span><span class="s1"> </span><span class="si">{13:&gt;28.28}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:5d}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:8.3f}</span><span class="s1"> </span><span class="si">{3:7d}</span><span class="s1"> </span><span class="si">{4:9d}</span><span class="s1"> </span><span class="si">{5:7d}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:11d}</span><span class="s1"> </span><span class="si">{7:7d}</span><span class="s1"> </span><span class="si">{8:9.2f}</span><span class="s1"> </span><span class="si">{9:7.2f}</span><span class="s1"> </span><span class="si">{10:8.2f}</span><span class="s1">  </span><span class="si">{11:&gt;16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{12:&gt;18.18}</span><span class="s1"> </span><span class="si">{13:&gt;28.28}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">no_resp_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:5d}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:31}</span><span class="s1"> </span><span class="si">{3}</span><span class="s1"> </span><span class="si">{4}</span><span class="s1"> </span><span class="si">{5}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:&gt;11}</span><span class="s1"> </span><span class="si">{7:&gt;7}</span><span class="s1"> </span><span class="si">{8:&gt;9}</span><span class="s1"> </span><span class="si">{9:&gt;7}</span><span class="s1"> </span><span class="si">{10:&gt;8}</span><span class="s1">  </span><span class="si">{11:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{12:&gt;18.18}</span><span class="s1"> </span><span class="si">{13:&gt;28.28}</span><span class="s1">&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_print_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;VAL&#39;</span><span class="p">,</span> <span class="s1">&#39;VAL&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;RESPONSE&#39;</span><span class="p">,</span> <span class="s1">&#39;BLOCKS&#39;</span><span class="p">,</span> <span class="s1">&#39;BLOCKS&#39;</span><span class="p">,</span> <span class="s1">&#39;BLOCKS&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;TXNS&#39;</span><span class="p">,</span> <span class="s1">&#39;TXNS&#39;</span><span class="p">,</span> <span class="s1">&#39;AVG TXN&#39;</span><span class="p">,</span> <span class="s1">&#39;AVG BLK&#39;</span><span class="p">,</span> <span class="s1">&#39;LOCAL&#39;</span><span class="p">,</span> <span class="s1">&#39;PREVIOUS&#39;</span><span class="p">,</span>
+            <span class="s1">&#39; VALIDATOR&#39;</span><span class="p">,</span> <span class="s1">&#39;VALIDATOR&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;STATE&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;TIME(S)&#39;</span><span class="p">,</span> <span class="s1">&#39;CLAIMED&#39;</span><span class="p">,</span> <span class="s1">&#39;COMMITTED&#39;</span><span class="p">,</span> <span class="s1">&#39;PENDING&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;COMMITTED&#39;</span><span class="p">,</span> <span class="s1">&#39;PENDING&#39;</span><span class="p">,</span> <span class="s1">&#39;RATE(T/S)&#39;</span><span class="p">,</span> <span class="s1">&#39;TIME(S)&#39;</span><span class="p">,</span> <span class="s1">&#39;MEAN&#39;</span><span class="p">,</span> <span class="s1">&#39;BLOCKID&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;URL&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_responding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">stats_ex</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">val_id</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">response_time</span><span class="p">,</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">][</span><span class="s2">&quot;BlocksClaimed&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">][</span><span class="s2">&quot;CommittedBlockCount&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">][</span><span class="s2">&quot;PendingBlockCount&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;CommittedTxnCount&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PendingTxnCount&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="n">stats_ex</span><span class="o">.</span><span class="n">average_transaction_rate</span><span class="p">,</span>
+            <span class="n">stats_ex</span><span class="o">.</span><span class="n">average_block_time</span><span class="p">,</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;LocalMeanTime&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PreviousBlockID&quot;</span><span class="p">,</span> <span class="s1">&#39;not reported&#39;</span><span class="p">),</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">url</span><span class="p">),</span>
+            <span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_not_responding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no_resp_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">val_id</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">response_status</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">url</span><span class="p">),</span>
+            <span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PlatformView"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.print_views.html#sawtooth.cli.stats_lib.print_views.PlatformView">[docs]</a><span class="k">class</span> <span class="nc">PlatformView</span><span class="p">(</span><span class="n">ValidatorBaseView</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">console_print</span><span class="p">,</span> <span class="n">clients</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PlatformView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">console_print</span><span class="p">,</span> <span class="n">clients</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;5}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:&gt;8}</span><span class="s1"> </span><span class="si">{3:&gt;8}</span><span class="s1"> </span><span class="si">{4:&gt;8}</span><span class="s1"> </span><span class="si">{5:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:&gt;8}</span><span class="s1"> </span><span class="si">{7:&gt;8}</span><span class="s1"> </span><span class="si">{8:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{9:&gt;8}</span><span class="s1"> </span><span class="si">{10:&gt;8}</span><span class="s1"> </span><span class="si">{11:&gt;8}</span><span class="s1"> </span><span class="si">{12:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{13:&gt;18.18}</span><span class="s1"> </span><span class="si">{14:&gt;28.28}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:5d}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:8.2f}</span><span class="s1"> </span><span class="si">{3:8.2f}</span><span class="s1"> </span><span class="si">{4:8.2f}</span><span class="s1"> </span><span class="si">{5:8.2f}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:8.2f}</span><span class="s1"> </span><span class="si">{7:8d}</span><span class="s1"> </span><span class="si">{8:8d}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{9:8d}</span><span class="s1"> </span><span class="si">{10:8d}</span><span class="s1"> </span><span class="si">{11:8d}</span><span class="s1"> </span><span class="si">{12:8d}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{13:&gt;18.18}</span><span class="s1"> </span><span class="si">{14:&gt;28.28}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">no_resp_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:5d}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:&gt;8}</span><span class="s1"> </span><span class="si">{3:&gt;8}</span><span class="s1"> </span><span class="si">{4:&gt;8}</span><span class="s1"> </span><span class="si">{5:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:&gt;8}</span><span class="s1"> </span><span class="si">{7:&gt;8}</span><span class="s1"> </span><span class="si">{8:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{9:&gt;8}</span><span class="s1"> </span><span class="si">{10:&gt;8}</span><span class="s1"> </span><span class="si">{11:&gt;8}</span><span class="s1"> </span><span class="si">{12:&gt;8}</span><span class="s1">  &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{13:&gt;18.18}</span><span class="s1"> </span><span class="si">{14:&gt;28.28}</span><span class="s1">&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_print_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;VAL&#39;</span><span class="p">,</span> <span class="s1">&#39;VAL&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;CPU&#39;</span><span class="p">,</span> <span class="s1">&#39;CPU&#39;</span><span class="p">,</span> <span class="s1">&#39;CPU&#39;</span><span class="p">,</span> <span class="s1">&#39;CPU&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;MEM&#39;</span><span class="p">,</span> <span class="s1">&#39;MEM&#39;</span><span class="p">,</span> <span class="s1">&#39;MEM&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;DISK&#39;</span><span class="p">,</span> <span class="s1">&#39;DISK&#39;</span><span class="p">,</span> <span class="s1">&#39;DISK&#39;</span><span class="p">,</span> <span class="s1">&#39;DISK&#39;</span><span class="p">,</span>
+            <span class="s1">&#39; VALIDATOR&#39;</span><span class="p">,</span> <span class="s1">&#39;VALIDATOR&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;STATE&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;PERCENT&#39;</span><span class="p">,</span> <span class="s1">&#39;USER PCT&#39;</span><span class="p">,</span> <span class="s1">&#39;SYS PCT&#39;</span><span class="p">,</span> <span class="s1">&#39;IDLE PCT&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;PERCENT&#39;</span><span class="p">,</span> <span class="s1">&#39;TOTAL MB&#39;</span><span class="p">,</span> <span class="s1">&#39;AVAIL MB&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;RD BYTES&#39;</span><span class="p">,</span> <span class="s1">&#39;WR BYTES&#39;</span><span class="p">,</span> <span class="s1">&#39;RD COUNT&#39;</span><span class="p">,</span> <span class="s1">&#39;WR COUNT&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;URL&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_responding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">stats_ex</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">val_id</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;scpu&quot;</span><span class="p">][</span><span class="s2">&quot;percent&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;scpu&quot;</span><span class="p">][</span><span class="s2">&quot;user_time&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;scpu&quot;</span><span class="p">][</span><span class="s2">&quot;system_time&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;scpu&quot;</span><span class="p">][</span><span class="s2">&quot;idle_time&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;svmem&quot;</span><span class="p">][</span><span class="s2">&quot;percent&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;svmem&quot;</span><span class="p">][</span><span class="s2">&quot;total&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1000000</span><span class="p">,</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;svmem&quot;</span><span class="p">][</span><span class="s2">&quot;available&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1000000</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">validator_stats</span><span class="o">.</span><span class="n">psis</span><span class="o">.</span><span class="n">intv_disk_bytes_read</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">validator_stats</span><span class="o">.</span><span class="n">psis</span><span class="o">.</span><span class="n">intv_disk_bytes_write</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">validator_stats</span><span class="o">.</span><span class="n">psis</span><span class="o">.</span><span class="n">intv_disk_count_read</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">validator_stats</span><span class="o">.</span><span class="n">psis</span><span class="o">.</span><span class="n">intv_disk_count_write</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">url</span><span class="p">),</span>
+            <span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_not_responding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no_resp_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">val_id</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">url</span><span class="p">),</span>
+            <span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ConsensusView"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.print_views.html#sawtooth.cli.stats_lib.print_views.ConsensusView">[docs]</a><span class="k">class</span> <span class="nc">ConsensusView</span><span class="p">(</span><span class="n">ValidatorBaseView</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">console_print</span><span class="p">,</span> <span class="n">clients</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ConsensusView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">console_print</span><span class="p">,</span> <span class="n">clients</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;5}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:&gt;8}</span><span class="s1"> </span><span class="si">{3:&gt;10}</span><span class="s1"> </span><span class="si">{4:&gt;12}</span><span class="s1"> </span><span class="si">{5:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:&gt;18.18}</span><span class="s1"> </span><span class="si">{7:&gt;28.28}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:5d}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:8.2f}</span><span class="s1"> </span><span class="si">{3:10.2f}</span><span class="s1"> </span><span class="si">{4:12.2f}</span><span class="s1"> </span><span class="si">{5:16.16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:&gt;18.18}</span><span class="s1"> </span><span class="si">{7:&gt;28.28}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">no_resp_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:5d}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:&gt;8}</span><span class="s1"> </span><span class="si">{3:&gt;10}</span><span class="s1"> </span><span class="si">{4:&gt;12}</span><span class="s1"> </span><span class="si">{5:&gt;16}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:&gt;18.18}</span><span class="s1"> </span><span class="si">{7:&gt;28.28}</span><span class="s1">&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_print_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;VAL&#39;</span><span class="p">,</span> <span class="s1">&#39;VAL&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;LOCAL&#39;</span><span class="p">,</span> <span class="s1">&#39;POPULATION&#39;</span><span class="p">,</span> <span class="s1">&#39;AGGREGATE&#39;</span><span class="p">,</span> <span class="s1">&#39;LAST&#39;</span><span class="p">,</span>
+            <span class="s1">&#39; VALIDATOR&#39;</span><span class="p">,</span> <span class="s1">&#39;VALIDATOR&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;STATE&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;MEAN&#39;</span><span class="p">,</span> <span class="s1">&#39;ESTIMATE&#39;</span><span class="p">,</span> <span class="s1">&#39;LOCALMEAN&#39;</span><span class="p">,</span> <span class="s1">&#39;BLOCKID&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;URL&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_responding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">stats_ex</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">val_id</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;LocalMeanTime&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PopulationEstimate&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;AggregateLocalMean&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PreviousBlockID&quot;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">),</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">url</span><span class="p">),</span>
+            <span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_not_responding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no_resp_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">val_id</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">url</span><span class="p">),</span>
+            <span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PacketView"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.print_views.html#sawtooth.cli.stats_lib.print_views.PacketView">[docs]</a><span class="k">class</span> <span class="nc">PacketView</span><span class="p">(</span><span class="n">ValidatorBaseView</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">console_print</span><span class="p">,</span> <span class="n">clients</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PacketView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">console_print</span><span class="p">,</span> <span class="n">clients</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;5}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:&gt;10}</span><span class="s1"> </span><span class="si">{3:&gt;10}</span><span class="s1"> </span><span class="si">{4:&gt;10}</span><span class="s1"> </span><span class="si">{5:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:&gt;12}</span><span class="s1"> </span><span class="si">{7:&gt;12}</span><span class="s1"> </span><span class="si">{8:&gt;12}</span><span class="s1"> </span><span class="si">{9:&gt;12}</span><span class="s1">&#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{10:&gt;18.18}</span><span class="s1"> </span><span class="si">{11:&gt;28.28}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:5d}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:10d}</span><span class="s1"> </span><span class="si">{3:10d}</span><span class="s1"> </span><span class="si">{4:10d}</span><span class="s1"> </span><span class="si">{5:10d}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:12d}</span><span class="s1"> </span><span class="si">{7:12d}</span><span class="s1"> </span><span class="si">{8:12d}</span><span class="s1"> </span><span class="si">{9:12d}</span><span class="s1">&#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{10:&gt;18.18}</span><span class="s1"> </span><span class="si">{11:&gt;28.28}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">no_resp_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:5d}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:&gt;10}</span><span class="s1"> </span><span class="si">{3:&gt;10}</span><span class="s1"> </span><span class="si">{4:&gt;10}</span><span class="s1"> </span><span class="si">{5:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:&gt;12}</span><span class="s1"> </span><span class="si">{7:&gt;12}</span><span class="s1"> </span><span class="si">{8:&gt;12}</span><span class="s1"> </span><span class="si">{9:&gt;12}</span><span class="s1">&#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{10:&gt;18.18}</span><span class="s1"> </span><span class="si">{11:&gt;28.28}</span><span class="s1">&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_print_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;VAL&#39;</span><span class="p">,</span> <span class="s1">&#39;VAL&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ACKS&#39;</span><span class="p">,</span> <span class="s1">&#39;BYTES&#39;</span><span class="p">,</span> <span class="s1">&#39;BYTES&#39;</span><span class="p">,</span> <span class="s1">&#39;PACKETS&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;PACKETS&#39;</span><span class="p">,</span> <span class="s1">&#39;UNACKED&#39;</span><span class="p">,</span> <span class="s1">&#39;MESSAGE&#39;</span><span class="p">,</span> <span class="s1">&#39;MESSAGE&#39;</span><span class="p">,</span>
+            <span class="s1">&#39; VALIDATOR&#39;</span><span class="p">,</span> <span class="s1">&#39;VALIDATOR&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;STATE&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;RECEIVED&#39;</span><span class="p">,</span> <span class="s1">&#39;RECEIVED&#39;</span><span class="p">,</span> <span class="s1">&#39;SENT&#39;</span><span class="p">,</span> <span class="s1">&#39;DROPPED&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;DUPLICATED&#39;</span><span class="p">,</span> <span class="s1">&#39;PACKETCOUNT&#39;</span><span class="p">,</span> <span class="s1">&#39;ACKED&#39;</span><span class="p">,</span> <span class="s1">&#39;HANDLED&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;URL&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_responding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">stats_ex</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">val_id</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;AcksReceived&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;BytesReceived&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;BytesSent&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;DroppedPackets&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;DuplicatePackets&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;UnackedPacketCount&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;MessagesAcked&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;packet&quot;</span><span class="p">][</span><span class="s2">&quot;MessagesHandled&quot;</span><span class="p">],</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">url</span><span class="p">),</span>
+            <span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_not_responding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no_resp_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">val_id</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">url</span><span class="p">),</span>
+            <span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NetworkView"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.print_views.html#sawtooth.cli.stats_lib.print_views.NetworkView">[docs]</a><span class="k">class</span> <span class="nc">NetworkView</span><span class="p">(</span><span class="n">ValidatorBaseView</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">console_print</span><span class="p">,</span> <span class="n">clients</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NetworkView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">console_print</span><span class="p">,</span> <span class="n">clients</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;5}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:&gt;10}</span><span class="s1"> </span><span class="si">{3:&gt;10}</span><span class="s1"> </span><span class="si">{4:&gt;12}</span><span class="s1"> </span><span class="si">{5:&gt;12}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:&gt;12}</span><span class="s1"> </span><span class="si">{7:&gt;12}</span><span class="s1"> </span><span class="si">{8:&gt;14}</span><span class="s1"> </span><span class="si">{9:&gt;14}</span><span class="s1">&#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{10:&gt;18.18}</span><span class="s1"> </span><span class="si">{11:&gt;28.28}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:5d}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:10d}</span><span class="s1"> </span><span class="si">{3:10d}</span><span class="s1"> </span><span class="si">{4:12d}</span><span class="s1"> </span><span class="si">{5:12d}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:12d}</span><span class="s1"> </span><span class="si">{7:12d}</span><span class="s1"> </span><span class="si">{8:14d}</span><span class="s1"> </span><span class="si">{9:14d}</span><span class="s1">&#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{10:&gt;18.18}</span><span class="s1"> </span><span class="si">{11:&gt;28.28}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">no_resp_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:5d}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:&gt;10}</span><span class="s1"> </span><span class="si">{3:&gt;10}</span><span class="s1"> </span><span class="si">{4:&gt;12}</span><span class="s1"> </span><span class="si">{5:&gt;12}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:&gt;12}</span><span class="s1"> </span><span class="si">{7:&gt;12}</span><span class="s1"> </span><span class="si">{8:&gt;14}</span><span class="s1"> </span><span class="si">{9:&gt;14}</span><span class="s1">&#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{10:&gt;18.18}</span><span class="s1"> </span><span class="si">{11:&gt;28.28}</span><span class="s1">&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_print_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;VAL&#39;</span><span class="p">,</span> <span class="s1">&#39;VAL&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;SEND&#39;</span><span class="p">,</span> <span class="s1">&#39;RECEIVE&#39;</span><span class="p">,</span> <span class="s1">&#39;SEND&#39;</span><span class="p">,</span> <span class="s1">&#39;RECEIVE&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;SEND&#39;</span><span class="p">,</span> <span class="s1">&#39;RECEIVE&#39;</span><span class="p">,</span> <span class="s1">&#39;SEND&#39;</span><span class="p">,</span> <span class="s1">&#39;RECEIVE&#39;</span><span class="p">,</span>
+            <span class="s1">&#39; VALIDATOR&#39;</span><span class="p">,</span> <span class="s1">&#39;VALIDATOR&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;STATE&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;BYTES&#39;</span><span class="p">,</span> <span class="s1">&#39;BYTES&#39;</span><span class="p">,</span> <span class="s1">&#39;PCKT BYTES&#39;</span><span class="p">,</span> <span class="s1">&#39;PCKT BYTES&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;BYTES ERR&#39;</span><span class="p">,</span> <span class="s1">&#39;BYTES ERR&#39;</span><span class="p">,</span> <span class="s1">&#39;DROPPED PCKTS&#39;</span><span class="p">,</span> <span class="s1">&#39;DROPPED PCKTS&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;URL&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_responding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">stats_ex</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">val_id</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;snetio&quot;</span><span class="p">][</span><span class="s2">&quot;bytes_recv&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;snetio&quot;</span><span class="p">][</span><span class="s2">&quot;bytes_sent&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;snetio&quot;</span><span class="p">][</span><span class="s2">&quot;packets_recv&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;snetio&quot;</span><span class="p">][</span><span class="s2">&quot;packets_sent&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;snetio&quot;</span><span class="p">][</span><span class="s2">&quot;errout&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;snetio&quot;</span><span class="p">][</span><span class="s2">&quot;errin&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;snetio&quot;</span><span class="p">][</span><span class="s2">&quot;dropout&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;platform&quot;</span><span class="p">][</span><span class="s2">&quot;snetio&quot;</span><span class="p">][</span><span class="s2">&quot;dropin&quot;</span><span class="p">],</span>
+
+            <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">url</span><span class="p">),</span>
+            <span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_not_responding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no_resp_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">val_id</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">url</span><span class="p">),</span>
+            <span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TransactionView"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.print_views.html#sawtooth.cli.stats_lib.print_views.TransactionView">[docs]</a><span class="k">class</span> <span class="nc">TransactionView</span><span class="p">(</span><span class="n">ValidatorBaseView</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">console_print</span><span class="p">,</span> <span class="n">clients</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TransactionView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">console_print</span><span class="p">,</span> <span class="n">clients</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;5}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:&gt;10}</span><span class="s1"> </span><span class="si">{3:&gt;10}</span><span class="s1"> </span><span class="si">{4:&gt;12}</span><span class="s1"> </span><span class="si">{5:&gt;12}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:&gt;16}</span><span class="s1"> </span><span class="si">{7:&gt;14}</span><span class="s1"> </span><span class="si">{8:&gt;14}</span><span class="s1">&#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{9:&gt;18.18}</span><span class="s1"> </span><span class="si">{10:&gt;28.28}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:5d}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:10d}</span><span class="s1"> </span><span class="si">{3:10d}</span><span class="s1"> </span><span class="si">{4:12d}</span><span class="s1"> </span><span class="si">{5:12d}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:16d}</span><span class="s1"> </span><span class="si">{7:14d}</span><span class="s1"> </span><span class="si">{8:14d}</span><span class="s1">&#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{9:&gt;18.18}</span><span class="s1"> </span><span class="si">{10:&gt;28.28}</span><span class="s1">&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">no_resp_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:5d}</span><span class="s1"> </span><span class="si">{1:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{2:&gt;10}</span><span class="s1"> </span><span class="si">{3:&gt;10}</span><span class="s1"> </span><span class="si">{4:&gt;12}</span><span class="s1"> </span><span class="si">{5:&gt;12}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{6:&gt;16}</span><span class="s1"> </span><span class="si">{7:&gt;14}</span><span class="s1"> </span><span class="si">{8:&gt;14}</span><span class="s1">&#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{9:&gt;18.18}</span><span class="s1"> </span><span class="si">{10:&gt;28.28}</span><span class="s1">&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_print_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;VAL&#39;</span><span class="p">,</span> <span class="s1">&#39;VAL&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;BLOCK&#39;</span><span class="p">,</span> <span class="s1">&#39;BLOCK&#39;</span><span class="p">,</span> <span class="s1">&#39;TXN&#39;</span><span class="p">,</span> <span class="s1">&#39;TXN&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;MISSING TXN&#39;</span><span class="p">,</span> <span class="s1">&#39;MISSING TXN&#39;</span><span class="p">,</span> <span class="s1">&#39;INVALID&#39;</span><span class="p">,</span>
+            <span class="s1">&#39; VALIDATOR&#39;</span><span class="p">,</span> <span class="s1">&#39;VALIDATOR&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;STATE&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;COMMITTED&#39;</span><span class="p">,</span> <span class="s1">&#39;PENDING&#39;</span><span class="p">,</span> <span class="s1">&#39;COMMITTED&#39;</span><span class="p">,</span> <span class="s1">&#39;PENDING&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;DEPENDENCY CNT&#39;</span><span class="p">,</span> <span class="s1">&#39;BLOCK CNT&#39;</span><span class="p">,</span> <span class="s1">&#39;TXN CNT&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;NAME&#39;</span><span class="p">,</span> <span class="s1">&#39;URL&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_responding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">stats_ex</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">val_id</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">][</span><span class="s2">&quot;CommittedBlockCount&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">][</span><span class="s2">&quot;PendingBlockCount&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">][</span><span class="s2">&quot;CommittedTxnCount&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">][</span><span class="s2">&quot;PendingTxnCount&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">][</span><span class="s2">&quot;MissingTxnDepCount&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">][</span><span class="s2">&quot;MissingTxnFromBlockCount&quot;</span><span class="p">],</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;journal&quot;</span><span class="p">][</span><span class="s2">&quot;InvalidTxnCount&quot;</span><span class="p">],</span>
+
+            <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">url</span><span class="p">),</span>
+            <span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_not_responding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no_resp_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">val_id</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">url</span><span class="p">),</span>
+            <span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BranchView"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.print_views.html#sawtooth.cli.stats_lib.print_views.BranchView">[docs]</a><span class="k">class</span> <span class="nc">BranchView</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">console_print</span><span class="p">,</span> <span class="n">branch_manager</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span> <span class="o">=</span> <span class="n">console_print</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_branch_manager</span> <span class="o">=</span> <span class="n">branch_manager</span>
+        <span class="c1"># determine which branch has the longest active list</span>
+        <span class="c1"># and active history list; size columns to match</span>
+        <span class="n">max_active</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">max_active_history</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">branch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_branch_manager</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
+            <span class="n">als</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">branch</span><span class="o">.</span><span class="n">is_active_list</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="n">ahls</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">branch</span><span class="o">.</span><span class="n">is_active_history</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">als</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_active</span><span class="p">:</span>
+                <span class="n">max_active</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">als</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ahls</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_active_history</span><span class="p">:</span>
+                <span class="n">max_active_history</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ahls</span><span class="p">)</span>
+        <span class="n">mastr</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">max_active</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+        <span class="n">mahstr</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">max_active_history</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;12}</span><span class="s1"> </span><span class="si">{1:&gt;10}</span><span class="s1"> </span><span class="si">{2:&gt;6}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{3:&gt;16}</span><span class="s1"> </span><span class="si">{4:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{5:&gt;16}</span><span class="s1"> </span><span class="si">{6:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:&gt;12}</span><span class="s1"> </span><span class="si">{8:&gt;16}</span><span class="s1"> </span><span class="si">{9:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{10:&gt;14}</span><span class="s1"> </span><span class="si">{11:&gt;14}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{12:&gt;8}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;{13:&gt;&#39;</span> <span class="o">+</span> <span class="n">mastr</span> <span class="o">+</span> <span class="s1">&#39; {14:&gt;&#39;</span> <span class="o">+</span> <span class="n">mahstr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;12}</span><span class="s1"> </span><span class="si">{1:&gt;10d}</span><span class="s1"> </span><span class="si">{2:&gt;6}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{3:&gt;16}</span><span class="s1"> </span><span class="si">{4:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{5:&gt;16}</span><span class="s1"> </span><span class="si">{6:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:&gt;12}</span><span class="s1"> </span><span class="si">{8:&gt;16}</span><span class="s1"> </span><span class="si">{9:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{10:&gt;14}</span><span class="s1"> </span><span class="si">{11:&gt;14}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{12:&gt;8d}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;{13:&gt;&#39;</span> <span class="o">+</span> <span class="n">mastr</span> <span class="o">+</span> <span class="s1">&#39; {14:&gt;&#39;</span> <span class="o">+</span> <span class="n">mahstr</span>
+
+<div class="viewcode-block" id="BranchView.print_view"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.print_views.html#sawtooth.cli.stats_lib.print_views.BranchView.print_view">[docs]</a>    <span class="k">def</span> <span class="nf">print_view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_print_headers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_print_branches</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_print_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;BRANCH&#39;</span><span class="p">,</span> <span class="s1">&#39;BRANCH&#39;</span><span class="p">,</span> <span class="s1">&#39;ACTIVE&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;TAIL&#39;</span><span class="p">,</span> <span class="s1">&#39;TAIL&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;HEAD&#39;</span><span class="p">,</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ANCESTOR&#39;</span><span class="p">,</span> <span class="s1">&#39;ANCESTOR&#39;</span><span class="p">,</span> <span class="s1">&#39;ANCESTOR&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;CREATE TIME&#39;</span><span class="p">,</span> <span class="s1">&#39;LAST ACTIVE&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ACTIVE&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ACTIVE&#39;</span><span class="p">,</span> <span class="s1">&#39;ACTIVE&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;LENGTH&#39;</span><span class="p">,</span> <span class="s1">&#39;STATUS&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;BLOCK ID&#39;</span><span class="p">,</span> <span class="s1">&#39;BLOCK NUM&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;BLOCK ID&#39;</span><span class="p">,</span> <span class="s1">&#39;BLOCK NUM&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;BRANCH ID&#39;</span><span class="p">,</span> <span class="s1">&#39;BLOCK ID&#39;</span><span class="p">,</span> <span class="s1">&#39;BLOCK NUM&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;MM:DD:HH:MM:SS&#39;</span><span class="p">,</span> <span class="s1">&#39;MM:DD:HH:MM:SS&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;COUNT&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;LIST&#39;</span><span class="p">,</span> <span class="s1">&#39;HISTORY&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_print_branches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">branch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_branch_manager</span><span class="o">.</span><span class="n">branches</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_print_branch</span><span class="p">(</span><span class="n">branch</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_print_branch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">branch</span><span class="p">):</span>
+        <span class="n">branch_create_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+            <span class="s2">&quot;%m:</span><span class="si">%d</span><span class="s2">:%H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">branch</span><span class="o">.</span><span class="n">create_time</span><span class="p">))</span>
+        <span class="n">branch_last_active_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+            <span class="s2">&quot;%m:</span><span class="si">%d</span><span class="s2">:%H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">branch</span><span class="o">.</span><span class="n">last_active_time</span><span class="p">))</span>
+        <span class="n">ancestor_branch_id</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="n">branch</span><span class="o">.</span><span class="n">ancestor_branch</span> <span class="ow">is</span> <span class="kc">None</span> \
+            <span class="k">else</span> <span class="n">branch</span><span class="o">.</span><span class="n">ancestor_branch</span><span class="o">.</span><span class="n">bcb_id</span>
+        <span class="n">ancestor_block_id</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="n">branch</span><span class="o">.</span><span class="n">ancestor_branch</span> <span class="ow">is</span> <span class="kc">None</span> \
+            <span class="k">else</span> <span class="n">branch</span><span class="o">.</span><span class="n">ancestor_block_id</span>
+        <span class="n">ancestor_block_num</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="k">if</span> <span class="n">branch</span><span class="o">.</span><span class="n">ancestor_branch</span> <span class="ow">is</span> <span class="kc">None</span> \
+            <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">branch</span><span class="o">.</span><span class="n">ancestor_block_num</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">branch</span><span class="o">.</span><span class="n">bcb_id</span><span class="p">,</span>
+            <span class="n">branch</span><span class="o">.</span><span class="n">block_count</span><span class="p">,</span>
+            <span class="s2">&quot;Active&quot;</span> <span class="k">if</span> <span class="n">branch</span><span class="o">.</span><span class="n">is_active</span> <span class="k">else</span> <span class="s2">&quot;Idle&quot;</span><span class="p">,</span>
+            <span class="n">branch</span><span class="o">.</span><span class="n">tail_block_id</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">branch</span><span class="o">.</span><span class="n">tail_block_num</span><span class="p">),</span>
+            <span class="n">branch</span><span class="o">.</span><span class="n">head_block_id</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">branch</span><span class="o">.</span><span class="n">head_block_num</span><span class="p">),</span>
+            <span class="n">ancestor_branch_id</span><span class="p">,</span>
+            <span class="n">ancestor_block_id</span><span class="p">,</span>
+            <span class="n">ancestor_block_num</span><span class="p">,</span>
+            <span class="n">branch_create_time</span><span class="p">,</span>
+            <span class="n">branch_last_active_time</span><span class="p">,</span>
+            <span class="n">branch</span><span class="o">.</span><span class="n">is_active_count</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">branch</span><span class="o">.</span><span class="n">is_active_list</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">branch</span><span class="o">.</span><span class="n">is_active_history</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)),</span>
+            <span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ForkView"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.print_views.html#sawtooth.cli.stats_lib.print_views.ForkView">[docs]</a><span class="k">class</span> <span class="nc">ForkView</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">console_print</span><span class="p">,</span> <span class="n">branch_manager</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span> <span class="o">=</span> <span class="n">console_print</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_branch_manager</span> <span class="o">=</span> <span class="n">branch_manager</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;12}</span><span class="s1"> </span><span class="si">{1:&gt;10}</span><span class="s1"> </span><span class="si">{2:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{3:&gt;16}</span><span class="s1"> </span><span class="si">{4:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{5:&gt;16}</span><span class="s1"> </span><span class="si">{6:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:&gt;9}</span><span class="s1"> </span><span class="si">{8:&gt;6}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{9:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{10:&gt;16}</span><span class="s1"> </span><span class="si">{11:&gt;10}</span><span class="s1"> &#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span> <span class="o">=</span> \
+            <span class="s1">&#39;</span><span class="si">{0:&gt;12}</span><span class="s1"> </span><span class="si">{1:&gt;10d}</span><span class="s1"> </span><span class="si">{2:&gt;10d}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{3:&gt;16}</span><span class="s1"> </span><span class="si">{4:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{5:&gt;16}</span><span class="s1"> </span><span class="si">{6:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{7:&gt;9d}</span><span class="s1"> </span><span class="si">{8:&gt;6}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{9:&gt;10}</span><span class="s1"> &#39;</span> \
+            <span class="s1">&#39;</span><span class="si">{10:&gt;16}</span><span class="s1"> </span><span class="si">{11:&gt;10}</span><span class="s1"> &#39;</span>
+
+<div class="viewcode-block" id="ForkView.print_view"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.stats_lib.print_views.html#sawtooth.cli.stats_lib.print_views.ForkView.print_view">[docs]</a>    <span class="k">def</span> <span class="nf">print_view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_print_headers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_print_forks</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_print_headers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;FORK&#39;</span><span class="p">,</span> <span class="s1">&#39;TOTAL&#39;</span><span class="p">,</span> <span class="s1">&#39;BRANCH&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;TAIL&#39;</span><span class="p">,</span> <span class="s1">&#39;TAIL&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;HEAD&#39;</span><span class="p">,</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;VALIDATOR&#39;</span><span class="p">,</span> <span class="s1">&#39;FORK&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;FORK&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;INTERCEPT&#39;</span><span class="p">,</span> <span class="s1">&#39;INTERCEPT&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;ID&#39;</span><span class="p">,</span> <span class="s1">&#39;LENGTH&#39;</span><span class="p">,</span> <span class="s1">&#39;COUNT&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;BLOCK ID&#39;</span><span class="p">,</span> <span class="s1">&#39;BLOCK NUM&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;BLOCK ID&#39;</span><span class="p">,</span> <span class="s1">&#39;BLOCK NUM&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;COUNT&#39;</span><span class="p">,</span> <span class="s1">&#39;STATUS&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;LENGTH&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;BLOCK ID&#39;</span><span class="p">,</span> <span class="s1">&#39;BLOCK NUM&#39;</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_print_forks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">fork</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_branch_manager</span><span class="o">.</span><span class="n">forks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_print_fork</span><span class="p">(</span><span class="n">fork</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_print_fork</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fork</span><span class="p">):</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;parent&quot;</span> <span class="k">if</span> <span class="n">fork</span><span class="o">.</span><span class="n">is_parent</span> <span class="ow">is</span> <span class="kc">True</span> <span class="k">else</span> <span class="s2">&quot;child&quot;</span>
+        <span class="n">fork_intercept_length</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> \
+            <span class="n">fork</span><span class="o">.</span><span class="n">fork_intercept_length</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> \
+            <span class="nb">str</span><span class="p">(</span><span class="n">fork</span><span class="o">.</span><span class="n">fork_intercept_length</span><span class="p">)</span>
+        <span class="n">intercept_block_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> \
+            <span class="n">fork</span><span class="o">.</span><span class="n">intercept_block_id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">fork</span><span class="o">.</span><span class="n">intercept_block_id</span><span class="p">)</span>
+        <span class="n">intercept_block_num</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">if</span> \
+            <span class="n">fork</span><span class="o">.</span><span class="n">intercept_block_num</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">fork</span><span class="o">.</span><span class="n">intercept_block_num</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_console_print</span><span class="o">.</span><span class="n">cpprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resp_formatter</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">fork</span><span class="o">.</span><span class="n">bcf_id</span><span class="p">,</span>
+            <span class="n">fork</span><span class="o">.</span><span class="n">block_count</span><span class="p">,</span>
+            <span class="n">fork</span><span class="o">.</span><span class="n">branch_count</span><span class="p">,</span>
+            <span class="n">fork</span><span class="o">.</span><span class="n">tail_block_id</span><span class="p">,</span>
+            <span class="n">fork</span><span class="o">.</span><span class="n">tail_block_num</span><span class="p">,</span>
+            <span class="n">fork</span><span class="o">.</span><span class="n">head_block_id</span><span class="p">,</span>
+            <span class="n">fork</span><span class="o">.</span><span class="n">tail_block_num</span><span class="p">,</span>
+            <span class="n">fork</span><span class="o">.</span><span class="n">validator_count</span><span class="p">,</span>
+            <span class="n">status</span><span class="p">,</span>
+            <span class="n">fork_intercept_length</span><span class="p">,</span>
+            <span class="n">intercept_block_id</span><span class="p">,</span>
+            <span class="n">intercept_block_num</span><span class="p">),</span>
+            <span class="kc">False</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

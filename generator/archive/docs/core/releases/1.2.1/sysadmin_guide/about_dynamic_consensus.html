@@ -1,0 +1,508 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>About Dynamic Consensus &mdash; Sawtooth v1.2.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Adding or Removing a PBFT Node" href="pbft_adding_removing_node.html" />
+    <link rel="prev" title="Using Grafana to Display Sawtooth Metrics" href="grafana_configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="setting_up_sawtooth_network.html">Setting Up a Sawtooth Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setting_allowed_txns.html">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_permissions.html">Configuring Validator and Transactor Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grafana_configuration.html">Using Grafana to Display Sawtooth Metrics</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">About Dynamic Consensus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-consensus-for-a-new-network">Configuring Consensus for a New Network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changing-consensus-on-a-running-network">Changing Consensus on a Running Network</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pbft-consensus">PBFT Consensus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#poet-consensus">PoET Consensus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#raft-consensus">Raft Consensus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#devmode-consensus">Devmode Consensus</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pbft_adding_removing_node.html">Adding or Removing a PBFT Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_sawtooth.html">About Sawtooth Configuration Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/pbft/nightly/master/">Sawtooth PBFT Consensus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/sabre/nightly/master/">Sawtooth Sabre Transaction Family</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/seth/nightly/master/">Sawtooth Seth Transaction Family</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator’s Guide</a> &raquo;</li>
+        
+      <li>About Dynamic Consensus</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/about_dynamic_consensus.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="about-dynamic-consensus">
+<span id="about-dynamic-consensus-label"></span><h1>About Dynamic Consensus<a class="headerlink" href="#about-dynamic-consensus" title="Permalink to this headline">¶</a></h1>
+<p>Sawtooth <a class="reference internal" href="../glossary.html#term-dynamic-consensus"><span class="xref std std-term">dynamic consensus</span></a> lets you choose from a variety of consensus
+algorithms for the network.</p>
+<ul class="simple">
+<li><p>Each consensus type has a <a class="reference internal" href="../glossary.html#term-consensus-engine"><span class="xref std std-term">consensus engine</span></a> that communicates with the
+validator through the <a class="reference internal" href="../glossary.html#term-consensus-api"><span class="xref std std-term">consensus API</span></a>. Each node in the network must run
+the same consensus engine.</p></li>
+<li><p>The validator listens for the consensus engine on the <cite>consensus endpoint</cite>
+(by default, <code class="docutils literal notranslate"><span class="pre">tcp://127.0.0.1:5050</span></code>). For more information, see
+<a class="reference internal" href="off_chain_settings.html"><span class="doc">Changing Off-chain Settings with Configuration Files</span></a>.</p></li>
+<li><p>The consensus type is controlled by the on-chain settings
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.algorithm.name</span></code> and
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.algorithm.version</span></code>. These settings are required.</p></li>
+</ul>
+<p>The rest of this topic summarizes how to configure consensus and lists the
+settings and requirements for each supported consensus type:
+<a class="reference internal" href="#pbft-consensus-label"><span class="std std-ref">PBFT</span></a>,
+<a class="reference internal" href="#poet-consensus-label"><span class="std std-ref">PoET</span></a>,
+<a class="reference internal" href="#raft-consensus-label"><span class="std std-ref">Raft</span></a>, and
+<a class="reference internal" href="#devmode-consensus-label"><span class="std std-ref">Devmode</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Compatibility with Sawtooth 1.0</strong>:
+Sawtooth provides defaults for backward compatibility with previous versions
+of Sawtooth (1.0 and earlier), when Devmode and PoET were the only supported
+consensus algorithms.</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.algorithm.version</span></code> is not set, the default version
+is <code class="docutils literal notranslate"><span class="pre">0.1</span></code>.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.algorithm.name</span></code> is not set, Sawtooth checks for
+the deprecated setting <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.algorithm</span></code>. If this setting
+exists, Sawtooth uses the specified consensus.</p></li>
+<li><p>Otherwise, Sawtooth uses Devmode consensus.</p></li>
+</ul>
+<p><strong>Important:</strong> In release 1.1 and later, a consensus engine is always
+required. The same consensus engine must be running on all nodes in the
+network.</p>
+</div>
+<div class="section" id="configuring-consensus-for-a-new-network">
+<h2>Configuring Consensus for a New Network<a class="headerlink" href="#configuring-consensus-for-a-new-network" title="Permalink to this headline">¶</a></h2>
+<p>To configure the initial consensus, create a consensus proposal for the
+<a class="reference internal" href="../glossary.html#term-genesis-block"><span class="xref std std-term">genesis block</span></a>, then start the consensus engine and any transaction
+processors that are required by that consensus type.</p>
+<ol class="arabic simple">
+<li><p>The administrator of the first node uses the command <code class="docutils literal notranslate"><span class="pre">sawset</span> <span class="pre">proposal</span>
+<span class="pre">create</span></code> to specify the consensus settings in the genesis block.
+See <a class="reference internal" href="setting_up_sawtooth_network.html"><span class="doc">Setting Up a Sawtooth Network</span></a> for this procedure.</p></li>
+<li><p>On each node, the administrator installs and starts the consensus engine and
+any transaction processors required for consensus (such as PoET Validator
+Registry). See <a class="reference internal" href="systemd.html"><span class="doc">Running Sawtooth as a Service</span></a> for this procedure.</p></li>
+</ol>
+<p>When each node joins the network, it reads the on-chain consensus settings, then
+starts using the consensus engine to process blocks.</p>
+</div>
+<div class="section" id="changing-consensus-on-a-running-network">
+<h2>Changing Consensus on a Running Network<a class="headerlink" href="#changing-consensus-on-a-running-network" title="Permalink to this headline">¶</a></h2>
+<p>To change to a different consensus, start the new consensus engine on all nodes,
+plus any transaction processors that are required by that consensus type. Then
+submit a consensus change proposal.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Administrators should coordinate the change to a new consensus. For some
+consensus types, the network could slow or become stalled if some nodes have
+not started the new consensus engine.</p>
+</div>
+<ol class="arabic">
+<li><p>If the network has forked, stop all nodes except the one with the preferred
+blocks.</p></li>
+<li><p>Each administrator installs and starts the new consensus engine and any
+related transaction processors. See <a class="reference internal" href="installation.html"><span class="doc">Installing Hyperledger Sawtooth</span></a> and
+<a class="reference internal" href="systemd.html"><span class="doc">Running Sawtooth as a Service</span></a> for these procedures.</p></li>
+<li><p>One administrator uses the command <code class="docutils literal notranslate"><span class="pre">sawset</span> <span class="pre">proposal</span> <span class="pre">create</span></code> to submit a
+transaction with the new on-chain consensus settings. For an example, see
+<a class="reference internal" href="creating_genesis_block.html"><span class="doc">Creating the Genesis Block</span></a> or <a class="reference internal" href="configure_sgx.html#config-validator-for-poet-sgx-label"><span class="std std-ref">Configure the Validator for PoET-SGX</span></a>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This node or user must have permission to change on-chain settings.
+Usually, the node that created the genesis block has the appropriate
+permissions.  For more information, see
+<a class="reference internal" href="configuring_permissions.html#config-onchain-txn-perm-label"><span class="std std-ref">On-chain Transactor Permissioning</span></a>.</p>
+</div>
+<p>When the block containing this transaction is committed, the network changes
+to the new consensus.</p>
+</li>
+<li><p>For each node, do not stop the previous consensus engine (and any related
+transaction processors) until the node has processed all the blocks that
+were submitted using the previous consensus.</p></li>
+<li><p>If a new node joins the network, it must run both consensus engines and all
+related transaction processors. The original consensus is required to process
+the first set of blocks.</p></li>
+</ol>
+</div>
+<div class="section" id="pbft-consensus">
+<span id="pbft-consensus-label"></span><h2>PBFT Consensus<a class="headerlink" href="#pbft-consensus" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="../glossary.html#term-pbft-consensus"><span class="xref std std-term">Sawtooth PBFT</span></a> is a voting-based, non-forking
+consensus algorithm with finality that provides Byzantine Fault Tolerance
+(BFT). PBFT is best for small, consortium-style networks that do not require
+open membership. For more information, see the
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/pbft/nightly/master/">PBFT documentation</a>.</p>
+<p>Requirements:</p>
+<ul>
+<li><p>A PBFT network must have at least four nodes.</p></li>
+<li><p>The genesis block must include the validator public keys of all nodes in the
+initial network.</p></li>
+<li><p>Each node must install the PBFT consensus engine package,
+<code class="docutils literal notranslate"><span class="pre">sawtooth-pbft-engine</span></code>.</p></li>
+<li><p>Each node must run the PBFT consensus engine:</p>
+<ul class="simple">
+<li><p>Service: <code class="docutils literal notranslate"><span class="pre">sawtooth-pbft-engine.service</span></code></p></li>
+<li><p>Executable: <code class="docutils literal notranslate"><span class="pre">pbft-engine</span></code></p></li>
+</ul>
+<p>For more information, see <a class="reference internal" href="systemd.html"><span class="doc">Running Sawtooth as a Service</span></a>. (To start the
+consensus engine on the command line, see
+<a class="reference internal" href="../app_developers_guide/ubuntu_test_network.html#start-sawtooth-first-node-label"><span class="std std-ref">Step 5. Start Sawtooth on the First Node</span></a>).</p>
+</li>
+<li><p>Specify static peering when starting each validator. Use the <code class="docutils literal notranslate"><span class="pre">--peering</span></code>
+option when starting the validator (see <a class="reference internal" href="../cli/sawtooth-validator.html"><span class="doc">sawtooth-validator</span></a>) or
+set the off-chain <code class="docutils literal notranslate"><span class="pre">peers</span></code> setting in the <code class="docutils literal notranslate"><span class="pre">validator.toml</span></code> configuration
+file (see <a class="reference internal" href="configuring_sawtooth.html"><span class="doc">About Sawtooth Configuration Files</span></a>).</p></li>
+<li><p>Use these on-chain settings to configure PBFT consensus:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sawtooth.consensus.algorithm.name=pbft
+sawtooth.consensus.algorithm.version=[VERSION]
+sawtooth.consensus.pbft.members=[&quot;VAL1KEY&quot;,&quot;VAL2KEY&quot;,...,&quot;VALnKEY&quot;]
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Use double quotes around each member key in a comma-separated list
+with no spaces. If using the <code class="docutils literal notranslate"><span class="pre">sawset</span> <span class="pre">proposal</span> <span class="pre">create</span></code> command, you must
+also surround the entire members string with single quotes (to protect the
+double quotes).</p>
+</div>
+<p>See <a class="reference internal" href="creating_genesis_block.html"><span class="doc">Creating the Genesis Block</span></a> for more information on the
+version and validator public keys for the PBFT member list .</p>
+</li>
+<li><p>For optional PBFT consensus settings, see
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/pbft/nightly/master/configuring-pbft.html">Configuring PBFT</a>
+in the PBFT documentation.</p></li>
+</ul>
+</div>
+<div class="section" id="poet-consensus">
+<span id="poet-consensus-label"></span><h2>PoET Consensus<a class="headerlink" href="#poet-consensus" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="../glossary.html#term-poet-consensus"><span class="xref std std-term">PoET</span></a> is a Nakamoto-style (lottery) consensus algorithm
+that is designed to support large production networks with open or
+consortium-style membership. For more information, see
+<a class="reference internal" href="../architecture/poet.html"><span class="doc">PoET 1.0 Specification</span></a>.</p>
+<p>Sawtooth provides two versions of PoET consensus: <em>PoET SGX</em> (also called
+PoET BFT) and <em>PoET simulator</em> (also called PoET CFT). For more information,
+see <a class="reference internal" href="../introduction.html#dynamic-consensus-label"><span class="std std-ref">Dynamic Consensus</span></a>.</p>
+<blockquote>
+<div><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>To learn which versions of Sawtooth support PoET SGX consensus, see
+<a class="reference internal" href="configure_sgx.html"><span class="doc">Using Sawtooth with PoET-SGX</span></a> in the System Administrator’s Guide.</p>
+</div>
+</div></blockquote>
+<p>Requirements:</p>
+<ul>
+<li><p>A PoET network must have at least three nodes, but is designed for larger
+networks.</p></li>
+<li><p>Each node must install the PoET consensus engine package,
+<code class="docutils literal notranslate"><span class="pre">python3-sawtooth-poet-engine</span></code>.</p></li>
+<li><p>Each node must run the PoET consensus engine:</p>
+<ul class="simple">
+<li><p>Service: <code class="docutils literal notranslate"><span class="pre">sawtooth-poet-engine.service</span></code></p></li>
+<li><p>Executable: <code class="docutils literal notranslate"><span class="pre">poet-engine</span></code></p></li>
+</ul>
+</li>
+<li><p>Each node in the network must also run the PoET Validator Registry transaction
+processor (included in the <code class="docutils literal notranslate"><span class="pre">sawtooth</span></code> package):</p>
+<ul class="simple">
+<li><p>Service: <code class="docutils literal notranslate"><span class="pre">sawtooth-poet-validator-registry-tp.service</span></code></p></li>
+<li><p>Executable: <code class="docutils literal notranslate"><span class="pre">poet-validator-registry-tp</span></code></p></li>
+</ul>
+</li>
+<li><p>Use these on-chain settings for the PoET consensus engine:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sawtooth.consensus.algorithm.name=PoET
+sawtooth.consensus.algorithm.version=0.1
+sawtooth.poet.report_public_key_pem=&quot;$(cat * /etc/sawtooth/simulator_rk_pub.pem)&quot;
+sawtooth.poet.valid_enclave_measurements=$(poet enclave measurement)
+sawtooth.poet.valid_enclave_basenames=$(poet enclave basename)
+</pre></div>
+</div>
+</li>
+<li><p>For a PoET test network with less than 10 or 12 nodes, disable the
+defense-in-depth tests with these settings:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sawtooth.poet.block_claim_delay=1
+sawtooth.poet.key_block_claim_limit= 100000
+sawtooth.poet.ztest_minimum_win_count=999999999
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="raft-consensus">
+<span id="raft-consensus-label"></span><h2>Raft Consensus<a class="headerlink" href="#raft-consensus" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="../glossary.html#term-raft-consensus"><span class="xref std std-term">Sawtooth Raft</span></a> provides a simple consensus algorithm
+that is easy to understand.  It is leader-based, crash fault tolerant, and
+does not fork. For more information, see the
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/raft/nightly/master/">Raft documentation</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sawtooth Raft is currently a prototype (not yet released). For more
+information, see the
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-raft">sawtooth-raft</a> repository.</p>
+</div>
+<p>Requirements:</p>
+<ul>
+<li><p>Each node must install the Raft consensus engine package,
+<code class="docutils literal notranslate"><span class="pre">sawtooth-raft-engine</span></code>.</p></li>
+<li><p>Each node must run the Raft consensus engine:</p>
+<ul class="simple">
+<li><p>Service: <code class="docutils literal notranslate"><span class="pre">sawtooth-raft-engine.service</span></code></p></li>
+<li><p>Executable: <code class="docutils literal notranslate"><span class="pre">raft-engine</span></code></p></li>
+</ul>
+<p>For more information, see <a class="reference internal" href="systemd.html"><span class="doc">Running Sawtooth as a Service</span></a>. (To start the
+consensus engine on the command line, see
+<a class="reference internal" href="../app_developers_guide/ubuntu_test_network.html#start-sawtooth-first-node-label"><span class="std std-ref">Step 5. Start Sawtooth on the First Node</span></a>).</p>
+</li>
+<li><p>Specify static peering when starting each validator. Use the <code class="docutils literal notranslate"><span class="pre">--peering</span></code>
+option when starting the validator (see <a class="reference internal" href="../cli/sawtooth-validator.html"><span class="doc">sawtooth-validator</span></a>) or
+set the off-chain <code class="docutils literal notranslate"><span class="pre">peers</span></code> setting in the <code class="docutils literal notranslate"><span class="pre">validator.toml</span></code> configuration
+file (see <a class="reference internal" href="configuring_sawtooth.html"><span class="doc">About Sawtooth Configuration Files</span></a>).</p></li>
+<li><p>Use these on-chain settings for Raft consensus:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sawtooth.consensus.algorithm.name=raft
+sawtooth.consensus.algorithm.version=[VERSION]
+sawtooth.consensus.raft.peers=[VAL1KEY,VAL2KEY,...,VALnKEY]
+</pre></div>
+</div>
+<p>For the version number, see the <code class="docutils literal notranslate"><span class="pre">Cargo.toml</span></code> file. Use only the first two
+digits (for example, <cite>0.1</cite>).</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">VALxKEY</span></code>, specify the validator public key of each node in the network.</p>
+</li>
+<li><p>For other on-chain settings for Raft, see
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/raft/nightly/master/configuring_deploying.html#on-chain-settings">Optional Settings</a>
+in the Raft documentation.</p></li>
+</ul>
+</div>
+<div class="section" id="devmode-consensus">
+<span id="devmode-consensus-label"></span><h2>Devmode Consensus<a class="headerlink" href="#devmode-consensus" title="Permalink to this headline">¶</a></h2>
+<p>Devmode uses a simplified random-leader algorithm. It is intended for testing
+a transaction processor with a single Sawtooth node. Do not use Devmode for a
+production network.</p>
+<p>Requirements:</p>
+<ul>
+<li><p>The node must install the Devmode consensus engine package,
+<code class="docutils literal notranslate"><span class="pre">sawtooth-devmode-engine-rust</span></code>.</p></li>
+<li><p>The node must run the Devmode consensus engine <code class="docutils literal notranslate"><span class="pre">devmode-engine-rust</span></code>.
+For example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo -u sawtooth devmode-engine-rust -vv --connect tcp://localhost:5050
+</pre></div>
+</div>
+<p>For more information, see <a class="reference internal" href="../app_developers_guide/installing_sawtooth.html"><span class="doc">Setting Up a Sawtooth Node for Testing</span></a>.</p>
+</li>
+<li><p>Use these on-chain settings for the Devmode consensus engine:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sawtooth.consensus.algorithm.name=Devmode
+sawtooth.consensus.algorithm.version=0.1
+</pre></div>
+</div>
+<p>Optional settings control how long a validator should wait before attempting
+to publish a block. If one (or both) of these options is a nonzero value,
+the Devmode algorithm picks a random value between the maximum and minimum.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.max_wait_time</span></code>: Maximum wait time, in seconds.
+The default is 0 (no wait).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.min_wait_time</span></code>: Minimum wait time, in seconds.
+The default is 0 (no wait).</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pbft_adding_removing_node.html" class="btn btn-neutral float-right" title="Adding or Removing a PBFT Node" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="grafana_configuration.html" class="btn btn-neutral float-left" title="Using Grafana to Display Sawtooth Metrics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

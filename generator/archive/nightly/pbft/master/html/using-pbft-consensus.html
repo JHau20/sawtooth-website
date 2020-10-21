@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using PBFT Consensus &mdash; Sawtooth PBFT latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="PBFT Architecture" href="architecture.html" />
+    <link rel="prev" title="Introduction" href="introduction-to-sawtooth-pbft.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Sawtooth PBFT
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction-to-sawtooth-pbft.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using PBFT Consensus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">PBFT Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuring-pbft.html">Configuring PBFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installing-and-running-pbft.html">Installing and Testing PBFT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sawtooth PBFT</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Using PBFT Consensus</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/using-pbft-consensus.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-pbft-consensus">
+<h1>Using PBFT Consensus<a class="headerlink" href="#using-pbft-consensus" title="Permalink to this headline">¶</a></h1>
+<p>Sawtooth PBFT consensus provides Byzantine fault tolerance for a network with
+restricted membership. It has the following requirements:</p>
+<ul class="simple">
+<li><p>A network using PBFT consensus must have at least four nodes. A network with
+fewer nodes will fail; a new network with less than four nodes will not start.</p></li>
+<li><p>A PBFT network must be fully peered; that is, all nodes must be directly
+connected to all other nodes. Static peering is recommended.</p></li>
+<li><p>Each node on the network must install and run the PBFT consensus engine.</p>
+<ul>
+<li><p>Package: <code class="docutils literal notranslate"><span class="pre">sawtooth-pbft-engine</span></code></p></li>
+<li><p>Executable: <code class="docutils literal notranslate"><span class="pre">pbft-engine</span></code></p></li>
+<li><p>Service: <code class="docutils literal notranslate"><span class="pre">sawtooth-pbft-engine.service</span></code></p></li>
+</ul>
+</li>
+<li><p>Each node must run the Settings transaction processor (or an equivalent) to
+handle the PBFT and Sawtooth on-chain settings.</p></li>
+<li><p>The genesis block must specify the PBFT consensus engine name and version,
+using the on-chain settings <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.algorithm.name</span></code> and
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.algorithm.version</span></code>.</p>
+<ul>
+<li><p>The PBFT consensus engine name is <code class="docutils literal notranslate"><span class="pre">pbft</span></code>.</p></li>
+<li><p>The version number is in the file <code class="docutils literal notranslate"><span class="pre">sawtooth-pbft/Cargo.toml</span></code> (see the
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-pbft/">sawtooth-pbft</a> repository)
+as <code class="docutils literal notranslate"><span class="pre">version</span> <span class="pre">=</span> <span class="pre">&quot;{major}.{minor}.{patch}&quot;</span></code>. Use only the first two digits
+(major and minor release numbers); omit the patch number.  For example, if
+the version is 1.0.4, use <code class="docutils literal notranslate"><span class="pre">1.0</span></code> for the version setting.</p></li>
+</ul>
+</li>
+<li><p>The on-chain configuration setting <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code> must
+list all PBFT member nodes in the network. For more information, see
+<a class="reference internal" href="configuring-pbft.html#on-chain-settings-label"><span class="std std-ref">PBFT On-Chain Settings</span></a>.</p></li>
+</ul>
+<p>For the procedure to configure PBFT, see the Hyperledger Sawtooth documentation:</p>
+<ul class="simple">
+<li><p>Developers: <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/creating_sawtooth_network.html">Creating a Sawtooth
+Network</a>
+shows how to create a test network with PBFT consensus for an application
+development environment.</p></li>
+<li><p>Sawtooth administrators: <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/sysadmin_guide/setting_up_sawtooth_poet-sim.html">Setting Up a Sawtooth
+Node</a>
+explains how to create a Sawtooth network with PBFT consensus, plus how to add
+or remove nodes for an existing network.</p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="architecture.html" class="btn btn-neutral float-right" title="PBFT Architecture" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="introduction-to-sawtooth-pbft.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2018 Bitwise IO, Inc
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

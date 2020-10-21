@@ -1,0 +1,420 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sawtooth Admin CLI (sawadm) &mdash; Sawtooth v1.0.0rc6 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc6 documentation" href="../index.html"/>
+        <link rel="up" title="CLI Reference" href="../cli.html"/>
+        <link rel="next" title="Sawtooth Network CLI (sawnet)" href="sawnet.html"/>
+        <link rel="prev" title="Sawtooth CLI" href="sawtooth.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../cli.html">CLI Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sawtooth.html">Sawtooth CLI</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Sawtooth Admin CLI (sawadm)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sawadm">sawadm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawadm-genesis">sawadm genesis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawadm-keygen">sawadm keygen</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sawnet.html">Sawtooth Network CLI (sawnet)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawset.html">Sawtooth Config CLI (sawset)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poet.html">PoET CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator.html">Validator CLI (sawtooth-validator)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API CLI (sawtooth-rest-api)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intkey.html">IntegerKey CLI (intkey)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xo.html">XO CLI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings-tp.html">Settings Transaction Processor CLI (sawtooth-settings)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity-tp.html">Identity Transaction Processor CLI (identity-tp)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../cli.html">CLI Reference</a> &raquo;</li>
+        
+      <li>Sawtooth Admin CLI (sawadm)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cli/sawadm.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sawtooth-admin-cli-sawadm">
+<span id="sawadm-reference-label"></span><h1>Sawtooth Admin CLI (sawadm)<a class="headerlink" href="#sawtooth-admin-cli-sawadm" title="Permalink to this headline">¶</a></h1>
+<p>The Sawtooth admin CLI, <code class="docutils literal"><span class="pre">sawadm</span></code> is used for Sawtooth administration tasks.</p>
+<div class="section" id="sawadm">
+<h2>sawadm<a class="headerlink" href="#sawadm" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">sawadm</span></code> subcommands create validator keys during
+initial configuration and help create the genesis block when
+initializing a validator.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawadm [-h] [-v] [-V] {genesis,keygen} ...</span>
+
+<span class="go">Provides subcommands to create validator keys and create the genesis block</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help        show this help message and exit</span>
+<span class="go">  -v, --verbose     enable more verbose output</span>
+<span class="go">  -V, --version     display version information</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {genesis,keygen}</span>
+<span class="go">    genesis         Creates the genesis.batch file for initializing the</span>
+<span class="go">                    validator</span>
+<span class="go">    keygen          Generates keys for the validator to use when signing</span>
+<span class="go">                    blocks</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawadm-genesis">
+<h2>sawadm genesis<a class="headerlink" href="#sawadm-genesis" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">sawadm</span> <span class="pre">genesis</span></code> subcommand produces a file for use during the
+initialization of a validator. A network requires an initial block (known as the
+<cite>genesis block</cite>) whose signature will determine the block chain id. This initial
+block is produced from a list of batches, which will be applied at
+genesis time.</p>
+<p>The optional argument <cite>input_file</cite> specifies one or more files containing
+serialized <code class="docutils literal"><span class="pre">BatchList</span></code> protobuf messages to add to the genesis data. (Use a
+space to separate multiple files.) If no input file is specified,
+<code class="docutils literal"><span class="pre">sawadm</span> <span class="pre">keygen</span></code> produces an empty genesis block.</p>
+<p>The output is a file containing a serialized <code class="docutils literal"><span class="pre">GenesisData</span></code> protobuf message.
+This file, when placed at <cite>sawtooth_data</cite>/<code class="docutils literal"><span class="pre">genesis.batch</span></code>, will trigger
+the genesis process.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The location of <cite>sawtooth_data</cite> depends on whether the
+environment variable <code class="docutils literal"><span class="pre">SAWTOOTH_HOME</span></code> is set. If it is, then
+<cite>sawtooth_data</cite> is located at <code class="docutils literal"><span class="pre">SAWTOOTH_HOME/data</span></code>. If it is
+not, then <cite>sawtooth_data</cite> is located at <code class="docutils literal"><span class="pre">/var/lib/sawtooth</span></code>.</p>
+</div>
+<p>When <code class="docutils literal"><span class="pre">sawadm</span> <span class="pre">genesis</span></code> runs, it displays the path and filename of the
+target file where the serialized <code class="docutils literal"><span class="pre">GenesisData</span></code> is written. (Default:
+<cite>sawtooth_data</cite>/<code class="docutils literal"><span class="pre">genesis.batch</span></code>.) For example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawadm genesis config.batch mktplace.batch
+<span class="go">Generating /var/lib/sawtooth/genesis.batch</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal"><span class="pre">--output</span></code> <cite>filename</cite> to specify a different name for the target file.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawadm genesis [-h] [-v] [-V] [-o OUTPUT] [input_file [input_file ...]]</span>
+
+<span class="go">Generates the genesis.batch file for initializing the validator.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  input_file            file or files containing batches to add to the</span>
+<span class="go">                        resulting GenesisData</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        choose the output file for GenesisData</span>
+
+<span class="go">This command generates a serialized GenesisData protobuf message and stores it</span>
+<span class="go">in the genesis.batch file. One or more input files (optional) can contain</span>
+<span class="go">serialized BatchList protobuf messages to add to the GenesisData. The output</span>
+<span class="go">shows the location of this file. By default, the genesis.batch file is stored</span>
+<span class="go">in /var/lib/sawtooth. If $SAWTOOTH_HOME is set, the location is</span>
+<span class="gp">$</span>SAWTOOTH_HOME/data/genesis.batch. Use the --output option to change the name
+<span class="go">of the file.</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="sawadm-keygen">
+<h2>sawadm keygen<a class="headerlink" href="#sawadm-keygen" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">sawadm</span> <span class="pre">keygen</span></code> subcommand generates keys that the validator uses to
+sign blocks. This system-wide key must be created during Sawtooth
+configuration.</p>
+<p>Validator keys are stored in the directory <code class="docutils literal"><span class="pre">/etc/sawtooth/keys/</span></code>. By
+default, the public-private key files are named <code class="docutils literal"><span class="pre">validator.priv</span></code> and
+validator.pub. Use the &lt;key-name&gt; argument to specify a different file
+name.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawadm keygen [-h] [-v] [-V] [--force] [-q] [key_name]</span>
+
+<span class="go">Generates keys for the validator to use when signing blocks.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  key_name       name of the key to create</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help     show this help message and exit</span>
+<span class="go">  -v, --verbose  enable more verbose output</span>
+<span class="go">  -V, --version  display version information</span>
+<span class="go">  --force        overwrite files if they exist</span>
+<span class="go">  -q, --quiet    do not display output</span>
+
+<span class="go">The private and public key pair is stored in /etc/sawtooth/keys/&lt;key-</span>
+<span class="go">name&gt;.priv and /etc/sawtooth/keys/&lt;key-name&gt;.pub.</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sawnet.html" class="btn btn-neutral float-right" title="Sawtooth Network CLI (sawnet)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sawtooth.html" class="btn btn-neutral" title="Sawtooth CLI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.0rc6',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

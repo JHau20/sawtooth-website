@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Adding or Removing a PBFT Node &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="About Sawtooth Configuration Files" href="configuring_sawtooth.html" />
+    <link rel="prev" title="About Dynamic Consensus" href="about_dynamic_consensus.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="setting_up_sawtooth_network.html">Setting Up a Sawtooth Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setting_allowed_txns.html">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_authorized_users.html">Adding Authorized Users for Settings Proposals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_permissions.html">Configuring Validator and Transactor Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grafana_configuration.html">Using Grafana to Display Sawtooth Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_dynamic_consensus.html">About Dynamic Consensus</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Adding or Removing a PBFT Node</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#adding-a-pbft-node">Adding a PBFT Node</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#removing-a-pbft-node">Removing a PBFT Node</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_sawtooth.html">About Sawtooth Configuration Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator’s Guide</a> &raquo;</li>
+        
+      <li>Adding or Removing a PBFT Node</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/pbft_adding_removing_node.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="adding-or-removing-a-pbft-node">
+<h1>Adding or Removing a PBFT Node<a class="headerlink" href="#adding-or-removing-a-pbft-node" title="Permalink to this headline">¶</a></h1>
+<p>Membership of a Sawtooth PBFT network is controlled by the on-chain setting
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code>. An administrator must update this setting
+when <a class="reference internal" href="#adding-a-pbft-node-label"><span class="std std-ref">adding a new node</span></a> or
+<a class="reference internal" href="#removing-a-pbft-node-label"><span class="std std-ref">removing an existing node</span></a>.</p>
+<p>All nodes in the network monitor this setting. When a node detects a change,
+it updates its local list of PBFT members to match the new list.</p>
+<div class="section" id="adding-a-pbft-node">
+<span id="adding-a-pbft-node-label"></span><h2>Adding a PBFT Node<a class="headerlink" href="#adding-a-pbft-node" title="Permalink to this headline">¶</a></h2>
+<p>To add a new node to an existing PBFT network, you will install and configure
+the node, start it and wait for it to catch up with the rest of the network.
+Next, the administrator of an existing node will update
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code>.</p>
+<p>You can add several nodes at the same time.</p>
+<ol class="arabic">
+<li><p>Install and configure Sawtooth on the new node, as described in
+<a class="reference internal" href="setting_up_sawtooth_network.html"><span class="doc">Setting Up a Sawtooth Network</span></a>. Note these important items:</p>
+<ul>
+<li><p>Skip the procedure to create a genesis block.</p></li>
+<li><p>In the <a class="reference internal" href="off_chain_settings.html#sysadm-configure-validator-label"><span class="std std-ref">off-chain validator settings</span></a>,
+set <code class="docutils literal notranslate"><span class="pre">peers</span></code> to include all other nodes in the network. (A PBFT network
+must fully peered.) If you copy this setting from another node, be sure to
+include that node in the list of peers.</p>
+<p>You do not need to update the peer list on other nodes, because Sawtooth
+peering is bidirectional.</p>
+</li>
+</ul>
+</li>
+<li><p>Start the new node. It will join the Sawtooth network and start the block
+catch-up procedure, where it receives and commits the blocks that are already
+on the blockchain. (For details, see the <a class="reference external" href="https://github.com/hyperledger/sawtooth-rfcs/blob/master/text/0031-pbft-node-catchup.md">PBFT node catch-up RFC</a>.)</p></li>
+<li><p>Wait for the node to catch up to the rest of the network (get within a few
+blocks of the chain head). If the new node becomes a PBFT member before it
+has caught up, the entire network could slow down or stall while the new
+member node catches up.</p>
+<p>This process can take a while, depending on the blockchain size, node’s
+hardware, and network speed. You can look at the logs or run
+<a class="reference internal" href="../cli/sawtooth.html#sawtooth-block-list-label"><span class="std std-ref">sawtooth block list</span></a> to check on the
+new node’s progress.</p>
+</li>
+<li><p>Send the new node’s public validator key to the administrator who will update
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code>. Use this command to display the public
+validator key:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cat /etc/sawtooth/keys/validator.pub
+</pre></div>
+</div>
+<p>This command assumes that the validator key is stored in the default
+location, <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/keys</span></code>. If not, use the location specified by the
+<code class="docutils literal notranslate"><span class="pre">key_dir</span></code> setting (see
+<a class="reference internal" href="configuring_sawtooth/path_configuration_file.html"><span class="doc">Path Configuration File</span></a>).</p>
+</li>
+<li><p>An authorized user must update the on-chain setting
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code> to include the public validator key of
+the new node.</p>
+<ol class="loweralpha">
+<li><p>Log into an existing member node as a user who has permission to change
+on-chain settings (by default, the owner of the private key used to create
+the genesis block). For more information, see
+<a class="reference internal" href="adding_authorized_users.html"><span class="doc">Adding Authorized Users for Settings Proposals</span></a>.</p></li>
+<li><p>List the current PBFT member nodes:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth settings list --filter sawtooth.consensus.pbft.members
+</pre></div>
+</div>
+<p>Copy the list of validator keys to use in the next step.</p>
+</li>
+<li><p>Submit a transaction that specifies the new list of all PBFT member nodes
+(the previous list plus the new node’s key).</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>BE VERY CAREFUL! Make sure to specify the full list of keys.
+Use double quotes around each key and surround the entire members
+string in single quotes, as shown in the following example.</p>
+<p>Double-check each key before you run this command, because a typo could
+stall the network.</p>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawset proposal create <span class="se">\</span>
+  --key /etc/sawtooth/keys/validator.priv <span class="se">\</span>
+  sawtooth.consensus.pbft.members<span class="o">=</span><span class="s1">&#39;[previous-list,&quot;NEW-KEY&quot;]&#39;</span>
+</pre></div>
+</div>
+<p>If there are no errors, this change will be committed to the blockchain.</p>
+</li>
+</ol>
+</li>
+</ol>
+<p>When all nodes have detected the change and updated their local copy of the
+member list, the new member node begins to participate in the PBFT network.</p>
+</div>
+<div class="section" id="removing-a-pbft-node">
+<span id="removing-a-pbft-node-label"></span><h2>Removing a PBFT Node<a class="headerlink" href="#removing-a-pbft-node" title="Permalink to this headline">¶</a></h2>
+<p>To remove an existing node from a PBFT network, an authorized user will delete
+the node’s validator key from  the <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code> setting.</p>
+<p>You can delete several nodes at the same time.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>PBFT consensus requires a network with at least four nodes. A network with
+fewer than four nodes will fail.</p>
+</div>
+<ol class="arabic">
+<li><p>Send the node’s public validator key to the administrator who will update
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code>. On the node you want to remove, use this
+command to display the public validator key:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> cat /etc/sawtooth/keys/validator.pub
+</pre></div>
+</div>
+</li>
+<li><p>An authorized user must update the on-chain setting
+<code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.pbft.members</span></code> to delete the public validator key of
+the node to be removed.</p>
+<ol class="loweralpha">
+<li><p>Log into an existing member node as a user who has permission to change
+on-chain settings (by default, the owner of the private key used to create
+the genesis block). For more information, see
+<a class="reference internal" href="adding_authorized_users.html"><span class="doc">Adding Authorized Users for Settings Proposals</span></a>.</p></li>
+<li><p>List the current PBFT member nodes:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth settings list --filter sawtooth.consensus.pbft.members
+</pre></div>
+</div>
+</li>
+<li><p>Submit a transaction that specifies the new list of PBFT member nodes
+(the previous list, minus the key of the node or nodes to be removed).</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>BE VERY CAREFUL! Make sure to specify the correct list of keys.
+Use double quotes around each key and surround the entire members
+string in single quotes, as shown in the following example.</p>
+<p>Double-check each key before you run this command, because a typo could
+stall the network.</p>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawset proposal create <span class="se">\</span>
+  --key /etc/sawtooth/keys/validator.priv <span class="se">\</span>
+  sawtooth.consensus.pbft.members<span class="o">=</span><span class="s1">&#39;[UPDATED-LIST]&#39;</span>
+</pre></div>
+</div>
+<p>If there are no errors, this change will be committed to the blockchain.</p>
+</li>
+</ol>
+</li>
+<li><p>Make sure that change has been committed. You can check the setting from
+any node.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth settings list --filter sawtooth.consensus.pbft.members
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Until the settings change is committed on all nodes, the removed node is
+considered part of the network. If the node is shut down too soon, it
+could be impossible to commit the settings change if there are too few
+working nodes. This is especially important on a small network or when
+removing several nodes at once.</p>
+</div>
+<p>When all nodes have detected the change and updated their local copy of the
+member list, the node being removed stops participating in the PBFT network.</p>
+</li>
+<li><p>Shut down the old node.</p>
+<ol class="loweralpha simple">
+<li><p>To stop the Sawtooth services, see
+<a class="reference internal" href="systemd.html#stop-restart-sawtooth-services-label"><span class="std std-ref">Stop or Restart the Sawtooth Services</span></a>.</p></li>
+<li><p>To delete blockchain data, logs, and keys from this node, see
+<a class="reference internal" href="../app_developers_guide/ubuntu.html#stop-sawtooth-ubuntu-label"><span class="std std-ref">Step 14: Stop Sawtooth Components</span></a>.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You do not need to remove this node from the <code class="docutils literal notranslate"><span class="pre">peers</span></code> list on the other
+nodes (in the <a class="reference internal" href="off_chain_settings.html#sysadm-configure-validator-label"><span class="std std-ref">off-chain validator settings</span></a>). The network will operate correctly
+even if a removed node is still in this list.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="configuring_sawtooth.html" class="btn btn-neutral float-right" title="About Sawtooth Configuration Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="about_dynamic_consensus.html" class="btn btn-neutral float-left" title="About Dynamic Consensus" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

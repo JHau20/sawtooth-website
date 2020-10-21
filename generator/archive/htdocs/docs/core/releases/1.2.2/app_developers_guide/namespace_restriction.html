@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Namespace Restriction &mdash; Sawtooth v1.2.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Subscribing to Events" href="event_subscriptions.html" />
+    <link rel="prev" title="Address and Namespace Design" href="address_and_namespace.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Transaction Family Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_sawtooth.html">Setting Up a Sawtooth Node for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creating_sawtooth_network.html">Creating a Sawtooth Test Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Playing with the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_the_sdks.html">Using the Sawtooth SDKs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Namespace Restriction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_subscriptions.html">Subscribing to Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer’s Guide</a> &raquo;</li>
+        
+      <li>Namespace Restriction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/namespace_restriction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="namespace-restriction">
+<h1>Namespace Restriction<a class="headerlink" href="#namespace-restriction" title="Permalink to this headline">¶</a></h1>
+<p>A transaction family is defined by a set of parameters including a
+name, some version numbers, an <em>apply</em> function and namespaces. The
+apply function is what defines the behavior of a transaction family
+according to the <cite>get</cite> and <cite>set</cite> operations on addresses of the Global
+State. The goal of having a family declaring namespaces is to indicate
+the subset of addresses it will use for its <cite>get</cite> (read, inputs) and
+<cite>set</cite> (write, outputs) operations. It is important to remember that the
+namespace is not necessarily a 1-to-1 relationship between namespaces and
+transaction families.  Some transaction families like <a class="reference internal" href="../transaction_family_specifications/settings_transaction_family.html"><span class="doc">Settings
+Transaction Family</span></a> or
+<a class="reference internal" href="../transaction_family_specifications/blockinfo_transaction_family.html"><span class="doc">BlockInfo Transaction Family</span></a>
+write data at addresses that other transaction families could use,
+like a specific on-chain setting, or the timestamp of the v1.2.2
+block. Nevertheless, for security reasons, it is important to make
+sure transaction families cannot write data at addresses that is only
+intended to be read. This is the goal of the <em>namespace restriction</em>
+feature, when explicitly activated, the
+validators verify that transaction processors only perform <cite>set</cite>
+operations whose addresses have a prefix in common with one of the
+family’s specified namespace prefix(es). By default and for better
+flexibility, this namespace restriction is not enforced by the
+validators, but when activated, this feature augments enforcement of
+the transaction processors declaration done during registration.</p>
+<p>In order to activate some namespace restrictions,
+appropriate settings must be published on-chain using the
+<a class="reference internal" href="../transaction_family_specifications/settings_transaction_family.html"><span class="doc">Settings Transaction Family</span></a>.
+For every block, a validator loads the JSON data stored under the
+specific key <code class="docutils literal notranslate"><span class="pre">sawtooth.validator.transaction_families</span></code>.  At this
+key the data is a list of JSON entries, one per transaction family,
+possibly including its namespaces. When a transaction family entry
+includes namespaces, the validator enforces that the corresponding
+transaction processor only writes at addresses with a prefix matching
+at least one of the namespaces.</p>
+<p>Here is an example in which the namespaces are set for the transaction
+families <code class="docutils literal notranslate"><span class="pre">block_info</span></code>, <code class="docutils literal notranslate"><span class="pre">sawtooth_settings</span></code> and <code class="docutils literal notranslate"><span class="pre">intkey</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sawtooth</span><span class="o">.</span><span class="n">validator</span><span class="o">.</span><span class="n">transaction_families</span><span class="o">=</span><span class="s1">&#39;[</span>
+  <span class="p">{</span>\<span class="s2">&quot;family</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="s2">block_info</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">version</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">namespaces</span><span class="se">\&quot;</span><span class="s2">: [</span><span class="se">\&quot;</span><span class="s2">00b10c</span><span class="se">\&quot;</span><span class="s2">]},</span>
+  <span class="p">{</span>\<span class="s2">&quot;family</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">sawtooth_settings</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">version</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2">},</span>
+  <span class="p">{</span>\<span class="s2">&quot;family</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="s2">intkey</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">version</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="s2">1.0</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">namespaces</span><span class="se">\&quot;</span><span class="s2">: [</span><span class="se">\&quot;</span><span class="s2">1cf126</span><span class="se">\&quot;</span><span class="s2">]} ]&#39;</span>
+</pre></div>
+</div>
+<p>In the case where a family has no <code class="docutils literal notranslate"><span class="pre">&quot;namespaces&quot;</span></code>, the validator does
+not restrict the write permission of the family. In the example above,
+the family <cite>sawtooth_settings</cite> does not indicate any namespace and
+therefore the validator will let it write at any address. This is
+legitimate for <a class="reference internal" href="../transaction_family_specifications.html"><span class="doc">transaction
+families</span></a> which are reviewed thoroughly,
+like the ones included in Sawtooth.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="event_subscriptions.html" class="btn btn-neutral float-right" title="Subscribing to Events" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="address_and_namespace.html" class="btn btn-neutral float-left" title="Address and Namespace Design" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

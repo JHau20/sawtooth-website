@@ -1,0 +1,7 @@
+sawtooth\.validator\_config module
+==================================
+
+.. automodule:: sawtooth.validator_config
+    :members:
+    :undoc-members:
+    :show-inheritance:

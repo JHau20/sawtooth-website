@@ -1,0 +1,727 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mktplace.transactions.market_place &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>mktplace.transactions.market_place</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mktplace.transactions.market_place</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">account_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">asset_type_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">asset_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">exchange_offer_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">exchange_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">holding_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">incentive_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">liability_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">participant_update</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">payment</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions</span> <span class="k">import</span> <span class="n">sell_offer_update</span>
+<span class="kn">from</span> <span class="nn">gossip</span> <span class="k">import</span> <span class="n">node</span><span class="p">,</span> <span class="n">signed_object</span>
+<span class="kn">from</span> <span class="nn">journal</span> <span class="k">import</span> <span class="n">transaction</span><span class="p">,</span> <span class="n">transaction_block</span>
+<span class="kn">from</span> <span class="nn">journal</span> <span class="k">import</span> <span class="n">object_store</span>
+<span class="kn">from</span> <span class="nn">journal.messages</span> <span class="k">import</span> <span class="n">transaction_message</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">ValidatorHoldingID</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">BaseValidationReward</span> <span class="o">=</span> <span class="mi">100</span>
+
+
+<div class="viewcode-block" id="register_transaction_types"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.market_place.html#mktplace.transactions.market_place.register_transaction_types">[docs]</a><span class="k">def</span> <span class="nf">register_transaction_types</span><span class="p">(</span><span class="n">journal</span><span class="p">):</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">register_message_handler</span><span class="p">(</span>
+        <span class="n">MarketPlaceTransactionMessage</span><span class="p">,</span>
+        <span class="n">transaction_message</span><span class="o">.</span><span class="n">transaction_message_handler</span><span class="p">)</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">add_transaction_store</span><span class="p">(</span><span class="n">MarketPlaceTransaction</span><span class="p">)</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">on_block_test</span> <span class="o">+=</span> <span class="n">_block_test</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">on_build_block</span> <span class="o">+=</span> <span class="n">_build_block</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">on_claim_block</span> <span class="o">+=</span> <span class="n">_claim_block</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">on_genesis_block</span> <span class="o">+=</span> <span class="n">_prepare_genesis_transactions</span></div>
+
+
+<span class="k">def</span> <span class="nf">_build_block</span><span class="p">(</span><span class="n">journal</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;build a new block&#39;</span><span class="p">)</span>
+
+    <span class="k">global</span> <span class="n">ValidatorHoldingID</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ValidatorHoldingID</span><span class="p">:</span>
+        <span class="n">mktstore</span> <span class="o">=</span> <span class="n">journal</span><span class="o">.</span><span class="n">global_store</span><span class="o">.</span><span class="n">TransactionStores</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">MarketPlaceTransaction</span><span class="o">.</span><span class="n">TransactionTypeName</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">mktstore</span><span class="p">:</span>
+            <span class="n">holdingname</span> <span class="o">=</span> <span class="s2">&quot;//</span><span class="si">{0}</span><span class="s2">/holding/validation-token&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">journal</span><span class="o">.</span><span class="n">local_node</span><span class="o">.</span><span class="n">Name</span><span class="p">)</span>
+            <span class="n">holdingid</span> <span class="o">=</span> <span class="n">mktstore</span><span class="o">.</span><span class="n">n2i</span><span class="p">(</span><span class="n">holdingname</span><span class="p">,</span> <span class="s1">&#39;Holding&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">holdingid</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;set validator holding id to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">holdingid</span><span class="p">)</span>
+                <span class="n">ValidatorHoldingID</span> <span class="o">=</span> <span class="n">holdingid</span>
+
+    <span class="c1"># the initial count is the minimum incentive for validating a block</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">BaseValidationReward</span>
+    <span class="k">for</span> <span class="n">txnid</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">TransactionIDs</span><span class="p">:</span>
+        <span class="n">txn</span> <span class="o">=</span> <span class="n">journal</span><span class="o">.</span><span class="n">transaction_store</span><span class="p">[</span><span class="n">txnid</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">txn</span><span class="p">,</span> <span class="n">MarketPlaceTransaction</span><span class="p">):</span>
+            <span class="c1"># check for payment, we don&#39;t actually need to</span>
+            <span class="c1"># check whether the payment is valid at this point</span>
+            <span class="c1"># just to make sure that the incentive transaction</span>
+            <span class="c1"># is not greater than the total payments</span>
+            <span class="k">if</span> <span class="n">txn</span><span class="o">.</span><span class="n">Payment</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="n">txn</span><span class="o">.</span><span class="n">Payment</span><span class="o">.</span><span class="n">Count</span>
+
+    <span class="c1"># build the incentive transaction, sign it and add it to the</span>
+    <span class="c1"># local store but dont send it out, use the local store as</span>
+    <span class="c1"># a temporary holding place</span>
+    <span class="k">if</span> <span class="n">ValidatorHoldingID</span><span class="p">:</span>
+
+        <span class="n">itxn</span> <span class="o">=</span> <span class="n">MarketPlaceTransaction</span><span class="p">(</span><span class="n">minfo</span><span class="o">=</span><span class="p">{</span>
+            <span class="s1">&#39;Updates&#39;</span><span class="p">:</span> <span class="p">[{</span>
+                <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="n">incentive_update</span><span class="o">.</span><span class="n">IncentiveUpdate</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">,</span>
+                <span class="s1">&#39;HoldingId&#39;</span><span class="p">:</span> <span class="n">ValidatorHoldingID</span><span class="p">,</span>
+                <span class="s1">&#39;Count&#39;</span><span class="p">:</span> <span class="n">count</span><span class="p">,</span>
+            <span class="p">}]</span>
+        <span class="p">})</span>
+        <span class="n">itxn</span><span class="o">.</span><span class="n">sign_from_node</span><span class="p">(</span><span class="n">journal</span><span class="o">.</span><span class="n">local_node</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;add incentive transaction </span><span class="si">%s</span><span class="s1"> to block&#39;</span><span class="p">,</span> <span class="n">itxn</span><span class="o">.</span><span class="n">Identifier</span><span class="p">)</span>
+        <span class="n">journal</span><span class="o">.</span><span class="n">transaction_store</span><span class="p">[</span><span class="n">itxn</span><span class="o">.</span><span class="n">Identifier</span><span class="p">]</span> <span class="o">=</span> <span class="n">itxn</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">TransactionIDs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">itxn</span><span class="o">.</span><span class="n">Identifier</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_claim_block</span><span class="p">(</span><span class="n">journal</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;prepare to claim block </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">Identifier</span><span class="p">)</span>
+
+    <span class="c1"># send out the incentive transactions prior to sending out the</span>
+    <span class="c1"># actual block</span>
+    <span class="n">itxns</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">txnid</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">TransactionIDs</span><span class="p">:</span>
+        <span class="n">txn</span> <span class="o">=</span> <span class="n">journal</span><span class="o">.</span><span class="n">transaction_store</span><span class="p">[</span><span class="n">txnid</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">txn</span><span class="p">,</span> <span class="n">MarketPlaceTransaction</span><span class="p">):</span>
+            <span class="c1"># grab all of the incentive transactions, in theory one</span>
+            <span class="c1"># should be sufficient though i suppose more could be added</span>
+            <span class="c1"># to redirect funds to multiple locations...</span>
+            <span class="n">update</span> <span class="o">=</span> <span class="n">txn</span><span class="o">.</span><span class="n">get_first_update</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">update</span><span class="o">.</span><span class="n">UpdateType</span> <span class="o">==</span> \
+                    <span class="n">incentive_update</span><span class="o">.</span><span class="n">IncentiveUpdate</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+                <span class="n">itxns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">txn</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;found </span><span class="si">%s</span><span class="s1"> incentive transactions while claiming block </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                 <span class="nb">len</span><span class="p">(</span><span class="n">itxns</span><span class="p">),</span> <span class="n">block</span><span class="o">.</span><span class="n">Identifier</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">itxn</span> <span class="ow">in</span> <span class="n">itxns</span><span class="p">:</span>
+        <span class="n">itxn</span><span class="o">.</span><span class="n">Status</span> <span class="o">=</span> <span class="n">transaction</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">pending</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">MarketPlaceTransactionMessage</span><span class="p">()</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">Transaction</span> <span class="o">=</span> <span class="n">itxn</span>
+        <span class="n">journal</span><span class="o">.</span><span class="n">gossip</span><span class="o">.</span><span class="n">broadcast_message</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;sending the incentive transaction </span><span class="si">%s</span><span class="s1"> for holding </span><span class="si">%s</span><span class="s1"> for block </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">itxn</span><span class="o">.</span><span class="n">Identifier</span><span class="p">,</span> <span class="n">itxn</span><span class="o">.</span><span class="n">get_first_update</span><span class="p">()</span><span class="o">.</span><span class="n">HoldingID</span><span class="p">,</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">Identifier</span><span class="p">)</span>
+        <span class="n">journal</span><span class="o">.</span><span class="n">gossip</span><span class="o">.</span><span class="n">broadcast_message</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_block_test</span><span class="p">(</span><span class="n">journal</span><span class="p">,</span> <span class="n">block</span><span class="p">):</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;test for valid marketplace block&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">block</span><span class="o">.</span><span class="n">Status</span> <span class="o">==</span> <span class="n">transaction_block</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">complete</span>
+
+    <span class="c1"># the initial count is the minimum incentive for validating a block</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">BaseValidationReward</span>
+    <span class="n">itxns</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">txnid</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">TransactionIDs</span><span class="p">:</span>
+        <span class="n">txn</span> <span class="o">=</span> <span class="n">journal</span><span class="o">.</span><span class="n">transaction_store</span><span class="p">[</span><span class="n">txnid</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">txn</span><span class="p">,</span> <span class="n">MarketPlaceTransaction</span><span class="p">):</span>
+            <span class="c1"># grab all of the incentive transactions, in theory one</span>
+            <span class="c1"># should be sufficient though i suppose more could be added</span>
+            <span class="c1"># to redirect funds to multiple locations...</span>
+            <span class="n">update</span> <span class="o">=</span> <span class="n">txn</span><span class="o">.</span><span class="n">get_first_update</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">update</span><span class="o">.</span><span class="n">UpdateType</span> <span class="o">==</span> \
+                    <span class="n">incentive_update</span><span class="o">.</span><span class="n">IncentiveUpdate</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+                <span class="n">itxns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">txn</span><span class="p">)</span>
+
+            <span class="c1"># check for payment, we don&#39;t actually need to</span>
+            <span class="c1"># check whether the payment is valid at this point</span>
+            <span class="c1"># just to make sure that the incentive transaction</span>
+            <span class="c1"># is not greater than the total payments</span>
+            <span class="k">elif</span> <span class="n">txn</span><span class="o">.</span><span class="n">Payment</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="n">txn</span><span class="o">.</span><span class="n">Payment</span><span class="o">.</span><span class="n">Count</span>
+
+    <span class="c1"># now make sure that the incentive transactions do not over claim resources</span>
+    <span class="k">for</span> <span class="n">itxn</span> <span class="ow">in</span> <span class="n">itxns</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">itxn</span><span class="o">.</span><span class="n">OriginatorID</span> <span class="o">!=</span> <span class="n">block</span><span class="o">.</span><span class="n">OriginatorID</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s1">&#39;participant </span><span class="si">%s</span><span class="s1"> attempted to claim incentive on block </span><span class="si">%s</span><span class="s1"> &#39;</span>
+                <span class="s1">&#39;committed by </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                <span class="n">itxn</span><span class="o">.</span><span class="n">OriginatorID</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">Identifier</span><span class="p">,</span> <span class="n">block</span><span class="o">.</span><span class="n">OriginatorID</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">count</span> <span class="o">-=</span> <span class="n">itxn</span><span class="o">.</span><span class="n">Update</span><span class="o">.</span><span class="n">Count</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;block payment is </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">count</span>
+
+
+<span class="k">def</span> <span class="nf">_prepare_genesis_transactions</span><span class="p">(</span><span class="n">journal</span><span class="p">):</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;prepare marketplace transactions for genesis block&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Set up a random key for generating the genesis objects, we</span>
+    <span class="c1"># &quot;trust&quot; that the key is not kept. At some point this should be</span>
+    <span class="c1"># revisited, suggestions about &quot;burning&quot; the private key</span>
+    <span class="n">signingkey</span> <span class="o">=</span> <span class="n">signed_object</span><span class="o">.</span><span class="n">generate_signing_key</span><span class="p">()</span>
+    <span class="n">identifier</span> <span class="o">=</span> <span class="n">signed_object</span><span class="o">.</span><span class="n">generate_identifier</span><span class="p">(</span><span class="n">signingkey</span><span class="p">)</span>
+    <span class="n">signnode</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">identifier</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span> <span class="n">signingkey</span><span class="o">=</span><span class="n">signingkey</span><span class="p">)</span>
+
+    <span class="c1"># Create a participant for the global market</span>
+    <span class="n">txn</span> <span class="o">=</span> <span class="n">MarketPlaceTransaction</span><span class="p">(</span><span class="n">minfo</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;Updates&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="n">participant_update</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">,</span>
+                <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;marketplace&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="s1">&#39;The ROOT participant for the marketplace&#39;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">})</span>
+    <span class="n">txn</span><span class="o">.</span><span class="n">sign_from_node</span><span class="p">(</span><span class="n">signnode</span><span class="p">)</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">add_pending_transaction</span><span class="p">(</span><span class="n">txn</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Created market participant: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">txn</span><span class="o">.</span><span class="n">Identifier</span><span class="p">)</span>
+    <span class="n">lasttxn</span> <span class="o">=</span> <span class="n">txn</span><span class="o">.</span><span class="n">Identifier</span>
+    <span class="n">mktid</span> <span class="o">=</span> <span class="n">txn</span><span class="o">.</span><span class="n">Identifier</span>
+
+    <span class="c1"># Create an asset type for participants</span>
+    <span class="n">txn</span> <span class="o">=</span> <span class="n">MarketPlaceTransaction</span><span class="p">(</span><span class="n">minfo</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;Updates&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="n">asset_type_update</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">,</span>
+                <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="n">mktid</span><span class="p">,</span>
+                <span class="s1">&#39;Restricted&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;/asset-type/participant&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="s1">&#39;Canonical type for participant assets&#39;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">})</span>
+    <span class="n">txn</span><span class="o">.</span><span class="n">Dependencies</span> <span class="o">=</span> <span class="p">[</span><span class="n">lasttxn</span><span class="p">]</span>
+    <span class="n">txn</span><span class="o">.</span><span class="n">sign_from_node</span><span class="p">(</span><span class="n">signnode</span><span class="p">)</span>
+
+    <span class="n">journal</span><span class="o">.</span><span class="n">add_pending_transaction</span><span class="p">(</span><span class="n">txn</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Created participant asset type: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">txn</span><span class="o">.</span><span class="n">Identifier</span><span class="p">)</span>
+    <span class="n">lasttxn</span> <span class="o">=</span> <span class="n">txn</span><span class="o">.</span><span class="n">Identifier</span>
+
+    <span class="c1"># Create an asset type for random tokens</span>
+    <span class="n">txn</span> <span class="o">=</span> <span class="n">MarketPlaceTransaction</span><span class="p">(</span><span class="n">minfo</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;Updates&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="n">asset_type_update</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">,</span>
+                <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="n">mktid</span><span class="p">,</span>
+                <span class="s1">&#39;Restricted&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;/asset-type/token&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="s1">&#39;Canonical type for meaningless tokens that &#39;</span>
+                               <span class="s1">&#39;are useful for bootstrapping&#39;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">})</span>
+    <span class="n">txn</span><span class="o">.</span><span class="n">Dependencies</span> <span class="o">=</span> <span class="p">[</span><span class="n">lasttxn</span><span class="p">]</span>
+    <span class="n">txn</span><span class="o">.</span><span class="n">sign_from_node</span><span class="p">(</span><span class="n">signnode</span><span class="p">)</span>
+
+    <span class="n">journal</span><span class="o">.</span><span class="n">add_pending_transaction</span><span class="p">(</span><span class="n">txn</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Created token asset type: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">txn</span><span class="o">.</span><span class="n">Identifier</span><span class="p">)</span>
+    <span class="n">lasttxn</span> <span class="o">=</span> <span class="n">txn</span><span class="o">.</span><span class="n">Identifier</span>
+    <span class="n">assettypeid</span> <span class="o">=</span> <span class="n">txn</span><span class="o">.</span><span class="n">Identifier</span>
+
+    <span class="c1"># Create an asset for the tokens</span>
+    <span class="n">txn</span> <span class="o">=</span> <span class="n">MarketPlaceTransaction</span><span class="p">(</span><span class="n">minfo</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;Updates&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="n">asset_update</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">,</span>
+                <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="n">mktid</span><span class="p">,</span>
+                <span class="s1">&#39;AssetTypeId&#39;</span><span class="p">:</span> <span class="n">assettypeid</span><span class="p">,</span>
+                <span class="s1">&#39;Restricted&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s1">&#39;Consumable&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s1">&#39;Divisible&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;/asset/token&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="s1">&#39;Canonical asset for tokens&#39;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">})</span>
+    <span class="n">txn</span><span class="o">.</span><span class="n">Dependencies</span> <span class="o">=</span> <span class="p">[</span><span class="n">lasttxn</span><span class="p">]</span>
+    <span class="n">txn</span><span class="o">.</span><span class="n">sign_from_node</span><span class="p">(</span><span class="n">signnode</span><span class="p">)</span>
+
+    <span class="n">journal</span><span class="o">.</span><span class="n">add_pending_transaction</span><span class="p">(</span><span class="n">txn</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Created token asset: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">txn</span><span class="o">.</span><span class="n">Identifier</span><span class="p">)</span>
+
+    <span class="c1"># Create an asset for the validation tokens</span>
+    <span class="n">txn</span> <span class="o">=</span> <span class="n">MarketPlaceTransaction</span><span class="p">(</span><span class="n">minfo</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;Updates&#39;</span><span class="p">:</span> <span class="p">[{</span>
+            <span class="s1">&#39;UpdateType&#39;</span><span class="p">:</span> <span class="n">asset_update</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">,</span>
+            <span class="s1">&#39;CreatorId&#39;</span><span class="p">:</span> <span class="n">mktid</span><span class="p">,</span>
+            <span class="s1">&#39;AssetTypeId&#39;</span><span class="p">:</span> <span class="n">assettypeid</span><span class="p">,</span>
+            <span class="s1">&#39;Restricted&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s1">&#39;Consumable&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s1">&#39;Divisible&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="s1">&#39;/asset/validation-token&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Description&#39;</span><span class="p">:</span> <span class="s1">&#39;Canonical asset for validation tokens&#39;</span>
+        <span class="p">}]}</span>
+    <span class="p">)</span>
+
+    <span class="n">txn</span><span class="o">.</span><span class="n">Dependencies</span> <span class="o">=</span> <span class="p">[</span><span class="n">lasttxn</span><span class="p">]</span>
+    <span class="n">txn</span><span class="o">.</span><span class="n">sign_from_node</span><span class="p">(</span><span class="n">signnode</span><span class="p">)</span>
+
+    <span class="n">journal</span><span class="o">.</span><span class="n">add_pending_transaction</span><span class="p">(</span><span class="n">txn</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Created validation token asset: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">txn</span><span class="o">.</span><span class="n">Identifier</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MarketPlaceGlobalStore"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.market_place.html#mktplace.transactions.market_place.MarketPlaceGlobalStore">[docs]</a><span class="k">class</span> <span class="nc">MarketPlaceGlobalStore</span><span class="p">(</span><span class="n">object_store</span><span class="o">.</span><span class="n">ObjectStore</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prevstore</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">storeinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MarketPlaceGlobalStore</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">prevstore</span><span class="p">,</span> <span class="n">storeinfo</span><span class="p">,</span>
+                                                     <span class="n">readonly</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MarketPlaceGlobalStore.clone_store"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.market_place.html#mktplace.transactions.market_place.MarketPlaceGlobalStore.clone_store">[docs]</a>    <span class="k">def</span> <span class="nf">clone_store</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">storeinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new checkpoint that can be modified</span>
+
+<span class="sd">        :return: a new checkpoint that extends the current store</span>
+<span class="sd">        :rtype: KeyValueStore</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">MarketPlaceGlobalStore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">storeinfo</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceGlobalStore.i2n"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.market_place.html#mktplace.transactions.market_place.MarketPlaceGlobalStore.i2n">[docs]</a>    <span class="k">def</span> <span class="nf">i2n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">,</span> <span class="n">objinfo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert an objectid into a canonical name representation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">objinfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">objinfo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">objectid</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="n">objinfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;///</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">objectid</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">objinfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;object-type&#39;</span><span class="p">)</span> <span class="o">==</span> \
+                <span class="n">participant_update</span><span class="o">.</span><span class="n">ParticipantObject</span><span class="o">.</span><span class="n">ObjectTypeName</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;//</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="n">creatorid</span> <span class="o">=</span> <span class="n">objinfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;creator&#39;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">creatorid</span>
+
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{0}{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">i2n</span><span class="p">(</span><span class="n">creatorid</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceGlobalStore.n2i"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.market_place.html#mktplace.transactions.market_place.MarketPlaceGlobalStore.n2i">[docs]</a>    <span class="k">def</span> <span class="nf">n2i</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find an object by name</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            obj_type: The object-type, Asset, Participant...</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;///&#39;</span><span class="p">):</span>
+            <span class="nb">id</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;///&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">id</span> <span class="k">if</span> <span class="nb">id</span> <span class="ow">in</span> <span class="bp">self</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;//&#39;</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">unpack_indeterminate</span><span class="p">(</span><span class="n">creator</span><span class="p">,</span> <span class="o">*</span><span class="n">path</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">creator</span><span class="p">,</span> <span class="n">path</span>
+
+            <span class="n">creator</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">unpack_indeterminate</span><span class="p">(</span><span class="o">*</span><span class="n">name</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">creator_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s2">&quot;Participant:full-name&quot;</span><span class="p">,</span>
+                                         <span class="s2">&quot;//&quot;</span> <span class="o">+</span> <span class="n">creator</span><span class="p">)[</span><span class="s1">&#39;object-id&#39;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">path</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">creator_id</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;//&quot;</span> <span class="o">+</span> <span class="n">creator</span>
+        <span class="n">ident</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">obj_type</span> <span class="o">+</span> <span class="s2">&quot;:full-name&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ident</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="p">)[</span><span class="s1">&#39;object-id&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">ident</span></div></div>
+
+
+<div class="viewcode-block" id="MarketPlaceTransactionMessage"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.market_place.html#mktplace.transactions.market_place.MarketPlaceTransactionMessage">[docs]</a><span class="k">class</span> <span class="nc">MarketPlaceTransactionMessage</span><span class="p">(</span><span class="n">transaction_message</span><span class="o">.</span><span class="n">TransactionMessage</span><span class="p">):</span>
+    <span class="n">MessageType</span> <span class="o">=</span> <span class="s2">&quot;/mktplace.transactions.MarketPlace/Transaction&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minfo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">minfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">minfo</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MarketPlaceTransactionMessage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">minfo</span><span class="o">=</span><span class="n">minfo</span><span class="p">)</span>
+
+        <span class="n">tinfo</span> <span class="o">=</span> <span class="n">minfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Transaction&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Transaction</span> <span class="o">=</span> <span class="n">MarketPlaceTransaction</span><span class="p">(</span><span class="n">tinfo</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MarketPlaceTransaction"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.market_place.html#mktplace.transactions.market_place.MarketPlaceTransaction">[docs]</a><span class="k">class</span> <span class="nc">MarketPlaceTransaction</span><span class="p">(</span><span class="n">transaction</span><span class="o">.</span><span class="n">UpdatesTransaction</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A Transaction is a set of updates to be applied atomically to a journal. It</span>
+<span class="sd">    has a unique identifier and a signature to validate the source.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">TransactionTypeName</span> <span class="o">=</span> <span class="s1">&#39;/MarketPlaceTransaction&#39;</span>
+    <span class="n">TransactionStoreType</span> <span class="o">=</span> <span class="n">MarketPlaceGlobalStore</span>
+    <span class="n">MessageType</span> <span class="o">=</span> <span class="n">MarketPlaceTransactionMessage</span>
+
+    <span class="n">UpdateRegistry</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">account_update</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">account_update</span><span class="o">.</span><span class="n">Register</span><span class="p">,</span>
+        <span class="n">account_update</span><span class="o">.</span><span class="n">Unregister</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">account_update</span><span class="o">.</span><span class="n">Unregister</span><span class="p">,</span>
+        <span class="n">account_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="n">account_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="p">,</span>
+        <span class="n">account_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">account_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="p">,</span>
+
+        <span class="n">asset_update</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">asset_update</span><span class="o">.</span><span class="n">Register</span><span class="p">,</span>
+        <span class="n">asset_update</span><span class="o">.</span><span class="n">Unregister</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">asset_update</span><span class="o">.</span><span class="n">Unregister</span><span class="p">,</span>
+        <span class="n">asset_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="n">asset_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="p">,</span>
+        <span class="n">asset_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">asset_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="p">,</span>
+
+        <span class="n">asset_type_update</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">asset_type_update</span><span class="o">.</span><span class="n">Register</span><span class="p">,</span>
+        <span class="n">asset_type_update</span><span class="o">.</span><span class="n">Unregister</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">asset_type_update</span><span class="o">.</span><span class="n">Unregister</span><span class="p">,</span>
+        <span class="n">asset_type_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="n">asset_type_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="p">,</span>
+        <span class="n">asset_type_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">asset_type_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="p">,</span>
+
+        <span class="n">exchange_offer_update</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="n">exchange_offer_update</span><span class="o">.</span><span class="n">Register</span><span class="p">,</span>
+        <span class="n">exchange_offer_update</span><span class="o">.</span><span class="n">Unregister</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="n">exchange_offer_update</span><span class="o">.</span><span class="n">Unregister</span><span class="p">,</span>
+        <span class="n">exchange_offer_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="n">exchange_offer_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="p">,</span>
+        <span class="n">exchange_offer_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="n">exchange_offer_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="p">,</span>
+
+
+        <span class="n">holding_update</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">holding_update</span><span class="o">.</span><span class="n">Register</span><span class="p">,</span>
+        <span class="n">holding_update</span><span class="o">.</span><span class="n">Unregister</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">holding_update</span><span class="o">.</span><span class="n">Unregister</span><span class="p">,</span>
+        <span class="n">holding_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="n">holding_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="p">,</span>
+        <span class="n">holding_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">holding_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="p">,</span>
+
+        <span class="n">liability_update</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">liability_update</span><span class="o">.</span><span class="n">Register</span><span class="p">,</span>
+        <span class="n">liability_update</span><span class="o">.</span><span class="n">Unregister</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">liability_update</span><span class="o">.</span><span class="n">Unregister</span><span class="p">,</span>
+        <span class="n">liability_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="n">liability_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="p">,</span>
+        <span class="n">liability_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">liability_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="p">,</span>
+
+        <span class="n">participant_update</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">participant_update</span><span class="o">.</span><span class="n">Register</span><span class="p">,</span>
+        <span class="n">participant_update</span><span class="o">.</span><span class="n">Unregister</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="n">participant_update</span><span class="o">.</span><span class="n">Unregister</span><span class="p">,</span>
+        <span class="n">participant_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="n">participant_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="p">,</span>
+        <span class="n">participant_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="n">participant_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="p">,</span>
+
+        <span class="n">sell_offer_update</span><span class="o">.</span><span class="n">Register</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">sell_offer_update</span><span class="o">.</span><span class="n">Register</span><span class="p">,</span>
+        <span class="n">sell_offer_update</span><span class="o">.</span><span class="n">Unregister</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">sell_offer_update</span><span class="o">.</span><span class="n">Unregister</span><span class="p">,</span>
+        <span class="n">sell_offer_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="n">sell_offer_update</span><span class="o">.</span><span class="n">UpdateDescription</span><span class="p">,</span>
+        <span class="n">sell_offer_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">sell_offer_update</span><span class="o">.</span><span class="n">UpdateName</span><span class="p">,</span>
+
+        <span class="n">exchange_update</span><span class="o">.</span><span class="n">Exchange</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span> <span class="n">exchange_update</span><span class="o">.</span><span class="n">Exchange</span><span class="p">,</span>
+        <span class="n">incentive_update</span><span class="o">.</span><span class="n">IncentiveUpdate</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="n">incentive_update</span><span class="o">.</span><span class="n">IncentiveUpdate</span>
+    <span class="p">}</span>
+
+    <span class="n">PaymentRegistry</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">payment</span><span class="o">.</span><span class="n">PayFromHolding</span><span class="o">.</span><span class="n">PaymentType</span><span class="p">:</span> <span class="n">payment</span><span class="o">.</span><span class="n">PayFromHolding</span>
+    <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minfo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">minfo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">minfo</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Payment</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="s1">&#39;Payment&#39;</span> <span class="ow">in</span> <span class="n">minfo</span><span class="p">:</span>
+            <span class="n">pinfo</span> <span class="o">=</span> <span class="n">minfo</span><span class="p">[</span><span class="s1">&#39;Payment&#39;</span><span class="p">]</span>
+            <span class="n">ptype</span> <span class="o">=</span> <span class="n">pinfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PaymentType&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ptype</span> <span class="ow">or</span> <span class="n">ptype</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">PaymentRegistry</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s1">&#39;transaction contains invalid payment type, skipping&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Payment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PaymentRegistry</span><span class="p">[</span><span class="n">ptype</span><span class="p">](</span><span class="bp">self</span><span class="p">,</span> <span class="n">pinfo</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MarketPlaceTransaction</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">minfo</span><span class="o">=</span><span class="n">minfo</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MarketPlaceTransaction.check_valid"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.market_place.html#mktplace.transactions.market_place.MarketPlaceTransaction.check_valid">[docs]</a>    <span class="k">def</span> <span class="nf">check_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">):</span>
+
+        <span class="c1"># check the payment</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Payment</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">Payment</span><span class="o">.</span><span class="n">is_valid</span><span class="p">(</span><span class="n">store</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;invalid payment: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Payment</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">MarketPlaceTransaction</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">check_valid</span><span class="p">(</span><span class="n">store</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceTransaction.add_to_pending"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.market_place.html#mktplace.transactions.market_place.MarketPlaceTransaction.add_to_pending">[docs]</a>    <span class="k">def</span> <span class="nf">add_to_pending</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predicate to note that a transaction should be added to pending</span>
+<span class="sd">        transactions. In general incentive transactions should not be</span>
+<span class="sd">        including in the pending transaction list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_first_update</span><span class="p">()</span><span class="o">.</span><span class="n">UpdateType</span> <span class="o">!=</span> \
+                <span class="n">incentive_update</span><span class="o">.</span><span class="n">IncentiveUpdate</span><span class="o">.</span><span class="n">UpdateType</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MarketPlaceTransaction.get_updates"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.market_place.html#mktplace.transactions.market_place.MarketPlaceTransaction.get_updates">[docs]</a>    <span class="k">def</span> <span class="nf">get_updates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_updates</span></div>
+
+<div class="viewcode-block" id="MarketPlaceTransaction.get_first_update"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.market_place.html#mktplace.transactions.market_place.MarketPlaceTransaction.get_first_update">[docs]</a>    <span class="k">def</span> <span class="nf">get_first_update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_updates</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_updates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="MarketPlaceTransaction.register_updates"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.market_place.html#mktplace.transactions.market_place.MarketPlaceTransaction.register_updates">[docs]</a>    <span class="k">def</span> <span class="nf">register_updates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registry</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">update_type</span><span class="p">,</span> <span class="n">update</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">UpdateRegistry</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">registry</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">update_type</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceTransaction.dump"><a class="viewcode-back" href="../../../mktplace_api/mktplace.transactions.market_place.html#mktplace.transactions.market_place.MarketPlaceTransaction.dump">[docs]</a>    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">MarketPlaceTransaction</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dump</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Payment</span><span class="p">:</span>
+            <span class="n">result</span><span class="p">[</span><span class="s1">&#39;Payment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Payment</span><span class="o">.</span><span class="n">dump</span><span class="p">()</span>
+        <span class="n">dependencies</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Dependencies&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">for</span> <span class="n">refid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_first_update</span><span class="p">()</span><span class="o">.</span><span class="n">References</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">refid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dependencies</span><span class="p">:</span>
+                <span class="n">dependencies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">refid</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;Dependencies&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dependencies</span>
+        <span class="k">return</span> <span class="n">result</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

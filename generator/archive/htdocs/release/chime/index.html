@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+  <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<head>
+	<meta charset="utf-8">
+	<title>Hyperledger Sawtooth 1.2 (Chime) | Hyperledger Sawtooth</title>
+	<meta name="description" content="An enterprise-grade solution for distributed ledgers.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="0.0.0.0/release/chime/">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Hyperledger Sawtooth" href="0.0.0.0/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+
+	<!-- Google Analytics
+	-->
+</head>
+
+  <body>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">Hyperledger Sawtooth</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+                        
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/release/">
+					Releases
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/docs/">
+					Docs
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/faq/">
+					FAQ
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/community/">
+					Community
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/contact/">
+					Contact
+				</a>
+			</li>
+			
+			
+			<li>
+				<a class="page-link" href="/examples">
+					Examples
+				</a>
+			</li>
+			<!-- Social icons from Font Awesome, if enabled -->
+			<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/hyperledger/sawtooth-core" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/\%23HyperledgerSawtooth" title="Follow on Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Hyperledger Sawtooth 1.2 (Chime)</h1>
+  </header>
+  <section class="post-content"><p><a href="top"></a></p>
+
+<p>Hyperledger Sawtooth 1.2 (Chime) is now available.  See the <a href="https://sawtooth.hyperledger.org/docs/core/releases/1.2.3/">latest
+documentation</a> to
+get started.</p>
+
+<p>This page describes the new and changed features in Hyperledger Sawtooth 1.2
+(since release 1.1).  Information is organized in the following categories:</p>
+
+<ul>
+  <li><a href="#new-features">New Features</a></li>
+  <li><a href="#non-breaking-changes">Non-Breaking Changes</a></li>
+  <li><a href="#documentation-changes">Documentation Changes</a></li>
+</ul>
+
+<h1 id="hyperledger-sawtooth-12">Hyperledger Sawtooth 1.2</h1>
+
+<h2 id="new-features">New Features</h2>
+
+<ul>
+  <li>Support for <a href="https://sawtooth.hyperledger.org/docs/pbft/releases/1.0.1/">Sawtooth PBFT consensus engine version
+1.0</a>.
+    <ul>
+      <li>Sawtooth PBFT is the recommended consensus mechanism. It is designed to
+handle small to medium network sizes with finality and byzantine fault
+tolerance.</li>
+      <li>Sawtooth PoET is designed for larger networks at the expense of slower /
+probabilistic finality.</li>
+      <li>Sawtooth Raft is designed for small to medium networks but performs more
+slowly than Sawtooth PBFT and lacks byzantine fault tolerance.</li>
+    </ul>
+  </li>
+  <li>Mobile SDKs for iOS (Swift) and Android (as part of the Java SDK).
+    <ul>
+      <li><a href="https://github.com/hyperledger/sawtooth-sdk-swift">Sawtooth SDK Swift</a></li>
+      <li><a href="https://github.com/hyperledger/sawtooth-sdk-java">Sawtooth SDK Java</a></li>
+    </ul>
+  </li>
+  <li>Support for raw transaction headers, as specified in <a href="https://github.com/hyperledger/sawtooth-rfcs/blob/master/text/0023-raw-txn-header.md">Sawtooth RFC
+#23</a>.
+This feature is backward compatible via the use of a protocol version indicator.</li>
+  <li>All core transaction families are compatible with <a href="https://sawtooth.hyperledger.org/docs/sabre/releases/0.4.0/">Sawtooth Sabre release
+0.4</a>.</li>
+</ul>
+
+<p><a href="#top">&gt; back to top &lt;</a></p>
+
+<h2 id="non-breaking-changes">Non-breaking changes</h2>
+
+<ul>
+  <li>PoET has the following patches:
+    <ul>
+      <li>Resolve a security defect where a correctly admitted validator could game
+its wait times. Thanks to Huibo Wang, Guoxing Chen, Yinqian Zhang,
+and Zhiqiang Lin for analyzing the poet implementation and identifying the
+defect.</li>
+      <li>Support the updated attestation service API</li>
+    </ul>
+  </li>
+  <li>A new BlockManager has been implemented, as specified in <a href="https://github.com/hyperledger/sawtooth-rfcs/pull/5">Sawtooth RFC
+#5</a>. This new feature
+improves block management and helps remove a known race condition that can cause
+network nodes to fork.</li>
+  <li>Several core transaction families have been rewritten in Rust: Settings,
+Identity, and BlockInfo.</li>
+  <li>All SDKs are in separate repositories for improved build time and release
+scheduling. The following SDKs were moved to their own repositories in this
+release:
+    <ul>
+      <li><a href="https://github.com/hyperledger/sawtooth-sdk-go">hyperledger/sawtooth-sdk-go</a></li>
+      <li><a href="https://github.com/hyperledger/sawtooth-sdk-python">hyperledger/sawtooth-sdk-python</a></li>
+      <li><a href="https://github.com/hyperledger/sawtooth-sdk-rust">hyperledger/sawtooth-sdk-rust</a></li>
+    </ul>
+  </li>
+  <li>The Devmode consensus engine has been moved to a separate repository:
+<a href="https://github.com/hyperledger/sawtooth-devmode">hyperledger/sawtooth-devmode</a>.</li>
+  <li>Consensus support has been modified to improve compatibility with PBFT
+consensus.</li>
+  <li>Cache performance has been improved for settings and identity state.</li>
+  <li>Duplicate signature validations have been eliminated.</li>
+  <li>Duplicate batches are now removed from the pending queue and candidate blocks</li>
+  <li>Transaction processors now receive a registration ACK before receiving
+transaction process requests.</li>
+  <li>Long-lived futures are expired when awaiting network message replies.</li>
+  <li>Logs now have fewer duplicate log messages.</li>
+</ul>
+
+<p><a href="#top">&gt; back to top &lt;</a></p>
+
+<h2 id="documentation-changes">Documentation changes</h2>
+
+<ul>
+  <li>Improved summary of the supported consensus algorithms: PBFT, PoET, Raft, and
+Devmode. See
+<a href="https://sawtooth.hyperledger.org/docs/core/releases/1.2.3/introduction.html">“Introduction”</a>.</li>
+  <li>Complete procedures for configuring PBFT consensus on a Sawtooth node and
+changing network membership. For procedures to configure either PBFT or PoET
+ consensus, see:</li>
+  <li><a href="https://sawtooth.hyperledger.org/docs/core/releases/1.2.3/app_developers_guide/creating_sawtooth_network.html">“Creating a Sawtooth Test Network” (Application Developer’s
+Guide)</a></li>
+  <li><a href="https://sawtooth.hyperledger.org/docs/core/releases/1.2.3/sysadmin_guide/setting_up_sawtooth_network.html">“Setting Up a Sawtooth Network” (System Administrator’s
+Guide)</a></li>
+  <li>New Swift and Java tutorials, including SDK reference documentation, for
+writing native mobile client applications for Sawtooth. See the Java and Swift
+links in <a href="https://sawtooth.hyperledger.org/docs/core/releases/1.2.3/app_developers_guide/using_the_sdks.html">“Using the Sawtooth
+SDKs”</a>.</li>
+  <li>Technical corrections, bug fixes, and general improvements throughout the
+documentation.</li>
+</ul>
+
+<p><a href="#top">&gt; back to top &lt;</a></p>
+</section>
+</article>
+
+    </div>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text"><p style="font-size: 1.5em;">
+  Hyperledger Sawtooth
+</p> <p>
+  <a href="/" title="Home"><span class="links">Home</span></a>
+  &bull;
+  <a href="/about/" title="About Sawtooth"><span class="links">About</span></a>
+  &bull;
+  <a href="/release/" title="Releases"><span class="links">Releases</span></a>
+  &bull;
+  <a href="/docs/" title="Documentation"><span class="links">Docs</span></a>
+  &bull;
+  <a href="/faq/" title="FAQ"><span class="links">FAQ</span></a>
+  &bull;
+  <a href="/community/" title="Community"><span class="links">Community</span></a>
+  &bull;
+  <a href="/contact/" title="Contact"><span class="links">Contact</span></a>
+</p> <p>
+  Find us: &nbsp;
+  <a href="https://github.com/hyperledger/sawtooth-core/" target="_blank" title="GitHub"><span  class="links">GitHub</span></a>
+  &bull;
+  <a href="https://chat.hyperledger.org/channel/sawtooth" target="_blank" title="#sawtooth chat channel"">Rocket.Chat</a>
+  &bull;
+  <a href="https://twitter.com/search?q=%23HyperledgerSawtooth" target="_blank" title="#sawtooth chat channel"">Twitter</a>
+</p> <p>
+  Examples: &nbsp;
+  <a href="/examples/seafood.html" target="_blank" title="Seafood Supply Chain Traceability">Seafood Supply Chain Traceability</a>
+  &bull;
+  <a href="/examples/bond.html" target="_blank" title="Bond Asset Settlement">Bond Asset Settlement</a>
+  &bull;
+  <a href="/examples/marketplace.html" target="_blank" title="Marketplace Digital Asset Exchange">Marketplace Digital Asset Exchange</a>
+</p> <p>
+  Linux Foundation: &nbsp;
+  <a href="http://www.linuxfoundation.org/privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+  &bull;
+  <a href="http://www.linuxfoundation.org/terms" target="_blank" title="Terms of Service">Terms of Service</a>
+</p> <p>
+  <small class="copyright">Copyright &copy; 2015-2019 contributors to Hyperledger Sawtooth</small>
+</p>
+</p>
+</footer>
+
+
+  </body>
+</html>

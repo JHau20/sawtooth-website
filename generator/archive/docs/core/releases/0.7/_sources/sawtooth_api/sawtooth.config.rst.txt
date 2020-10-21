@@ -1,0 +1,7 @@
+sawtooth\.config module
+=======================
+
+.. automodule:: sawtooth.config
+    :members:
+    :undoc-members:
+    :show-inheritance:

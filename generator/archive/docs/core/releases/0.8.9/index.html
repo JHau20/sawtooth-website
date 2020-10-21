@@ -1,0 +1,553 @@
+
+
+
+
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+
+<head>
+
+  <meta charset="utf-8">
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+
+  <title>Overview &mdash; Sawtooth v0.8.9 documentation</title>
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+
+
+  
+
+  
+
+    
+
+
+
+  
+
+
+
+  
+
+  
+
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+
+
+
+  
+
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+
+
+
+  
+
+        <link rel="index" title="Index"
+
+              href="genindex.html"/>
+
+        <link rel="search" title="Search" href="search.html"/>
+
+    <link rel="top" title="Sawtooth v0.8.9 documentation" href="#"/> 
+
+
+
+  
+
+  <script src="_static/js/modernizr.min.js"></script>
+
+
+
+</head>
+
+
+
+<body class="wy-body-for-nav" role="document">
+
+
+
+   
+
+  <div class="wy-grid-for-nav">
+
+
+
+    
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+
+      <div class="wy-side-scroll">
+
+        <div class="wy-side-nav-search">
+
+          
+
+
+
+          
+
+            <a href="contents.html" class="icon icon-home"> Sawtooth
+
+          
+
+
+
+          
+
+          </a>
+
+
+
+          
+
+            
+
+            
+
+              <div class="version">
+
+                v0.8.9
+
+              </div>
+
+            
+
+          
+
+
+
+          
+
+<div role="search">
+
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+
+    <input type="text" name="q" placeholder="Search docs" />
+
+    <input type="hidden" name="check_keywords" value="yes" />
+
+    <input type="hidden" name="area" value="default" />
+
+  </form>
+
+</div>
+
+
+
+          
+
+        </div>
+
+
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+          
+
+            
+
+            
+
+              
+
+            
+
+            
+
+              <ul>
+
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="solidity_developers_guide.html">Solidity Developers Guide</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="rest_api.html">REST API Reference</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI Reference</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications.html">Transaction Family Specifications</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+
+</ul>
+
+
+
+            
+
+          
+
+        </div>
+
+      </div>
+
+    </nav>
+
+
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+
+      
+
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+
+        
+
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+
+          <a href="contents.html">Sawtooth</a>
+
+        
+
+      </nav>
+
+
+
+
+
+      
+
+      <div class="wy-nav-content">
+
+        <div class="rst-content">
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+
+
+  <ul class="wy-breadcrumbs">
+
+    
+
+      <li><a href="contents.html">Docs</a> &raquo;</li>
+
+        
+
+      <li>Overview</li>
+
+    
+
+    
+
+      <li class="wy-breadcrumbs-aside">
+
+        
+
+            
+
+        
+
+      </li>
+
+    
+
+  </ul>
+
+
+
+  
+
+  <hr/>
+
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+           <div itemprop="articleBody">
+
+            
+
+
+
+  <h1>Hyperledger Sawtooth documentation</h1>
+
+
+
+  <p>
+
+  <select name="version_switch" id="version_switch">
+
+  </select>
+
+  <script type="text/javascript">
+
+   var urlmenu = document.getElementById( 'version_switch' );
+
+var disabled_func = function() {
+        window.location.replace( this.options[ this.selectedIndex ].value );
+
+   };
+
+  </script>
+
+  </p>
+
+
+
+  <p class="biglink"><a class="biglink" href="introduction.html">Introduction</a><br/>
+
+    <span class="linkdescr">learn about Hyperledger Sawtooth</span></p>
+
+
+
+  <p class="biglink"><a class="biglink" href="architecture.html">Architecture</a><br/>
+
+    <span class="linkdescr">high-level architecture and design topics</span></p>
+
+
+
+  <p class="biglink"><a class="biglink" href="app_developers_guide.html">Application Developer's Guide</a><br/>
+
+    <span class="linkdescr">create applications using the Sawtooth platform</span></p>
+
+
+
+  <p class="biglink"><a class="biglink" href="core_developers_guide.html">Core Developer's Guide</a><br/>
+
+    <span class="linkdescr">enhance the Sawtooth platform code and documentation</span></p>
+
+
+
+  <p class="biglink"><a class="biglink" href="sysadmin_guide.html">System Administrator's Guide</a><br/>
+
+    <span class="linkdescr">installation, configuration, and maintenance</span></p>
+
+
+
+  <p class="biglink"><a class="biglink" href="rest_api.html">REST API Reference</a><br/>
+
+    <span class="linkdescr">submit transactions and retrieve block, transaction, and state data</span></p>
+
+
+
+  <p class="biglink"><a class="biglink" href="cli.html">CLI Reference</a><br/>
+
+    <span class="linkdescr">command-line tool reference</span></p>
+
+
+
+  <p class="biglink"><a class="biglink" href="transaction_family_specifications.html">Transaction Family Specifications</a><br/>
+
+    <span class="linkdescr">dive into design of existing transaction families</span></p>
+
+
+
+  <p class="biglink"><a class="biglink" href="community.html">Community</a><br/>
+
+    <span class="linkdescr">join the conversation</span></p>
+
+
+
+  <p class="biglink"><a class="biglink" href="faq.html">FAQ</a><br/>
+
+    <span class="linkdescr">frequently asked questions</span></p>
+
+
+
+  <p class="biglink"><a class="biglink" href="contents.html">Table of Contents</a><br/>
+
+    <span class="linkdescr">detailed list of documentation sections</span></p>
+
+
+
+
+
+
+
+           </div>
+
+           <div class="articleComments">
+
+            
+
+           </div>
+
+          </div>
+
+          <footer>
+
+  
+
+
+
+  <hr/>
+
+
+
+  <div role="contentinfo">
+
+    <p>
+
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+
+
+    </p>
+
+  </div> 
+
+
+
+</footer>
+
+
+
+        </div>
+
+      </div>
+
+
+
+    </section>
+
+
+
+  </div>
+
+  
+
+
+
+
+
+  
+
+
+
+    <script type="text/javascript">
+
+        var DOCUMENTATION_OPTIONS = {
+
+            URL_ROOT:'./',
+
+            VERSION:'v0.8.9',
+
+            COLLAPSE_INDEX:false,
+
+            FILE_SUFFIX:'.html',
+
+            HAS_SOURCE:  true,
+
+            SOURCELINK_SUFFIX: '.txt'
+
+        };
+
+    </script>
+
+      <script type="text/javascript" src="_static/jquery.js"></script>
+
+      <script type="text/javascript" src="_static/underscore.js"></script>
+
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+
+
+  
+
+
+
+  
+
+  
+
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  
+
+
+
+  
+
+  
+
+  <script type="text/javascript">
+
+      jQuery(function () {
+
+          SphinxRtdTheme.StickyNav.enable();
+
+      });
+
+  </script>
+
+   
+
+
+
+<script src="_static/switcher.js"></script>
+</body>
+
+</html>

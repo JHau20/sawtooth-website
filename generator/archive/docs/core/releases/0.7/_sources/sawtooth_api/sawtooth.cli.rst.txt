@@ -1,0 +1,35 @@
+sawtooth\.cli package
+=====================
+
+.. automodule:: sawtooth.cli
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    sawtooth.cli.admin_sub
+    sawtooth.cli.monitor_lib
+    sawtooth.cli.stats_lib
+
+Submodules
+----------
+
+.. toctree::
+
+   sawtooth.cli.admin
+   sawtooth.cli.block
+   sawtooth.cli.cluster
+   sawtooth.cli.docker
+   sawtooth.cli.exceptions
+   sawtooth.cli.keygen
+   sawtooth.cli.main
+   sawtooth.cli.monitor
+   sawtooth.cli.stats
+   sawtooth.cli.store
+   sawtooth.cli.submit
+   sawtooth.cli.transaction
+

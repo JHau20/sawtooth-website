@@ -1,0 +1,338 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Seth Transaction Receipts and Events &mdash; Sawtooth v0.8.11 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.11 documentation" href="../index.html"/>
+        <link rel="up" title="Solidity Developers Guide" href="../solidity_developers_guide.html"/>
+        <link rel="next" title="Seth-RPC" href="seth_rpc.html"/>
+        <link rel="prev" title="Solidity Developers Guide" href="../solidity_developers_guide.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.11
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../solidity_developers_guide.html">Solidity Developers Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Seth Transaction Receipts and Events</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#receipt-data">Receipt Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#log-events">Log Events</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="seth_rpc.html">Seth-RPC</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../solidity_developers_guide.html">Solidity Developers Guide</a> &raquo;</li>
+        
+      <li>Seth Transaction Receipts and Events</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/solidity_developers_guide/seth_transaction_receipts_and_events.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="seth-transaction-receipts-and-events">
+<h1>Seth Transaction Receipts and Events<a class="headerlink" href="#seth-transaction-receipts-and-events" title="Permalink to this headline">¶</a></h1>
+<p>In order to satisfy the JSON RPC calls eth_getTransactionReceipt, eth_getLogs,
+and related calls, Seth transactions in Sawtooth provide the following
+information through Sawtooth transaction receipts and events:</p>
+<ul class="simple">
+<li>Contract address: the EVM address of the contract created during the
+transaction, if any</li>
+<li>Logs: a list of log entries produced during the execution of the transaction</li>
+<li>Gas used: the quantity of gas used during the execution of the transaction</li>
+</ul>
+<p>In addition, the execution result from the EVM is included, so that
+the result can be returned to the client that submitted the transaction.</p>
+<p>The remaining pieces of data required by the JSON-RPC responses are related to
+the context of a committed transaction within its respective block.
+Consequently, the information can be computed at request time. These pieces are:</p>
+<ul class="simple">
+<li>Block hash: the header signature of the block containing the transaction</li>
+<li>Block number: the block’s number</li>
+<li>Transaction hash: the transaction header signature</li>
+<li>Transaction index: the index of the transaction within the block</li>
+<li>Cumulative gas used: the total gas used by all EVM transactions in the block
+preceding and including this transaction</li>
+</ul>
+<div class="section" id="receipt-data">
+<h2>Receipt Data<a class="headerlink" href="#receipt-data" title="Permalink to this headline">¶</a></h2>
+<p>Receipt data for a given transaction is limited to what can be computed during
+the execution of a transaction. Given that a transaction processor’s knowledge
+is limited to that of the transaction itself and current state, the values that
+may be included in an individual receipt are limited.</p>
+<p>Receipt data from an individual transaction is comprised of the following
+protobuf message. The serialized message is wrapped in a TransactionReceipt.Data
+message, as specified in &#8220;Events and Transaction Receipts&#8221;. The receipt
+data_type field is set to “seth_receipt”:</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">EvmTransactionReceipt</span> <span class="p">{</span>
+    <span class="kt">bytes</span> <span class="na">contract_address</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// A contract address, if created</span>
+    <span class="kt">uint64</span> <span class="na">gas_used</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// The gas consumed by this transaction</span>
+    <span class="kt">bytes</span> <span class="na">return_value</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// The return value of the contract execution</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="log-events">
+<h2>Log Events<a class="headerlink" href="#log-events" title="Permalink to this headline">¶</a></h2>
+<p>Ethereum defines a set of LOGX instructions that allow contracts to log
+off-chain data. Solidity uses these instructions to implement an event
+subscription system. To make Seth compatible with both, the LOGX instructions
+generate Sawtooth events. These events contain only the data that is available
+during transaction execution.</p>
+<p>The log events are wrapped in a TransactionEvent, as specified in <a class="reference internal" href="../architecture/events_and_transactions_receipts.html"><span class="doc">Events
+and Transactions Receipts</span></a>.
+The event_type field is set to “seth_log_event”. The event_data from an
+individual transaction contains the following protobuf message.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="c1">// Example Sawtooth event capturing EVM logs</span>
+<span class="n">Event</span> <span class="p">{</span>
+      <span class="na">event_type</span> <span class="o">=</span> <span class="s">&quot;seth_log_event&quot;</span><span class="p">,</span>
+      <span class="na">event_data</span> <span class="o">=</span> <span class="p">&lt;</span><span class="n">serialized</span> <span class="n">EvmLogData</span><span class="p">&gt;,</span>
+  <span class="na">attributes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Attribute</span> <span class="p">{</span> <span class="s">&quot;address&quot;</span><span class="o">:</span> <span class="p">&lt;</span><span class="n">evm</span> <span class="n">address</span> <span class="n">as</span> <span class="n">hex</span><span class="p">&gt;</span> <span class="p">},</span>
+      <span class="p">],</span>
+<span class="p">}</span>
+
+<span class="c1">// Protobuf message to store in the Sawtooth Event&#39;s event_data field</span>
+<span class="kd">message</span> <span class="nc">EvmLogData</span> <span class="p">{</span>
+    <span class="c1">// 20 Bytes - address from which this log originated.</span>
+    <span class="kt">bytes</span> <span class="na">address</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// Array of 0 to 4 32-byte blobs of data.</span>
+    <span class="c1">// (In solidity: The first topic is the hash of the signature</span>
+    <span class="c1">// of the event (e.g. Deposit(address,bytes32,uint256)), except</span>
+    <span class="c1">// you declared the event with the &#39;anonymous&#39; specifier.)</span>
+    <span class="c1">// See the following:</span>
+    <span class="c1">// https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getfilterchanges</span>
+    <span class="k">repeated</span> <span class="kt">bytes</span> <span class="na">topics</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// contains one or more 32 Bytes non-indexed arguments of the log.</span>
+    <span class="kt">bytes</span> <span class="na">data</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The address in this entry refers to the contract address that created the
+message. The data is an opaque set of bytes, set by the contract.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="seth_rpc.html" class="btn btn-neutral float-right" title="Seth-RPC" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../solidity_developers_guide.html" class="btn btn-neutral" title="Solidity Developers Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.11',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

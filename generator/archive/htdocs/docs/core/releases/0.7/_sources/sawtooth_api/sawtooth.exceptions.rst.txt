@@ -1,0 +1,7 @@
+sawtooth\.exceptions module
+===========================
+
+.. automodule:: sawtooth.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:

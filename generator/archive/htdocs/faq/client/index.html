@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+  <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<head>
+	<meta charset="utf-8">
+	<title>Sawtooth FAQ - Client | Hyperledger Sawtooth</title>
+	<meta name="description" content="An enterprise-grade solution for distributed ledgers.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="0.0.0.0/faq/client/">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Hyperledger Sawtooth" href="0.0.0.0/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+
+	<!-- Google Analytics
+	-->
+</head>
+
+  <body>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">Hyperledger Sawtooth</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+                        
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/release/">
+					Releases
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/docs/">
+					Docs
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/faq/">
+					FAQ
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/community/">
+					Community
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/contact/">
+					Contact
+				</a>
+			</li>
+			
+			
+			<li>
+				<a class="page-link" href="/examples">
+					Examples
+				</a>
+			</li>
+			<!-- Social icons from Font Awesome, if enabled -->
+			<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/hyperledger/sawtooth-core" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/\%23HyperledgerSawtooth" title="Follow on Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Sawtooth FAQ - Client</h1>
+  </header>
+  <section class="post-content"><p class="mininav"><a class="reference external" href="/faq/consensus/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/rest/">NEXT</a></p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-is-a-sawtooth-client" id="id1">What is a Sawtooth Client?</a></li>
+<li><a class="reference internal" href="#what-languages-does-the-sawtooth-client-sdk-support" id="id2">What languages does the Sawtooth Client SDK support?</a></li>
+<li><a class="reference internal" href="#does-sawtooth-have-a-net-sdk" id="id3">Does Sawtooth have a .NET SDK?</a></li>
+<li><a class="reference internal" href="#when-would-you-want-to-develop-without-the-sawtooth-sdk" id="id4">When would you want to develop without the Sawtooth SDK?</a></li>
+<li><a class="reference internal" href="#what-does-the-client-do-to-send-a-transaction" id="id5">What does the client do to send a transaction?</a></li>
+<li><a class="reference internal" href="#what-is-the-nonce-used-for-in-the-transaction-header" id="id6">What is the nonce used for in the transaction header?</a></li>
+<li><a class="reference internal" href="#what-does-this-error-mean" id="id7">What does this error mean:</a></li>
+<li><a class="reference internal" href="#what-are-the-various-batch-statuses-rest-api-result-values" id="id8">What are the various batch_statuses REST API result values?</a></li>
+<li><a class="reference internal" href="#what-does-an-invalid-batch-status-mean" id="id9">What does an INVALID batch status mean?</a></li>
+<li><a class="reference internal" href="#what-does-it-mean-if-a-batch-status-result-remains-pending" id="id10">What does it mean if a batch status result remains PENDING?</a></li>
+<li><a class="reference internal" href="#can-i-use-partial-address-prefixes-say-the-6-character-prefix-in-a-transaction-s-input-or-output-list" id="id11">Can I use partial address prefixes (say the 6-character prefix) in a transaction's input or output list?</a></li>
+<li><a class="reference internal" href="#how-do-i-debug-a-sawtooth-client" id="id12">How do I debug a Sawtooth client?</a></li>
+<li><a class="reference internal" href="#how-do-i-delete-or-change-a-specific-value-in-state" id="id13">How do I delete or change a specific value in state?</a></li>
+<li><a class="reference internal" href="#how-can-a-sawtooth-client-access-a-validator-on-another-machine" id="id14">How can a Sawtooth client access a validator on another machine?</a></li>
+<li><a class="reference internal" href="#how-do-i-use-the-rust-sdk-in-ms-windows" id="id15">How do I use the Rust SDK in MS Windows?</a></li>
+</ul>
+</div>
+<div class="section" id="what-is-a-sawtooth-client">
+<h2><a class="toc-backref" href="#id1">What is a Sawtooth Client?</a></h2>
+<p>It is an application that communicates with the Sawtooth Validator, usually using the REST API. The application is Transaction Family-specific and may come in various forms, such as a CLI, BUI (browser/web app), GUI, or background daemon. The client may be written in any language supported by the Sawtooth SDK.</p>
+</div>
+<div class="section" id="what-languages-does-the-sawtooth-client-sdk-support">
+<h2><a class="toc-backref" href="#id2">What languages does the Sawtooth Client SDK support?</a></h2>
+<p>JavaScript, Python 3, and Rust.
+Others are in the process of being added: Java and C++.
+A SDK for Microsoft .NET is also available from <a class="reference external" href="https://github.com/hyperledger/sawtooth-sdk-dotnet">https://github.com/hyperledger/sawtooth-sdk-dotnet</a>
+One can also interface directly to Sawtooth without a SDK.
+Multiple languages are supported as different languages are more suited for different problem spaces and developers tend to be more comfortable with some languages more than others.
+See this chart of Sawtooth SDK support:
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/sdk_table.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/sdk_table.html</a>
+For more information, see the Sawtooth SDK Reference at
+<a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/sdks.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/sdks.html</a></p>
+</div>
+<div class="section" id="does-sawtooth-have-a-net-sdk">
+<h2><a class="toc-backref" href="#id3">Does Sawtooth have a .NET SDK?</a></h2>
+<p>Yes, there is a Sawtooth SDK for .NET Core described here:
+<a class="reference external" href="https://tomislav.tech/2018-03-02-sawtooth-sdk-net-core/">https://tomislav.tech/2018-03-02-sawtooth-sdk-net-core/</a>
+The source is here:
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-sdk-dotnet">https://github.com/hyperledger/sawtooth-sdk-dotnet</a></p>
+</div>
+<div class="section" id="when-would-you-want-to-develop-without-the-sawtooth-sdk">
+<h2><a class="toc-backref" href="#id4">When would you want to develop without the Sawtooth SDK?</a></h2>
+<p>You should use the SDK whenever possible for your language.
+If your preferred development language does not have a SDK,
+or if the SDK is incomplete for something you need, then develop without a SDK.
+For details, see <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/no_sdk.html">https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/no_sdk.html</a></p>
+</div>
+<div class="section" id="what-does-the-client-do-to-send-a-transaction">
+<h2><a class="toc-backref" href="#id5">What does the client do to send a transaction?</a></h2>
+<p>It encodes the TF-specific payload (which could be anything, but defined by the TF) in Base64,
+signs the transaction using ECDSA with curve secp256k1, and generates a deterministic state address.</p>
+</div>
+<div class="section" id="what-is-the-nonce-used-for-in-the-transaction-header">
+<h2><a class="toc-backref" href="#id6">What is the nonce used for in the transaction header?</a></h2>
+<p>A nonce is a one-time use number (never repeated). Typically a random number is used for a nonce.
+A nonce in this case guarantees against replay attacks by making transactions unique.</p>
+</div>
+<div class="section" id="what-does-this-error-mean">
+<h2><a class="toc-backref" href="#id7">What does this error mean:</a></h2>
+<p><tt class="docutils literal">validator | <span class="pre">[...</span> DEBUG signature_verifier] transaction signature invalid for txn: ...</tt>?
+The client submitted a transaction with an invalid signature.</p>
+</div>
+<div class="section" id="what-are-the-various-batch-statuses-rest-api-result-values">
+<h2><a class="toc-backref" href="#id8">What are the various batch_statuses REST API result values?</a></h2>
+<ul class="simple">
+<li><tt class="docutils literal">PENDING</tt> - batch validation has started on this validator. This ends when the batch is either committed or invalidated</li>
+<li><tt class="docutils literal">COMMITTED</tt> - batch is in the blockchain</li>
+<li><tt class="docutils literal">INVALID</tt> - batch has recently been invalidated by this validator and is still in the invalid batch cache</li>
+<li><tt class="docutils literal">UNKNOWN</tt> - batch is not in any of the above categories, it is not currently being validated by this validator, not in the blockchain, and not in this validator's invalid cache</li>
+</ul>
+</div>
+<div class="section" id="what-does-an-invalid-batch-status-mean">
+<h2><a class="toc-backref" href="#id9">What does an INVALID batch status mean?</a></h2>
+<p>I means the transaction batch was processed by the Transaction Processor, but the TP marked it as invalid. The INVALID batch information is not stored on the blockchain. Validators will keep a local cache of invalid batch info around for awhile (I think 10 minutes), so clients can query it, but that data is ephemeral.</p>
+</div>
+<div class="section" id="what-does-it-mean-if-a-batch-status-result-remains-pending">
+<h2><a class="toc-backref" href="#id10">What does it mean if a batch status result remains PENDING?</a></h2>
+<p>It means processing has not completed on the batch. If it stays that way, it means the transaction batch never reached the Transaction Processor. The transaction remains in the validator queue waiting for the TP to appear online. The TP may have died or may have never started. Or the validator failed the PoET Z Test (z-tested out) because it was winning too frequently.</p>
+</div>
+<div class="section" id="can-i-use-partial-address-prefixes-say-the-6-character-prefix-in-a-transaction-s-input-or-output-list">
+<h2><a class="toc-backref" href="#id11">Can I use partial address prefixes (say the 6-character prefix) in a transaction's input or output list?</a></h2>
+<p>Yes. You can use full addresses or partial addresses or empty (no address). The full addresses are preferred as this allows the parallel scheduler to process non-conflicting transactions in parallel.</p>
+</div>
+<div class="section" id="how-do-i-debug-a-sawtooth-client">
+<h2><a class="toc-backref" href="#id12">How do I debug a Sawtooth client?</a></h2>
+<ul class="simple">
+<li>Add debug messages (such as
+<tt class="docutils literal"><span class="pre">print(&quot;Action</span> = <span class="pre">{}&quot;.format(action))</span></tt> in Python).</li>
+<li>Start the REST API with the <tt class="docutils literal"><span class="pre">sawtooth-rest-api</span> <span class="pre">-vvv</span></tt> for the most verbosity.</li>
+<li>Set the trace parameter to true when calling method <tt class="docutils literal">Batch</tt>. In Python: <tt class="docutils literal">batch_pb2.Batch(trace=True)</tt> .
+This prints additional logging information in the Sawtooth REST API and Validator components.</li>
+</ul>
+</div>
+<div class="section" id="how-do-i-delete-or-change-a-specific-value-in-state">
+<h2><a class="toc-backref" href="#id13">How do I delete or change a specific value in state?</a></h2>
+<p>Use the <tt class="docutils literal">delete_state</tt> in the SDK to delete a specific state variable.
+The data will remain in previously-created blocks (which are immutable),
+but will not be in the current blockchain state.</p>
+</div>
+<div class="section" id="how-can-a-sawtooth-client-access-a-validator-on-another-machine">
+<h2><a class="toc-backref" href="#id14">How can a Sawtooth client access a validator on another machine?</a></h2>
+<p>By default, the REST API listens to client requests on localhost (127.0.0.1) and is not accessible from a client on another machine. To change this, edit file /etc/sawtooth/rest_api.toml` (copy from <cite>rest_api.toml.example</cite>) and add a line similar to:
+<tt class="docutils literal">bind = [&quot;10.1.1.2:8008&quot;]</tt> where you change <tt class="docutils literal">10.1.1.2</tt> to your IP address or hostname.</p>
+</div>
+<div class="section" id="how-do-i-use-the-rust-sdk-in-ms-windows">
+<h2><a class="toc-backref" href="#id15">How do I use the Rust SDK in MS Windows?</a></h2>
+<p>Colin McCullough gives these steps:
+<a class="reference external" href="https://github.com/colincmcc">Colin McCullough</a> gives these steps:</p>
+<ol class="arabic simple">
+<li>Download libzmq from <a class="reference external" href="https://github.com/zeromq/libzmq">https://github.com/zeromq/libzmq</a> and compile from source using <tt class="docutils literal">cmake</tt>. One option is to follow the steps in the <tt class="docutils literal">.appveyor.bat</tt> file in the <tt class="docutils literal"><span class="pre">sawtooth-zmq-0.8.2-dev5</span></tt> folder, located in your <tt class="docutils literal">.crates</tt> folder. It contains appropriate <tt class="docutils literal">cmake</tt> and <tt class="docutils literal">msbuild</tt> commands, which may save some time, rather than try to follow the INSTALL instructions that come with libzmq. Windows binaries stop after something around 4.04 and you need 4.2. I believe you also need to rename the built lib file from <tt class="docutils literal">libzmq.lib</tt> to <tt class="docutils literal">zmq.lib</tt></li>
+<li>Download OpenSSl and install. A dependency <tt class="docutils literal"><span class="pre">rust-openssl</span></tt> states that it will autolocate your ssl installation, but that was not the case for me. You'll have to set the location as an environment variable</li>
+<li>Download the protobuf compiler, <tt class="docutils literal">protoc</tt>, from <a class="reference external" href="https://github.com/protocolbuffers/protobuf/releases">https://github.com/protocolbuffers/protobuf/releases</a> and set in your path</li>
+<li>Set these environment variables <tt class="docutils literal">OPENSSL_DIR</tt>, <tt class="docutils literal">LIBZMQ_INCLUDE_DIR</tt>, <tt class="docutils literal">LIBZMQ_PREFIX</tt>, <tt class="docutils literal">LIBZMQ_LIB_DIR</tt>.  Building may only require the <tt class="docutils literal">OPENSSL_DIR</tt> and <tt class="docutils literal">LIBZMQ_PREFIX</tt> to be set.  If you run a build with an incorrect environment variable or you move the dependencies to another location, you must run <tt class="docutils literal">cargo clean</tt> to reset the build environment.  Rust will look to the old build environment for any environment variables rather than the currently set paths.</li>
+<li>After all of this I still faced a missing dll error. One of the dependencies needs <tt class="docutils literal">libzmq.dll</tt> and will not look for it under any of those set variable locations. I put the file in the system32 folder, which fixed the issue.  Any input on what environment variable needs to be set would be helpful.</li>
+</ol>
+<p>Until Rust and the RustSDK are a bit more mature, I still recommend using a Docker container for development to avoid any MS Windows troubles.  You can reach me at <a class="reference external" href="mailto:hello&#64;colinmac.me">hello&#64;colinmac.me</a> with any questions.</p>
+<p class="mininav"><a class="reference external" href="/faq/consensus/">PREVIOUS</a> <a class="reference external" href="/faq/">TOP</a> <a class="reference external" href="/faq/rest/">NEXT</a></p>
+<p>© Copyright 2018, Intel Corporation.</p>
+</div>
+
+</section>
+</article>
+
+    </div>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text"><p style="font-size: 1.5em;">
+  Hyperledger Sawtooth
+</p> <p>
+  <a href="/" title="Home"><span class="links">Home</span></a>
+  &bull;
+  <a href="/about/" title="About Sawtooth"><span class="links">About</span></a>
+  &bull;
+  <a href="/release/" title="Releases"><span class="links">Releases</span></a>
+  &bull;
+  <a href="/docs/" title="Documentation"><span class="links">Docs</span></a>
+  &bull;
+  <a href="/faq/" title="FAQ"><span class="links">FAQ</span></a>
+  &bull;
+  <a href="/community/" title="Community"><span class="links">Community</span></a>
+  &bull;
+  <a href="/contact/" title="Contact"><span class="links">Contact</span></a>
+</p> <p>
+  Find us: &nbsp;
+  <a href="https://github.com/hyperledger/sawtooth-core/" target="_blank" title="GitHub"><span  class="links">GitHub</span></a>
+  &bull;
+  <a href="https://chat.hyperledger.org/channel/sawtooth" target="_blank" title="#sawtooth chat channel"">Rocket.Chat</a>
+  &bull;
+  <a href="https://twitter.com/search?q=%23HyperledgerSawtooth" target="_blank" title="#sawtooth chat channel"">Twitter</a>
+</p> <p>
+  Examples: &nbsp;
+  <a href="/examples/seafood.html" target="_blank" title="Seafood Supply Chain Traceability">Seafood Supply Chain Traceability</a>
+  &bull;
+  <a href="/examples/bond.html" target="_blank" title="Bond Asset Settlement">Bond Asset Settlement</a>
+  &bull;
+  <a href="/examples/marketplace.html" target="_blank" title="Marketplace Digital Asset Exchange">Marketplace Digital Asset Exchange</a>
+</p> <p>
+  Linux Foundation: &nbsp;
+  <a href="http://www.linuxfoundation.org/privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+  &bull;
+  <a href="http://www.linuxfoundation.org/terms" target="_blank" title="Terms of Service">Terms of Service</a>
+</p> <p>
+  <small class="copyright">Copyright &copy; 2015-2019 contributors to Hyperledger Sawtooth</small>
+</p>
+</p>
+</footer>
+
+
+  </body>
+</html>

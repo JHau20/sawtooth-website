@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ClientReceiptGetResponse_Status",""]],"fn":[["file_descriptor_proto",""]],"struct":[["ClientReceiptGetRequest","Generated files are compatible only with the same version of protobuf runtime."],["ClientReceiptGetResponse",""]]});

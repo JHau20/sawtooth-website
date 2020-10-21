@@ -1,0 +1,534 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction &mdash; Sawtooth v1.0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Architecture Description" href="architecture.html" />
+    <link rel="prev" title="Table of Contents" href="contents.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#about-distributed-ledgers">About Distributed Ledgers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#distinctive-features-of-sawtooth">Distinctive Features of Sawtooth</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#separation-between-the-application-level-and-the-core-system">Separation Between the Application Level and the Core System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#private-networks-with-the-sawtooth-permissioning-features">Private Networks with the Sawtooth Permissioning Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parallel-transaction-execution">Parallel Transaction Execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#event-system">Event System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ethereum-contract-compatibility-with-seth">Ethereum Contract Compatibility with Seth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pluggable-consensus-algorithms">Pluggable consensus algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sample-transaction-families">Sample Transaction Families</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#real-world-application-examples">Real-world Application Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started-with-application-development">Getting Started with Application Development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#try-hyperledger-sawtooth">Try Hyperledger Sawtooth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#develop-a-custom-application">Develop a Custom Application</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#participating-in-core-development">Participating in Core Development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#learn-about-sawtooth-architecture">Learn about Sawtooth Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-the-sawtooth-software">Get the Sawtooth Software</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#join-the-sawtooth-community">Join the Sawtooth Community</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="contents.html">Docs</a> &raquo;</li>
+        
+      <li>Introduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>Hyperledger Sawtooth is an enterprise blockchain platform for building
+distributed ledger applications and networks. The design philosophy targets
+keeping ledgers <em>distributed</em> and making smart contracts <em>safe</em>, particularly
+for enterprise use.</p>
+<p>Sawtooth simplifies blockchain application development by separating the core
+system from the application domain. Application developers can specify the
+business rules appropriate for their application, using the language of their
+choice, without needing to know the underlying design of the core system.</p>
+<p>Sawtooth is also highly modular. This modularity enables enterprises and
+consortia to make policy decisions that they are best equipped to make.
+Sawtooth&#8217;s core design allows applications to choose the transaction rules,
+permissioning, and consensus algorithms that support their unique business
+needs.</p>
+<p>Sawtooth is an open source project under the Hyperledger umbrella. For
+information on how to contribute, see <a class="reference internal" href="#join-the-sawtooth-community">Join the Sawtooth Community</a>.</p>
+<div class="section" id="about-distributed-ledgers">
+<h2>About Distributed Ledgers<a class="headerlink" href="#about-distributed-ledgers" title="Permalink to this headline">¶</a></h2>
+<p>A &#8220;distributed ledger&#8221; is another term for a blockchain. It distributes a
+database (a ledger) of transactions to all participants in a network (also
+called &#8220;peers&#8221; or &#8220;nodes&#8221;). There is no central administrator or centralised
+data storage. In essence, it is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Distributed</strong>: The blockchain database is shared among potentially
+untrusted participants and is demonstrably identical on all nodes
+in the network. All participants have the same information.</li>
+<li><strong>Immutable</strong>: The blockchain database is an unalterable history of all
+transactions that uses block hashes to make it easy to detect and
+prevent attempts to alter the history.</li>
+<li><strong>Secure</strong>: All changes are performed by transactions that are signed by
+known identities.</li>
+</ul>
+</div></blockquote>
+<p>These features work together, along with agreed-upon consensus mechanisms, to
+provide &#8220;adversarial trust&#8221; among all participants in a blockchain network.</p>
+</div>
+<div class="section" id="distinctive-features-of-sawtooth">
+<h2>Distinctive Features of Sawtooth<a class="headerlink" href="#distinctive-features-of-sawtooth" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="separation-between-the-application-level-and-the-core-system">
+<h3>Separation Between the Application Level and the Core System<a class="headerlink" href="#separation-between-the-application-level-and-the-core-system" title="Permalink to this headline">¶</a></h3>
+<p>Sawtooth makes it easy to develop and deploy an application by providing a
+clear separation between the application level and the core system level.
+Sawtooth provides smart contract abstraction that allows application
+developers to write contract logic in a language of their choice.</p>
+<p>An application can be a native business logic or a smart contract virtual
+machine. In fact, both types of applications can co-exist on the same
+blockchain. Sawtooth allows these design decisions to be made in the
+transaction-processing layer, which allows multiple types of applications to
+exist in the same instance of the blockchain network.</p>
+<p>Each application defines the custom transaction processors for its unique
+requirements. Sawtooth provides several example transaction
+families to serve as models for low-level functions, such as maintaining
+chain-wide settings and storing on-chain permissions, and for specific
+applications such as performance analysis and storing block information.</p>
+<p>Transaction processor SDKs are available in multiple languages to streamline
+creation of new contract languages, including Python, JavaScript, Go, C++,
+Java, and Rust. A provided REST API simplifies client development by adapting
+validator communication to standard HTTP/JSON.</p>
+</div>
+<div class="section" id="private-networks-with-the-sawtooth-permissioning-features">
+<h3>Private Networks with the Sawtooth Permissioning Features<a class="headerlink" href="#private-networks-with-the-sawtooth-permissioning-features" title="Permalink to this headline">¶</a></h3>
+<p>Sawtooth is built to solve the challenges of permissioned (private) networks.
+Clusters of Sawtooth nodes can be easily deployed with separate permissioning.
+There is no centralized service that could potentially leak transaction
+patterns or other confidential information.</p>
+<p>The blockchain stores the settings that specify the permissions, such as roles
+and identities, so that all participants in the network can access this
+information.</p>
+</div>
+<div class="section" id="parallel-transaction-execution">
+<h3>Parallel Transaction Execution<a class="headerlink" href="#parallel-transaction-execution" title="Permalink to this headline">¶</a></h3>
+<p>Most blockchains require serial transaction execution in order to guarantee
+consistent ordering at each node on the network. Sawtooth includes an advanced
+parallel scheduler that splits transactions into parallel flows. Based on the
+locations in state which are accessed by a transaction, Sawtooth isolates the
+execution of transactions from one another while maintaining contextual
+changes.</p>
+<p>When possible, transactions are executed in parallel, while preventing
+double-spending even with multiple modifications to the same state. Parallel
+scheduling provides a substantial potential increase in performance over
+serial execution.</p>
+</div>
+<div class="section" id="event-system">
+<h3>Event System<a class="headerlink" href="#event-system" title="Permalink to this headline">¶</a></h3>
+<p>Hyperledger Sawtooth supports creating and broadcasting events. This allows
+applications to:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Subscribe to events that occur related to the blockchain, such as a new
+block being committed or switching to a new fork.</li>
+<li>Subscribe to application specific events defined by a transaction family.</li>
+<li>Relay information about the execution of a transaction back to clients
+without storing that data in state.</li>
+</ul>
+</div></blockquote>
+<p>Subscriptions are submitted and serviced over a ZMQ Socket.</p>
+</div>
+<div class="section" id="ethereum-contract-compatibility-with-seth">
+<h3>Ethereum Contract Compatibility with Seth<a class="headerlink" href="#ethereum-contract-compatibility-with-seth" title="Permalink to this headline">¶</a></h3>
+<p>The Sawtooth-Ethereum integration project, Seth, extends the interoperability
+of the Sawtooth platform to Ethereum. EVM (Ethereum Virtual Machine) smart
+contracts can be deployed to Sawtooth using the Seth transaction family.</p>
+</div>
+<div class="section" id="pluggable-consensus-algorithms">
+<h3>Pluggable consensus algorithms<a class="headerlink" href="#pluggable-consensus-algorithms" title="Permalink to this headline">¶</a></h3>
+<p>In a blockchain, consensus is the process of building agreement among a group
+of mutually distrusting participants. Algorithms for achieving consensus with
+arbitrary faults generally require some form of voting among a known set of
+participants. General approaches include Nakamoto-style consensus, which
+elects a leader through some form of lottery, and variants of the traditional
+<a class="reference external" href="https://en.wikipedia.org/wiki/Byzantine_fault_tolerance">Byzantine Fault Tolerance (BFT)</a>
+algorithms, which use multiple rounds of explicit votes to achieve consensus.</p>
+<p>Sawtooth abstracts the core concepts of consensus and isolates consensus from
+transaction semantics. The interface supports plugging in various consensus
+implementations. More importantly, Sawtooth allows different types of
+consensus on the same blockchain. The consensus is selected during the initial
+network setup and can be changed on a running blockchain with a transaction.</p>
+<p>Sawtooth currently supports these consensus implementations:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Proof of Elapsed Time (PoET), a Nakamoto-style consensus algorithm that is
+designed to be a production-grade protocol capable of supporting large
+network populations. PoET relies on secure instruction execution to
+achieve the scaling benefits of a Nakamoto-style consensus algorithm
+without the power consumption drawbacks of the Proof of Work algorithm.</li>
+<li>PoET simulator, which provides PoET-style consensus on any type of
+hardware, including a virtualized cloud environment.</li>
+<li>Dev mode, a simplified random-leader algorithm that is useful for
+development and testing.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="sample-transaction-families">
+<h3>Sample Transaction Families<a class="headerlink" href="#sample-transaction-families" title="Permalink to this headline">¶</a></h3>
+<p>In Sawtooth, the data model and transaction language are implemented
+in a <em>transaction family</em>. While we expect users to build custom transaction
+families that reflect the unique requirements of their ledgers, we provide
+several core transaction families as models:</p>
+<blockquote>
+<div><ul class="simple">
+<li>IntegerKey - Used for testing deployed ledgers.</li>
+<li>Settings - Provides a reference implementation for storing
+on-chain configuration settings.</li>
+<li>Identity - Handles on-chain permissioning for transactor
+and validator keys to streamline managing identities
+for lists of public keys.</li>
+</ul>
+</div></blockquote>
+<p>Additional transaction families provide models for specific areas:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Smallbank - Handles performance analysis for benchmarking
+and performance testing when comparing the performance of
+blockchain systems.
+This transaction family is based on the H-Store Smallbank benchmark.</li>
+<li>BlockInfo - Provides a methodology for storing information
+about a configurable number of historic blocks.</li>
+</ul>
+</div></blockquote>
+<p>For more information, see <a class="reference internal" href="transaction_family_specifications.html"><span class="doc">Transaction Family Specifications</span></a>.</p>
+</div>
+</div>
+<div class="section" id="real-world-application-examples">
+<h2>Real-world Application Examples<a class="headerlink" href="#real-world-application-examples" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>XO: Demonstrates how to construct basic transactions by playing
+<a class="reference external" href="https://en.wikipedia.org/wiki/Tic-tac-toe">Tic-tac-toe</a>. The
+XO transaction family includes create and take transactions, with an <code class="docutils literal"><span class="pre">xo</span></code>
+command that allows two participants to play the game.
+For more information, see
+<a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html"><span class="doc">Introduction to the XO Transaction Family</span></a>.</li>
+<li>Sawtooth Supply Chain:
+Helps you trace the provenance and other
+contextual information of any asset. Supply Chain provides a complete
+example application with a transaction processor, custom REST API, and web
+app. This application also demonstrates a secure and decentralized solution
+for in-browser transaction signing, and illustrates how to synchronize the
+blockchain state to a local database for complex queries. For more
+information, see the <a class="reference external" href="https://github.com/hyperledger/sawtooth-supply-chain">sawtooth-supply-chain repo on GitHub</a>.</li>
+<li>Sawtooth Marketplace:
+Allows users to exchange specific quantities of customized assets with other
+users on the blockchain. This application contains a number of components
+that, together with a Sawtooth validator, will run a Sawtooth blockchain and
+provide a simple RESTful API to interact with it.  For more information, see
+the <a class="reference external" href="https://github.com/hyperledger/sawtooth-marketplace">sawtooth-marketplace repo on GitHub</a>.</li>
+<li>Sawtooth Private UTXO:
+Demonstrates how assets can be created and traded.
+It shows how to use SGX to allow for assets to be
+transferred off ledger and privately traded, where only the trading parties
+know the details of the transaction. For more information, see the
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-private-utxo">sawtooth-private-utxo repo on GitHub</a>.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="getting-started-with-application-development">
+<h2>Getting Started with Application Development<a class="headerlink" href="#getting-started-with-application-development" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="try-hyperledger-sawtooth">
+<h3>Try Hyperledger Sawtooth<a class="headerlink" href="#try-hyperledger-sawtooth" title="Permalink to this headline">¶</a></h3>
+<p>The Sawtooth documentation explains how to set up a local validator for
+demonstrating Sawtooth functionality and testing an application. Once
+running, you will be able to submit new transactions and fetch the resulting
+state and block data from the blockchain using HTTP and the Sawtooth REST API.
+These methods apply to the included example transaction families, as
+well as to any transaction families you might write yourself.</p>
+<p>Sawtooth validators can be run from pre-built Docker containers, installed
+natively using Ubuntu 16.04, or launched in AWS from the AWS Marketplace.</p>
+<p>To get started, see <a class="reference internal" href="app_developers_guide/installing_sawtooth.html"><span class="doc">Installing and Running Sawtooth</span></a>.</p>
+</div>
+<div class="section" id="develop-a-custom-application">
+<h3>Develop a Custom Application<a class="headerlink" href="#develop-a-custom-application" title="Permalink to this headline">¶</a></h3>
+<p>In Sawtooth, the data model and transaction language are implemented in a
+transaction family. Transaction families codify business rules used to modify
+state, while client programs typically submit transactions and view state. You
+can build custom transaction families that reflect your unique requirements,
+using the provided core transaction families as models.</p>
+<p>Sawtooth provides a REST API and SDKs in several languages - including Python,
+C++, Go, Java, JavaScript, and Rust - for development of applications which run
+on top of the Sawtooth platform. In addition, you can write smart contracts in
+Solidity for use with the Seth transaction family.</p>
+<p>For more information, see <a class="reference internal" href="app_developers_guide.html"><span class="doc">Application Developer&#8217;s Guide</span></a>, <a class="reference internal" href="sdks.html"><span class="doc">SDK API Reference</span></a>, and
+<a class="reference internal" href="rest_api.html"><span class="doc">REST API Reference</span></a>.</p>
+</div>
+</div>
+<div class="section" id="participating-in-core-development">
+<h2>Participating in Core Development<a class="headerlink" href="#participating-in-core-development" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="learn-about-sawtooth-architecture">
+<h3>Learn about Sawtooth Architecture<a class="headerlink" href="#learn-about-sawtooth-architecture" title="Permalink to this headline">¶</a></h3>
+<p>See <a class="reference internal" href="architecture.html"><span class="doc">Architecture Description</span></a> for information on core Sawtooth features such as
+global state, transactions and batches (the atomic unit of state change in
+Sawtooth), permissioning, the validator network, the event system, and more.</p>
+</div>
+<div class="section" id="get-the-sawtooth-software">
+<h3>Get the Sawtooth Software<a class="headerlink" href="#get-the-sawtooth-software" title="Permalink to this headline">¶</a></h3>
+<p>The Sawtooth software is distributed as source code with an Apache license. You
+can get the code to start building your own distributed ledger.</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://github.com/hyperledger/sawtooth-core">sawtooth-core</a>: Contains
+fundamental classes used throughout the Sawtooth project, as well as the
+following items:<ul>
+<li>The implementation of the validator process which runs on each node</li>
+<li>SDKs for writing transaction processing or validation logic in a variety
+of languages</li>
+<li>Dockerfiles to support development or launching a network of validators</li>
+<li>Source files for this documentation</li>
+</ul>
+</li>
+<li><a class="reference external" href="https://github.com/hyperledger/sawtooth-seth">Seth</a>:
+Deploy Ethereum Virtual Machine (EVM) smart contracts to Sawtooth</li>
+<li><a class="reference external" href="https://github.com/hyperledger/sawtooth-marketplace">Sawtooth Marketplace</a>:
+Exchange customized &#8220;Assets&#8221; with other users on the blockchain</li>
+<li><a class="reference external" href="https://github.com/hyperledger/sawtooth-supply-chain">Sawtooth Supply Chain</a>:
+Trace the provenance and other contextual information of any asset</li>
+<li><a class="reference external" href="https://github.com/hyperledger/sawtooth-private-utxo">Sawtooth Private UTXO</a>:
+Create and trade assets, using SGX to allow assets to be transferred
+off-ledger and traded privately</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="join-the-sawtooth-community">
+<h3>Join the Sawtooth Community<a class="headerlink" href="#join-the-sawtooth-community" title="Permalink to this headline">¶</a></h3>
+<p>Sawtooth is an open source project under the Hyperledger umbrella. We welcome
+working with individuals and companies interested in advancing distributed
+ledger technology. Please see <a class="reference internal" href="community.html"><span class="doc">Community</span></a> for ways to become a part of
+the Sawtooth community.</p>
+</div>
+</div>
+<div class="section" id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
+<p>This project uses software developed by the OpenSSL Project for use in the
+OpenSSL Toolkit (<a class="reference external" href="http://www.openssl.org/">http://www.openssl.org/</a>).</p>
+<p>This project relies on other third-party components. For details, see the
+LICENSE and NOTICES files in the <a class="reference external" href="https://github.com/hyperledger/sawtooth-core">sawtooth-core repository</a>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="architecture.html" class="btn btn-neutral float-right" title="Architecture Description" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="contents.html" class="btn btn-neutral" title="Table of Contents" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'v1.0.4',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+sawtooth\.manage\.subproc module
+================================
+
+.. automodule:: sawtooth.manage.subproc
+    :members:
+    :undoc-members:
+    :show-inheritance:

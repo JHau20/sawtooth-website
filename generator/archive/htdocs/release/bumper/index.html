@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html class="no-js">
+<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+  <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<head>
+	<meta charset="utf-8">
+	<title>Hyperledger Sawtooth 1.1 (Bumper) | Hyperledger Sawtooth</title>
+	<meta name="description" content="An enterprise-grade solution for distributed ledgers.">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-Frame-Options" content="sameorigin">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="/css/main.css">
+
+	<!--Favicon-->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+	<!-- Canonical -->
+	<link rel="canonical" href="0.0.0.0/release/bumper/">
+
+	<!-- RSS -->
+	<link rel="alternate" type="application/atom+xml" title="Hyperledger Sawtooth" href="0.0.0.0/feed.xml" />
+
+	<!-- Font Awesome -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Google Fonts -->
+	
+	<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,700italic,400italic" rel="stylesheet" type="text/css">
+	
+
+	<!-- KaTeX -->
+	
+
+	<!-- Google Analytics
+	-->
+</head>
+
+  <body>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<header class="site-header">
+	<div class="branding">
+		
+		<a href="/">
+			<img class="avatar" src="/img/avatar.png" alt=""/>
+		</a>
+		
+		<h1 class="site-title">
+			<a href="/">Hyperledger Sawtooth</a>
+		</h1>
+	</div>
+	<nav class="site-nav">
+		<ul>
+                        
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li>
+				<a class="page-link" href="/about/">
+					About
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/release/">
+					Releases
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/docs/">
+					Docs
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/faq/">
+					FAQ
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/community/">
+					Community
+				</a>
+			</li>
+			
+			
+			
+			<li>
+				<a class="page-link" href="/contact/">
+					Contact
+				</a>
+			</li>
+			
+			
+			<li>
+				<a class="page-link" href="/examples">
+					Examples
+				</a>
+			</li>
+			<!-- Social icons from Font Awesome, if enabled -->
+			<!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://github.com/hyperledger/sawtooth-core" title="Follow on GitHub">
+		<i class="fa fa-fw fa-github"></i>
+	</a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li>
+	<a href="https://twitter.com/\%23HyperledgerSawtooth" title="Follow on Twitter">
+		<i class="fa fa-fw fa-twitter"></i>
+	</a>
+</li>
+
+
+
+
+
+
+		</ul>
+	</nav>
+</header>
+
+    <div class="content">
+      <article >
+  <header style="background-image: url('/')">
+    <h1 class="title">Hyperledger Sawtooth 1.1 (Bumper)</h1>
+  </header>
+  <section class="post-content"><p><a href="top"></a></p>
+
+<p>Hyperledger Sawtooth 1.1 (Bumper) is now available. See the
+<a href="https://sawtooth.hyperledger.org/docs/core/releases/1.1.5/">documentation</a> to
+get started.</p>
+
+<p>This page describes the new and changed features in Hyperledger
+Sawtooth 1.1 (since release 1.0). Information is organized in the following
+categories:</p>
+
+<ul>
+  <li><a href="#core-sawtooth-components">Core Sawtooth Components</a></li>
+  <li><a href="#consensus">Consensus</a>: Includes the new consensus API, changes to existing
+consensus algorithm implementations, and support for new consensus algorithms</li>
+  <li><a href="#documentation">Documentation</a></li>
+  <li><a href="#smart-contract-engines">Smart Contract Engines</a></li>
+  <li><a href="#devops-and-ci">DevOps and CI</a>: Describes changes to the project’s build
+tools and continuous integration process</li>
+  <li><a href="#website">Website</a>: Includes the Sawtooth website content, structure, and
+website development processes</li>
+</ul>
+
+<h1 id="core-sawtooth-components">Core Sawtooth Components</h1>
+
+<h2 id="new-features">New Features</h2>
+
+<ul>
+  <li>The consensus API has been completely redesigned. Consensus has been moved to
+a separate process, called a “consensus engine”. See <a href="#consensus">Hyperledger Sawtooth
+Consensus</a> for more details.</li>
+  <li>State pruning is now supported at a configurable block horizon. This helps
+limit the total storage requirements for global state by removing historic
+state after the configured horizon. Check out the <a href="https://github.com/hyperledger/sawtooth-rfcs/pull/8">state pruning
+RFC</a> for more details.</li>
+  <li>Several example transaction processors have been rewritten in Rust, including
+IntegerKey (intkey), XO, and Smallbank.</li>
+  <li>A new <code class="language-plaintext highlighter-rouge">/status</code> endpoint and <code class="language-plaintext highlighter-rouge">sawtooth status show</code> command are available to
+query status information for an active validator.</li>
+  <li>New metrics have been added for submitted batches and transactions, thread
+pools, transaction processing, and dispatcher queue sizes.</li>
+  <li>The internal metrics library has been refactored to be more modular and
+similar to the logging API.</li>
+  <li>The gossip protocol used by Sawtooth is now versioned to support
+backwards-compatible upgrades in the future.</li>
+</ul>
+
+<h2 id="major-improvements">Major Improvements</h2>
+
+<ul>
+  <li>The Rust SDK has matured. It now includes libraries for signing, writing
+transaction processors, and writing consensus engines, along with supporting
+information for the auto-generated SDK documentation.</li>
+  <li>Several key items have been rewritten in Rust: Validator CLI argument
+parsing, global state database (and supporting views), ChainController, and
+BlockPublisher. This change allows some code to be executed outside of the
+Python global interpreter lock (GIL).</li>
+  <li>The ChainController and BlockPublisher have been substantially refactored to
+be more modular and support validating blocks in parallel.</li>
+</ul>
+
+<h2 id="minor-improvements">Minor Improvements</h2>
+
+<ul>
+  <li>Transaction processors can now report the maximum number of transactions that
+they can handle at a time. The validator will only request that many
+transactions at a time for processing.</li>
+  <li>Logging has been improved to reduce the volume and improve the quality of
+generated log messages.</li>
+  <li>Discarded blocks are now explicitly canceled to avoid wasting effort on
+blocks that will never be chosen.</li>
+  <li>Deserialization is now cached for messages that have multiple handlers to
+avoid redundant work.</li>
+  <li>Peers are requested only from connections that have passed authorization.</li>
+  <li>Client message handling has been moved to a separate thread pool to avoid
+interfering with transaction processing.</li>
+  <li>The parallel scheduler has been refactored to use a generic <code class="language-plaintext highlighter-rouge">PredecessorTree</code>
+data structure.</li>
+</ul>
+
+<h2 id="bug-fixes">Bug Fixes</h2>
+
+<ul>
+  <li>Fixed a bad internal configuration that allowed the Completer and
+ChainController to get out of sync about which blocks were in the system</li>
+  <li>Add missing handlers for client messages</li>
+  <li>Correctly decrement “time to live” on gossip messages</li>
+  <li>Handled an edge case where a new node will not get the chain until a new
+block is published</li>
+  <li>Stopped trying to unschedule transactions that haven’t been scheduled yet</li>
+  <li>Fixed a number of concurrency issues where data structure were being accessed
+concurrently without protection or with incorrect usage of synchronization
+primitives</li>
+  <li>Fixed a bug where a future could be executed in the event loop instead of in
+a thread pool</li>
+  <li>Only broadcast to peers that have completed authorization</li>
+  <li>Ensured that candidate blocks are only built in the BlockPublisher thread</li>
+</ul>
+
+<h2 id="upgrade-considerations">Upgrade Considerations</h2>
+
+<ul>
+  <li>The consensus setting <code class="language-plaintext highlighter-rouge">sawtooth.consensus.algorithm</code> setting has been
+deprecated and no longer has an effect. Instead, use the settings
+<code class="language-plaintext highlighter-rouge">sawtooth.consensus.algorithm.name</code> and <code class="language-plaintext highlighter-rouge">sawtooth.consensus.algorithm.version</code>
+to set the name and version of the consensus engine.</li>
+  <li>All SDKs except Rust and Python have been moved from sawtooth-core to
+<a href="https://github.com/hyperledger?utf8=%E2%9C%93&amp;q=sawtooth-sdk&amp;type=&amp;language=">separate repositories</a>.</li>
+  <li>PoET has been moved to <a href="https://github.com/hyperledger/sawtooth-poet">a new repository</a>.</li>
+</ul>
+
+<p><a href="#top">&gt; back to top &lt;</a></p>
+
+<h1 id="consensus">Consensus</h1>
+
+<p>Hyperledger Sawtooth 1.1 includes a new consensus interface that enables
+features like language independence for consensus algorithms. Consensus
+protocols are now implemented as separate processes called “consensus engines”,
+which enables more consensus options for Sawtooth. Check out the <a href="https://github.com/hyperledger/sawtooth-rfcs/pull/4">consensus API
+RFC</a> for more details.</p>
+
+<ul>
+  <li>The network deployment tools have been updated to launch the consensus
+processes. If you have made your own custom launch scripts, note that the
+consensus engine now runs as its own process, like other services such as the
+REST API and transaction processors. Please see the example Sawtooth
+docker-compose files for reference.</li>
+  <li>This release includes the following consensus engines based on the new
+consensus API:
+    <ul>
+      <li><a href="https://github.com/hyperledger/sawtooth-poet">PoET consensus engine</a>, a
+refactored version of the previous PoET consensus module.</li>
+      <li>Dev mode consensus engine, based on the previous dev mode consensus module.</li>
+      <li>New <a href="https://github.com/hyperledger/sawtooth-pbft">PBFT consensus engine</a>,
+based on the Practical Byzantine Fault Tolerance (PBFT) consensus algorithm.</li>
+      <li>New <a href="https://github.com/hyperledger/sawtooth-raft">Raft consensus engine</a>,
+based on the Raft consensus algorithm.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="sawtooth-poet">Sawtooth PoET</h2>
+
+<p>The Sawtooth Proof of Elapsed Time (PoET) consensus can be deployed as a pure
+Python application using a simulated enclave, called PoET simulator, or with a
+C++ module implementing an Intel® Software Guard Extensions (Intel® SGX)
+enclave, called PoET-SGX.</p>
+
+<ul>
+  <li>PoET simulator is available in the 1.1 release as a consensus engine. If you
+are using PoET simulator consensus, we recommend upgrading to Sawtooth 1.1.</li>
+  <li>PoET-SGX has not been validated on Sawtooth 1.1. Users relying on PoET-SGX
+are recommended to remain on Sawtooth 1.0. We are working on a new
+implementation of poet and its TEE enclave, which is anticipated for a point
+release in the near future.</li>
+</ul>
+
+<h2 id="sawtooth-raft">Sawtooth Raft</h2>
+
+<p>Hyperledger Sawtooth 1.1 supports a developer preview of <a href="https://github.com/hyperledger/sawtooth-raft">Sawtooth
+Raft</a>, a Rust implementation of
+Raft based on the <a href="https://github.com/pingcap/raft-rs">raft-rs</a> library used by
+<a href="https://github.com/tikv/tikv">TiKV</a>. The Sawtooth Raft consensus engine uses
+the new consensus API.</p>
+
+<p>Sawtooth Raft is still in the prototype phase and is under active development.</p>
+
+<h2 id="sawtooth-pbft">Sawtooth PBFT</h2>
+
+<p>The Hyperledger Sawtooth 1.1 release includes the <a href="https://github.com/hyperledger/sawtooth-pbft">Sawtooth PBFT consensus
+engine</a>. Sawtooth PBFT is based
+on the <a href="http://pmg.csail.mit.edu/papers/osdi99.pdf">original PBFT paper</a> with
+several extensions to make it compatible with Sawtooth and to resolve known
+issues with the original protocol. See the RFCs for more details:</p>
+
+<ul>
+  <li><a href="https://github.com/hyperledger/sawtooth-rfcs/pull/19">Initial RFC</a></li>
+  <li><a href="https://github.com/hyperledger/sawtooth-rfcs/pull/29">Extension RFC to mitigate fair ordering and silent leader issues</a></li>
+  <li><a href="https://github.com/hyperledger/sawtooth-rfcs/pull/30">Extension RFC to enable observer validation of consensus</a></li>
+</ul>
+
+<p>Sawtooth PBFT is still in the prototype phase and is under active development.</p>
+
+<p><a href="#top">&gt; back to top &lt;</a></p>
+
+<h1 id="documentation">Documentation</h1>
+
+<p>In addition to updates for Hyperledger Sawtooth 1.1 features, technical
+corrections, and bug fixes throughout, the Sawtooth documentation has the
+following changes and improvements.</p>
+
+<h2 id="application-developers-guide">Application Developer’s Guide</h2>
+
+<ul>
+  <li>Improved procedures for running a single Sawtooth node with Docker, Ubuntu,
+or AWS, plus a new Kubernetes procedure. See <a href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/installing_sawtooth.html">Setting Up a Sawtooth
+Application Development Environment</a>.</li>
+  <li>New procedures to add multiple nodes to a network for Docker, Ubuntu, and
+Kubernetes. See <a href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/creating_sawtooth_network.html">Creating a Sawtooth Network</a>.</li>
+  <li>Updated procedure for trying the example tic-tac-toe transaction processor in
+Sawtooth. See <a href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/intro_xo_transaction_family.html">Playing with the XO Transaction Family</a>.</li>
+  <li>Improved and expanded tutorials for using the Sawtooth JavaScript, Go, and
+Python SDKs, plus a new Rust version. See <a href="https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/using_the_sdks.html">Using the Sawtooth SDKs</a>.</li>
+</ul>
+
+<h2 id="api-references">API References</h2>
+
+<ul>
+  <li>New Rust SDK documentation; see
+<a href="https://sawtooth.hyperledger.org/docs/core/nightly/master/sdks.html#rust">Rust SDK API Reference</a>.</li>
+</ul>
+
+<h2 id="system-administrators-guide">System Administrator’s Guide</h2>
+
+<ul>
+  <li>Improved procedure for setting up a Sawtooth network with PoET simulator
+consensus, including new steps to change off-chain settings and test the
+system. See <a href="https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/setting_up_sawtooth_poet-sim.html">Setting Up a Sawtooth Node</a>.</li>
+  <li>Updated procedure to configure a proxy server. See <a href="https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/rest_auth_proxy.html">Using a Proxy Server to
+Authorize the REST API</a>.</li>
+  <li>Updated permission information. See <a href="https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/configuring_permissions.html">Configuring Validator and Transactor
+Permissions</a>.</li>
+  <li>New procedure to configure Sawtooth to display Grafana metrics. See <a href="https://sawtooth.hyperledger.org/docs/core/nightly/master/sysadmin_guide/grafana_configuration.html">Using
+Grafana to Display Sawtooth Metrics</a>.</li>
+</ul>
+
+<h2 id="architecture-guide">Architecture Guide</h2>
+
+<ul>
+  <li>General improvements and a new architecture overview.</li>
+</ul>
+
+<h2 id="glossary">Glossary</h2>
+
+<ul>
+  <li>New glossary of Sawtooth terminology.</li>
+</ul>
+
+<p><a href="#top">&gt; back to top &lt;</a></p>
+
+<h1 id="smart-contract-engines">Smart Contract Engines</h1>
+
+<h2 id="sawtooth-seth">Sawtooth Seth</h2>
+
+<p>Hyperledger Sawtooth 1.1 continues to support <a href="https://github.com/hyperledger/sawtooth-seth">Sawtooth
+Seth</a>, an Ethereum-compatible
+transaction family for the Hyperledger Sawtooth platform. Significant changes
+in this release:</p>
+
+<ul>
+  <li>A new <code class="language-plaintext highlighter-rouge">seth</code> CLI that is capable of communicating with the existing JSON-RPC
+API. This CLI will let us test the JSON-RPC API, and will eventually allow us
+to deprecate the existing REST-API-based CLI, which is now available in the
+<code class="language-plaintext highlighter-rouge">seth-cli-go</code> container.</li>
+  <li>The existing JSON-RPC API has been updated to align more closely with
+existing Ethereum JSON-RPC implementations, particularly in how it handles
+account management. This change provides better inter-compatibility with
+off-the-shelf Ethereum tooling.</li>
+  <li>The Burrow version was updated from 0.17 to 0.21 and vendor dependencies were
+removed.</li>
+  <li>The build process and dependencies have been updated and aligned with current
+best practices, such as formatting the Rust code and linting it with Clippy.</li>
+  <li>The documentation has been updated with minor corrections.</li>
+  <li>Several minor bugs have been fixed, such as a segfault occurring when
+creating an account with a nonce, and invalid addresses being displayed in
+contract listing.</li>
+  <li>This release includes Dockerfiles suitable for publishing to Docker Hub.</li>
+</ul>
+
+<h2 id="sawtooth-sabre">Sawtooth Sabre</h2>
+
+<p>Hyperledger Sawtooth 1.1 supports <a href="https://github.com/hyperledger/sawtooth-sabre">Sawtooth
+Sabre</a>, a transaction family
+that implements on-chain smart contracts executed in a WebAssembly virtual
+machine. Sabre smart contracts are stored on chain and executed using the Sabre
+transaction processor.</p>
+
+<p>Sawtooth Sabre includes an SDK for writing Sabre smart contracts in Rust. The
+smart contracts can be written in such a way that they can be compiled into
+transaction processor and run without Sabre. This also makes it easy to convert
+already-written Rust transaction processors to a Sabre smart contract.</p>
+
+<p><strong>Note:</strong> Sabre is currently at version 0.1 and is under active development.</p>
+
+<p><a href="#top">&gt; back to top &lt;</a></p>
+
+<h1 id="devops-and-ci">DevOps and CI</h1>
+
+<h2 id="build-system-improvements">Build System Improvements</h2>
+
+<ul>
+  <li>The <code class="language-plaintext highlighter-rouge">bin/build_all</code> script and related build scripts have been replaced with
+<code class="language-plaintext highlighter-rouge">docker-compose</code>.</li>
+  <li>The Docker Compose files now have ‘build’ sections, so that pre-building
+steps aren’t necessary and all required images can be built with a single
+<code class="language-plaintext highlighter-rouge">docker-compose up</code> command.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">sawtooth-dev-{lang}</code> Dockerfiles are deprecated. Each component now has
+its own Dockerfile for development.</li>
+</ul>
+
+<p>Check out the <a href="https://github.com/hyperledger/sawtooth-rfcs/pull/25">build system
+RFC</a> for more details.</p>
+
+<p><strong>Note</strong>: Requires Docker Engine 18.02.0 or later.</p>
+
+<h2 id="docker">Docker</h2>
+
+<ul>
+  <li>Each component now has “installed” Dockerfiles that utilize multi-stage
+builds. These Dockerfiles are suitable for publishing to a docker registry.</li>
+</ul>
+
+<p><strong>Note</strong>: Requires Docker Engine 18.02.0 or later.</p>
+
+<h2 id="kubernetes">Kubernetes</h2>
+
+<ul>
+  <li>This release includes example files for two Kubernetes deployments: A
+five-node network using PoET simulator and a single-node environment using
+dev mode consensus. The Application Developer’s Guide describes how to use
+these example files; see the <a href="https://sawtooth.hyperledger.org/docs/core/releases/1.1.5/app_developers_guide.html">Hyperledger Sawtooth
+documentation</a>.</li>
+</ul>
+
+<p><a href="#top">&gt; back to top &lt;</a></p>
+
+<h1 id="website">Website</h1>
+
+<p>The Sawtooth website,
+<a href="https://sawtooth.hyperledger.org">sawtooth.hyperledger.org</a>, has been updated
+with this release. This update includes:</p>
+
+<ul>
+  <li>A new home page for Hyperledger Sawtooth that provides links to examples,
+documentation, and timely blog posts.</li>
+  <li>The structure to easily update static content and blog posts.</li>
+  <li>The ability to conduct agile changes, reviews, and approvals through Github.</li>
+</ul>
+
+<p>Expect changes to the Sawtooth website on a regular basis. In the short term,
+we plan to:</p>
+
+<ul>
+  <li>Improve website navigation</li>
+  <li>Automate the website build and deployment, based on the model for Sawtooth</li>
+  <li>Apply consistent formatting throughout the site
+PRs</li>
+</ul>
+
+<p><a href="#top">&gt; back to top &lt;</a></p>
+
+<hr />
+
+<p><a href="https://sawtooth.hyperledger.org/">The Hyperledger Sawtooth Team</a></p>
+</section>
+</article>
+
+    </div>
+    <!-- Copyright (c) 2014 Rohan Chandra. SPDX-License-Identifier: MIT -->
+<script src="/js/main.js"></script>
+
+
+<footer class="site-footer">
+	<p class="text"><p style="font-size: 1.5em;">
+  Hyperledger Sawtooth
+</p> <p>
+  <a href="/" title="Home"><span class="links">Home</span></a>
+  &bull;
+  <a href="/about/" title="About Sawtooth"><span class="links">About</span></a>
+  &bull;
+  <a href="/release/" title="Releases"><span class="links">Releases</span></a>
+  &bull;
+  <a href="/docs/" title="Documentation"><span class="links">Docs</span></a>
+  &bull;
+  <a href="/faq/" title="FAQ"><span class="links">FAQ</span></a>
+  &bull;
+  <a href="/community/" title="Community"><span class="links">Community</span></a>
+  &bull;
+  <a href="/contact/" title="Contact"><span class="links">Contact</span></a>
+</p> <p>
+  Find us: &nbsp;
+  <a href="https://github.com/hyperledger/sawtooth-core/" target="_blank" title="GitHub"><span  class="links">GitHub</span></a>
+  &bull;
+  <a href="https://chat.hyperledger.org/channel/sawtooth" target="_blank" title="#sawtooth chat channel"">Rocket.Chat</a>
+  &bull;
+  <a href="https://twitter.com/search?q=%23HyperledgerSawtooth" target="_blank" title="#sawtooth chat channel"">Twitter</a>
+</p> <p>
+  Examples: &nbsp;
+  <a href="/examples/seafood.html" target="_blank" title="Seafood Supply Chain Traceability">Seafood Supply Chain Traceability</a>
+  &bull;
+  <a href="/examples/bond.html" target="_blank" title="Bond Asset Settlement">Bond Asset Settlement</a>
+  &bull;
+  <a href="/examples/marketplace.html" target="_blank" title="Marketplace Digital Asset Exchange">Marketplace Digital Asset Exchange</a>
+</p> <p>
+  Linux Foundation: &nbsp;
+  <a href="http://www.linuxfoundation.org/privacy" target="_blank" title="Privacy Policy">Privacy Policy</a>
+  &bull;
+  <a href="http://www.linuxfoundation.org/terms" target="_blank" title="Terms of Service">Terms of Service</a>
+</p> <p>
+  <small class="copyright">Copyright &copy; 2015-2019 contributors to Hyperledger Sawtooth</small>
+</p>
+</p>
+</footer>
+
+
+  </body>
+</html>

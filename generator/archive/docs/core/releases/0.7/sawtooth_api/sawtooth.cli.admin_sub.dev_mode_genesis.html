@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.cli.admin_sub.dev_mode_genesis module &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="sawtooth.cli.admin_sub package" href="sawtooth.cli.admin_sub.html"/>
+        <link rel="next" title="sawtooth.cli.admin_sub.genesis_common module" href="sawtooth.cli.admin_sub.genesis_common.html"/>
+        <link rel="prev" title="sawtooth.cli.admin_sub.clean module" href="sawtooth.cli.admin_sub.clean.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/architecture_overview.html">Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/sawtooth_vagrant.html">Vagrant</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">Distributed Ledger Python API</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="sawtooth.html">sawtooth package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="sawtooth.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sawtooth.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/web_api/index.html">Distributed Ledger Web API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/validator_network_launcher.html">The Validator Network Launcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/workload_simulator.html">The Workload Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/signing_transactions.html">Signing Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="modules.html">Distributed Ledger Python API</a> &raquo;</li>
+        
+          <li><a href="sawtooth.html">sawtooth package</a> &raquo;</li>
+        
+          <li><a href="sawtooth.cli.html">sawtooth.cli package</a> &raquo;</li>
+        
+          <li><a href="sawtooth.cli.admin_sub.html">sawtooth.cli.admin_sub package</a> &raquo;</li>
+        
+      <li>sawtooth.cli.admin_sub.dev_mode_genesis module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sawtooth_api/sawtooth.cli.admin_sub.dev_mode_genesis.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-sawtooth.cli.admin_sub.dev_mode_genesis">
+<span id="sawtooth-cli-admin-sub-dev-mode-genesis-module"></span><h1>sawtooth.cli.admin_sub.dev_mode_genesis module<a class="headerlink" href="#module-sawtooth.cli.admin_sub.dev_mode_genesis" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="sawtooth.cli.admin_sub.dev_mode_genesis.add_dev_mode_genesis_parser">
+<code class="descclassname">sawtooth.cli.admin_sub.dev_mode_genesis.</code><code class="descname">add_dev_mode_genesis_parser</code><span class="sig-paren">(</span><em>subparsers</em>, <em>parent_parser</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/admin_sub/dev_mode_genesis.html#add_dev_mode_genesis_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.admin_sub.dev_mode_genesis.add_dev_mode_genesis_parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sawtooth.cli.admin_sub.dev_mode_genesis.do_dev_mode_genesis">
+<code class="descclassname">sawtooth.cli.admin_sub.dev_mode_genesis.</code><code class="descname">do_dev_mode_genesis</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/admin_sub/dev_mode_genesis.html#do_dev_mode_genesis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.admin_sub.dev_mode_genesis.do_dev_mode_genesis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sawtooth.cli.admin_sub.genesis_common.html" class="btn btn-neutral float-right" title="sawtooth.cli.admin_sub.genesis_common module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sawtooth.cli.admin_sub.clean.html" class="btn btn-neutral" title="sawtooth.cli.admin_sub.clean module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

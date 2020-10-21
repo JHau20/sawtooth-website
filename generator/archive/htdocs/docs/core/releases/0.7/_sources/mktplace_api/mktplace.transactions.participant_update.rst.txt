@@ -1,0 +1,7 @@
+mktplace\.transactions\.participant\_update module
+==================================================
+
+.. automodule:: mktplace.transactions.participant_update
+    :members:
+    :undoc-members:
+    :show-inheritance:

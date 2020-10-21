@@ -1,0 +1,7 @@
+sawtooth\.cli\.stats\_lib\.topology\_stats module
+=================================================
+
+.. automodule:: sawtooth.cli.stats_lib.topology_stats
+    :members:
+    :undoc-members:
+    :show-inheritance:

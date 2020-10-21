@@ -1,0 +1,788 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Permissioning Design &mdash; Sawtooth v1.2.3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Injecting Batches and On-Chain Block Validation Rules" href="injecting_batches_block_validation_rules.html" />
+    <link rel="prev" title="Sawtooth Network" href="validator_network.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../architecture.html">Architecture Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="global_state.html">Global State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transactions_and_batches.html">Transactions and Batches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="journal.html">Journal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html">Transaction Scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_network.html">Sawtooth Network</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Permissioning Design</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#definitions">Definitions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#general-definitions">General Definitions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actor-definitions">Actor Definitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtooth-network-scenarios">Sawtooth Network Scenarios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transactor-key-permissioning">Transactor Key Permissioning</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#allow-all-batch-signers-to-submit-batches">Allow all batch signers to submit batches</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#allow-only-specific-batch-signers-to-submit-batches">Allow only specific batch signers to submit batches</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#allow-all-transaction-signers-to-submit-transactions">Allow all transaction signers to submit transactions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#allow-only-specific-transaction-signers-to-submit-transactions">Allow only specific transaction signers to submit transactions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#restrict-the-type-of-transactions-transactors-can-sign">Restrict the type of transactions transactors can sign</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#support-policy-based-transactor-permissioning">Support policy-based transactor permissioning</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#validator-key-permissioning">Validator Key Permissioning</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#allow-all-nodes-to-join-the-sawtooth-network">Allow all nodes to join the Sawtooth network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#allow-only-specific-nodes-to-join-the-sawtooth-network">Allow only specific nodes to join the Sawtooth network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#allow-only-specific-nodes-to-participate-in-consensus">Allow only specific nodes to participate in consensus</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="injecting_batches_block_validation_rules.html">Injecting Batches and On-Chain Block Validation Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_and_transactions_receipts.html">Events and Transaction Receipts</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/pbft/releases/v1.2.3/architecture.html">PBFT Consensus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poet.html">PoET 1.0 Consensus</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../architecture.html">Architecture Guide</a> &raquo;</li>
+        
+      <li>Permissioning Design</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/architecture/permissioning_requirement.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="permissioning-design">
+<h1>Permissioning Design<a class="headerlink" href="#permissioning-design" title="Permalink to this headline">¶</a></h1>
+<p>Sawtooth includes the ability to control validator and transactor
+permissions. This chapter describes permissioning in Hyperledger Sawtooth by
+providing a detailed list of the requirements, capabilities, and user stories
+that help to understand permissioning design.</p>
+<p>Sawtooth divides permissioning into two general groups:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>Transactor key permissioning</cite> controls who can submit transactions and
+batches, based on signing keys.</p></li>
+<li><p><cite>Validator key permissioning</cite> controls which nodes are allowed to
+establish connections to the Sawtooth network.</p></li>
+</ul>
+</div></blockquote>
+<p>This chapter summarizes the types of Sawtooth networks, then lists the
+capability requirements for these permissioning groups. Each requirement has
+a short description, the network scenario the requirement supports, and
+associated <cite>user stories</cite>. User stories are short statements about a requirement
+or capability that an actor desires. These short descriptions illustrate the
+need for specific permission requirements.</p>
+<p>The design of Sawtooth permissioning includes both local validator configuration
+and network-wide on-chain permissioning.</p>
+<ul class="simple">
+<li><p>Local configuration allows a validator to limit who is allowed to submit
+batches and transactions directly to that validator. This is useful, for
+example, if a company is running its own Sawtooth node and wishes to allow
+only members of that company to submit transactions.</p></li>
+<li><p>On-chain configuration allows a Sawtooth network to enforce consistent
+permissioning rules. For example, in validator key permissioning, all the
+validators on the network will reject the same node from peering, ensuring
+that only known nodes can join the network.</p></li>
+</ul>
+<div class="section" id="definitions">
+<h2>Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="general-definitions">
+<h3>General Definitions<a class="headerlink" href="#general-definitions" title="Permalink to this headline">¶</a></h3>
+<p>The following list contains architecture-level definitions for Sawtooth
+concepts. For general definitions, see the <a class="reference internal" href="../glossary.html"><span class="doc">Glossary</span></a>.</p>
+<dl class="simple">
+<dt>Authorization procedure</dt><dd><p>“Handshake” that a connection must go through
+to be allowed to connect to a validator. If the connection does not follow
+the authorization procedure correctly, the connection will be rejected and
+closed.</p>
+</dd>
+<dt>Batch</dt><dd><p>Protobuf object containing a list of transactions, a header, and
+a signature. The signature is generated by the batch signer by signing the
+batch header with the batch signer’s private key. For more information on the
+structure of a batch, see <a class="reference internal" href="transactions_and_batches.html"><span class="doc">Batch Data Structure</span></a>.</p>
+</dd>
+<dt>Client</dt><dd><p>Program that connects to a validator and is able to query the
+state of the blockchain and submit batches.</p>
+</dd>
+<dt>Policy</dt><dd><p>Set of DENY and PERMIT rules that can be used to permission the
+access to the Sawtooth network and which transactors can participate on the
+network.</p>
+</dd>
+<dt>Transaction</dt><dd><p>Protobuf object containing a payload, header, and
+signature. The signature is generated by the transaction signer by signing the
+transaction header with the transaction signer’s private key. For more
+information on the structure of a transaction, see <a class="reference internal" href="transactions_and_batches.html"><span class="doc">Transaction Data
+Structure</span></a>.</p>
+</dd>
+<dt>Transaction Family</dt><dd><p>Set containing a transaction payload format, a model for storing information
+in global state, and a procedure for validating a transaction and updating
+state based on the transaction payload. For information on specific
+transaction families, see <a class="reference internal" href="../transaction_family_specifications.html"><span class="doc">Transaction Family
+Specifications</span></a>.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="actor-definitions">
+<h3>Actor Definitions<a class="headerlink" href="#actor-definitions" title="Permalink to this headline">¶</a></h3>
+<p>The following terms are used for the actors within a Sawtooth network:</p>
+<dl class="simple">
+<dt>Transactor</dt><dd><p>Person or program which signs batches or transactions.
+When signing a batch, the transactor is also a batch signer. When signing a
+transaction, a transactor is also a transaction signer.</p>
+</dd>
+<dt>Batch signer</dt><dd><p>Transactor that signs a batch header using the batch
+signer’s private key. The resulting signature is included as part of the
+batch. The batch signer’s public key is also stored in the batch header.</p>
+</dd>
+<dt>Transaction Signer</dt><dd><p>Transactor that signs a transaction header using
+the transaction signer’s private key. The resulting signature is included as
+part of the transaction. The transaction signer’s public key is also
+stored in the transaction header.</p>
+</dd>
+<dt>Network Operator</dt><dd><p>One or more people who collectively manage the Sawtooth
+network. The network operator determines and coordinates the overall network
+characteristics, such as determining which transaction processors are being
+run, setting the consensus mechanism, modifying on-chain settings, and
+modifying on-chain roles.</p>
+</dd>
+<dt>Sysadmin</dt><dd><p>System administrator; a person who installs and configures a Sawtooth
+node using config files. The
+role of sysadmin does not include activities that modify on-chain settings.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="sawtooth-network-scenarios">
+<h2>Sawtooth Network Scenarios<a class="headerlink" href="#sawtooth-network-scenarios" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth is designed to support public, consortium, and private networks.
+The following network scenarios are used in the discussion of capability
+requirements to illustrate when each requirement would be useful.</p>
+<ul class="simple">
+<li><p>Public network:
+In a public network, all connections are allowed and all transactors are
+allowed to sign batches and transactions.</p></li>
+<li><p>Consortium network:
+In a consortium network, only specific nodes are allowed to join the
+Sawtooth network and participate in consensus. However, the network allows
+any client, transaction processor, or event subscriber to connect to a
+validator and accept batches and transactions signed by all transactors.</p></li>
+<li><p>Private Network:
+In a private network, only specific nodes are allowed to join the
+Sawtooth network and participate in consensus. The validators in the network
+accept only connections from specific clients. The validators also control
+whether the client is allowed to submit batches and query specific address
+prefixes in state. Only specific transaction processors and event subscribers
+are allowed to connect to the local validator. Batches and transactions that
+are received by the validator can only be signed by permitted transactors.
+Transactors can also be restricted to only sending transactions for certain
+transaction families.</p></li>
+</ul>
+<p>The following table summaries the capability requirements for each network
+scenario.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Network Scenario</p></td>
+<td><p>Capabilities</p></td>
+</tr>
+<tr class="row-even"><td><p>Public Network</p></td>
+<td><ul class="simple">
+<li><p>Allow all batch signers to submit batches</p></li>
+<li><p>Allow all transaction signers to submit transactions</p></li>
+<li><p>Allow all nodes to join the Sawtooth network</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Consortium Network</p></td>
+<td><ul class="simple">
+<li><p>Allow all batch signers to submit batches</p></li>
+<li><p>Allow all transaction signers to submit transactions</p></li>
+<li><p>Allow only specific nodes to join the Sawtooth
+network</p></li>
+<li><p>Allow only specific nodes to participate in consensus</p></li>
+<li><p>Support policy-based transactor permissioning</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Private Network</p></td>
+<td><ul class="simple">
+<li><p>Allow only specific batch signers to submit batches</p></li>
+<li><p>Allow only specific transaction signers to submit
+transactions</p></li>
+<li><p>Allow only specific nodes to join the Sawtooth
+network</p></li>
+<li><p>Allow only specific nodes to participate in consensus</p></li>
+<li><p>Restrict the type of transactions transactors can
+sign</p></li>
+<li><p>Restrict address space access to a limited set of
+transactors</p></li>
+<li><p>Support policy-based transactor permissioning</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="transactor-key-permissioning">
+<h2>Transactor Key Permissioning<a class="headerlink" href="#transactor-key-permissioning" title="Permalink to this headline">¶</a></h2>
+<p>Transactor key permissioning is performed on the basis of a transactor’s public
+signing key. This includes both batch signers and transaction signers.</p>
+<p>When the validator receives a batch from a client, it checks both the local
+configuration and network configuration.  Only the batch signers that are
+permitted in the intersection of the two configurations will be allowed.</p>
+<p>When the validator receives a batch from a peer validator, only the network
+configuration is checked. This behavior is required to prevent network forks.</p>
+<p>The following tables describe the design of each capability for transactor
+key permissioning.</p>
+<div class="section" id="allow-all-batch-signers-to-submit-batches">
+<h3>Allow all batch signers to submit batches<a class="headerlink" href="#allow-all-batch-signers-to-submit-batches" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Network Scenario</p></td>
+<td><ul class="simple">
+<li><p>Public - YES</p></li>
+<li><p>Consortium - YES</p></li>
+<li><p>Private - NO</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>The validator can be configured to allow
+all batches to be submitted, regardless of who the
+batch signer is. In other words, if a client is
+connected to the validator and that client is allowed
+to submit batches, the batches will not be rejected due
+to the public key that was used to sign the batch.
+These batches will still be rejected if they fail
+signature verification.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Stories</p></td>
+<td><ul class="simple">
+<li><p>A sysadmin can configure a local
+validator to accept batches signed by any batch
+signer.</p></li>
+<li><p>A network operator can configure the
+Sawtooth network to accept batches signed by any
+batch signer.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="allow-only-specific-batch-signers-to-submit-batches">
+<h3>Allow only specific batch signers to submit batches<a class="headerlink" href="#allow-only-specific-batch-signers-to-submit-batches" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Network Scenario</p></td>
+<td><ul class="simple">
+<li><p>Public - NO</p></li>
+<li><p>Consortium - NO</p></li>
+<li><p>Private - YES</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>The validator can be configured to only
+allow certain batch signers to submit batches. If the
+validator receives a batch that was signed by a batch
+signer whose public key is not allowed, that batch
+is dropped. Batches are also checked
+before block validation. If the Sawtooth network
+permits a given batch signer, the validator accepts
+batches signed by that batch signer from peers,
+regardless of its local configuration.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Stories</p></td>
+<td><ul class="simple">
+<li><p>A sysadmin can configure a local
+validator to accept batches signed only by predefined
+batch signers.</p></li>
+<li><p>A network operator can configure the
+whole Sawtooth network to only accept batches from
+specific batch signers.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="allow-all-transaction-signers-to-submit-transactions">
+<h3>Allow all transaction signers to submit transactions<a class="headerlink" href="#allow-all-transaction-signers-to-submit-transactions" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Network Scenario</p></td>
+<td><ul class="simple">
+<li><p>Public - YES</p></li>
+<li><p>Consortium - YES</p></li>
+<li><p>Private - NO</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>The validator can be configured to allow
+all transactions to be submitted, regardless of who the
+transaction signer is. In other words, if a client is
+connected to the validator and the client is allowed to
+submit transactions, the transactions will not be
+rejected due to the public key that was used to sign
+the transactions. These transactions will still be
+rejected if they fail signature verification.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Stories</p></td>
+<td><ul class="simple">
+<li><p>A sysadmin can configure a local
+validator to accept transactions signed by any
+transaction signer.</p></li>
+<li><p>A network operator can configure the
+whole Sawtooth network to accept transactions signed
+by any batch signer.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="allow-only-specific-transaction-signers-to-submit-transactions">
+<h3>Allow only specific transaction signers to submit transactions<a class="headerlink" href="#allow-only-specific-transaction-signers-to-submit-transactions" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Network Scenario</p></td>
+<td><ul class="simple">
+<li><p>Public - NO</p></li>
+<li><p>Consortium - NO</p></li>
+<li><p>Private - YES</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>The validator can be configured to only
+allow certain transaction signers to submit
+transactions. In other words, if the validator receives
+a transaction that was signed by a transaction signer
+whose public key is not allowed, that transaction
+should be dropped. Transactions should also be checked
+during block validation. If the Sawtooth network
+permits a given transaction signer, the validator will
+accept transactions signed by that transaction signer
+from peers, regardless of its local configuration.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Stories</p></td>
+<td><ul class="simple">
+<li><p>A sysadmin can configure a local
+validator to accept transactions signed only by
+predefined transaction signers.</p></li>
+<li><p>A network operator can configure the
+whole Sawtooth network to accept batches only from
+specific transaction signers.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="restrict-the-type-of-transactions-transactors-can-sign">
+<h3>Restrict the type of transactions transactors can sign<a class="headerlink" href="#restrict-the-type-of-transactions-transactors-can-sign" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Network Scenario</p></td>
+<td><ul class="simple">
+<li><p>Public - NO</p></li>
+<li><p>Consortium - NO</p></li>
+<li><p>Private - YES</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>The validator can restrict the transaction
+signers that are allowed to sign transactions for a
+specific transaction family. This permissioning is
+separate from any public key permissioning enforced
+by the transaction family logic.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Stories</p></td>
+<td><ul class="simple">
+<li><p>A network operator can configure the
+whole Sawtooth network to only accept transactions
+that were signed by allowed transaction signers for a
+specific transaction family.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="support-policy-based-transactor-permissioning">
+<h3>Support policy-based transactor permissioning<a class="headerlink" href="#support-policy-based-transactor-permissioning" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Network Scenario</p></td>
+<td><ul class="simple">
+<li><p>Public - NO</p></li>
+<li><p>Consortium - YES</p></li>
+<li><p>Private - YES</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>The validator can enforce transactor
+permissions based on defined policies.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Stories</p></td>
+<td><ul class="simple">
+<li><p>A sysadmin can configure a local
+validator to accept only transactions and batches
+that are signed by transactors that are allowed by
+predefined locally stored policies.</p></li>
+<li><p>A network operator can configure the
+whole Sawtooth network to accept only transactions
+and batches that are signed by transactor that are
+allowed by defined policies.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="validator-key-permissioning">
+<h2>Validator Key Permissioning<a class="headerlink" href="#validator-key-permissioning" title="Permalink to this headline">¶</a></h2>
+<p>Validator key permissioning is performed on the basis of a validator’s
+public signing key.</p>
+<p>The following tables describe the design of each capability for validator
+key permissioning.</p>
+<div class="section" id="allow-all-nodes-to-join-the-sawtooth-network">
+<h3>Allow all nodes to join the Sawtooth network<a class="headerlink" href="#allow-all-nodes-to-join-the-sawtooth-network" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Network Scenario</p></td>
+<td><ul class="simple">
+<li><p>Public - YES</p></li>
+<li><p>Consortium - NO</p></li>
+<li><p>Private - NO</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>The Sawtooth network can be configured to
+allow all nodes to join the network. This
+means that every validator on the network should accept
+the node as a peer, regardless of its public key.
+The nodes are also able to
+participate in consensus and communicate over the
+gossip protocol. The node must still go through
+the authorization procedure defined by the validator
+the node is trying to connect to. If, for any reason,
+the node fails the authorization procedure, it will be
+rejected.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Stories</p></td>
+<td><ul class="simple">
+<li><p>A network operator can configure the
+Sawtooth network to accept all nodes that wish to
+connect, regardless of the node’s public key.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="allow-only-specific-nodes-to-join-the-sawtooth-network">
+<h3>Allow only specific nodes to join the Sawtooth network<a class="headerlink" href="#allow-only-specific-nodes-to-join-the-sawtooth-network" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Network Scenario</p></td>
+<td><ul class="simple">
+<li><p>Public - NO</p></li>
+<li><p>Consortium - YES</p></li>
+<li><p>Private - YES</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>The Sawtooth network can be configured to
+only allow nodes to join the network if the node’s
+public key is permitted. In other words, if a validator
+receives a connection request from a node, and the
+validator does not recognize the node’s public key, the
+connection is rejected.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Stories</p></td>
+<td><ul class="simple">
+<li><p>A network operator can configure the
+Sawtooth network to only accept connections from
+nodes with specific public keys.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="allow-only-specific-nodes-to-participate-in-consensus">
+<h3>Allow only specific nodes to participate in consensus<a class="headerlink" href="#allow-only-specific-nodes-to-participate-in-consensus" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Network Scenario</p></td>
+<td><ul class="simple">
+<li><p>Public - NO</p></li>
+<li><p>Consortium - YES</p></li>
+<li><p>Private - YES</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p>Description</p></td>
+<td><p>The Sawtooth network can be configured to
+only allow specific nodes to participate in consensus.
+This is separate from any restrictions enforced by the
+consensus algorithm. The nodes that are not allowed to
+participate in consensus can still validate blocks but
+are not allowed to publish blocks.</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Stories</p></td>
+<td><ul class="simple">
+<li><p>A network operator can configure the
+Sawtooth network to only allow certain nodes to
+participate in consensus.</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="injecting_batches_block_validation_rules.html" class="btn btn-neutral float-right" title="Injecting Batches and On-Chain Block Validation Rules" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="validator_network.html" class="btn btn-neutral float-left" title="Sawtooth Network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

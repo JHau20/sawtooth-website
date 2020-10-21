@@ -1,0 +1,679 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.cli.cluster &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>sawtooth.cli.cluster</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sawtooth.cli.cluster</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">argparse</span> <span class="k">import</span> <span class="n">Namespace</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth.cli.exceptions</span> <span class="k">import</span> <span class="n">CliException</span>
+<span class="kn">from</span> <span class="nn">sawtooth.exceptions</span> <span class="k">import</span> <span class="n">ManagementError</span>
+<span class="kn">from</span> <span class="nn">sawtooth.manage.daemon</span> <span class="k">import</span> <span class="n">DaemonNodeController</span>
+<span class="kn">from</span> <span class="nn">sawtooth.manage.docker</span> <span class="k">import</span> <span class="n">DockerNodeController</span>
+<span class="kn">from</span> <span class="nn">sawtooth.manage.node</span> <span class="k">import</span> <span class="n">NodeArguments</span>
+<span class="kn">from</span> <span class="nn">sawtooth.manage.simple</span> <span class="k">import</span> <span class="n">SimpleNodeCommandGenerator</span>
+<span class="kn">from</span> <span class="nn">sawtooth.manage.subproc</span> <span class="k">import</span> <span class="n">SubprocessNodeController</span>
+<span class="kn">from</span> <span class="nn">sawtooth.manage.wrap</span> <span class="k">import</span> <span class="n">WrappedNodeController</span>
+<span class="kn">from</span> <span class="nn">sawtooth.manage.vnm</span> <span class="k">import</span> <span class="n">ValidatorNetworkManager</span>
+
+
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats</span> <span class="k">import</span> <span class="n">run_stats</span>
+
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="add_cluster_parser"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.add_cluster_parser">[docs]</a><span class="k">def</span> <span class="nf">add_cluster_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;cluster&#39;</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">parent_parser</span><span class="p">])</span>
+
+    <span class="n">cluster_subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span>
+        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;subcommands&#39;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;cluster_command&#39;</span><span class="p">)</span>
+
+    <span class="n">add_cluster_start_parser</span><span class="p">(</span><span class="n">cluster_subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">)</span>
+    <span class="n">add_cluster_status_parser</span><span class="p">(</span><span class="n">cluster_subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">)</span>
+    <span class="n">add_cluster_stop_parser</span><span class="p">(</span><span class="n">cluster_subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">)</span>
+    <span class="n">add_cluster_extend_parser</span><span class="p">(</span><span class="n">cluster_subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">)</span>
+    <span class="n">add_cluster_stats_parser</span><span class="p">(</span><span class="n">cluster_subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_cluster_status_parser"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.add_cluster_status_parser">[docs]</a><span class="k">def</span> <span class="nf">add_cluster_status_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">parent_parser</span><span class="p">])</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;node_names&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;NODE_NAME&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;report status of specific node(s)&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_cluster_start_parser"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.add_cluster_start_parser">[docs]</a><span class="k">def</span> <span class="nf">add_cluster_start_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">parent_parser</span><span class="p">])</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--count&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of nodes to start&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-m&#39;</span><span class="p">,</span> <span class="s1">&#39;--manage&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;style of validator management&#39;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subprocess&#39;</span><span class="p">,</span> <span class="s1">&#39;daemon&#39;</span><span class="p">,</span> <span class="s1">&#39;docker&#39;</span><span class="p">],</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;subprocess&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--wrap&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">const</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;use WRAP as CURRENCYHOME (create/use a temp &#39;</span>
+                             <span class="s1">&#39;directory if WRAP is unspecified)&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_cluster_stop_parser"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.add_cluster_stop_parser">[docs]</a><span class="k">def</span> <span class="nf">add_cluster_stop_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">parent_parser</span><span class="p">])</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;node_names&#39;</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;NODE_NAME&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;stop specific node(s)&#39;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_cluster_extend_parser"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.add_cluster_extend_parser">[docs]</a><span class="k">def</span> <span class="nf">add_cluster_extend_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;extend&#39;</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">parent_parser</span><span class="p">])</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--count&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;number of nodes to add to network&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="add_cluster_stats_parser"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.add_cluster_stats_parser">[docs]</a><span class="k">def</span> <span class="nf">add_cluster_stats_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;stats&#39;</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="p">[</span><span class="n">parent_parser</span><span class="p">])</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--node_name&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;node to connect to&#39;</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="do_cluster"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.do_cluster">[docs]</a><span class="k">def</span> <span class="nf">do_cluster</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">cluster_command</span> <span class="o">==</span> <span class="s1">&#39;start&#39;</span><span class="p">:</span>
+        <span class="n">do_cluster_start</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">cluster_command</span> <span class="o">==</span> <span class="s1">&#39;status&#39;</span><span class="p">:</span>
+        <span class="n">do_cluster_status</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">cluster_command</span> <span class="o">==</span> <span class="s1">&#39;stop&#39;</span><span class="p">:</span>
+        <span class="n">do_cluster_stop</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">cluster_command</span> <span class="o">==</span> <span class="s1">&#39;extend&#39;</span><span class="p">:</span>
+        <span class="n">do_cluster_extend</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">cluster_command</span> <span class="o">==</span> <span class="s1">&#39;stats&#39;</span><span class="p">:</span>
+        <span class="n">do_cluster_stats</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span><span class="s2">&quot;invalid cluster command: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">cluster_command</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="get_state_file_name"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.get_state_file_name">[docs]</a><span class="k">def</span> <span class="nf">get_state_file_name</span><span class="p">():</span>
+    <span class="n">home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">home</span><span class="p">,</span> <span class="s1">&#39;.sawtooth&#39;</span><span class="p">,</span> <span class="s1">&#39;cluster&#39;</span><span class="p">,</span> <span class="s2">&quot;state.yaml&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_state"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.load_state">[docs]</a><span class="k">def</span> <span class="nf">load_state</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">get_state_file_name</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">state_file</span><span class="p">:</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">state_file</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">start</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;DesiredState&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Stopped&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span><span class="s2">&quot;Missing state file&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">state</span></div>
+
+
+<div class="viewcode-block" id="save_state"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.save_state">[docs]</a><span class="k">def</span> <span class="nf">save_state</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">get_state_file_name</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">state_file</span><span class="p">:</span>
+        <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">state_file</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_node_controller"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.get_node_controller">[docs]</a><span class="k">def</span> <span class="nf">get_node_controller</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="c1"># pylint: disable=redefined-variable-type</span>
+
+    <span class="c1"># Get base controller:</span>
+    <span class="n">node_controller</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;Manage&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;subprocess&#39;</span><span class="p">:</span>
+        <span class="n">node_controller</span> <span class="o">=</span> <span class="n">SubprocessNodeController</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;Manage&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;docker&#39;</span><span class="p">:</span>
+        <span class="n">node_controller</span> <span class="o">=</span> <span class="n">DockerNodeController</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;Manage&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;daemon&#39;</span><span class="p">:</span>
+        <span class="n">node_controller</span> <span class="o">=</span> <span class="n">DaemonNodeController</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span><span class="s1">&#39;invalid management type:&#39;</span>
+                           <span class="s1">&#39; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;Manage&#39;</span><span class="p">]))</span>
+
+    <span class="c1"># Optionally decorate with WrappedNodeController</span>
+    <span class="n">args_wrap</span> <span class="o">=</span> <span class="kc">False</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="s1">&#39;wrap&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">args</span><span class="o">.</span><span class="n">wrap</span>
+    <span class="k">if</span> <span class="s1">&#39;Wrap&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="c1"># if wrap has not been set in state, set it</span>
+        <span class="n">state</span><span class="p">[</span><span class="s1">&#39;Wrap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">args_wrap</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># state already knows about a wrapper</span>
+        <span class="k">if</span> <span class="n">args_wrap</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">args_wrap</span> <span class="o">!=</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;Wrap&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span><span class="s2">&quot;Already wrapped to </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Wrap&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;Wrap&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node_controller</span><span class="p">,</span> <span class="n">SubprocessNodeController</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span><span class="s2">&quot;--wrap currently only implemented for &quot;</span>
+                               <span class="s2">&quot;&#39;subprocess&#39; management type&quot;</span><span class="p">)</span>
+        <span class="c1"># either args or state have indicated a WrappedNodeController</span>
+        <span class="k">if</span> <span class="s1">&#39;ManageWrap&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">state</span><span class="p">[</span><span class="s1">&#39;ManageWrap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">node_controller</span> <span class="o">=</span> <span class="n">WrappedNodeController</span><span class="p">(</span>
+            <span class="n">node_controller</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;Wrap&#39;</span><span class="p">],</span>
+            <span class="n">clean_data_dir</span><span class="o">=</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;ManageWrap&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;Wrap&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="s1">&#39;Wrap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">node_controller</span><span class="o">.</span><span class="n">get_data_dir</span><span class="p">()</span>
+            <span class="n">state</span><span class="p">[</span><span class="s1">&#39;ManageWrap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> wrapped to </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">cluster_command</span><span class="p">,</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;Wrap&#39;</span><span class="p">]))</span>
+
+    <span class="c1"># Return out construction:</span>
+    <span class="k">return</span> <span class="n">node_controller</span></div>
+
+
+<div class="viewcode-block" id="do_cluster_start"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.do_cluster_start">[docs]</a><span class="k">def</span> <span class="nf">do_cluster_start</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">load_state</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Check State for Running validators, if stopped clear out nodes.</span>
+    <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;DesiredState&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Stopped&quot;</span><span class="p">:</span>
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Nodes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="s2">&quot;Manage&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">state</span> <span class="ow">or</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;DesiredState&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Stopped&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">manage</span> <span class="o">==</span> <span class="s2">&quot;subprocess&quot;</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">manage</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Manage&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;subprocess&quot;</span>
+        <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">manage</span> <span class="o">==</span> <span class="s2">&quot;docker&quot;</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Manage&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;docker&quot;</span>
+        <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">manage</span> <span class="o">==</span> <span class="s2">&quot;daemon&quot;</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Manage&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;daemon&quot;</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">manage</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="s1">&#39;Manage&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">args</span><span class="o">.</span><span class="n">manage</span>\
+            <span class="ow">and</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;DesiredState&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Running&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span><span class="s1">&#39;Cannot use two different Manage types.&#39;</span>
+                           <span class="s1">&#39; Already running </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;Manage&quot;</span><span class="p">]))</span>
+
+    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;DesiredState&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Running&quot;</span>
+
+    <span class="n">node_controller</span> <span class="o">=</span> <span class="n">get_node_controller</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="n">node_command_generator</span> <span class="o">=</span> <span class="n">SimpleNodeCommandGenerator</span><span class="p">()</span>
+    <span class="n">vnm</span> <span class="o">=</span> <span class="n">ValidatorNetworkManager</span><span class="p">(</span>
+        <span class="n">node_controller</span><span class="o">=</span><span class="n">node_controller</span><span class="p">,</span>
+        <span class="n">node_command_generator</span><span class="o">=</span><span class="n">node_command_generator</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">existing_nodes</span> <span class="o">=</span> <span class="n">vnm</span><span class="o">.</span><span class="n">get_node_names</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">ManagementError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+    <span class="c1"># Check for runnings nodes. If found, raise exception with message to use</span>
+    <span class="c1"># sawtooth cluster extend command to add nodes to running network.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">count</span><span class="p">):</span>
+        <span class="n">node_name</span> <span class="o">=</span> <span class="s2">&quot;validator-</span><span class="si">{:0&gt;3}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">node_name</span> <span class="ow">in</span> <span class="n">existing_nodes</span> <span class="ow">and</span> <span class="n">vnm</span><span class="o">.</span><span class="n">is_running</span><span class="p">(</span><span class="n">node_name</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Already running: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_name</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span><span class="s2">&quot;Please use &#39;sawtooth cluster extend&#39;</span><span class="se">\</span>
+<span class="s2">             to add more nodes.&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">count</span><span class="p">):</span>
+        <span class="n">node_name</span> <span class="o">=</span> <span class="s2">&quot;validator-</span><span class="si">{:0&gt;3}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="c1"># if node_name in existing_nodes and vnm.is_running(node_name):</span>
+        <span class="c1">#     print &quot;Already running: {}&quot;.format(node_name)</span>
+        <span class="c1">#     continue</span>
+
+        <span class="c1"># genesis is true for the first node</span>
+        <span class="n">genesis</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">gossip_port</span> <span class="o">=</span> <span class="mi">5500</span> <span class="o">+</span> <span class="n">i</span>
+        <span class="n">http_port</span> <span class="o">=</span> <span class="mi">8800</span> <span class="o">+</span> <span class="n">i</span>
+
+        <span class="n">node_args</span> <span class="o">=</span> <span class="n">NodeArguments</span><span class="p">(</span><span class="n">node_name</span><span class="p">,</span> <span class="n">http_port</span><span class="o">=</span><span class="n">http_port</span><span class="p">,</span>
+                                  <span class="n">gossip_port</span><span class="o">=</span><span class="n">gossip_port</span><span class="p">,</span> <span class="n">genesis</span><span class="o">=</span><span class="n">genesis</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">node_args</span><span class="o">.</span><span class="n">genesis</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">node_controller</span><span class="o">.</span><span class="n">create_genesis_block</span><span class="p">(</span><span class="n">node_args</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Starting: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_name</span><span class="p">))</span>
+        <span class="n">node_command_generator</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">node_args</span><span class="p">)</span>
+
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Nodes&quot;</span><span class="p">][</span><span class="n">node_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Status&quot;</span><span class="p">:</span> <span class="s2">&quot;Running&quot;</span><span class="p">,</span> <span class="s2">&quot;Index&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+            <span class="s2">&quot;HttpPort&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">http_port</span><span class="p">),</span> <span class="s2">&quot;GossipPort&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">gossip_port</span><span class="p">)}</span>
+
+    <span class="n">save_state</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">vnm</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">ManagementError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Manage&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;subprocess&#39;</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">()</span>
+            <span class="n">ns</span> <span class="o">=</span> <span class="n">Namespace</span><span class="p">(</span><span class="n">cluster_command</span><span class="o">=</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="s1">&#39;cluster&#39;</span><span class="p">,</span>
+                           <span class="n">node_names</span><span class="o">=</span><span class="p">[],</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">do_cluster_stop</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="do_cluster_stop"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.do_cluster_stop">[docs]</a><span class="k">def</span> <span class="nf">do_cluster_stop</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">load_state</span><span class="p">()</span>
+
+    <span class="n">node_controller</span> <span class="o">=</span> <span class="n">get_node_controller</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="n">node_command_generator</span> <span class="o">=</span> <span class="n">SimpleNodeCommandGenerator</span><span class="p">()</span>
+    <span class="n">vnm</span> <span class="o">=</span> <span class="n">ValidatorNetworkManager</span><span class="p">(</span>
+        <span class="n">node_controller</span><span class="o">=</span><span class="n">node_controller</span><span class="p">,</span>
+        <span class="n">node_command_generator</span><span class="o">=</span><span class="n">node_command_generator</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">node_names</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">node_names</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">node_names</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">node_names</span> <span class="o">=</span> <span class="n">vnm</span><span class="o">.</span><span class="n">get_node_names</span><span class="p">()</span>
+
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Nodes&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">node_name</span> <span class="ow">in</span> <span class="n">node_names</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not a known node name&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_name</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">nodes</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="s1">&#39;Status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Stopped&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> already stopped&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_name</span><span class="p">))</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stopping: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_name</span><span class="p">))</span>
+        <span class="n">node_command_generator</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="n">node_name</span><span class="p">)</span>
+        <span class="c1"># Update status of Nodes</span>
+        <span class="k">if</span> <span class="n">node_name</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="n">nodes</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="s2">&quot;Status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Stopped&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">nodes</span><span class="p">[</span><span class="n">node_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Status&quot;</span><span class="p">:</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">}</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">node_names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">node_names</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">node_name</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="n">nodes</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="s2">&quot;Status&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Unknown&quot;</span>
+
+    <span class="c1"># If none of the nodes are running set overall State to Stopped</span>
+    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;DesiredState&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Stopped&quot;</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s2">&quot;Status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Running&quot;</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;DesiredState&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Running&quot;</span>
+
+    <span class="c1"># Update state of nodes</span>
+    <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Nodes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">nodes</span>
+    <span class="n">save_state</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="n">vnm</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+    <span class="c1"># Wait up to 16 seconds for our targeted nodes to gracefully shut down</span>
+    <span class="k">def</span> <span class="nf">find_still_up</span><span class="p">(</span><span class="n">targeted_nodes</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">vnm</span><span class="o">.</span><span class="n">get_node_names</span><span class="p">())</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">targeted_nodes</span><span class="p">))</span>
+
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mi">16</span>
+    <span class="n">mark</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">find_still_up</span><span class="p">(</span><span class="n">node_names</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">mark</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Force kill any targeted nodes that are still up</span>
+    <span class="k">for</span> <span class="n">node_name</span> <span class="ow">in</span> <span class="n">find_still_up</span><span class="p">(</span><span class="n">node_names</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Node name still up: killling </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_name</span><span class="p">))</span>
+        <span class="n">node_controller</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">node_name</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="do_cluster_status"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.do_cluster_status">[docs]</a><span class="k">def</span> <span class="nf">do_cluster_status</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">load_state</span><span class="p">()</span>
+
+    <span class="n">node_controller</span> <span class="o">=</span> <span class="n">get_node_controller</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="n">node_command_generator</span> <span class="o">=</span> <span class="n">SimpleNodeCommandGenerator</span><span class="p">()</span>
+    <span class="n">vnm</span> <span class="o">=</span> <span class="n">ValidatorNetworkManager</span><span class="p">(</span>
+        <span class="n">node_controller</span><span class="o">=</span><span class="n">node_controller</span><span class="p">,</span>
+        <span class="n">node_command_generator</span><span class="o">=</span><span class="n">node_command_generator</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">node_names</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">node_names</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">node_names</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">node_names</span> <span class="o">=</span> <span class="n">vnm</span><span class="o">.</span><span class="n">get_node_names</span><span class="p">()</span>
+
+    <span class="c1"># Check expected status of nodes vs what is returned from vnm</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NodeName Expected Current&quot;</span><span class="p">)</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Nodes&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">node_name</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">node_names</span> <span class="ow">and</span> \
+                <span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="s2">&quot;Status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Running&quot;</span> <span class="ow">or</span>
+                    <span class="n">nodes</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="s2">&quot;Status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;No Response&quot;</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">node_name</span><span class="p">,</span> <span class="n">nodes</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="s2">&quot;Status&quot;</span><span class="p">],</span> <span class="s2">&quot;Not Running&quot;</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">vnm</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="n">node_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;UNKNOWN&quot;</span> <span class="ow">and</span> \
+                    <span class="n">nodes</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="s2">&quot;Status&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Stopped&quot;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_name</span><span class="p">,</span> <span class="n">nodes</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="s2">&quot;Status&quot;</span><span class="p">],</span>
+                                        <span class="n">status</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_name</span><span class="p">,</span> <span class="n">nodes</span><span class="p">[</span><span class="n">node_name</span><span class="p">][</span><span class="s2">&quot;Status&quot;</span><span class="p">],</span>
+                                        <span class="n">status</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="do_cluster_extend"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.do_cluster_extend">[docs]</a><span class="k">def</span> <span class="nf">do_cluster_extend</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">load_state</span><span class="p">()</span>
+
+    <span class="n">node_controller</span> <span class="o">=</span> <span class="n">get_node_controller</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="n">node_command_generator</span> <span class="o">=</span> <span class="n">SimpleNodeCommandGenerator</span><span class="p">()</span>
+    <span class="n">vnm</span> <span class="o">=</span> <span class="n">ValidatorNetworkManager</span><span class="p">(</span>
+        <span class="n">node_controller</span><span class="o">=</span><span class="n">node_controller</span><span class="p">,</span>
+        <span class="n">node_command_generator</span><span class="o">=</span><span class="n">node_command_generator</span><span class="p">)</span>
+
+    <span class="n">existing_nodes</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Nodes&quot;</span><span class="p">]</span>
+
+    <span class="n">desired_stated</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;DesiredState&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">desired_stated</span> <span class="o">!=</span> <span class="s2">&quot;Running&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span>
+            <span class="s2">&quot;You must have a running network.</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span>
+            <span class="s2">&quot;Use the cluster start command to start a validator network.&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Extending network by </span><span class="si">{}</span><span class="s2"> nodes.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">count</span><span class="p">))</span>
+
+    <span class="n">index_offset</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">existing_nodes</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">count</span><span class="p">):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">index_offset</span>
+        <span class="n">node_name</span> <span class="o">=</span> <span class="s2">&quot;validator-</span><span class="si">{:0&gt;3}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">node_name</span> <span class="ow">in</span> <span class="n">existing_nodes</span> <span class="ow">and</span> <span class="n">vnm</span><span class="o">.</span><span class="n">is_running</span><span class="p">(</span><span class="n">node_name</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Already running: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_name</span><span class="p">))</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># genesis is true for the first node</span>
+        <span class="n">genesis</span> <span class="o">=</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">gossip_port</span> <span class="o">=</span> <span class="mi">5500</span> <span class="o">+</span> <span class="n">j</span>
+        <span class="n">http_port</span> <span class="o">=</span> <span class="mi">8800</span> <span class="o">+</span> <span class="n">j</span>
+
+        <span class="n">node_args</span> <span class="o">=</span> <span class="n">NodeArguments</span><span class="p">(</span><span class="n">node_name</span><span class="p">,</span> <span class="n">http_port</span><span class="o">=</span><span class="n">http_port</span><span class="p">,</span>
+                                  <span class="n">gossip_port</span><span class="o">=</span><span class="n">gossip_port</span><span class="p">,</span> <span class="n">genesis</span><span class="o">=</span><span class="n">genesis</span><span class="p">)</span>
+        <span class="n">node_command_generator</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">node_args</span><span class="p">)</span>
+
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Nodes&quot;</span><span class="p">][</span><span class="n">node_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;Status&quot;</span><span class="p">:</span> <span class="s2">&quot;Running&quot;</span><span class="p">,</span> <span class="s2">&quot;Index&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+            <span class="s2">&quot;HttpPort&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">http_port</span><span class="p">),</span> <span class="s2">&quot;GossipPort&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">gossip_port</span><span class="p">)}</span>
+
+    <span class="n">save_state</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">vnm</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">ManagementError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="do_cluster_stats"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.cluster.html#sawtooth.cli.cluster.do_cluster_stats">[docs]</a><span class="k">def</span> <span class="nf">do_cluster_stats</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">load_state</span><span class="p">()</span>
+
+    <span class="n">node_controller</span> <span class="o">=</span> <span class="n">get_node_controller</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="n">node_command_generator</span> <span class="o">=</span> <span class="n">SimpleNodeCommandGenerator</span><span class="p">()</span>
+
+    <span class="n">vnm</span> <span class="o">=</span> <span class="n">ValidatorNetworkManager</span><span class="p">(</span>
+        <span class="n">node_controller</span><span class="o">=</span><span class="n">node_controller</span><span class="p">,</span>
+        <span class="n">node_command_generator</span><span class="o">=</span><span class="n">node_command_generator</span><span class="p">)</span>
+
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;Nodes&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">node_name</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">node_ip</span> <span class="o">=</span> <span class="n">vnm</span><span class="o">.</span><span class="n">get_ip</span><span class="p">(</span><span class="n">node_name</span><span class="p">)</span>
+            <span class="n">node_name_stats</span> <span class="o">=</span> <span class="n">node_name</span>
+            <span class="k">break</span>
+        <span class="k">except</span> <span class="n">ManagementError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+    <span class="n">node_url</span> <span class="o">=</span> <span class="s2">&quot;http://&quot;</span> <span class="o">+</span> <span class="n">node_ip</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39; </span><span class="se">\t\n\r</span><span class="s1">&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> \
+               <span class="n">nodes</span><span class="p">[</span><span class="n">node_name_stats</span><span class="p">][</span><span class="s2">&quot;HttpPort&quot;</span><span class="p">]</span>
+
+    <span class="n">run_stats</span><span class="p">(</span><span class="n">node_url</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+sawtooth\.cli\.admin\_sub\.permissioned\_validator\_registry module
+===================================================================
+
+.. automodule:: sawtooth.cli.admin_sub.permissioned_validator_registry
+    :members:
+    :undoc-members:
+    :show-inheritance:

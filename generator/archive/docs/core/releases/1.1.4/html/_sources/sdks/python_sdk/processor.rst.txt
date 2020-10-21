@@ -1,0 +1,62 @@
+processor package
+=================
+
+Submodules
+----------
+
+processor.config module
+-----------------------
+
+.. automodule:: processor.config
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+processor.context module
+------------------------
+
+.. automodule:: processor.context
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+processor.core module
+---------------------
+
+.. automodule:: processor.core
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+processor.exceptions module
+---------------------------
+
+.. automodule:: processor.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+processor.handler module
+------------------------
+
+.. automodule:: processor.handler
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+processor.log module
+--------------------
+
+.. automodule:: processor.log
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: processor
+    :members:
+    :undoc-members:
+    :show-inheritance:

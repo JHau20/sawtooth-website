@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>XO Transaction Processor Configuration File &mdash; Sawtooth v1.2.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Log Configuration File" href="../log_configuration.html" />
+    <link rel="prev" title="Settings Transaction Processor Configuration File" href="settings_tp_configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../setting_up_sawtooth_network.html">Setting Up a Sawtooth Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../setting_allowed_txns.html">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../configuring_permissions.html">Configuring Validator and Transactor Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../grafana_configuration.html">Using Grafana to Display Sawtooth Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about_dynamic_consensus.html">About Dynamic Consensus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pbft_adding_removing_node.html">Adding or Removing a PBFT Node</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../configuring_sawtooth.html">About Sawtooth Configuration Files</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="validator_configuration_file.html">Validator Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rest_api_configuration_file.html">REST API Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli_configuration.html">Sawtooth CLI Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="poet_sgx_enclave_configuration_file.html">PoET SGX Enclave Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="identity_tp_configuration.html">Identity Transaction Processor Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings_tp_configuration.html">Settings Transaction Processor Configuration File</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">XO Transaction Processor Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../log_configuration.html">Log Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="path_configuration_file.html">Path Configuration File</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/pbft/nightly/master/">Sawtooth PBFT Consensus</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/sabre/nightly/master/">Sawtooth Sabre Transaction Family</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/seth/nightly/master/">Sawtooth Seth Transaction Family</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../sysadmin_guide.html">System Administrator’s Guide</a> &raquo;</li>
+        
+          <li><a href="../configuring_sawtooth.html">About Sawtooth Configuration Files</a> &raquo;</li>
+        
+      <li>XO Transaction Processor Configuration File</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/sysadmin_guide/configuring_sawtooth/xo_tp_configuration.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="xo-transaction-processor-configuration-file">
+<h1>XO Transaction Processor Configuration File<a class="headerlink" href="#xo-transaction-processor-configuration-file" title="Permalink to this headline">¶</a></h1>
+<p>The XO transaction processor configuration file specifies the validator
+endpoint connection to use.</p>
+<p>If the config directory contains a file named <code class="docutils literal notranslate"><span class="pre">xo.toml</span></code>, the
+configuration settings are applied when the transaction processor starts.
+Specifying a command-line option will override the setting in the configuration
+file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default, the config directory is <code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/</span></code>.
+See <a class="reference internal" href="path_configuration_file.html"><span class="doc">Path Configuration File</span></a> for more information.</p>
+</div>
+<p>An example configuration file is in the <code class="docutils literal notranslate"><span class="pre">sawtooth-sdk-python</span></code> repository at
+<code class="docutils literal notranslate"><span class="pre">https://github.com/hyperledger/sawtooth-sdk-python/blob/master/examples/xo_python/packaging/xo.toml.example</span></code>.
+To create a XO transaction processor configuration file, download this example
+file to the config directory and name it <code class="docutils literal notranslate"><span class="pre">xo.toml</span></code>. Set the ownership and
+permissions to owner <code class="docutils literal notranslate"><span class="pre">root</span></code>, group <code class="docutils literal notranslate"><span class="pre">sawtooth</span></code>, and permissions <code class="docutils literal notranslate"><span class="pre">640</span></code>.
+Then edit the file to change the example configuration options as necessary for
+your system.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">xo.toml</span></code> configuration file has the following option:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">connect</span></code> = “<cite>URL</cite>”</p>
+<p>Identifies the URL of a running validator. Default: <code class="docutils literal notranslate"><span class="pre">tcp://localhost:4004</span></code>.
+For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>connect = &quot;tcp://localhost:4004&quot;
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../log_configuration.html" class="btn btn-neutral float-right" title="Log Configuration File" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="settings_tp_configuration.html" class="btn btn-neutral float-left" title="Settings Transaction Processor Configuration File" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

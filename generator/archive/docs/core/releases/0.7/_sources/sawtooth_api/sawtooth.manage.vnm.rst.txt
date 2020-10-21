@@ -1,0 +1,7 @@
+sawtooth\.manage\.vnm module
+============================
+
+.. automodule:: sawtooth.manage.vnm
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,1080 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Table of Contents &mdash; Sawtooth v1.0.0rc6 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc6 documentation" href="index.html"/>
+        <link rel="next" title="Introduction" href="introduction.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Table of Contents</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/contents.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="table-of-contents">
+<h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#sawtooth-s-ledger">Sawtooth&#8217;s Ledger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#transaction-families">Transaction Families</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#consensus">Consensus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#getting-sawtooth">Getting Sawtooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#repositories">Repositories</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/global_state.html">Global State</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture/global_state.html#radix-merkle-tree-overview">Radix Merkle Tree Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/global_state.html#merkle-hashes">Merkle Hashes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/global_state.html#radix-addresses">Radix Addresses</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/global_state.html#serialization-concerns">Serialization Concerns</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/transactions_and_batches.html">Transactions and Batches!</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture/transactions_and_batches.html#transaction-data-structure">Transaction Data Structure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/transactions_and_batches.html#header-signature-and-public-keys">Header, Signature, and Public Keys</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/transactions_and_batches.html#transaction-family">Transaction Family</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/transactions_and_batches.html#dependencies-and-input-output-addresses">Dependencies and Input/Output Addresses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/transactions_and_batches.html#payload">Payload</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/transactions_and_batches.html#nonce">Nonce</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/transactions_and_batches.html#batch-data-structure">Batch Data Structure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/transactions_and_batches.html#id1">Header, Signature, and Public Keys</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/transactions_and_batches.html#transactions">Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/transactions_and_batches.html#why-batches">Why Batches?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/journal.html">Journal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture/journal.html#the-blockstore">The BlockStore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/journal.html#the-blockcache">The BlockCache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/journal.html#the-completer">The Completer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/journal.html#the-consensus-interface">The Consensus Interface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/journal.html#consensus-blockpublisher">Consensus.BlockPublisher</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/journal.html#consensus-blockverifier">Consensus.BlockVerifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/journal.html#consensus-forkresolver">Consensus.ForkResolver</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/journal.html#the-chaincontroller">The ChainController</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/journal.html#chain-head-update">Chain Head Update</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/journal.html#delayed-block-processing">Delayed Block Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/journal.html#the-blockvalidator">The BlockValidator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/journal.html#block-validation">Block Validation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/journal.html#the-blockpublisher">The BlockPublisher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/journal.html#genesis-operation">Genesis Operation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/journal.html#genesis-batch-creation">Genesis Batch Creation</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="architecture/journal.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/journal.html#block-creation">Block Creation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/scheduling.html">Transaction Scheduling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture/scheduling.html#scheduling-within-the-validator">Scheduling within the Validator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/scheduling.html#chain-controller">Chain Controller</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/scheduling.html#block-publisher">Block Publisher</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/scheduling.html#executor">Executor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/scheduling.html#iterative-scheduling">Iterative Scheduling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/scheduling.html#serial-scheduler">Serial Scheduler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/scheduling.html#parallel-scheduler">Parallel Scheduler</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/rest_api.html">REST API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture/rest_api.html#open-api-specification">Open API Specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/rest_api.html#http-status-codes">HTTP Status Codes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/rest_api.html#data-envelope">Data Envelope</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/rest_api.html#pagination">Pagination</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/rest_api.html#errors">Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/rest_api.html#query-parameters">Query Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/rest_api.html#endpoints">Endpoints</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/rest_api.html#resource-endpoints">Resource Endpoints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/rest_api.html#submission-endpoints">Submission Endpoints</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/rest_api.html#future-development">Future Development</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/rest_api.html#stats-and-status-endpoints">Stats and Status Endpoints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/rest_api.html#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/rest_api.html#authorization">Authorization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/poet.html">PoET 1.0 Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture/poet.html#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/poet.html#definitions">Definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/poet.html#p2p-poet-sgx-enclave-specifications">P2P PoET SGX Enclave Specifications</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/poet.html#generatesignupdata-opkhash"><code class="docutils literal"><span class="pre">generateSignUpData(OPKhash)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/poet.html#unsealsignupdata-sealedsignupdata"><code class="docutils literal"><span class="pre">unsealSignUpData(sealedSignUpData)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/poet.html#createwaittimer-localmean-waitcertid-n"><code class="docutils literal"><span class="pre">createWaitTimer(localMean,</span> <span class="pre">WaitCertId_n)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/poet.html#createwaitcertificate-blockdigest"><code class="docutils literal"><span class="pre">createWaitCertificate(blockDigest)</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="architecture/poet.html#sign-up-phase">Sign-up Phase</a></li>
+<li class="toctree-l5"><a class="reference internal" href="architecture/poet.html#election-phase">Election Phase</a></li>
+<li class="toctree-l5"><a class="reference internal" href="architecture/poet.html#revocation">Revocation</a></li>
+<li class="toctree-l5"><a class="reference internal" href="architecture/poet.html#security-considerations">Security Considerations</a></li>
+<li class="toctree-l5"><a class="reference internal" href="architecture/poet.html#comments-on-multi-user-or-multi-ledger-sgx-enclave-service">Comments on Multi-user or Multi-ledger SGX Enclave Service</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/poet.html#population-size-and-local-mean-computation">Population Size and Local Mean Computation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/poet.html#z-test">z-test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/validator_network.html">Validator Network</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture/validator_network.html#services">Services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/validator_network.html#states">States</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/validator_network.html#wire-protocol">Wire Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/validator_network.html#peer-discovery">Peer Discovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/validator_network.html#related-components">Related Components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/validator_network.html#message-delivery">Message Delivery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/validator_network.html#network-layer-security">Network Layer Security</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/validator_network.html#network-permissioning">Network Permissioning</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/validator_network.html#authorization-types">Authorization Types</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/permissioning_requirement.html">Permissioning Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture/permissioning_requirement.html#definitions">Definitions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/permissioning_requirement.html#general-definitions">General Definitions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/permissioning_requirement.html#actor-definitions">Actor Definitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/permissioning_requirement.html#validator-network-scenarios">Validator Network Scenarios</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/permissioning_requirement.html#public-network">Public Network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/permissioning_requirement.html#consortium-network">Consortium Network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/permissioning_requirement.html#private-network">Private Network</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/permissioning_requirement.html#transactor-key-permissioning">Transactor Key Permissioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/permissioning_requirement.html#validator-key-permissioning">Validator Key Permissioning</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/injecting_batches_block_validation_rules.html">Injecting Batches and On-Chain Block Validation Rules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture/injecting_batches_block_validation_rules.html#batchinjector-interface">BatchInjector Interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/injecting_batches_block_validation_rules.html#on-chain-configuration">On-Chain Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/injecting_batches_block_validation_rules.html#on-chain-validation-rules">On-Chain Validation Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/injecting_batches_block_validation_rules.html#example-blockinfoinjector">Example: BlockInfoInjector</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/events_and_transactions_receipts.html">Events and Transaction Receipts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture/events_and_transactions_receipts.html#events">Events</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/events_and_transactions_receipts.html#event-extractors">Event Extractors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/events_and_transactions_receipts.html#transaction-receipts">Transaction Receipts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="architecture/events_and_transactions_receipts.html#transaction-receipt-store">Transaction Receipt Store</a></li>
+<li class="toctree-l4"><a class="reference internal" href="architecture/events_and_transactions_receipts.html#message-handlers">Message Handlers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="app_developers_guide.html">Application Developer&#8217;s Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="app_developers_guide/installing_sawtooth.html">Installing and Running Sawtooth</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/docker.html">Using Sawtooth with Docker</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/docker.html#overview-of-sawtooth-components">Overview of Sawtooth Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/docker.html#install-docker-engine-and-docker-compose">Install Docker Engine and Docker Compose</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#windows">Windows</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#macos">macOS</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#linux">Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/docker.html#environment-setup">Environment Setup</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#download-the-docker-compose-file">Download the Docker Compose File</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#proxy-settings-optional">Proxy Settings (Optional)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#starting-sawtooth">Starting Sawtooth</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#stopping-sawtooth">Stopping Sawtooth</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/docker.html#logging-into-the-client-container">Logging Into The Client Container</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#confirming-connectivity">Confirming Connectivity</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/docker.html#using-sawtooth-with-cli-commands">Using Sawtooth with CLI Commands</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#creating-and-submitting-transactions-with-intkey">Creating and Submitting Transactions with intkey</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#submitting-transactions-with-sawtooth-batch-submit">Submitting Transactions with sawtooth batch submit</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#viewing-the-block-chain">Viewing the Block Chain</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="app_developers_guide/docker.html#viewing-the-list-of-blocks">Viewing the List of Blocks</a></li>
+<li class="toctree-l6"><a class="reference internal" href="app_developers_guide/docker.html#viewing-a-particular-block">Viewing a Particular Block</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#viewing-global-state">Viewing Global State</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="app_developers_guide/docker.html#viewing-the-list-of-nodes-addresses">Viewing the List of Nodes (Addresses)</a></li>
+<li class="toctree-l6"><a class="reference internal" href="app_developers_guide/docker.html#viewing-data-at-an-address">Viewing Data at an Address</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/docker.html#connecting-to-the-rest-api">Connecting to the REST API</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#from-the-client-container">From the Client Container</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#from-the-host-operating-system">From the Host Operating System</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/docker.html#connecting-to-each-container">Connecting to Each Container</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#the-client-container">The Client Container</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#the-validator-container">The Validator Container</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#the-rest-api-container">The REST API Container</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#the-settings-transaction-processor-container">The Settings Transaction Processor Container</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#the-integerkey-transaction-processor-container">The IntegerKey Transaction Processor Container</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/docker.html#the-xo-transaction-processor-container">The XO Transaction Processor Container</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/docker.html#viewing-log-files">Viewing Log Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/docker.html#configuring-the-list-of-transaction-families">Configuring the List of Transaction Families</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/ubuntu.html">Using Sawtooth on Ubuntu 16.04</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/ubuntu.html#overview-of-sawtooth-components">Overview of Sawtooth Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/ubuntu.html#installing-sawtooth">Installing Sawtooth</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/ubuntu.html#getting-the-sawtooth-packages-for-ubuntu">Getting the Sawtooth Packages for Ubuntu</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/ubuntu.html#installing-the-sawtooth-packages">Installing the Sawtooth Packages</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/ubuntu.html#creating-the-genesis-block">Creating the Genesis Block</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/ubuntu.html#starting-the-validator">Starting the Validator</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/ubuntu.html#other-start-up-options-for-the-validator">Other Start-up Options for the Validator</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/ubuntu.html#starting-the-rest-api">Starting the REST API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/ubuntu.html#starting-and-configuring-the-transaction-processors">Starting and Configuring the Transaction Processors</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/ubuntu.html#starting-the-integerkey-transaction-processor">Starting the IntegerKey Transaction Processor</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/ubuntu.html#starting-the-settings-family-transaction-processor">Starting the Settings Family Transaction Processor</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/ubuntu.html#verifying-that-the-rest-api-is-running">Verifying that the REST API is Running</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/ubuntu.html#configuring-the-list-of-transaction-families-ubuntu-version">Configuring the List of Transaction Families (Ubuntu version)</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/ubuntu.html#creating-and-submitting-transactions">Creating and Submitting Transactions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/ubuntu.html#viewing-blocks-and-state">Viewing Blocks and State</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/ubuntu.html#viewing-the-list-of-blocks">Viewing the List of Blocks</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/ubuntu.html#viewing-a-particular-block">Viewing a Particular Block</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/ubuntu.html#viewing-global-state">Viewing Global State</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/ubuntu.html#viewing-data-in-a-node">Viewing Data in a Node</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/ubuntu.html#stopping-sawtooth-components">Stopping Sawtooth Components</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/aws.html">Using Sawtooth on AWS</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/aws.html#overview-of-sawtooth-components">Overview of Sawtooth Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/aws.html#launching-a-sawtooth-instance">Launching a Sawtooth Instance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/aws.html#logging-in-to-the-sawtooth-instance">Logging In to the Sawtooth Instance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/aws.html#using-sawtooth-with-the-cli-commands">Using Sawtooth with the CLI Commands</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/aws.html#creating-and-submitting-transactions-with-intkey">Creating and Submitting Transactions with intkey</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="app_developers_guide/aws.html#submitting-transactions-with-sawtooth-batch-submit">Submitting Transactions with sawtooth batch submit</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/aws.html#viewing-the-block-chain">Viewing the Block Chain</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="app_developers_guide/aws.html#viewing-the-list-of-blocks">Viewing the List of Blocks</a></li>
+<li class="toctree-l6"><a class="reference internal" href="app_developers_guide/aws.html#viewing-a-particular-block">Viewing a Particular Block</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/aws.html#viewing-global-state">Viewing Global State</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="app_developers_guide/aws.html#viewing-list-of-nodes-addresses">Viewing List of Nodes (Addresses)</a></li>
+<li class="toctree-l6"><a class="reference internal" href="app_developers_guide/aws.html#viewing-data-at-an-address">Viewing Data at an Address</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/aws.html#connecting-to-the-rest-api">Connecting To The REST API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/aws.html#configuring-the-list-of-transaction-families">Configuring the List of Transaction Families</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/aws.html#changing-the-transaction-family-settings">Changing the Transaction Family Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/aws.html#sawtooth-setup-service">Sawtooth Setup Service</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/aws.html#resetting-the-environment">Resetting the Environment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="app_developers_guide/example_transaction_processors.html">Example Transaction Processors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="app_developers_guide/address_and_namespace.html">Address and Namespace Design</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/address_and_namespace.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/address_and_namespace.html#address-components">Address Components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/address_and_namespace.html#namespace-prefix">Namespace Prefix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/address_and_namespace.html#address-construction">Address Construction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/address_and_namespace.html#simple-example-integerkey">Simple Example - IntegerKey</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/address_and_namespace.html#more-complex-addressing-schemes">More Complex Addressing Schemes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/address_and_namespace.html#id1">Address construction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/address_and_namespace.html#settings-transaction-family-example">Settings Transaction Family Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html">Introduction to the XO Transaction Family</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#what-is-xo">What is XO?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#how-to-play-xo">How to Play XO</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#game-rules">Game Rules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#playing-xo-using-the-command-line-interface">Playing XO Using the Command-line Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#viewing-the-game-state">Viewing the Game State</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#url">URL</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#playing-xo-with-the-xo-client-example">Playing XO with the XO Client (Example)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#start-the-necessary-components">Start the Necessary Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#create-players">Create Players</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#create-a-game">Create a Game</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#take-a-space-as-player-one">Take a Space as Player One</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#take-a-space-as-player-two">Take a Space as Player Two</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#show-the-current-state-of-the-game-board">Show the Current State of the Game Board</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#continue-the-game">Continue the Game</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html#xo-transaction-family-specification">XO Transaction Family Specification</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="app_developers_guide/java_sdk.html">Java SDK</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autogen/sdk_TP_tutorial_java.html">Transaction Processor Tutorial  Java</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_java.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_java.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_java.html#the-transaction-processor">The Transaction Processor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_java.html#the-apply-method">The <code class="docutils literal"><span class="pre">apply</span></code> Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_java.html#data">Data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_java.html#implementing-game-play">Implementing Game Play</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_java.html#the-xohandler-class">The <code class="docutils literal"><span class="pre">XoHandler</span></code> Class</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="app_developers_guide/javascript_sdk.html">JavaScript SDK</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autogen/sdk_submit_tutorial_js.html">Building and Submitting Transactions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_submit_tutorial_js.html#creating-a-private-key-and-signer">Creating a Private Key and Signer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_submit_tutorial_js.html#encoding-your-payload">Encoding Your Payload</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_submit_tutorial_js.html#building-the-transaction">Building the Transaction</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/sdk_submit_tutorial_js.html#create-the-transaction-header">1. Create the Transaction Header</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/sdk_submit_tutorial_js.html#create-the-transaction">2. Create the Transaction</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/sdk_submit_tutorial_js.html#optional-encode-the-transaction-s">3. (optional) Encode the Transaction(s)</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_submit_tutorial_js.html#building-the-batch">Building the Batch</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/sdk_submit_tutorial_js.html#create-the-batchheader">1. Create the BatchHeader</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/sdk_submit_tutorial_js.html#create-the-batch">2. Create the Batch</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/sdk_submit_tutorial_js.html#encode-the-batch-es-in-a-batchlist">3. Encode the Batch(es) in a BatchList</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_submit_tutorial_js.html#submitting-batches-to-the-validator">Submitting Batches to the Validator</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="_autogen/sdk_TP_tutorial_js.html">Transaction Processor Tutorial  JavaScript</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_js.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_js.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_js.html#the-transaction-processor">The Transaction Processor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_js.html#the-apply-method">The <code class="docutils literal"><span class="pre">apply</span></code> Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_js.html#data">Data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_js.html#implementing-game-play">Implementing Game Play</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_js.html#the-xohandler-class">The <code class="docutils literal"><span class="pre">XOHandler</span></code> Class</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="app_developers_guide/python_sdk.html">Python SDK</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/python_sdk_install.html">Python SDK Installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/python_sdk_install.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/python_sdk_install.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/python_sdk_install.html#importing-the-sdk">Importing the SDK</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="_autogen/sdk_submit_tutorial_python.html">Building and Submitting Transactions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_submit_tutorial_python.html#creating-a-private-key-and-signer">Creating a Private Key and Signer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_submit_tutorial_python.html#encoding-your-payload">Encoding Your Payload</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_submit_tutorial_python.html#building-the-transaction">Building the Transaction</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/sdk_submit_tutorial_python.html#create-the-transaction-header">1. Create the Transaction Header</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/sdk_submit_tutorial_python.html#create-the-transaction">2. Create the Transaction</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/sdk_submit_tutorial_python.html#optional-encode-the-transaction-s">3. (optional) Encode the Transaction(s)</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_submit_tutorial_python.html#building-the-batch">Building the Batch</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/sdk_submit_tutorial_python.html#create-the-batchheader">1. Create the BatchHeader</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/sdk_submit_tutorial_python.html#create-the-batch">2. Create the Batch</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/sdk_submit_tutorial_python.html#encode-the-batch-es-in-a-batchlist">3. Encode the Batch(es) in a BatchList</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_submit_tutorial_python.html#submitting-batches-to-the-validator">Submitting Batches to the Validator</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="_autogen/sdk_TP_tutorial_python.html">Transaction Processor Tutorial  Python</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_python.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_python.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_python.html#the-transaction-processor">The Transaction Processor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_python.html#the-apply-method">The <code class="docutils literal"><span class="pre">apply</span></code> Method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_python.html#data">Data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_python.html#implementing-game-play">Implementing Game Play</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/sdk_TP_tutorial_python.html#the-xotransactionhandler-class">The <code class="docutils literal"><span class="pre">XoTransactionHandler</span></code> Class</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="app_developers_guide/testing.html">Testing a Transaction Processor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/testing.html#communication-with-the-validator">Communication with the Validator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/testing.html#message-factory-and-mock-validator">Message Factory and Mock Validator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="app_developers_guide/no_sdk.html">Development Without an SDK</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autogen/txn_submit_tutorial.html">Building and Submitting Transactions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#creating-private-and-public-keys">Creating Private and Public Keys</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#encoding-your-payload">Encoding Your Payload</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#building-the-transaction">Building the Transaction</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#create-a-sha-512-payload-hash">1. Create a SHA-512 Payload Hash</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#create-the-transactionheader">2. Create the TransactionHeader</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#sign-the-header">3. Sign the Header</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#create-the-transaction">4. Create the Transaction</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#optional-encode-the-transaction-s">5. (optional) Encode the Transaction(s)</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#building-the-batch">Building the Batch</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#optional-decode-the-transaction-s">1. (optional) Decode the Transaction(s)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#create-the-batchheader">2. Create the BatchHeader</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#id1">3. Sign the Header</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#create-the-batch">4. Create the Batch</a></li>
+<li class="toctree-l5"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#encode-the-batch-es">5. Encode the Batch(es)</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="_autogen/txn_submit_tutorial.html#submitting-batches-to-the-validator">Submitting Batches to the Validator</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="app_developers_guide/event_subscriptions.html">Subscribing to Events</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/event_subscriptions.html#requirements">Requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/event_subscriptions.html#constructing-a-subscription">Constructing a Subscription</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/event_subscriptions.html#event-type">Event Type</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/event_subscriptions.html#event-filters">Event Filters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/event_subscriptions.html#event-protobuf-message">Event Protobuf Message</a></li>
+<li class="toctree-l5"><a class="reference internal" href="app_developers_guide/event_subscriptions.html#example-subscribing-to-state-deltas-within-a-namespace">Example: Subscribing to State Deltas within a Namespace</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/event_subscriptions.html#submitting-an-event-subscription">Submitting an Event Subscription</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/event_subscriptions.html#receiving-the-response">Receiving the Response</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/event_subscriptions.html#listening-for-events">Listening for Events</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/event_subscriptions.html#correlating-events-to-blocks">Correlating Events to Blocks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/event_subscriptions.html#requesting-event-catch-up">Requesting Event Catch-Up</a></li>
+<li class="toctree-l4"><a class="reference internal" href="app_developers_guide/event_subscriptions.html#unsubscribing-to-events">Unsubscribing to Events</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide.html">System Administrator&#8217;s Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/installation.html">Installing Hyperledger Sawtooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/systemd.html">Running Sawtooth as a Service</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/systemd.html#viewing-console-output">Viewing Console Output</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/systemd.html#validator-start-up-process">Validator Start-up Process</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/systemd.html#create-genesis-block">Create Genesis Block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/systemd.html#running-sawtooth">Running Sawtooth</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth.html">Configuring Sawtooth</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/validator_configuration_file.html">Validator Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/rest_api_configuration_file.html">REST API Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/cli_configuration.html">Sawtooth CLI Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/poet_sgx_enclave_configuration_file.html">PoET SGX Enclave Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/path_configuration_file.html">Path Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/identity_tp_configuration.html">Identity Transaction Processor Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/settings_tp_configuration.html">Settings Transaction Processor Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/configuring_sawtooth/xo_tp_configuration.html">XO Transaction Processor Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/log_configuration.html">Log Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/log_configuration.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/log_configuration.html#log-files">Log Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/log_configuration.html#id1">Log Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/log_configuration.html#examples">Examples</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="sysadmin_guide/log_configuration.html#configure-a-specific-logger">Configure a Specific Logger</a></li>
+<li class="toctree-l5"><a class="reference internal" href="sysadmin_guide/log_configuration.html#rotating-file-handler">Rotating File Handler</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/rest_auth_proxy.html#forwarding-url-info-with-headers">Forwarding URL Info with Headers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/rest_auth_proxy.html#x-forwarded-headers">&#8220;X-Forwarded&#8221; Headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/rest_auth_proxy.html#forwarded-header">&#8220;Forwarded&#8221; Header</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/rest_auth_proxy.html#apache-proxy-setup-guide">Apache Proxy Setup Guide</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/rest_auth_proxy.html#install-apache">Install Apache</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/rest_auth_proxy.html#set-up-passwords-and-certificates">Set Up Passwords and Certificates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/rest_auth_proxy.html#configure-proxy">Configure Proxy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/rest_auth_proxy.html#start-apache-a-validator-and-the-rest-api">Start Apache, a Validator, and the REST API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/rest_auth_proxy.html#send-test-requests">Send Test Requests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/permissioning.html">Permissioning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/permissioning.html#transactor-permissioning">Transactor Permissioning</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/permissioning.html#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/permissioning.html#off-chain-transactor-permissioning">Off-Chain Transactor Permissioning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/permissioning.html#on-chain-transactor-permissioning">On-Chain Transactor Permissioning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/permissioning.html#transactor-roles">Transactor Roles</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/permissioning.html#validator-key-permissioning">Validator Key Permissioning</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/permissioning.html#id2">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/permissioning.html#configuring-authorization">Configuring Authorization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/permissioning.html#network-roles">Network Roles</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide/configure_sgx.html">Using Sawtooth with the SGX Implementation of PoET</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/configure_sgx.html#prerequisites">Prerequisites</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/configure_sgx.html#bios-update">BIOS Update</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/configure_sgx.html#install-sgx-psw">Install SGX/PSW</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysadmin_guide/configure_sgx.html#configuring-sawtooth-to-use-sgx">Configuring Sawtooth to Use SGX</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/configure_sgx.html#install-sawtooth">Install Sawtooth</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/configure_sgx.html#certificate-file">Certificate File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/configure_sgx.html#configure-the-validator-to-use-sgx-poet">Configure the Validator to Use SGX PoET</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/configure_sgx.html#change-the-validator-config-file">Change the Validator Config File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/configure_sgx.html#start-the-sawtooth-services">Start the Sawtooth Services</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sysadmin_guide/configure_sgx.html#stop-or-restart-the-sawtooth-services">Stop or Restart the Sawtooth Services</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rest_api.html">REST API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rest_api/endpoint_specs.html">Endpoint Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api/error_codes.html">Error Responses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rest_api/error_codes.html#http-status-codes">HTTP Status Codes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rest_api/error_codes.html#json-response">JSON Response</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="rest_api/error_codes.html#example-json-response">Example JSON Response</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="rest_api/error_codes.html#error-codes-and-descriptions">Error Codes and Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api/state_delta_websockets.html">State Delta Subscriptions via Web Sockets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rest_api/state_delta_websockets.html#opening-a-web-socket">Opening a Web Socket</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rest_api/state_delta_websockets.html#subscribing-to-state-changes">Subscribing to State Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rest_api/state_delta_websockets.html#events">Events</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="rest_api/state_delta_websockets.html#missed-events">Missed Events</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="rest_api/state_delta_websockets.html#unsubscribing">Unsubscribing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rest_api/state_delta_websockets.html#errors-and-warnings">Errors and Warnings</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sdks.html">Sawtooth SDK APIs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sdks.html#python">Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sdks/python_sdk/processor.html">processor package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sdks/python_sdk/processor.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sdks/python_sdk/processor.html#module-processor.config">processor.config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sdks/python_sdk/processor.html#module-processor.context">processor.context module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sdks/python_sdk/processor.html#module-processor.core">processor.core module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sdks/python_sdk/processor.html#module-processor.exceptions">processor.exceptions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sdks/python_sdk/processor.html#module-processor.handler">processor.handler module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sdks/python_sdk/processor.html#module-processor.log">processor.log module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sdks/python_sdk/processor.html#module-processor">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sdks/python_sdk/sawtooth_signing.html">sawtooth_signing package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sdks/python_sdk/sawtooth_signing.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sdks/python_sdk/sawtooth_signing.html#module-sawtooth_signing.core">sawtooth_signing.core module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sdks/python_sdk/sawtooth_signing.html#module-sawtooth_signing.secp256k1">sawtooth_signing.secp256k1 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sdks/python_sdk/sawtooth_signing.html#module-sawtooth_signing">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sdks.html#go">Go</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sdks.html#javascript">Javascript</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawtooth.html">Sawtooth CLI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth">sawtooth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-batch">sawtooth batch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-batch-list">sawtooth batch list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-batch-show">sawtooth batch show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-batch-status">sawtooth batch status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-batch-submit">sawtooth batch submit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-block">sawtooth block</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-block-list">sawtooth block list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-block-show">sawtooth block show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-identity">sawtooth identity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-identity-policy">sawtooth identity policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-identity-policy-create">sawtooth identity policy create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-identity-policy-list">sawtooth identity policy list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-identity-role">sawtooth identity role</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-identity-role-create">sawtooth identity role create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-identity-role-list">sawtooth identity role list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-keygen">sawtooth keygen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-peer">sawtooth peer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-peer-list">sawtooth peer list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-settings">sawtooth settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-settings-list">sawtooth settings list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-state">sawtooth state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-state-list">sawtooth state list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-state-show">sawtooth state show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-transaction">sawtooth transaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-transaction-list">sawtooth transaction list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawtooth.html#sawtooth-transaction-show">sawtooth transaction show</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawadm.html">Sawtooth Admin CLI (sawadm)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawadm.html#sawadm">sawadm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawadm.html#sawadm-genesis">sawadm genesis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawadm.html#sawadm-keygen">sawadm keygen</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawnet.html">Sawtooth Network CLI (sawnet)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawnet.html#sawnet">sawnet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawnet.html#sawnet-compare-chains">sawnet compare-chains</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cli/sawset.html">Sawtooth Config CLI (sawset)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawset.html#sawset">sawset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawset.html#sawset-genesis">sawset genesis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawset.html#sawset-proposal">sawset proposal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawset.html#sawset-proposal-create">sawset proposal create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawset.html#sawset-proposal-list">sawset proposal list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/sawset.html#sawset-proposal-vote">sawset proposal vote</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cli/poet.html">PoET CLI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/poet.html#poet">poet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/poet.html#poet-registration">poet registration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/poet.html#poet-registration-create">poet registration create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/poet.html#poet-enclave">poet enclave</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cli/validator.html">Validator CLI (sawtooth-validator)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/validator.html#sawtooth-validator">sawtooth-validator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cli/rest_api.html">REST API CLI (sawtooth-rest-api)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/rest_api.html#sawtooth-rest-api">sawtooth-rest-api</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cli/intkey.html">IntegerKey CLI (intkey)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/intkey.html#intkey">intkey</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/intkey.html#intkey-set">intkey set</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/intkey.html#intkey-inc">intkey inc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/intkey.html#intkey-dec">intkey dec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/intkey.html#intkey-show">intkey show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/intkey.html#intkey-list">intkey list</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cli/xo.html">XO CLI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/xo.html#xo">xo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/xo.html#xo-create">xo create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/xo.html#xo-list">xo list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/xo.html#xo-show">xo show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/xo.html#xo-take">xo take</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli/xo.html#xo-delete">xo delete</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cli/settings-tp.html">Settings Transaction Processor CLI (sawtooth-settings)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/settings-tp.html#settings-tp">settings-tp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cli/identity-tp.html">Identity Transaction Processor CLI (identity-tp)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cli/identity-tp.html#identity-tp">identity-tp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications.html">Transaction Family Specifications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html">Settings Transaction Family Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html#state">State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html#settings">Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html#definition-of-setting-entries">Definition of Setting Entries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html#sawtooth-settings-vote-proposals">sawtooth.settings.vote.proposals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html#addressing">Addressing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html#transaction-header">Transaction Header</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html#inputs-and-outputs">Inputs and Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html#family">Family</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html#encoding">Encoding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html#execution">Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html">Identity Transaction Family Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html#state">State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html#policies">Policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html#roles">Roles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html#addressing">Addressing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html#transaction-header">Transaction Header</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html#inputs-and-outputs">Inputs and Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html#family">Family</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html#encoding">Encoding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html#execution">Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html">BlockInfo Transaction Family Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html#state">State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html#address">Address</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html#blockinfo">BlockInfo</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html#transaction-header">Transaction Header</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html#inputs-and-outputs">Inputs and Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html#encoding">Encoding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html#execution">Execution</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html#timestamps">Timestamps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html">IntegerKey Transaction Family Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html#state">State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html#addressing">Addressing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html#transaction-header">Transaction Header</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html#inputs-and-outputs">Inputs and Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html#family">Family</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html#encoding">Encoding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html#execution">Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html">XO Transaction Family Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html#state">State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html#addressing">Addressing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html#transaction-header">Transaction Header</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html#inputs-and-outputs">Inputs and Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html#family">Family</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html#encoding">Encoding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html#execution">Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="transaction_family_specifications/validator_registry_transaction_family.html">Validator Registry Transaction Family Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/validator_registry_transaction_family.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/validator_registry_transaction_family.html#state">State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/validator_registry_transaction_family.html#addressing">Addressing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/validator_registry_transaction_family.html#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/validator_registry_transaction_family.html#transaction-header">Transaction Header</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/validator_registry_transaction_family.html#inputs-and-outputs">Inputs and Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/validator_registry_transaction_family.html#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/validator_registry_transaction_family.html#family">Family</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/validator_registry_transaction_family.html#encoding">Encoding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/validator_registry_transaction_family.html#execution">Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="transaction_family_specifications/smallbank_transaction_family.html">Smallbank Transaction Family Specification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/smallbank_transaction_family.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/smallbank_transaction_family.html#state">State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/smallbank_transaction_family.html#addressing">Addressing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/smallbank_transaction_family.html#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/smallbank_transaction_family.html#transaction-header">Transaction Header</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/smallbank_transaction_family.html#inputs-and-outputs">Inputs and Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/smallbank_transaction_family.html#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/smallbank_transaction_family.html#family">Family</a></li>
+<li class="toctree-l4"><a class="reference internal" href="transaction_family_specifications/smallbank_transaction_family.html#encoding">Encoding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="transaction_family_specifications/smallbank_transaction_family.html#execution">Execution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community/join_the_discussion.html">Join the Discussion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="community/join_the_discussion.html#chat">Chat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="community/join_the_discussion.html#mailing-lists">Mailing Lists</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="community/issue_tracking.html">Issue Tracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="community/issue_tracking.html#reporting-issues">Reporting Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="community/issue_tracking.html#how-to-report-an-issue">How to Report an Issue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="community/issue_tracking.html#id1">JIRA</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="community/contributing.html">Contributing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="community/contributing.html#ways-to-contribute">Ways to Contribute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="community/contributing.html#commit-process">Commit Process</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="community/code_of_conduct.html">Code of Conduct</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="introduction.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'v1.0.0rc6',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

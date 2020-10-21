@@ -1,0 +1,749 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../index.html"/>
+        <link rel="up" title="Sawtooth Lake Bond Family User’s Guide" href="../users_guide.html"/>
+        <link rel="next" title="UI Reference" href="ui_reference.html"/>
+        <link rel="prev" title="Sawtooth Lake Bond Family User’s Guide" href="../users_guide.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../bond_family_guide.html">Bond Family Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../users_guide.html">Sawtooth Lake Bond Family User&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#considerations">Considerations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#supported-browsers">Supported Browsers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#supported-tasks">Supported Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tasks-not-supported-by-the-ui">Tasks Not Supported by the UI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-an-account">Create an Account</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sign-in-with-existing-account">Sign in with Existing Account</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#view-bonds">View Bonds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-bond">Create Bond</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#issue-a-quote">Issue a Quote</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#view-the-quotes">View Quotes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-an-order">Create an Order</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#settle-a-matched-order">Settle a Matched Order</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-organization">Create Organization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#update-user-account">Update User Account</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#view-portfolio">View Portfolio</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ui_reference.html">UI Reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scenarios.html">Scenarios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli.html">btp CLI Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sysadmin_guide.html">Sawtooth Lake Bond Family System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design.html">Sawtooth Lake Bond Family Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bond_workload_simulator.html">Sawtooth Lake Bond Family Workload Simulator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../bond_family_guide.html">Bond Family Guide</a> &raquo;</li>
+        
+          <li><a href="../users_guide.html">Sawtooth Lake Bond Family User&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/bond_family_guide/users_guide/tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial is a guide to the use of the Sawtooth Lake Bond Family user
+interface (UI).</p>
+</div>
+<div class="section" id="considerations">
+<h2>Considerations<a class="headerlink" href="#considerations" title="Permalink to this headline">¶</a></h2>
+<p>The Sawtooth Bond Family UI runs in a cloud-based instance that is installed,
+configured and maintained by Intel. You do not need to install any specialized
+sofware on your  computer.</p>
+</div>
+<div class="section" id="supported-browsers">
+<h2>Supported Browsers<a class="headerlink" href="#supported-browsers" title="Permalink to this headline">¶</a></h2>
+<p>The following web browsers are supported:</p>
+<ol class="arabic simple">
+<li>Firefox version 47.0+</li>
+<li>Chrome version 52.0+</li>
+<li>Safari version 9.1+</li>
+<li>Internet Explorer version 11+</li>
+</ol>
+</div>
+<div class="section" id="supported-tasks">
+<h2>Supported Tasks<a class="headerlink" href="#supported-tasks" title="Permalink to this headline">¶</a></h2>
+<p>You can perform the following tasks in the Sawtooth Bond Family UI:</p>
+<div class="section" id="account-creation-and-updates">
+<h3>Account Creation and Updates<a class="headerlink" href="#account-creation-and-updates" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="#create-an-account">Create an Account</a></li>
+<li><a class="reference internal" href="#sign-in-with-existing-account">Sign in with Existing Account</a></li>
+<li><a class="reference internal" href="#update-user-account">Update User Account</a></li>
+</ul>
+</div>
+<div class="section" id="buying-and-selling">
+<h3>Buying and Selling<a class="headerlink" href="#buying-and-selling" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="#view-bonds">View Bonds</a></li>
+<li><a class="reference internal" href="#view-quotes">View Quotes</a></li>
+<li><a class="reference internal" href="#issue-a-quote">Issue a Quote</a></li>
+<li><a class="reference internal" href="#create-an-order">Create an Order</a></li>
+<li><a class="reference internal" href="#settle-a-matched-order">Settle a Matched Order</a></li>
+</ul>
+</div>
+<div class="section" id="holdings-and-transactions">
+<h3>Holdings and Transactions<a class="headerlink" href="#holdings-and-transactions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="#view-portfolio">View Portfolio</a></li>
+</ul>
+</div>
+<div class="section" id="administrative">
+<h3>Administrative<a class="headerlink" href="#administrative" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="#create-organization">Create Organization</a></li>
+<li><a class="reference internal" href="#create-bond">Create Bond</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="tasks-not-supported-by-the-ui">
+<h2>Tasks Not Supported by the UI<a class="headerlink" href="#tasks-not-supported-by-the-ui" title="Permalink to this headline">¶</a></h2>
+<p>Certain tasks are not supported by the UI,
+but can be performed using the command-line interface (CLI).
+For example, bond redemption can be accomplished with the CLI.</p>
+<p>See the <a class="reference internal" href="cli.html"><span class="doc">CLI reference guide</span></a> for information on performing tasks
+not supported by the UI, but which are supported by the CLI.</p>
+</div>
+<div class="section" id="create-an-account">
+<h2>Create an Account<a class="headerlink" href="#create-an-account" title="Permalink to this headline">¶</a></h2>
+<p>The first time you sign in to the Sawtooth Lake Bond UI, you need to
+create your account. During this process, you generate a new wallet import
+format (WIF) key, or import an existing WIF key. Your key is used to identify
+participants and sign transactions.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you sign out, or need to sign in from
+another browser, simply follow the procedure below entitled
+<a class="reference internal" href="#sign-in-with-existing-account">Sign in with Existing Account</a>.</p>
+</div>
+<div class="section" id="creating-an-account-with-a-new-key">
+<h3>Creating an Account with a New Key<a class="headerlink" href="#creating-an-account-with-a-new-key" title="Permalink to this headline">¶</a></h3>
+<p>To create an account with a new WIF key:</p>
+<ol class="arabic">
+<li><p class="first">Navigate to the URL of the Bond UI instance.</p>
+</li>
+<li><p class="first">Click <strong>Generate WIF</strong>.</p>
+</li>
+<li><p class="first">Save your WIF key using one of the following methods:</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>Click <strong>Download Key</strong> to download the WIF key to your local filesystem.</dt>
+<dd><ul class="first last">
+<li>Sarafi does not support downloading the WIF key.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>Alternatively, copy the WIF key to your clipboard by clicking <strong>Copy Key
+to Clipboard</strong>.</li>
+</ul>
+</li>
+<li><p class="first">Store your WIF key in safe location. It is needed in order to:</p>
+<ul class="simple">
+<li>Sign in to the UI from another browser or computer</li>
+<li>Sign in after deleting the site cookie</li>
+</ul>
+</li>
+<li><p class="first">Click <strong>Create Participant</strong>.</p>
+<ul class="simple">
+<li>The <strong>Create Participant</strong> page loads:</li>
+</ul>
+<img alt="Create participant" src="../../_images/create_participant.png" />
+</li>
+<li><p class="first">Create a username.</p>
+</li>
+<li><p class="first">Select a firm from the <strong>Firm</strong> dropdown.</p>
+</li>
+<li><p class="first">Click the <strong>Create Participant</strong> button.</p>
+<ul class="simple">
+<li>To leave the <strong>Create Participant</strong> page without creating an account, click <strong>Cancel.</strong></li>
+<li>During account creation, the browser displays:</li>
+</ul>
+<img alt="Create participant transaction submitted" src="../../_images/account_creation_loading.png" />
+</li>
+<li><p class="first">The main Bond UI page loads.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="creating-an-account-with-an-existing-key">
+<h3>Creating an Account with an Existing Key<a class="headerlink" href="#creating-an-account-with-an-existing-key" title="Permalink to this headline">¶</a></h3>
+<p>To create an account with an existing WIF key:</p>
+<ol class="arabic">
+<li><p class="first">Navigate to the URL of the Bond UI instance.</p>
+</li>
+<li><p class="first">Click <strong>Import WIF</strong>.</p>
+<ul class="simple">
+<li>The <strong>Import WIF Key</strong> page loads:</li>
+</ul>
+<img alt="Import WIF key" src="../../_images/import_wif_key.png" />
+</li>
+<li><p class="first">Input your WIF key using one of two methods:</p>
+<ul>
+<li><p class="first">Paste the WIF key into the text box.</p>
+</li>
+<li><p class="first">Click <strong>Upload WIF File</strong>, navigate to the WIF key file, then select the file.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <strong>Upload WIF File</strong> button does not work in Firefox. Use
+the paste option if you use Firefox.</p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p class="first">Click <strong>Submit</strong>.</p>
+<ul class="simple">
+<li>The <strong>Create Participant</strong> page loads:</li>
+</ul>
+<img alt="Create participant" src="../../_images/create_participant.png" />
+</li>
+<li><p class="first">Create a username.</p>
+</li>
+<li><p class="first">Select a firm from the <strong>Firm</strong> dropdown.</p>
+</li>
+<li><p class="first">Click the <strong>Create Participant</strong> button.</p>
+<ul class="simple">
+<li>To leave the <strong>Create Participant</strong> page without creating an account, click <strong>Cancel.</strong></li>
+<li>During account creation, screen will display:</li>
+</ul>
+<img alt="Create participant transaction submitted" src="../../_images/account_creation_loading.png" />
+</li>
+<li><p class="first">The main Bond UI page loads.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="sign-in-with-existing-account">
+<span id="signed-in"></span><h2>Sign in with Existing Account<a class="headerlink" href="#sign-in-with-existing-account" title="Permalink to this headline">¶</a></h2>
+<p>You can sign in to the Bond UI as an existing user.</p>
+<p>To sign in as an existing user:</p>
+<ol class="arabic">
+<li><p class="first">Navigate to the URL of the Bond UI instance.</p>
+</li>
+<li><p class="first">Click <strong>Import WIF</strong>.</p>
+<ul class="simple">
+<li>The <strong>Import WIF Key</strong> page loads:</li>
+</ul>
+<img alt="Import WIF key" src="../../_images/import_wif_key.png" />
+</li>
+<li><p class="first">Input the WIF key associated with the existing user using one of two
+methods:</p>
+<ul>
+<li><p class="first">Paste the WIF key into the text box</p>
+</li>
+<li><p class="first">Click <strong>Upload WIF File</strong>, navigate to the WIF key file, then select the
+file.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <strong>Upload WIF File</strong> button does not work in Firefox. Use
+the paste option if you use Firefox.</p>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p class="first">Click <strong>Submit</strong>.</p>
+<ul class="simple">
+<li>You are now signed in as the existing user or participant.</li>
+</ul>
+</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The tasks below assume that you are already <a class="reference internal" href="#signed-in">signed in</a> as a
+participant.</p>
+</div>
+</div>
+<div class="section" id="view-bonds">
+<h2>View Bonds<a class="headerlink" href="#view-bonds" title="Permalink to this headline">¶</a></h2>
+<p>The UI allows you to view bonds,  and to search for bonds based on various
+search criteria.</p>
+<div class="section" id="view-all-bonds">
+<h3>View All Bonds<a class="headerlink" href="#view-all-bonds" title="Permalink to this headline">¶</a></h3>
+<p>You can view all bonds stored in the distributed ledger by following these
+steps:</p>
+<ol class="arabic">
+<li><p class="first">Select <strong>Bonds</strong> from the top menu bar.</p>
+<img alt="Menu bar" src="../../_images/menu_bar_bonds.png" />
+</li>
+<li><p class="first">The list of bonds is displayed:</p>
+<img alt="List of bonds" src="../../_images/list_of_bonds.png" />
+</li>
+</ol>
+</div>
+<div class="section" id="search-for-specific-bonds">
+<h3>Search For Specific Bonds<a class="headerlink" href="#search-for-specific-bonds" title="Permalink to this headline">¶</a></h3>
+<p>You can search for bonds based on the following criteria:</p>
+<blockquote>
+<div><ul class="simple">
+<li>ISIN</li>
+<li>CUSIP</li>
+<li>Ticker Symbol</li>
+</ul>
+</div></blockquote>
+<p>To search for bonds based based on your search criteria:</p>
+<ol class="arabic">
+<li><p class="first">Enter the ISIN, CUSIP, or ticker symbol in the <strong>Search</strong> field.</p>
+</li>
+<li><p class="first">Click <strong>Go</strong>.</p>
+<ul class="simple">
+<li>The list of matching bonds is displayed:</li>
+</ul>
+<img alt="List of bonds from search" src="../../_images/list_of_bonds_search.png" />
+</li>
+</ol>
+<p>To start a new search:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Click <strong>Clear</strong>.</li>
+<li>Enter the new search term.</li>
+<li>Click <strong>Go</strong>.</li>
+</ol>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">From the <strong>Bonds</strong> page, you can <a class="reference internal" href="#view-quotes">view quotes</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="create-bond">
+<h2>Create Bond<a class="headerlink" href="#create-bond" title="Permalink to this headline">¶</a></h2>
+<p>If you have the market maker role, you can create bonds:</p>
+<ol class="arabic">
+<li><p class="first">Select <strong>Create Bond</strong> from the top menu bar.</p>
+<img alt="Menu bar" src="../../_images/menu_bar_create_bond.png" />
+</li>
+<li><p class="first">Fill in the required fields on the <strong>Create Bonds</strong> page, then press the <strong>Create Bond</strong> button, or press <strong>Reset</strong> to clear fields:</p>
+<img alt="Create bond" src="../../_images/create_bond.png" />
+</li>
+</ol>
+</div>
+<div class="section" id="issue-a-quote">
+<h2>Issue a Quote<a class="headerlink" href="#issue-a-quote" title="Permalink to this headline">¶</a></h2>
+<p>You can can issue quotes, which are submitted to the distributed ledger. They
+can then be matched with orders submitted by other particpants.</p>
+<p>To issue a quote:</p>
+<ol class="arabic">
+<li><p class="first">Select <strong>Issue Quote</strong> from the top menu bar.</p>
+<img alt="menu bar" src="../../_images/menu_bar_issue_quote.png" />
+</li>
+<li><p class="first">Select a bond from the <strong>CUSIP/ISIN</strong> drop-down.</p>
+<img alt="Select ISIN" src="../../_images/isin_drop_down.png" />
+</li>
+<li><p class="first">Fill in the following text boxes under <strong>Quote Details</strong>:</p>
+<ul class="simple">
+<li>Bid Price</li>
+<li>Ask Price</li>
+<li>Bid Quantity</li>
+<li>Ask Quantity</li>
+</ul>
+<img alt="Quote details" src="../../_images/quote_details.png" />
+</li>
+<li><p class="first">Click <strong>Issue</strong> to submit the quote.</p>
+<blockquote>
+<div><ul class="simple">
+<li>To cancel the quote and reset the page, click <strong>Reset</strong>.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">The <strong>View Quotes</strong> page displays the newly issued quote:</p>
+</li>
+</ol>
+<img alt="View quotes after submitting a quote" src="../../_images/view_quote.png" />
+</div>
+<div class="section" id="view-the-quotes">
+<span id="view-quotes"></span><span id="id1"></span><h2>View Quotes<a class="headerlink" href="#view-the-quotes" title="Permalink to this headline">¶</a></h2>
+<p>You can view quotes from the <strong>Bonds</strong> page.</p>
+<p>To view the quotes associated with a bond:</p>
+<ol class="arabic">
+<li><p class="first">Select <strong>Bonds</strong> from the top menu bar.</p>
+<img alt="Menu bar" src="../../_images/menu_bar_bonds.png" />
+<ul class="simple">
+<li>A list of available bonds is displayed.</li>
+</ul>
+</li>
+<li><p class="first">Click the <strong>View Quotes</strong> link:</p>
+<img alt="View quotes link" src="../../_images/view_quotes_link.png" />
+</li>
+<li><p class="first">The <strong>View Quotes</strong> page for the chosen bond is displayed:</p>
+<img alt="View quotes page" src="../../_images/view_quotes_multiple.png" />
+</li>
+</ol>
+</div>
+<div class="section" id="create-an-order">
+<h2>Create an Order<a class="headerlink" href="#create-an-order" title="Permalink to this headline">¶</a></h2>
+<p>Participants can create buy and sell orders, which are then be matched against
+quotes that meet the order&#8217;s criteria.</p>
+<p>To create an order:</p>
+<ol class="arabic">
+<li><p class="first">Follow the steps above to <a class="reference internal" href="#view-the-quotes">view the quotes</a> available for the bond you want
+to buy or sell.</p>
+</li>
+<li><p class="first">Click the <strong>buy</strong> or <strong>sell</strong> button from the <strong>View Quotes</strong> page:</p>
+<img alt="View quotes for buy and sell" src="../../_images/view_quotes_buy_sell.png" />
+<ul class="simple">
+<li>The <strong>Buy/Sell Order</strong> page loads:</li>
+</ul>
+<img alt="Buy/Sell order page" src="../../_images/buy_sell_bonds.png" />
+</li>
+<li><p class="first">Fill in the following fields:</p>
+<ul class="simple">
+<li>Quantity</li>
+<li>Best Price (optional)</li>
+<li>Best Yield (optional)</li>
+</ul>
+</li>
+<li><p class="first">Click <strong>Create Order</strong></p>
+<ul class="simple">
+<li>The <strong>View Orders</strong> page is displayed, and includes your submitted order:</li>
+</ul>
+<img alt="View orders" src="../../_images/view_orders.png" />
+</li>
+</ol>
+</div>
+<div class="section" id="settle-a-matched-order">
+<h2>Settle a Matched Order<a class="headerlink" href="#settle-a-matched-order" title="Permalink to this headline">¶</a></h2>
+<p>When an order and a quote are matched by the bond transaction family, the order
+can be settled by an authorized participant.</p>
+<p>To settle a matched order:</p>
+<ol class="arabic">
+<li><p class="first">Select <strong>Orders</strong> from the top menu bar.</p>
+<img alt="Menu bar" src="../../_images/menu_bar_orders.png" />
+<ul class="simple">
+<li>The <strong>View Orders</strong> page is displayed:</li>
+</ul>
+<img alt="View orders for settlement" src="../../_images/view_orders_settle.png" />
+<ul class="simple">
+<li>If an order is matched with a quote, a <strong>settle</strong> button appears in the
+last column of the order&#8217;s row.</li>
+</ul>
+</li>
+<li><p class="first">Click the <strong>settle</strong> button for each matched order that you want to settle.</p>
+<ul class="simple">
+<li>The settlement request is submitted.</li>
+<li>Once the request is accepted, the <strong>View Orders</strong> page is refreshed, and
+the list of orders available for settlement is updated:</li>
+</ul>
+<img alt="View orders after settlement" src="../../_images/view_orders_settle_update.png" />
+</li>
+</ol>
+</div>
+<div class="section" id="create-organization">
+<h2>Create Organization<a class="headerlink" href="#create-organization" title="Permalink to this headline">¶</a></h2>
+<p>To create a new organization:</p>
+<ol class="arabic">
+<li><p class="first">Select <strong>Create Organization</strong> from the top menu bar.</p>
+<img alt="Menu bar" src="../../_images/menu_bar_create_org.png" />
+<ul class="simple">
+<li>The <strong>Create Organization</strong> page is displayed.</li>
+</ul>
+<img alt="Create organization" src="../../_images/create_organization.png" />
+</li>
+<li><p class="first">Fill in the following fields:</p>
+<ul class="simple">
+<li>Name</li>
+<li>Industry (Optional)</li>
+</ul>
+</li>
+<li><p class="first">Enter one of the two following fields:</p>
+<ul>
+<li><p class="first">Ticker</p>
+<blockquote>
+<div><ul class="simple">
+<li>Entering a ticker creates an issuing org.</li>
+<li>Bonds are issued against orgs with tickers.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Pricing Source</p>
+<blockquote>
+<div><ul class="simple">
+<li>Entering a pricing source creates a trading firm.</li>
+<li>Trading firms can issue quotes, perform trades, etc.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you create a trading firm, your participant will be be removed
+from any previous trading firm, and placed in the new one.</p>
+</div>
+</div>
+<div class="section" id="update-user-account">
+<h2>Update User Account<a class="headerlink" href="#update-user-account" title="Permalink to this headline">¶</a></h2>
+<p>You can update your user account.
+To update your account:</p>
+<ol class="arabic">
+<li><p class="first">Click your username from the top menu bar.</p>
+<img alt="../../_images/menu_bar_account.png" src="../../_images/menu_bar_account.png" />
+<ul class="simple">
+<li>The <strong>Update Participant</strong> page is displayed:</li>
+</ul>
+<img alt="Update participant" src="../../_images/update_participant.png" />
+</li>
+<li><p class="first">Update desired fields in the available text boxes, then press <strong>Update</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="view-portfolio">
+<h2>View Portfolio<a class="headerlink" href="#view-portfolio" title="Permalink to this headline">¶</a></h2>
+<p>You can view your holdings and transactions from the <strong>Portfolio</strong> page.</p>
+<ol class="arabic">
+<li><p class="first">Select <strong>Portfolio</strong> from the top menu bar:</p>
+<img alt="Menu bar" src="../../_images/menu_bar_portfolio.png" />
+<ul class="simple">
+<li>the <strong>Portfolio</strong> page loads:</li>
+</ul>
+<img alt="View portfolio" src="../../_images/portfolio.png" />
+</li>
+<li><p class="first">Select one of the following categories to view:</p>
+<ul class="simple">
+<li>Holdings</li>
+<li>Receipts</li>
+<li>Settlements</li>
+</ul>
+</li>
+<li><p class="first">The selected category is displayed.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ui_reference.html" class="btn btn-neutral float-right" title="UI Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../users_guide.html" class="btn btn-neutral" title="Sawtooth Lake Bond Family User’s Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

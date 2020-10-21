@@ -1,0 +1,383 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Configuration &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../index.html"/>
+        <link rel="up" title="Sawtooth Lake Bond Family System Administrator’s Guide" href="../sysadmin_guide.html"/>
+        <link rel="next" title="Sawtooth Lake Bond Family Design" href="../design.html"/>
+        <link rel="prev" title="Installation" href="installation.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../bond_family_guide.html">Bond Family Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../users_guide.html">Sawtooth Lake Bond Family User&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../sysadmin_guide.html">Sawtooth Lake Bond Family System Administrator&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-customize-the-config-file-for-your-environment">Step 1: Customize the Config File for Your Environment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../design.html">Sawtooth Lake Bond Family Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bond_workload_simulator.html">Sawtooth Lake Bond Family Workload Simulator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../bond_family_guide.html">Bond Family Guide</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">Sawtooth Lake Bond Family System Administrator&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Configuration</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/bond_family_guide/sysadmin_guide/configuration.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This article guides you through the configuration and startup of the Sawtooth
+Lake Bond Family validator service that you installed in <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a>.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="networking">
+<h3>Networking<a class="headerlink" href="#networking" title="Permalink to this headline">¶</a></h3>
+<p>1. Your node must be able to communicate with other nodes in the network, as
+covered in the networking section of <a class="reference internal" href="installation.html"><span class="doc">Installation</span></a>.</p>
+<ol class="arabic simple" start="2">
+<li>You need the values for your NodeName and LedgerURL entries.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="step-1-customize-the-config-file-for-your-environment">
+<h2>Step 1: Customize the Config File for Your Environment<a class="headerlink" href="#step-1-customize-the-config-file-for-your-environment" title="Permalink to this headline">¶</a></h2>
+<p>The configuration file, <code class="docutils literal"><span class="pre">txnvalidator.js</span></code>, is located in the folder with the
+path <code class="docutils literal"><span class="pre">sawtooth-core/validator/etc/</span></code>.  This file has a
+number of sections, but you only need to configure the following entries:</p>
+<ol class="arabic simple">
+<li>Listen</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Required for all configurations</li>
+<li>Tells the validator which interface and ports to listen on</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>Endpoint</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>Required only for NAT environments</li>
+<li>Provides the publicly accessible network address and ports</li>
+<li>Leave commented out if not needed</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>NodeName: The name of your node on the validator network</li>
+<li>LedgerURL: The node or nodes with which your node communicates with directly</li>
+</ol>
+<p>To configure your validator node:</p>
+<ol class="arabic simple">
+<li>Run the following commands to rename the provided example config file and
+open it in a text editor:</li>
+</ol>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> <span class="nb">cd</span> sawtooth-core/validator/etc/
+<span class="gp">%</span> mv txnvalidator.js.example txnvalidator.js
+<span class="gp">%</span> vi txnvalidator.js
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>Modify the <strong>Listen</strong> entry of the configuration file if necessary.</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li>The defaults will work for most cases</li>
+<li>Default entry:</li>
+</ul>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">&quot;Listen&quot; : [</span>
+<span class="go">       &quot;0.0.0.0:5500/UDP gossip&quot;,</span>
+<span class="go">       &quot;0.0.0.0:8800/TCP&quot;</span>
+<span class="go">   ],</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ol class="arabic" start="3">
+<li><p class="first">Modify the <strong>Endpoint</strong> entry to reflect your network environment. This
+section must be filled in correctly in order to proceed. This section
+tells the other nodes in the network how to communicate with you rnode.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Do not proceed without completing this step!</p>
+</div>
+</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Host</strong>: This is the publicly addressable IP address or FQDN of your
+validator node.</li>
+<li><strong>Port</strong>: This port must allow UDP traffic to reach the UDP port configured
+in the <strong>Listen</strong> entry of the config file.</li>
+<li><strong>HttpPort</strong>: This port must allow TCP traffic to reach the TCP/Http port
+configured in the <strong>Listen</strong> entry of the config file.</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li><strong>NodeName</strong>: Modify the value of &#8220;NodeName&#8221; to match the correct value.</li>
+<li><strong>LedgerUrl</strong>: This value will be provided to you. Example value:</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">&quot;http://192.0.2.1:38804/&quot;</span></code></li>
+<li>Technical note: this value is an array that can contain multiple IP addresses.</li>
+</ul>
+</div></blockquote>
+<ol class="arabic" start="6">
+<li><p class="first">(Optional) Modify the https proxy setting:</p>
+<blockquote>
+<div><p><em>If your device requires a proxy to communicate with other nodes, then
+perform this step:</em></p>
+<ul class="simple">
+<li>Modify the value of &#8220;HttpsProxy&#8221; to the IP address or value supplied by
+your network administrator.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Save the config file.</p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Do not uncomment any lines that make up the internal documentation or
+explanatory notes within the config file.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../design.html" class="btn btn-neutral float-right" title="Sawtooth Lake Bond Family Design" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installation.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

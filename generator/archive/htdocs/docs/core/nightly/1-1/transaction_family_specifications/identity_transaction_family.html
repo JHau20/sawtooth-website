@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Identity Transaction Family &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BlockInfo Transaction Family" href="blockinfo_transaction_family.html" />
+    <link rel="prev" title="Settings Transaction Family" href="settings_transaction_family.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="settings_transaction_family.html">Settings Transaction Family</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Identity Transaction Family</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#state">State</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#policies">Policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#roles">Roles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#addressing">Addressing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transaction-header">Transaction Header</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#inputs-and-outputs">Inputs and Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#family">Family</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#execution">Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="blockinfo_transaction_family.html">BlockInfo Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="integerkey_transaction_family.html">IntegerKey Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xo_transaction_family.html">XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_registry_transaction_family.html">Validator Registry Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="smallbank_transaction_family.html">Smallbank Transaction Family</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../transaction_family_specifications.html">Transaction Family Specifications</a> &raquo;</li>
+        
+      <li>Identity Transaction Family</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/transaction_family_specifications/identity_transaction_family.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="identity-transaction-family">
+<h1>Identity Transaction Family<a class="headerlink" href="#identity-transaction-family" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>On-chain permissioning is desired for transactor key and validator key
+permissioning. This feature requires that authorized participants for each
+role be stored. Currently, the only form of identification on the network is
+the entity’s public key. Since lists of public keys are difficult to manage,
+an identity namespace will be used to streamline managing identities.</p>
+<p>The identity system described here is an extensible role and policy based
+system for defining permissions in a way which can be utilized by other pieces
+of the architecture. This includes the existing permissioning components for
+transactor key and validator key, but in the future may also be used by
+transaction family implementations.</p>
+<p>The identity namespace:</p>
+<ul class="simple">
+<li><p>Encompasses ways to identify participants based on public keys</p></li>
+<li><p>Stores a set of permit and deny rules called “policies”</p></li>
+<li><p>Stores the roles that those policies apply to</p></li>
+</ul>
+<p>Policies describe a set of identities that have permission to perform some
+action, without specifying the logic of the action itself. Roles simply
+reference a policy, providing a more flexible interface. For example, a policy
+could be referenced by multiple roles. This way if the policy is updated, all
+roles referencing the policy are updated as well. An example role might be named
+“transactor”, and references the policy that controls who is allowed to submit
+batches and transactions on the network. This example is further described in
+<a class="reference internal" href="../sysadmin_guide/configuring_permissions.html"><span class="doc">Transactor Permissioning</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This transaction family will serve as a reference specification
+and implementation and may also be used in production. A custom implementation
+can be used so long as they adhere to the same addressing scheme and content
+format for policies and roles.</p>
+</div>
+</div>
+<div class="section" id="state">
+<h2>State<a class="headerlink" href="#state" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="policies">
+<h3>Policies<a class="headerlink" href="#policies" title="Permalink to this headline">¶</a></h3>
+<p>A policy will have a name and a list of entries. Each policy entry will have a
+list of type/key pairs. The type will be either PERMIT_KEY or DENY_KEY.
+Each key in a type/key pair will be a public key.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="c1">// Policy will be stored in a PolicyList to account for hash collisions</span>
+<span class="kd">message</span> <span class="nc">PolicyList</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="n">Policy</span> <span class="na">policies</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">Policy</span> <span class="p">{</span>
+
+  <span class="kd">enum</span> <span class="n">EntryType</span> <span class="p">{</span>
+    <span class="na">ENTRY_TYPE_UNSET</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="na">PERMIT_KEY</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="na">DENY_KEY</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kd">message</span> <span class="nc">Entry</span> <span class="p">{</span>
+    <span class="c1">// Whether this is a PERMIT_KEY or DENY_KEY entry</span>
+    <span class="n">EntryType</span> <span class="na">type</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// This should a public key or * to refer to all participants.</span>
+    <span class="kt">string</span> <span class="na">key</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// name of the policy, this should be unique.</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// list of Entries</span>
+  <span class="c1">// The entries will be processed in order from first to last.</span>
+  <span class="k">repeated</span> <span class="n">Entry</span> <span class="na">entries</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="roles">
+<h3>Roles<a class="headerlink" href="#roles" title="Permalink to this headline">¶</a></h3>
+<p>A role will be made up of a role name and the name of the policy to be enforced
+for that role. The data will be stored in state at the address described above
+using the following protobuf messages:</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="c1">// Roles will be stored in a RoleList to handle state collisions. The Roles</span>
+<span class="c1">// will be sorted by name.</span>
+<span class="kd">message</span> <span class="nc">RoleList</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="n">Role</span> <span class="na">roles</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">Role</span><span class="p">{</span>
+  <span class="c1">// Role name</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="c1">// Name of corresponding policy</span>
+  <span class="kt">string</span> <span class="na">policy_name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="addressing">
+<h3>Addressing<a class="headerlink" href="#addressing" title="Permalink to this headline">¶</a></h3>
+<p>All identity data will be stored under the special namespace of “00001d”.</p>
+<p>For each policy, the address will be formed by concatenating the namespace, the
+special policy namespace of “00”, and the first 62 characters of the SHA-256
+hash of the policy name:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;00001d&quot;</span> <span class="o">+</span> <span class="s2">&quot;00&quot;</span> <span class="o">+</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">policy_name</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">62</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Address construction for roles will follow a pattern similar to address
+construction in the settings namespace. Role names will be broken into four
+parts, where parts of the string are delimited by the “.” character. For
+example, the key a.b.c would be split into the parts “a”, “b”, “c”, and the
+empty string. If a key would have more than four parts the extra parts are left
+in the last part. For example, the key a.b.c.d.e would be split into “a”, “b”,
+“c”, and “d.e”.</p>
+<p>A short hash is computed for each part. For the first part the first 14
+characters of the SHA-256 hash are used. For the remaining parts the first 16
+characters of the SHA-256 hash are used. The address is formed by concatenating
+the identity namespace “00001d”, the role namespace “01”, and the four short
+hashes.</p>
+<p>For example, the address for the role client.query_state would be constructed
+as follows:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;00001d&quot;</span><span class="o">+</span> <span class="s2">&quot;01&quot;</span> <span class="o">+</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="s1">&#39;client&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">14</span><span class="p">]</span><span class="o">+</span> \
+<span class="go">  hashlib.sha256(&#39;query_state&#39;.encode()).hexdigest()[:16]+ \</span>
+<span class="go">  hashlib.sha256(&#39;&#39;.encode()).hexdigest()[:16]+ \</span>
+<span class="go">  hashlib.sha256(&#39;&#39;.encode()).hexdigest()[:16]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="transaction-payload">
+<h2>Transaction Payload<a class="headerlink" href="#transaction-payload" title="Permalink to this headline">¶</a></h2>
+<p>Identity transaction family payloads are defined by the following protocol
+buffers code:</p>
+<p>File: sawtooth-core/families/identity/protos/identity.proto</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">IdentityPayload</span> <span class="p">{</span>
+    <span class="kd">enum</span> <span class="n">IdentityType</span> <span class="p">{</span>
+      <span class="na">POLICY</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="na">ROLE</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Which type of payload this is for</span>
+    <span class="n">IdentityType</span> <span class="na">type</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// Serialize bytes of a role or a policy</span>
+    <span class="kt">bytes</span> <span class="na">data</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="transaction-header">
+<h2>Transaction Header<a class="headerlink" href="#transaction-header" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="inputs-and-outputs">
+<h3>Inputs and Outputs<a class="headerlink" href="#inputs-and-outputs" title="Permalink to this headline">¶</a></h3>
+<p>The inputs for Identity family transactions must include:</p>
+<ul class="simple">
+<li><p>the address of the setting <em>sawtooth.identity.allowed_keys</em></p></li>
+<li><p>the address of the role or policy being changed</p></li>
+<li><p>if setting a role, the address of the policy to assign to the role</p></li>
+</ul>
+<p>The outputs for Identity family transactions must include:</p>
+<ul class="simple">
+<li><p>the address of the role or policy being changed</p></li>
+</ul>
+</div>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<p>None.</p>
+</div>
+<div class="section" id="family">
+<h3>Family<a class="headerlink" href="#family" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>family_name: “sawtooth_identity”</p></li>
+<li><p>family_version: “1.0”</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="execution">
+<h2>Execution<a class="headerlink" href="#execution" title="Permalink to this headline">¶</a></h2>
+<p>Initially, the transaction processor gets the current values of
+sawtooth.identity.allowed_keys from the state.</p>
+<p>The public key of the transaction signer is checked against the values in the
+list of allowed keys. If it is empty, no roles or policy can be updated. If
+the transaction signer is not in the allowed keys the transaction is invalid.</p>
+<p>Whether this is a role or a policy transaction is checked by looking at the
+<code class="docutils literal notranslate"><span class="pre">IdentityType</span></code> in the payload.</p>
+<p>If the transaction is for setting a policy, the data in the payload will be
+parsed to form a <code class="docutils literal notranslate"><span class="pre">Policy</span></code> object. The <code class="docutils literal notranslate"><span class="pre">Policy</span></code> object is then checked to
+make sure it has a name and at least one entry. If either are missing, the
+transaction is considered invalid. If the policy is determined to be whole, the
+address for the new policy is fetched. If there is no data found at the address,
+a new <code class="docutils literal notranslate"><span class="pre">PolicyList</span></code> object is created, the new policy is added, and the policy
+list is applied to state. If there is data, it is parsed into a <code class="docutils literal notranslate"><span class="pre">PolicyList</span></code>.
+The new policy is added to the policy list, replacing any policy with the same
+name, and the policy list is applied to state.</p>
+<p>If the transaction is for setting a role, the data in the payload will be
+parsed to form a <code class="docutils literal notranslate"><span class="pre">Role</span></code> object. The <code class="docutils literal notranslate"><span class="pre">Role</span></code> object is then checked to make
+sure it has a name and a policy_name. If either are missing, the transaction is
+considered invalid. The policy_name stored in the role must match a <code class="docutils literal notranslate"><span class="pre">Policy</span></code>
+already stored in state, if no policy is found stored at the address created
+by the policy_name, the transaction is invalid. If the policy exist, the
+address for the new role is fetched. If there is no data found at the address,
+a new <code class="docutils literal notranslate"><span class="pre">RoleList</span></code> object is created, the new role is added, and the policy
+list is applied to state. If there is data, it is parsed into a <code class="docutils literal notranslate"><span class="pre">RoleList</span></code>.
+The new role is added to the role list, replacing any role with the same name,
+and the role list is applied to state.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="blockinfo_transaction_family.html" class="btn btn-neutral float-right" title="BlockInfo Transaction Family" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="settings_transaction_family.html" class="btn btn-neutral float-left" title="Settings Transaction Family" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

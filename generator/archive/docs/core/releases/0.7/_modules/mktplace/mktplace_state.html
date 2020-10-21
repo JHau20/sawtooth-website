@@ -1,0 +1,494 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mktplace.mktplace_state &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>mktplace.mktplace_state</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mktplace.mktplace_state</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Wrapper for the market place state</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">mktplace.mktplace_communication</span> <span class="k">import</span> <span class="n">MarketPlaceCommunication</span>
+<span class="kn">from</span> <span class="nn">mktplace.transactions.market_place</span> <span class="k">import</span> <span class="n">MarketPlaceGlobalStore</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Filters"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_state.html#mktplace.mktplace_state.Filters">[docs]</a><span class="k">class</span> <span class="nc">Filters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class that wraps a number of useful lambda expressions that</span>
+<span class="sd">    can be used for the lambdafilter function on MarketPlaceState</span>
+<span class="sd">    collections.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Filters.matchvalue"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_state.html#mktplace.mktplace_state.Filters.matchvalue">[docs]</a>    <span class="k">def</span> <span class="nf">matchvalue</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predicate: match objects that have the given field and the</span>
+<span class="sd">        value for the field matches the given value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">lambda</span> <span class="n">objinfo</span><span class="p">:</span> <span class="n">objinfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="o">==</span> <span class="n">value</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Filters.references"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_state.html#mktplace.mktplace_state.Filters.references">[docs]</a>    <span class="k">def</span> <span class="nf">references</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">idlist</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predicte: match objects that have the given field and the</span>
+<span class="sd">        value for the field references one of the objects in the list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">lambda</span> <span class="n">objinfo</span><span class="p">:</span> <span class="n">objinfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="ow">in</span> <span class="n">idlist</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Filters.matchtype"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_state.html#mktplace.mktplace_state.Filters.matchtype">[docs]</a>    <span class="k">def</span> <span class="nf">matchtype</span><span class="p">(</span><span class="n">objtype</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predicate: match objects with the given type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">lambda</span> <span class="n">objinfo</span><span class="p">:</span> <span class="n">objinfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;object-type&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">objtype</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Filters.offers"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_state.html#mktplace.mktplace_state.Filters.offers">[docs]</a>    <span class="k">def</span> <span class="nf">offers</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predicate: match objects with either ExchangeOffer or SellOffer type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">lambda</span> <span class="n">objinfo</span><span class="p">:</span> <span class="n">objinfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;object-type&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="s1">&#39;ExchangeOffer&#39;</span><span class="p">,</span> <span class="s1">&#39;SellOffer&#39;</span><span class="p">]</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Filters.holdings"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_state.html#mktplace.mktplace_state.Filters.holdings">[docs]</a>    <span class="k">def</span> <span class="nf">holdings</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predicate: match objects with either Holding or Liability type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">lambda</span> <span class="n">objinfo</span><span class="p">:</span> <span class="n">objinfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;object-type&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="s1">&#39;Holding&#39;</span><span class="p">,</span> <span class="s1">&#39;Liability&#39;</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="MarketPlaceState"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_state.html#mktplace.mktplace_state.MarketPlaceState">[docs]</a><span class="k">class</span> <span class="nc">MarketPlaceState</span><span class="p">(</span><span class="n">MarketPlaceCommunication</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to wrap the current ledger state for a market place. Retrieves</span>
+<span class="sd">    the state from a validator and builds maps for names and ids. Exports</span>
+<span class="sd">    methods for querying state.</span>
+
+<span class="sd">    :param url baseurl: the base URL for a Sawtooth Lake validator that</span>
+<span class="sd">        supports an HTTP interface</span>
+<span class="sd">    :param id creator: the identifier for the participant generating</span>
+<span class="sd">        transactions</span>
+
+<span class="sd">    :var dict State: The key/value store associated with the head of the</span>
+<span class="sd">        ledger, for the MarketPlace store, keys are object identifiers and the</span>
+<span class="sd">        values are the current state of each object.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">baseurl</span><span class="p">,</span> <span class="n">creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">creator_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MarketPlaceState</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">baseurl</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">State</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ScratchState</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CurrentBlockID</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span> <span class="o">=</span> <span class="n">creator</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span> <span class="ow">and</span> <span class="n">creator_name</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">n2i</span><span class="p">(</span><span class="s1">&#39;//&#39;</span> <span class="o">+</span> <span class="n">creator_name</span><span class="p">,</span> <span class="s1">&#39;Participant&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MarketPlaceState.n2i"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_state.html#mktplace.mktplace_state.MarketPlaceState.n2i">[docs]</a>    <span class="k">def</span> <span class="nf">n2i</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert a name into an identifier. The name can take one of these</span>
+<span class="sd">        forms:</span>
+<span class="sd">        @ -- resolves to the identifier for creator</span>
+<span class="sd">        ///&lt;IDENTIFIER&gt;  -- resolves to the identifier</span>
+<span class="sd">        //&lt;CREATOR&gt;/&lt;PATH&gt; -- fully qualified name</span>
+<span class="sd">        /&lt;PATH&gt; -- resolve relative to the current creator if specified</span>
+
+<span class="sd">        :param str name: object name</span>
+<span class="sd">        :return: object identifier</span>
+<span class="sd">        :rtype: id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;//&#39;</span><span class="p">):</span>
+            <span class="n">cname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CreatorID</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">cname</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cname</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">unpack_indeterminate</span><span class="p">(</span><span class="n">creator</span><span class="p">,</span> <span class="o">*</span><span class="n">path</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">creator</span><span class="p">,</span> <span class="n">path</span>
+            <span class="n">creator</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">unpack_indeterminate</span><span class="p">(</span><span class="o">*</span><span class="n">name</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">))</span>
+            <span class="n">creator_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">n2i</span><span class="p">(</span><span class="s2">&quot;//&quot;</span> <span class="o">+</span> <span class="n">creator</span><span class="p">,</span> <span class="s1">&#39;Participant&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">path</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">creator_id</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;//&quot;</span> <span class="o">+</span> <span class="n">creator</span>
+
+        <span class="n">identifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">n2i</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">obj_type</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">identifier</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;could not find identifier by name: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">identifier</span></div>
+
+<div class="viewcode-block" id="MarketPlaceState.i2n"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_state.html#mktplace.mktplace_state.MarketPlaceState.i2n">[docs]</a>    <span class="k">def</span> <span class="nf">i2n</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objectid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct the fully qualified name for an object</span>
+
+<span class="sd">        If the object does not have a name the format will be ///&lt;IDENTIFIER&gt;</span>
+<span class="sd">        If the object is a participant the format will be //&lt;NAME&gt;</span>
+<span class="sd">        Otherwise the format will be //&lt;CREATOR NAME&gt;/&lt;NAME&gt;</span>
+
+<span class="sd">        :param id objectid: identifier for the object</span>
+<span class="sd">        :return: the fully qualified name for the object</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">i2n</span><span class="p">(</span><span class="n">objectid</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MarketPlaceState.fetch"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_state.html#mktplace.mktplace_state.MarketPlaceState.fetch">[docs]</a>    <span class="k">def</span> <span class="nf">fetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="o">=</span><span class="s1">&#39;MarketPlaceTransaction&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the current state from the validator. Rebuild</span>
+<span class="sd">        the name, type, and id maps for the resulting objects.</span>
+
+<span class="sd">        :param str store: optional, the name of the marketplace store to</span>
+<span class="sd">            retrieve</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;fetch state from </span><span class="si">%s</span><span class="s1">/</span><span class="si">%s</span><span class="s1">/*&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">BaseURL</span><span class="p">,</span> <span class="n">store</span><span class="p">)</span>
+
+        <span class="n">blockids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getmsg</span><span class="p">(</span><span class="s1">&#39;/block?blockcount=10&#39;</span><span class="p">)</span>
+        <span class="n">blockid</span> <span class="o">=</span> <span class="n">blockids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">blockid</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">CurrentBlockID</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">CurrentBlockID</span> <span class="ow">in</span> <span class="n">blockids</span><span class="p">:</span>
+            <span class="n">fetchlist</span> <span class="o">=</span> <span class="n">blockids</span><span class="p">[:</span><span class="n">blockids</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CurrentBlockID</span><span class="p">)]</span>
+            <span class="k">for</span> <span class="n">fetchid</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">fetchlist</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;only fetch delta of state for block </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fetchid</span><span class="p">)</span>
+                <span class="n">delta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getmsg</span><span class="p">(</span>
+                    <span class="s1">&#39;/store/</span><span class="si">{0}</span><span class="s1">/*?delta=1&amp;blockid=</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">fetchid</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">clone_store</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;full fetch of state for block </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">blockid</span><span class="p">)</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getmsg</span><span class="p">(</span>
+                <span class="s2">&quot;/store/</span><span class="si">{0}</span><span class="s2">/*?blockid=</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">blockid</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">MarketPlaceGlobalStore</span><span class="p">(</span><span class="n">prevstore</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                 <span class="n">storeinfo</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Store&#39;</span><span class="p">:</span> <span class="n">state</span><span class="p">,</span>
+                                                            <span class="s1">&#39;DeletedKeys&#39;</span><span class="p">:</span> <span class="p">[]})</span>
+
+        <span class="c1"># State is actually a clone of the block state, this is a free</span>
+        <span class="c1"># operation because of the copy on write implementation of the global</span>
+        <span class="c1">#  store. This way market clients can update the state speculatively</span>
+        <span class="c1"># without corrupting the synchronized storage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">State</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">clone_store</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CurrentBlockID</span> <span class="o">=</span> <span class="n">blockid</span></div>
+
+<div class="viewcode-block" id="MarketPlaceState.path"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_state.html#mktplace.mktplace_state.MarketPlaceState.path">[docs]</a>    <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to retrieve the value of a property of an object in the</span>
+<span class="sd">        saved state</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path -- &#39;.&#39; separate expression for extracting a value from state</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">pathargs</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span>
+        <span class="k">while</span> <span class="n">pathargs</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pathargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="MarketPlaceState.lambdafilter"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_state.html#mktplace.mktplace_state.MarketPlaceState.lambdafilter">[docs]</a>    <span class="k">def</span> <span class="nf">lambdafilter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">predicates</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply a series of predicates to state objects. Predicates are</span>
+<span class="sd">        lambda expressions on the data of an object. See the Filters class</span>
+<span class="sd">        for tools for creating lambda expressions.</span>
+
+<span class="sd">        :param predicates: a list of predicates used to filter the set of</span>
+<span class="sd">            objects</span>
+<span class="sd">        :type predicates: list of lambda functions</span>
+<span class="sd">        :returns: a list of object identifiers</span>
+<span class="sd">        :rtype: list of identifiers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">objlist</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">objid</span><span class="p">,</span> <span class="n">objinfo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">for</span> <span class="n">predicate</span> <span class="ow">in</span> <span class="n">predicates</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">predicate</span><span class="p">(</span><span class="n">objinfo</span><span class="p">):</span>
+                    <span class="n">match</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">break</span>
+
+            <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                <span class="n">objlist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">objid</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">objlist</span></div>
+
+<div class="viewcode-block" id="MarketPlaceState.list"><a class="viewcode-back" href="../../mktplace_api/mktplace.mktplace_state.html#mktplace.mktplace_state.MarketPlaceState.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simple filter for common query operations on the current state</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">objid</span><span class="p">,</span> <span class="n">objinfo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">State</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">objtype</span> <span class="ow">and</span> <span class="n">objinfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;object-type&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">objtype</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">creator</span> <span class="ow">and</span> <span class="n">objinfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;creator&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">creator</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">objinfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># provide a couple useful properties</span>
+            <span class="n">objinfo</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">objid</span>
+            <span class="n">objinfo</span><span class="p">[</span><span class="s1">&#39;fqname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">i2n</span><span class="p">(</span><span class="n">objid</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">objinfo</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span>
+                <span class="n">objinfo</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/id/&#39;</span> <span class="o">+</span> <span class="n">objid</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">fields</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">objid</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">fields</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">objinfo</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">objinfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">fld</span><span class="p">)</span> <span class="k">for</span> <span class="n">fld</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">result</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

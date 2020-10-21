@@ -1,0 +1,7 @@
+mktplace\.transactions\.market\_place module
+============================================
+
+.. automodule:: mktplace.transactions.market_place
+    :members:
+    :undoc-members:
+    :show-inheritance:

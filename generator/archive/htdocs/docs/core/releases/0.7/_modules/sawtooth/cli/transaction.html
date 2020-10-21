@@ -1,0 +1,506 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.cli.transaction &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>sawtooth.cli.transaction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sawtooth.cli.transaction</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="kn">from</span> <span class="nn">gossip.common</span> <span class="k">import</span> <span class="n">pretty_print_dict</span>
+
+<span class="kn">from</span> <span class="nn">journal</span> <span class="k">import</span> <span class="n">transaction</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth.client</span> <span class="k">import</span> <span class="n">SawtoothClient</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth.exceptions</span> <span class="k">import</span> <span class="n">MessageException</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth.cli.exceptions</span> <span class="k">import</span> <span class="n">CliException</span>
+
+
+<div class="viewcode-block" id="add_transaction_parser"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.transaction.html#sawtooth.cli.transaction.add_transaction_parser">[docs]</a><span class="k">def</span> <span class="nf">add_transaction_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;transaction&#39;</span><span class="p">)</span>
+
+    <span class="n">grand_parsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;grandchildcommands&#39;</span><span class="p">,</span>
+                                          <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;subcommand&#39;</span><span class="p">)</span>
+
+    <span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    details:</span>
+<span class="s1">      list the transactions from the newest to the oldest.</span>
+<span class="s1">      if a field doesn&#39;t correspond to a transaction family</span>
+<span class="s1">      &#39;*******&#39; will be printed in the field value&#39;s place.</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+
+    <span class="n">list_parser</span> <span class="o">=</span> <span class="n">grand_parsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;list&#39;</span><span class="p">,</span> <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">)</span>
+    <span class="n">list_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--type&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;the name of the transaction type&#39;</span><span class="p">)</span>
+    <span class="n">list_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--url&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;the URL to the validator&#39;</span><span class="p">)</span>
+    <span class="n">list_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--blockcount&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;list the maximum number of transaction IDs. Default: 10&#39;</span><span class="p">)</span>
+    <span class="n">list_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="s1">&#39;--all&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;list all of transaction IDs&#39;</span><span class="p">)</span>
+
+    <span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    details:</span>
+<span class="s1">      show the contents of transaction or the value associated with key</span>
+<span class="s1">      within the transaction.</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+    <span class="n">show_parser</span> <span class="o">=</span> <span class="n">grand_parsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;show&#39;</span><span class="p">,</span> <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">)</span>
+    <span class="n">show_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;transactionID&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;the id of the transaction&#39;</span><span class="p">)</span>
+    <span class="n">show_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-k&#39;</span><span class="p">,</span> <span class="s1">&#39;--key&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;the key within the transaction&#39;</span><span class="p">)</span>
+    <span class="n">show_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--url&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;the URL to the validator&#39;</span><span class="p">)</span>
+    <span class="n">list_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--format&#39;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store&#39;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;the format of the output. Options: csv, json or yaml.&#39;</span><span class="p">)</span>
+
+    <span class="n">epilog</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    details:</span>
+<span class="s1">      show the status of a specific transaction id.</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+    <span class="n">status_parser</span> <span class="o">=</span> <span class="n">grand_parsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="n">epilog</span><span class="o">=</span><span class="n">epilog</span><span class="p">)</span>
+    <span class="n">status_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;transactionID&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;the id of the transaction&#39;</span><span class="p">)</span>
+    <span class="n">status_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--url&#39;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;the URL to the validator&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="do_transaction"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.transaction.html#sawtooth.cli.transaction.do_transaction">[docs]</a><span class="k">def</span> <span class="nf">do_transaction</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">subcommands</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;list&#39;</span><span class="p">,</span> <span class="s1">&#39;show&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">subcommands</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unknown sub-command, expecting one of </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">subcommands</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">url</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">url</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://localhost:8800&#39;</span>
+
+    <span class="n">web_client</span> <span class="o">=</span> <span class="n">SawtoothClient</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s1">&#39;list&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">all</span><span class="p">:</span>
+                <span class="n">tsctids</span> <span class="o">=</span> <span class="n">web_client</span><span class="o">.</span><span class="n">get_transaction_list</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tsctids</span> <span class="o">=</span> \
+                    <span class="n">web_client</span><span class="o">.</span><span class="n">get_transaction_list</span><span class="p">(</span>
+                        <span class="n">block_count</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">blockcount</span><span class="p">)</span>
+
+            <span class="n">print_trans_info</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">web_client</span><span class="p">,</span> <span class="n">tsctids</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s1">&#39;show&#39;</span><span class="p">:</span>
+            <span class="n">tsct_info</span> <span class="o">=</span> \
+                <span class="n">web_client</span><span class="o">.</span><span class="n">get_transaction</span><span class="p">(</span>
+                    <span class="n">transaction_id</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">transactionID</span><span class="p">,</span>
+                    <span class="n">field</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">pretty_print_dict</span><span class="p">(</span><span class="n">tsct_info</span><span class="p">))</span>
+            <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s1">&#39;status&#39;</span><span class="p">:</span>
+            <span class="n">tsct_status</span> <span class="o">=</span> <span class="n">web_client</span><span class="o">.</span><span class="n">get_transaction_status</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">transactionID</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tsct_status</span> <span class="o">==</span> <span class="n">transaction</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">committed</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;transaction committed&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">tsct_status</span> <span class="o">==</span> <span class="n">transaction</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">pending</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;transaction still uncommitted&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">tsct_status</span> <span class="o">==</span> <span class="n">transaction</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">unknown</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;unknown transaction&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">tsct_status</span> <span class="o">==</span> <span class="n">transaction</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">failed</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;transaction failed to validate.&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;transaction returned unexpected status code </span><span class="si">{0}</span><span class="s1">&#39;</span>
+                      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tsct_status</span><span class="p">))</span>
+            <span class="k">return</span>
+
+    <span class="k">except</span> <span class="n">MessageException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="print_trans_info"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.transaction.html#sawtooth.cli.transaction.print_trans_info">[docs]</a><span class="k">def</span> <span class="nf">print_trans_info</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">web_client</span><span class="p">,</span> <span class="n">tsctids</span><span class="p">):</span>
+    <span class="n">txn_type</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">type</span>
+    <span class="n">info_fields_mapping</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># These map the names of the keys in the returned ordered dict</span>
+        <span class="c1"># to the field names that will be displayed.</span>
+        <span class="s2">&quot;Identifier&quot;</span><span class="p">:</span> <span class="s2">&quot;TRANS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;InBlock&quot;</span><span class="p">:</span> <span class="s2">&quot;BLOCK&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Status&quot;</span><span class="p">:</span> <span class="s2">&quot;STATUS&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TransactionType&quot;</span><span class="p">:</span> <span class="s2">&quot;TXNTYPE&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">format_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;TRANS&quot;</span><span class="p">:</span> <span class="s1">&#39;20&#39;</span><span class="p">,</span>
+                      <span class="s2">&quot;BLOCK&quot;</span><span class="p">:</span> <span class="s1">&#39;20&#39;</span><span class="p">,</span>
+                      <span class="s2">&quot;STATUS&quot;</span><span class="p">:</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span>
+                      <span class="s2">&quot;TXNTYPE&quot;</span><span class="p">:</span> <span class="s1">&#39;30&#39;</span><span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">txn_type</span> <span class="o">==</span> <span class="s2">&quot;/EndpointRegistryTransaction&quot;</span><span class="p">:</span>
+        <span class="n">info_fields_mapping</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="c1"># These map the names of the keys in the returned ordered dict</span>
+            <span class="c1"># to the field names that will be displayed.</span>
+            <span class="s2">&quot;Identifier&quot;</span><span class="p">:</span> <span class="s2">&quot;TRANS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;InBlock&quot;</span><span class="p">:</span> <span class="s2">&quot;BLOCK&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Status&quot;</span><span class="p">:</span> <span class="s2">&quot;STATUS&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;TransactionType&quot;</span><span class="p">:</span> <span class="s2">&quot;TXNTYPE&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Update&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;HttpPort&quot;</span><span class="p">:</span> <span class="s2">&quot;HTTPPORT&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;NetHost&quot;</span><span class="p">:</span> <span class="s2">&quot;HOST&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;NetPort&quot;</span><span class="p">:</span> <span class="s2">&quot;UDPPORT&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Name&quot;</span><span class="p">:</span> <span class="s2">&quot;NAME&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;NodeIdentifier&quot;</span><span class="p">:</span> <span class="s2">&quot;NODE&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;Verb&quot;</span><span class="p">:</span> <span class="s2">&quot;VERB&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">format_mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;TRANS&quot;</span><span class="p">:</span> <span class="s1">&#39;20&#39;</span><span class="p">,</span>
+                          <span class="s2">&quot;BLOCK&quot;</span><span class="p">:</span> <span class="s1">&#39;20&#39;</span><span class="p">,</span>
+                          <span class="s2">&quot;STATUS&quot;</span><span class="p">:</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span>
+                          <span class="s2">&quot;TXNTYPE&quot;</span><span class="p">:</span> <span class="s1">&#39;30&#39;</span><span class="p">,</span>
+                          <span class="s2">&quot;HTTPPORT&quot;</span><span class="p">:</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span>
+                          <span class="s2">&quot;HOST&quot;</span><span class="p">:</span> <span class="s1">&#39;15&#39;</span><span class="p">,</span>
+                          <span class="s2">&quot;UDPPORT&quot;</span><span class="p">:</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span>
+                          <span class="s2">&quot;NAME&quot;</span><span class="p">:</span> <span class="s1">&#39;15&#39;</span><span class="p">,</span>
+                          <span class="s2">&quot;NODE&quot;</span><span class="p">:</span> <span class="s1">&#39;35&#39;</span><span class="p">,</span>
+                          <span class="s2">&quot;VERB&quot;</span><span class="p">:</span> <span class="s1">&#39;5&#39;</span><span class="p">}</span>
+
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">format_mapping</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">()]</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span>
+        <span class="n">format_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+            <span class="s2">&quot;{:^&quot;</span> <span class="o">+</span> <span class="n">f_length</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span> <span class="k">for</span> <span class="n">f_length</span>
+            <span class="ow">in</span> <span class="n">format_mapping</span><span class="o">.</span><span class="n">itervalues</span><span class="p">()</span>
+        <span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">format_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">fields</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">txn_id</span> <span class="ow">in</span> <span class="n">tsctids</span><span class="p">:</span>
+            <span class="n">trans_dict</span> <span class="o">=</span> <span class="n">get_trans_info</span><span class="p">(</span><span class="n">web_client</span><span class="p">,</span>
+                                        <span class="n">txn_id</span><span class="p">,</span>
+                                        <span class="n">txn_type</span><span class="p">,</span>
+                                        <span class="n">info_fields_mapping</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">trans_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">format_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">trans_dict</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">]))</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;csv&#39;</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">txn_id</span> <span class="ow">in</span> <span class="n">tsctids</span><span class="p">:</span>
+                <span class="n">trans_dict</span> <span class="o">=</span> <span class="n">get_trans_info</span><span class="p">(</span><span class="n">web_client</span><span class="p">,</span>
+                                            <span class="n">txn_id</span><span class="p">,</span>
+                                            <span class="n">txn_type</span><span class="p">,</span>
+                                            <span class="n">info_fields_mapping</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">trans_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">field_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">trans_dict</span><span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">]</span>
+                <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">field_values</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">csv</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;json&#39;</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;yaml&#39;</span><span class="p">:</span>
+        <span class="n">json_dict</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">txn_id</span> <span class="ow">in</span> <span class="n">tsctids</span><span class="p">:</span>
+            <span class="n">trans_dict</span> <span class="o">=</span> <span class="n">get_trans_info</span><span class="p">(</span><span class="n">web_client</span><span class="p">,</span>
+                                        <span class="n">txn_id</span><span class="p">,</span>
+                                        <span class="n">txn_type</span><span class="p">,</span>
+                                        <span class="n">info_fields_mapping</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">trans_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">json_dict</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trans_dict</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;json&#39;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json_dict</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">json_dict</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">CliException</span><span class="p">(</span>
+            <span class="s2">&quot;unknown format option: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">format</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="get_trans_info"><a class="viewcode-back" href="../../../sawtooth_api/sawtooth.cli.transaction.html#sawtooth.cli.transaction.get_trans_info">[docs]</a><span class="k">def</span> <span class="nf">get_trans_info</span><span class="p">(</span><span class="n">web_client</span><span class="p">,</span> <span class="n">txn_id</span><span class="p">,</span> <span class="n">txn_type</span><span class="p">,</span> <span class="n">info_fields_mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">trans_info</span> <span class="o">=</span> <span class="n">web_client</span><span class="o">.</span><span class="n">get_transaction</span><span class="p">(</span><span class="n">txn_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">txn_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">trans_info</span><span class="p">[</span><span class="s1">&#39;TransactionType&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">txn_type</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">trans_info_specified</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">info_fields_mapping</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">input_key</span><span class="p">,</span> <span class="n">output_field</span> <span class="ow">in</span> <span class="n">info_fields_mapping</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output_field</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">trans_info_specified</span><span class="p">[</span><span class="n">output_field</span><span class="p">]</span> <span class="o">=</span> <span class="n">trans_info</span><span class="p">[</span><span class="n">input_key</span><span class="p">]</span> \
+                    <span class="k">if</span> <span class="n">input_key</span> <span class="ow">in</span> <span class="n">trans_info</span> <span class="k">else</span> <span class="s1">&#39;*******&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># else it is the &#39;Update&#39; dict</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">output_field</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                    <span class="n">update</span> <span class="o">=</span> <span class="n">trans_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Update&#39;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">update</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">trans_info_specified</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="n">update</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">trans_info_specified</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*******&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">trans_info_specified</span><span class="p">[</span><span class="s1">&#39;TRANS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trans_info</span><span class="p">[</span><span class="s1">&#39;Identifier&#39;</span><span class="p">]</span>
+        <span class="n">trans_info_specified</span><span class="p">[</span><span class="s1">&#39;BLOCK&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trans_info</span><span class="p">[</span><span class="s1">&#39;InBlock&#39;</span><span class="p">]</span>
+        <span class="n">trans_info_specified</span><span class="p">[</span><span class="s1">&#39;Status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trans_info</span><span class="p">[</span><span class="s1">&#39;Status&#39;</span><span class="p">]</span>
+        <span class="n">trans_info_specified</span><span class="p">[</span><span class="s1">&#39;TXNTYPE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">trans_info</span><span class="p">[</span><span class="s1">&#39;TransactionType&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">trans_info_specified</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,418 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>xo &mdash; Sawtooth v1.1.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Community" href="../community.html" />
+    <link rel="prev" title="settings-tp" href="settings-tp.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.1.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../cli.html">CLI Command Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sawtooth.html">sawtooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawtooth-validator.html">sawtooth-validator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawtooth-rest-api.html">sawtooth-rest-api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawadm.html">sawadm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawnet.html">sawnet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sawset.html">sawset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="identity-tp.html">identity-tp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intkey.html">intkey</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings-tp.html">settings-tp</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">xo</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#xo-create">xo create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xo-list">xo list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xo-show">xo show</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xo-take">xo take</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xo-delete">xo delete</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../cli.html">CLI Command Reference</a> &raquo;</li>
+        
+      <li>xo</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cli/xo.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="xo">
+<span id="xo-cli-reference-label"></span><h1>xo<a class="headerlink" href="#xo" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">xo</span></code> command starts the XO transaction processor.</p>
+<p>This command demonstrates an example client that uses the XO transaction
+family to play a simple game of Tic-tac-toe (also known as Noughts and Crosses,
+or X’s and O’s). This command handles the construction and submission of
+transactions to a running validator via the URL of the validator’s REST API.</p>
+<p>Before playing a game, you must start a validator, the XO transaction processor,and the REST API. The XO client sends requests to update and query the
+blockchain to the URL of the REST API (by default, <code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:8008</span></code>).</p>
+<p>For more information on requirements and game rules, see
+<a class="reference internal" href="../app_developers_guide/intro_xo_transaction_family.html"><span class="doc">Playing with the XO Transaction Family</span></a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">xo</span></code> command provides subcommands for playing XO on the command line.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: xo [-h] [-v] [-V] {create,list,show,take,delete} ...</span>
+
+<span class="go">Provides subcommands to play tic-tac-toe (also known as Noughts and Crosses)</span>
+<span class="go">by sending XO transactions.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+
+<span class="go">subcommands:</span>
+<span class="go">  {create,list,show,take,delete}</span>
+<span class="go">    create              Creates a new xo game</span>
+<span class="go">    list                Displays information for all xo games</span>
+<span class="go">    show                Displays information about an xo game</span>
+<span class="go">    take                Takes a space in an xo game</span>
+</pre></div>
+</div>
+<div class="section" id="xo-create">
+<h2>xo create<a class="headerlink" href="#xo-create" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">xo</span> <span class="pre">create</span></code> subcommand starts an XO game with the specified name.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: xo create [-h] [-v] [-V] [--url URL] [--username USERNAME]</span>
+<span class="go">                 [--key-dir KEY_DIR] [--auth-user AUTH_USER]</span>
+<span class="go">                 [--auth-password AUTH_PASSWORD] [--disable-client-validation]</span>
+<span class="go">                 [--wait [WAIT]]</span>
+<span class="go">                 name</span>
+
+<span class="go">Sends a transaction to start an xo game with the identifier &lt;name&gt;. This</span>
+<span class="go">transaction will fail if the specified game already exists.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name                  unique identifier for the new game</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+<span class="go">  --url URL             specify URL of REST API</span>
+<span class="go">  --username USERNAME   identify name of user&#39;s private key file</span>
+<span class="go">  --key-dir KEY_DIR     identify directory of user&#39;s private key file</span>
+<span class="go">  --auth-user AUTH_USER</span>
+<span class="go">                        specify username for authentication if REST API is</span>
+<span class="go">                        using Basic Auth</span>
+<span class="go">  --auth-password AUTH_PASSWORD</span>
+<span class="go">                        specify password for authentication if REST API is</span>
+<span class="go">                        using Basic Auth</span>
+<span class="go">  --disable-client-validation</span>
+<span class="go">                        disable client validation</span>
+<span class="go">  --wait [WAIT]         set time, in seconds, to wait for game to commit</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="xo-list">
+<h2>xo list<a class="headerlink" href="#xo-list" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">xo</span> <span class="pre">list</span></code> subcommand displays information for all XO games in state.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: xo list [-h] [-v] [-V] [--url URL] [--username USERNAME]</span>
+<span class="go">               [--key-dir KEY_DIR] [--auth-user AUTH_USER]</span>
+<span class="go">               [--auth-password AUTH_PASSWORD]</span>
+
+<span class="go">Displays information for all xo games in state, showing the players, the game</span>
+<span class="go">state, and the board for each game.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+<span class="go">  --url URL             specify URL of REST API</span>
+<span class="go">  --username USERNAME   identify name of user&#39;s private key file</span>
+<span class="go">  --key-dir KEY_DIR     identify directory of user&#39;s private key file</span>
+<span class="go">  --auth-user AUTH_USER</span>
+<span class="go">                        specify username for authentication if REST API is</span>
+<span class="go">                        using Basic Auth</span>
+<span class="go">  --auth-password AUTH_PASSWORD</span>
+<span class="go">                        specify password for authentication if REST API is</span>
+<span class="go">                        using Basic Auth</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="xo-show">
+<h2>xo show<a class="headerlink" href="#xo-show" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">xo</span> <span class="pre">show</span></code> subcommand displays information about the specified XO game.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: xo show [-h] [-v] [-V] [--url URL] [--username USERNAME]</span>
+<span class="go">               [--key-dir KEY_DIR] [--auth-user AUTH_USER]</span>
+<span class="go">               [--auth-password AUTH_PASSWORD]</span>
+<span class="go">               name</span>
+
+<span class="go">Displays the xo game &lt;name&gt;, showing the players, the game state, and the</span>
+<span class="go">board</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name                  identifier for the game</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+<span class="go">  --url URL             specify URL of REST API</span>
+<span class="go">  --username USERNAME   identify name of user&#39;s private key file</span>
+<span class="go">  --key-dir KEY_DIR     identify directory of user&#39;s private key file</span>
+<span class="go">  --auth-user AUTH_USER</span>
+<span class="go">                        specify username for authentication if REST API is</span>
+<span class="go">                        using Basic Auth</span>
+<span class="go">  --auth-password AUTH_PASSWORD</span>
+<span class="go">                        specify password for authentication if REST API is</span>
+<span class="go">                        using Basic Auth</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="xo-take">
+<h2>xo take<a class="headerlink" href="#xo-take" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">xo</span> <span class="pre">take</span></code> subcommand makes a move in an XO game by sending a transaction
+to take the identified space.  This transaction will fail if the game <cite>name</cite> does not exist, if it is not the sender’s turn, or if <cite>space</cite> is
+already taken.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: xo take [-h] [-v] [-V] [--url URL] [--username USERNAME]</span>
+<span class="go">               [--key-dir KEY_DIR] [--auth-user AUTH_USER]</span>
+<span class="go">               [--auth-password AUTH_PASSWORD] [--wait [WAIT]]</span>
+<span class="go">               name space</span>
+
+<span class="go">Sends a transaction to take a square in the xo game with the identifier</span>
+<span class="go">&lt;name&gt;. This transaction will fail if the specified game does not exist.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name                  identifier for the game</span>
+<span class="go">  space                 number of the square to take (1-9); the upper-left</span>
+<span class="go">                        space is 1, and the lower-right space is 9</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+<span class="go">  --url URL             specify URL of REST API</span>
+<span class="go">  --username USERNAME   identify name of user&#39;s private key file</span>
+<span class="go">  --key-dir KEY_DIR     identify directory of user&#39;s private key file</span>
+<span class="go">  --auth-user AUTH_USER</span>
+<span class="go">                        specify username for authentication if REST API is</span>
+<span class="go">                        using Basic Auth</span>
+<span class="go">  --auth-password AUTH_PASSWORD</span>
+<span class="go">                        specify password for authentication if REST API is</span>
+<span class="go">                        using Basic Auth</span>
+<span class="go">  --wait [WAIT]         set time, in seconds, to wait for take transaction to</span>
+<span class="go">                        commit</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="xo-delete">
+<h2>xo delete<a class="headerlink" href="#xo-delete" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">xo</span> <span class="pre">delete</span></code> subcommand deletes an existing xo game.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: xo delete [-h] [-v] [-V] [--url URL] [--username USERNAME]</span>
+<span class="go">                 [--key-dir KEY_DIR] [--auth-user AUTH_USER]</span>
+<span class="go">                 [--auth-password AUTH_PASSWORD] [--wait [WAIT]]</span>
+<span class="go">                 name</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name                  name of the game to be deleted</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -v, --verbose         enable more verbose output</span>
+<span class="go">  -V, --version         display version information</span>
+<span class="go">  --url URL             specify URL of REST API</span>
+<span class="go">  --username USERNAME   identify name of user&#39;s private key file</span>
+<span class="go">  --key-dir KEY_DIR     identify directory of user&#39;s private key file</span>
+<span class="go">  --auth-user AUTH_USER</span>
+<span class="go">                        specify username for authentication if REST API is</span>
+<span class="go">                        using Basic Auth</span>
+<span class="go">  --auth-password AUTH_PASSWORD</span>
+<span class="go">                        specify password for authentication if REST API is</span>
+<span class="go">                        using Basic Auth</span>
+<span class="go">  --wait [WAIT]         set time, in seconds, to wait for delete transaction</span>
+<span class="go">                        to commit</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../community.html" class="btn btn-neutral float-right" title="Community" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="settings-tp.html" class="btn btn-neutral float-left" title="settings-tp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

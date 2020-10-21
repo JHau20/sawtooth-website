@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.manage.node module &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="sawtooth.manage package" href="sawtooth.manage.html"/>
+        <link rel="next" title="sawtooth.manage.simple module" href="sawtooth.manage.simple.html"/>
+        <link rel="prev" title="sawtooth.manage.docker module" href="sawtooth.manage.docker.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/architecture_overview.html">Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/sawtooth_vagrant.html">Vagrant</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">Distributed Ledger Python API</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="sawtooth.html">sawtooth package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="sawtooth.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sawtooth.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/web_api/index.html">Distributed Ledger Web API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/validator_network_launcher.html">The Validator Network Launcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/workload_simulator.html">The Workload Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/signing_transactions.html">Signing Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="modules.html">Distributed Ledger Python API</a> &raquo;</li>
+        
+          <li><a href="sawtooth.html">sawtooth package</a> &raquo;</li>
+        
+          <li><a href="sawtooth.manage.html">sawtooth.manage package</a> &raquo;</li>
+        
+      <li>sawtooth.manage.node module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sawtooth_api/sawtooth.manage.node.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-sawtooth.manage.node">
+<span id="sawtooth-manage-node-module"></span><h1>sawtooth.manage.node module<a class="headerlink" href="#module-sawtooth.manage.node" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sawtooth.manage.node.NodeArguments">
+<em class="property">class </em><code class="descclassname">sawtooth.manage.node.</code><code class="descname">NodeArguments</code><span class="sig-paren">(</span><em>node_name</em>, <em>http_port=None</em>, <em>gossip_port=None</em>, <em>currency_home=None</em>, <em>config_files=None</em>, <em>genesis=False</em>, <em>ledger_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#NodeArguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.NodeArguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Structure to house arguments exposed by our validator cli</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>node_name</strong> (<em>str</em>) &#8211; </li>
+<li><strong>http_port</strong> (<em>int</em>) &#8211; </li>
+<li><strong>gossip_port</strong> (<em>int</em>) &#8211; </li>
+<li><strong>currency_home</strong> (<em>str</em>) &#8211; </li>
+<li><strong>config_files</strong> (<em>list&lt;str&gt;</em>) &#8211; </li>
+<li><strong>genesis</strong> (<em>bool</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.manage.node.NodeController">
+<em class="property">class </em><code class="descclassname">sawtooth.manage.node.</code><code class="descname">NodeController</code><a class="reference internal" href="../_modules/sawtooth/manage/node.html#NodeController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.NodeController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sawtooth.manage.node.NodeController.create_genesis_block">
+<code class="descname">create_genesis_block</code><span class="sig-paren">(</span><em>node_args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#NodeController.create_genesis_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.NodeController.create_genesis_block" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node_args</strong> (<a class="reference internal" href="#sawtooth.manage.node.NodeArguments" title="sawtooth.manage.node.NodeArguments"><em>NodeArguments</em></a>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.manage.node.NodeController.start">
+<code class="descname">start</code><span class="sig-paren">(</span><em>node_args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#NodeController.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.NodeController.start" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node_args</strong> (<a class="reference internal" href="#sawtooth.manage.node.NodeArguments" title="sawtooth.manage.node.NodeArguments"><em>NodeArguments</em></a>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.manage.node.NodeController.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><em>node_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#NodeController.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.NodeController.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.manage.node.NodeController.kill">
+<code class="descname">kill</code><span class="sig-paren">(</span><em>node_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#NodeController.kill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.NodeController.kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.manage.node.NodeController.get_node_names">
+<code class="descname">get_node_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#NodeController.get_node_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.NodeController.get_node_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.manage.node.NodeController.is_running">
+<code class="descname">is_running</code><span class="sig-paren">(</span><em>node_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#NodeController.is_running"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.NodeController.is_running" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.manage.node.NodeCommandGenerator">
+<em class="property">class </em><code class="descclassname">sawtooth.manage.node.</code><code class="descname">NodeCommandGenerator</code><a class="reference internal" href="../_modules/sawtooth/manage/node.html#NodeCommandGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.NodeCommandGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sawtooth.manage.node.NodeCommandGenerator.get_commands">
+<code class="descname">get_commands</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#NodeCommandGenerator.get_commands"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.NodeCommandGenerator.get_commands" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.manage.node.NodeCommand">
+<em class="property">class </em><code class="descclassname">sawtooth.manage.node.</code><code class="descname">NodeCommand</code><a class="reference internal" href="../_modules/sawtooth/manage/node.html#NodeCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.NodeCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sawtooth.manage.node.NodeCommand.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>controller</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#NodeCommand.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.NodeCommand.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.manage.node.GenesisCommand">
+<em class="property">class </em><code class="descclassname">sawtooth.manage.node.</code><code class="descname">GenesisCommand</code><span class="sig-paren">(</span><em>node_args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#GenesisCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.GenesisCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sawtooth.manage.node.NodeCommand" title="sawtooth.manage.node.NodeCommand"><code class="xref py py-class docutils literal"><span class="pre">sawtooth.manage.node.NodeCommand</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node_args</strong> (<a class="reference internal" href="#sawtooth.manage.node.NodeArguments" title="sawtooth.manage.node.NodeArguments"><em>NodeArguments</em></a>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="sawtooth.manage.node.GenesisCommand.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>controller</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#GenesisCommand.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.GenesisCommand.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.manage.node.StartCommand">
+<em class="property">class </em><code class="descclassname">sawtooth.manage.node.</code><code class="descname">StartCommand</code><span class="sig-paren">(</span><em>node_args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#StartCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.StartCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sawtooth.manage.node.NodeCommand" title="sawtooth.manage.node.NodeCommand"><code class="xref py py-class docutils literal"><span class="pre">sawtooth.manage.node.NodeCommand</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node_args</strong> (<a class="reference internal" href="#sawtooth.manage.node.NodeArguments" title="sawtooth.manage.node.NodeArguments"><em>NodeArguments</em></a>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="sawtooth.manage.node.StartCommand.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>controller</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#StartCommand.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.StartCommand.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.manage.node.StopCommand">
+<em class="property">class </em><code class="descclassname">sawtooth.manage.node.</code><code class="descname">StopCommand</code><span class="sig-paren">(</span><em>node_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#StopCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.StopCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sawtooth.manage.node.NodeCommand" title="sawtooth.manage.node.NodeCommand"><code class="xref py py-class docutils literal"><span class="pre">sawtooth.manage.node.NodeCommand</span></code></a></p>
+<dl class="method">
+<dt id="sawtooth.manage.node.StopCommand.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>controller</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#StopCommand.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.StopCommand.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.manage.node.KillCommand">
+<em class="property">class </em><code class="descclassname">sawtooth.manage.node.</code><code class="descname">KillCommand</code><span class="sig-paren">(</span><em>node_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#KillCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.KillCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sawtooth.manage.node.NodeCommand" title="sawtooth.manage.node.NodeCommand"><code class="xref py py-class docutils literal"><span class="pre">sawtooth.manage.node.NodeCommand</span></code></a></p>
+<dl class="method">
+<dt id="sawtooth.manage.node.KillCommand.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>controller</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/manage/node.html#KillCommand.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.manage.node.KillCommand.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sawtooth.manage.simple.html" class="btn btn-neutral float-right" title="sawtooth.manage.simple module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sawtooth.manage.docker.html" class="btn btn-neutral" title="sawtooth.manage.docker module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

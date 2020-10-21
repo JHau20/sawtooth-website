@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.cli.admin_sub.dev_mode_genesis &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>sawtooth.cli.admin_sub.dev_mode_genesis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sawtooth.cli.admin_sub.dev_mode_genesis</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">gossip.gossip_core</span> <span class="k">import</span> <span class="n">Gossip</span>
+<span class="kn">from</span> <span class="nn">journal.journal_core</span> <span class="k">import</span> <span class="n">Journal</span>
+<span class="kn">from</span> <span class="nn">ledger.transaction</span> <span class="k">import</span> <span class="n">endpoint_registry</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.admin_sub.genesis_common</span> <span class="k">import</span> <span class="n">add_genesis_parser</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.admin_sub.genesis_common</span> <span class="k">import</span> <span class="n">check_for_chain</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.admin_sub.genesis_common</span> <span class="k">import</span> <span class="n">genesis_info_file_name</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.admin_sub.genesis_common</span> <span class="k">import</span> <span class="n">mirror_validator_parsing</span>
+<span class="kn">from</span> <span class="nn">txnserver.validator</span> <span class="k">import</span> <span class="n">parse_networking_info</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth_validator.consensus.dev_mode.dev_mode_consensus</span> \
+    <span class="kn">import</span> <span class="nn">DevModeConsensus</span>
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="add_dev_mode_genesis_parser"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.admin_sub.dev_mode_genesis.html#sawtooth.cli.admin_sub.dev_mode_genesis.add_dev_mode_genesis_parser">[docs]</a><span class="k">def</span> <span class="nf">add_dev_mode_genesis_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">):</span>
+    <span class="n">add_genesis_parser</span><span class="p">(</span><span class="n">subparsers</span><span class="p">,</span> <span class="n">parent_parser</span><span class="p">,</span> <span class="s1">&#39;dev-mode&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="do_dev_mode_genesis"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.admin_sub.dev_mode_genesis.html#sawtooth.cli.admin_sub.dev_mode_genesis.do_dev_mode_genesis">[docs]</a><span class="k">def</span> <span class="nf">do_dev_mode_genesis</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="c1"># Get journal config:</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">mirror_validator_parsing</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="c1"># Check for existing block store</span>
+    <span class="n">node_name</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;NodeName&quot;</span><span class="p">)</span>
+    <span class="n">data_directory</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DataDirectory&quot;</span><span class="p">)</span>
+    <span class="n">store_type</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;StoreType&quot;</span><span class="p">)</span>
+    <span class="n">check_for_chain</span><span class="p">(</span><span class="n">data_directory</span><span class="p">,</span> <span class="n">node_name</span><span class="p">,</span> <span class="n">store_type</span><span class="p">)</span>
+
+    <span class="c1"># Obtain Journal object:</span>
+    <span class="c1"># ...build Gossip dependency</span>
+    <span class="p">(</span><span class="n">nd</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">parse_networking_info</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+    <span class="n">minimum_retries</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MinimumRetries&quot;</span><span class="p">)</span>
+    <span class="n">retry_interval</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;RetryInterval&quot;</span><span class="p">)</span>
+    <span class="n">gossiper</span> <span class="o">=</span> <span class="n">Gossip</span><span class="p">(</span><span class="n">nd</span><span class="p">,</span> <span class="n">minimum_retries</span><span class="p">,</span> <span class="n">retry_interval</span><span class="p">)</span>
+    <span class="c1"># ...build Journal</span>
+    <span class="n">min_txn_per_block</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MinimumTransactionsPerBlock&quot;</span><span class="p">)</span>
+    <span class="n">max_txn_per_block</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MaxTransactionsPerBlock&quot;</span><span class="p">)</span>
+    <span class="n">max_txn_age</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;MaxTxnAge&quot;</span><span class="p">)</span>
+    <span class="n">stat_domains</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">consensus_obj</span> <span class="o">=</span> <span class="n">DevModeConsensus</span><span class="p">(</span><span class="n">block_publisher</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                     <span class="n">block_wait_time</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;BlockWaitTime&#39;</span><span class="p">))</span>
+    <span class="n">journal</span> <span class="o">=</span> <span class="n">Journal</span><span class="p">(</span><span class="n">gossiper</span><span class="o">.</span><span class="n">LocalNode</span><span class="p">,</span>
+                      <span class="n">gossiper</span><span class="p">,</span>
+                      <span class="n">gossiper</span><span class="o">.</span><span class="n">dispatcher</span><span class="p">,</span>
+                      <span class="n">consensus_obj</span><span class="p">,</span>
+                      <span class="n">stat_domains</span><span class="p">,</span>
+                      <span class="n">minimum_transactions_per_block</span><span class="o">=</span><span class="n">min_txn_per_block</span><span class="p">,</span>
+                      <span class="n">max_transactions_per_block</span><span class="o">=</span><span class="n">max_txn_per_block</span><span class="p">,</span>
+                      <span class="n">max_txn_age</span><span class="o">=</span><span class="n">max_txn_age</span><span class="p">,</span>
+                      <span class="n">data_directory</span><span class="o">=</span><span class="n">data_directory</span><span class="p">,</span>
+                      <span class="n">store_type</span><span class="o">=</span><span class="n">store_type</span><span class="p">,</span>
+                      <span class="p">)</span>
+    <span class="c1"># ...add &#39;built in&#39; txn families</span>
+    <span class="n">default_transaction_families</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">endpoint_registry</span>
+    <span class="p">]</span>
+    <span class="k">for</span> <span class="n">txn_family</span> <span class="ow">in</span> <span class="n">default_transaction_families</span><span class="p">:</span>
+        <span class="n">txn_family</span><span class="o">.</span><span class="n">register_transaction_types</span><span class="p">(</span><span class="n">journal</span><span class="p">)</span>
+    <span class="c1"># ...add auxiliary transaction families</span>
+    <span class="k">for</span> <span class="n">txn_family_module_name</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;TransactionFamilies&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+        <span class="n">txn_family</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">txn_family_module_name</span><span class="p">)</span>
+        <span class="n">txn_family</span><span class="o">.</span><span class="n">register_transaction_types</span><span class="p">(</span><span class="n">journal</span><span class="p">)</span>
+
+    <span class="c1"># Make genesis block:</span>
+    <span class="c1"># ...make sure there is no current chain here, or fail</span>
+    <span class="c1"># ...create block g_block</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">on_genesis_block</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">journal</span><span class="p">)</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">initializing</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">txn</span> <span class="ow">in</span> <span class="n">journal</span><span class="o">.</span><span class="n">initial_transactions</span><span class="p">:</span>
+        <span class="n">journal</span><span class="o">.</span><span class="n">add_pending_transaction</span><span class="p">(</span><span class="n">txn</span><span class="p">,</span> <span class="n">build_block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">g_block</span> <span class="o">=</span> <span class="n">journal</span><span class="o">.</span><span class="n">build_block</span><span class="p">(</span><span class="n">genesis</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">claim_block</span><span class="p">(</span><span class="n">g_block</span><span class="p">)</span>
+    <span class="c1"># ...simulate receiving the genesis block msg from reactor to force commit</span>
+    <span class="n">g_block_msg</span> <span class="o">=</span> <span class="n">gossiper</span><span class="o">.</span><span class="n">IncomingMessageQueue</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="n">g_block_msg</span><span class="p">)</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">initialization_complete</span><span class="p">()</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="n">journal</span><span class="o">.</span><span class="n">most_recent_committed_block_id</span>
+    <span class="n">chain_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">journal</span><span class="o">.</span><span class="n">committed_block_ids</span><span class="p">())</span>
+
+    <span class="c1"># Run shutdown:</span>
+    <span class="c1"># ...persist new state</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+    <span class="c1"># ...release gossip obj&#39;s UDP port</span>
+    <span class="n">gossiper</span><span class="o">.</span><span class="n">Listener</span><span class="o">.</span><span class="n">loseConnection</span><span class="p">()</span>
+    <span class="n">gossiper</span><span class="o">.</span><span class="n">Listener</span><span class="o">.</span><span class="n">connectionLost</span><span class="p">(</span><span class="n">reason</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="c1"># Log genesis data, then write it out to ease dissemination</span>
+    <span class="n">genesis_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;GenesisId&#39;</span><span class="p">:</span> <span class="n">head</span><span class="p">,</span>
+        <span class="s1">&#39;ChainLength&#39;</span><span class="p">:</span> <span class="n">chain_len</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">gblock_fname</span> <span class="o">=</span> <span class="n">genesis_info_file_name</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;DataDirectory&#39;</span><span class="p">])</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;genesis data: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">genesis_data</span><span class="p">)</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;writing genesis data to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">gblock_fname</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">gblock_fname</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">genesis_data</span><span class="p">))</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

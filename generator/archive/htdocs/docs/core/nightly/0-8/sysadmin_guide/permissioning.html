@@ -1,0 +1,552 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Permissioning &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth latest documentation" href="../index.html"/>
+        <link rel="up" title="System Administrator’s Guide" href="../sysadmin_guide.html"/>
+        <link rel="next" title="Using Sawtooth with the SGX Implementation of PoET" href="configure_sgx.html"/>
+        <link rel="prev" title="Using a Proxy Server to Authorize the REST API" href="rest_auth_proxy.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../solidity_developers_guide.html">Solidity Developers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installing Hyperledger Sawtooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="systemd.html">Running Sawtooth As A Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="log_configuration.html">Log Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Permissioning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#transactor-permissioning">Transactor Permissioning</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#off-chain-transactor-permissioning">Off-Chain Transactor Permissioning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#on-chain-transactor-permissioning">On-Chain Transactor Permissioning</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transactor-roles">Transactor Roles</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#validator-key-permissioning">Validator Key Permissioning</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuring-authorization">Configuring Authorization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#network-roles">Network Roles</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with the SGX Implementation of PoET</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Permissioning</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/permissioning.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="permissioning">
+<h1>Permissioning<a class="headerlink" href="#permissioning" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="transactor-permissioning">
+<h2>Transactor Permissioning<a class="headerlink" href="#transactor-permissioning" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<p>A running protected network needs a mechanism for limiting which transactors
+are allowed to submit batches and transactions to the validators. There are
+two different methods for defining the transactors a validator will accept.</p>
+<p>The first method is configuring a validator to only accept batches and
+transactions from predefined transactors that are loaded from a local validator
+config file. Once the validator is configured the list of allowed transactors
+is immutable while the validator is running. This set of permissions are only
+enforced when receiving a batch from a connected client, but not when receiving
+a batch from a peer on the network.</p>
+<p>The second method uses the identity namespace which will allow for network-wide
+updates and agreement on allowed transactors. The allowed transactors are
+checked when a batch is received from a client, received from a peer, and
+when a block is validated.</p>
+<p>When using both on-chain and off-chain configuration, the validator only
+accepts transactions and batches from a client if both configurations agree it
+should be accepted. If a batch is received from a peer, only on-chain
+configuration is checked.</p>
+<p>It is possible that in the time that the batch has been in the pending queue,
+the transactor permissions have been updated to no longer allow a batch signer
+or a transaction signer that is being included in a block. For this reason, the
+allowed transactor roles will also need to be checked on block validation.</p>
+</div>
+<div class="section" id="off-chain-transactor-permissioning">
+<h3>Off-Chain Transactor Permissioning<a class="headerlink" href="#off-chain-transactor-permissioning" title="Permalink to this headline">¶</a></h3>
+<p>Validators can be locally configured by creating a validator.toml file and
+placing it in the config directory. Adding configuration for transactor
+permissioning to the configuration shall be done in the following format:</p>
+<p>validator.toml:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[permissions]
+
+ROLE = POLICY_NAME
+</pre></div>
+</div>
+<p>Where ROLE is one of the roles defined below for transactor permissioning and
+equals the filename for a policy. Multiple roles may be defined in the same
+format within the config file.</p>
+<p>The policies are stored in the policy_dir defined by the path config. Each
+policy will be made up of permit and deny rules, similar to policies defined in
+the Identity Namespace. Each line will contain either a “PERMIT_KEY” or
+“DENY_KEY” and should be followed with either a public key for an allowed
+transactor or an * to allow all possible transactors. The rules will be
+evaluated in order.</p>
+<p>Policy file:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>PERMIT_KEY &lt;key&gt;
+DENY_KEY &lt;key&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="on-chain-transactor-permissioning">
+<h3>On-Chain Transactor Permissioning<a class="headerlink" href="#on-chain-transactor-permissioning" title="Permalink to this headline">¶</a></h3>
+<p>The Identity Namespace stores roles as key-value pairs, where the key is a role
+name and the value is a policy. All roles that limit who is allowed to sign
+transactions and batches should start with transactor as a prefix.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>transactor.SUB_ROLE = POLICY_NAME
+</pre></div>
+</div>
+<p>SUB_ROLEs are more specific signing roles, for example who is allowed to sign
+transactions. Each role equals a policy name that corresponds to a policy
+stored in state. The policy contains a list of public keys that correspond
+to the identity signing key of the transactors.</p>
+<p>To configure on-chain roles, the signer of identity transactions needs to have
+their public key set in the Setting &#8220;sawtooth.identity.allowed_keys&#8221;. Only
+those transactors whose public keys are in that setting are allowed to update
+roles and policies.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth config proposal create sawtooth.identity.allowed_keys<span class="o">=</span>02b2be336a6ada8f96881cd55fd848c10386d99d0a05e1778d2fc1c60c2783c2f4
+</pre></div>
+</div>
+<p>Once your signer key is stored in the setting, the identity cli can be used to
+set and update roles and policies. Make sure that the identity transaction
+processor and the the rest api are running.</p>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity policy create [-h] [-k KEY] [-o OUTPUT | --url URL]</span>
+<span class="go">                                       [--wait WAIT]</span>
+<span class="go">                                       name rule [rule ...]</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name                  The name of the new policy</span>
+<span class="go">  rule                  Each rule should be in the following format</span>
+<span class="go">                        &quot;PERMIT_KEY &lt;key&gt;&quot; or &quot;DENY_KEY &lt;key&gt;&quot;. Multiple</span>
+<span class="go">                        &quot;rule&quot; arguments can be added.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -k KEY, --key KEY     the signing key for the resulting batches</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        the name of the file to output the resulting batches</span>
+<span class="go">  --url URL             the URL of a validator&#39;s REST API</span>
+<span class="go">  --wait WAIT           time to wait for the policy to commit when submitting</span>
+<span class="go">                        to the rest api.</span>
+</pre></div>
+</td></tr></table></div>
+<div class="highlight-console"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="go">usage: sawtooth identity role create [-h] [-k KEY] [--wait WAIT]</span>
+<span class="go">                                     [-o OUTPUT | --url URL]</span>
+<span class="go">                                     name policy</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  name                  The name of the role</span>
+<span class="go">  policy                the name of the policy the role will be restricted to.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -k KEY, --key KEY     the signing key for the resulting batches</span>
+<span class="go">  --wait WAIT           time to wait for a role to commit when submitting to</span>
+<span class="go">                        the rest api.</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        the name of the file to output the resulting batches</span>
+<span class="go">  --url URL             the URL of a validator&#39;s REST API</span>
+</pre></div>
+</td></tr></table></div>
+<p>For example, running the following will create a policy that permits all
+and is named policy_1:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth identity policy create policy_1 <span class="s2">&quot;PERMIT_KEY *&quot;</span>
+</pre></div>
+</div>
+<p>To see the policy in state, run the following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth identity policy list
+<span class="go">policy_1:</span>
+<span class="go">  Entries:</span>
+<span class="go">    PERMIT_KEY *</span>
+</pre></div>
+</div>
+<p>Finally, run the following command to set the role for transactor to permit all:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth identity role create transactor policy_1
+</pre></div>
+</div>
+<p>To see the role in state, run the following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth identity role list
+<span class="go">transactor: policy_1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="transactor-roles">
+<h3>Transactor Roles<a class="headerlink" href="#transactor-roles" title="Permalink to this headline">¶</a></h3>
+<p>The following are the identity roles that are used to control which transactors
+are allowed to sign transactions and batches on the system.</p>
+<dl class="docutils">
+<dt>default:</dt>
+<dd>When evaluating role permissions, if the role has not been set the default
+policy will be used. The policy can be changed to meet the network&#8217;s
+requirements after initial start-up by submitting a new policy with the name
+default. If the default policy has not been set, the default policy&#8217;s default
+policy is “PERMIT_KEY *”.</dd>
+<dt>transactor:</dt>
+<dd>The top level role for controlling who can sign transactions and batches on
+the system will be transactor. This role shall be used when the allowed
+transactors for transactions and batches are the same. Any transactor whose
+public key is in the policy will be allowed to sign transactions and batches,
+unless a more specific sub-role disallows their public key.</dd>
+<dt>transactor.transaction_signer:</dt>
+<dd>If a transaction is received that is signed by a transactor who is not
+permitted by the policy, the batch containing the transaction will be dropped.</dd>
+<dt>transactor.transaction_signer.{tp_name}:</dt>
+<dd>If a transaction is received for a specific transaction family that is signed
+by a transactor who is not permitted by the policy, the batch containing the
+transaction will be dropped.</dd>
+<dt>transactor.batch_signer:</dt>
+<dd>If a batch is received that is signed by a transactor who is not permitted by
+the policy, that batch will be dropped.</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="validator-key-permissioning">
+<h2>Validator Key Permissioning<a class="headerlink" href="#validator-key-permissioning" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Overview<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>One of the permissioning requirements is that the validator network be able to
+limit the nodes that are able to connect to it. The permissioning rules
+determine the roles a connection is able to play on the network. The roles
+control the types of messages that can be sent and received over a given
+connection. The entities acting in the different roles will be referred to as
+requesters below.</p>
+<p>Validators are able to determine whether messages delivered to them should
+be handled or dropped based on a set of role and identities stored within the
+Identity namespace. Each requester will be identified by the public key derived
+from the their identity signing key. Permission verifiers examine incoming
+messages against the policy and the current configuration and either permit,
+drop, or respond with an error. In certain cases, the connection will be
+forcibly closed &#8211; for example: if a node is not allowed to connect to the
+validator network.</p>
+<p>This on-chain approach allows the whole network to change its policies at the
+same time while the network is live, instead of relying on a startup
+configuration.</p>
+</div>
+<div class="section" id="configuring-authorization">
+<h3>Configuring Authorization<a class="headerlink" href="#configuring-authorization" title="Permalink to this headline">¶</a></h3>
+<p>The Identity namespace stores roles as key-value pairs, where the key is a role
+name and the value is a policy. Validator network permissioning roles use
+the following pattern:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>network[.SUB_ROLE] = POLICY_NAME
+</pre></div>
+</div>
+<p>where network is the name of the role to be used for validator network
+permissioning. POLICY_NAME refers to the name of a policy that is set in the
+Identity namespace. The policy defines the public keys that are allowed to
+participate in that role. The policy is made up of PERMIT_KEY and DENY_KEY
+rules and is evaluated in order. If the public key is denied, the connection
+will be rejected. For more information, please look at the
+<a class="reference internal" href="../transaction_family_specifications/identity_transaction_family.html"><span class="doc">Identity Transaction Family</span></a>.</p>
+<p>Like above, run the following command to set the role for network to permit all:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth identity role create network policy_1
+</pre></div>
+</div>
+<p>To see the role in state, run the following command:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawtooth identity role list
+<span class="go">network: policy_1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="network-roles">
+<h3>Network Roles<a class="headerlink" href="#network-roles" title="Permalink to this headline">¶</a></h3>
+<p>The following is the suggested high-level role for on-chain validator network
+permissioning.</p>
+<dl class="docutils">
+<dt>network</dt>
+<dd>If a validator receives a peer request from a node whose public key is not
+permitted by the policy, the message will be dropped, an
+AuthorizationViolation will be returned, and the connection will be closed.</dd>
+</dl>
+<p>This role is checked by the permission verifier when the following
+messages are received:</p>
+<ul class="simple">
+<li>GossipMessage</li>
+<li>GetPeersRequest</li>
+<li>PeerRegisterRequest</li>
+<li>PeerUnregisterRequest</li>
+<li>GossipBlockRequest</li>
+<li>GossipBlockResponse</li>
+<li>GossipBatchByBatchIdRequest</li>
+<li>GossipBatchByTransactionIdRequest</li>
+<li>GossipBatchResponse</li>
+<li>GossipPeersRequest</li>
+<li>GossipPeersResponse</li>
+</ul>
+<dl class="docutils">
+<dt>network.consensus</dt>
+<dd>If a validator receives a GossipMessage that contains a new block published
+by a node whose public key is not permitted by the policy, the message will
+be dropped, an AuthorizationViolation will be returned, and the connection
+will be closed.</dd>
+</dl>
+<p>In the future, other sub-roles can be added to further restrict access to
+specific functions of the role. For example network.gossip could control who is
+allowed to send gossip messages.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="configure_sgx.html" class="btn btn-neutral float-right" title="Using Sawtooth with the SGX Implementation of PoET" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rest_auth_proxy.html" class="btn btn-neutral" title="Using a Proxy Server to Authorize the REST API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'latest',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

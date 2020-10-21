@@ -1,0 +1,544 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Changing Off-chain Settings with Configuration Files &mdash; Sawtooth v1.2.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Running Sawtooth as a Service" href="systemd.html" />
+    <link rel="prev" title="Creating the Genesis Block" href="creating_genesis_block.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="setting_up_sawtooth_network.html">Setting Up a Sawtooth Network</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="installation.html">Installing Hyperledger Sawtooth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generating_keys.html">Generating User and Validator Keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="creating_genesis_block.html">Creating the Genesis Block</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Changing Off-chain Settings with Configuration Files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configure-the-validator">Configure the Validator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configure-the-rest-api">Configure the REST API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configure-the-sawtooth-commands-optional">Configure the Sawtooth Commands (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="systemd.html">Running Sawtooth as a Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing_sawtooth.html">Testing Sawtooth Functionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pbft_updating_member_list.html">PBFT Only: Updating the PBFT Member List</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setting_allowed_txns.html">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_authorized_users.html">Adding Authorized Users for Settings Proposals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_permissions.html">Configuring Validator and Transactor Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grafana_configuration.html">Using Grafana to Display Sawtooth Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_dynamic_consensus.html">About Dynamic Consensus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pbft_adding_removing_node.html">Adding or Removing a PBFT Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_sawtooth.html">About Sawtooth Configuration Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator’s Guide</a> &raquo;</li>
+        
+          <li><a href="setting_up_sawtooth_network.html">Setting Up a Sawtooth Network</a> &raquo;</li>
+        
+      <li>Changing Off-chain Settings with Configuration Files</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/off_chain_settings.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="changing-off-chain-settings-with-configuration-files">
+<h1>Changing Off-chain Settings with Configuration Files<a class="headerlink" href="#changing-off-chain-settings-with-configuration-files" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These instructions have been tested on Ubuntu 18.04 (Bionic) only.</p>
+</div>
+<p>This procedure explains how to create and use Sawtooth configuration files to
+change the following Sawtooth settings:</p>
+<ul>
+<li><p>Host and port values (bind endpoints) for the validator, REST API, and
+consensus API</p></li>
+<li><p>Peering type and peer nodes on the network</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>For PBFT, all peer nodes must be specified with the <code class="docutils literal notranslate"><span class="pre">peers</span></code> setting in
+the validator configuration file.</p>
+</div>
+</li>
+<li><p>Network keys for secured communication between nodes (optional)</p></li>
+<li><p>Scheduler type (optional)</p></li>
+</ul>
+<p>It also explains how to configure a non-default REST API URL for the Sawtooth
+commands.</p>
+<p>See <a class="reference internal" href="configuring_sawtooth.html"><span class="doc">About Sawtooth Configuration Files</span></a> for detailed information on
+the settings in each configuration file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This procedure assumes that the configuration directory is
+<code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/</span></code>. If your system uses a different location, change this
+path in the commands below. For more information, see
+<a class="reference internal" href="configuring_sawtooth/path_configuration_file.html"><span class="doc">Path Configuration File</span></a>.</p>
+</div>
+<div class="section" id="configure-the-validator">
+<span id="sysadm-configure-validator-label"></span><h2>Configure the Validator<a class="headerlink" href="#configure-the-validator" title="Permalink to this headline">¶</a></h2>
+<p>The following steps configure the validator’s networking information so that the
+validator advertises itself properly and knows where to search for peers.
+Additional steps specify the peers for this node, change the scheduler type
+(optional), and create a network key.</p>
+<ol class="arabic">
+<li><p>Create the validator configuration file by copying the example file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo cp -a /etc/sawtooth/validator.toml.example /etc/sawtooth/validator.toml
+</pre></div>
+</div>
+</li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sudo</span></code> to edit this file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo vi /etc/sawtooth/validator.toml
+</pre></div>
+</div>
+</li>
+<li><p>Change the network settings for the validator.</p>
+<ol class="loweralpha">
+<li><p>Locate the <code class="docutils literal notranslate"><span class="pre">endpoint</span></code> setting, which specifies validator’s external URL.</p>
+<p>Replace the default interface and port (<code class="docutils literal notranslate"><span class="pre">127.0.0.1:8800</span></code>) with the
+values for your node. You can use either the NAT values or the publicly
+addressable IP address and port.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">endpoint</span> <span class="o">=</span> <span class="s">&quot;tcp://{external_interface}:{port}&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Locate the <code class="docutils literal notranslate"><span class="pre">bind</span></code> settings. If necessary, change these values for your
+system. The default values are:</p>
+<blockquote>
+<div><div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">bind</span> <span class="o">=</span> <span class="s">[</span>
+<span class="s">  &quot;network:tcp://127.0.0.1:8800&quot;,</span>
+<span class="s">  &quot;component:tcp://127.0.0.1:4004&quot;,</span>
+<span class="s">  &quot;consensus:tcp://127.0.0.1:5050&quot;</span>
+<span class="na">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">network</span></code> specifies where the validator listens for communication
+from other nodes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">component</span></code> specifies where the validator listens for communication
+from this validator’s components, such as the REST API and transaction
+processors</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">consensus</span></code> specifies where the validator listens for communication
+from the consensus engine</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Make sure that all values in this setting are valid for your network.
+If the bind interface doesn’t exist, you might see a ZMQ error in the
+<code class="docutils literal notranslate"><span class="pre">sawtooth-validator</span></code> systemd logs when attempting to start the
+validator, as in this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Jun 02 14:50:37 ubuntu validator[15461]:   File &quot;/usr/lib/python3.5/threading.py&quot;, line 862, in run</span>
+<span class="go">...</span>
+<span class="go">Jun 02 14:50:37 ubuntu validator[15461]:   File &quot;zmq/backend/cython/socket.pyx&quot;, line 487, in zmq.backend.cython.socket.Socket.bind (zmq/backend/cython/socket.c:5156)</span>
+<span class="go">Jun 02 14:50:37 ubuntu validator[15461]:   File &quot;zmq/backend/cython/checkrc.pxd&quot;, line 25, in zmq.backend.cython.checkrc._check_rc (zmq/backend/cython/socket.c:7535)</span>
+<span class="go">Jun 02 14:50:37 ubuntu validator[15461]: zmq.error.ZMQError: No such device</span>
+<span class="go">Jun 02 14:50:37 ubuntu systemd[1]: sawtooth-validator.service: Main process exited, code=exited, status=1/FAILURE</span>
+<span class="go">Jun 02 14:50:37 ubuntu systemd[1]: sawtooth-validator.service: Unit entered failed state.</span>
+<span class="go">Jun 02 14:50:37 ubuntu systemd[1]: sawtooth-validator.service: Failed with result &#39;exit-code&#39;.</span>
+</pre></div>
+</div>
+</div>
+</li>
+</ol>
+</li>
+<li><p>Set the peering type and peer list (directly connected nodes) for this
+Sawtooth node.</p>
+<ol class="loweralpha">
+<li><p>Locate the <code class="docutils literal notranslate"><span class="pre">peering</span></code> setting, which specifies the type of peering
+approach the validator should take: static (the default) or dynamic.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">peering</span> <span class="o">=</span> <span class="s">&quot;static&quot;</span>
+</pre></div>
+</div>
+<p>This choice depends on the network type and consensus algorithm. For
+example, a public network using an open-membership consensus algorithm
+should use dynamic peering, while a consortium network or network using a
+fixed-membership consensus algorithm should use static peering. For more
+information, see
+<a class="reference internal" href="configuring_sawtooth/validator_configuration_file.html"><span class="doc">Validator Configuration File</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Static peering is recommended for PBFT consensus, because a PBFT
+network must be fully peered.</p>
+</div>
+</li>
+<li><p>Find the <code class="docutils literal notranslate"><span class="pre">peers</span></code> setting and enter the URLs for other validators on the
+network.</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">peering</span></code> is <code class="docutils literal notranslate"><span class="pre">dynamic</span></code>, you can enter a partial list of URLs.
+Sawtooth will automatically discover the other nodes on the network.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">peering</span></code> is <code class="docutils literal notranslate"><span class="pre">static</span></code>, you must list the URLs of <strong>all</strong> peers
+that this node should connect to.</p></li>
+</ul>
+<p>Use the format <code class="docutils literal notranslate"><span class="pre">tcp://{hostname}:{port}</span></code> for each peer. Specify multiple
+peers in a comma-separated list. For example:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">peers</span> <span class="o">=</span> <span class="s">[&quot;tcp://node1:8800&quot;, &quot;tcp://node2:8800&quot;, &quot;tcp://node3:8800&quot;]</span>
+</pre></div>
+</div>
+</li>
+<li><p>(Dynamic peering only). Find the <code class="docutils literal notranslate"><span class="pre">seeds</span></code> setting, which specifies the
+peers to use for the initial connection to the Sawtooth network.
+This setting is ignored for static peering.</p>
+<p>Replace the default address and port (<code class="docutils literal notranslate"><span class="pre">host1:8800</span></code>) with the values for
+one or more nodes in your network. You can use either the NAT values or the
+publicly addressable IP address and port.</p>
+<p>Specify multiple nodes in a comma-separated list, as in this example:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">seeds</span> <span class="o">=</span> <span class="s">[&quot;tcp://{address1}:{port}&quot;,</span>
+<span class="s">         &quot;tcp://{address2}:{port}&quot;]</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p>(Optional) Set the scheduler type to either <code class="docutils literal notranslate"><span class="pre">parallel</span></code> (the default) or
+<code class="docutils literal notranslate"><span class="pre">serial</span></code>. For more information, see <a class="reference internal" href="../architecture/scheduling.html#arch-iterative-sched-label"><span class="std std-ref">Iterative Scheduling</span></a>
+in the Architecture Guide.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">scheduler</span> <span class="o">=</span> <span class="s">&#39;parallel&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><p>(Optional) Set the network key to specify secured network communication
+between nodes in the network. By default, the network is unsecured.</p>
+<blockquote>
+<div><div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The example configuration file contains sample keys that are publicly
+visible. You <strong>must</strong> change these keys in order to have a secured
+network.</p>
+</div>
+</div></blockquote>
+<ol class="loweralpha">
+<li><p>Locate the <code class="docutils literal notranslate"><span class="pre">network_public_key</span></code> and <code class="docutils literal notranslate"><span class="pre">network_private_key</span></code> settings.
+These items specify the curve ZMQ key pair used to create a secured
+network based on side-band sharing of a single network key pair to all
+participating nodes.</p></li>
+<li><p>Generate your network keys.</p>
+<ul>
+<li><p>This example shows how to use Python to generate these keys:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span>
+ <span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">zmq</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">(</span><span class="n">public</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span> <span class="o">=</span> <span class="n">zmq</span><span class="o">.</span><span class="n">curve_keypair</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">public</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+<span class="n">wFMwoOt</span><span class="o">&gt;</span><span class="n">yFqI</span><span class="o">/</span><span class="n">ek</span><span class="o">.</span><span class="n">G</span><span class="p">[</span><span class="n">tfMMILHWw</span><span class="c1">#vXB[Sv}&gt;l&gt;i)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">secret</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;UTF-8&#39;</span><span class="p">))</span>
+<span class="n">r</span><span class="o">&amp;</span><span class="n">oJ5aQDj4</span><span class="o">+</span><span class="n">V</span><span class="p">]</span><span class="n">p2</span><span class="p">:</span><span class="n">Lz70Eu0x</span><span class="c1">#m%IwzBdP(}&amp;hWM*</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Or you could use the following steps to compile and run <code class="docutils literal notranslate"><span class="pre">curve_keygen</span></code>
+to generate the keys:</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get install g++ libzmq3-dev
+<span class="go"> ...</span>
+<span class="gp">$</span> wget https://raw.githubusercontent.com/zeromq/libzmq/master/tools/curve_keygen.cpp
+<span class="go"> ...</span>
+<span class="gp">$</span> g++ curve_keygen.cpp -o curve_keygen -lzmq
+
+<span class="gp">$</span>./curve_keygen
+<span class="go">== CURVE PUBLIC KEY ==</span>
+<span class="go">-so&lt;iWpS=5uINn*eV$=J)F%lEFd=@g:g@GqmL2C]</span>
+<span class="go">== CURVE SECRET KEY ==</span>
+<span class="go">G1.mNaJLnJxb6BWsY=P[K3D({+uww!T&amp;LC3(Xq:B</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p>Replace the example values with your unique network keys.</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">network_public_key</span> <span class="o">=</span> <span class="s">&#39;{nw-public-key}&#39;</span>
+<span class="na">network_private_key</span> <span class="o">=</span> <span class="s">&#39;{nw-private-key}&#39;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p>After saving your changes, restrict the permissions on <code class="docutils literal notranslate"><span class="pre">validator.toml</span></code>
+to protect the network private key.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo chown root:sawtooth /etc/sawtooth/validator.toml
+<span class="gp">$</span> sudo chmod <span class="m">640</span> /etc/sawtooth/validator.toml
+</pre></div>
+</div>
+</li>
+<li><p>Finally, restart the validator to activate the configuration changes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl restart sawtooth-validator.service
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To learn how to use the <code class="docutils literal notranslate"><span class="pre">[role]</span></code> and <code class="docutils literal notranslate"><span class="pre">[permissions]</span></code> settings to
+control validator and user access to the network, see
+<a class="reference internal" href="configuring_permissions.html"><span class="doc">Configuring Validator and Transactor Permissions</span></a>.</p>
+<p>For information about the <code class="docutils literal notranslate"><span class="pre">opentsdb_</span></code> settings, see
+<a class="reference internal" href="grafana_configuration.html"><span class="doc">Using Grafana to Display Sawtooth Metrics</span></a>.</p>
+</div>
+</div>
+<div class="section" id="configure-the-rest-api">
+<span id="rest-api-bind-address-label"></span><h2>Configure the REST API<a class="headerlink" href="#configure-the-rest-api" title="Permalink to this headline">¶</a></h2>
+<p>Use these steps to change the network settings for the REST API.</p>
+<ol class="arabic">
+<li><p>Create the REST API configuration file by copying the example file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo cp -a /etc/sawtooth/rest_api.toml.example /etc/sawtooth/rest_api.toml
+</pre></div>
+</div>
+</li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sudo</span></code> to edit this file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo vi /etc/sawtooth/rest_api.toml
+</pre></div>
+</div>
+</li>
+<li><p>If necessary, change the <code class="docutils literal notranslate"><span class="pre">bind</span></code> setting to specify where the REST API
+listens for incoming communication.</p>
+<p>Be sure to remove the <code class="docutils literal notranslate"><span class="pre">#</span></code> comment character to activate this setting.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">bind = [&quot;127.0.0.1:8008&quot;]</span>
+</pre></div>
+</div>
+</li>
+<li><p>If necessary, change the <code class="docutils literal notranslate"><span class="pre">connect</span></code> setting, which specifies where the
+REST API can find this node’s validator on the network.</p>
+<p>Be sure to remove the <code class="docutils literal notranslate"><span class="pre">#</span></code> comment character to activate this setting.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">connect = &quot;tcp://localhost:4004&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Finally, restart the REST API to activate the configuration changes.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo systemctl restart sawtooth-rest-api.service
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To learn how to put the REST API behind a proxy server,
+see <a class="reference internal" href="rest_auth_proxy.html"><span class="doc">Using a Proxy Server to Authorize the REST API</span></a>.</p>
+</div>
+</div>
+<div class="section" id="configure-the-sawtooth-commands-optional">
+<span id="config-sawtooth-cmds-label"></span><h2>Configure the Sawtooth Commands (Optional)<a class="headerlink" href="#configure-the-sawtooth-commands-optional" title="Permalink to this headline">¶</a></h2>
+<p>If the REST API on this node is not at the default location, you can set the URL
+in the CLI configuration file. Otherwise, you would have to use the <code class="docutils literal notranslate"><span class="pre">--url</span></code>
+option with each Sawtooth command.</p>
+<p>For more information, see
+<a class="reference internal" href="configuring_sawtooth/cli_configuration.html"><span class="doc">Sawtooth CLI Configuration File</span></a>.</p>
+<ol class="arabic">
+<li><p>Create the CLI configuration file by copying the example file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo cp -a /etc/sawtooth/cli.toml.example /etc/sawtooth/cli.toml
+</pre></div>
+</div>
+</li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sudo</span></code> to edit this file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo vi /etc/sawtooth/cli.toml
+</pre></div>
+</div>
+</li>
+<li><p>Change the <code class="docutils literal notranslate"><span class="pre">url</span></code> setting to the host and port for the REST API. This
+setting must match the <code class="docutils literal notranslate"><span class="pre">bind</span></code> value in the REST API configuration file.</p>
+<p>Be sure to remove the <code class="docutils literal notranslate"><span class="pre">#</span></code> comment character to activate this setting.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">url = &quot;http://localhost:8008&quot;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="systemd.html" class="btn btn-neutral float-right" title="Running Sawtooth as a Service" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="creating_genesis_block.html" class="btn btn-neutral float-left" title="Creating the Genesis Block" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,473 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Private UTXO Example &mdash; Sawtooth v0.8.10 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.10 documentation" href="../../index.html"/>
+        <link rel="up" title="Examples" href="../../examples.html"/>
+        <link rel="next" title="Private UTXO Transaction Family" href="private_utxo_transaction_family.html"/>
+        <link rel="prev" title="SupplyChain Error Responses" href="../supplychain/rest_api/error_codes.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.10
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../solidity_developers_guide.html">Solidity Developers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../supplychain/overview.html">SupplyChain Example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Private UTXO Example</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#private-utxo-overview">Private UTXO Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#asset-types">Asset Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#holdings">Holdings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unspent-transaction-output-utxo">Unspent Transaction Output (UTXO)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#trading-and-transactions">Trading and Transactions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#private-utxo-transaction-family">Private UTXO Transaction Family</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#off-ledger-trading">Off-Ledger Trading</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utee-enclave-operations">UTEE Enclave Operations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#best-practices">Best Practices</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../examples.html">Examples</a> &raquo;</li>
+        
+      <li>Private UTXO Example</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/examples/private_utxo/overview.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="private-utxo-example">
+<h1>Private UTXO Example<a class="headerlink" href="#private-utxo-example" title="Permalink to this headline">¶</a></h1>
+<p>This example shows how assets may be created and traded on the Sawtooth Ledger
+and how SGX may be utilized to allow for assets to be transfered off ledger and
+traded in private between parties with only the trading parties knowing the
+details of the transaction.</p>
+<div class="section" id="private-utxo-overview">
+<h2>Private UTXO Overview<a class="headerlink" href="#private-utxo-overview" title="Permalink to this headline">¶</a></h2>
+<p>The Private UTXO example allows for assets to be tracked and traded on the
+Ledger. These assets can also be held off the Ledger and still traded in a
+manner that enforces the Ledger rules governing the Asset and allows
+transactional privacy for the owner of the asset. Assets in this system can
+exist in two states; on-Ledger and off-Ledger. When assets are on-Ledger, they
+are held in &#8220;Holdings&#8221; associated with the owner’s public key. In this state
+the balances and trades of and trades between participants are visible to all
+who can see the Ledger.</p>
+<p>Assets in the off-Ledger state are unspent transaction outputs (UTXO) stored on
+the Ledger with a matching document held by the owner off-Ledger describing the
+Asset represented by the UTXO. Trusted Execution Environments(TEE) are used to
+validate and process off-Ledger transactions. Once validated by the TEE, a
+proof of the transaction is submitted to the Ledger recording the UTXO consumed
+and the new UTXO produced.</p>
+<p>Assets represent something of value. In order to preserve this value, it is
+important that the rules governing that asset are preserved. In this system,
+users can issue assets, but only the original issuer can create more. All other
+transactions for these Assets can not change the amount of these Assets in
+circulation.</p>
+<p>In this example, Assets are represented as positive whole numbers. Fractional
+asset representations are not supported.</p>
+<p>The Private UTXO example manages three stores of information: the Asset Types,
+Holdings, and UTXO. Participants may act on these stores according to their
+permissions. Participants are identified by their public key. A Participant&#8217;s
+signature on a transaction is their authorization of the transaction.</p>
+<div class="section" id="asset-types">
+<h3>Asset Types<a class="headerlink" href="#asset-types" title="Permalink to this headline">¶</a></h3>
+<p>The Asset Type is the definition of what exists, who created it, and how much
+of that asset is in circulation. The creator of the Asset Type may create more
+of that asset at any time to increase the amount in circulation.</p>
+</div>
+<div class="section" id="holdings">
+<h3>Holdings<a class="headerlink" href="#holdings" title="Permalink to this headline">¶</a></h3>
+<p>Holdings keep a record of which participants hold how much of which Assets.
+Holdings can be thought of as on-Ledger wallets or bank accounts where the
+balance of each Asset is held.</p>
+</div>
+<div class="section" id="unspent-transaction-output-utxo">
+<h3>Unspent Transaction Output (UTXO)<a class="headerlink" href="#unspent-transaction-output-utxo" title="Permalink to this headline">¶</a></h3>
+<p>When off-Ledger, the assets are represented as a document. This document
+holds the details of the assets. The sha512 hash of this document is the UTXO
+handle. In this case, the document is in a very real sense the asset that is
+being represented. Having access to the document will provide the details of
+the asset and who owns it. As such, it is important that the document is kept
+secret and protected.  UTXODocument is considered valid when there is a
+matching UTXO record in the DLT. If there is not a matching entry in the DLT
+then the Asset has either been consumed or has not yet be recorded with
+<strong>Convert to UTXO</strong> or <strong>Transfer UTXO</strong> transactions.</p>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="c1">// Utxo off-Ledger Representation</span>
+<span class="kd">message</span> <span class="nc">UtxoDocument</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">owner</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// The hex encoded public key of the owner</span>
+    <span class="kt">string</span> <span class="na">asset_type</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// The identifier of the asset type</span>
+    <span class="kt">int64</span> <span class="na">amount</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// The amount of the Asset stored in this UTXO</span>
+    <span class="kt">string</span> <span class="na">nonce</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// A random vaue to guarentee uniqness</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="trading-and-transactions">
+<h2>Trading and Transactions<a class="headerlink" href="#trading-and-transactions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="private-utxo-transaction-family">
+<h3>Private UTXO Transaction Family<a class="headerlink" href="#private-utxo-transaction-family" title="Permalink to this headline">¶</a></h3>
+<p>The Private UTXO Transaction Family is implemented by a Transaction Processor
+that manages representation in the Ledger.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="private_utxo_transaction_family.html">Private UTXO Transaction Family</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="private_utxo_transaction_family.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="private_utxo_transaction_family.html#state">State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="private_utxo_transaction_family.html#transactions">Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="private_utxo_transaction_family.html#transaction-payload">Transaction Payload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="private_utxo_transaction_family.html#execution">Execution</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="off-ledger-trading">
+<h3>Off-Ledger Trading<a class="headerlink" href="#off-ledger-trading" title="Permalink to this headline">¶</a></h3>
+<p>This section describes how off-Ledger Assets, stored in UTXODocuments,
+are traded.</p>
+<p>UTXO processing Trusted Execution Environment (UTEE) are reponsible for
+validating and signing all off-Ledger transactions. UTEE&#8217;s will be provided as
+signed binaries from the operators of the Ledger. The initial versions of the
+UTEE will support operation on clients enabled with SGX technology. The UTEE
+will utilize an IAS Proxy service to allow for generation of the Attestation
+Verification Reports(AVRs).</p>
+<p>The UTEE is responsible for enforcing the Asset semantic rules. This
+implementation only enforces the constant supply of Assets (Transfers neither
+create nor destroy assets). Other semantics are possible but would require a
+different UTEE implementation to enforce those rules.</p>
+<p>The flow of an off-Ledger trade happens as follows:</p>
+<p>First, the UTXODocument owner creates a set of Output documents that they wish
+to transform their document into. For example, if Alice has a UTXODocument for
+100 units and wishes to give 10 to Bob, she would generate two output
+UTXODocuments, one with Bob as the owner with the amount of 10 and the other
+with her as the owner and the amount of 90.</p>
+<p>Next, Alice will produce a signature of her input UTXODocument using her
+private key. This signature acts as her authorization to consume the document.</p>
+<p>The Input UTXODocument, the signature, and the output UTXODocuments are all
+submitted to the UTEE for verification. When the verification finishes, a Quote
+is generated by the UTEE. A Quote contains the details of the UTEE environment,
+the enclave, and the transaction. The Quote is used by the Attestation service
+to verify that this is a valid UTEE environment.</p>
+<p>Alice then submits the Quote to the Intel Attestation Service for verification.
+When the verification succeeds, an Attestation Verification Report(AVR) is
+generated.</p>
+<p>Alice will then generate a Transfer UTXO transaction with the addresses of the
+input UTXODocument, the addresses of the output UTXODocuments, and the AVR. She
+will sign this with a randomly generated key and submit it to any validator on
+the network. A random signing key is used on these transactions so that the
+transaction can not be traced back to the sender directly, providing anonymity
+of who is participating in the transaction.</p>
+<p>Once the Transfer UTXO transaction has been validated and is included in the
+Ledger (added to a block in the block chain), the input UTXODocument is now
+consumed and no longer valid, and the two output UTXODocuments are now valid.
+Alice can now send the Output document to Bob and Bob can verify that they are
+valid by seeing that the address of the document appears on the Ledger.</p>
+</div>
+<div class="section" id="utee-enclave-operations">
+<h3>UTEE Enclave Operations<a class="headerlink" href="#utee-enclave-operations" title="Permalink to this headline">¶</a></h3>
+<p>The UTEE provides functionality to generate an Attestation for UTXO transfers.</p>
+<div class="section" id="generate-transfer-utxo-quote">
+<h4>Generate Transfer UTXO Quote<a class="headerlink" href="#generate-transfer-utxo-quote" title="Permalink to this headline">¶</a></h4>
+<p>Given a set of Input and Output UTXODocuments, validate the Inputs are
+authorized to be spent and the Outputs conform to the asset rules. Then
+generate a Quote attesting to the transfer&#8217;s correctness.</p>
+<p>Inputs:</p>
+<ul class="simple">
+<li>List of (UTXODocument, signature) pairs, specifying the UTXO inputs to spend
+and the authorization to spend them. The signatures are ECDSA signatures
+of UTXODocument, produced using the document owner&#8217;s private key.</li>
+<li>List of Output UTXODocument.</li>
+</ul>
+<p>Outputs:</p>
+<ul class="simple">
+<li>An Enclave quote (sgx_quote_t) with the report data set to
+(sgx_report_data_t) sha512(input UTXOs|output UTXOs)</li>
+</ul>
+<p>Enclave Execution:</p>
+<p>The enclave validates the following cases:</p>
+<ul class="simple">
+<li>The Input documents are validly formatted.</li>
+<li>The Output documents are validly formatted.</li>
+<li>All Inputs and outputs are of the same AssetType.</li>
+<li>The signatures match the owner in the corresponding Input UTXODocument.</li>
+<li>The sum of the outputs amounts equal the sum of the Input amounts.</li>
+</ul>
+<p>If any of these cases are not true, the enclave stops processing and returns an
+error.</p>
+<p>If all the validation passes, then an enclave quote is generated. The report
+data field of the quote (sgx_report_data_t) set to the sha512(input
+addresses|output addresses). This provides linkage between the transaction and
+the SGX Attestation. The input and output addresses are generated UTXO
+address as described in the <a class="reference internal" href="private_utxo_transaction_family.html"><span class="doc">Private UTXO Transaction Family</span></a></p>
+</div>
+<div class="section" id="ias-proxy">
+<h4>IAS Proxy<a class="headerlink" href="#ias-proxy" title="Permalink to this headline">¶</a></h4>
+<p>Once the Enclave Quote is generated, it must be passed to the Intel Attestation
+Service (IAS) for verification and signing. A proxy interface to IAS is
+provided to allow the connection to IAS to be authenticated with the Software
+provider Id. The proxy accepts the Enclave quotes and returns Attestation
+Verification Reports (AVRS) singed by IAS.</p>
+</div>
+<div class="section" id="transfer-utxo-transaction">
+<h4>Transfer UTXO Transaction<a class="headerlink" href="#transfer-utxo-transaction" title="Permalink to this headline">¶</a></h4>
+<p>Once the Transfer AVR is created, a Transfer UTXO transaction can be created
+and submitted for validation. This transaction must contain the input and
+output document addresses in the order of the documents we submitted to the
+UTEE. This transaction should be signed with a randomly generated key, so that
+the identity of the UTXO can be hidden.</p>
+</div>
+<div class="section" id="utee-authorization">
+<h4>UTEE Authorization<a class="headerlink" href="#utee-authorization" title="Permalink to this headline">¶</a></h4>
+<p>A Ledger setting in the settings namespace is used to hold the list of enclave
+builds that are authorized to operate on this network. The setting
+<cite>sawtooth.private_utxo.valid_enclave_measurements</cite> holds a comma separated list
+of the measurements of enclaves that are allowed to attest for Transfer UTXO
+transactions.</p>
+</div>
+</div>
+</div>
+<div class="section" id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Permalink to this headline">¶</a></h2>
+<p>The conversion of assets to and from the Ledger are visible and the spending
+DAG of the off-Ledger UTXO is visible (note: the contents of the UTXO are
+not visible). The UTXO DAG can provide an inadvertent source of information for
+those interested in the trading behavior.</p>
+<p>It is recommended that Participants in the system manage multiple private keys
+for holding off-Ledger UTXO. Only use a primary key for trading on-Ledger and
+have a set of keys for off-Ledger trading. When an asset is converted to UTXO,
+it should be transferred among these keys several times in a random order to
+hide the ownership of the asset. Furthermore, when an asset is transferred off-
+Ledger, it should receive the same mixing behavior both before and after the
+trade by both the sender and receiver. In addition, the off-Ledger keys should
+regularly be regenerated so that the public keys cannot be associated with a
+particular participant over time from observing the behavior of the trading.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="private_utxo_transaction_family.html" class="btn btn-neutral float-right" title="Private UTXO Transaction Family" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../supplychain/rest_api/error_codes.html" class="btn btn-neutral" title="SupplyChain Error Responses" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'v0.8.10',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

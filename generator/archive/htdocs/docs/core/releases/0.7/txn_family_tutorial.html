@@ -1,0 +1,856 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Transaction Family Tutorial &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="index.html"/>
+        <link rel="next" title="Bond Family Guide" href="bond_family_guide.html"/>
+        <link rel="prev" title="Tutorial" href="tutorial.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Transaction Family Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#transaction-family-tutorial-sample-code">Transaction Family Tutorial Sample Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#change-to-the-correct-working-directory-for-tutorial-start">Change to the Correct Working Directory for Tutorial Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#components">Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#txnvalidator-configuration-and-dynamic-loading">txnvalidator Configuration and Dynamic Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#skeleton-implementation">Skeleton Implementation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#registration">Registration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-message-class">The Message Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-transaction-class">The Transaction Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cli-client">CLI Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#serialization-and-deserialization">Serialization and Deserialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implementing-apply-and-check-valid">Implementing apply() and check_valid()</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="contents.html">Docs</a> &raquo;</li>
+        
+      <li>Transaction Family Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/txn_family_tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="transaction-family-tutorial">
+<h1>Transaction Family Tutorial<a class="headerlink" href="#transaction-family-tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial covers the creation of a new Sawtooth Lake transaction family.
+We will construct a transaction family called &#8216;sawtooth_xo&#8217; which implements
+a distributed version of the multi-player game tic-tac-toe.</p>
+<p>A general description of tic-tac-toe, including the rules, can be found on
+Wikipedia at:</p>
+<blockquote>
+<div><a class="reference external" href="https://en.wikipedia.org/wiki/Tic-tac-toe">https://en.wikipedia.org/wiki/Tic-tac-toe</a></div></blockquote>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial assumes that you have gone through the primary Sawtooth Lake
+<a class="reference internal" href="tutorial.html"><span class="doc">Tutorial</span></a> and are familiar with the concepts introduced there.</p>
+<p>Prior to going through this tutorial, you should have a working vagrant
+environment running to which you can login.  Specific setup instructions
+are available in the <a class="reference internal" href="tutorial.html"><span class="doc">Tutorial</span></a>.</p>
+</div>
+<div class="section" id="transaction-family-tutorial-sample-code">
+<h2>Transaction Family Tutorial Sample Code<a class="headerlink" href="#transaction-family-tutorial-sample-code" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial, we use example code defined in the <strong>txn_family_tutorial</strong>
+directory of the documentation to allow you to step through the tutorial without
+manually entering any code.  At each step, you can review the code for that step
+before proceeding to the next step.  The code examples are located in subfolders
+named using the convention <em>xo-tutorial-stepNN</em>, where NN is a two-digit number.
+You simply source a special script named <em>env.sh</em> before you run the code for each
+step. The script <strong>env.sh</strong> sets the PYTHONPATH environment variable to the
+correct value, so that the python  interpreter knows which code examples to run,
+when you  start the validator.</p>
+<p>A complete implementation, along with other example transaction families,
+is also available in master branch of sawtooth-core.</p>
+<p>The repository is located at:</p>
+<blockquote>
+<div><a class="reference external" href="https://github.com/hyperledger/sawtooth-core">https://github.com/hyperledger/sawtooth-core</a></div></blockquote>
+<p>The example transaction families are located at:</p>
+<blockquote>
+<div><a class="reference external" href="https://github.com/hyperledger/sawtooth-core/tree/master/extensions/arcade">https://github.com/hyperledger/sawtooth-core/tree/master/extensions/arcade</a></div></blockquote>
+<p>Instructions for what to do with the repo are in the next section.</p>
+</div>
+<div class="section" id="change-to-the-correct-working-directory-for-tutorial-start">
+<h2>Change to the Correct Working Directory for Tutorial Start<a class="headerlink" href="#change-to-the-correct-working-directory-for-tutorial-start" title="Permalink to this headline">¶</a></h2>
+<p>From following the Sawtooth Lake Tutorial, you should already have cloned the
+following repository:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">project/</span>
+<span class="go">  sawtooth-core/</span>
+</pre></div>
+</div>
+<p>You already have the transaction family tutorial code in your repository, in the
+directory <code class="docutils literal"><span class="pre">/project/sawtooth-core/docs/source/txn_family_tutorial</span></code>.</p>
+<p>Change your working directory to the <strong>xo-tutorial-step00</strong> subdirectory:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> <span class="nb">cd</span> /project/sawtooth-core/docs/source/txn_family_tutorial/xo-tutorial-step00
+</pre></div>
+</div>
+<p>There will only be one file in the <code class="docutils literal"><span class="pre">xo-tutorial-step00</span></code> directory: README.md</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> ls
+<span class="go">README.md</span>
+</pre></div>
+</div>
+<p>Please read the README.md file now with your favorite text editor.</p>
+</div>
+<div class="section" id="components">
+<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
+<p>As messages containing transactions are received by a validator, they are
+validated and applied to the local state of the validator.  The transaction
+family defines the message type and the business logic used for validation
+and state changes.</p>
+<p>There are three top-level components of a transaction family:</p>
+<ul class="simple">
+<li>a registration function</li>
+<li>a message class</li>
+<li>a transaction class</li>
+</ul>
+</div>
+<div class="section" id="txnvalidator-configuration-and-dynamic-loading">
+<h2>txnvalidator Configuration and Dynamic Loading<a class="headerlink" href="#txnvalidator-configuration-and-dynamic-loading" title="Permalink to this headline">¶</a></h2>
+<p>txnvalidator dynamically loads transaction families based on the
+&#8220;TransactionFamilies&#8221; setting in the txnvalidator.js configuration file.  As
+the validator processes the list, it loads each transaction family&#8217;s Python
+module and calls the function &#8216;register_transaction_types&#8217; as defined in
+that module.</p>
+<p>To enable sawtooth_xo, the txnvalidator.js configuration must include
+sawtooth_xo in the &#8220;TransactionFamilies&#8221; list:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&quot;TransactionFamilies&quot; : [
+    &quot;sawtooth_xo&quot;
+],
+</pre></div>
+</div>
+<p>Observe that in txnvalidator.js, sawtooth_xo is listed as the only transaction
+family. This will load the sawtooth_xo python module and run
+sawtooth_xo.register_transaction_types.</p>
+<p>You can also have more than one transaction family configured at once:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&quot;TransactionFamilies&quot; : [
+    &quot;ledger.transaction.integer_key&quot;,
+    &quot;sawtooth_xo&quot;
+],
+</pre></div>
+</div>
+<p>In this case, the validator iterates over the list and registers one at a
+time.</p>
+<p>At this time, change your working directory to the <strong>xo-tutorial-step01</strong>
+directory, then source the <strong>env.sh</strong> script:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> <span class="nb">cd</span> /project/sawtooth-core/docs/source/txn_family_tutorial/xo-tutorial-step01
+<span class="gp">%</span> <span class="nb">source</span> env.sh
+</pre></div>
+</div>
+<p>Two new files have been added for this step:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">xo-tutorial-step01/sawtooth_xo/__init__.py</span>
+<span class="go">xo-tutorial-step01/sawtooth_xo/txn_family.py</span>
+</pre></div>
+</div>
+<p>In sawtooth_xo/__init__.py, register_transaction_types is defined as:</p>
+<p><em>sawtooth_xo/__init__.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sawtooth_xo.txn_family</span> <span class="kn">import</span> <span class="n">_register_transaction_types</span>
+
+<span class="k">def</span> <span class="nf">register_transaction_types</span><span class="p">(</span><span class="n">journal</span><span class="p">):</span>
+    <span class="n">_register_transaction_types</span><span class="p">(</span><span class="n">journal</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Thus, although the starting point is the sawtooth_xo module&#8217;s __init__.py, we
+have chosen to keep the implementation in the sawtooth_xo.txn_family module.
+This is purely to keep the transaction family name listed in txnvalidator.js
+as short and simple as possible: &#8216;sawtooth_xo&#8217;.</p>
+<p>In sawtooth_xo/txn_family.py, we now have a register function which logs an
+error - it doesn&#8217;t register anything quite yet.</p>
+<p>Inside the vagrant environment, in the same terminal window you used to source the
+special script <em>env.sh</em> above, start a txnvalidator as follows, and after a few
+seconds, kill it by pressing CTRL-C:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./docs/source/txn_family_tutorial/genesis.sh
+<span class="gp">$</span> ./bin/txnvalidator -v --config /project/sawtooth-core/docs/source/txn_family_tutorial/txnvalidator.js
+
+<span class="go">...</span>
+<span class="go">[02:51:45 INFO    validator_cli] adding transaction family: sawtooth_xo</span>
+<span class="go">[02:51:45 ERROR   txn_family] sawtooth_xo register_transaction_types not implemented</span>
+<span class="go">...</span>
+<span class="go">&lt;CTRL-C&gt;</span>
+</pre></div>
+</div>
+<p>Observe the INFO and ERROR lines above.  The first is printed by the
+validator prior to attempting to load the transaction family.  This is a
+quick way to determine if your transaction family is being loaded.  The
+next line is the error logging message we have as the current implementation
+of sawtooth_xo.txn_family.register_transaction_types().</p>
+</div>
+<div class="section" id="skeleton-implementation">
+<h2>Skeleton Implementation<a class="headerlink" href="#skeleton-implementation" title="Permalink to this headline">¶</a></h2>
+<p>Now, change your working directory to the <strong>xo-tutorial-step02</strong> subdirectory,
+then source the <strong>env.sh</strong> script:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> <span class="nb">cd</span> /project/sawtooth-core/docs/source/txn_family_tutorial/xo-tutorial-step02
+<span class="gp">%</span> <span class="nb">source</span> env.sh
+</pre></div>
+</div>
+<p>This updates sawtooth_xo/txn_family.py such that it contains all the framework
+of the transaction family, but several methods are not yet implemented.
+Let&#8217;s look at this initial skeleton code.</p>
+<div class="section" id="registration">
+<h3>Registration<a class="headerlink" href="#registration" title="Permalink to this headline">¶</a></h3>
+<p>The implementation of _register_transaction_types, which is now complete,
+looks like this:</p>
+<p><em>sawtooth_xo/txn_family.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">journal.messages</span> <span class="kn">import</span> <span class="n">transaction_message</span>
+
+<span class="k">def</span> <span class="nf">_register_transaction_types</span><span class="p">(</span><span class="n">journal</span><span class="p">):</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">register_message_handler</span><span class="p">(</span>
+        <span class="n">XoTransactionMessage</span><span class="p">,</span>
+        <span class="n">transaction_message</span><span class="o">.</span><span class="n">transaction_message_handler</span><span class="p">)</span>
+    <span class="n">journal</span><span class="o">.</span><span class="n">add_transaction_store</span><span class="p">(</span><span class="n">XoTransaction</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The journal object being passed into this function is a type derived from
+journal.journal_core.Journal from <a class="reference external" href="http://github.com/HyperLedger/sawtooth-core">sawtooth-core</a>
+(such as PoetJournal).  We
+register the standard transaction message handler to
+specify the message type of XoTransactionMessage, which is derived from
+transaction_message.TransactionMessage.</p>
+<p>Lastly, we add the transaction store. The method add_transaction_store() takes the
+transaction type as input (XoTransaction).  It adds an instance of the
+appropriate store type to the global store, using the transaction type&#8217;s
+name.</p>
+</div>
+<div class="section" id="the-message-class">
+<h3>The Message Class<a class="headerlink" href="#the-message-class" title="Permalink to this headline">¶</a></h3>
+<p>The implementation of XoTransactionMessage, which is also complete:</p>
+<p><em>sawtooth_xo/txn_family.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">journal.messages</span> <span class="kn">import</span> <span class="n">transaction_message</span>
+
+<span class="k">class</span> <span class="nc">XoTransactionMessage</span><span class="p">(</span><span class="n">transaction_message</span><span class="o">.</span><span class="n">TransactionMessage</span><span class="p">):</span>
+    <span class="n">MessageType</span> <span class="o">=</span> <span class="s2">&quot;/Xo/Transaction&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minfo</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">minfo</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">minfo</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">XoTransactionMessage</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">minfo</span><span class="p">)</span>
+
+        <span class="n">tinfo</span> <span class="o">=</span> <span class="n">minfo</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Transaction&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Transaction</span> <span class="o">=</span> <span class="n">XoTransaction</span><span class="p">(</span><span class="n">tinfo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Most of the work is done by the TransactionMessage, so our derived class
+is fairly simple.</p>
+<p>The MessageType class attribute specifies the name used for these types of
+messages.  This is used in several places; for example, it is used when
+correlating message statistics.</p>
+<p>During __init__, the minfo argument is used for deserialization.  It is used by
+the implementation in this class and the base classes to restore an object.  In
+this implementation, it uses it to restore a XoTransaction instance (if
+&#8216;Transaction&#8217; is set in minfo) by passing tinfo to XoTransaction&#8217;s constructor.</p>
+</div>
+<div class="section" id="the-transaction-class">
+<h3>The Transaction Class<a class="headerlink" href="#the-transaction-class" title="Permalink to this headline">¶</a></h3>
+<p>The transaction class is the heart of a transaction family.  It must define:</p>
+<ul class="simple">
+<li>TransactionTypeName class attribute</li>
+<li>TransactionStoreType class attribute</li>
+<li>MessageType class attribute</li>
+<li>An __init__() method which implements deserialization</li>
+<li>A __str__() method</li>
+<li>A check_valid() method which throws an exception if the transaction is not valid</li>
+<li>An apply() method which updates the store</li>
+<li>A dump() method which implements serialization</li>
+</ul>
+<p>The skeleton implementation is:</p>
+<p><em>sawtooth_xo/txn_family.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">XoTransaction</span><span class="p">(</span><span class="n">transaction</span><span class="o">.</span><span class="n">Transaction</span><span class="p">):</span>
+    <span class="n">TransactionTypeName</span> <span class="o">=</span> <span class="s1">&#39;/XoTransaction&#39;</span>
+    <span class="n">TransactionStoreType</span> <span class="o">=</span> <span class="n">global_store_manager</span><span class="o">.</span><span class="n">KeyValueStore</span>
+    <span class="n">MessageType</span> <span class="o">=</span> <span class="n">XoTransactionMessage</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minfo</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">minfo</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">minfo</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">XoTransaction</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">minfo</span><span class="p">)</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;minfo: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">minfo</span><span class="p">))</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;XoTransaction __init__ not implemented&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;XoTransaction __str__ not implemented&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;XoTransaction&quot;</span>
+
+    <span class="k">def</span> <span class="nf">check_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">):</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">XoTransaction</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">check_valid</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;checking </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+        <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span><span class="s1">&#39;XoTransaction.check_valid is not implemented&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">):</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;apply </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;XoTransaction.apply is not implemented&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">XoTransaction</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dump</span><span class="p">()</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;XoTransaction.dump is not implemented&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="cli-client">
+<h2>CLI Client<a class="headerlink" href="#cli-client" title="Permalink to this headline">¶</a></h2>
+<p>Before we move forward with implementation, we need an easy way to submit
+transactions to a validator.  We also need a way to view the current state
+of the store (which in this case, will be game state).</p>
+<p>Describing the CLI client in detail is out-of-scope for this tutorial, but
+we will point out a few important pieces.</p>
+<p>At this time, change your working directory to the <strong>xo-tutorial-step03</strong> directory,
+then source the <strong>env.sh</strong> script:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> <span class="nb">cd</span> /project/sawtooth-core/docs/source/txn_family_tutorial/xo-tutorial-step03
+<span class="gp">%</span> <span class="nb">source</span> env.sh
+</pre></div>
+</div>
+<p>Three new files have been added:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>xo-tutorial-step03/bin/xo
+xo-tutorial-step03/sawtooth-xo/xo_cli.py
+xo-tutorial-step03/sawtooth-xo/xo_client.py
+</pre></div>
+</div>
+<p>bin/xo is a small script which launches the CLI code contained in xo_cli.py.
+We will not dive deep into the implementation of the CLI itself; it is fairly
+straight-forward argparse code.  However, we will use it extensively to
+submit transactions and web API requests to the validator.</p>
+<p>xo_client.py contains an implementation of XoClient, which is derived from
+SawtoothClient.  The SawtoothClient base class takes care of all of the
+details related to submitting transactions and retrieving state.  XoClient
+provides a couple methods for creating transactions:</p>
+<p><em>sawtooth_xo/xo_client.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">send_xo_txn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This sets up the same defaults as the Transaction so when</span>
+<span class="sd">    signing happens in sendtxn, the same payload is signed.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        update: dict The data associated with the Xo data model</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        txnid: str The txnid associated with the transaction</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;Name&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">update</span><span class="p">:</span>
+        <span class="n">update</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="s1">&#39;Action&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">update</span><span class="p">:</span>
+        <span class="n">update</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="s1">&#39;Space&#39;</span> <span class="ow">in</span> <span class="n">update</span> <span class="ow">and</span> <span class="n">update</span><span class="p">[</span><span class="s1">&#39;Space&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">update</span><span class="p">[</span><span class="s1">&#39;Space&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sendtxn</span><span class="p">(</span><span class="s1">&#39;/XoTransaction&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;/Xo/Transaction&#39;</span><span class="p">,</span>
+                        <span class="n">update</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="s1">&#39;CREATE&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_xo_txn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">take</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">space</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">update</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Action&#39;</span><span class="p">:</span> <span class="s1">&#39;TAKE&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+        <span class="s1">&#39;Space&#39;</span><span class="p">:</span> <span class="n">space</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_xo_txn</span><span class="p">(</span><span class="n">update</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In both cases, an XoTransaction is sent (wrapped in a XoTransactionMessage),
+but the update has different actions.  The two allowable actions for
+our tic-tac-toe implementation are CREATE and TAKE.  CREATE takes the name
+of the game to create, and TAKE takes the name of the game and the space.  We
+imply all other implementation from the state of the transaction family&#8217;s
+store.</p>
+<p>Another thing to note is that XoClient is aware of the XoTransaction
+family and will run check_valid() and apply() locally prior to sending
+the transaction to the validator.  This allows the CLI client to catch
+obvious errors prior to submitting them as a transaction.</p>
+<p>Let&#8217;s submit a transaction and see the result.</p>
+<p>First, startup txnvaldiator inside vagrant (and leave it running):</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Start the txnvalidator in the same terminal window in which you
+sourced the <strong>env.sh</strong> script, or run the following command from a
+new vagrant window (log in with &#8220;vagrant ssh&#8221;):</p>
+<div class="last highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">source</span> /project/sawtooth-core/docs/source/txn_family_tutorial/xo-tutorial-step03/env.sh
+</pre></div>
+</div>
+</div>
+<p>Run the following commands to start the validator:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./docs/source/txn_family_tutorial/genesis.sh
+<span class="gp">$</span> ./bin/txnvalidator -v --config /project/sawtooth-core/docs/source/txn_family_tutorial/txnvalidator.js
+</pre></div>
+</div>
+<p>Next, in a separate vagrant window, use the xo CLI to create a key for player1:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> <span class="nb">source</span> /project/sawtooth-core/docs/source/txn_family_tutorial/xo-tutorial-step03/env.sh
+<span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./bin/xo init --username<span class="o">=</span>player1
+</pre></div>
+</div>
+<p>Then, attempt to create a game:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> ./bin/xo create -vvv game000
+<span class="go">[15:40:54 DEBUG   client] set signing key from file /home/vagrant/.sawtooth/keys/player1.wif</span>
+<span class="go">[15:40:54 DEBUG   client] Posting transaction: 77b85773bbb5a3d0</span>
+<span class="go">?iSignaturexXHIkL44U02V3SfohF6KjVA3xvxbIwWpGsxehOiKyhOWEaCtchVgGGe5jmlQrJ6ASEW8vxOyKbkOllC4lmimFVlYw=oTransactionTypen/XoTransactioni__NONCE__?A???y:m__SIGNATURE__xXGwHRqQG0gMaqp3qOC944bveycd+n5cSrGez32NtN6TO7wMGpnJnONCNQ0ImJo4+l1r91iI0tQ1CprFxZPzWat/k=h__TYPE__o/Xo/Transaction&gt;</span>
+<span class="go">[15:40:54 WARNING client] operation failed with response: 400 OrderedDict([(&#39;error&#39;, &#39;XoTransaction.check_valid is not implemented&#39;), (&#39;errorType&#39;, &#39;InvalidTransactionError&#39;), (&#39;status&#39;, 400L)])</span>
+<span class="go">Error: XoTransaction.check_valid is not implemented</span>
+</pre></div>
+</div>
+<p>Stop the validator with CTRL-C.</p>
+<p>Great! The client fetched the state (which will have been empty, but note the
+URL, that&#8217;s our store), created a signed transaction, then ran check_valid.
+Since we throw an exception in check_valid, we got the expected error message.</p>
+<p>Now we are ready to complete the rest of the implementation.</p>
+</div>
+<div class="section" id="serialization-and-deserialization">
+<h2>Serialization and Deserialization<a class="headerlink" href="#serialization-and-deserialization" title="Permalink to this headline">¶</a></h2>
+<p>At this time, change your working directory to the <strong>xo-tutorial-step04</strong> directory:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">%</span> <span class="nb">cd</span> /project/sawtooth-core/docs/source/txn_family_tutorial/xo-tutorial-step04
+</pre></div>
+</div>
+<p>As we saw in the client section, we have two possible actions: CREATE and TAKE.
+CREATE requires a name, and TAKE requires a name and a space.  So we have three
+fields that make up a transaction: Action, Name, and Space.</p>
+<p>The __init__() implementation restores these fields from minfo if they are
+present there during construction:</p>
+<p><em>sawtooth_xo/txn_family.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">XoTransaction</span><span class="p">(</span><span class="n">transaction</span><span class="o">.</span><span class="n">Transaction</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minfo</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">minfo</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">minfo</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">XoTransaction</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">minfo</span><span class="p">)</span>
+
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;minfo: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">minfo</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">minfo</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;Name&#39;</span> <span class="ow">in</span> <span class="n">minfo</span> <span class="k">else</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_action</span> <span class="o">=</span> <span class="n">minfo</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;Action&#39;</span> <span class="ow">in</span> <span class="n">minfo</span> <span class="k">else</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_space</span> <span class="o">=</span> <span class="n">minfo</span><span class="p">[</span><span class="s1">&#39;Space&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;Space&#39;</span> <span class="ow">in</span> <span class="n">minfo</span> <span class="k">else</span> <span class="bp">None</span>
+</pre></div>
+</div>
+<p>If they are not specified in minfo, they default to None.</p>
+<p>The dump() method does the reverse and serializes the data:</p>
+<p><em>sawtooth_xo/txn_family.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">XoTransaction</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dump</span><span class="p">()</span>
+
+    <span class="n">result</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action</span>
+    <span class="n">result</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_space</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;Space&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_space</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>Note that the implementation of __init__() and dump() define the structure of
+the transaction data.  Both of these methods call their base classes.  The base
+classes will add/restore additional fields to the transaction.</p>
+<p>We can now also implement __str__() since all the relevant fields are defined:</p>
+<p><em>sawtooth_xo/txn_family.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">oid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OriginatorID</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="n">oid</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;({0} {1} {2})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">oid</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">_space</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="implementing-apply-and-check-valid">
+<h2>Implementing apply() and check_valid()<a class="headerlink" href="#implementing-apply-and-check-valid" title="Permalink to this headline">¶</a></h2>
+<p>The check_valid() method throws an XoException if the transaction can not be
+applied for some reason.  For example, it will throw an exception if, during
+a CREATE, a game name is already in use.</p>
+<p>The apply() method takes the transaction&#8217;s data and modifies the store in
+the appropriate way.  It assumes that check_valid() has been called just
+before, in that it does not re-check everything checked with check_valid().</p>
+<p>The implementation of check_valid():</p>
+<p><em>sawtooth_xo/txn_family.py</em></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">check_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">XoTransaction</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">check_valid</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;checking </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span><span class="s1">&#39;name not set&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span><span class="s1">&#39;action not set&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action</span> <span class="o">==</span> <span class="s1">&#39;CREATE&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="ow">in</span> <span class="n">store</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span><span class="s1">&#39;game already exists&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_action</span> <span class="o">==</span> <span class="s1">&#39;TAKE&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_space</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span><span class="s1">&#39;TAKE requires space&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_space</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_space</span> <span class="o">&gt;</span> <span class="mi">9</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span><span class="s1">&#39;invalid space&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">store</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span><span class="s1">&#39;no such game&#39;</span><span class="p">)</span>
+
+        <span class="n">state</span> <span class="o">=</span> <span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">][</span><span class="s1">&#39;State&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;P1-WIN&#39;</span><span class="p">,</span> <span class="s1">&#39;P2-WIN&#39;</span><span class="p">,</span> <span class="s1">&#39;TIE&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span><span class="s1">&#39;game complete&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;P1-NEXT&#39;</span> <span class="ow">and</span> <span class="s1">&#39;Player1&#39;</span> <span class="ow">in</span> <span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">]:</span>
+            <span class="n">player1</span> <span class="o">=</span> <span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">][</span><span class="s1">&#39;Player1&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">player1</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OriginatorID</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span><span class="s1">&#39;invalid player 1&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;P2-NEXT&#39;</span> <span class="ow">and</span> <span class="s1">&#39;Player2&#39;</span> <span class="ow">in</span> <span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">]:</span>
+            <span class="n">player1</span> <span class="o">=</span> <span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">][</span><span class="s1">&#39;Player2&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">player1</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OriginatorID</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span><span class="s1">&#39;invalid player 2&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">][</span><span class="s1">&#39;Board&#39;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">_space</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span><span class="s1">&#39;space already taken&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InvalidTransactionError</span><span class="p">(</span><span class="s1">&#39;invalid action&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The implementation of apply():</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">):</span>
+    <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;apply </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="ow">in</span> <span class="n">store</span><span class="p">:</span>
+        <span class="n">game</span> <span class="o">=</span> <span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">game</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">if</span> <span class="s1">&#39;Board&#39;</span> <span class="ow">in</span> <span class="n">game</span><span class="p">:</span>
+        <span class="n">board</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">game</span><span class="p">[</span><span class="s1">&#39;Board&#39;</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">board</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s1">&#39;---------&#39;</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;P1-NEXT&#39;</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_space</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">board</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">board</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;O&#39;</span><span class="p">):</span>
+            <span class="n">board</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_space</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;O&#39;</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;P1-NEXT&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">board</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_space</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;X&#39;</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;P2-NEXT&#39;</span>
+
+        <span class="c1"># The first time a space is taken, player 1 will be assigned.  The</span>
+        <span class="c1"># second time a space is taken, player 2 will be assigned.</span>
+        <span class="k">if</span> <span class="s1">&#39;Player1&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">game</span><span class="p">:</span>
+            <span class="n">game</span><span class="p">[</span><span class="s1">&#39;Player1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OriginatorID</span>
+        <span class="k">elif</span> <span class="s1">&#39;Player2&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">game</span><span class="p">:</span>
+            <span class="n">game</span><span class="p">[</span><span class="s1">&#39;Player2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OriginatorID</span>
+
+    <span class="n">game</span><span class="p">[</span><span class="s1">&#39;Board&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">board</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_win</span><span class="p">(</span><span class="n">game</span><span class="p">[</span><span class="s1">&#39;Board&#39;</span><span class="p">],</span> <span class="s1">&#39;X&#39;</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;P1-WIN&#39;</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_win</span><span class="p">(</span><span class="n">game</span><span class="p">[</span><span class="s1">&#39;Board&#39;</span><span class="p">],</span> <span class="s1">&#39;O&#39;</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;P2-WIN&#39;</span>
+    <span class="k">elif</span> <span class="s1">&#39;-&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">game</span><span class="p">[</span><span class="s1">&#39;Board&#39;</span><span class="p">]:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;TIE&#39;</span>
+
+    <span class="n">game</span><span class="p">[</span><span class="s1">&#39;State&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">game</span>
+</pre></div>
+</div>
+<p>The implementation of apply() uses _is_win():</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_is_win</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">,</span> <span class="n">letter</span><span class="p">):</span>
+    <span class="n">wins</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">win</span> <span class="ow">in</span> <span class="n">wins</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">win</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">letter</span>
+                <span class="ow">and</span> <span class="n">board</span><span class="p">[</span><span class="n">win</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">letter</span>
+                <span class="ow">and</span> <span class="n">board</span><span class="p">[</span><span class="n">win</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">letter</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">return</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>It is now possible to play the game:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">source</span> /project/sawtooth-core/docs/source/txn_family_tutorial/xo-tutorial-step04/env.sh
+<span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./docs/source/txn_family_tutorial/genesis.sh
+<span class="gp">$</span> ./bin/txnvalidator -v --config /project/sawtooth-core/docs/source/txn_family_tutorial/txnvalidator.js
+</pre></div>
+</div>
+<p>Then, create a game in a separate vagrant window (log in with &#8220;vagrant ssh&#8221; from the tools directory):</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">source</span> /project/sawtooth-core/docs/source/txn_family_tutorial/xo-tutorial-step04/env.sh
+<span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./bin/xo create -vvv game001 --wait
+<span class="go">[04:53:07 DEBUG   client] fetch state from http://localhost:8800/XoTransaction/*</span>
+<span class="go">[04:53:07 DEBUG   client] get content from url &lt;http://localhost:8800/store/XoTransaction/\*&gt;</span>
+<span class="go">[04:53:07 DEBUG   client] set signing key from file /home/vagrant/.sawtooth/keys/player1.wif</span>
+<span class="go">[04:53:07 DEBUG   txn_family] minfo: {&#39;Action&#39;: &#39;CREATE&#39;, &#39;Name&#39;: &#39;game001&#39;}</span>
+<span class="go">[04:53:07 DEBUG   txn_family] checking (1NNxoo58EsR5cCEACiJf9mvoVLrGF37kvV game001 None)</span>
+<span class="go">[04:53:07 DEBUG   txn_family] minfo: {}</span>
+<span class="go">[04:53:07 DEBUG   client] Posting transaction: 12e8a91cb8dcd0fc</span>
+<span class="go">[04:53:07 DEBUG   client] post transaction to http://localhost:8800/Xo/Transaction with DATALEN=349, DATA=&lt;?kTransaction?fActionfCREATElDependencies?dNameggame002eNonce?A??7??7?iSignaturexXHIosnrTVbfgUL2jAc13I2i3H9/bEZ5l6/VGx0W4/H0Sh9BCmwDmku7bsApz3ykfwYr9yEiLprS0fL1YztqOzXqk=oTransactionTypen/XoTransactioni__NONCE__?A??7??Sm__SIGNATURE__xXHC5nsdONidVTX4ond7zOJgXvXOOvkQl5DYRNh1MglAEPSMK5NCDKViUfnuaTjIWyTFRLKTpsqatdBIJEghMXVJE=h__TYPE__o/Xo/Transaction&gt;</span>
+<span class="go">[04:53:07 DEBUG   client] {</span>
+<span class="go">  &quot;Transaction&quot;: {</span>
+<span class="go">    &quot;Action&quot;: &quot;CREATE&quot;,</span>
+<span class="go">    &quot;Dependencies&quot;: [],</span>
+<span class="go">    &quot;Name&quot;: &quot;game001&quot;,</span>
+<span class="go">    &quot;Nonce&quot;: 1465966387.019018,</span>
+<span class="go">    &quot;Signature&quot;: &quot;HIosnrTVbfgUL2jAc13I2i3H9/bEZ5l6/VGx0W4/H0Sh9BCmwDmku7bsApz3ykfwYr9yEiLprS0fL1YztqOzXqk=&quot;,</span>
+<span class="go">    &quot;TransactionType&quot;: &quot;/XoTransaction&quot;</span>
+<span class="go">  },</span>
+<span class="go">  &quot;__NONCE__&quot;: 1465966387.031697,</span>
+<span class="go">  &quot;__SIGNATURE__&quot;: &quot;HC5nsdONidVTX4ond7zOJgXvXOOvkQl5DYRNh1MglAEPSMK5NCDKViUfnuaTjIWyTFRLKTpsqatdBIJEghMXVJE=&quot;,</span>
+<span class="go">  &quot;__TYPE__&quot;: &quot;/Xo/Transaction&quot;</span>
+<span class="go">}</span>
+<span class="go">[04:53:07 DEBUG   txn_family] apply (1NNxoo58EsR5cCEACiJf9mvoVLrGF37kvV game001 None)</span>
+<span class="go">[04:53:07 DEBUG   client] get content from url &lt;http://localhost:8800/transaction/12e8a91cb8dcd0fc&gt;</span>
+<span class="go">[04:53:07 DEBUG   client] waiting for transaction 12e8a91cb8dcd0fc to commit</span>
+<span class="go">[04:53:12 DEBUG   client] get content from url &lt;http://localhost:8800/transaction/12e8a91cb8dcd0fc&gt;</span>
+<span class="go">[04:53:12 DEBUG   client] waiting for transaction 12e8a91cb8dcd0fc to commit</span>
+<span class="go">[04:53:17 DEBUG   client] get content from url &lt;http://localhost:8800/transaction/12e8a91cb8dcd0fc&gt;</span>
+<span class="go">[04:53:17 DEBUG   client] waiting for transaction 12e8a91cb8dcd0fc to commit</span>
+<span class="go">[04:53:22 DEBUG   client] get content from url &lt;http://localhost:8800/transaction/12e8a91cb8dcd0fc&gt;</span>
+<span class="go">[04:53:22 DEBUG   client] waiting for transaction 12e8a91cb8dcd0fc to commit</span>
+<span class="go">[04:53:27 DEBUG   client] get content from url &lt;http://localhost:8800/transaction/12e8a91cb8dcd0fc&gt;</span>
+<span class="go">[04:53:27 DEBUG   client] waiting for transaction 12e8a91cb8dcd0fc to commit</span>
+<span class="go">[04:53:32 DEBUG   client] get content from url &lt;http://localhost:8800/transaction/12e8a91cb8dcd0fc&gt;</span>
+</pre></div>
+</div>
+<p>The xo CLI also has a take subcommand for taking a space, a list subcommand for
+viewing the list of games, and a show subcommand for showing the board of a
+specific game.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="bond_family_guide.html" class="btn btn-neutral float-right" title="Bond Family Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tutorial.html" class="btn btn-neutral" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

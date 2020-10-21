@@ -1,0 +1,838 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mktplace.mktplace_client module &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="mktplace package" href="mktplace.html"/>
+        <link rel="next" title="mktplace.mktplace_communication module" href="mktplace.mktplace_communication.html"/>
+        <link rel="prev" title="mktplace.transactions.sell_offer_update module" href="mktplace.transactions.sell_offer_update.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_data_model.html">MarketPlace Data Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_messages.html">MarketPlace Messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_transactions.html">MarketPlace Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_transactions.html#marketplace-transaction-updates">MarketPlace Transaction Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktplace_initial_state.html">MarketPlace Initial State</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">MarketPlace Python API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="mktintegration.html">mktintegration package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mktmain.html">mktmain package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="mktplace.html">mktplace package</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mktplace.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="mktplace.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../mktplace_developers_guide/mktclient.html">MarketPlace Client Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="modules.html">MarketPlace Python API</a> &raquo;</li>
+        
+          <li><a href="mktplace.html">mktplace package</a> &raquo;</li>
+        
+      <li>mktplace.mktplace_client module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/mktplace_api/mktplace.mktplace_client.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-mktplace.mktplace_client">
+<span id="mktplace-mktplace-client-module"></span><h1>mktplace.mktplace_client module<a class="headerlink" href="#module-mktplace.mktplace_client" title="Permalink to this headline">¶</a></h1>
+<p>Helper functions for creating and submitting marketplace transactions</p>
+<dl class="function">
+<dt id="mktplace.mktplace_client.interactive_client">
+<code class="descclassname">mktplace.mktplace_client.</code><code class="descname">interactive_client</code><span class="sig-paren">(</span><em>url=None</em>, <em>name=None</em>, <em>keyfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#interactive_client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.interactive_client" title="Permalink to this definition">¶</a></dt>
+<dd><p>InterativeClient &#8211; utility function to simplify initialization of the
+MarketPlaceClient class in an interactive python shell.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>-- base url for a validator</strong> (<em>url</em>) &#8211; </li>
+<li><strong>-- simple name of a player</strong><strong>, </strong><strong>e.g. 'market'</strong> (<em>name</em>) &#8211; </li>
+<li><strong>-- the name of the file from which keys should be retreived</strong> (<em>keyfile</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mktplace.mktplace_client.sign_message_with_transaction">
+<code class="descclassname">mktplace.mktplace_client.</code><code class="descname">sign_message_with_transaction</code><span class="sig-paren">(</span><em>transaction</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#sign_message_with_transaction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.sign_message_with_transaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signs a transaction message or transaction
+:param transaction dict:
+:param key str: A signing key
+returns message, txnid tuple: The first 16 characters
+of a sha256 hexdigest.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="mktplace.mktplace_client.MarketPlaceClient">
+<em class="property">class </em><code class="descclassname">mktplace.mktplace_client.</code><code class="descname">MarketPlaceClient</code><span class="sig-paren">(</span><em>baseurl</em>, <em>creator=None</em>, <em>name='txnclient'</em>, <em>keystring=None</em>, <em>keyfile=None</em>, <em>state=None</em>, <em>tokenstore=None</em>, <em>session=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mktplace.mktplace_communication.html#mktplace.mktplace_communication.MarketPlaceCommunication" title="mktplace.mktplace_communication.MarketPlaceCommunication"><code class="xref py py-class docutils literal"><span class="pre">mktplace.mktplace_communication.MarketPlaceCommunication</span></code></a></p>
+<p>The MarketPlaceClient class wraps transaction generation and
+submission for the Sawtooth Lake Digital Market.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>baseurl</strong> (<em>url</em>) &#8211; the base URL for a Sawtooth Lake validator that
+supports an HTTP interface</li>
+<li><strong>creator</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the identifier for the participant generating
+transactions</li>
+<li><strong>keystring</strong> (<em>str</em>) &#8211; the wif format key used to sign transactions</li>
+<li><strong>keyfile</strong> (<em>str</em>) &#8211; the name of a file that contains the wif format key</li>
+<li><strong>state</strong> (<a class="reference internal" href="mktplace.mktplace_state.html#mktplace.mktplace_state.MarketPlaceState" title="mktplace.mktplace_state.MarketPlaceState"><em>MarketPlaceState</em></a>) &#8211; ledger state used to test correctness of
+transactions prior to submission</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.create_session">
+<code class="descname">create_session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.create_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.create_session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.delete_session">
+<code class="descname">delete_session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.delete_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.delete_session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.waitforcommit">
+<code class="descname">waitforcommit</code><span class="sig-paren">(</span><em>txnid=None</em>, <em>timetowait=5</em>, <em>iterations=12</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.waitforcommit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.waitforcommit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait until a specified transaction shows up in the ledger&#8217;s committed
+transaction list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>txnid</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the transaction to wait for, the last transaction by
+default</li>
+<li><strong>timetowait</strong> (<em>int</em>) &#8211; time to wait between polling the ledger</li>
+<li><strong>iterations</strong> (<em>int</em>) &#8211; number of iterations to wait before giving up</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.exchange">
+<code class="descname">exchange</code><span class="sig-paren">(</span><em>payer</em>, <em>payee</em>, <em>count</em>, <em>offerids=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.exchange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.exchange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an exchange transaction for moving assets amongst holdings</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>payer</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the holding/liability from which assets will be
+transferred</li>
+<li><strong>payee</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the holding/liability into which assets will be
+transferred</li>
+<li><strong>count</strong> (<em>int</em>) &#8211; the number of assets that will be transferred from
+the payer holding/liability</li>
+<li><strong>offerids</strong> (<em>list of id</em>) &#8211; a list of offer identifiers that transform payer to
+payee transaction</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">exchange transaction id</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.register_asset">
+<code class="descname">register_asset</code><span class="sig-paren">(</span><em>assettype</em>, <em>name=''</em>, <em>description=''</em>, <em>consumable=True</em>, <em>restricted=True</em>, <em>divisible=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.register_asset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.register_asset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register an asset with the ledger.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>assettype</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the asset type identifier</li>
+<li><strong>name</strong> (<em>str</em>) &#8211; an optional name for the asset, unique for the current
+participant</li>
+<li><strong>description</strong> (<em>str</em>) &#8211; an optional description for the asset</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">asset id</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.unregister_asset">
+<code class="descname">unregister_asset</code><span class="sig-paren">(</span><em>objectid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.unregister_asset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.unregister_asset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister an asset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>objectid</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the identifier for the asset object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">unregister transaction identifier</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_asset_name">
+<code class="descname">update_asset_name</code><span class="sig-paren">(</span><em>objectid</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_asset_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_asset_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_asset_description">
+<code class="descname">update_asset_description</code><span class="sig-paren">(</span><em>objectid</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_asset_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_asset_description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.register_assettype">
+<code class="descname">register_assettype</code><span class="sig-paren">(</span><em>name=''</em>, <em>description=''</em>, <em>restricted=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.register_assettype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.register_assettype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register an asset type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; an optional name for the asset type, unique for the
+current participant</li>
+<li><strong>description</strong> (<em>str</em>) &#8211; an optional description for the asset type</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">asset type id</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.unregister_assettype">
+<code class="descname">unregister_assettype</code><span class="sig-paren">(</span><em>objectid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.unregister_assettype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.unregister_assettype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister an asset type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>objectid</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the identifier for the asset type object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">unregister transaction identifier</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_assettype_name">
+<code class="descname">update_assettype_name</code><span class="sig-paren">(</span><em>objectid</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_assettype_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_assettype_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_assettype_description">
+<code class="descname">update_assettype_description</code><span class="sig-paren">(</span><em>objectid</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_assettype_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_assettype_description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.register_exchangeoffer">
+<code class="descname">register_exchangeoffer</code><span class="sig-paren">(</span><em>iliability</em>, <em>oliability</em>, <em>ratio</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.register_exchangeoffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.register_exchangeoffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct and post a transaction to register an exchange offer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>iliability</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; identifier for the input liability (where payment
+is made)</li>
+<li><strong>oliability</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; identifier for the output liability (where goods
+are given)</li>
+<li><strong>name</strong> (<em>str</em>) &#8211; an optional name for the asset type, unique for the
+current participant</li>
+<li><strong>description</strong> (<em>str</em>) &#8211; an optional description for the asset type</li>
+<li><strong>minimum</strong> (<em>int</em>) &#8211; an optional parameter noting the smallest number of
+input assets</li>
+<li><strong>maximum</strong> (<em>int</em>) &#8211; an optional parameter noting the largest number of
+input assets</li>
+<li><strong>execution</strong> (<em>one of 'Any'</em><em>, </em><em>'ExecuteOnce'</em><em>,
+</em><em>'ExecuteOncePerParticipant'</em>) &#8211; optional flag indicating offer execution modifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">exchange offer id</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.unregister_exchangeoffer">
+<code class="descname">unregister_exchangeoffer</code><span class="sig-paren">(</span><em>objectid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.unregister_exchangeoffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.unregister_exchangeoffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Revoke an exchange offer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>objectid</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the identifier for the exchange offer</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">unregister transaction identifier</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_exchangeoffer_name">
+<code class="descname">update_exchangeoffer_name</code><span class="sig-paren">(</span><em>objectid</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_exchangeoffer_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_exchangeoffer_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_exchangeoffer_description">
+<code class="descname">update_exchangeoffer_description</code><span class="sig-paren">(</span><em>objectid</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_exchangeoffer_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_exchangeoffer_description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.register_holding">
+<code class="descname">register_holding</code><span class="sig-paren">(</span><em>account</em>, <em>asset</em>, <em>count</em>, <em>name=''</em>, <em>description=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.register_holding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.register_holding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a holding.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>account</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the identifier the account that scopes the holding</li>
+<li><strong>asset</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the identifier for the asset to store in the holding</li>
+<li><strong>count</strong> (<em>int</em>) &#8211; the initial number of assets to store in the holding</li>
+<li><strong>name</strong> (<em>str</em>) &#8211; an optional name for the holding, unique for the
+current participant</li>
+<li><strong>description</strong> (<em>str</em>) &#8211; an optional description for the holding</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">holding id</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.unregister_holding">
+<code class="descname">unregister_holding</code><span class="sig-paren">(</span><em>objectid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.unregister_holding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.unregister_holding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister a holding.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>objectid</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the identifier for the holding</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">unregister transaction identifier</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_holding_name">
+<code class="descname">update_holding_name</code><span class="sig-paren">(</span><em>objectid</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_holding_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_holding_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_holding_description">
+<code class="descname">update_holding_description</code><span class="sig-paren">(</span><em>objectid</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_holding_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_holding_description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.register_liability">
+<code class="descname">register_liability</code><span class="sig-paren">(</span><em>account</em>, <em>assettype</em>, <em>guarantor</em>, <em>count</em>, <em>name=''</em>, <em>description=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.register_liability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.register_liability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a liability.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>account</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the identifier the account that scopes the liability</li>
+<li><strong>assettype</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the identifier for the asset type to store in the
+liability</li>
+<li><strong>count</strong> (<em>int</em>) &#8211; the initial number of assets to store in the
+liability</li>
+<li><strong>name</strong> (<em>str</em>) &#8211; an optional name for the liability, unique for the
+current participant</li>
+<li><strong>description</strong> (<em>str</em>) &#8211; an optional description for the liability</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">liability id</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.unregister_liability">
+<code class="descname">unregister_liability</code><span class="sig-paren">(</span><em>objectid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.unregister_liability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.unregister_liability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister a liability.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>objectid</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the identifier for the liability</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">unregister transaction identifier</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_liability_name">
+<code class="descname">update_liability_name</code><span class="sig-paren">(</span><em>objectid</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_liability_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_liability_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_liability_description">
+<code class="descname">update_liability_description</code><span class="sig-paren">(</span><em>objectid</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_liability_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_liability_description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.register_participant">
+<code class="descname">register_participant</code><span class="sig-paren">(</span><em>name=''</em>, <em>description=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.register_participant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.register_participant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a participant with the ledger.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; an optional name for the asset, unique for the current
+participant</li>
+<li><strong>description</strong> (<em>str</em>) &#8211; an optional description for the asset</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">participant id</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.unregister_participant">
+<code class="descname">unregister_participant</code><span class="sig-paren">(</span><em>objectid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.unregister_participant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.unregister_participant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister a participant.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>objectid</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the identifier for the participant</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">unregister transaction identifier</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_participant_name">
+<code class="descname">update_participant_name</code><span class="sig-paren">(</span><em>objectid</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_participant_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_participant_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_participant_description">
+<code class="descname">update_participant_description</code><span class="sig-paren">(</span><em>objectid</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_participant_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_participant_description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.register_selloffer">
+<code class="descname">register_selloffer</code><span class="sig-paren">(</span><em>iliability</em>, <em>oholding</em>, <em>ratio</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.register_selloffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.register_selloffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct and post a transaction to register an SellOffer object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>iliability</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; identifier for the input liability (where payment
+is made)</li>
+<li><strong>oholding</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; identifier for the output holding (where goods are
+given)</li>
+<li><strong>name</strong> (<em>str</em>) &#8211; an optional name for the asset type, unique for the
+current participant</li>
+<li><strong>description</strong> (<em>str</em>) &#8211; an optional description for the asset type</li>
+<li><strong>minimum</strong> (<em>int</em>) &#8211; an optional parameter noting the smallest number of
+input assets</li>
+<li><strong>maximum</strong> (<em>int</em>) &#8211; an optional parameter noting the largest number of
+input assets</li>
+<li><strong>execution</strong> (<em>one of 'Any'</em><em>, </em><em>'ExecuteOnce'</em><em>,
+</em><em>'ExecuteOncePerParticipant'</em>) &#8211; optional flag indicating offer execution modifiers</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">exchange offer id</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.unregister_selloffer">
+<code class="descname">unregister_selloffer</code><span class="sig-paren">(</span><em>objectid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.unregister_selloffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.unregister_selloffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Revoke a sell offer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>objectid</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the identifier for the sell offer</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">unregister transaction identifier</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_selloffer_name">
+<code class="descname">update_selloffer_name</code><span class="sig-paren">(</span><em>objectid</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_selloffer_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_selloffer_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_selloffer_description">
+<code class="descname">update_selloffer_description</code><span class="sig-paren">(</span><em>objectid</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_selloffer_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_selloffer_description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.register_account">
+<code class="descname">register_account</code><span class="sig-paren">(</span><em>name=''</em>, <em>description=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.register_account"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.register_account" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register an account with the ledger.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<em>str</em>) &#8211; an optional name for the asset, unique for the current
+participant</li>
+<li><strong>description</strong> (<em>str</em>) &#8211; an optional description for the asset</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">account id</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.unregister_account">
+<code class="descname">unregister_account</code><span class="sig-paren">(</span><em>objectid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.unregister_account"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.unregister_account" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister an account.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>objectid</strong> (<a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the identifier for the account</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">unregister transaction identifier</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="../sawtooth_api/sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id">id</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_account_name">
+<code class="descname">update_account_name</code><span class="sig-paren">(</span><em>objectid</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_account_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_account_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mktplace.mktplace_client.MarketPlaceClient.update_account_description">
+<code class="descname">update_account_description</code><span class="sig-paren">(</span><em>objectid</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mktplace/mktplace_client.html#MarketPlaceClient.update_account_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mktplace.mktplace_client.MarketPlaceClient.update_account_description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mktplace.mktplace_communication.html" class="btn btn-neutral float-right" title="mktplace.mktplace_communication module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mktplace.transactions.sell_offer_update.html" class="btn btn-neutral" title="mktplace.transactions.sell_offer_update module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

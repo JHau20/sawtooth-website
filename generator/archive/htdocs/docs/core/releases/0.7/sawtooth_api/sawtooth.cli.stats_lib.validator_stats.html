@@ -1,0 +1,406 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.cli.stats_lib.validator_stats module &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="sawtooth.cli.stats_lib package" href="sawtooth.cli.stats_lib.html"/>
+        <link rel="next" title="sawtooth.cli.admin module" href="sawtooth.cli.admin.html"/>
+        <link rel="prev" title="sawtooth.cli.stats_lib.topology_stats module" href="sawtooth.cli.stats_lib.topology_stats.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/architecture_overview.html">Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/sawtooth_vagrant.html">Vagrant</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">Distributed Ledger Python API</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="sawtooth.html">sawtooth package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="sawtooth.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sawtooth.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/web_api/index.html">Distributed Ledger Web API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/validator_network_launcher.html">The Validator Network Launcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/workload_simulator.html">The Workload Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/signing_transactions.html">Signing Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="modules.html">Distributed Ledger Python API</a> &raquo;</li>
+        
+          <li><a href="sawtooth.html">sawtooth package</a> &raquo;</li>
+        
+          <li><a href="sawtooth.cli.html">sawtooth.cli package</a> &raquo;</li>
+        
+          <li><a href="sawtooth.cli.stats_lib.html">sawtooth.cli.stats_lib package</a> &raquo;</li>
+        
+      <li>sawtooth.cli.stats_lib.validator_stats module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sawtooth_api/sawtooth.cli.stats_lib.validator_stats.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-sawtooth.cli.stats_lib.validator_stats">
+<span id="sawtooth-cli-stats-lib-validator-stats-module"></span><h1>sawtooth.cli.stats_lib.validator_stats module<a class="headerlink" href="#module-sawtooth.cli.stats_lib.validator_stats" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.validator_stats.StatsClient">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.validator_stats.</code><code class="descname">StatsClient</code><span class="sig-paren">(</span><em>val_id</em>, <em>fullurl</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#StatsClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.StatsClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.validator_stats.StatsClient.stats_request">
+<code class="descname">stats_request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#StatsClient.stats_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.StatsClient.stats_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.cli.stats_lib.validator_stats.ValStatsEx">
+<code class="descclassname">sawtooth.cli.stats_lib.validator_stats.</code><code class="descname">ValStatsEx</code><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.ValStatsEx" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">calculated_validator_stats</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.validator_stats.ValidatorStats">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.validator_stats.</code><code class="descname">ValidatorStats</code><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#ValidatorStats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.ValidatorStats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.validator_stats.ValidatorStats.update_stats">
+<code class="descname">update_stats</code><span class="sig-paren">(</span><em>responding</em>, <em>json_stats</em>, <em>start_time</em>, <em>end_time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#ValidatorStats.update_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.ValidatorStats.update_stats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.validator_stats.ValidatorStats.collect">
+<code class="descname">collect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#ValidatorStats.collect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.ValidatorStats.collect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.validator_stats.</code><code class="descname">ValidatorStatsManager</code><span class="sig-paren">(</span><em>endpoint_manager</em>, <em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#ValidatorStatsManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsModule" title="sawtooth.cli.stats_lib.stats_utils.StatsModule"><code class="xref py py-class docutils literal"><span class="pre">sawtooth.cli.stats_lib.stats_utils.StatsModule</span></code></a></p>
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#ValidatorStatsManager.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager.connect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager.collect">
+<code class="descname">collect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#ValidatorStatsManager.collect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager.collect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager.update_client_list">
+<code class="descname">update_client_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#ValidatorStatsManager.update_client_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager.update_client_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager.collect_stats">
+<code class="descname">collect_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#ValidatorStatsManager.collect_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.ValidatorStatsManager.collect_stats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.cli.stats_lib.validator_stats.SysClient">
+<code class="descclassname">sawtooth.cli.stats_lib.validator_stats.</code><code class="descname">SysClient</code><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.SysClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">sys_client</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.cli.stats_lib.validator_stats.SysBlocks">
+<code class="descclassname">sawtooth.cli.stats_lib.validator_stats.</code><code class="descname">SysBlocks</code><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.SysBlocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">sys_blocks</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.cli.stats_lib.validator_stats.SysTxns">
+<code class="descclassname">sawtooth.cli.stats_lib.validator_stats.</code><code class="descname">SysTxns</code><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.SysTxns" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">sys_txns</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.cli.stats_lib.validator_stats.SysPackets">
+<code class="descclassname">sawtooth.cli.stats_lib.validator_stats.</code><code class="descname">SysPackets</code><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.SysPackets" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">sys_packets</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.cli.stats_lib.validator_stats.SysMsgs">
+<code class="descclassname">sawtooth.cli.stats_lib.validator_stats.</code><code class="descname">SysMsgs</code><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.SysMsgs" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">sys_messages</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.cli.stats_lib.validator_stats.PoetStats">
+<code class="descclassname">sawtooth.cli.stats_lib.validator_stats.</code><code class="descname">PoetStats</code><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.PoetStats" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">poet_stats</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.validator_stats.SystemStats">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.validator_stats.</code><code class="descname">SystemStats</code><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#SystemStats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.SystemStats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsCollector" title="sawtooth.cli.stats_lib.stats_utils.StatsCollector"><code class="xref py py-class docutils literal"><span class="pre">sawtooth.cli.stats_lib.stats_utils.StatsCollector</span></code></a></p>
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.validator_stats.SystemStats.collect_stats">
+<code class="descname">collect_stats</code><span class="sig-paren">(</span><em>stats_clients</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#SystemStats.collect_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.SystemStats.collect_stats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.validator_stats.SystemStats.calculate_stats">
+<code class="descname">calculate_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#SystemStats.calculate_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.SystemStats.calculate_stats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.validator_stats.SystemStats.clear_accumulators">
+<code class="descname">clear_accumulators</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#SystemStats.clear_accumulators"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.SystemStats.clear_accumulators" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.validator_stats.SystemStats.get_stats_as_dict">
+<code class="descname">get_stats_as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#SystemStats.get_stats_as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.SystemStats.get_stats_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.validator_stats.SystemStatsManager">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.validator_stats.</code><code class="descname">SystemStatsManager</code><span class="sig-paren">(</span><em>endpoint_manager</em>, <em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#SystemStatsManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.SystemStatsManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsModule" title="sawtooth.cli.stats_lib.stats_utils.StatsModule"><code class="xref py py-class docutils literal"><span class="pre">sawtooth.cli.stats_lib.stats_utils.StatsModule</span></code></a></p>
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.validator_stats.SystemStatsManager.initialize">
+<code class="descname">initialize</code><span class="sig-paren">(</span><em>module_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#SystemStatsManager.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.SystemStatsManager.initialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.validator_stats.SystemStatsManager.process">
+<code class="descname">process</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/validator_stats.html#SystemStatsManager.process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.validator_stats.SystemStatsManager.process" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sawtooth.cli.admin.html" class="btn btn-neutral float-right" title="sawtooth.cli.admin module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sawtooth.cli.stats_lib.topology_stats.html" class="btn btn-neutral" title="sawtooth.cli.stats_lib.topology_stats module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

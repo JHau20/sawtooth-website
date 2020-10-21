@@ -1,0 +1,846 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sabre Transaction Family &mdash; Sawtooth Sabre v0.4.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sabre Application Developer’s Guide" href="application_developer_guide.html" />
+    <link rel="prev" title="Welcome to Sabre’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Sawtooth Sabre
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.4.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sabre Transaction Family</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#state">State</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#namespaceregistry">NamespaceRegistry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#contractregistry">ContractRegistry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#contract">Contract</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smart-permission">Smart Permission</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smart-permission-list">Smart Permission List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#addressing">Addressing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#transaction-payload-and-execution">Transaction Payload and Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sabrepayload">SabrePayload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#createcontractaction">CreateContractAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deletecontractaction">DeleteContractAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#executecontractaction">ExecuteContractAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#createcontractregistryaction">CreateContractRegistryAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deletecontractregistryaction">DeleteContractRegistryAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updatecontractregistryownersaction">UpdateContractRegistryOwnersAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#createnamespaceregistryaction">CreateNamespaceRegistryAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deletenamespaceregistryaction">DeleteNamespaceRegistryAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updatenamespaceregistryownersaction">UpdateNamespaceRegistryOwnersAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#createnamespaceregistrypermissionaction">CreateNamespaceRegistryPermissionAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deletenamespaceregistrypermissionaction">DeleteNamespaceRegistryPermissionAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#createsmartpermissionaction">CreateSmartPermissionAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updatesmartpermissionaction">UpdateSmartPermissionAction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deletesmartpermissionaction">DeleteSmartPermissionAction</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#transaction-header">Transaction Header</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#inputs-and-outputs">Inputs and Outputs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#family">Family</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="application_developer_guide.html">Sabre Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sabre_cli.html">Sabre CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="smart_permissions.html">Smart Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version_compatibility.html">Sabre and Sawtooth Version Compatibility</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sawtooth Sabre</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Sabre Transaction Family</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/sabre_transaction_family.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sabre-transaction-family">
+<h1>Sabre Transaction Family<a class="headerlink" href="#sabre-transaction-family" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth Sabre is a transaction family which implements on-chain smart
+contracts executed in a WebAssembly virtual machine.</p>
+<p>WebAssembly (Wasm) is a stack-based virtual machine newly implemented in major
+browsers. It is well-suited for the purposes of smart contract execution due to
+its sandboxed design, growing popularity, and tool support.</p>
+</div>
+<div class="section" id="state">
+<h2>State<a class="headerlink" href="#state" title="Permalink to this headline">¶</a></h2>
+<p>All Sabre objects are serialized using Protocol Buffers before being stored in
+state. Theses objects include namespace registries, contract registries, and
+contracts. All objects are stored in a list to handle hash collisions.</p>
+<div class="section" id="namespaceregistry">
+<h3>NamespaceRegistry<a class="headerlink" href="#namespaceregistry" title="Permalink to this headline">¶</a></h3>
+<p>A namespace is a state address prefix used to identify a portion of state.
+The NamespaceRegistry stores the namespace, the owners of the namespace, and the
+permissions given to that namespace. NamespaceRegistry is uniquely identified
+by its namespace.</p>
+<p>Permissions are used to control read and/or write access to the namespace. It
+includes a contract name that correlates to the name of a Sabre contract and
+whether that contract is allowed to read and/or write to that namespace. The
+permission is uniquely identified by the contract_name. If the contract is
+executed but does not have the needed permission to read or write to state,
+the transaction is considered invalid.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">NamespaceRegistry</span> <span class="p">{</span>
+  <span class="kd">message</span> <span class="nc">Permission</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">contract_name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="na">read</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="na">write</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">string</span> <span class="na">namespace</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="kt">string</span> <span class="na">owners</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="k">repeated</span> <span class="n">Permission</span> <span class="na">permissions</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>When the same address is computed for different namespace registries, a
+collision occurs; all colliding namespace registries are stored in at the
+address in a NamespaceRegistryList</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">NamespaceRegistryList</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="n">NamespaceRegistry</span> <span class="na">registries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="contractregistry">
+<span id="tpdoc-contractregistry-label"></span><h3>ContractRegistry<a class="headerlink" href="#contractregistry" title="Permalink to this headline">¶</a></h3>
+<p>ContractRegistry keeps track of versions of the Sabre contract and the list of
+owners. A ContractRegistry is uniquely identified by the name of its contract.</p>
+<p>Versions represent the contract version and include the sha512 hash of the
+contract and the public key of the creator. The hash can be used by a client to
+verify this is the correct version of the contract that should be executed.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">ContractRegistry</span> <span class="p">{</span>
+  <span class="kd">message</span> <span class="nc">Version</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">version</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// used to verify if a contract is the same as the one the client intended</span>
+    <span class="c1">// to invoke</span>
+    <span class="kt">string</span> <span class="na">contract_sha512</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+    <span class="c1">// for client information purposes only - the key that created this</span>
+    <span class="c1">// contract on the chain</span>
+    <span class="kt">string</span> <span class="na">creator</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">Version</span> <span class="na">versions</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="kt">string</span> <span class="na">owners</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>ContractRegistry entries whose addresses collide are stored in a
+ContractRegsitryList.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">ContractRegistryList</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="n">ContractRegistry</span> <span class="na">registries</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="contract">
+<h3>Contract<a class="headerlink" href="#contract" title="Permalink to this headline">¶</a></h3>
+<p>A Contract represents the Sabre smart contract. It is uniquely
+identified by its name and version number. The contract also contains
+the expected inputs and outputs (namespaces) used when executing the
+contract, the public key of the creator, and the compiled wasm code of
+the contract.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">Contract</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">version</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="kt">string</span> <span class="na">inputs</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="kt">string</span> <span class="na">outputs</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">creator</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="kt">bytes</span> <span class="na">contract</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Contracts whose addresses collide are stored in a ContractList.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">ContractList</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="n">Contract</span> <span class="na">contracts</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="smart-permission">
+<h3>Smart Permission<a class="headerlink" href="#smart-permission" title="Permalink to this headline">¶</a></h3>
+<p>A smart permission is an executable piece of WebAssembly code. A smart permission is named,
+and associated with an organization created via the Pike transaction processor.</p>
+<p>A smart permission is defined with three fields:</p>
+<ul class="simple">
+<li><p>name: the name of the smart permission function as defined by a <code class="docutils literal notranslate"><span class="pre">CreateContractAction</span></code></p></li>
+<li><p>function: a byte array that stores the executable code of the smart permission</p></li>
+<li><p>org_id: The identifier of the organization to which the smart permission
+function belongs. This organization is created via the Pike transaction
+processor</p></li>
+</ul>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">SmartPermission</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">org_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">bytes</span> <span class="na">function</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="smart-permission-list">
+<h3>Smart Permission List<a class="headerlink" href="#smart-permission-list" title="Permalink to this headline">¶</a></h3>
+<p>Smart Permissions whose addresses collide are stored in a smart permission
+list. A smart permission list contains one field:</p>
+<ul class="simple">
+<li><p>smart_permissions: a list of smart permissions</p></li>
+</ul>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">SmartPermissionList</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">SmartPermission</span> <span class="na">smart_permissions</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="addressing">
+<h3>Addressing<a class="headerlink" href="#addressing" title="Permalink to this headline">¶</a></h3>
+<p>Sabre objects are stored under 4 namespaces:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">00ec00</span></code>: Namespace for NamespaceRegistry</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">00ec01</span></code>: Namespace for ContractRegistry</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">00ec02</span></code>: Namespace for Contracts</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">00ec03</span></code>: Namespace for Smart Permissions</p></li>
+</ul>
+</div></blockquote>
+<dl class="simple">
+<dt>The remaining 64 characters of the object’s address is the following:</dt><dd><ul class="simple">
+<li><p>NamespaceRegistry: the first 64 characters of the hash of the first 6
+characters of the namespaces.</p></li>
+<li><p>ContractRegistry: the first 64 characters of the hash of the name.</p></li>
+<li><p>Contract: the first 64 characters of the hash of “name,version”</p></li>
+<li><p>Smart Permission: first 6 characters of the hash of the organization ID
+and the first 58 characters of the hash of the smart permission
+name.</p></li>
+</ul>
+</dd>
+</dl>
+<p>For example, the address for a contract with name “example” and version “1.0”
+address would be:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;00ec02&#39;</span> <span class="o">+</span> <span class="n">get_hash</span><span class="p">(</span><span class="s2">&quot;example,1.0&quot;</span><span class="p">)</span>
+<span class="go">&#39;00ec0248a8e00e3fbca83815668ec5eee730023e6eb61b03b54e8cae1729bf5a0bec64&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="transaction-payload-and-execution">
+<h2>Transaction Payload and Execution<a class="headerlink" href="#transaction-payload-and-execution" title="Permalink to this headline">¶</a></h2>
+<p>Below, the different payload actions are defined along with the inputs and
+outputs that are required in the transaction header.</p>
+<div class="section" id="sabrepayload">
+<h3>SabrePayload<a class="headerlink" href="#sabrepayload" title="Permalink to this headline">¶</a></h3>
+<p>A SabrePayload contains an action enum and the associated action payload. This
+allows for the action payload to be dispatched to the appropriate logic.</p>
+<p>Only the defined actions are available and only one action payload should be
+defined in the SabrePayload.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">SabrePayload</span> <span class="p">{</span>
+  <span class="kd">enum</span> <span class="n">Action</span> <span class="p">{</span>
+    <span class="na">ACTION_UNSET</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="na">CREATE_CONTRACT</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="na">DELETE_CONTRACT</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="na">EXECUTE_CONTRACT</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="na">CREATE_CONTRACT_REGISTRY</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="na">DELETE_CONTRACT_REGISTRY</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="na">UPDATE_CONTRACT_REGISTRY_OWNERS</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+    <span class="na">CREATE_NAMESPACE_REGISTRY</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+    <span class="na">DELETE_NAMESPACE_REGISTRY</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+    <span class="na">UPDATE_NAMESPACE_REGISTRY_OWNERS</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+    <span class="na">CREATE_NAMESPACE_REGISTRY_PERMISSION</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="na">DELETE_NAMESPACE_REGISTRY_PERMISSION</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+    <span class="na">CREATE_SMART_PERMISSION</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+    <span class="na">UPDATE_SMART_PERMISSION</span><span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
+    <span class="na">DELETE_SMART_PERMISSION</span> <span class="o">=</span> <span class="mi">14</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">Action</span> <span class="na">action</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="n">CreateContractAction</span> <span class="na">create_contract</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">DeleteContractAction</span> <span class="na">delete_contract</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="n">ExecuteContractAction</span> <span class="na">execute_contract</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+  <span class="n">CreateContractRegistryAction</span> <span class="na">create_contract_registry</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="n">DeleteContractRegistryAction</span> <span class="na">delete_contract_registry</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+  <span class="n">UpdateContractRegistryOwnersAction</span> <span class="na">update_contract_registry_owners</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+
+  <span class="n">CreateNamespaceRegistryAction</span> <span class="na">create_namespace_registry</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+  <span class="n">DeleteNamespaceRegistryAction</span> <span class="na">delete_namespace_registry</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+  <span class="n">UpdateNamespaceRegistryOwnersAction</span> <span class="na">update_namespace_registry_owners</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="n">CreateNamespaceRegistryPermissionAction</span> <span class="na">create_namespace_registry_permission</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+  <span class="n">DeleteNamespaceRegistryPermissionAction</span> <span class="na">delete_namespace_registry_permission</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+
+  <span class="n">CreateSmartPermissionAction</span> <span class="na">create_smart_permission</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
+  <span class="n">UpdateSmartPermissionAction</span> <span class="na">update_smart_permission</span> <span class="o">=</span> <span class="mi">14</span><span class="p">;</span>
+  <span class="n">DeleteSmartPermissionAction</span> <span class="na">delete_smart_permission</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="createcontractaction">
+<h3>CreateContractAction<a class="headerlink" href="#createcontractaction" title="Permalink to this headline">¶</a></h3>
+<p>Creates a contract and updates the associated contract registry.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">CreateContractAction</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">version</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="kt">string</span> <span class="na">inputs</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="kt">string</span> <span class="na">outputs</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="kt">bytes</span> <span class="na">contract</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If a contract with the name and version already exists the transaction is
+considered invalid.</p>
+<p>The contract registry is fetched from state and the transaction signer is
+checked against the owners. If the signer is not an owner, the transaction is
+considered invalid.</p>
+<p>If the contract registry for the contract name does not exist, the transaction
+is invalid.</p>
+<p>Both the new contract and the updated contract registry are set in state.</p>
+<p>The inputs for CreateContractAction must include:</p>
+<ul class="simple">
+<li><p>the address for the new contract</p></li>
+<li><p>the address for the contract registry</p></li>
+</ul>
+<p>The outputs for CreateContractAction must include:</p>
+<ul class="simple">
+<li><p>the address for the new contract</p></li>
+<li><p>the address for the contract registry</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These inputs/outputs are for the general Sawtooth transaction.
+They are required for any transaction, whether it is a Sabre
+transaction or a transaction of any other transaction family.
+However, the inputs/outputs fields in the <code class="docutils literal notranslate"><span class="pre">CreateContractAction</span></code>,
+above,  are not related to the ones listed in the Sawtooth
+transaction. The <code class="docutils literal notranslate"><span class="pre">CreateContractAction</span></code> inputs/outputs are
+used to enforce namespace permissions for the contract.</p>
+</div>
+</div>
+<div class="section" id="deletecontractaction">
+<h3>DeleteContractAction<a class="headerlink" href="#deletecontractaction" title="Permalink to this headline">¶</a></h3>
+<p>Delete a contract and remove its entry from the associated contract registry.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">DeleteContractAction</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">version</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the contract does not already exist or does not have an entry in the contract
+registry, the transactions is invalid.</p>
+<p>If the transaction signer is not an owner, they cannot delete the contract and
+the transaction is invalid.</p>
+<p>The contract is deleted and the version entry is removed from the
+contract entry.</p>
+<p>The inputs for DeleteContractAction must include:</p>
+<ul class="simple">
+<li><p>the address for the contract</p></li>
+<li><p>the address for the contract registry</p></li>
+</ul>
+<p>The outputs for DeleteContractAction must include:</p>
+<ul class="simple">
+<li><p>the address for the contract</p></li>
+<li><p>the address for the contract registry</p></li>
+</ul>
+</div>
+<div class="section" id="executecontractaction">
+<h3>ExecuteContractAction<a class="headerlink" href="#executecontractaction" title="Permalink to this headline">¶</a></h3>
+<p>Execute the contract.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">ExecuteContractAction</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">version</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="kt">string</span> <span class="na">inputs</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="kt">string</span> <span class="na">outputs</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="kt">bytes</span> <span class="na">payload</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The contract is fetched from state. If the contract does not exist, the
+transaction is invalid.</p>
+<p>The inputs and outputs are then checked against the namespace registry
+associated with the first 6 characters of each input or output. If the input
+or output is less than 6 characters the transaction is invalid. For every
+input, the namespace registry must have a read permission for the contract and
+for every output the namespace registry must have a write permission for the
+contract. If either are missing or the namespace registry does not exist,
+the transaction is invalid. The inputs and outputs in the
+<code class="docutils literal notranslate"><span class="pre">ExecuteContractAction</span></code> payload shall not be mistaken with the inputs and
+outputs of the Sawtooth transaction carrying the payload.</p>
+<p>The contract is then loaded into the wasm interpreter and run against the
+provided payload. A result is returned. If the result is 1 the transaction
+is okay and the contract data is stored in state. If the result is -3 the
+transaction is invalid. If any other number result is returned there was an
+internal error.</p>
+<p>The inputs for ExecuteContractAction must include:</p>
+<ul class="simple">
+<li><p>the address for the contract</p></li>
+<li><p>the address for the contract registry</p></li>
+<li><p>any inputs that are required for executing the contract</p></li>
+<li><p>the addresses for every namespace registry required to check the provided
+contract inputs</p></li>
+</ul>
+<p>The outputs for ExecuteContractAction must include:</p>
+<ul class="simple">
+<li><p>the address for the contract</p></li>
+<li><p>the address for the contract registry</p></li>
+<li><p>any outputs that are required for executing the contract</p></li>
+<li><p>the addresses for every namespace registry required to check the provided
+contract outputs</p></li>
+</ul>
+</div>
+<div class="section" id="createcontractregistryaction">
+<h3>CreateContractRegistryAction<a class="headerlink" href="#createcontractregistryaction" title="Permalink to this headline">¶</a></h3>
+<p>Create a contract registry with no version.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">CreateContractRegistryAction</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="kt">string</span> <span class="na">owners</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the contract registry for the provided contract name already exists, then
+the transaction is invalid.</p>
+<p>Only those whose public keys are stored in <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code> are
+allowed to create new contract registries. If the transaction signer is an
+administrator, the new contract registry is set in state. Otherwise, the
+transaction is invalid.</p>
+<p>The new contract registry is created for the name and provided owners. The
+owners should be a list of public keys of users that are allowed to add new
+contract versions, delete old versions, and delete the registry.</p>
+<p>The new contract registry is set in state.</p>
+<p>The inputs for CreateContractRegistryAction must include:</p>
+<ul class="simple">
+<li><p>the address for the contract registry</p></li>
+<li><p>the settings address for <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code></p></li>
+</ul>
+<p>The outputs for CreateContractRegistryAction must include:</p>
+<ul class="simple">
+<li><p>the address for the contract registry</p></li>
+</ul>
+</div>
+<div class="section" id="deletecontractregistryaction">
+<h3>DeleteContractRegistryAction<a class="headerlink" href="#deletecontractregistryaction" title="Permalink to this headline">¶</a></h3>
+<p>Deletes a contract registry if there are no versions.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">DeleteContractRegistryAction</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the contract registry does not exist, the transaction is invalid. If the
+transaction signer is not an owner or does not have their public key in
+<code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code> or the contract registry has any number of
+versions, the transaction is invalid.</p>
+<p>The contract registry is deleted.</p>
+<p>The inputs for DeleteContractRegistryAction must include:</p>
+<ul class="simple">
+<li><p>the address for the contract registry</p></li>
+<li><p>the settings address for <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code></p></li>
+</ul>
+<p>The outputs for DeleteContractRegistryAction must include:</p>
+<ul class="simple">
+<li><p>the address for the contract registry</p></li>
+</ul>
+</div>
+<div class="section" id="updatecontractregistryownersaction">
+<h3>UpdateContractRegistryOwnersAction<a class="headerlink" href="#updatecontractregistryownersaction" title="Permalink to this headline">¶</a></h3>
+<p>Update the contract registry’s owners list.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">UpdateContractRegistryOwnersAction</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="kt">string</span> <span class="na">owners</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the contract registry does not exist or the transaction signer is not an
+owner or does not have their public key in <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code>, the
+transaction is invalid.</p>
+<p>The new owner list will replace the current owner list and the updated contract
+registry is set in state.</p>
+<p>The inputs for UpdateContractRegistryOwnersAction must include:</p>
+<ul class="simple">
+<li><p>the address for the contract registry</p></li>
+<li><p>the settings address for <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code></p></li>
+</ul>
+<p>The outputs for UpdateContractRegistryOwnersAction must include:</p>
+<ul class="simple">
+<li><p>the address for the contract registry</p></li>
+</ul>
+</div>
+<div class="section" id="createnamespaceregistryaction">
+<h3>CreateNamespaceRegistryAction<a class="headerlink" href="#createnamespaceregistryaction" title="Permalink to this headline">¶</a></h3>
+<p>Creates a namespace registry with no permissions.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">CreateNamespaceRegistryAction</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">namespace</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="kt">string</span> <span class="na">owners</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The namespace must be at least 6 characters long. If the namespace registry
+already exists, the transaction is invalid.</p>
+<p>Only those whose public keys are stored in <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code> are
+allowed to create new namespace registries. If the transaction signer is an
+administrator, the new namespace registry is set in state. Otherwise, the
+transaction is invalid.</p>
+<p>The inputs for CreateNamespaceRegistryAction must include:</p>
+<ul class="simple">
+<li><p>the address for the namespace registry</p></li>
+<li><p>the settings address for <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code></p></li>
+</ul>
+<p>The outputs for CreateNamespaceRegistryAction must include:</p>
+<ul class="simple">
+<li><p>the address for the namespace registry</p></li>
+</ul>
+</div>
+<div class="section" id="deletenamespaceregistryaction">
+<h3>DeleteNamespaceRegistryAction<a class="headerlink" href="#deletenamespaceregistryaction" title="Permalink to this headline">¶</a></h3>
+<p>Deletes a namespace registry if it does not contains any permissions.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">DeleteNamespaceRegistryAction</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">namespace</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the namespace registry does not exist or contain permissions, the
+transaction is invalid.</p>
+<p>If the transaction signer is either an owner in the namespace registry or has
+their public key in <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code>, the namespace registry
+is deleted. Otherwise, the transaction is invalid.</p>
+<p>The inputs for DeleteNamespaceRegistryAction must include:</p>
+<ul class="simple">
+<li><p>the address for the namespace registry</p></li>
+<li><p>the settings address for <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code></p></li>
+</ul>
+<p>The outputs for DeleteNamespaceRegistryAction must include:</p>
+<ul class="simple">
+<li><p>the address for the namespace registry</p></li>
+</ul>
+</div>
+<div class="section" id="updatenamespaceregistryownersaction">
+<h3>UpdateNamespaceRegistryOwnersAction<a class="headerlink" href="#updatenamespaceregistryownersaction" title="Permalink to this headline">¶</a></h3>
+<p>Update the namespace registry’s owners list.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">UpdateNamespaceRegistryOwnersAction</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">namespace</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="kt">string</span> <span class="na">owners</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the namespace registry does not exist, the transaction is invalid.</p>
+<p>If the transaction signer is either an owner in the namespace registry or has
+their public key in <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code>, the namespace registry’s
+owners are updated. Otherwise, the transaction is invalid.</p>
+<p>The updated namespace registry is set in state.</p>
+<p>The inputs for UpdateNamespaceRegistryOwnersAction must include:</p>
+<ul class="simple">
+<li><p>the address for the namespace registry</p></li>
+<li><p>the settings address for <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code></p></li>
+</ul>
+<p>The outputs for UpdateNamespaceRegistryOwnersAction must include:</p>
+<ul class="simple">
+<li><p>the address for the namespace registry</p></li>
+</ul>
+</div>
+<div class="section" id="createnamespaceregistrypermissionaction">
+<h3>CreateNamespaceRegistryPermissionAction<a class="headerlink" href="#createnamespaceregistrypermissionaction" title="Permalink to this headline">¶</a></h3>
+<p>Adds a permission entry into a namespace registry for the associated namespace.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">CreateNamespaceRegistryPermissionAction</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">namespace</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">contract_name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="na">read</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="na">write</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the namespace registry does not exist, the transaction is invalid.</p>
+<p>If the transaction signer is either an owner in the namespace registry or has
+their public key in <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code>, a new permission is
+added for the provided contract_name. Otherwise, the transaction is invalid.</p>
+<p>If there is already a permission for the contract_name in the namespace
+registry, the old permission is removed and replaced with the new
+permission.</p>
+<p>The updated namespace registry is set in state.</p>
+<p>The inputs for CreateNamespaceRegistryPermissionAction must include:</p>
+<ul class="simple">
+<li><p>the address for the namespace registry</p></li>
+<li><p>the settings address for <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code></p></li>
+</ul>
+<p>The outputs for CreateNamespaceRegistryPermissionAction must include:</p>
+<ul class="simple">
+<li><p>the address for the namespace registry</p></li>
+</ul>
+</div>
+<div class="section" id="deletenamespaceregistrypermissionaction">
+<h3>DeleteNamespaceRegistryPermissionAction<a class="headerlink" href="#deletenamespaceregistrypermissionaction" title="Permalink to this headline">¶</a></h3>
+<p>Delete a permission entry in a namespace registry for the associated
+namespace.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">DeleteNamespaceRegistryPermissionAction</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">namespace</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">contract_name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the namespace registry does not exist, the transaction is invalid. If the
+transaction signer is either an owner in the namespace registry or has their
+public key in <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code>, the permission for the provided
+contract name is removed. Otherwise, the transaction is invalid.</p>
+<p>The inputs for DeleteNamespaceRegistryPermissionAction must include:</p>
+<ul class="simple">
+<li><p>the address for the namespace registry</p></li>
+<li><p>the settings address for <code class="docutils literal notranslate"><span class="pre">sawtooth.swa.administrators</span></code></p></li>
+</ul>
+<p>The outputs for DeleteNamespaceRegistryPermissionAction must include:</p>
+<ul class="simple">
+<li><p>the address for the namespace registry</p></li>
+</ul>
+</div>
+<div class="section" id="createsmartpermissionaction">
+<h3>CreateSmartPermissionAction<a class="headerlink" href="#createsmartpermissionaction" title="Permalink to this headline">¶</a></h3>
+<p>This operation loads a smart permission into Global State.  The
+bytes provided are compiled smart permission code.  org_id is the Organization
+identifier (smart permissions are organization-specific).  name is the name of the
+function known to application transaction processors using this smart permission
+during that transaction processor’s permission function evaluation. Only an agent
+that holds an admin role for the included organization can create smart
+permissions for the organization. Agents and Organization are created and
+registered by the Pike transaction processor.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">CreateSmartPermissionAction</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">org_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">bytes</span> <span class="na">function</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="updatesmartpermissionaction">
+<h3>UpdateSmartPermissionAction<a class="headerlink" href="#updatesmartpermissionaction" title="Permalink to this headline">¶</a></h3>
+<p>This operation updates the bytes of smart permission function stored in
+Global State. Only an agent that holds an admin role for the included
+organization can update smart permissions for the organization. Agents
+and Organization are created and registered by the Pike transaction processor.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">UpdateSmartPermissionAction</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">org_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">bytes</span> <span class="na">function</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deletesmartpermissionaction">
+<h3>DeleteSmartPermissionAction<a class="headerlink" href="#deletesmartpermissionaction" title="Permalink to this headline">¶</a></h3>
+<p>This operation deletes an existing smart permission function stored in
+Global State. Only an agent that holds an admin role for the included
+organization can delete smart permissions for the organization. Agents
+and Organization are created and registered by the Pike transaction
+processor.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span>  <span class="kd">message</span> <span class="nc">DeleteSmartPermissionAction</span> <span class="p">{</span>
+    <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">string</span> <span class="na">org_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="transaction-header">
+<h2>Transaction Header<a class="headerlink" href="#transaction-header" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="inputs-and-outputs">
+<h3>Inputs and Outputs<a class="headerlink" href="#inputs-and-outputs" title="Permalink to this headline">¶</a></h3>
+<p>The required inputs and outputs are defined for each action payload above.</p>
+</div>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<p>No dependencies.</p>
+</div>
+<div class="section" id="family">
+<h3>Family<a class="headerlink" href="#family" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>family_name: “sabre”</p></li>
+<li><p>family_version: “0.3”</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="application_developer_guide.html" class="btn btn-neutral float-right" title="Sabre Application Developer’s Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Sabre’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Cargill Incorporated
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

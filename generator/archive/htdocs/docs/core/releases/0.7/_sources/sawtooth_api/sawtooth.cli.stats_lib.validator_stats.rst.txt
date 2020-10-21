@@ -1,0 +1,7 @@
+sawtooth\.cli\.stats\_lib\.validator\_stats module
+==================================================
+
+.. automodule:: sawtooth.cli.stats_lib.validator_stats
+    :members:
+    :undoc-members:
+    :show-inheritance:

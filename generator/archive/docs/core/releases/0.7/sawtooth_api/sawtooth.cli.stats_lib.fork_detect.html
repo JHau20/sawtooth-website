@@ -1,0 +1,456 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.cli.stats_lib.fork_detect module &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="sawtooth.cli.stats_lib package" href="sawtooth.cli.stats_lib.html"/>
+        <link rel="next" title="sawtooth.cli.stats_lib.platform_stats module" href="sawtooth.cli.stats_lib.platform_stats.html"/>
+        <link rel="prev" title="sawtooth.cli.stats_lib.endpoint_manager module" href="sawtooth.cli.stats_lib.endpoint_manager.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/architecture_overview.html">Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/sawtooth_vagrant.html">Vagrant</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">Distributed Ledger Python API</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="sawtooth.html">sawtooth package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="sawtooth.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sawtooth.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/web_api/index.html">Distributed Ledger Web API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/validator_network_launcher.html">The Validator Network Launcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/workload_simulator.html">The Workload Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/signing_transactions.html">Signing Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="modules.html">Distributed Ledger Python API</a> &raquo;</li>
+        
+          <li><a href="sawtooth.html">sawtooth package</a> &raquo;</li>
+        
+          <li><a href="sawtooth.cli.html">sawtooth.cli package</a> &raquo;</li>
+        
+          <li><a href="sawtooth.cli.stats_lib.html">sawtooth.cli.stats_lib package</a> &raquo;</li>
+        
+      <li>sawtooth.cli.stats_lib.fork_detect module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sawtooth_api/sawtooth.cli.stats_lib.fork_detect.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-sawtooth.cli.stats_lib.fork_detect">
+<span id="sawtooth-cli-stats-lib-fork-detect-module"></span><h1>sawtooth.cli.stats_lib.fork_detect module<a class="headerlink" href="#module-sawtooth.cli.stats_lib.fork_detect" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockChainBranch">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.fork_detect.</code><code class="descname">BlockChainBranch</code><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockChainBranch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockChainBranch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockChainBranch.assess">
+<code class="descname">assess</code><span class="sig-paren">(</span><em>block</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockChainBranch.assess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockChainBranch.assess" title="Permalink to this definition">¶</a></dt>
+<dd><p>adds block to branch if branch is empty, else....
+adds block to branch if block is a direct predecessor or successor
+returns true if block is added or exact copy already exists in branch
+otherwise returns false</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockChainBranch.block_count">
+<code class="descname">block_count</code><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockChainBranch.block_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockChainBranch.get_stats_as_dict">
+<code class="descname">get_stats_as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockChainBranch.get_stats_as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockChainBranch.get_stats_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockChainBranch.is_active_count">
+<code class="descname">is_active_count</code><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockChainBranch.is_active_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockChainBranch.print_branch">
+<code class="descname">print_branch</code><span class="sig-paren">(</span><em>do_print=False</em>, <em>print_all=False</em>, <em>print_terse=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockChainBranch.print_branch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockChainBranch.print_branch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockChainBranch.remove_head">
+<code class="descname">remove_head</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockChainBranch.remove_head"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockChainBranch.remove_head" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockChainBranch.remove_tail">
+<code class="descname">remove_tail</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockChainBranch.remove_tail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockChainBranch.remove_tail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockChainFork">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.fork_detect.</code><code class="descname">BlockChainFork</code><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockChainFork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockChainFork" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockChainFork.branch_count">
+<code class="descname">branch_count</code><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockChainFork.branch_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockChainFork.build_fork">
+<code class="descname">build_fork</code><span class="sig-paren">(</span><em>active_branch</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockChainFork.build_fork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockChainFork.build_fork" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockChainFork.find_intercept">
+<code class="descname">find_intercept</code><span class="sig-paren">(</span><em>child_fork</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockChainFork.find_intercept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockChainFork.find_intercept" title="Permalink to this definition">¶</a></dt>
+<dd><p>while stepping through child fork branches from head to tail
+if the child fork branch is found in parent fork branches
+if the child fork branch intercept block num is less than
+the parent fork branch intercept block num
+then intercept block num is child intercept block num
+if the child fork branch intercept block num is greater than
+the parent fork branch intercept block num
+then intercept block num is parent intercept block num
+else there is no intercept</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockChainFork.get_stats_as_dict">
+<code class="descname">get_stats_as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockChainFork.get_stats_as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockChainFork.get_stats_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockChainFork.get_successor_info">
+<code class="descname">get_successor_info</code><span class="sig-paren">(</span><em>info_branch</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockChainFork.get_successor_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockChainFork.get_successor_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockClient">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.fork_detect.</code><code class="descname">BlockClient</code><span class="sig-paren">(</span><em>bc_id</em>, <em>full_url</em>, <em>look_back_count=5</em>, <em>validator=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockClient.blocks_request">
+<code class="descname">blocks_request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockClient.blocks_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockClient.blocks_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockClient.get_new_blocks">
+<code class="descname">get_new_blocks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockClient.get_new_blocks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockClient.get_new_blocks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BlockClient.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>block_response</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BlockClient.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BlockClient.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BranchManager">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.fork_detect.</code><code class="descname">BranchManager</code><span class="sig-paren">(</span><em>endpoint_manager</em>, <em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BranchManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BranchManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sawtooth.cli.stats_lib.stats_utils.html#sawtooth.cli.stats_lib.stats_utils.StatsModule" title="sawtooth.cli.stats_lib.stats_utils.StatsModule"><code class="xref py py-class docutils literal"><span class="pre">sawtooth.cli.stats_lib.stats_utils.StatsModule</span></code></a></p>
+<dl class="attribute">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BranchManager.branch_count">
+<code class="descname">branch_count</code><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BranchManager.branch_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BranchManager.branch_update">
+<code class="descname">branch_update</code><span class="sig-paren">(</span><em>block</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BranchManager.branch_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BranchManager.branch_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>for each branch in branches....
+assess whether the current block should be added to the branch
+if the block is not found in any branches, create a new one and add it</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BranchManager.collect">
+<code class="descname">collect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BranchManager.collect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BranchManager.collect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BranchManager.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BranchManager.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BranchManager.connect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BranchManager.fork_count">
+<code class="descname">fork_count</code><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BranchManager.fork_count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BranchManager.trim_empty_branches">
+<code class="descname">trim_empty_branches</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BranchManager.trim_empty_branches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BranchManager.trim_empty_branches" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BranchManager.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BranchManager.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BranchManager.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BranchManager.update_client_list">
+<code class="descname">update_client_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BranchManager.update_client_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BranchManager.update_client_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BranchManagerStats">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.fork_detect.</code><code class="descname">BranchManagerStats</code><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BranchManagerStats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BranchManagerStats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BranchManagerStats.get_stats_as_dict">
+<code class="descname">get_stats_as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BranchManagerStats.get_stats_as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BranchManagerStats.get_stats_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.BranchManagerStats.print_stats">
+<code class="descname">print_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#BranchManagerStats.print_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.BranchManagerStats.print_stats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.cli.stats_lib.fork_detect.ForkManagerStats">
+<em class="property">class </em><code class="descclassname">sawtooth.cli.stats_lib.fork_detect.</code><code class="descname">ForkManagerStats</code><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#ForkManagerStats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.ForkManagerStats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.ForkManagerStats.get_stats_as_dict">
+<code class="descname">get_stats_as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#ForkManagerStats.get_stats_as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.ForkManagerStats.get_stats_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.cli.stats_lib.fork_detect.ForkManagerStats.print_stats">
+<code class="descname">print_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/cli/stats_lib/fork_detect.html#ForkManagerStats.print_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.cli.stats_lib.fork_detect.ForkManagerStats.print_stats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sawtooth.cli.stats_lib.platform_stats.html" class="btn btn-neutral float-right" title="sawtooth.cli.stats_lib.platform_stats module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sawtooth.cli.stats_lib.endpoint_manager.html" class="btn btn-neutral" title="sawtooth.cli.stats_lib.endpoint_manager module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

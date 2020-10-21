@@ -1,0 +1,501 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Developing DApps &mdash; Sawtooth Seth latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'latest',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Seth Transaction Family Specification" href="seth_transaction_family_spec.html" />
+    <link rel="prev" title="Permissions" href="permissions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth Seth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="permissions.html">Permissions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Developing DApps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#starting-seth-rpc">Starting Seth RPC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploying-contracts">Deploying Contracts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#calling-contracts">Calling Contracts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#subscribing-to-logs">Subscribing to Logs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#external-libraries">External Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#supported-ethereum-json-rpc-api-methods">Supported Ethereum JSON-RPC API Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#compatibility-notes">Compatibility Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#method-list">Method List</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="seth_transaction_family_spec.html">Seth Transaction Family Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_reference.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">Sawtooth Seth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Developing DApps</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/dapps.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="developing-dapps">
+<h1>Developing DApps<a class="headerlink" href="#developing-dapps" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="starting-seth-rpc">
+<h2>Starting Seth RPC<a class="headerlink" href="#starting-seth-rpc" title="Permalink to this headline">¶</a></h2>
+<p>In order to develop full-stack applications with Seth, we need a way to
+programatically interact with Seth. Sawtooth provides a general-purpose REST
+API for submitting queries about the network and generic transactions that
+could be used for this. However, this would require a complete understanding of
+the <a class="reference internal" href="seth_transaction_family_spec.html"><span class="doc">Seth Transaction Family Spec</span></a>. Instead,
+Seth comes with a web server that implements much of the <a class="reference external" href="https://github.com/ethereum/wiki/wiki/JSON-RPC">Ethereum JSON-RPC
+API</a>, the <a class="reference internal" href="cli_reference.html#seth-rpc-reference-label"><span class="std std-ref">seth-rpc</span></a> server. This interface
+provides a much higher level interface for developing Seth applications and is
+the recommended interface.</p>
+<p>The <code class="docutils literal"><span class="pre">seth-rpc</span></code> server accepts HTTP POST requests from clients, communicates
+with a sawtooth-validator to fulfill the request, and then responds with the
+appropriate output. This means you must have a running validator for it to
+connect to.</p>
+<p>First, start a validator and confirm that is is running, as described in
+<a class="reference internal" href="getting_started.html"><span class="doc">Getting Started</span></a>. Next, you can start the <code class="docutils literal"><span class="pre">seth-rpc</span></code>
+server from the seth container with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ seth-rpc --connect tcp://validator:4004 --bind 0.0.0.0:3030
+</pre></div>
+</div>
+<p>This will start the server which will begin listening for requests.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">You should only bind seth-rpc to 0.0.0.0 for development purposes as it starts
+listening for requests on all interfaces. This is a potential security risk in
+production environments.</p>
+</div>
+<p>You can now submit requests to the server. If you are using the docker-compose
+environment described earlier, port 3030 in the seth container should be
+forwarded to your host&#8217;s port, so you can send requests from your host. For
+example, you can get the current block number by running curl from a prompt on
+your host with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ curl -d &#39;{&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;method&quot;: &quot;eth_blockNumber&quot;, &quot;id&quot;: 1}&#39; -H &quot;Content-Type: application/json&quot; localhost:3030
+</pre></div>
+</div>
+</div>
+<div class="section" id="deploying-contracts">
+<h2>Deploying Contracts<a class="headerlink" href="#deploying-contracts" title="Permalink to this headline">¶</a></h2>
+<p>Contracts can also be deployed using the <code class="docutils literal"><span class="pre">seth-rpc</span></code> server. In order to
+submit any requests that reference specific accounts, that account must be
+unlocked when <code class="docutils literal"><span class="pre">seth-rpc</span></code> is started. Only external accounts that have been
+imported with the <code class="docutils literal"><span class="pre">seth</span></code> client may be unlocked by the <code class="docutils literal"><span class="pre">seth-rpc</span></code> server.</p>
+<p>To unlock an account when starting <code class="docutils literal"><span class="pre">seth-rpc</span></code> pass the <code class="docutils literal"><span class="pre">--unlock</span></code> flag and
+the alias of the account to unlock:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ seth-rpc --unlock {alias}
+</pre></div>
+</div>
+<p>To deploy a contract using the unlocked account, you must know its address. If
+you do not already know the address, you can get it with <code class="docutils literal"><span class="pre">seth</span> <span class="pre">account</span> <span class="pre">list</span></code>.
+Once you have the account address, you can deploy a contract through the
+<code class="docutils literal"><span class="pre">seth-rpc</span></code> server with the <code class="docutils literal"><span class="pre">eth_sendTransaction</span></code> method:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ curl -d &#39;{&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;method&quot;: &quot;eth_sendTransaction&quot;, &quot;id&quot;: 2, &quot;params&quot;: [{&quot;from&quot;: &quot;0x{address}&quot;, &quot;data&quot;: &quot;0x{contract}&quot;}]}&#39; -H &quot;Content-Type: application/json&quot; localhost:3030
+</pre></div>
+</div>
+<p>You should substitute <code class="docutils literal"><span class="pre">{address}</span></code> with the address of the unlocked account and
+<code class="docutils literal"><span class="pre">{contract}</span></code> with the contract deployment code. The return value of this call
+is the id of the contract creation transaction with a <code class="docutils literal"><span class="pre">0x</span></code> prefix. You can use
+this id to get the result of the contract creation transaction with
+<code class="docutils literal"><span class="pre">eth_getTransactionReceipt</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ curl -d &#39;{&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;method&quot;: &quot;eth_getTransactionReceipt&quot;, &quot;id&quot;: 3, &quot;params&quot;: [0x{transaction-id}}&quot;, &quot;data&quot;: &quot;0x{contract}&quot;}]}&#39; -H &quot;Content-Type: application/json&quot; localhost:3030
+</pre></div>
+</div>
+<p>where <code class="docutils literal"><span class="pre">{transaction-id}</span></code> should  be substituted with the transaction id
+returned by <code class="docutils literal"><span class="pre">eth_sendTransaction</span></code>. The return value is a JSON object. If the
+transaction was processed successfully, the object will contain an
+<code class="docutils literal"><span class="pre">&quot;address&quot;</span></code> key that references the address of the newly created contract.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal"><span class="pre">eth_sendTransaction</span></code> method is used for both contract creation and
+contract calls. If the parameters passed include a <code class="docutils literal"><span class="pre">&quot;to&quot;</span></code> key, then the
+transaction is treated as a contract call. Otherwise it is treated as a
+contract creation.</p>
+</div>
+</div>
+<div class="section" id="calling-contracts">
+<h2>Calling Contracts<a class="headerlink" href="#calling-contracts" title="Permalink to this headline">¶</a></h2>
+<p>Once a contract has been deployed, it can be called with the
+<code class="docutils literal"><span class="pre">eth_sendTransaction</span></code> method:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ curl -d &#39;{&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;method&quot;: &quot;eth_sendTransaction&quot;, &quot;id&quot;: 2, &quot;params&quot;: [{&quot;from&quot;: &quot;0x{address}&quot;, &quot;data&quot;: &quot;0x{input}&quot;, &quot;to&quot;: &quot;0x{contract}&quot;}]}&#39; -H &quot;Content-Type: application/json&quot; localhost:3030
+</pre></div>
+</div>
+<p>You should substitute <code class="docutils literal"><span class="pre">{address}</span></code> with the address of the unlocked account,
+<code class="docutils literal"><span class="pre">{input}</span></code> with the input data for the contract and <code class="docutils literal"><span class="pre">{contract}</span></code> with the
+address of the deployed contract. The return value of this call is the id of the
+contract call transaction, which can be used with the
+<code class="docutils literal"><span class="pre">eth_getTransactionReceipt</span></code> method to get the result of the transaction.</p>
+</div>
+<div class="section" id="subscribing-to-logs">
+<h2>Subscribing to Logs<a class="headerlink" href="#subscribing-to-logs" title="Permalink to this headline">¶</a></h2>
+<p>Logs that are generated by contracts, such as Solidity contracts that define and
+call any <code class="docutils literal"><span class="pre">event</span></code> types, can be subscribed to with the <code class="docutils literal"><span class="pre">eth_newFilter</span></code>
+method. More information on how to subscribe to logs generated by Solidity can
+be found in the <a class="reference external" href="https://solidity.readthedocs.io/en/develop/abi-spec.html#events">Solidity Documentation on Events</a>.</p>
+</div>
+<div class="section" id="external-libraries">
+<h2>External Libraries<a class="headerlink" href="#external-libraries" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">seth-rpc</span></code> server implements many of the methods defined by the <a class="reference external" href="https://github.com/ethereum/wiki/wiki/JSON-RPC">Ethereum
+JSON-RPC API</a>. There are several libraries and tools for building applications
+that depend on this interface, such as <a class="reference external" href="https://www.npmjs.com/package/web3">Web3 JS</a> and <a class="reference external" href="http://truffleframework.com/">Truffle</a>, and it should
+be possible to use parts of these libraries with <code class="docutils literal"><span class="pre">seth-rpc</span></code>.</p>
+<p>As of this writing, compatibility these libraries has not been tested in any
+way. Help with testing and improving compatibility with these libraries is
+welcome, including sharing information about how the <code class="docutils literal"><span class="pre">seth-rpc</span></code> server is
+being used, submitting issues that are encountered, and submitting pull requests
+that improve the <code class="docutils literal"><span class="pre">seth-rpc</span></code> server&#8217;s compatibility with these libraries.</p>
+</div>
+<div class="section" id="supported-ethereum-json-rpc-api-methods">
+<h2>Supported Ethereum JSON-RPC API Methods<a class="headerlink" href="#supported-ethereum-json-rpc-api-methods" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="compatibility-notes">
+<h3>Compatibility Notes<a class="headerlink" href="#compatibility-notes" title="Permalink to this headline">¶</a></h3>
+<p>When requesting block objects by hash, the block hash must be 64 bytes instead
+of 32 bytes.</p>
+<p>When returning block objects, the following fields always have the zero value,
+since they do not have a corollary in Sawtooth:</p>
+<ul class="simple">
+<li>&#8220;nonce&#8221;</li>
+<li>&#8220;sha3Uncles&#8221;</li>
+<li>&#8220;logsBloom&#8221;</li>
+<li>&#8220;transactionsRoot&#8221;</li>
+<li>&#8220;receiptsRoot&#8221;</li>
+<li>&#8220;miner&#8221;</li>
+<li>&#8220;difficulty&#8221;</li>
+<li>&#8220;totalDifficulty&#8221;</li>
+<li>&#8220;extraData&#8221;</li>
+<li>&#8220;size&#8221;</li>
+<li>&#8220;gasLimit&#8221;</li>
+<li>&#8220;uncles&#8221;</li>
+</ul>
+<p>When returning receipt objects, &#8220;cumulativeGasUsed&#8221; is always 0.</p>
+<p>When returning log objects, &#8220;logIndex&#8221; is always 0 and &#8220;removed&#8221; is always
+false.</p>
+</div>
+<div class="section" id="method-list">
+<h3>Method List<a class="headerlink" href="#method-list" title="Permalink to this headline">¶</a></h3>
+<p>The following JSON-RPC calls are supported. See the <a class="reference external" href="https://github.com/ethereum/wiki/wiki/JSON-RPC">Ethereum JSON-RPC API</a>
+spec for details on parameters and return values.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="53%" />
+<col width="12%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Support</th>
+<th class="head">Additional Notes</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>eth_accounts</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>eth_blockNumber</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>eth_gasPrice</td>
+<td>Partial</td>
+<td>Always returns 0</td>
+</tr>
+<tr class="row-odd"><td>eth_getBalance</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>eth_getBlockByHash</td>
+<td>Partial</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>eth_getBlockByNumber</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>eth_getBlockTransactionCountByHash</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>eth_getBlockTransactionCountByNumber</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>eth_getCode</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>eth_getFilterChanges</td>
+<td>Partial</td>
+<td>For pending transaction
+filters, transactions that
+committed transactions are
+returned instead.</td>
+</tr>
+<tr class="row-even"><td>eth_getFilterLogs</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>eth_getLogs</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>eth_getStorageAt</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>eth_getTransactionByBlockHashAndIndex</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>eth_getTransactionByBlockNumberAndIndex</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>eth_getTransactionByHash</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>eth_getTransactionCount</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>eth_getTransactionReceipt</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>eth_newBlockFilter</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>eth_newFilter</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>eth_newPendingTransactionFilter</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>eth_sendTransaction</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>eth_sign</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>eth_uninstallFilter</td>
+<td>Full</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>net_listening</td>
+<td>Partial</td>
+<td>Always returns true</td>
+</tr>
+<tr class="row-odd"><td>net_peerCount</td>
+<td>Partial</td>
+<td>Always returns 0</td>
+</tr>
+<tr class="row-even"><td>net_version</td>
+<td>Partial</td>
+<td>Always returns 19</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="seth_transaction_family_spec.html" class="btn btn-neutral float-right" title="Seth Transaction Family Specification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="permissions.html" class="btn btn-neutral float-left" title="Permissions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2018, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

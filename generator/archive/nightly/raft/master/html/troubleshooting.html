@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Troubleshooting and Common Issues &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Community" href="community.html" />
+    <link rel="prev" title="Configuring and Deploying Sawtooth Raft" href="configuring_deploying.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuring_deploying.html">Configuring and Deploying Sawtooth Raft</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting and Common Issues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#no-leader-is-elected">No Leader Is Elected</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting-connectivity">Troubleshooting Connectivity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#validator-peering-configuration">Validator Peering Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#max-peers-exceeded">Max Peers Exceeded</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting-sawtooth-consensus-raft-peers-setting">Troubleshooting <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.raft.peers</span></code> Setting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#list-format">List Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="contents.html">Docs</a> &raquo;</li>
+        
+      <li>Troubleshooting and Common Issues</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/troubleshooting.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="troubleshooting-and-common-issues">
+<h1>Troubleshooting and Common Issues<a class="headerlink" href="#troubleshooting-and-common-issues" title="Permalink to this headline">¶</a></h1>
+<p>Below is a list of common issues that are seen when attempting to start and run
+a Sawtooth Raft network. If you encounter any problems, please consult this list
+to see if your issue is discussed. If you are still having problems, find out
+how to get help in the <a class="reference internal" href="community/join_the_discussion.html"><span class="doc">Joining the Discussion</span></a> section.</p>
+<div class="section" id="no-leader-is-elected">
+<h2>No Leader Is Elected<a class="headerlink" href="#no-leader-is-elected" title="Permalink to this headline">¶</a></h2>
+<p>When a Sawtooth Raft network is unable to elect a leader, one or more nodes will
+continuously start new elections. The logs will probably look similar to this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">INFO  | raft::raft:833       | [10283357333226787554] became follower at term 1</span>
+<span class="go">INFO  | raft::raft:1120      | [10283357333226787554] is starting a new election at term 1</span>
+<span class="go">INFO  | raft::raft:848       | [10283357333226787554] became candidate at term 2</span>
+<span class="go">INFO  | raft::raft:950       | [10283357333226787554] received MsgRequestVoteResponse from 10283357333226787554 at term 2</span>
+<span class="go">INFO  | raft::raft:927       | [10283357333226787554] [logterm: 1, index: 2] sent MsgRequestVote request to 6831727538046783822 at term 2</span>
+<span class="go">INFO  | raft::raft:1120      | [10283357333226787554] is starting a new election at term 2</span>
+<span class="go">INFO  | raft::raft:848       | [10283357333226787554] became candidate at term 3</span>
+<span class="go">INFO  | raft::raft:950       | [10283357333226787554] received MsgRequestVoteResponse from 10283357333226787554 at term 3</span>
+<span class="go">INFO  | raft::raft:927       | [10283357333226787554] [logterm: 1, index: 2] sent MsgRequestVote request to 6831727538046783822 at term 3</span>
+<span class="go">INFO  | raft::raft:1120      | [10283357333226787554] is starting a new election at term 3</span>
+<span class="go">INFO  | raft::raft:848       | [10283357333226787554] became candidate at term 4</span>
+<span class="go">INFO  | raft::raft:950       | [10283357333226787554] received MsgRequestVoteResponse from 10283357333226787554 at term 4</span>
+<span class="go">INFO  | raft::raft:927       | [10283357333226787554] [logterm: 1, index: 2] sent MsgRequestVote request to 6831727538046783822 at term 4</span>
+<span class="go">INFO  | raft::raft:1120      | [10283357333226787554] is starting a new election at term 4</span>
+<span class="go">INFO  | raft::raft:848       | [10283357333226787554] became candidate at term 5</span>
+<span class="go">INFO  | raft::raft:950       | [10283357333226787554] received MsgRequestVoteResponse from 10283357333226787554 at term 5</span>
+<span class="go">INFO  | raft::raft:927       | [10283357333226787554] [logterm: 1, index: 2] sent MsgRequestVote request to 6831727538046783822 at term 5</span>
+<span class="go">...</span>
+</pre></div>
+</div>
+<p>This is usually a sign that the nodes are not peering properly. If you encounter
+this problem, see <a class="reference internal" href="#troubleshooting-connectivity">Troubleshooting Connectivity</a> for tips on how to resolve it.</p>
+</div>
+<div class="section" id="troubleshooting-connectivity">
+<h2>Troubleshooting Connectivity<a class="headerlink" href="#troubleshooting-connectivity" title="Permalink to this headline">¶</a></h2>
+<p>If a Raft network is not setup correctly, some nodes may not be able to
+communicate; this is detrimental to the functionality of the Raft algorithm, so
+it is usually quite obvious when there is a connectivity issue. Common signs
+that some nodes are unable to communicate with each other include:</p>
+<ul class="simple">
+<li><p>Failing to elect or keep a leader</p></li>
+<li><p>One or more nodes not making progress with the rest of the network</p></li>
+<li><p>Nodes repeatedly sending a message without a response</p></li>
+</ul>
+<p>Below are a few common causes for node connectivity issues and how to resolve
+them.</p>
+<div class="section" id="validator-peering-configuration">
+<h3>Validator Peering Configuration<a class="headerlink" href="#validator-peering-configuration" title="Permalink to this headline">¶</a></h3>
+<p>If you are experiencing network peering problems, the first thing to do is to
+verify that the validators are configured to peer properly. If the validators
+are not started up with static peering or the list of all existing validator
+endpoints is not supplied to a validator, some nodes will not be able to
+communicate. See the section on <a class="reference internal" href="configuring_deploying.html#validator-peering-requirements-label"><span class="std std-ref">Validator Peering Requirements</span></a> to
+ensure that you are providing the correct parameters for the validators to peer
+properly.</p>
+</div>
+<div class="section" id="max-peers-exceeded">
+<h3>Max Peers Exceeded<a class="headerlink" href="#max-peers-exceeded" title="Permalink to this headline">¶</a></h3>
+<p>If you are running a large Raft network (around 10 nodes), you might see an
+error in one or more of the validators’ logs indicating that a peering request
+was rejected because the validator has reached its maximum number of peers. The
+message will look like this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">Unable to successfully peer with connection_id: 208f8143e9f50aeacf7583bc599e2e4dcd206acfbd0499de6f9b05ac49ad44fcc8a993dea62c43fdbdfe78e19e41c4efec6f7b6e0c2a9a1722b8d008bf97ad91, due to At maximum configured number of peers: 10 Rejecting peering request from tcp://03a56e9f368a:8800.</span>
+</pre></div>
+</div>
+<p>To resolve this issue, you will need to increase the peer limit for all
+validators. If you are starting the validator from the command line, you can
+specify the maximum number of peer connections with the
+<code class="docutils literal notranslate"><span class="pre">--maximum_peer_connectivity</span></code> option (see the <a class="reference external" href="https://sawtooth.hyperledger.org/docs/core/nightly/master/cli/sawtooth-validator.html">sawtooth-validator
+documentation</a> for more details).</p>
+</div>
+</div>
+<div class="section" id="troubleshooting-sawtooth-consensus-raft-peers-setting">
+<h2>Troubleshooting <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.raft.peers</span></code> Setting<a class="headerlink" href="#troubleshooting-sawtooth-consensus-raft-peers-setting" title="Permalink to this headline">¶</a></h2>
+<p>When the <code class="docutils literal notranslate"><span class="pre">sawtooth.consensus.raft.peers</span></code> on-chain setting is not configured
+properly, the Raft network will fail to work. This may result in nodes not
+communicating properly, or it may cause one or more nodes to crash with a
+message like:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">raft_1              | thread &#39;main&#39; panicked at &#39;Peer id not valid hex: OddLength&#39;, libcore/result.rs:945:5</span>
+<span class="go">raft_1              | note: Run with `RUST_BACKTRACE=1` for a backtrace.</span>
+</pre></div>
+</div>
+<p>Here are some tips for troubleshooting this setting.</p>
+<div class="section" id="list-format">
+<h3>List Format<a class="headerlink" href="#list-format" title="Permalink to this headline">¶</a></h3>
+<p>The list of peers must be a valid JSON formatted list, similar to this:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sawtooth.consensus.raft.peers=[&quot;dc26a7099e81bb02869cc8ae57da030fbe4cf276b38ab37d2cc815fec63a14ab&quot;,&quot;df8e8388ced559bd35c2b05199ca9f8fbebb420979715003355dcb7363016c1d&quot;]</span>
+</pre></div>
+</div>
+<p>If your list looks like the above but you are still encountering errors, try
+escaping the quotes in the JSON string:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sawtooth.consensus.raft.peers=[\&quot;dc26a7099e81bb02869cc8ae57da030fbe4cf276b38ab37d2cc815fec63a14ab\&quot;,\&quot;df8e8388ced559bd35c2b05199ca9f8fbebb420979715003355dcb7363016c1d\&quot;]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="community.html" class="btn btn-neutral float-right" title="Community" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="configuring_deploying.html" class="btn btn-neutral float-left" title="Configuring and Deploying Sawtooth Raft" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2018, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

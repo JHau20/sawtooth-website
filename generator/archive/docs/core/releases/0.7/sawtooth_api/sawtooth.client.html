@@ -1,0 +1,768 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.client module &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="sawtooth package" href="sawtooth.html"/>
+        <link rel="next" title="sawtooth.config module" href="sawtooth.config.html"/>
+        <link rel="prev" title="sawtooth.manage.wrap module" href="sawtooth.manage.wrap.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/architecture_overview.html">Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/sawtooth_vagrant.html">Vagrant</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">Distributed Ledger Python API</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="sawtooth.html">sawtooth package</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="sawtooth.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="sawtooth.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/web_api/index.html">Distributed Ledger Web API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/validator_network_launcher.html">The Validator Network Launcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/workload_simulator.html">The Workload Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_developers_guide/signing_transactions.html">Signing Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="modules.html">Distributed Ledger Python API</a> &raquo;</li>
+        
+          <li><a href="sawtooth.html">sawtooth package</a> &raquo;</li>
+        
+      <li>sawtooth.client module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sawtooth_api/sawtooth.client.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-sawtooth.client">
+<span id="sawtooth-client-module"></span><h1>sawtooth.client module<a class="headerlink" href="#module-sawtooth.client" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="sawtooth.client.TransactionStatus">
+<em class="property">class </em><code class="descclassname">sawtooth.client.</code><code class="descname">TransactionStatus</code><a class="reference internal" href="../_modules/sawtooth/client.html#TransactionStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.TransactionStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">enum.IntEnum</span></code></p>
+<dl class="attribute">
+<dt id="sawtooth.client.TransactionStatus.committed">
+<code class="descname">committed</code><em class="property"> = 200</em><a class="headerlink" href="#sawtooth.client.TransactionStatus.committed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.client.TransactionStatus.pending">
+<code class="descname">pending</code><em class="property"> = 302</em><a class="headerlink" href="#sawtooth.client.TransactionStatus.pending" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.client.TransactionStatus.not_found">
+<code class="descname">not_found</code><em class="property"> = 404</em><a class="headerlink" href="#sawtooth.client.TransactionStatus.not_found" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.client.TransactionStatus.internal_server_error">
+<code class="descname">internal_server_error</code><em class="property"> = 500</em><a class="headerlink" href="#sawtooth.client.TransactionStatus.internal_server_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.client.TransactionStatus.server_busy">
+<code class="descname">server_busy</code><em class="property"> = 503</em><a class="headerlink" href="#sawtooth.client.TransactionStatus.server_busy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.client.TransactionStatus.__eq__">
+<code class="descname">__eq__</code><em class="property"> = &lt;method-wrapper '__eq__' of type object at 0x904b40&gt;</em><a class="headerlink" href="#sawtooth.client.TransactionStatus.__eq__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.client.TransactionStatus.__ge__">
+<code class="descname">__ge__</code><em class="property"> = &lt;method-wrapper '__ge__' of type object at 0x904b40&gt;</em><a class="headerlink" href="#sawtooth.client.TransactionStatus.__ge__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.client.TransactionStatus.__gt__">
+<code class="descname">__gt__</code><em class="property"> = &lt;method-wrapper '__gt__' of type object at 0x904b40&gt;</em><a class="headerlink" href="#sawtooth.client.TransactionStatus.__gt__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.client.TransactionStatus.__hash__">
+<code class="descname">__hash__</code><a class="headerlink" href="#sawtooth.client.TransactionStatus.__hash__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.client.TransactionStatus.__le__">
+<code class="descname">__le__</code><em class="property"> = &lt;method-wrapper '__le__' of type object at 0x904b40&gt;</em><a class="headerlink" href="#sawtooth.client.TransactionStatus.__le__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.client.TransactionStatus.__lt__">
+<code class="descname">__lt__</code><em class="property"> = &lt;method-wrapper '__lt__' of type object at 0x904b40&gt;</em><a class="headerlink" href="#sawtooth.client.TransactionStatus.__lt__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.client.TransactionStatus.__ne__">
+<code class="descname">__ne__</code><em class="property"> = &lt;method-wrapper '__ne__' of type object at 0x904b40&gt;</em><a class="headerlink" href="#sawtooth.client.TransactionStatus.__ne__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.client.UpdateBatch">
+<em class="property">class </em><code class="descclassname">sawtooth.client.</code><code class="descname">UpdateBatch</code><span class="sig-paren">(</span><em>client</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#UpdateBatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.UpdateBatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="docutils">
+<dt>Helper object to allow group updates submission using</dt>
+<dd><p class="first">sawtooth client.</p>
+<dl class="docutils">
+<dt>the block</dt>
+<dd><dl class="first last docutils">
+<dt>try:</dt>
+<dd>client.start_batch()
+client.send_txn(...)
+client.send_txn(...)
+client.send_batch()</dd>
+<dt>except:</dt>
+<dd>client.reset_batch()</dd>
+</dl>
+</dd>
+</dl>
+<p>becomes:</p>
+<blockquote class="last">
+<div><dl class="docutils">
+<dt>with UpdateBatch(client) as _:</dt>
+<dd>client.send_txn()
+client.send_txn()</dd>
+</dl>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth.client.SawtoothClient">
+<em class="property">class </em><code class="descclassname">sawtooth.client.</code><code class="descname">SawtoothClient</code><span class="sig-paren">(</span><em>base_url</em>, <em>store_name=None</em>, <em>name='SawtoothClient'</em>, <em>txntype_name=None</em>, <em>msgtype_name=None</em>, <em>keystring=None</em>, <em>keyfile=None</em>, <em>disable_client_validation=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="sawtooth.client.SawtoothClient.base_url">
+<code class="descname">base_url</code><a class="headerlink" href="#sawtooth.client.SawtoothClient.base_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth.client.SawtoothClient.last_transaction_id">
+<code class="descname">last_transaction_id</code><a class="headerlink" href="#sawtooth.client.SawtoothClient.last_transaction_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.start_batch">
+<code class="descname">start_batch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.start_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.start_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a batch of updates to be sent in a single transaction to
+the validator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.reset_batch">
+<code class="descname">reset_batch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.reset_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.reset_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abandon the current batch.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.send_batch">
+<code class="descname">send_batch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.send_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.send_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the current batch of transactions to the Validator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">transaction_id of the update transaction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.send_update">
+<code class="descname">send_update</code><span class="sig-paren">(</span><em>updates</em>, <em>dependencies=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.send_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.send_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send an update or list of updates to the validator or add them to an
+existing batch.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>updates</strong> &#8211; single update or list of updates to be sent.</li>
+<li><strong>dependencies</strong> &#8211; ids of transactions dependencies.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">transaction_id if update is sent, None if it is added to a batch.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.sendtxn">
+<code class="descname">sendtxn</code><span class="sig-paren">(</span><em>txntype_name</em>, <em>msgtype_name</em>, <em>minfo</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.sendtxn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.sendtxn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a transaction for the update, wrap it in a message with all
+of the appropriate signatures and post it to the validator. Will
+not work with UpdatesTransaction txn families but will work with
+txn families in Arcade.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.get_status">
+<code class="descname">get_status</code><span class="sig-paren">(</span><em>timeout=30</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.get_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.get_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the status for a validator</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timeout</strong> &#8211; Number of seconds to wait for response before determining
+reqeuest has timed out</td>
+</tr>
+</tbody>
+</table>
+<p>Returns: A dictionary of status items</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.get_store_list">
+<code class="descname">get_store_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.get_store_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.get_store_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of stores on the validator.</p>
+<p>Returns: A list of store names</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.get_store_by_name">
+<code class="descname">get_store_by_name</code><span class="sig-paren">(</span><em>txn_type_or_name</em>, <em>key=None</em>, <em>block_id=None</em>, <em>delta=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.get_store_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.get_store_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic store retrieval method of any named store.  This allows
+complete flexibility in specifying the parameters to the HTTP
+request.</p>
+<p>This function is used when the client has not been configured, on
+construction, to use a specific store or you wish to access a
+different store than the object was initially configured to use.</p>
+<p>This function should only be used when you need absolute control
+over the HTTP request being made to the store.  Otherwise, the
+store convenience methods should be used instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>txn_type_or_name</strong> &#8211; A transaction class or object (i.e., derived
+from transaction.Transaction) that can be used to infer the
+store name or a string with the store name.</li>
+<li><strong>key</strong> &#8211; (optional) The object to retrieve from the store.  If None,
+will returns keys instead of objects.</li>
+<li><strong>block_id</strong> &#8211; (optional) The block ID to use as ending or starting
+point of retrieval.</li>
+<li><strong>delta</strong> &#8211; (optional) A flag to indicate of only a delta should be
+returned.  If key is None, this is ignored.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Either a list of keys, a dictionary of name/value pairs that
+represent one or more objects, or a delta representation of the
+store.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Reference the Sawtooth Lake Web API documentation for the
+behavior for the key/block_id/delta combinations.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.get_store">
+<code class="descname">get_store</code><span class="sig-paren">(</span><em>key=None</em>, <em>block_id=None</em>, <em>delta=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.get_store"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.get_store" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic store retrieval method.  This allows complete flexibility
+in specifying the parameters to the HTTP request.</p>
+<p>This function should only be used when you need absolute control
+over the HTTP request being made to the store.  Otherwise, the
+store convenience methods should be used instead.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; (optional) The object to retrieve from the store.  If None,
+will returns keys instead of objects.</li>
+<li><strong>block_id</strong> &#8211; (optional) The block ID to use as ending or starting
+point of retrieval.</li>
+<li><strong>delta</strong> &#8211; (optional) A flag to indicate of only a delta should be
+returned.  If key is None, this is ignored.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Either a list of keys, a dictionary of name/value pairs that
+represent one or more objects, or a delta representation of the
+store.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Reference the Sawtooth Lake Web API documentation for the
+behavior for the key/block_id/delta combinations.</p>
+<p>Raises ClientException if the client object was not created with a
+store name or transaction type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.get_store_keys">
+<code class="descname">get_store_keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.get_store_keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.get_store_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the list of keys (object IDs) from the store.</p>
+<p>Returns: A list of keys for the store</p>
+<p>Raises ClientException if the client object was not created with a
+store name or transaction type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.get_all_store_objects">
+<code class="descname">get_all_store_objects</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.get_all_store_objects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.get_all_store_objects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve all of the objects for a particular store</p>
+<dl class="docutils">
+<dt>Returns: A dictionary mapping object keys to objects (dictionaries</dt>
+<dd>of key/value pairs).</dd>
+</dl>
+<p>Raises ClientException if the client object was not created with a
+store name or transaction type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.get_store_object_for_key">
+<code class="descname">get_store_object_for_key</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.get_store_object_for_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.get_store_object_for_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the object from the store corresponding to the key</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> &#8211; The object to retrieve from the store</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dictionary of name/value pairs that represent the object
+associated with the key provided.</td>
+</tr>
+</tbody>
+</table>
+<p>Raises ClientException if the client object was not created with a
+store name or transaction type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.get_store_delta_for_block">
+<code class="descname">get_store_delta_for_block</code><span class="sig-paren">(</span><em>block_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.get_store_delta_for_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.get_store_delta_for_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the store for just the block provided.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>block_id</strong> &#8211; The ID of the block for which store should be returned.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dictionary that represents the store.</td>
+</tr>
+</tbody>
+</table>
+<p>Raises ClientException if the client object was not created with a
+store name or transaction type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.get_store_objects_through_block">
+<code class="descname">get_store_objects_through_block</code><span class="sig-paren">(</span><em>block_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.get_store_objects_through_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.get_store_objects_through_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve all of the objects for a particular store up through the
+block requested.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>block_id</strong> &#8211; The ID of the last block to look for objects.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returns: A dictionary mapping object keys to objects (dictionaries</dt>
+<dd>of key/value pairs).</dd>
+</dl>
+<p>Raises ClientException if the client object was not created with a
+store name or transaction type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.get_block_list">
+<code class="descname">get_block_list</code><span class="sig-paren">(</span><em>count=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.get_block_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.get_block_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the list of block IDs, ordered from newest to oldest.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>count</strong> &#8211; (optional) If not None, specifies the maximum number of
+blocks to return.</td>
+</tr>
+</tbody>
+</table>
+<p>Returns: A list of block IDs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.get_block">
+<code class="descname">get_block</code><span class="sig-paren">(</span><em>block_id</em>, <em>field=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.get_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.get_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve information about a specific block, returning all information
+or, if provided, a specific field from the block.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>block_id</strong> &#8211; The ID of the block to retrieve</li>
+<li><strong>field</strong> &#8211; (optional) If not None, specifies the name of the field to
+retrieve from the block.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dictionary of block data, if field is None
+The value for the field, if field is not None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.get_transaction_list">
+<code class="descname">get_transaction_list</code><span class="sig-paren">(</span><em>block_count=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.get_transaction_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.get_transaction_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the list of transaction IDs, ordered from newest to oldest.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>block_count</strong> &#8211; (optional) If not None, specifies the maximum number
+of blocks to return transaction IDs for.</td>
+</tr>
+</tbody>
+</table>
+<p>Returns: A list of transaction IDs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.get_transaction">
+<code class="descname">get_transaction</code><span class="sig-paren">(</span><em>transaction_id</em>, <em>field=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.get_transaction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.get_transaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve information about a specific transaction, returning all
+information or, if provided, a specific field from the transaction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>transaction_id</strong> &#8211; The ID of the transaction to retrieve</li>
+<li><strong>field</strong> &#8211; (optional) If not None, specifies the name of the field to
+retrieve from the transaction.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dictionary of transaction data, if field is None
+The value for the field, if field is not None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.get_transaction_status">
+<code class="descname">get_transaction_status</code><span class="sig-paren">(</span><em>transaction_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.get_transaction_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.get_transaction_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves that status of a transaction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>transaction_id</strong> &#8211; The ID of the transaction to check.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">One of the TransactionStatus values (committed, etc.)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.forward_message">
+<code class="descname">forward_message</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.forward_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.forward_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post a gossip message to the ledger with the intent of having the
+receiving validator forward it to all of its peers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msg</strong> &#8211; The message to send.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returns: The parsed response, which is typically the encoding of</dt>
+<dd>the original message.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth.client.SawtoothClient.wait_for_commit">
+<code class="descname">wait_for_commit</code><span class="sig-paren">(</span><em>txnid=None</em>, <em>timetowait=5</em>, <em>iterations=12</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sawtooth/client.html#SawtoothClient.wait_for_commit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth.client.SawtoothClient.wait_for_commit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait until a specified transaction shows up in the ledger&#8217;s committed
+transaction list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>txnid</strong> (<a class="reference internal" href="sawtooth.simulator.html#sawtooth.simulator.PendingTransaction.id" title="sawtooth.simulator.PendingTransaction.id"><em>id</em></a>) &#8211; the transaction to wait for, the last transaction by
+default</li>
+<li><strong>timetowait</strong> (<em>int</em>) &#8211; time to wait between polling the ledger</li>
+<li><strong>iterations</strong> (<em>int</em>) &#8211; number of iterations to wait before giving up</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sawtooth.config.html" class="btn btn-neutral float-right" title="sawtooth.config module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sawtooth.manage.wrap.html" class="btn btn-neutral" title="sawtooth.manage.wrap module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

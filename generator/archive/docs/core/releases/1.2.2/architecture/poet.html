@@ -1,0 +1,858 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PoET 1.0 Specification &mdash; Sawtooth v1.2.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Transaction Family Specifications" href="../transaction_family_specifications.html" />
+    <link rel="prev" title="Events and Transaction Receipts" href="events_and_transactions_receipts.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../architecture.html">Architecture Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="global_state.html">Global State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transactions_and_batches.html">Transactions and Batches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="journal.html">Journal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html">Transaction Scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_network.html">Sawtooth Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="permissioning_requirement.html">Permissioning Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="injecting_batches_block_validation_rules.html">Injecting Batches and On-Chain Block Validation Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_and_transactions_receipts.html">Events and Transaction Receipts</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/pbft/releases/v1.2.2/architecture.html">PBFT Consensus</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">PoET 1.0 Consensus</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#definitions">Definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#p2p-poet-sgx-enclave-specifications">P2P PoET SGX Enclave Specifications</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#generatesignupdata-opkhash"><code class="docutils literal notranslate"><span class="pre">generateSignUpData(OPKhash)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unsealsignupdata-sealedsignupdata"><code class="docutils literal notranslate"><span class="pre">unsealSignUpData(sealedSignUpData)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#createwaittimer-localmean-waitcertid-n"><code class="docutils literal notranslate"><span class="pre">createWaitTimer(localMean,</span> <span class="pre">WaitCertId_n)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#createwaitcertificate-blockdigest"><code class="docutils literal notranslate"><span class="pre">createWaitCertificate(blockDigest)</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#population-size-and-local-mean-computation">Population Size and Local Mean Computation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#z-test">z-test</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../architecture.html">Architecture Guide</a> &raquo;</li>
+        
+      <li>PoET 1.0 Specification</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/architecture/poet.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="poet-1-0-specification">
+<h1>PoET 1.0 Specification<a class="headerlink" href="#poet-1-0-specification" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The Proof of Elapsed Time (PoET) Consensus method offers a solution to the
+Byzantine Generals Problem that utilizes a “trusted execution environment” to
+improve on the efficiency of present solutions such as Proof-of-Work. The
+initial reference implementation of PoET released to Hyperledger was written for
+an abstract TEE to keep it flexible to any TEE implementation. This
+specification defines a concrete implementation for SGX. The following
+presentation assumes the use of Intel SGX as the trusted execution environment.</p>
+<p>At a high-level, PoET stochastically elects individual peers to execute requests
+at a given target rate. Individual peers sample an exponentially distributed
+random variable and wait for an amount of time dictated by the sample. The peer
+with the smallest sample wins the election. Cheating is prevented through the
+use of a trusted execution environment, identity verification and blacklisting
+based on asymmetric key cryptography, and an additional set of election
+policies.</p>
+<p>For the purpose of achieving distributed consensus efficiently,
+a good lottery function has several characteristics:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Fairness: The function should distribute leader election
+across the broadest possible population of participants.</p></li>
+<li><p>Investment: The cost of controlling the leader election
+process should be proportional to the value gained from it.</p></li>
+<li><p>Verification: It should be relatively simple for all participants
+to verify that the leader was legitimately selected.</p></li>
+</ul>
+</div></blockquote>
+<p>PoET is designed to achieve these goals using new secure CPU instructions
+which are becoming widely available in consumer and enterprise processors.
+PoET uses these features to ensure the safety and randomness of the leader
+election process without requiring the costly investment of power and specialized
+hardware inherent in most “proof” algorithms.</p>
+<p>Sawtooth includes an implementation which simulates the secure instructions.
+This should make it easier for the community to work with the software but
+also forgoes Byzantine fault tolerance.</p>
+<p>PoET essentially works as follows:</p>
+<ol class="arabic simple">
+<li><p>Every validator requests a wait time from an enclave (a trusted function).</p></li>
+<li><p>The validator with the shortest wait time for a particular transaction
+block is elected the leader.</p></li>
+<li><p>One function, such as “CreateTimer”, creates a timer for a transaction
+block that is guaranteed to have been created by the enclave.</p></li>
+<li><p>Another function, such as “CheckTimer”, verifies that the timer
+was created by the enclave. If the timer has expired, this function
+creates an attestation that can be used to verify that the validator did
+wait the allotted time before claiming the leadership role.</p></li>
+</ol>
+<p>The PoET leader election algorithm meets the criteria for a good lottery
+algorithm. It randomly distributes leadership election across the entire
+population of validators with distribution that is similar to what is
+provided by other lottery algorithms. The probability of election
+is proportional to the resources contributed (in this case, resources
+are general purpose processors with a trusted execution environment).
+An attestation of execution provides information for verifying that the
+certificate was created within the enclave (and that the validator waited
+the allotted time). Further, the low cost of participation increases the
+likelihood that the population of validators will be large, increasing
+the robustness of the consensus algorithm.</p>
+</div>
+<div class="section" id="definitions">
+<h2>Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline">¶</a></h2>
+<p>The following terms are used throughout the PoET spec and are defined here for
+reference.</p>
+<dl>
+<dt>Enclave</dt><dd><p>A protected area in an application’s address space which provides
+confidentiality and integrity even in the presence of privileged malware.</p>
+<p>The term can also be used to refer to a specific enclave that has been
+initialized with a specific code and data.</p>
+</dd>
+<dt>Basename</dt><dd><p>A service provider base name. In our context the service provider
+entity is the distributed ledger network. Each distinct network should have
+its own Basename and Service Provider ID (see EPID and IAS specifications).</p>
+</dd>
+<dt>EPID</dt><dd><p>An anonymous credential system. See E. Brickell and Jiangtao Li: “Enhanced
+Privacy ID from Bilinear Pairing for Hardware Authentication and Attestation”.
+IEEE International Conference on Social Computing / IEEE International
+Conference on Privacy, Security, Risk and Trust. 2010.</p>
+</dd>
+<dt>EPID Pseudonym</dt><dd><p>Pseudonym of an SGX platform used in linkable quotes.  It is
+part of the IAS attestation response according to IAS API specifications. It
+is computed as a function of the service Basename (Sawtooth network, in our
+case) and the device’s EPID private key.</p>
+</dd>
+<dt>PPK, PSK</dt><dd><p>PoET ECC public and private key created by the PoET enclave.</p>
+</dd>
+<dt>IAS Report Key</dt><dd><p>IAS public key used to sign attestation reports as specified
+in the current IAS API Guide.</p>
+</dd>
+<dt>PSEmanifest</dt><dd><p>Platform Services Enclave manifest. It is part of an SGX quote
+for enclaves using Platform Services like Trusted Time and Monotonic
+Counters.</p>
+</dd>
+<dt>AEP</dt><dd><p>Attestation evidence payload sent to IAS (see IAS API specifications).
+Contains JSON encodings of the quote, an optional PSEmanifest, and an optional
+nonce.</p>
+</dd>
+<dt>AVR</dt><dd><p>Attestation verification report, the response to a quote attestation
+request from the IAS. It is verified with the IAS Report Key. It contains
+a copy of the input AEP.</p>
+</dd>
+<dt><img class="math" src="../_images/math/5754d267e9090748e41fd23aa2e223fe7c936766.png" alt="WaitCertId_{n}"/></dt><dd><p>The <img class="math" src="../_images/math/5a939c5280da7202ca4531f175a7780ad5e1f80a.png" alt="n"/>-th or most recent WaitCertificate digest. We
+assume <img class="math" src="../_images/math/40888a10e8006da12baad88b5bb1eb02fa2f9ad3.png" alt="n &gt;= 0"/> represents the current number of blocks in the ledger.
+WaitCertId is a function of the contents of the Wait Certificate. For
+instance the SHA256 digest of the WaitCertificate ECDSA signature.</p>
+</dd>
+<dt>OPK, OSK</dt><dd><p>Originator ECDSA public and private key. These are the higher level
+ECDSA keys a validator uses to sign messages.</p>
+</dd>
+<dt>OPKhash</dt><dd><p>SHA256 digest of OPK</p>
+</dd>
+<dt>blockDigest</dt><dd><p>ECDSA signature with OSK of SHA256 digest of transaction block
+that the validator wants to commit.</p>
+</dd>
+<dt>localMean</dt><dd><p>Estimated wait time local mean.</p>
+</dd>
+<dt>MCID</dt><dd><p>SGX Monotonic Counter identifier.</p>
+</dd>
+<dt>SealKey</dt><dd><p>The SGX enclave Seal Key. It is used by the SGX <code class="docutils literal notranslate"><span class="pre">sgx_seal_data()</span></code>
+and <code class="docutils literal notranslate"><span class="pre">sgx_unseal_data()</span></code> functions.</p>
+</dd>
+<dt>PoetSealKey</dt><dd><p>The Poet SGX enclave Seal Key. It must be obtained through the
+SGX SDK <code class="docutils literal notranslate"><span class="pre">`sgx_get_key()</span></code> function passing a fixed 32 byte constant as
+<code class="docutils literal notranslate"><span class="pre">key_id</span></code> argument.</p>
+</dd>
+<dt>PoET_MRENCLAVE</dt><dd><p>Public MRENCLAVE (see SGX SDK documentation) value of valid
+PoET SGX enclave.</p>
+</dd>
+<dt><img class="math" src="../_images/math/005d514f53776d6f3c2de334821e7ddd6dac3a99.png" alt="T_{WT}"/></dt><dd><p>WaitTimer timeout in seconds. A validator has at most <img class="math" src="../_images/math/005d514f53776d6f3c2de334821e7ddd6dac3a99.png" alt="T_{WT}"/>
+seconds to consume a WaitTimer, namely obtain a WaitCertificate on it after
+the WaitTimer itself has expired.</p>
+</dd>
+<dt><img class="math" src="../_images/math/52ddc0cde6d632f631533173562fe3ca375b1f32.png" alt="K"/></dt><dd><p>Number of blocks a validator can commit before having to sign-up with
+a fresh PPK.</p>
+</dd>
+<dt><img class="math" src="../_images/math/d520a12f1579170834c32ad5f656de081bbb36fe.png" alt="c"/></dt><dd><p>The “sign-up delay”, i.e., number of blocks a validator has to wait after
+sign-up before starting to participate in elections.</p>
+</dd>
+<dt>minDuration</dt><dd><p>Minimum duration for a WaitTimer.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="p2p-poet-sgx-enclave-specifications">
+<h2>P2P PoET SGX Enclave Specifications<a class="headerlink" href="#p2p-poet-sgx-enclave-specifications" title="Permalink to this headline">¶</a></h2>
+<p>The P2P PoET SGX enclave uses the following data structures:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>WaitTimer {
+  double requestTime
+  double duration
+  byte[32] WaitCertId:sub:`n`
+  double localMean
+}
+
+WaitCertificate {
+  WaitTimer waitTimer
+  byte[32] nonce
+  byte[] blockDigest
+}
+</pre></div>
+</div>
+<p>It uses the following global variables:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WaitTimer</span> <span class="n">activeWT</span> <span class="c1"># The unique active WaitTimer object</span>
+<span class="n">byte</span><span class="p">[</span><span class="mi">64</span><span class="p">]</span> <span class="n">PPK</span>
+<span class="n">byte</span><span class="p">[</span><span class="mi">64</span><span class="p">]</span> <span class="n">PSK</span>
+<span class="n">MCID</span> <span class="c1"># SGX Monotonic Counter Identifier</span>
+</pre></div>
+</div>
+<p>It exports the following functions:</p>
+<div class="section" id="generatesignupdata-opkhash">
+<h3><code class="docutils literal notranslate"><span class="pre">generateSignUpData(OPKhash)</span></code><a class="headerlink" href="#generatesignupdata-opkhash" title="Permalink to this headline">¶</a></h3>
+<p><strong>Returns</strong></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">byte[64]  PPK</span>
+<span class="go">byte[432] report # SGX Report Data Structure</span>
+<span class="go">byte[256] PSEmanifest</span>
+<span class="go">byte[672] sealedSignUpData # (PPK, PSK, MCID) tuple encrypted with SealKey</span>
+</pre></div>
+</div>
+<p><strong>**Parameters**</strong></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">byte[32] OPKhash # SHA256 digest of OPK</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<ol class="arabic simple">
+<li><p>Generate fresh ECC key pair (PPK, PSK)</p></li>
+<li><p>Create monotonic counter and save its identifier as MCID.</p></li>
+<li><p>Use the SGX <code class="docutils literal notranslate"><span class="pre">sgx_seal_data()</span></code> function to encrypt (PPK, PSK, MCID) with
+SealKey (using MRENCLAVE policy)
+<img class="math" src="../_images/math/a3c4b69c9131e05be72a51932486956b6971672e.png" alt="sealedSignupData = \textnormal{AES-GCM}_{SealKey} (PPK | PSK | MCID)"/></p></li>
+<li><p>Create SGX enclave report, store <code class="docutils literal notranslate"><span class="pre">SHA256(OPKhash|PPK)</span></code> in <code class="docutils literal notranslate"><span class="pre">report_data</span></code>
+field.</p></li>
+<li><p>Get SGX PSE manifest: PSEManifest.</p></li>
+<li><p>Save (PPK, PSK, MCID) as global variables within the enclave.</p></li>
+<li><p>Set active WaitTimer instance activeWT to NULL.</p></li>
+<li><p>Return (PPK, report, PSEmanifest, sealedSignUpData).</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Implementation Note:</strong> Normally, there is a maximum number of monotonic
+counters that can be created. One way to deal with this limitation is to
+destroy a previously created monotonic counter if this is not the first time
+the generateSignupData function was called.</p>
+</div>
+</div>
+<div class="section" id="unsealsignupdata-sealedsignupdata">
+<h3><code class="docutils literal notranslate"><span class="pre">unsealSignUpData(sealedSignUpData)</span></code><a class="headerlink" href="#unsealsignupdata-sealedsignupdata" title="Permalink to this headline">¶</a></h3>
+<p><strong>Returns</strong></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">byte[64] PPK</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">byte[672] sealedSignUpData # (PPK, PSK, MCID) tuple encrypted with SealKey</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<ol class="arabic simple">
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">sgx_unseal_data()</span></code> function to decrypt sealedSignUpData into (PPK,
+PSK, MCID) with SealKey (using MRENCLAVE policy).</p></li>
+<li><p>Save (PPK, PSK, MCID) as global variables within the enclave.</p></li>
+<li><p>Set global active WaitTimer instance activeWT to NULL.</p></li>
+<li><p>Return PPK</p></li>
+</ol>
+</div>
+<div class="section" id="createwaittimer-localmean-waitcertid-n">
+<h3><code class="docutils literal notranslate"><span class="pre">createWaitTimer(localMean,</span> <span class="pre">WaitCertId_n)</span></code><a class="headerlink" href="#createwaittimer-localmean-waitcertid-n" title="Permalink to this headline">¶</a></h3>
+<p><strong>Returns</strong></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">WaitTimer waitTimer</span>
+<span class="go">byte[64] signature # ECDSA PSK signature of waitTimer</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">double localMean # Estimated wait time local mean</span>
+<span class="go">byte[32] WaitCertId_n # SHA256 digest of WaitCertificate owner&#39;s ECDSA</span>
+<span class="gp">                      #</span> signature
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<ol class="arabic simple">
+<li><p>Increment monotonic counter MCID and store value in global variable
+counterValue.</p></li>
+<li><p>Compute <img class="math" src="../_images/math/5728b1832b0660d5757cba8fd3aefab80d14d480.png" alt="tag = \textnormal{AES-CMAC}_{PoetSealKey} (WaitCertId_{n})"/>.</p></li>
+<li><p>Convert lowest 64-bits of tag into double precision number in <img class="math" src="../_images/math/8027137b3073a7f5ca4e45ba2d030dcff154eca4.png" alt="[0, 1]"/>:
+tagd.</p></li>
+<li><p>Compute <img class="math" src="../_images/math/e362e90d98bd2e5d4374375b0dcbcdfa8133cd09.png" alt="duration = minimumDuration - localMean * log(tagd)"/>.</p></li>
+<li><p>Set requestTime equal to SGX Trusted Time value.</p></li>
+<li><p>Create WaitTimer object <img class="math" src="../_images/math/1e98eea65eaae28af3415aa86b7b352550aa356a.png" alt="waitTimer = WaitTimer(requestTime, duration,
+WaitCertId_{n}, localMean)"/>.</p></li>
+<li><p>Compute ECDSA signature of waitTimer using PSK: <img class="math" src="../_images/math/be992ee8a566f05b7760fb9032de81f23aa8dd50.png" alt="signature =
+ECDSA_{PSK} (waitTimer)"/>.</p></li>
+<li><p>Set global active WaitTimer instance activeWT equal to waitTimer.</p></li>
+<li><p>Return (waitTimer, signature).</p></li>
+</ol>
+</div>
+<div class="section" id="createwaitcertificate-blockdigest">
+<h3><code class="docutils literal notranslate"><span class="pre">createWaitCertificate(blockDigest)</span></code><a class="headerlink" href="#createwaitcertificate-blockdigest" title="Permalink to this headline">¶</a></h3>
+<p><strong>Returns</strong></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">WaitCertificate waitCertificate</span>
+<span class="go">byte[64] signature # ECDSA PSK signature of waitCertificate</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">byte[] blockDigest # ECDSA signature with originator private key of SHA256</span>
+<span class="gp">                   #</span> digest of transaction block that the validator wants
+<span class="gp">                   #</span> to commit
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<ol class="arabic simple">
+<li><p>If activeWT is equal to NULL, exit.</p></li>
+<li><p>Read monotonic counter MCID and compare its value to global variable
+counterValue. If values do not match, exit.</p></li>
+<li><p>Read SGX Trusted time into variable currentTime. If currentTime is smaller
+than <img class="math" src="../_images/math/e05af26e16d776f9324a63bc847a94f2c489e825.png" alt="waitTimer.requestTime + waitTimer.duration"/>, exit (the duration
+has not elapsed yet).</p></li>
+<li><p>If currentTime is larger than <img class="math" src="../_images/math/f1030249a4ff59107578fd989a4eb6f0cbe4b688.png" alt="waitTimer.requestTime +
+waitTimer.duration+T_{WT}"/>, exit.</p></li>
+<li><p>Generate random nonce.</p></li>
+<li><p>Create WaitCertificate object <img class="math" src="../_images/math/08175f0db013d79987ee2940bf64a9cdd1f8fdaa.png" alt="waitCertificate =
+WaitCertificate(waitTimer, nonce, blockDigest)"/>.</p></li>
+<li><p>Compute ECDSA signature of waitCertificate using PSK: <img class="math" src="../_images/math/187d37d750b90159037d193084dbe0e7165bb542.png" alt="signature =
+ECDSA_{PSK} (waitCertificate)"/>.</p></li>
+<li><p>Set activeWT to NULL.</p></li>
+<li><p>Return (waitCertificate, signature).</p></li>
+</ol>
+<div class="section" id="sign-up-phase">
+<h4>Sign-up Phase<a class="headerlink" href="#sign-up-phase" title="Permalink to this headline">¶</a></h4>
+<p>A participant joins as a validator by downloading the PoET SGX enclave and a
+SPID certificate for the blockchain. The client side of the validator runs the
+following sign-up procedure:</p>
+<ol class="arabic">
+<li><p>Start PoET SGX enclave: ENC.</p></li>
+<li><p>Generate sign-up data: <img class="math" src="../_images/math/12591629cedd68c8091fea62fae3a2f4b60369b4.png" alt="(PPK, report, PSEmanifest, sealedSignUpData) =
+\textnormal{ENC.generateSignUpData(OPKhash)}"/> The <code class="docutils literal notranslate"><span class="pre">report_data</span></code> (512 bits)
+field in the report body includes the SHA256 digest of (OPKhash | PPK).</p></li>
+<li><p>Ask SGX Quoting Enclave (QE) for linkable quote on the report (using the
+Sawtooth network’s Basename).</p></li>
+<li><p>If Self Attestation is enabled in IAS API: request attestation of linkable
+quote and PSE manifest to IAS. The AEP sent to IAS must contain:</p>
+<ul class="simple">
+<li><p>isvEnclaveQuote: base64 encoded quote</p></li>
+<li><p>pseManifest: base64 encoded PSEmanifest</p></li>
+<li><p>nonce: <img class="math" src="../_images/math/5754d267e9090748e41fd23aa2e223fe7c936766.png" alt="WaitCertId_{n}"/></p></li>
+</ul>
+<p>The IAS sends back a signed AVR containing a copy of the input AEP and the
+EPID Pseudonym.</p>
+</li>
+<li><p>If Self Attestation is enabled in IAS API: broadcast self-attested join
+request, (OPK, PPK, AEP, AVR) to known participants.</p></li>
+<li><p>If Self Attestation is NOT enabled in IAS API: broadcast join request, (OPK,
+PPK, quote, PSEmanifest) to known participants.</p></li>
+</ol>
+<p>A validator has to wait for <img class="math" src="../_images/math/d520a12f1579170834c32ad5f656de081bbb36fe.png" alt="c"/> block to be published on the distributed
+ledger before participating in an election.</p>
+<p>The server side of the validator runs the following sign-up procedure:</p>
+<ol class="arabic">
+<li><p>Wait for a join request.</p></li>
+<li><p>Upon arrival of a join request do the verification:</p>
+<p>If the join request is self attested (Self Attestation is enabled in IAS
+API): (OPK, PPK, AEP, AVR)</p>
+<ol class="loweralpha simple">
+<li><p>Verify AVR legitimacy using IAS Report Key and therefore quote legitimacy.</p></li>
+<li><p>Verify the <code class="docutils literal notranslate"><span class="pre">report_data</span></code> field within the quote contains the SHA256
+digest of (OPKhash | PPK).</p></li>
+<li><p>Verify the nonce in the AVR is equal to <img class="math" src="../_images/math/5754d267e9090748e41fd23aa2e223fe7c936766.png" alt="WaitCertId_{n}"/>, namely the
+digest of the most recently committed block. It may be that the sender has
+not seen <img class="math" src="../_images/math/5754d267e9090748e41fd23aa2e223fe7c936766.png" alt="WaitCertId_{n}"/> yet and could be sending
+<img class="math" src="../_images/math/3fa09857719a410a8d7562d392c63d826ecb96e3.png" alt="WaitCertId_{n'}"/> where <img class="math" src="../_images/math/56688662066fed812cc40ba6a3533bd5beeb5796.png" alt="n'&lt;n"/>. In this case the sender should
+be urged to updated the view of the ledger by appending the new blocks
+and retry. It could also happen that the receiving validator has not seen
+<img class="math" src="../_images/math/5754d267e9090748e41fd23aa2e223fe7c936766.png" alt="WaitCertId_{n}"/> in which case it should try to update the
+view of the ledger and verify again.</p></li>
+<li><p>Verify MRENCLAVE value within quote is equal to PoET_MRENCLAVE (there
+could be more than one allowed value).</p></li>
+<li><p>Verify PSE Manifest SHA256 digest in AVR is equal to SHA256 digest of
+PSEmanifest in AEP.</p></li>
+<li><p>Verify basename in the quote is equal to distributed ledger Basename.</p></li>
+<li><p>Verify attributes field in the quote has the allowed value (normally the
+enclave must be in initialized state and not be a debug enclave).</p></li>
+</ol>
+<p>If the join request is not self attested (Self Attestation is NOT enabled in
+IAS API): (OPK, PPK, quote, PSEmanifest)</p>
+<ol class="loweralpha simple">
+<li><p>Create AEP with quote and PSEmanifest :</p>
+<ul class="simple">
+<li><p>isvEnclaveQuote: base64 encoded quote</p></li>
+<li><p>pseManifest: base64 encoded PSEmanifest</p></li>
+</ul>
+</li>
+<li><p>Send AEP to IAS. The IAS sends back a signed AVR.</p></li>
+<li><p>Verify received AVR attests to validity of both quote and PSEmanifest and
+save EPID Pseudonym.</p></li>
+<li><p>Verify <code class="docutils literal notranslate"><span class="pre">report_data</span></code> field within the quote contains the SHA256 digest
+of (OPKhash | PPK).</p></li>
+<li><p>Verify MRENCLAVE value within quote is equal to PoET_MRENCLAVE (there
+could be more than one allowed value).</p></li>
+<li><p>Verify basename in the quote is equal to distributed ledger Basename.</p></li>
+<li><p>Verify attributes field in the quote has the allowed value (normally the
+enclave must be in initialized state and not be a debug enclave).</p></li>
+</ol>
+<p>If the verification fails, exit.</p>
+<p>If the verification succeeds but the SGX platform identified by the EPID
+Pseudonym in the quote has already signed up, ignore the join request, exit.</p>
+<p>If the verification succeeds:</p>
+<ol class="loweralpha simple">
+<li><p>Pass sign-up certificate of new participant (OPK, EPID Pseudonym, PPK,
+current <img class="math" src="../_images/math/5754d267e9090748e41fd23aa2e223fe7c936766.png" alt="WaitCertId_{n}"/> to upper layers for registration in EndPoint
+registry.</p></li>
+<li><p>Goto 1.</p></li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section" id="election-phase">
+<h4>Election Phase<a class="headerlink" href="#election-phase" title="Permalink to this headline">¶</a></h4>
+<p>Assume the identifier of the most recent valid block is <img class="math" src="../_images/math/5754d267e9090748e41fd23aa2e223fe7c936766.png" alt="WaitCertId_{n}"/>.
+Broadcast messages are signed by a validator with its PPK. To participate in
+the election phase a validator runs the following procedure on the client side:</p>
+<ol class="arabic simple">
+<li><p>Start the PoET SGX enclave: ENC.</p></li>
+<li><p>Read the sealedSignUpData from disk and load it into enclave:
+<img class="math" src="../_images/math/cc6495c01eee41d10fff7f12e8646b8dfae3429b.png" alt="ENC.\textnormal{unsealSignUpData}(sealedSignUpData)"/></p></li>
+<li><p>Call <img class="math" src="../_images/math/67e2822307da718c37c554b2f8041f3f2e443a83.png" alt="(waitTimer, signature) = ENC.createWaitTimer(localMean,
+WaitCertId_{n})"/>.</p></li>
+<li><p>Wait waitTimer.duration seconds.</p></li>
+<li><p>Call <img class="math" src="../_images/math/afcb271e94ba262d9bd92e6e6a4b7ce66bb56f45.png" alt="(waitCertificate, signature) =
+ENC.createWaitCertificate(blockDigest)"/>.</p></li>
+<li><p>If the <code class="docutils literal notranslate"><span class="pre">createWaitCertificate()</span></code> call is successful, broadcast
+(waitCertificate, signature, block, OPK, PPK) where block is the transaction
+block identified by blockDigest.</p></li>
+</ol>
+<p>On the server side, a validator waits for incoming (waitCertificate, signature,
+block, OPK, PPK) tuples. When one is received the following validity checks are
+performed:</p>
+<ol class="arabic simple">
+<li><p>Verify the PPK and OPK belong to a registered validator by checking the EndPoint
+registry.</p></li>
+<li><p>Verify the signature is valid using sender’s PPK.</p></li>
+<li><p>Verify the PPK was used by sender to commit less than <img class="math" src="../_images/math/52ddc0cde6d632f631533173562fe3ca375b1f32.png" alt="K"/> blocks by
+checking EndPoint registry (otherwise sender needs to re-sign).</p></li>
+<li><p>Verify the waitCertificate.waitTimer.localMean is correct by comparing against
+localMean computed locally.</p></li>
+<li><p>Verify the waitCertificate.blockDigest is a valid ECDSA signature of the SHA256
+hash of block using OPK.</p></li>
+<li><p>Verify the sender has been winning elections according to the expected
+distribution (see z-test documentation).</p></li>
+<li><p>Verify the sender signed up at least <img class="math" src="../_images/math/d520a12f1579170834c32ad5f656de081bbb36fe.png" alt="c"/> committed blocks ago, i.e.,
+respected the <img class="math" src="../_images/math/d520a12f1579170834c32ad5f656de081bbb36fe.png" alt="c"/> block start-up delay.</p></li>
+</ol>
+<p>A valid waitCertificate is passed to the upper ledger layer and the
+waitCertificate with the lowest value of waitCertificate.waitTimer.duration
+determines the election winner.</p>
+</div>
+<div class="section" id="revocation">
+<h4>Revocation<a class="headerlink" href="#revocation" title="Permalink to this headline">¶</a></h4>
+<p>Two mechanisms are put in place to blacklist validators whose EPID key has been
+revoked by IAS. The first one affects each validator periodically, although
+infrequently. The second one is an asynchronous revocation check that each
+validator could perform on other validators’ EPID keys  at any time.</p>
+<ol class="arabic simple">
+<li><p><strong>Periodic regeneration of PPK</strong> a validator whose EPID key has been revoked
+by the IAS would not be able to obtain any valid AVR and therefore would be
+prevented from signing-up. Forcing validators to periodically re-sign with a
+fresh sign-up certificate leaves validators whose EPID keys have been revoked
+out of the system. Validators have to re-sign after they commit <img class="math" src="../_images/math/52ddc0cde6d632f631533173562fe3ca375b1f32.png" alt="K"/>
+blocks and if they do not they are considered revoked.</p></li>
+<li><p><strong>Asynchronous sign-up quote verification</strong> A validator can (at any time) ask
+IAS for attestation on a quote that another validator used to sign-up to
+check if its EPID key has been revoked since. If so, the returned AVR will
+indicate that the key is revoked. A validator that obtains such an AVR from
+IAS can broadcast it in a blacklisting transaction, so that all the
+validators can check the veracity of the AVR and proceed with the
+blacklisting. To limit the use of blacklisting transactions as a means to
+thwart liveness for malicious validators one can control the rate at which
+they can be committed in different ways:</p>
+<ul class="simple">
+<li><p>A certain number of participation tokens needs to be burned to commit a
+blacklisting transaction.</p></li>
+<li><p>A validator can commit a blacklisting transaction only once it wins one
+or more elections.</p></li>
+<li><p>A validator that commits a certain number of non-legit blacklisting
+transactions is blacklisted.</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="security-considerations">
+<h4>Security Considerations<a class="headerlink" href="#security-considerations" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li><p><img class="math" src="../_images/math/005d514f53776d6f3c2de334821e7ddd6dac3a99.png" alt="T_{WT}"/> <strong>motivation</strong>: A validator has at most <img class="math" src="../_images/math/005d514f53776d6f3c2de334821e7ddd6dac3a99.png" alt="T_{WT}"/> seconds
+to consume a WaitTimer, namely obtain a WaitCertificate on it after the
+WaitTimer itself has expired. This constraint is enforced to avoid that in
+case there are no transactions to build a block for some time several
+validators might hold back after they waited the duration of their WaitTimers
+and generate the WaitCertificate only once enough transactions are available.
+At the point they will all send out their WaitCertificates generating a lot
+of traffic and possibly inducing forks. The timeout mitigates this problem.</p></li>
+<li><p><strong>Enclave compromise:</strong> a compromised SGX platform that is able to
+arbitrarily win elections cannot affect the correctness of the system, but
+can hinder progress by publishing void transactions. This problem is
+mitigated by limiting the frequency with which a validator (identified by
+its PPK) can win elections in a given time frame (see z-test
+documentation).</p></li>
+<li><p><strong>WaitTimer duration manipulation:</strong></p>
+<ol class="loweralpha simple">
+<li><p>Imposing a <img class="math" src="../_images/math/d520a12f1579170834c32ad5f656de081bbb36fe.png" alt="c"/> block participation delay after sign-up prevents
+validators from generating different pairs of OPK, PPK and pick the one that
+would result in the lowest value of the next WaitTimer duration as follows:</p>
+<ol class="lowerroman simple">
+<li><p>Generate as many PPK,PSK pairs and therefore monotonic counters as
+possible.</p></li>
+<li><p>Do not sign up but use all the enclaves (each using a different PPK,
+PSK and MCID) to create a WaitTimer every time a new block is committed
+until a very low duration is obtained (good chance of winning the
+election). Then collect all the different waitCertIds.</p></li>
+<li><p>Ask each enclave to create the next waitTimer, whose duration depends
+on each of the different winning waitCertIds. Choose the PPK of the
+enclave giving me the lowest next duration and sign up with that.</p></li>
+<li><p>As a result an attacker can win the first the election (with high
+probability) and can chain the above 3 steps to get a good chance of
+winning several elections in a row.</p></li>
+</ol>
+</li>
+<li><p>The nonce field in WaitCertificate is set to a random value so that a
+validator does not have control over the resulting <img class="math" src="../_images/math/5754d267e9090748e41fd23aa2e223fe7c936766.png" alt="WaitCertId_{n}"/>.
+A validator winning an election could otherwise try different blockDigest
+input values to createWaitCertificate and broadcast the WaitCertificate
+whose <img class="math" src="../_images/math/5754d267e9090748e41fd23aa2e223fe7c936766.png" alt="WaitCertId_{n}"/> results in the lowest duration of its
+next WaitTimer.</p></li>
+<li><p>The call <code class="docutils literal notranslate"><span class="pre">createWaitTimer()</span></code> in step 1 of the election phase (client
+side) is bound to the subsequent call to <code class="docutils literal notranslate"><span class="pre">createWaitCertificate()</span></code> by
+the internal state of the PoET enclave. More precisely only one call to
+<code class="docutils literal notranslate"><span class="pre">createWaitCertificate()</span></code> is allowed after a call to
+<code class="docutils literal notranslate"><span class="pre">createWaitTimer()</span></code> (and the duration has elapsed) as the value of the
+global active WaitTimer object activeWT is set to null at the end of
+<code class="docutils literal notranslate"><span class="pre">createWaitCertificate()</span></code> so that subsequent calls would fail. Therefore
+only one transaction block (identified by the input parameter blockDigest)
+can be attached to a WaitCertificate object. This prevents a malicious
+user from creating multiple WaitCertificates (each with a different nonce)
+resulting in different WaitCertId digests without re-creating a WaitTimer
+(and waiting for its duration) each time. It follows that as long as the
+duration of WaitTimer is not too small, a malicious validator that wins the
+current election has very limited control over the duration of its
+next WaitTimer.</p></li>
+<li><p>The check on the Monotonic Counter value guarantees only one enclave
+instance can obtain a WaitCertificate after the WaitTimer duration
+elapses. This again prevents a malicious user from running multiple
+instances of the enclave to create multiple WaitCertificates (each with a
+different nonce) resulting in different WaitCertId digests and selecting
+the one that would result in the lowest duration for a new WaitTimer.</p></li>
+<li><p>A monotonic counter with id MCID is created at the same time PPK and PSK
+are generated and the triple (MCID, PPK, PSK) is encrypted using AES-GCM
+with the Seal Key and saved in permanent storage. A malicious validator
+cannot run multiple enclave instances (before signing up) to create
+multiple monotonic counters without being forced to commit to using only
+one eventually. As a monotonic counter is bound to PPK, PSK through the
+AES-GCM encryption with the Seal Key, when a validator signs-up with a PPK
+it automatically commits to using the monotonic counter that was created
+along with PPK, PSK.</p></li>
+</ol>
+</li>
+<li><p><strong>Sign-up AEP replay:</strong> the use of the nonce field in the AEP, which is set
+equal to <img class="math" src="../_images/math/5754d267e9090748e41fd23aa2e223fe7c936766.png" alt="WaitCertId_{n}"/>, is used to prevent the replay of old AEPs.</p></li>
+</ol>
+</div>
+<div class="section" id="comments-on-multi-user-or-multi-ledger-sgx-enclave-service">
+<h4>Comments on Multi-user or Multi-ledger SGX Enclave Service<a class="headerlink" href="#comments-on-multi-user-or-multi-ledger-sgx-enclave-service" title="Permalink to this headline">¶</a></h4>
+<p>It is possible to use the same enclave for multiple users or ledgers by
+providing username and ledgername as input parameters to
+<code class="docutils literal notranslate"><span class="pre">generateSignUpData()</span></code> and <code class="docutils literal notranslate"><span class="pre">unsealSignUpData()</span></code>. Then the sign-up tuple
+(username, ledgername, PPK, PSK, MCID) is sealed to disk, with username and
+ledgername used to generate the filename. Anytime a user authenticates to the
+service the latter can have the enclave unseal and use the sign-up tuple from
+the file corresponding to that user (and ledger).</p>
+</div>
+</div>
+</div>
+<div class="section" id="population-size-and-local-mean-computation">
+<h2>Population Size and Local Mean Computation<a class="headerlink" href="#population-size-and-local-mean-computation" title="Permalink to this headline">¶</a></h2>
+<p><strong>Parameters</strong>:</p>
+<ol class="arabic simple">
+<li><p>targetWaitTime: the desired average wait time. This depends on the network
+diameter and is selected to minimize the probability of a collision.</p></li>
+<li><p>initialWaitTime: the initial wait time used in the bootstrapping phase until
+the ledger contains sampleLength blocks.</p></li>
+<li><p>sampleLength: number of blocks that need to be on the ledger to finish the
+bootstrapping phase</p></li>
+<li><p>minimumWaitTime: a lower bound on the wait time.</p></li>
+</ol>
+<p>The population size is computed as follows:</p>
+<ol class="arabic">
+<li><p><img class="math" src="../_images/math/6593916f26076a3e0b680e19c1e662ccbc3dd744.png" alt="sumMeans = 0"/></p></li>
+<li><p><img class="math" src="../_images/math/ebd55c47103769684f9c5f3b12cb6a6b33489aec.png" alt="sumWaits = 0"/></p></li>
+<li><div class="line-block">
+<div class="line"><strong>foreach</strong> wait certificate <img class="math" src="../_images/math/b4fb3d260beece953557ba61f9efba306eea6cd6.png" alt="wc"/> stored on the ledger:</div>
+<div class="line-block">
+<div class="line"><img class="math" src="../_images/math/9113836817740f8ce942adffae42465a054d2f37.png" alt="sumWaits += wc\textrm{.duration}-\textrm{minimumWaitTime}"/></div>
+<div class="line"><img class="math" src="../_images/math/c72f7df9356450287ee897001c6181dda4178433.png" alt="sumMeans += wc\textrm{.localMean}"/></div>
+</div>
+</div>
+</li>
+<li><p><img class="math" src="../_images/math/f007469e64a0712bd4ee5d2f5e8d979d99cde2d3.png" alt="populationSize = sumMeans / sumWaits"/></p></li>
+</ol>
+<p>Assuming <img class="math" src="../_images/math/68c7c8c65602677ab56cf7fd88002023f0edc575.png" alt="b"/> is the number of blocks currently claimed, the local mean is computed as follows:</p>
+<ol class="arabic">
+<li><div class="line-block">
+<div class="line">if <img class="math" src="../_images/math/a2c117c85fe643299a53cefc90a304d1ba5fdf6f.png" alt="b &lt; \textrm{sampleLength}"/> then</div>
+<div class="line-block">
+<div class="line"><img class="math" src="../_images/math/83bcfcd85d95d0eb73e6921fcc743bdd622bc90a.png" alt="ratio = 1.0\cdot b / \textrm{sampleLength}"/> and</div>
+<div class="line"><img class="math" src="../_images/math/fbb8b8f70e9a35aa803ca2a0add218c0d3e85a77.png" alt="\textrm{localMean} = \textrm{targetWaitTime}\cdot (1 - ratio^2) + \textrm{initialWaitTime}\cdot ratio^2"/>.</div>
+</div>
+</div>
+</li>
+<li><p>else <img class="math" src="../_images/math/4037c6b0f749b5e59ed8685dab1138a839900fe2.png" alt="\textrm{localMean}= \textrm{targetWaitTime}\cdot
+\textrm{populationSize}"/></p></li>
+</ol>
+</div>
+<div class="section" id="z-test">
+<h2>z-test<a class="headerlink" href="#z-test" title="Permalink to this headline">¶</a></h2>
+<p>A z-test is used to test the hypothesis that a validator won elections at a
+higher average rate than expected.</p>
+<p><strong>Parameters</strong>:</p>
+<ol class="arabic simple">
+<li><p>zmax: test value, it measures the maximum deviation from the expected mean.
+It is selected so that the desired confidence interval $alpha$ is obtained.
+Example configurations are:</p>
+<ol class="loweralpha simple">
+<li><p><img class="math" src="../_images/math/04063c56526618f9c1de2b3c879e45e981355738.png" alt="\textrm{ztest}=1.645 \leftrightarrow \alpha=0.05"/></p></li>
+<li><p><img class="math" src="../_images/math/a3531ab820a43b6054946fd8869ff879996d625d.png" alt="\textrm{ztest}=2.325 \rightarrow \alpha=0.01"/></p></li>
+<li><p><img class="math" src="../_images/math/3658c9e79cd2b01f53067fb621574a30369aefd2.png" alt="\textrm{ztest}=2.575 \rightarrow \alpha=0.005"/></p></li>
+<li><p><img class="math" src="../_images/math/a14265d065f59b4ff917cef65bdb13a7a5a59a94.png" alt="\textrm{ztest}=3.075 \rightarrow \alpha=0.001"/></p></li>
+</ol>
+</li>
+<li><p>testValidatorId: the validator identifier under test.</p></li>
+<li><p>blockArray: an array containing pairs of validator identifier and estimated
+population size. Each pair represents one published transaction block.</p></li>
+<li><p>minObservedWins: minimum number of election wins that needs to be observed
+for the identifier under test.</p></li>
+</ol>
+<p>The z-test is computed as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">observedWins</span> <span class="o">=</span> <span class="n">expectedWins</span> <span class="o">=</span> <span class="n">blockCount</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">foreach</span> <span class="n">block</span> <span class="o">=</span> <span class="p">(</span><span class="n">validatorId</span><span class="p">,</span> <span class="n">populationEstimate</span><span class="p">)</span> <span class="ow">in</span> <span class="n">blockArray</span><span class="p">:</span>
+    <span class="n">blockCount</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">expectedWins</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">populationEstimate</span>
+
+    <span class="k">if</span> <span class="n">validatorId</span> <span class="ow">is</span> <span class="n">equal</span> <span class="n">to</span> <span class="n">testValidatorId</span><span class="p">:</span>
+        <span class="n">observedWins</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">observedWins</span> <span class="o">&gt;</span> <span class="n">minObservedWins</span> <span class="ow">and</span> <span class="n">observedWins</span> <span class="o">&gt;</span> <span class="n">expectedWins</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">expectedWins</span> <span class="o">/</span> <span class="n">blockCount</span>
+            <span class="n">σ</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">blockCount</span> <span class="o">*</span> <span class="n">p</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">p</span><span class="p">))</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">observedWins</span> <span class="o">-</span> <span class="n">expectedWins</span><span class="p">)</span> <span class="o">/</span> <span class="n">σ</span>
+            <span class="k">if</span> <span class="n">z</span> <span class="o">&gt;</span> <span class="n">zmax</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+<span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>If the z-test fails (False is returned) then the validator under test won
+elections at a higher average rate than expected.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../transaction_family_specifications.html" class="btn btn-neutral float-right" title="Transaction Family Specifications" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="events_and_transactions_receipts.html" class="btn btn-neutral float-left" title="Events and Transaction Receipts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

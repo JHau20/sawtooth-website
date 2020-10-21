@@ -1,0 +1,782 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>UI Reference &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../index.html"/>
+        <link rel="up" title="Sawtooth Lake Bond Family User’s Guide" href="../users_guide.html"/>
+        <link rel="next" title="Scenarios" href="scenarios.html"/>
+        <link rel="prev" title="Tutorial" href="tutorial.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../bond_family_guide.html">Bond Family Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../users_guide.html">Sawtooth Lake Bond Family User&#8217;s Guide</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">UI Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#menu-bar">Menu Bar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bonds">Bonds</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-bond">Create Bond</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#orders">Orders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#issue-quote">Issue Quote</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-organization">Create Organization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#portfolio">Portfolio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#update-participant">Update Participant</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#view-quotes">View Quotes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="scenarios.html">Scenarios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cli.html">btp CLI Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../sysadmin_guide.html">Sawtooth Lake Bond Family System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design.html">Sawtooth Lake Bond Family Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bond_workload_simulator.html">Sawtooth Lake Bond Family Workload Simulator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../bond_family_guide.html">Bond Family Guide</a> &raquo;</li>
+        
+          <li><a href="../users_guide.html">Sawtooth Lake Bond Family User&#8217;s Guide</a> &raquo;</li>
+        
+      <li>UI Reference</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/bond_family_guide/users_guide/ui_reference.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ui-reference">
+<h1>UI Reference<a class="headerlink" href="#ui-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This is the reference guide for the Sawtooth Lake Bond Family graphical user
+interface (UI).</p>
+</div>
+<div class="section" id="menu-bar">
+<h2>Menu Bar<a class="headerlink" href="#menu-bar" title="Permalink to this headline">¶</a></h2>
+<p>Use the menu bar at the top of the Sawtooth Lake Bond UI to navigate
+between the functions supported by the UI.</p>
+<img alt="../../_images/ref_menu_bar_anot.png" src="../../_images/ref_menu_bar_anot.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="5%" />
+<col width="20%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>a</td>
+<td>Main page</td>
+<td>Welcome page</td>
+</tr>
+<tr class="row-odd"><td>b</td>
+<td>Bonds</td>
+<td>List or search for bonds</td>
+</tr>
+<tr class="row-even"><td>c</td>
+<td>Create Bond</td>
+<td>Create a new bond listing</td>
+</tr>
+<tr class="row-odd"><td>d</td>
+<td>Orders</td>
+<td>View orders and settle matched orders</td>
+</tr>
+<tr class="row-even"><td>e</td>
+<td>Issue Quote</td>
+<td>Issue a quote if your participant is associated with a pricing source</td>
+</tr>
+<tr class="row-odd"><td>f</td>
+<td>Create Organization</td>
+<td>Create a new organization</td>
+</tr>
+<tr class="row-even"><td>g</td>
+<td>Portfolio</td>
+<td>View holdings and transactions</td>
+</tr>
+<tr class="row-odd"><td>h</td>
+<td>Update Participant</td>
+<td>Click to view and modify account settings</td>
+</tr>
+<tr class="row-even"><td>i</td>
+<td>Sign Out</td>
+<td>After you sign out, you need your WIF key to sign back in</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="bonds">
+<h2>Bonds<a class="headerlink" href="#bonds" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Bonds</strong> page allows you to view all the bonds in the system, or to search for
+bonds based on specific criteria.</p>
+<img alt="../../_images/ref_bonds_anot.png" src="../../_images/ref_bonds_anot.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="24%" />
+<col width="70%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>a</td>
+<td>Search field</td>
+<td>Enter search criteria here</td>
+</tr>
+<tr class="row-odd"><td>b</td>
+<td>Go</td>
+<td>Click to search for bonds</td>
+</tr>
+<tr class="row-even"><td>c</td>
+<td>Clear</td>
+<td>Click to clear search field</td>
+</tr>
+<tr class="row-odd"><td>d</td>
+<td>ISIN/CUSIP</td>
+<td>The ISIN or CUSIP of the bond</td>
+</tr>
+<tr class="row-even"><td>e</td>
+<td>Bond description</td>
+<td>Detailed information on bond</td>
+</tr>
+<tr class="row-odd"><td>f</td>
+<td>Market Prices</td>
+<td>The current bid and ask prices of the bond</td>
+</tr>
+<tr class="row-even"><td>g</td>
+<td>Market Yields</td>
+<td>The yield of the bond based on the current market price</td>
+</tr>
+<tr class="row-odd"><td>h</td>
+<td>Time of Quote</td>
+<td>The time of the last quote for the bond</td>
+</tr>
+<tr class="row-even"><td>i</td>
+<td>View Quotes</td>
+<td>Click to view all quotes for the bond</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="create-bond">
+<h2>Create Bond<a class="headerlink" href="#create-bond" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Create Bond</strong> page allows you to create a bond, if your user account has
+the necessary role.</p>
+<img alt="../../_images/ref_create_bond_anot.png" src="../../_images/ref_create_bond_anot.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="24%" />
+<col width="70%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>a</td>
+<td>Issuer</td>
+<td>Drop-down menu selects the issuer of the bond</td>
+</tr>
+<tr class="row-odd"><td>b</td>
+<td>Industry</td>
+<td>The industry of the bond issuer</td>
+</tr>
+<tr class="row-even"><td>c</td>
+<td>Ticker</td>
+<td>The ticker symbol of the bond issuer</td>
+</tr>
+<tr class="row-odd"><td>d</td>
+<td>Moody&#8217;s</td>
+<td>The Moody&#8217;s rating for the bond</td>
+</tr>
+<tr class="row-even"><td>e</td>
+<td>S&amp;P</td>
+<td>The S&amp;P rating for the bond</td>
+</tr>
+<tr class="row-odd"><td>f</td>
+<td>Fitch</td>
+<td>The Fitch rating for the bond</td>
+</tr>
+<tr class="row-even"><td>g</td>
+<td>CUSIP</td>
+<td>The CUSIP identifier of the bond</td>
+</tr>
+<tr class="row-odd"><td>h</td>
+<td>ISIN</td>
+<td>The ISIN identifier of the bond</td>
+</tr>
+<tr class="row-even"><td>i</td>
+<td>1st Settle Date</td>
+<td>The first settle date of the bond</td>
+</tr>
+<tr class="row-odd"><td>j</td>
+<td>Maturity Date</td>
+<td>Maturity date of the bond</td>
+</tr>
+<tr class="row-even"><td>k</td>
+<td>Face Value</td>
+<td>The face value of the bond</td>
+</tr>
+<tr class="row-odd"><td>l</td>
+<td>Amount Outstanding</td>
+<td>The amount outstanding on the bond</td>
+</tr>
+<tr class="row-even"><td>m</td>
+<td>Type</td>
+<td>Choose fixed or floating</td>
+</tr>
+<tr class="row-odd"><td>n</td>
+<td>Frequency</td>
+<td>The frequency of payments</td>
+</tr>
+<tr class="row-even"><td>o</td>
+<td>1st Date</td>
+<td>The first payment date</td>
+</tr>
+<tr class="row-odd"><td>p</td>
+<td>Rate</td>
+<td>The interest rate paid by the bond</td>
+</tr>
+<tr class="row-even"><td>q</td>
+<td>Benchmark</td>
+<td>The benchmark used to set the rate, if rate is floating</td>
+</tr>
+<tr class="row-odd"><td>r</td>
+<td>Create Bond</td>
+<td>Click to create the bond based on the entered values</td>
+</tr>
+<tr class="row-even"><td>s</td>
+<td>Reset</td>
+<td>Click to clear all fields</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="orders">
+<h2>Orders<a class="headerlink" href="#orders" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>View Orders</strong> page allows you to view all orders in the system, and to settle
+orders that have been matched with a quote.</p>
+<img alt="../../_images/ref_view_orders_anot.png" src="../../_images/ref_view_orders_anot.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="22%" />
+<col width="72%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>a</td>
+<td>Filter options</td>
+<td>Show all orders, or only your orders</td>
+</tr>
+<tr class="row-odd"><td>b</td>
+<td>Order Time</td>
+<td>Displays date and time of order</td>
+</tr>
+<tr class="row-even"><td>c</td>
+<td>Trader</td>
+<td>Name of the trader or market participant that placed the order</td>
+</tr>
+<tr class="row-odd"><td>d</td>
+<td>ISIN/CUSIP</td>
+<td>The ISIN or CUSIP of the bond</td>
+</tr>
+<tr class="row-even"><td>e</td>
+<td>Bond description</td>
+<td>Detailed information on bond</td>
+</tr>
+<tr class="row-odd"><td>f</td>
+<td>Order Status</td>
+<td>The status of the order</td>
+</tr>
+<tr class="row-even"><td>g</td>
+<td>Type</td>
+<td>The order type (e.g. market, limit, etc.)</td>
+</tr>
+<tr class="row-odd"><td>h</td>
+<td>Quantity</td>
+<td>The quantity of bonds to buy or sell</td>
+</tr>
+<tr class="row-even"><td>i</td>
+<td>settle</td>
+<td>Click to settle a matched order</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="issue-quote">
+<h2>Issue Quote<a class="headerlink" href="#issue-quote" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Issue Quote</strong> page allows you to issue a quote if your user account is
+associated with a pricing source.</p>
+<img alt="../../_images/ref_issue_quote_anot.png" src="../../_images/ref_issue_quote_anot.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="5%" />
+<col width="19%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>a</td>
+<td>Pricing Source</td>
+<td>The pricing source of the bond, tied to the participant creating the quote.</td>
+</tr>
+<tr class="row-odd"><td>b</td>
+<td>ISIN/CUSIP</td>
+<td>The ISIN or CUSIP identifier of the bond</td>
+</tr>
+<tr class="row-even"><td>c</td>
+<td>Issuer</td>
+<td>Ticker symbol of the issuer</td>
+</tr>
+<tr class="row-odd"><td>d</td>
+<td>Maturity date</td>
+<td>Date on which the principal amount is due</td>
+</tr>
+<tr class="row-even"><td>e</td>
+<td>Prior Quote</td>
+<td>Info on prior quote for the same bond</td>
+</tr>
+<tr class="row-odd"><td>f</td>
+<td>Bid Price</td>
+<td>Bid price for the bond</td>
+</tr>
+<tr class="row-even"><td>g</td>
+<td>Ask Price</td>
+<td>Ask price for the bond</td>
+</tr>
+<tr class="row-odd"><td>h</td>
+<td>Bid Quantity</td>
+<td>The number of bonds that must be purchased</td>
+</tr>
+<tr class="row-even"><td>i</td>
+<td>Ask Quantity</td>
+<td>The number of bonds that must be offered</td>
+</tr>
+<tr class="row-odd"><td>j</td>
+<td>Issue</td>
+<td>Click to issue the quote</td>
+</tr>
+<tr class="row-even"><td>k</td>
+<td>Reset</td>
+<td>Click to clear fields and start over</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="create-organization">
+<h2>Create Organization<a class="headerlink" href="#create-organization" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Create Organization</strong> page allows you to create a new organization.</p>
+<img alt="../../_images/ref_create_org_anot.png" src="../../_images/ref_create_org_anot.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="5%" />
+<col width="20%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>a</td>
+<td>Name</td>
+<td>Name of the organization to create</td>
+</tr>
+<tr class="row-odd"><td>b</td>
+<td>Industry</td>
+<td>The industry of the organization (optional)</td>
+</tr>
+<tr class="row-even"><td>c</td>
+<td>Ticker</td>
+<td>The ticker symbol of the organization (if applicable)</td>
+</tr>
+<tr class="row-odd"><td>d</td>
+<td>Pricing Source</td>
+<td>The pricing source to associate with the organization (if applicable)</td>
+</tr>
+<tr class="row-even"><td>e</td>
+<td>Create</td>
+<td>Click to create the new organization</td>
+</tr>
+<tr class="row-odd"><td>f</td>
+<td>Reset</td>
+<td>Click to reset all fields and start over</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="portfolio">
+<h2>Portfolio<a class="headerlink" href="#portfolio" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Portfolio</strong> page allows you to view your holdings and transactions.</p>
+<img alt="../../_images/ref_portfolio_anot.png" src="../../_images/ref_portfolio_anot.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="28%" />
+<col width="65%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>a</td>
+<td>Holdings</td>
+<td>Click to see holdings</td>
+</tr>
+<tr class="row-odd"><td>b</td>
+<td>Receipts</td>
+<td>Click to see receipts</td>
+</tr>
+<tr class="row-even"><td>c</td>
+<td>Settlements</td>
+<td>Click to see settlements</td>
+</tr>
+<tr class="row-odd"><td>d</td>
+<td>Data display area</td>
+<td>Shows your holdings, receipts, or settlements</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="update-participant">
+<h2>Update Participant<a class="headerlink" href="#update-participant" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Update Participant</strong> page allows you to update your account information.</p>
+<img alt="../../_images/ref_account_anot.png" src="../../_images/ref_account_anot.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="28%" />
+<col width="65%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>a</td>
+<td>Name</td>
+<td>Participant username</td>
+</tr>
+<tr class="row-odd"><td>b</td>
+<td>Firm</td>
+<td>Organization associated with participant</td>
+</tr>
+<tr class="row-even"><td>c</td>
+<td>Role</td>
+<td>Role of participant (market maker or trader)</td>
+</tr>
+<tr class="row-odd"><td>d</td>
+<td>Update</td>
+<td>Click to update account</td>
+</tr>
+<tr class="row-even"><td>e</td>
+<td>Reset</td>
+<td>Click to reset fields</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="view-quotes">
+<h2>View Quotes<a class="headerlink" href="#view-quotes" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>View Quotes</strong> page allows you to view all the quotes associated with a bond.
+To navigate to this page, click <strong>Bonds</strong>, then <strong>View Quotes</strong> for a bond.</p>
+<img alt="../../_images/ref_view_quotes_anot.png" src="../../_images/ref_view_quotes_anot.png" />
+<table border="1" class="docutils">
+<colgroup>
+<col width="5%" />
+<col width="20%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Description</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>a</td>
+<td>Buy</td>
+<td>Click to buy this bond</td>
+</tr>
+<tr class="row-odd"><td>b</td>
+<td>Sell</td>
+<td>Click to sell this bond</td>
+</tr>
+<tr class="row-even"><td>c</td>
+<td>PSC</td>
+<td>Pricing Source</td>
+</tr>
+<tr class="row-odd"><td>d</td>
+<td>Firm Name</td>
+<td>Name of the firm selling the bond</td>
+</tr>
+<tr class="row-even"><td>e</td>
+<td>Bid / Ask Prices</td>
+<td>The bid price followed by the ask price for the bond</td>
+</tr>
+<tr class="row-odd"><td>f</td>
+<td>Bid / Ask Yields</td>
+<td>The bid and ask yields based on the bid and ask prices</td>
+</tr>
+<tr class="row-even"><td>g</td>
+<td>Bid / Ask Sizes (M)</td>
+<td>The number of bonds that must be purchased or sold based on this quote</td>
+</tr>
+<tr class="row-odd"><td>h</td>
+<td>Time of Quote</td>
+<td>The time the quote was generated</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="scenarios.html" class="btn btn-neutral float-right" title="Scenarios" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tutorial.html" class="btn btn-neutral" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

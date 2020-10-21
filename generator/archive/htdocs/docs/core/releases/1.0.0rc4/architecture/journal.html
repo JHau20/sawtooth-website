@@ -1,0 +1,691 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Journal &mdash; Sawtooth v1.0.0rc4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc4 documentation" href="../index.html"/>
+        <link rel="up" title="Architecture" href="../architecture.html"/>
+        <link rel="next" title="Transaction Scheduling" href="scheduling.html"/>
+        <link rel="prev" title="Transactions and Batches!" href="transactions_and_batches.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../architecture.html">Architecture</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="global_state.html">Global State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transactions_and_batches.html">Transactions and Batches!</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Journal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-blockstore">The BlockStore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-blockcache">The BlockCache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-completer">The Completer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-consensus-interface">The Consensus Interface</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#consensus-blockpublisher">Consensus.BlockPublisher</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#consensus-blockverifier">Consensus.BlockVerifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#consensus-forkresolver">Consensus.ForkResolver</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#the-chaincontroller">The ChainController</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#chain-head-update">Chain Head Update</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#delayed-block-processing">Delayed Block Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#the-blockvalidator">The BlockValidator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#block-validation">Block Validation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#the-blockpublisher">The BlockPublisher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#genesis-operation">Genesis Operation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#genesis-batch-creation">Genesis Batch Creation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#block-creation">Block Creation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html">Transaction Scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poet.html">PoET 1.0 Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_network.html">Validator Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="permissioning_requirement.html">Permissioning Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="injecting_batches_block_validation_rules.html">Injecting Batches and On-Chain Block Validation Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_and_transactions_receipts.html">Events and Transaction Receipts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../architecture.html">Architecture</a> &raquo;</li>
+        
+      <li>Journal</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/architecture/journal.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="journal">
+<h1>Journal<a class="headerlink" href="#journal" title="Permalink to this headline">¶</a></h1>
+<p>The Journal is responsible for maintaining and extending the BlockChain for the
+validator. This responsibility involves validating candidate blocks, evaluating
+valid blocks to determine if they are the correct chain head, and generating
+new blocks to extend the chain.</p>
+<p>The Journal is the consumer of Blocks and Batches that arrive at the validator.
+These Blocks and Batches arrive via interconnect, either through the gossip
+protocol or the REST API. The newly-arrived Blocks and Batches are sent to the
+Journal, which routes them internally.</p>
+<a class="reference internal image-reference" href="../_images/journal_organization.svg"><div align="center" class="align-center"><img alt="Journal Organization Diagram" src="../_images/journal_organization.svg" width="80%" /></div>
+</a>
+<p>The Journal divides up the processing of Blocks and Batches to different
+pipelines. Both objects are delivered initially to the Completer, which
+guarantees that all dependencies for the Blocks and Batches have been satisfied
+and delivered downstream. Completed Blocks are delivered to the Chain
+controller for validation and fork resolution. Completed Batches are delivered
+the BlockPublisher for validation and inclusion in a Block.</p>
+<p>The Journal is designed to be asynchronous, allowing incoming blocks to be
+processed in parallel by the ChainController, as well as allowing the
+BlockPublisher to proceed with claiming blocks even when the incoming block
+rate is high.</p>
+<p>It is also flexible enough to accept different consensus algorithms.  The
+Journal implements a consensus interface that defines the entry points and
+responsibilities of a consensus algorithm.</p>
+<div class="section" id="the-blockstore">
+<h2>The BlockStore<a class="headerlink" href="#the-blockstore" title="Permalink to this headline">¶</a></h2>
+<p>The BlockStore contains all the blocks in the current block chain, that is the
+list of blocks from the current chain head back to the Genesis blocks. Blocks
+from forks are not included in the BlockStore. The BlockStore also includes a
+reference to the head of the current chain. It is expected to be coherent at
+all times, and an error in the BlockStore is considered a non-recoverable error
+for the validator. Such critical errors would include missing blocks, bad
+indexes, missing chain reference, incomplete blocks or invalid blocks in the
+store. The BlockStore provides an atomic means to update the store when the
+current fork is changed (the chain head is updated).</p>
+<p>The BlockStore is a persistent on-disk store of all Blocks in the current
+chain. When the validator is started, the contents of the BlockStore is trusted
+to be the current state of the world.</p>
+<p>All blocks stored here are formally complete. The BlockStore allows blocks to
+be accessed via Block ID. Blocks can also be accessed via Batch ID,
+Transaction ID, or block number; for example, <code class="docutils literal"><span class="pre">get_block_by_batch_id</span></code>,
+<code class="docutils literal"><span class="pre">get_block_by_transaction_id</span></code>, <code class="docutils literal"><span class="pre">get_batch_by_transaction</span></code>, or
+<code class="docutils literal"><span class="pre">get_block_by_number</span></code>.</p>
+<p>The BlockStore maintains internal mappings of Transaction-to-Block and
+Batch-to-Block. These may be rebuilt if missing or corrupt. This rebuild should
+be done during startup, and not during the course of normal operation. These
+mappings should be stored in a format that is cached to disk, so they are not
+required to be held in memory at all times. As the block chain grows, these will
+become quite large.</p>
+<p>The BlockStore provides an atomic method for updating the current head of the
+chain. In order for the BlockStore to switch forks, it is provided with a list
+of blocks in the new chain to commit, and a list of blocks in the old chain to
+decommit. These lists are the blocks in each fork back to the common root.</p>
+</div>
+<div class="section" id="the-blockcache">
+<h2>The BlockCache<a class="headerlink" href="#the-blockcache" title="Permalink to this headline">¶</a></h2>
+<p>The Block Cache holds the working set of blocks for the validator and tracks the
+processing state. This processing state is tracked as valid, invalid, or
+unknown. Valid blocks are blocks that have been proven to be valid by the
+ChainController. Invalid blocks are blocks that failed validation or have an
+invalid block as a predecessor. Unknown are blocks that have not yet completed
+validation, usually having just arrived from the Completer.</p>
+<p>The BlockCache is an in-memory construct. It is rebuilt by demand when the
+system is started.</p>
+<p>If a block is not present in the BlockCache, it will look in the BlockStore for
+the block. If it is not found or the lookup fails, the block is unknown to the
+system. If the block is found in the BlockStore it is loaded into the
+BlockCache and marked as valid. All blocks in the BlockStore are considered
+valid.</p>
+<p>The BlockCache keeps blocks that are currently relevant, tracked by the last
+time the block was accessed. Periodically, the blocks that have not been
+accessed recently are purged from the block cache, but only if none of the
+other blocks in the BlockCache reference those blocks as predecessors.</p>
+</div>
+<div class="section" id="the-completer">
+<h2>The Completer<a class="headerlink" href="#the-completer" title="Permalink to this headline">¶</a></h2>
+<p>The Completer is responsible for making sure Blocks and Batches are complete
+before they are delivered. Blocks are considered formally complete once all of
+their predecessors have been delivered to the ChainController and their batches
+field contains all the Batches specified in the BlockHeader’s batch_ids list.
+The batches field is also expected to be in the same order as the batch_ids.
+Once Blocks are formally complete they are delivered to the ChainController for
+validation.</p>
+<p>Batches are considered complete once all of its dependent transactions exist in
+the current chain or have been delivered to the BlockPublisher.</p>
+<p>All Blocks and Batches will have a timeout for being completed. After the
+initial request for the missing dependencies is sent, if the response is not
+received within the specified time window, they are dropped.</p>
+<p>If you have a new block of unknown validity, you must ensure that its
+predecessors have been delivered to the journal. If a predecessor is not
+delivered on request to the journal in a reasonable amount of time, the new
+block cannot be validated.</p>
+<p>Consider the case where you have the chain A-&gt;B-&gt;C :</p>
+<p>If C arrives and B is not in the BlockCache, the validator will request B. If
+the request for B times out, the C block is dropped.</p>
+<p>If later on D arrives with predecessor C, of chain A-&gt;B-&gt;C-&gt;D, the Completer
+will request C from the network and once C arrives, then will request B again.
+If B arrives this time, then the new chain will be delivered to the
+ChainController, where they will be check for validity and considered for
+becoming the block head by the ChainController.</p>
+</div>
+<div class="section" id="the-consensus-interface">
+<h2>The Consensus Interface<a class="headerlink" href="#the-consensus-interface" title="Permalink to this headline">¶</a></h2>
+<p>In the spirit of configurability, the Journal supports pluggable consensus
+algorithms that may be changed via the settings transaction family.  The
+initial selection of a  Consensus algorithm is set for the chain in the Genesis
+Block during Genesis (described below). This may be changed during the course of
+a Chain&#8217;s lifetime. The Journal and its Consensus Interface support pluggable
+consensus for probabilistic finality algorithms like Proof of Work, as well as
+algorithms with absolute finality like PBFT.</p>
+<p>The Consensus algorithm services to the journal are divided into three distinct
+interfaces that have specific lifetimes and access to information.</p>
+<ol class="arabic simple">
+<li>Consensus.BlockPublisher</li>
+<li>Consensus.BlockVerifier</li>
+<li>Consensus.ForkResolver</li>
+</ol>
+<p>Consensus algorithm implementations in Sawtooth must implement all of the
+consensus interfaces. Each of these objects are provided read-only access to
+the BlockCache and GlobalState.</p>
+<div class="section" id="consensus-blockpublisher">
+<h3>Consensus.BlockPublisher<a class="headerlink" href="#consensus-blockpublisher" title="Permalink to this headline">¶</a></h3>
+<p>An implementation of the interface Consensus.BlockPublisher is used by the
+BlockPublisher to create new candidate blocks to extend the chain. The
+Consensus.BlockPublisher is provided access to a read-only view of global
+state, a read-only view of the BlockStore, and an interface to publish batches.</p>
+<p>Three events are called on the Consensus.BlockPublisher,</p>
+<ol class="arabic simple">
+<li>initialize_block - The BlockHeader is provided for the candidate block. This
+is called immediately after the block_header is initialized and allows for
+validation of the consensus algorithm&#8217;s internal state, checks if the header
+is correct, checks if according to the consensus rules a block could be
+published, and checks if any initialization of the block_header is required.
+If this function fails no candidate block is created and the BlockPublisher
+will periodically attempt to create new blocks.</li>
+<li>check_publish_block - Periodically, polling is done to check if the block can
+be published. In the case of PoET, this is a check to see if the wait time
+has expired, but could be on any other criteria the consensus algorithm has
+for determining if it is time to publish a block. When this returns true the
+BlockPublisher will proceed in creating the block.</li>
+<li>finalize_block - Once check_publish_block has confirmed it is time to
+publish a block, the block header is considered complete, except for the
+consensus information. The BlockPublisher calls finalize_block with the
+completed block_header allowing the consensus field to be filled out.
+Afterwards, the BlockPublisher signs the block and broadcasts it to the
+network.</li>
+</ol>
+<p>This implementation needs to take special care to handle the genesis block
+correctly. During genesis operation, the Consensus.BlockPublisher will be called
+to initialize and finalize a block so that it can be published on the chain
+(see below).</p>
+</div>
+<div class="section" id="consensus-blockverifier">
+<h3>Consensus.BlockVerifier<a class="headerlink" href="#consensus-blockverifier" title="Permalink to this headline">¶</a></h3>
+<p>The Consensus.BlockVerifier implementation provides Block verification services
+to the BlockValidator. This gives the consensus algorithm an opportunity to
+check whether the candidate block was published following the consensus rules.</p>
+</div>
+<div class="section" id="consensus-forkresolver">
+<h3>Consensus.ForkResolver<a class="headerlink" href="#consensus-forkresolver" title="Permalink to this headline">¶</a></h3>
+<p>The consensus algorithm is responsible for fork resolution on the system.
+Depending on the consensus algorithm, the determination of the valid block to
+become the chain head will differ. In a Bitcoin Proof of Work consensus, this
+will be the longest chain, whereas PoET uses the measure of aggregate local
+mean (a measure of the total amount of time spent waiting) to determine the
+valid fork. Consensus algorithms with finality, such as PBFT, will only ever
+produce blocks that extend the current head. These algorithms will never have
+forks to resolve. The ForkResolver for these algorithms with finality will
+always select the new block that extends the current head.</p>
+</div>
+</div>
+<div class="section" id="the-chaincontroller">
+<h2>The ChainController<a class="headerlink" href="#the-chaincontroller" title="Permalink to this headline">¶</a></h2>
+<p>The ChainController is responsible for determining which chain the validator is
+currently on and coordinating any change-of-chain activities that need to
+happen.</p>
+<p>The ChainController is designed to be able to handle multiple block validation
+activities simultaneously. For instance, if multiple forks form on the network,
+the ChainController can process blocks from all of the competing forks
+simultaneously. This is advantageous as it allows progress to be made even when
+there are several deep forks competing. The current chain can also be advanced
+while a deep fork is being evaluated. This was implemented for cases that could
+happen if a group of validators lost connectivity with the network and later
+rejoined.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Currently, the thread pool is set to 1, so only one Block is validated
+at a time.</p>
+</div>
+<p>Here is the basic flow of the ChainController as a single block is processed.</p>
+<a class="reference internal image-reference" href="../_images/journal_chain_controller.svg"><div align="center" class="align-center"><img alt="Journal Chain Controller Diagram" src="../_images/journal_chain_controller.svg" width="80%" /></div>
+</a>
+<p>When a block arrives, the ChainController creates a BlockValidator and
+dispatches it to a thread pool for execution.  Once the BlockValidator has
+completed, it will callback to the ChainController indicating whether the new
+block should be the chain head. This indication falls into 3 cases:</p>
+<ol class="arabic simple">
+<li>The chain head has been updated since the BlockValidator was created. In
+this case a new BlockValidator is created and dispatched to redo the fork
+resolution.</li>
+<li>The new Block should become the chain head. In this case the chain head is
+updated to be the new block.</li>
+<li>The new Block should not become the chain head. This could be because the
+new Block is part of a chain that has an invalid block in it, or it is a
+member of a shorter or less desirable fork as determined by consensus.</li>
+</ol>
+<p>The Chain Controller synchronizes chain head updates such that only one
+BlockValidator result can be processed at a time. This is to prevent the race
+condition of multiple fork resolution processes attempting to update the chain
+head at the same time.</p>
+<div class="section" id="chain-head-update">
+<h3>Chain Head Update<a class="headerlink" href="#chain-head-update" title="Permalink to this headline">¶</a></h3>
+<p>When the chain needs to be updated, the ChainController does an update of the
+ChainHead using the BlockStore, providing it with the list of commit blocks
+that are in the new fork and a list of decommit blocks that are in the
+BlockStore, which must be removed. After the BlockStore is updated, the Block
+Publisher is notified that there is a new ChainHead.</p>
+</div>
+<div class="section" id="delayed-block-processing">
+<h3>Delayed Block Processing<a class="headerlink" href="#delayed-block-processing" title="Permalink to this headline">¶</a></h3>
+<p>While the ChainController does Block validation in parallel, there are cases
+where the ChainController will serialize Block validation. These cases are when
+a Block is received and any of its predecessors are still being validated. In
+this case the validation of the predecessor is completed before the new block is
+scheduled. This is done to avoid redoing the validation work of the predecessor
+Block, since the predecessor must be validated prior to the new Block, the delay
+is inconsequential to the outcome.</p>
+</div>
+<div class="section" id="the-blockvalidator">
+<h3>The BlockValidator<a class="headerlink" href="#the-blockvalidator" title="Permalink to this headline">¶</a></h3>
+<p>The BlockValidator is a subcomponent of the ChainController that is responsible
+for Block validation and fork resolution. When the BlockValidator is
+instantiated, it is given the candidate Block to validate and the current chain
+head.</p>
+<p>During processing, if a Block is marked as invalid it is discarded, never to be
+considered again. The only way to have the Block reconsidered is by flushing the
+BlockCache, which can be done by restarting the validator.</p>
+<p>The BlockValidator has three stages of evaluation.</p>
+<ol class="arabic simple">
+<li>Determine the common root of the fork (ForkRoot). This is done by walking the
+chain back from the candidate and the chain head until a common block is
+found. The Root can be the ChainHead in the case that the Candidate is
+advancing the existing chain. The only case that the ForkRoot will not be
+found is if the Candidate is from another Genesis. If this is the case, the
+Candidate and all of its predecessors are marked as Invalid and discarded.
+During this step, an ordered list of both chains is built back to the
+ForkRoot.</li>
+<li>The Candidate chain is validated. This process walks forward from the
+ForkRoot and applies block validation rules (described below) to each Block
+successively. If any block fails validation, it and all of its successors
+are marked as Invalid (Valid Blocks are defined as having Valid
+predecessor(s)). Once the Candidate is successfully Validated and marked as
+Valid, the Candidate is ready for Fork Resolution.</li>
+<li>Fork resolution requires a determination to be made if the Candidate should
+replace the ChainHead and is deferred entirely to the consensus
+implementation. Once the Consensus determines if the block is the new
+ChainHead, the answer is returned to the ChainController, which updates the
+BlockStore.  If it is not the new ChainHead, the Candidate is dropped.
+Additionally, if the Candidate is to become the ChainHead, the list of
+transactions committed in the new chain back to the common root is computed
+and the same list is computed on the current chain. This information helps
+the BlockPublisher update its pending batch list when the chain is updated.</li>
+</ol>
+</div>
+<div class="section" id="block-validation">
+<h3>Block Validation<a class="headerlink" href="#block-validation" title="Permalink to this headline">¶</a></h3>
+<p>Block validation has the following steps that are always run in order. Failure
+of any validation step results in failure, processing is stopped, and the Block
+is marked as Invalid.</p>
+<ol class="arabic">
+<li><p class="first"><strong>Transaction Permissioning</strong> - On-chain transaction permissions are
+checked to see who is allowed to submit transactions and batches.</p>
+</li>
+<li><p class="first"><strong>On-chain Block Validation Rules</strong> - The on-chain block validation rules
+are checked to ensure that the Block doesn&#8217;t invalidate any of the
+rules stored at <code class="docutils literal"><span class="pre">sawtooth.validator.block_validation_rules</span></code>.</p>
+</li>
+<li><p class="first"><strong>Batches Validation</strong> - All of the Batches in the block are sent in order
+to a Transaction Scheduler for validation. If any Batches fail validation,
+this block is marked as invalid. Note: Batch and Signature verification is
+done on receipt of the Batch prior to it being routed to the Journal. The
+batches are checked for the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>No duplicate Batches</li>
+<li>No duplicate Transactions</li>
+<li>Valid Transaction dependencies</li>
+<li>Successful Batch Execution</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Consensus Verification</strong> - The Consensus instance is given to the Block for
+verification. Consensus block verification is done by the consensus algorithm
+using its own rules.</p>
+</li>
+<li><p class="first"><strong>State Hash Check</strong> - The StateRootHash generated by validating the block is
+checked against the StateRootHash (state_root_hash field in the BlockHeader)
+on the block. They must match for the block to be valid.</p>
+</li>
+</ol>
+<p>If the block is computed to be valid, then StateRootHash is committed to the
+store.</p>
+</div>
+</div>
+<div class="section" id="the-blockpublisher">
+<h2>The BlockPublisher<a class="headerlink" href="#the-blockpublisher" title="Permalink to this headline">¶</a></h2>
+<p>The BlockPublisher is responsible for creating candidate blocks to extend the
+current chain. The BlockPublisher does all of the housekeeping work around
+creating a block but takes direction from the consensus algorithm for when to
+create a block and when to publish a block.</p>
+<p>The BlockPublisher follows this logic flow:</p>
+<a class="reference internal image-reference" href="../_images/journal_block_publisher_flow.svg"><div align="center" class="align-center"><img alt="Journal Block Publisher Diagram" src="../_images/journal_block_publisher_flow.svg" width="80%" /></div>
+</a>
+<p>At each processing stage, the consensus algorithm has a chance to inspect and
+confirm the validity of the block.</p>
+<p>During CreateBlock, an instance of Consensus.BlockPublisher is created that is
+responsible for guiding the creation of this candidate block.  Also, a
+TransactionScheduler is created and all of the pending Batches are submitted to
+it.</p>
+<p>A delay is employed in the checking loop to ensure that there is time for the
+batch processing to occur.</p>
+</div>
+<div class="section" id="genesis-operation">
+<h2>Genesis Operation<a class="headerlink" href="#genesis-operation" title="Permalink to this headline">¶</a></h2>
+<p>The Journal supports Genesis operation. This is the action of creating a root of
+the chain (the Genesis block) when the block store is empty. This operation is
+necessary for bootstrapping a validator network with the desired consensus
+model, any deployment-specific configuration settings, as well as any
+genesis-time transactions for an application&#8217;s Transaction Family.</p>
+<div class="section" id="genesis-batch-creation">
+<h3>Genesis Batch Creation<a class="headerlink" href="#genesis-batch-creation" title="Permalink to this headline">¶</a></h3>
+<p>The CLI tool produces batches in a file, which will be consumed by the
+validator on startup (when starting with an empty chain).</p>
+<p>The file contains a protobuf-encoded list of batches:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">File: sawtooth-core/protos/genesis.proto</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-protobuf"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">GenesisData</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">Batch</span> <span class="na">batches</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>The tool should take multiple input batch collections, and combine them
+together into the single list of batches contained in GenesisData. This allows
+independent tools or transaction families to include their own batches, without
+needing to know anything about the genesis process.</p>
+<p>The first implementation assumes that the order of the input batches have
+implied dependencies, with each batch being implicitly dependent on the
+previous.  Any dependencies should be verified when the final set of batches is
+produced.  This would be enforced by the use of strict ordering of the batches
+during execution time.  Future implementations may provide a way to verify
+dependencies across input batches.</p>
+<p>Transaction family authors who need to provide batches that will be included,
+need to provide their own tool to produce GenesisData, with the batches they
+require for the process. Each individual tool may manage their batch and
+transaction dependencies explicitly within the context of their specific
+genesis batches.</p>
+<div class="section" id="example">
+<h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
+<p>The following example configures the validator to use PoET consensus
+and specifies the appropriate settings:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sawset proposal create <span class="se">\</span>
+  -k &lt;signing-key-file&gt;
+  -o sawset.batch <span class="se">\</span>
+  sawtooth.consensus.algorithm<span class="o">=</span>poet <span class="se">\</span>
+  sawtooth.poet.initial_wait_timer<span class="o">=</span>x <span class="se">\</span>
+  sawtooth.poet.target_wait_time<span class="o">=</span>x <span class="se">\</span>
+  sawtooth.poet.minimum_wait_time<span class="o">=</span>x <span class="se">\</span>
+  sawtooth.poet.population_estimate_sample_size<span class="o">=</span>x <span class="se">\</span>
+  sawadm genesis <span class="se">\</span>
+  sawset.batch
+</pre></div>
+</div>
+<p>A genesis.batch file will written to the validator&#8217;s data directory.</p>
+</div>
+</div>
+<div class="section" id="block-creation">
+<h3>Block Creation<a class="headerlink" href="#block-creation" title="Permalink to this headline">¶</a></h3>
+<p>On startup, the validator would use the resulting genesis.batch file to produce
+a genesis block under the following conditions:</p>
+<ul class="simple">
+<li>The genesis.batch file exists</li>
+<li>There is no block specified as the chain head</li>
+</ul>
+<p>If either of these conditions is not met, the validator halts operation.</p>
+<p>The validator will load the batches from the file into the pending queue.  It
+will then produce the genesis block through the standard process with the
+following modifications.</p>
+<p>First, the execution of the batches will be strictly in the order they have
+been provided.  The Executor will not attempt to reorder them, or drop failed
+transactions.  Any failure of a transaction in genesis.batch will fail to
+produce the genesis block, and the validator will treat this as a fatal error.</p>
+<p>Second, it will use a genesis consensus, to determine block validity. At the
+start of the genesis block creation process, the Merkle state will be empty.
+Given that the consensus mechanism is specified by a configuration setting in
+the state, this will return None.  As a result, the genesis consensus mechanism
+will be used. This will produce a block with an empty consensus field.</p>
+<p>In addition to the genesis block, the block chain ID (that is, the signature of
+the genesis block) is written to the file <code class="docutils literal"><span class="pre">block-chain-id</span></code> in the validator’s
+data directory.</p>
+<p>Part of the production of the genesis block will require the configuration of
+the consensus mechanism. The second block will then use the configured
+consensus model, which will need to know how to initialize the consensus field
+from an empty one.  In future cases, transitions between consensus models may be
+possible, as long as they know how to read the consensus field of the previous
+block.</p>
+<p>To complete the process, all necessary transaction processors must be running.
+Minimally this includes the Sawtooth settings transaction processor.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="scheduling.html" class="btn btn-neutral float-right" title="Transaction Scheduling" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="transactions_and_batches.html" class="btn btn-neutral" title="Transactions and Batches!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.0rc4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

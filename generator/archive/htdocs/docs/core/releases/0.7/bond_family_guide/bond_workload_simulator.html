@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sawtooth Lake Bond Family Workload Simulator &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="Bond Family Guide" href="../bond_family_guide.html"/>
+        <link rel="next" title="Marketplace Navigator User’s Guide" href="../mktnav_users_guide.html"/>
+        <link rel="prev" title="Sawtooth LIBOR" href="design/libor.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="users_guide.html">Sawtooth Lake Bond Family User&#8217;s Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sysadmin_guide.html">Sawtooth Lake Bond Family System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design.html">Sawtooth Lake Bond Family Design</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Sawtooth Lake Bond Family Workload Simulator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview-of-the-bond-transaction-workload-operation">Overview of the Bond Transaction Workload Operation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-the-simulator-to-generate-a-bond-workload">Configuring the Simulator to Generate a Bond Workload</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-the-bond-workload-generator">Configuring the Bond Workload Generator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../bond_family_guide.html">Bond Family Guide</a> &raquo;</li>
+        
+      <li>Sawtooth Lake Bond Family Workload Simulator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/bond_family_guide/bond_workload_simulator.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sawtooth-lake-bond-family-workload-simulator">
+<h1>Sawtooth Lake Bond Family Workload Simulator<a class="headerlink" href="#sawtooth-lake-bond-family-workload-simulator" title="Permalink to this headline">¶</a></h1>
+<p>Sawtooth Lake has a workload simulator that can be used to generate a
+synthetic transaction workload.  General information about synthetic
+workload generation can be found in the workload simulator section of
+the Sawtooth Lake Developer&#8217;s Guide.  The workload simulator relies upon
+a workload generator to generate transactions for a particular transaction
+family.  The Sawtooth Lake project includes a workload generator
+that the workload simulator uses to generate a synthetic bond transaction
+workload (quotes and buy/sell orders).</p>
+<div class="section" id="overview-of-the-bond-transaction-workload-operation">
+<h2>Overview of the Bond Transaction Workload Operation<a class="headerlink" href="#overview-of-the-bond-transaction-workload-operation" title="Permalink to this headline">¶</a></h2>
+<p>Upon startup, the workload simulator discovers the initial validator network.
+For each validator discovered, the bond workload generator submits
+transactions to that validator to:</p>
+<ul class="simple">
+<li>Create a participant that will be referenced as the authorizing participant
+when the organizations that create quote and order transactions are created.
+Synthetic participants can be distinguished by their names, which consist of
+<code class="docutils literal"><span class="pre">P_</span></code> followed by a string of 14 random hexadecimal digits (0-9a-f).</li>
+<li>Create a trader organization that will create order
+transactions.  Synthetic traders can be distinguished by their names,
+which consist of <code class="docutils literal"><span class="pre">T_</span></code> followed by the same 14 random hexadecimal digits
+that appear in the creating participant&#8217;s name.</li>
+<li>Create a market maker organization that will create quote transactions.
+Synthetic market makers can be distinguished by their names,
+which consist of <code class="docutils literal"><span class="pre">M_</span></code> followed by the same 14 random hexadecimal digits
+that appear in the creating participant&#8217;s name.  In addition to a unique
+name, market makers also have a unique pricing source, which consists
+of the captial letter Z followed by three lower and/or upper case letters.</li>
+</ul>
+<p>After the initial validator network is discovered, and prior to the generation
+of the synthetic transaction workload, if the configuration file references
+a setup file (see <a class="reference internal" href="#configuring-the-bond-workload-generator-label"><span class="std std-ref">Configuring the Bond Workload Generator</span></a>), the
+bond workload generator will perform any setup (creating participants,
+organizations, bond, quotes, etc.) specified in the setup file.  In order to
+ensure that the validator network is in a consistent state after the setup
+file transactions have been submitted, the bond workload generator waits until
+all validators in the validator network have committed the setup file
+transactions to their blockchains.</p>
+<p>As a final step before synthetic workload generation, the bond workload
+generator discovers, via the validator network, the list of bonds that will
+be used later by traders and market makers when creating order and quote
+transactions, respectively.</p>
+<p>Once the setup is completed, at, or as close as possible to, the rate
+specified either on the command-line or in the simulator configuration file,
+the bond workload generator will generate either an order or a quote
+transaction, dictated by the ratio of order to quote transactions (see
+<a class="reference internal" href="#configuring-the-bond-workload-generator-label"><span class="std std-ref">Configuring the Bond Workload Generator</span></a>).  For each transaction,
+the bond workload generator will pick a random bond from the list of bonds
+discovered previously and a random validator (and therefore, by
+association its trader or market maker organization) to which the transaction
+will be submitted.</p>
+<p>For order transactions, the bond workload generator:</p>
+<ul class="simple">
+<li>Randomly chooses to either buy or sell the bond chosen.</li>
+<li>Randomly chooses a quantity between 1,000 and 10,000, inclusive, in
+multiples of 1,000.</li>
+<li>Sets the order type to market.</li>
+</ul>
+<p>For quote transactions, the bond workload generator:</p>
+<ul class="simple">
+<li>Randomly chooses a bid price between 100-00 0/8 and 105-31 7/8,
+inclusive.</li>
+<li>Randomly chooses a bid quantity between 100,000 and 500,000, inclusive, in
+multiples of 1,000.</li>
+<li>Randomly chooses an ask price between the bid prices and 105-31 7/8,
+inclusive.</li>
+<li>Randomly chooses an ask quantity between 100,000 and 500,000, inclusive, in
+multiples of 1,000.</li>
+</ul>
+</div>
+<div class="section" id="configuring-the-simulator-to-generate-a-bond-workload">
+<h2>Configuring the Simulator to Generate a Bond Workload<a class="headerlink" href="#configuring-the-simulator-to-generate-a-bond-workload" title="Permalink to this headline">¶</a></h2>
+<p>To generate a synthetic bond transaction workload, the workload simulator
+needs to be configured to use the bond workload generator,
+<code class="docutils literal"><span class="pre">sawtooth_bond.bond_workload.BondWorkload</span></code>.  This can be done
+in one of two ways:</p>
+<ul>
+<li><p class="first">Use the workload simulator&#8217;s <code class="docutils literal"><span class="pre">--workload</span></code> command-line option:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> /project/sawtooth-core
+<span class="gp">$</span> ./bin/simulator --workload sawtooth_bond.bond_workload.BondWorkload
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Edit the workload simulator configuration file and in the <code class="docutils literal"><span class="pre">[Simulator]</span></code>
+section, set the workload configuration option:</p>
+<blockquote>
+<div><div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">[Simulator]</span>
+<span class="go">workload = sawtooth_bond.bond_workload.BondWorkload</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>In either case, when the simulator starts, it should indicate that it is using
+the bond workload generator:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">[22:59:19 INFO    simulator_cli] Simulator configuration:</span>
+<span class="go">[22:59:19 INFO    simulator_cli] Simulator: url = http://127.0.0.1:8800</span>
+<span class="go">[22:59:19 INFO    simulator_cli] Simulator: workload = sawtooth_bond.bond_workload.BondWorkload</span>
+<span class="go">[22:59:19 INFO    simulator_cli] Simulator: rate = 12</span>
+<span class="go">[22:59:19 INFO    simulator_cli] Simulator: discover = 15</span>
+<span class="go">[22:59:19 INFO    simulator_cli] Simulator: verbose = 1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuring-the-bond-workload-generator">
+<span id="configuring-the-bond-workload-generator-label"></span><h2>Configuring the Bond Workload Generator<a class="headerlink" href="#configuring-the-bond-workload-generator" title="Permalink to this headline">¶</a></h2>
+<p>The bond workload generator is configured using the same configuration
+file used to configure the workload simulator.  All bond workload
+configuration options must appear in a section named <code class="docutils literal"><span class="pre">[BondWorkload]</span></code>.  A
+sample simulator configuration file,
+<code class="docutils literal"><span class="pre">extensions/bond/sawtooth_bond/bond_workload_sample.cfg</span></code>, with a bond workload
+generator section is provided and its contents are similar to the following:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">[Simulator]</span>
+<span class="go">url = http://127.0.0.1:8800</span>
+<span class="go">workload = sawtooth_bond.bond_workload.BondWorkload</span>
+<span class="go">rate = 20</span>
+<span class="go">discover = 15</span>
+<span class="go">verbose = 1</span>
+
+<span class="go">[BondWorkload]</span>
+<span class="go">setup_file = /project/sawtooth-core/extensions/bond/data/bond_workload_sample_setup.yaml</span>
+<span class="go">order_to_quote_ratio = 15</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">[Simulator]</span></code> section configuration options are described in detail in
+the simulator workload section of the Sawtooth Lake Developer&#8217;s Guide.</p>
+<p>The <code class="docutils literal"><span class="pre">[BondWorkload]</span></code> section may contain the following configuration options:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">setup_file</span></code> The file used to set up the validator network prior to the
+generation of the synthetic bond transaction workload.  The setup file is
+expressed in YAML and follows the same format as the file that the bond
+transaction family command-line interface load command (see
+<a class="reference internal" href="users_guide/cli.html#btp-cli-reference-label"><span class="std std-ref">btp CLI Reference</span></a>).  A sample setup file can be found in
+<code class="docutils literal"><span class="pre">sawtooth-core/extensions/bond/data/bond_workload_sample_setup.yaml</span></code>.
+If this option does not appear in the configuration file, then validator
+network setup is skipped.If there are any errors in the setup transactions,
+the bond workload generator will log a warning, but will continue.</li>
+<li><code class="docutils literal"><span class="pre">order_to_quote_ratio</span></code> The number of order transactions to create for each
+quote transaction created.  Note that this is simply a ratio of order
+transactions to quote transactions and there is no attempt to correlate or
+match up the transactions.  In the example configuration file above, for
+every fifteen order transactions that the bond workload generator
+creates it creates one quote transaction.  If this option does not appear
+in the configuration file, the default order to quote ratio is ten.</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../mktnav_users_guide.html" class="btn btn-neutral float-right" title="Marketplace Navigator User’s Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="design/libor.html" class="btn btn-neutral" title="Sawtooth LIBOR" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

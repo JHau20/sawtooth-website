@@ -1,0 +1,7 @@
+sawtooth\.cli\.block module
+===========================
+
+.. automodule:: sawtooth.cli.block
+    :members:
+    :undoc-members:
+    :show-inheritance:

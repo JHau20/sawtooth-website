@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: signing/secp256k1.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: signing/secp256k1.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Copyright 2017 Intel Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ------------------------------------------------------------------------------
+ */
+
+/** @module signing/secp256k1 */
+'use strict'
+
+const secp256k1 = require('secp256k1')
+const { createHash, randomBytes } = require('crypto')
+
+const { PrivateKey, PublicKey, Context, ParseError } = require('./core')
+
+/**
+ * A Secp256k1 specific implementation of the PrivateKey class.
+ */
+class Secp256k1PrivateKey extends PrivateKey {
+  /**
+   * @param {Buffer} privateKeyBytes - the bytes of the private key
+   */
+  constructor (privateKeyBytes) {
+    super()
+    this.privateKeyBytes = privateKeyBytes
+  }
+
+  getAlgorithmName () {
+    return 'secp256k1'
+  }
+
+  /**
+   * @return {Buffer} the key in bytes
+   */
+  asBytes () {
+    return Buffer.from(this.privateKeyBytes)
+  }
+
+  /**
+   * Creates a private key from a hex encode set of bytes.
+   *
+   * @param {string} privateKeyHex - the key in hex
+   * @return {PrivateKey} a private key instance
+   * @throws {ParseError} if the private key is not valid
+   */
+  static fromHex (privateKeyHex) {
+    let buffer = Buffer.from(privateKeyHex, 'hex')
+    // verify that it is either a proper compressed or uncompressed key
+    if (!secp256k1.privateKeyVerify(buffer) &amp;&amp;
+        !secp256k1.privateKeyVerify(buffer, false)) {
+      throw new ParseError('Unable to parse a private key from the given hex')
+    }
+    return new Secp256k1PrivateKey(buffer)
+  }
+
+  static newRandom () {
+    let privKey
+    do {
+      privKey = randomBytes(32)
+    } while (!secp256k1.privateKeyVerify(privKey))
+
+    return new Secp256k1PrivateKey(privKey)
+  }
+}
+
+/**
+ * A Secp256k1 specific implementation of the PublicKey class.
+ */
+class Secp256k1PublicKey extends PublicKey {
+  /**
+   * @param {Buffer} publicKeyBytes - the bytes of the public key
+   */
+  constructor (publicKeyBytes) {
+    super()
+    this.publicKeyBytes = publicKeyBytes
+  }
+
+  getAlgorithmName () {
+    return 'secp256k1'
+  }
+
+  /**
+   * @return {Buffer} the key in bytes
+   */
+  asBytes () {
+    return Buffer.from(this.publicKeyBytes)
+  }
+
+  /**
+   * Creates a public key from a hex encode set of bytes.
+   *
+   * @param {string} publicKeyHex - the key in hex
+   * @return {PublicKey} a public key instance
+   * @throws {ParseError} if the public key is not valid
+   */
+  static fromHex (publicKeyHex) {
+    let buffer = Buffer.from(publicKeyHex, 'hex')
+    if (!secp256k1.publicKeyVerify(buffer)) {
+      throw new ParseError('Unable to parse a private key from the given hex')
+    }
+    return new Secp256k1PublicKey(buffer)
+  }
+}
+
+/**
+ * A Secp256k1 specific implementation of the abstract Context class.
+ */
+class Secp256k1Context extends Context {
+  getAlgorithmName () {
+    return 'secp256k1'
+  }
+
+  verify (signature, message, publicKey) {
+    const dataHash = createHash('sha256').update(message).digest()
+    const sigBytes = Buffer.from(signature, 'hex')
+
+    return secp256k1.verify(dataHash, sigBytes, publicKey.publicKeyBytes)
+  }
+
+  sign (message, privateKey) {
+    const dataHash = createHash('sha256').update(message).digest()
+
+    const result = secp256k1.sign(dataHash, privateKey.privateKeyBytes)
+    return result.signature.toString('hex')
+  }
+
+  getPublicKey (privateKey) {
+    return new Secp256k1PublicKey(
+      secp256k1.publicKeyCreate(privateKey.privateKeyBytes)
+    )
+  }
+
+  newRandomPrivateKey () {
+    return Secp256k1PrivateKey.newRandom()
+  }
+}
+
+module.exports = {
+  Secp256k1PrivateKey,
+  Secp256k1PublicKey,
+  Secp256k1Context
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-processor.html">processor</a></li><li><a href="module-processor_context.html">processor/context</a></li><li><a href="module-processor_exceptions.html">processor/exceptions</a></li><li><a href="module-processor_handler.html">processor/handler</a></li><li><a href="module-protobuf.html">protobuf</a></li><li><a href="module-signing.html">signing</a></li><li><a href="module-signing_core.html">signing/core</a></li><li><a href="module-signing_secp256k1.html">signing/secp256k1</a></li></ul><h3>Classes</h3><ul><li><a href="module-processor_context-Context.html">Context</a></li><li><a href="module-processor_exceptions-AuthorizationException.html">AuthorizationException</a></li><li><a href="module-processor_exceptions-InternalError.html">InternalError</a></li><li><a href="module-processor_exceptions-InvalidTransaction.html">InvalidTransaction</a></li><li><a href="module-processor_exceptions-ValidatorConnectionError.html">ValidatorConnectionError</a></li><li><a href="module-processor_handler-TransactionHandler.html">TransactionHandler</a></li><li><a href="module-processor-TransactionProcessor.html">TransactionProcessor</a></li><li><a href="module-signing_core-Context.html">Context</a></li><li><a href="module-signing_core-NoSuchAlgorithmError.html">NoSuchAlgorithmError</a></li><li><a href="module-signing_core-ParseError.html">ParseError</a></li><li><a href="module-signing_core-PrivateKey.html">PrivateKey</a></li><li><a href="module-signing_core-PublicKey.html">PublicKey</a></li><li><a href="module-signing_core-SigningError.html">SigningError</a></li><li><a href="module-signing_secp256k1-Secp256k1Context.html">Secp256k1Context</a></li><li><a href="module-signing_secp256k1-Secp256k1PrivateKey.html">Secp256k1PrivateKey</a></li><li><a href="module-signing_secp256k1-Secp256k1PublicKey.html">Secp256k1PublicKey</a></li><li><a href="module-signing-CryptoFactory.html">CryptoFactory</a></li><li><a href="module-signing-Signer.html">Signer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sun Oct 04 2020 08:14:32 GMT+0000 (UTC)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

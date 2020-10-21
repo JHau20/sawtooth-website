@@ -1,0 +1,392 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation on SLES &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../index.html"/>
+        <link rel="up" title="System Administrator’s Guide" href="../sysadmin_guide.html"/>
+        <link rel="next" title="Installation on Windows" href="installation_windows.html"/>
+        <link rel="prev" title="Installation on Ubuntu" href="installation_ubuntu.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="packaging_ubuntu.html">Creating Packages for Ubuntu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging_sles.html">Creating Packages for SLES</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging_windows.html">Creating Packages for Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation_ubuntu.html">Installation on Ubuntu</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Installation on SLES</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configure-zypper">Configure Zypper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sawtoothlake-installation">SawtoothLake Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#starting-and-stopping-the-validator">Starting and Stopping the Validator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuring-the-validator">Configuring the Validator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#configuration-files-location">Configuration Files Location</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuration-file-parameters">Configuration File Parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#security">Security</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#log-files">Log Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation_windows.html">Installation on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network_configuration.html">Network Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Installation on SLES</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/installation_sles.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation-on-sles">
+<h1>Installation on SLES<a class="headerlink" href="#installation-on-sles" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>To install onto SLES, you need the following:</p>
+<ul class="simple">
+<li>SLES 12</li>
+<li>SawtoothLake Distribution (sawtoothlake-x.y.z-sles-packages.tar.gz)</li>
+</ul>
+</div>
+<div class="section" id="configure-zypper">
+<h2>Configure Zypper<a class="headerlink" href="#configure-zypper" title="Permalink to this headline">¶</a></h2>
+<p>Two additional repositories are required for installation.  To configure them, run:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@sles #</span> zypper addrepo <span class="se">\</span>
+    http://download.opensuse.org/repositories/devel:libraries:c_c++/SLE_12/devel:libraries:c_c++.repo
+<span class="gp">root@sles #</span> zypper addrepo <span class="se">\</span>
+    http://download.opensuse.org/repositories/devel:languages:python/SLE_12/devel:languages:python.repo
+<span class="gp">root@sles #</span> zypper refresh
+</pre></div>
+</div>
+</div>
+<div class="section" id="sawtoothlake-installation">
+<h2>SawtoothLake Installation<a class="headerlink" href="#sawtoothlake-installation" title="Permalink to this headline">¶</a></h2>
+<p>As root, unpack the SawtoothLake Distribution:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@sles #</span> tar xvfj sawtoothlake-x.y.z-sles-packages.tar.bz2
+</pre></div>
+</div>
+<p>Install the SawtoothLake RPM files:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@sles #</span> <span class="nb">cd</span> sawtoothlake-x.y.z-sles-packages
+<span class="gp">root@sles #</span> zypper install -y *.rpm
+</pre></div>
+</div>
+</div>
+<div class="section" id="starting-and-stopping-the-validator">
+<h2>Starting and Stopping the Validator<a class="headerlink" href="#starting-and-stopping-the-validator" title="Permalink to this headline">¶</a></h2>
+<p>The validator is run via systemd and can be started and stopped with systemctl
+commands.</p>
+<p>To start the validator:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu #</span> systemctl start sawtooth-validator
+</pre></div>
+</div>
+<p>To stop the validator:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu #</span> systemctl stop sawtooth-validator
+</pre></div>
+</div>
+<p>You can also view the Upstart status with:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu #</span> systemctl status sawtooth-validator
+</pre></div>
+</div>
+<p>The process name will be &#8216;txnvalidator&#8217; and you can verify it is running
+with ps:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu #</span> ps -ef <span class="p">|</span> grep txnvalidator
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuring-the-validator">
+<h2>Configuring the Validator<a class="headerlink" href="#configuring-the-validator" title="Permalink to this headline">¶</a></h2>
+<p>When run via systemd, the txnvalidator options can be changed in
+/etc/sysconfig/sawtooth-validator with the TXNVALIDATOR_OPTIONS environment
+variable.  This includes specifying which configuration file the
+txnvalidator should use.</p>
+<div class="section" id="configuration-files-location">
+<h3>Configuration Files Location<a class="headerlink" href="#configuration-files-location" title="Permalink to this headline">¶</a></h3>
+<p>Configuration files are placed in /etc/sawtooth-validator.</p>
+</div>
+<div class="section" id="configuration-file-parameters">
+<h3>Configuration File Parameters<a class="headerlink" href="#configuration-file-parameters" title="Permalink to this headline">¶</a></h3>
+<p>By default, the validator will start up as a &#8216;base&#8217; validator.
+It will not reach out to other validator nodes, and it will initialize
+a new set of data files in the data directory, /var/lib/sawtooth-validator
+by default.</p>
+<p>In order to join the new validator to an existing network of validators,
+the &#8220;LedgerURL&#8221; setting must be changed in the configuration file to
+point to a valid URL for an existing http validator in the network.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{
+    &quot;HttpPort&quot; : 0,
+    &quot;Host&quot; : &quot;localhost&quot;,
+    &quot;Port&quot; : 0,
+    &quot;NodeName&quot; : &quot;node000&quot;,
+    &quot;LedgerURL&quot; : &quot;http://base-validator.domain.com:8800/&quot;,
+</pre></div>
+</div>
+<p>It is also important to set the &#8220;NodeName&#8221; value to a unique value based
+on your naming convention. The node&#8217;s key, which must be generated using
+the command <em>sawtooth keygen</em>, must be named {node name}.wif and placed
+in the keys directory.</p>
+<p>Several other settings are important for correct functionality of the
+new validator node. The configuration file must contain the list of
+valid transaction families supported by the validator network.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&quot;TransactionFamilies&quot; : [
+    &quot;IntegerKey&quot;,
+    &quot;MarketPlace&quot;
+]
+</pre></div>
+</div>
+<p>Lastly, the &#8220;AdministrationNode&#8221; setting must contain the address of the
+administration node on the validator network. This instructs the validator
+to listen for and act on administrative transactions (like shutdown)
+received from the administration node. The administration node address
+can be found in the keys directory on the adminstration node in a file
+called {node name}.addr.</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&quot;AdministrationNode&quot; : &quot;19ns29kWDTX8vNeHNzJbJy6S9HZiqHZyEE&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="security">
+<h3>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h3>
+<p>You can instruct the validator to check whether or not the validator is being
+run under a user with elevated privileges (root in Linux, or administrator in
+Windows). If elevated privileges are being used, the validator stops with a
+warning.</p>
+<p>To run the privilege level check, change the &#8220;CheckElevated&#8221; setting to &#8220;true&#8221;
+in the configuration file:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&quot;CheckElevated&quot; : true
+</pre></div>
+</div>
+<p>This setting applies only to Linux and Windows operating systems.</p>
+</div>
+</div>
+<div class="section" id="log-files">
+<h2>Log Files<a class="headerlink" href="#log-files" title="Permalink to this headline">¶</a></h2>
+<p>The primary directory for log files is /var/log/sawtooth-validator.  In
+addition, stdout and stderr are captured and viewable with journalctl.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">root@ubuntu #</span> journalctl -u sawtooth-validator
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation_windows.html" class="btn btn-neutral float-right" title="Installation on Windows" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installation_ubuntu.html" class="btn btn-neutral" title="Installation on Ubuntu" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

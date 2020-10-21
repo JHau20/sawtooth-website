@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>About Event Subscriptions &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using ZMQ to Subscribe to Events" href="zmq_event_subscription.html" />
+    <link rel="prev" title="About Sawtooth Events" href="about_events.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Transaction Family Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_sawtooth.html">Setting Up a Sawtooth Node for Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creating_sawtooth_network.html">Creating a Sawtooth Test Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Playing with the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_the_sdks.html">Using the Sawtooth SDKs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_restriction.html">Namespace Restriction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="event_subscriptions.html">Subscribing to Events</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="about_events.html">About Sawtooth Events</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">About Event Subscriptions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#event-filters">Event Filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#event-subscription-protobuf">Event Subscription Protobuf</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="zmq_event_subscription.html">Using ZMQ to Subscribe to Events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="web_socket_event_subscription.html">About Web Sockets and Event Subscriptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="event_subscriptions.html">Subscribing to Events</a> &raquo;</li>
+        
+      <li>About Event Subscriptions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/about_event_subscriptions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="about-event-subscriptions">
+<h1>About Event Subscriptions<a class="headerlink" href="#about-event-subscriptions" title="Permalink to this headline">¶</a></h1>
+<p>An application can use event subscriptions to tell the validator to supply
+information about changes to the blockchain.</p>
+<p>An event subscription consists of an event type (the name of the event) and an
+optional list of filters for this event type. If an event is in one of your
+subscriptions, you will receive the event when the validator broadcasts it.</p>
+<p>An event is “in a subscription” if the event’s <code class="docutils literal notranslate"><span class="pre">event_type</span></code> field matches the
+subscription’s <code class="docutils literal notranslate"><span class="pre">event_type</span></code> field, and the event matches any filters that are
+in the event subscription. If multiple filters are included in a single
+subscription, only events that pass <em>all</em> filters will be received.
+Note, however, that you can have multiple subscriptions at a time, so you
+will receive all events that pass the filter or filters in each subscription.</p>
+<div class="section" id="event-filters">
+<h2>Event Filters<a class="headerlink" href="#event-filters" title="Permalink to this headline">¶</a></h2>
+<p>An event filter operates on event attributes. A filter specifies an attribute
+key, a “match string”, and a filter type.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The attribute key specifies the event attribute that you are interested in,
+such as <code class="docutils literal notranslate"><span class="pre">address</span></code> or <code class="docutils literal notranslate"><span class="pre">block_id</span></code>.</p></li>
+<li><p>The match string is used to compare against the event’s attribute value, as
+identified by the attribute key.</p></li>
+<li><p>The filter type (simple or regular expression) determines the rules for
+comparing the match string to the event’s attribute value.</p></li>
+</ul>
+</div></blockquote>
+<p>The filter type can either be <code class="docutils literal notranslate"><span class="pre">SIMPLE</span></code> (an exact match to the specified
+string) or <code class="docutils literal notranslate"><span class="pre">REGEX</span></code> (a match using a regular expression). In addition, the
+filter type specifies <code class="docutils literal notranslate"><span class="pre">ANY</span></code> (match one or more) or <code class="docutils literal notranslate"><span class="pre">ALL</span></code> (must match all).
+The following filter types are supported:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">SIMPLE_ANY</span></code>:
+The filter’s “match string” must match at least one of the
+event’s attribute values. For example, this filter type with the match string
+“<code class="docutils literal notranslate"><span class="pre">abc</span></code>” would succeed for a single event with the following attributes,
+because it matches the attribute value <code class="docutils literal notranslate"><span class="pre">abc</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Attribute(key=&quot;address&quot;,value=&quot;abc&quot;)
+Attribute(key=&quot;address&quot;,value=&quot;def&quot;)
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SIMPLE_ALL</span></code>:
+The filter’s “match string” must match all of the event’s attribute values.
+This filter type with the match string “<code class="docutils literal notranslate"><span class="pre">abc</span></code>” would fail with the previous
+example, because it does not match all the attribute values.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">REGEX_ANY</span></code>:
+The filter’s regular expression must evaluate to a match for at least one of
+the event’s attribute values. For example, this filter type with the match
+string “<code class="docutils literal notranslate"><span class="pre">ab.</span></code>” would succeed for a single event with the following
+attributes, because it matches the attribute value <code class="docutils literal notranslate"><span class="pre">abc</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Attribute(key=&quot;address&quot;,value=&quot;abc&quot;)
+Attribute(key=&quot;address&quot;,value=&quot;abbbc&quot;)
+Attribute(key=&quot;address&quot;,value=&quot;def&quot;)
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">REGEX_ALL</span></code>:
+The filter’s regular expression must evaluate to a match for all of the
+event’s attribute values. This filter type with the match string “<code class="docutils literal notranslate"><span class="pre">ab.</span></code>”
+would fail with the previous example, because it doesn’t match all three
+attribute values above. The match string <code class="docutils literal notranslate"><span class="pre">[ad][be]*[cf]</span></code> would succeed.</p></li>
+</ul>
+</div>
+<div class="section" id="event-subscription-protobuf">
+<h2>Event Subscription Protobuf<a class="headerlink" href="#event-subscription-protobuf" title="Permalink to this headline">¶</a></h2>
+<p>Event subscriptions are submitted and serviced over a ZMQ socket using the
+validator’s messaging protocol.</p>
+<p>An event subscription is represented with the following protobuf messages, which
+are defined in <code class="docutils literal notranslate"><span class="pre">sawtooth-core/protos/events.proto</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="n">EventSubscription</span> <span class="p">{</span>
+  <span class="n">string</span> <span class="n">event_type</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">repeated</span> <span class="n">EventFilter</span> <span class="n">filters</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">message</span> <span class="n">EventFilter</span> <span class="p">{</span>
+  <span class="n">string</span> <span class="n">key</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">string</span> <span class="n">match_string</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+  <span class="n">enum</span> <span class="n">FilterType</span> <span class="p">{</span>
+      <span class="n">FILTER_TYPE_UNSET</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="n">SIMPLE_ANY</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="n">SIMPLE_ALL</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+      <span class="n">REGEX_ANY</span>  <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+      <span class="n">REGEX_ALL</span>  <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">FilterType</span> <span class="n">filter_type</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A <code class="docutils literal notranslate"><span class="pre">ClientEventsSubscribeRequest</span></code> envelope is used to submit subscription
+requests and receive the responses.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">ClientEventsSubscribeRequest</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">EventSubscription</span> <span class="na">subscriptions</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="c1">// The block id (or ids, if trying to walk back a fork) the subscriber last</span>
+    <span class="c1">// received events on. It can be set to empty if it has not yet received the</span>
+    <span class="c1">// genesis block.</span>
+    <span class="k">repeated</span> <span class="kt">string</span> <span class="na">last_known_block_ids</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The validator responds with a <code class="docutils literal notranslate"><span class="pre">ClientEventsSubscribeResponse</span></code> message that
+specifies whether the subscription was successful.</p>
+<div class="highlight-protobuf notranslate"><div class="highlight"><pre><span></span><span class="kd">message</span> <span class="nc">ClientEventsSubscribeResponse</span> <span class="p">{</span>
+    <span class="kd">enum</span> <span class="n">Status</span> <span class="p">{</span>
+         <span class="na">OK</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+         <span class="na">INVALID_FILTER</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+         <span class="na">UNKNOWN_BLOCK</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">Status</span> <span class="na">status</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="c1">// Additional information about the response status</span>
+    <span class="kt">string</span> <span class="na">response_message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>When subscribing to events, an application can optionally request “event
+catch-up” by sending a list of block IDs along with the subscription. For more
+information, see <a class="reference internal" href="zmq_event_subscription.html#event-catch-up-label"><span class="std std-ref">Requesting Event Catch-Up</span></a>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="zmq_event_subscription.html" class="btn btn-neutral float-right" title="Using ZMQ to Subscribe to Events" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="about_events.html" class="btn btn-neutral float-left" title="About Sawtooth Events" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

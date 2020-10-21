@@ -1,0 +1,624 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth_signing package &mdash; Sawtooth v1.1.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="REST API Reference" href="../../rest_api.html" />
+    <link rel="prev" title="processor package" href="processor.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.1.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../api_references.html">API References</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../sdks.html">SDK API Reference</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../sdks.html#python">Python</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="processor.html">Transaction Processor</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Signing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../sdks.html#go">Go</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sdks.html#javascript">Javascript</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sdks.html#rust">Rust</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../rest_api.html">REST API Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../api_references.html">API References</a> &raquo;</li>
+        
+          <li><a href="../../sdks.html">SDK API Reference</a> &raquo;</li>
+        
+      <li>sawtooth_signing package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/sdks/python_sdk/sawtooth_signing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sawtooth-signing-package">
+<h1>sawtooth_signing package<a class="headerlink" href="#sawtooth-signing-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-sawtooth_signing.core">
+<span id="sawtooth-signing-core-module"></span><h2>sawtooth_signing.core module<a class="headerlink" href="#module-sawtooth_signing.core" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="sawtooth_signing.core.NoSuchAlgorithmError">
+<em class="property">exception </em><code class="descclassname">sawtooth_signing.core.</code><code class="descname">NoSuchAlgorithmError</code><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#NoSuchAlgorithmError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.NoSuchAlgorithmError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
+<p>Thrown when trying to create an algorithm which does not exist.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="sawtooth_signing.core.SigningError">
+<em class="property">exception </em><code class="descclassname">sawtooth_signing.core.</code><code class="descname">SigningError</code><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#SigningError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.SigningError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
+<p>Thrown when an error occurs during the signing process.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="sawtooth_signing.core.ParseError">
+<em class="property">exception </em><code class="descclassname">sawtooth_signing.core.</code><code class="descname">ParseError</code><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#ParseError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.ParseError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
+<p>Thrown when an error occurs during deserialization of a Private or
+Public key from various formats.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth_signing.core.PrivateKey">
+<em class="property">class </em><code class="descclassname">sawtooth_signing.core.</code><code class="descname">PrivateKey</code><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#PrivateKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.PrivateKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A private key instance.</p>
+<p>The underlying content is dependent on implementation.</p>
+<dl class="method">
+<dt id="sawtooth_signing.core.PrivateKey.get_algorithm_name">
+<code class="descname">get_algorithm_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#PrivateKey.get_algorithm_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.PrivateKey.get_algorithm_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the algorithm name used for this private key.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.core.PrivateKey.as_hex">
+<code class="descname">as_hex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#PrivateKey.as_hex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.PrivateKey.as_hex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the private key encoded as a hex string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.core.PrivateKey.as_bytes">
+<code class="descname">as_bytes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#PrivateKey.as_bytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.PrivateKey.as_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the private key bytes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth_signing.core.PublicKey">
+<em class="property">class </em><code class="descclassname">sawtooth_signing.core.</code><code class="descname">PublicKey</code><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#PublicKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.PublicKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A public key instance.</p>
+<p>The underlying content is dependent on implementation.</p>
+<dl class="method">
+<dt id="sawtooth_signing.core.PublicKey.get_algorithm_name">
+<code class="descname">get_algorithm_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#PublicKey.get_algorithm_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.PublicKey.get_algorithm_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the algorithm name used for this public key.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.core.PublicKey.as_hex">
+<code class="descname">as_hex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#PublicKey.as_hex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.PublicKey.as_hex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the public key encoded as a hex string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.core.PublicKey.as_bytes">
+<code class="descname">as_bytes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#PublicKey.as_bytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.PublicKey.as_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the public key bytes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth_signing.core.Context">
+<em class="property">class </em><code class="descclassname">sawtooth_signing.core.</code><code class="descname">Context</code><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#Context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A context for a cryptographic signing algorithm.</p>
+<dl class="method">
+<dt id="sawtooth_signing.core.Context.get_algorithm_name">
+<code class="descname">get_algorithm_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#Context.get_algorithm_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.Context.get_algorithm_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the algorithm name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.core.Context.sign">
+<code class="descname">sign</code><span class="sig-paren">(</span><em>message</em>, <em>private_key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#Context.sign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.Context.sign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sign a message</p>
+<p>Given a private key for this algorithm, sign the given message bytes
+and return a hex-encoded string of the resulting signature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>message</strong> (<em>bytes</em>) &#8211; the message bytes</li>
+<li><strong>private_key</strong> (<a class="reference internal" href="#sawtooth_signing.core.PrivateKey" title="sawtooth_signing.core.PrivateKey"><code class="xref py py-obj docutils literal"><span class="pre">PrivateKey</span></code></a>) &#8211; the private key</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The signature in a hex-encoded string</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#sawtooth_signing.core.SigningError" title="sawtooth_signing.core.SigningError"><code class="xref py py-exc docutils literal"><span class="pre">SigningError</span></code></a> &#8211; if any error occurs during the signing process</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.core.Context.verify">
+<code class="descname">verify</code><span class="sig-paren">(</span><em>signature</em>, <em>message</em>, <em>public_key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#Context.verify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.Context.verify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies that a signature of a message was produced with the
+associated public key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>signature</strong> (<em>str</em>) &#8211; the hex-encoded signature</li>
+<li><strong>message</strong> (<em>bytes</em>) &#8211; the message bytes</li>
+<li><strong>public_key</strong> (<a class="reference internal" href="#sawtooth_signing.core.PublicKey" title="sawtooth_signing.core.PublicKey"><code class="xref py py-obj docutils literal"><span class="pre">PublicKey</span></code></a>) &#8211; the public key to use for
+verification</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if the public key is associated with the signature
+for that method, False otherwise</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.core.Context.new_random_private_key">
+<code class="descname">new_random_private_key</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#Context.new_random_private_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.Context.new_random_private_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a new random PrivateKey using this context.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a random private key</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">(<a class="reference internal" href="#sawtooth_signing.core.PrivateKey" title="sawtooth_signing.core.PrivateKey"><code class="xref py py-obj docutils literal"><span class="pre">PrivateKey</span></code></a>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.core.Context.get_public_key">
+<code class="descname">get_public_key</code><span class="sig-paren">(</span><em>private_key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/core.html#Context.get_public_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.core.Context.get_public_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a public key for the given private key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>private_key</strong> (<a class="reference internal" href="#sawtooth_signing.core.PrivateKey" title="sawtooth_signing.core.PrivateKey"><code class="xref py py-obj docutils literal"><span class="pre">PrivateKey</span></code></a>) &#8211; a private key</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">(<a class="reference internal" href="#sawtooth_signing.core.PublicKey" title="sawtooth_signing.core.PublicKey"><code class="xref py py-obj docutils literal"><span class="pre">PublicKey</span></code></a>) the public key for the given private key</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sawtooth_signing.secp256k1">
+<span id="sawtooth-signing-secp256k1-module"></span><h2>sawtooth_signing.secp256k1 module<a class="headerlink" href="#module-sawtooth_signing.secp256k1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PrivateKey">
+<em class="property">class </em><code class="descclassname">sawtooth_signing.secp256k1.</code><code class="descname">Secp256k1PrivateKey</code><span class="sig-paren">(</span><em>secp256k1_private_key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1PrivateKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PrivateKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sawtooth_signing.core.PrivateKey" title="sawtooth_signing.core.PrivateKey"><code class="xref py py-class docutils literal"><span class="pre">sawtooth_signing.core.PrivateKey</span></code></a></p>
+<dl class="method">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PrivateKey.get_algorithm_name">
+<code class="descname">get_algorithm_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1PrivateKey.get_algorithm_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PrivateKey.get_algorithm_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PrivateKey.as_hex">
+<code class="descname">as_hex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1PrivateKey.as_hex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PrivateKey.as_hex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PrivateKey.as_bytes">
+<code class="descname">as_bytes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1PrivateKey.as_bytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PrivateKey.as_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PrivateKey.secp256k1_private_key">
+<code class="descname">secp256k1_private_key</code><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PrivateKey.secp256k1_private_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PrivateKey.from_bytes">
+<em class="property">static </em><code class="descname">from_bytes</code><span class="sig-paren">(</span><em>byte_str</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1PrivateKey.from_bytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PrivateKey.from_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PrivateKey.from_hex">
+<em class="property">static </em><code class="descname">from_hex</code><span class="sig-paren">(</span><em>hex_str</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1PrivateKey.from_hex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PrivateKey.from_hex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PrivateKey.new_random">
+<em class="property">static </em><code class="descname">new_random</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1PrivateKey.new_random"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PrivateKey.new_random" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PublicKey">
+<em class="property">class </em><code class="descclassname">sawtooth_signing.secp256k1.</code><code class="descname">Secp256k1PublicKey</code><span class="sig-paren">(</span><em>secp256k1_public_key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1PublicKey"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PublicKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sawtooth_signing.core.PublicKey" title="sawtooth_signing.core.PublicKey"><code class="xref py py-class docutils literal"><span class="pre">sawtooth_signing.core.PublicKey</span></code></a></p>
+<dl class="attribute">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PublicKey.secp256k1_public_key">
+<code class="descname">secp256k1_public_key</code><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PublicKey.secp256k1_public_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PublicKey.get_algorithm_name">
+<code class="descname">get_algorithm_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1PublicKey.get_algorithm_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PublicKey.get_algorithm_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PublicKey.as_hex">
+<code class="descname">as_hex</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1PublicKey.as_hex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PublicKey.as_hex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PublicKey.as_bytes">
+<code class="descname">as_bytes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1PublicKey.as_bytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PublicKey.as_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PublicKey.from_bytes">
+<em class="property">static </em><code class="descname">from_bytes</code><span class="sig-paren">(</span><em>byte_str</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1PublicKey.from_bytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PublicKey.from_bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="sawtooth_signing.secp256k1.Secp256k1PublicKey.from_hex">
+<em class="property">static </em><code class="descname">from_hex</code><span class="sig-paren">(</span><em>hex_str</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1PublicKey.from_hex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1PublicKey.from_hex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth_signing.secp256k1.Secp256k1Context">
+<em class="property">class </em><code class="descclassname">sawtooth_signing.secp256k1.</code><code class="descname">Secp256k1Context</code><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1Context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1Context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sawtooth_signing.core.Context" title="sawtooth_signing.core.Context"><code class="xref py py-class docutils literal"><span class="pre">sawtooth_signing.core.Context</span></code></a></p>
+<dl class="method">
+<dt id="sawtooth_signing.secp256k1.Secp256k1Context.get_algorithm_name">
+<code class="descname">get_algorithm_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1Context.get_algorithm_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1Context.get_algorithm_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.secp256k1.Secp256k1Context.sign">
+<code class="descname">sign</code><span class="sig-paren">(</span><em>message</em>, <em>private_key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1Context.sign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1Context.sign" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.secp256k1.Secp256k1Context.verify">
+<code class="descname">verify</code><span class="sig-paren">(</span><em>signature</em>, <em>message</em>, <em>public_key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1Context.verify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1Context.verify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.secp256k1.Secp256k1Context.new_random_private_key">
+<code class="descname">new_random_private_key</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1Context.new_random_private_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1Context.new_random_private_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.secp256k1.Secp256k1Context.get_public_key">
+<code class="descname">get_public_key</code><span class="sig-paren">(</span><em>private_key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing/secp256k1.html#Secp256k1Context.get_public_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.secp256k1.Secp256k1Context.get_public_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-sawtooth_signing">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-sawtooth_signing" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sawtooth_signing.Signer">
+<em class="property">class </em><code class="descclassname">sawtooth_signing.</code><code class="descname">Signer</code><span class="sig-paren">(</span><em>context</em>, <em>private_key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing.html#Signer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.Signer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>A convenient wrapper of Context and PrivateKey</p>
+<dl class="method">
+<dt id="sawtooth_signing.Signer.sign">
+<code class="descname">sign</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing.html#Signer.sign"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.Signer.sign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signs the given message</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<em>bytes</em>) &#8211; the message bytes</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The signature in a hex-encoded string</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">SigningError</span></code> &#8211; if any error occurs during the signing process</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.Signer.get_public_key">
+<code class="descname">get_public_key</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing.html#Signer.get_public_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.Signer.get_public_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the public key for this Signer instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sawtooth_signing.CryptoFactory">
+<em class="property">class </em><code class="descclassname">sawtooth_signing.</code><code class="descname">CryptoFactory</code><span class="sig-paren">(</span><em>context</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing.html#CryptoFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.CryptoFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Factory for generating Signers.</p>
+<dl class="attribute">
+<dt id="sawtooth_signing.CryptoFactory.context">
+<code class="descname">context</code><a class="headerlink" href="#sawtooth_signing.CryptoFactory.context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the context that backs this factory instance</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sawtooth_signing.CryptoFactory.new_signer">
+<code class="descname">new_signer</code><span class="sig-paren">(</span><em>private_key</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing.html#CryptoFactory.new_signer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.CryptoFactory.new_signer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new signer for the given private key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>private_key</strong> (<code class="xref py py-obj docutils literal"><span class="pre">PrivateKey</span></code>) &#8211; a private key</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a signer instance</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(<a class="reference internal" href="#sawtooth_signing.Signer" title="sawtooth_signing.Signer"><code class="xref py py-obj docutils literal"><span class="pre">Signer</span></code></a>)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="sawtooth_signing.create_context">
+<code class="descclassname">sawtooth_signing.</code><code class="descname">create_context</code><span class="sig-paren">(</span><em>algorithm_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/sawtooth_signing.html#create_context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sawtooth_signing.create_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an algorithm instance by name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>algorithm_name</strong> (<em>str</em>) &#8211; the algorithm name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a context instance for the given algorithm</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(<code class="xref py py-obj docutils literal"><span class="pre">Context</span></code>)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">NoSuchAlgorithmError if the algorithm is unknown</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../rest_api.html" class="btn btn-neutral float-right" title="REST API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="processor.html" class="btn btn-neutral" title="processor package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'v1.1.2',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

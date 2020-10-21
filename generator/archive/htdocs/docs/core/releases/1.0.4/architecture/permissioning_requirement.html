@@ -1,0 +1,801 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Permissioning Requirements &mdash; Sawtooth v1.0.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Injecting Batches and On-Chain Block Validation Rules" href="injecting_batches_block_validation_rules.html" />
+    <link rel="prev" title="Validator Network" href="validator_network.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../architecture.html">Architecture Description</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="global_state.html">Global State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transactions_and_batches.html">Transactions and Batches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="journal.html">Journal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scheduling.html">Transaction Scheduling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_api.html">REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poet.html">PoET 1.0 Specification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator_network.html">Validator Network</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Permissioning Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#definitions">Definitions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#general-definitions">General Definitions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#actor-definitions">Actor Definitions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#validator-network-scenarios">Validator Network Scenarios</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#public-network">Public Network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#consortium-network">Consortium Network</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#private-network">Private Network</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#transactor-key-permissioning">Transactor Key Permissioning</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#validator-key-permissioning">Validator Key Permissioning</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="injecting_batches_block_validation_rules.html">Injecting Batches and On-Chain Block Validation Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events_and_transactions_receipts.html">Events and Transaction Receipts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../architecture.html">Architecture Description</a> &raquo;</li>
+        
+      <li>Permissioning Requirements</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/architecture/permissioning_requirement.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="permissioning-requirements">
+<h1>Permissioning Requirements<a class="headerlink" href="#permissioning-requirements" title="Permalink to this headline">¶</a></h1>
+<p>The following is a detailed list of permissioning requirements, capabilities,
+and user stories that aid in the explanation and discussion of the
+permissioning design for Hyperledger Sawtooth.</p>
+<p>The following permission groups are presented in this document:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Transactor key permissioning, which controls acceptance of transactions and
+batches based on signing keys.</li>
+<li>Validator key permissioning, which controls which nodes are allowed to
+establish connections to the validator network.</li>
+</ul>
+</div></blockquote>
+<p>The permissioning types are further broken down into capability requirements.
+Each requirement is made up of a short description, the network scenario the
+requirement supports, and associated user stories. User stories are short
+statements about a requirement or capability that an actor desires. These short
+descriptions illustrate the need for specific permission requirements.</p>
+<p>The design requirements for permissioning include both local validator
+configuration and network-wide on-chain permissioning. Local configuration is
+needed so that a validator can limit who is allowed to submit batches and
+transactions directly to that validator. This is useful, for example, if a
+company is running its own validator and wishes to only allow members of that
+company to submit transactions. On-chain configuration is required so that the
+whole of the network can enforce consistent permissioning rules. For example,
+in validator key permissioning, all the validators on the network will reject
+the same node from peering, ensuring that only known nodes can join the network.</p>
+<div class="section" id="definitions">
+<h2>Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="general-definitions">
+<h3>General Definitions<a class="headerlink" href="#general-definitions" title="Permalink to this headline">¶</a></h3>
+<p>The following define general components and concepts related to Sawtooth:</p>
+<dl class="docutils">
+<dt>Batch</dt>
+<dd>A batch is a protobuf object containing a list of transactions, a header, and
+a signature. The signature is generated by the batch signer by signing the
+batch header with the batch signer&#8217;s private key. For more information on the
+structure of a batch, see <a class="reference internal" href="transactions_and_batches.html"><span class="doc">Batch Data Structure</span></a>.</dd>
+<dt>Transaction</dt>
+<dd>A transaction is a protobuf object containing a payload, header, and
+signature. The signature is generated by the transaction signer by signing the
+transaction header with the transaction signer&#8217;s private key. For more
+information on the structure of a transaction, see <a class="reference internal" href="transactions_and_batches.html"><span class="doc">Transaction Data
+Structure</span></a>.</dd>
+<dt>Consensus</dt>
+<dd>Consensus is the process of building agreement among a group of mutually
+distrusting participants. In this case, the mutually distrusting participants
+are the other nodes on the validator network.</dd>
+<dt>Transaction Family</dt>
+<dd>A transaction family is a set containing: a transaction payload format, a
+model for storing information in global state, and a procedure for validating
+a transaction and updating state based on the transaction payload. For
+information on specific transaction families, see <a class="reference internal" href="../transaction_family_specifications.html"><span class="doc">Transaction Family
+Specifications</span></a>.</dd>
+<dt>Transaction Processor</dt>
+<dd>A transaction processor validates transactions and updates state based on the
+rules defined by a given transaction family.</dd>
+<dt>Validator</dt>
+<dd>A validator is the component ultimately responsible for validating batches of
+transactions, combining them into blocks, maintaining consensus with the
+network, and coordinating communication between clients, other validators,
+and transaction processors. Much of the actual validation is delegated to
+other components, such as transaction processors and the active consensus
+module.</dd>
+<dt>Node</dt>
+<dd>A node is a validator that is trying to connect to the network.</dd>
+<dt>Client</dt>
+<dd>A client is a program that connects to a validator and is able to query the
+state of the blockchain and submit batches.</dd>
+<dt>State Delta Subscriber</dt>
+<dd>A state delta subscriber is a client framework that subscribes to a validator
+for state deltas on a specific subset of namespaces, for the purpose of
+off-chain storage or action.</dd>
+<dt>Radix Merkle Tree</dt>
+<dd>A Radix Merkle tree is the representation of state used by Sawtooth. The tree
+is a Merkle tree because it is a copy-on-write data structure which stores
+successive node hashes from leaf-to-root upon any changes to the tree. The
+tree is also an addressable Radix tree because addresses uniquely identify
+the paths to leaf nodes in the tree where information is stored.</dd>
+<dt>Validator Network</dt>
+<dd>A validator network is peer to peer network of validators that are working on
+the same block chain.</dd>
+<dt>Authorization Procedure</dt>
+<dd>An authorization procedure is a “handshake” that a connection must go through
+to be allowed to connect to a validator. If the connection does not follow
+the authorization procedure correctly, the connection will be rejected and
+closed.</dd>
+<dt>Policy</dt>
+<dd>A policy is a set of DENY and PERMIT rules that can be used to permission the
+access to the validator network and which transactors can participate on the
+network.</dd>
+</dl>
+</div>
+<div class="section" id="actor-definitions">
+<h3>Actor Definitions<a class="headerlink" href="#actor-definitions" title="Permalink to this headline">¶</a></h3>
+<p>The following define the actors within a Sawtooth network:</p>
+<dl class="docutils">
+<dt>Transactor</dt>
+<dd>A transactor is the person or program which signs batches or transactions.
+When signing a batch, the transactor is also a batch signer. When signing a
+transaction, a transactor is also a transaction signer.</dd>
+<dt>Batch Signer</dt>
+<dd>A batch signer is a transactor which signs a batch header using the batch
+signer&#8217;s private key. The resulting signature is included as part of the
+batch. The batch signer&#8217;s public key is also stored in the batch header.</dd>
+<dt>Transaction Signer</dt>
+<dd>A transaction signer is a transactor which signs a transaction header using
+the transaction signer&#8217;s private key. The resulting signature is included as
+part of the transaction. The transaction signer&#8217;s public key is also
+stored in the transaction header.</dd>
+<dt>Network Operator</dt>
+<dd>A network operator is one or more people who collectively manage the sawtooth
+network. The network operator determines and coordinates the overall network
+characteristics such as which transaction processors are being run, the
+consensus mechanism, modifying on-chain settings, modifying on-chain roles etc.</dd>
+<dt>Sysadmin</dt>
+<dd>A sysadmin is a person who installs and configures the validator software
+and configures the validator software using config files. The role of
+sysadmin does not include activities which modify on-chain settings.</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="validator-network-scenarios">
+<h2>Validator Network Scenarios<a class="headerlink" href="#validator-network-scenarios" title="Permalink to this headline">¶</a></h2>
+<p>The following example network scenarios are used to illustrate when each
+capability requirement would be useful.</p>
+<div class="section" id="public-network">
+<h3>Public Network<a class="headerlink" href="#public-network" title="Permalink to this headline">¶</a></h3>
+<p>In a public network, all connections will be allowed and all transactors are
+allowed to sign batches and transactions.</p>
+<p>In order for a public Sawtooth network to function correctly, an incentive
+system would also need to be designed and implemented. Such a system is beyond
+the scope of this design and so it is omitted.</p>
+</div>
+<div class="section" id="consortium-network">
+<h3>Consortium Network<a class="headerlink" href="#consortium-network" title="Permalink to this headline">¶</a></h3>
+<p>In a consortium network, only specific validators will be allowed to join the
+validator network and participate in consensus. The network will still allow
+any client, transaction processor, or state delta subscriber to connect to a
+validator and accept batches and transactions signed by all transactors.</p>
+</div>
+<div class="section" id="private-network">
+<h3>Private Network<a class="headerlink" href="#private-network" title="Permalink to this headline">¶</a></h3>
+<p>In a private network, only specific validators will be allowed to join the
+validator network and participate in consensus. The validators in the network
+will only accept connections from specific clients and will control if the
+client is allowed to submit batches and query specific address prefixes in
+state. Only specific transaction processors and state delta subscribers will be
+allowed to connect to the local validator. Batches and transactions received by
+the validator can only be signed by permitted transactors. Transactors may also
+be restricted to only sending transactions for certain transaction families.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Network Scenario</td>
+<td>Capabilities</td>
+</tr>
+<tr class="row-even"><td>Public Network</td>
+<td><ul class="first last simple">
+<li>Allow all batch signers to submit batches</li>
+<li>Allow all transaction signers to submit transactions</li>
+<li>Allow all nodes to join the validator network</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>Consortium Network</td>
+<td><ul class="first last simple">
+<li>Allow all batch signers to submit batches</li>
+<li>Allow all transaction signers to submit transactions</li>
+<li>Allow only specific nodes to join the validator
+network</li>
+<li>Allow only specific nodes to participate in consensus</li>
+<li>Support policy-based transactor permissioning</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>Private Network</td>
+<td><ul class="first last simple">
+<li>Allow only specific batch signers to submit batches</li>
+<li>Allow only specific transaction signers to submit
+transactions</li>
+<li>Allow only specific nodes to join the validator
+network</li>
+<li>Allow only specific nodes to participate in consensus</li>
+<li>Restrict the type of transactions transactors can
+sign</li>
+<li>Restrict address space access to a limited set of
+transactors</li>
+<li>Support policy-based transactor permissioning</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="transactor-key-permissioning">
+<h2>Transactor Key Permissioning<a class="headerlink" href="#transactor-key-permissioning" title="Permalink to this headline">¶</a></h2>
+<p>The following stories are related to permissioning performed on the basis of a
+transactor&#8217;s public signing key. This includes both batch signers and
+transaction signers. The validator will check local configuration and network
+configuration when receiving a batch from a client and only batch signers
+permitted in the intersection of the two configurations will be allowed. When
+the validator receives a batch from a peer, only the network configuration will
+be checked. This is required to prevent network forks.</p>
+<p>Allow all batch signers to submit batches</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Network Scenario</td>
+<td><ul class="first last simple">
+<li>Public - YES</li>
+<li>Consortium - YES</li>
+<li>Private - NO</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>Description</td>
+<td>The validator must be able to be configured to allow
+all batches to be submitted, regardless of who the
+batch signer is. In other words, if a client is
+connected to the validator and that client is allowed
+to submit batches, the batches will not be rejected due
+to the public key that was used to sign the batch.
+These batches will still be rejected if they fail
+signature verification.</td>
+</tr>
+<tr class="row-odd"><td>User Stories</td>
+<td><ul class="first last simple">
+<li>A sysadmin must be able to configure a local
+validator to accept batches signed by any batch
+signer.</li>
+<li>A network operator must be able to configure the
+validator network to accept batches signed by any
+batch signer.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Allow only specific batch signers to submit batches</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Network Scenario</td>
+<td><ul class="first last simple">
+<li>Public - NO</li>
+<li>Consortium - NO</li>
+<li>Private - YES</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>Description</td>
+<td>The validator must be able to be configured to only
+allow certain batch signers to submit batches. If the
+validator receives a batch that was signed by a batch
+signer whose public key is not allowed, that batch
+should be dropped. Batches should also be checked
+before block validation. If the validator network
+permits a given batch signer, the validator must accept
+batches signed by that batch signer from peers,
+regardless of its local configuration.</td>
+</tr>
+<tr class="row-odd"><td>User Stories</td>
+<td><ul class="first last simple">
+<li>A sysadmin must be able to configure a local
+validator to accept batches signed only by predefined
+batch signers.</li>
+<li>A network operator must be able to configure the
+whole validator network to only accept batches from
+specific batch signers.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Allow all transaction signers to submit transactions</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Network Scenario</td>
+<td><ul class="first last simple">
+<li>Public - YES</li>
+<li>Consortium - YES</li>
+<li>Private - NO</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>Description</td>
+<td>The validator must be able to be configured to allow
+all transactions to be submitted, regardless of who the
+transaction signer is. In other words, if a client is
+connected to the validator and the client is allowed to
+submit transactions, the transactions will not be
+rejected due to the public key that was used to sign
+the transactions. These transactions will still be
+rejected if they fail signature verification.</td>
+</tr>
+<tr class="row-odd"><td>User Stories</td>
+<td><ul class="first last simple">
+<li>A sysadmin must be able to configure a local
+validator to accept transactions signed by any
+transaction signer.</li>
+<li>A network operator must be able to configure the
+whole validator network to accept transactions signed
+by any batch signer.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Allow only specific transaction signers to submit transactions</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Network Scenario</td>
+<td><ul class="first last simple">
+<li>Public - NO</li>
+<li>Consortium - NO</li>
+<li>Private - YES</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>Description</td>
+<td>The validator must be able to be configured to only
+allow certain transaction signers to submit
+transactions. In other words, if the validator receives
+a transaction that was signed by a transaction signer
+whose public key is not allowed, that transaction
+should be dropped. Transactions should also be checked
+during block validation. If the validator network
+permits a given transaction signer, the validator must
+accept transaction signed by that transaction signer
+from peers, regardless of its local configuration.</td>
+</tr>
+<tr class="row-odd"><td>User Stories</td>
+<td><ul class="first last simple">
+<li>A sysadmin must be able to configure a local
+validator to accept transactions signed only by
+predefined transaction signers.</li>
+<li>A network operator must be able to configure the
+whole validator network to accept batches only from
+specific transaction signers.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Restrict the type of transactions transactors can sign</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Network Scenario</td>
+<td><ul class="first last simple">
+<li>Public - NO</li>
+<li>Consortium - NO</li>
+<li>Private - YES</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>Description</td>
+<td>The validator must be able to restrict the transaction
+signers that are allowed to sign transactions for a
+specific transaction family. This permissioning would
+be separate from any public key permissioning enforced
+by the transaction family logic.</td>
+</tr>
+<tr class="row-odd"><td>User Stories</td>
+<td><ul class="first last simple">
+<li>A network operator must be able to configure the
+whole validator network to only accept transactions
+that were signed by allowed transaction signers for a
+specific transaction family.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Support policy-based transactor permissioning</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Network Scenario</td>
+<td><ul class="first last simple">
+<li>Public - NO</li>
+<li>Consortium - YES</li>
+<li>Private - YES</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>Description</td>
+<td>The validator must be able to enforce transactor
+permissions based on defined policies.</td>
+</tr>
+<tr class="row-odd"><td>User Stories</td>
+<td><ul class="first last simple">
+<li>A sysadmin must be able to configure a local
+validator to only accept transactions and batches
+that are signed by transactors that are allowed by
+predefined locally stored policies.</li>
+<li>A network operator must be able to configure the
+whole validator network to only accept transactions
+and batches that are signed by transactor that are
+allowed by defined policies.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="validator-key-permissioning">
+<h2>Validator Key Permissioning<a class="headerlink" href="#validator-key-permissioning" title="Permalink to this headline">¶</a></h2>
+<p>The following stories are related to permissioning performed on the basis of a
+node’s public signing key.</p>
+<p>Allow all nodes to join the validator network</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Network Scenario</td>
+<td><ul class="first last simple">
+<li>Public - YES</li>
+<li>Consortium - NO</li>
+<li>Private - NO</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>Description</td>
+<td>The validator network must be able to be configured to
+allow all validator nodes to join the network. This
+means that every validator on the network should accept
+the node as a peer regardless of what its public key
+is. The validator nodes will also be able to
+participate in consensus and communicate over the
+gossip protocol. The node will still need to go through
+the authorization procedure defined by the validator
+the node is trying to connect to. If, for any reason,
+the node fails the authorization procedure, it will be
+rejected.</td>
+</tr>
+<tr class="row-odd"><td>User Stories</td>
+<td><ul class="first last simple">
+<li>A network operator must be able to configure the
+validator network to accept all nodes that wish to
+connect, regardless of the node’s public key.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Allow only specific nodes to join the validator network</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Network Scenario</td>
+<td><ul class="first last simple">
+<li>Public - NO</li>
+<li>Consortium - YES</li>
+<li>Private - YES</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>Description</td>
+<td>The validator network must be able to be configured to
+only allow nodes to join the network if the node&#8217;s
+public key is permitted. In other words, if a validator
+receives a connection request from a node, and the
+validator does not recognize the node’s public key, the
+connection should be rejected.</td>
+</tr>
+<tr class="row-odd"><td>User Stories</td>
+<td><ul class="first last simple">
+<li>A network operator must be able to configure the
+validator network to only accept connections from
+nodes with specific public keys.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Allow only specific nodes to participate in consensus</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Network Scenario</td>
+<td><ul class="first last simple">
+<li>Public - NO</li>
+<li>Consortium - YES</li>
+<li>Private - YES</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>Description</td>
+<td>The validator network must be able to be configured to
+only allow specific nodes to participate in consensus.
+This is separate from any restrictions enforced by the
+consensus algorithm. The nodes that are not allowed to
+participate in consensus can still validate blocks but
+are not allowed to publish blocks.</td>
+</tr>
+<tr class="row-odd"><td>User Stories</td>
+<td><ul class="first last simple">
+<li>A network operator must be able to configure the
+validator network to only allow certain nodes to
+participate in consensus.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="injecting_batches_block_validation_rules.html" class="btn btn-neutral float-right" title="Injecting Batches and On-Chain Block Validation Rules" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="validator_network.html" class="btn btn-neutral" title="Validator Network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.4',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

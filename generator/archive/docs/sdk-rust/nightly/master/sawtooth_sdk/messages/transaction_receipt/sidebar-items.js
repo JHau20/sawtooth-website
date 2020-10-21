@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["StateChange_Type",""]],"fn":[["file_descriptor_proto",""]],"struct":[["StateChange",""],["StateChangeList",""],["TransactionReceipt","Generated files are compatible only with the same version of protobuf runtime."]]});

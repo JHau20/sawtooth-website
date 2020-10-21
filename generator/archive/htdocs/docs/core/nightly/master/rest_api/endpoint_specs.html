@@ -1,0 +1,610 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Endpoint Specifications &mdash; Sawtooth latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Error Responses" href="error_codes.html" />
+    <link rel="prev" title="REST API Reference" href="../rest_api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api_references.html">SDK and API References</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../sdk_go.html">Go</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/sdk-java/nightly/master/sdk_api_ref.html">Java</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdk_javascript.html">JavaScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdk_python.html">Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sdk_rust.html">Rust</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/sdk-swift/nightly/master/sdk_api_ref.html">Swift</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../rest_api.html">REST API Reference</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Endpoint Specifications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="error_codes.html">Error Responses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="state_delta_websockets.html">State Delta Subscriptions via Web Sockets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../api_references.html">SDK and API References</a> &raquo;</li>
+        
+          <li><a href="../rest_api.html">REST API Reference</a> &raquo;</li>
+        
+      <li>Endpoint Specifications</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/rest_api/endpoint_specs.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="endpoint-specifications">
+<h1>Endpoint Specifications<a class="headerlink" href="#endpoint-specifications" title="Permalink to this headline">¶</a></h1>
+<p>These specifications document the available Sawtooth REST API endpoints. They
+are generated from the official <a class="reference external" href="http://swagger.io/specification/">OpenAPI</a>
+formatted YAML specification, which can be found on the
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-core/blob/master/rest_api/openapi.yaml">Sawtooth GitHub</a>.</p>
+<dl class="http post">
+<dt id="post--batches">
+<code class="sig-name descname">POST </code><code class="sig-name descname">/batches</code><a class="headerlink" href="#post--batches" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Sends a BatchList to the validator</strong></p>
+<p>Accepts a protobuf formatted <cite>BatchList</cite> as an octet-stream binary
+file and submits it to the validator to be committed.</p>
+<p>The API will return immediately with a status of <cite>202</cite>. There will be
+no <cite>data</cite> object, only a <cite>link</cite> to a <cite>/batch_statuses</cite> endpoint to be
+polled to check the status of submitted batches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.3">202 Accepted</a> – Batches submitted for validation, but not yet committed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://tools.ietf.org/html/rfc6585#section-4">429 Too Many Requests</a> – Too many requests have been made to process batches</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt id="get--batches">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/batches</code><a class="headerlink" href="#get--batches" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches a list of batches</strong></p>
+<p>Fetches a paginated list of batches from the validator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>head</strong> (<em>string</em>) – Index or id of head block</p></li>
+<li><p><strong>start</strong> (<em>string</em>) – Id to start paging (inclusive)</p></li>
+<li><p><strong>limit</strong> (<em>integer</em>) – Number of items to return</p></li>
+<li><p><strong>reverse</strong> (<em>string</em>) – If the list should be reversed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Successfully retrieved batches</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt id="get--batches-batch_id">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/batches/{batch_id}</code><a class="headerlink" href="#get--batches-batch_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches a particular batch</strong></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>batch_id</strong> (<em>string</em>) – Batch id</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Successfully retrieved batch</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> – Address or id did not match any resource</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt id="get--batch_statuses">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/batch_statuses</code><a class="headerlink" href="#get--batch_statuses" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches the committed statuses for a set of batches</strong></p>
+<p>Fetches an array of objects with a status and id for each batch
+requested. There are four possible statuses with string values
+<cite>‘COMMITTED’</cite>, <cite>‘INVALID’</cite>, <cite>‘PENDING’</cite>, and <cite>‘UNKNOWN’</cite>.</p>
+<p>The batch(es) you want to check can be specified using the <cite>id</cite> filter
+parameter. If a <cite>wait</cite> time is specified in the URL, the API will wait
+to respond until all batches are committed, or the time in seconds has
+elapsed. If the value of <cite>wait</cite> is not set (i.e., <cite>?wait&amp;id=…</cite>), or
+it is set to any non-integer value other than <cite>false</cite>, the wait time
+will be just under the API’s specified timeout (usually 300).</p>
+<p>Note that because this route does not return full resources, the
+response will not be paginated, and there will be no <cite>head</cite> or
+<cite>paging</cite> properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>string</em>) – A comma-separated list of batch ids</p></li>
+<li><p><strong>wait</strong> (<em>integer</em>) – A time in seconds to wait for commit</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Successfully retrieved statuses</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http post">
+<dt id="post--batch_statuses">
+<code class="sig-name descname">POST </code><code class="sig-name descname">/batch_statuses</code><a class="headerlink" href="#post--batch_statuses" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches the committed statuses for a set of batches</strong></p>
+<p>Identical to <cite>GET /batch_statuses</cite>, but takes ids of batches as a JSON
+formatted POST body rather than a query parameter. This allows for many
+more batches to be checked and should be used for more than 15 ids.</p>
+<p>Note that because query information is not encoded in the URL, no <cite>link</cite>
+will be returned with this query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wait</strong> (<em>integer</em>) – A time in seconds to wait for commit</p></li>
+</ul>
+</dd>
+<dt class="field-even">Request JSON Object</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>[]</strong> (<em>string</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Status Codes</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Successfully retrieved statuses</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt id="get--state">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/state</code><a class="headerlink" href="#get--state" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches the data for the current state</strong></p>
+<p>Fetches a paginated list of entries for the current state, or relative to a particular head block. Using the <cite>address</cite> filter parameter will narrow the list to any entries that have an address beginning with the characters specified.
+Note that the partial address in <cite>address</cite> parameter should have even  number of hexadecimal characters (i.e., complete bytes).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>head</strong> (<em>string</em>) – Index or id of head block</p></li>
+<li><p><strong>address</strong> (<em>string</em>) – A partial address to filter leaves by</p></li>
+<li><p><strong>start</strong> (<em>string</em>) – Id to start paging (inclusive)</p></li>
+<li><p><strong>limit</strong> (<em>integer</em>) – Number of items to return</p></li>
+<li><p><strong>reverse</strong> (<em>string</em>) – If the list should be reversed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Successfully retrieved state data</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt id="get--state-address">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/state/{address}</code><a class="headerlink" href="#get--state-address" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches a particular leaf from the current state</strong></p>
+<p>Takes full 70-character address and fetches a particular leaf. For partial address (i.e., group of leaves) use <cite>/state</cite> above.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>address</strong> (<em>string</em>) – Radix address of a leaf</p></li>
+</ul>
+</dd>
+<dt class="field-even">Query Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>head</strong> (<em>string</em>) – Index or id of head block</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Status Codes</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Successfully fetched leaves</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> – Address or id did not match any resource</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt id="get--blocks">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/blocks</code><a class="headerlink" href="#get--blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches a list of blocks</strong></p>
+<p>Fetches a paginated list of blocks from the validator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>head</strong> (<em>string</em>) – Index or id of head block</p></li>
+<li><p><strong>start</strong> (<em>string</em>) – Id to start paging (inclusive)</p></li>
+<li><p><strong>limit</strong> (<em>integer</em>) – Number of items to return</p></li>
+<li><p><strong>reverse</strong> (<em>string</em>) – If the list should be reversed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Successfully retrieved blocks</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt id="get--blocks-block_id">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/blocks/{block_id}</code><a class="headerlink" href="#get--blocks-block_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches a particular block</strong></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>block_id</strong> (<em>string</em>) – Block id</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Successfully retrieved block</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> – Address or id did not match any resource</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt id="get--transactions">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/transactions</code><a class="headerlink" href="#get--transactions" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches a list of transactions</strong></p>
+<p>Fetches a paginated list of transactions from the validator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>head</strong> (<em>string</em>) – Index or id of head block</p></li>
+<li><p><strong>start</strong> (<em>string</em>) – Id to start paging (inclusive)</p></li>
+<li><p><strong>limit</strong> (<em>integer</em>) – Number of items to return</p></li>
+<li><p><strong>reverse</strong> (<em>string</em>) – If the list should be reversed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Successfully retrieved transactions</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt id="get--transactions-transaction_id">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/transactions/{transaction_id}</code><a class="headerlink" href="#get--transactions-transaction_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches a particular transaction</strong></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>transaction_id</strong> (<em>string</em>) – Transaction id</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Successfully retrieved transaction</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> – Address or id did not match any resource</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt id="get--receipts">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/receipts</code><a class="headerlink" href="#get--receipts" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches the receipts for a set of transactions</strong></p>
+<p>Fetches an array of objects for each receipt requested.</p>
+<p>The receipt(s) you want to retrieve can be specified using the <cite>id</cite>
+filter parameter, where <cite>id</cite> refers to the transaction id of the
+transaction the receipt is associated with.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>string</em>) – A comma-separated list of transaction ids</p></li>
+</ul>
+</dd>
+<dt class="field-even">Status Codes</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Successfully retrieved transaction receipts</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http post">
+<dt id="post--receipts">
+<code class="sig-name descname">POST </code><code class="sig-name descname">/receipts</code><a class="headerlink" href="#post--receipts" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches the receipts for a set of transactions</strong></p>
+<p>Identical to <cite>GET /receipts</cite>, but takes ids of transactions as a JSON
+formatted POST body rather than a query parameter. This allows for many
+more receipts to be fetched and should be used with more than 15 ids.</p>
+<p>Note that because query information is not encoded in the URL, no <cite>link</cite>
+will be returned with this request.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Query Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wait</strong> (<em>integer</em>) – A time in seconds to wait for commit</p></li>
+</ul>
+</dd>
+<dt class="field-even">Request JSON Object</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>[]</strong> (<em>string</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-odd">Status Codes</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Successfully retrieved transaction receipts</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt id="get--peers">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/peers</code><a class="headerlink" href="#get--peers" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches the endpoints of the authorized peers of the validator</strong></p>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Successfully retrieved peers</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="http get">
+<dt id="get--status">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/status</code><a class="headerlink" href="#get--status" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Fetches information pertaining to the status of the validator</strong></p>
+<dl class="field-list simple">
+<dt class="field-odd">Status Codes</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Successfully retrieved status</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Request was malformed</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Something went wrong within the validator</p></li>
+<li><p><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">503 Service Unavailable</a> – API is unable to reach the validator</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="error_codes.html" class="btn btn-neutral float-right" title="Error Responses" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../rest_api.html" class="btn btn-neutral float-left" title="REST API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

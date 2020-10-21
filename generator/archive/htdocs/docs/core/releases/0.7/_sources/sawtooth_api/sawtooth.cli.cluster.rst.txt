@@ -1,0 +1,7 @@
+sawtooth\.cli\.cluster module
+=============================
+
+.. automodule:: sawtooth.cli.cluster
+    :members:
+    :undoc-members:
+    :show-inheritance:

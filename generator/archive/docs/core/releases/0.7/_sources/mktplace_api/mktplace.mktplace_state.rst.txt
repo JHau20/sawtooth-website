@@ -1,0 +1,7 @@
+mktplace\.mktplace\_state module
+================================
+
+.. automodule:: mktplace.mktplace_state
+    :members:
+    :undoc-members:
+    :show-inheritance:

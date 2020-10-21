@@ -1,0 +1,7 @@
+sawtooth\.manage\.daemon module
+===============================
+
+.. automodule:: sawtooth.manage.daemon
+    :members:
+    :undoc-members:
+    :show-inheritance:

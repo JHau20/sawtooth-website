@@ -1,0 +1,515 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using a Proxy Server to Authorize the REST API &mdash; Sawtooth v1.0.0rc3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc3 documentation" href="../index.html"/>
+        <link rel="up" title="System Administrator’s Guide" href="../sysadmin_guide.html"/>
+        <link rel="next" title="Permissioning" href="permissioning.html"/>
+        <link rel="prev" title="Log Configuration" href="log_configuration.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installing Hyperledger Sawtooth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="systemd.html">Running Sawtooth as a Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_sawtooth.html">Configuring Sawtooth</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using a Proxy Server to Authorize the REST API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#forwarding-url-info-with-headers">Forwarding URL Info with Headers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#x-forwarded-headers">&#8220;X-Forwarded&#8221; Headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#forwarded-header">&#8220;Forwarded&#8221; Header</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#apache-proxy-setup-guide">Apache Proxy Setup Guide</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#install-apache">Install Apache</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#set-up-passwords-and-certificates">Set Up Passwords and Certificates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configure-proxy">Configure Proxy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#start-apache-a-validator-and-the-rest-api">Start Apache, a Validator, and the REST API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#send-test-requests">Send Test Requests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="permissioning.html">Permissioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with the SGX Implementation of PoET</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Using a Proxy Server to Authorize the REST API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/rest_auth_proxy.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-a-proxy-server-to-authorize-the-rest-api">
+<h1>Using a Proxy Server to Authorize the REST API<a class="headerlink" href="#using-a-proxy-server-to-authorize-the-rest-api" title="Permalink to this headline">¶</a></h1>
+<p>As a lightweight shim on top of internal communications, requests sent to the
+<em>Hyperledger Sawtooth</em> REST API are simply passed on to the validator, without
+any sort of authorization. While this is in keeping with the public nature of
+blockchains, that behavior may not be desirable in every use case. Rather than
+internally implementing one authorization scheme or another, the REST API is
+designed to work well behind a proxy server, allowing any available
+authorization scheme to be implemented externally.</p>
+<div class="section" id="forwarding-url-info-with-headers">
+<h2>Forwarding URL Info with Headers<a class="headerlink" href="#forwarding-url-info-with-headers" title="Permalink to this headline">¶</a></h2>
+<p>For the most part putting the REST API behind a proxy server should just work.
+The majority of what it does will work equally well whether or not it is
+communicating directly with a client. The notable exceptions being the <cite>&#8220;link&#8221;</cite>
+parameter sent back in the response envelope, and the <cite>&#8220;previous&#8221;</cite> and <cite>&#8220;next&#8221;</cite>
+links that are sent back with a paging response. These URLs can be a
+convenience for clients, but not when crucial URL information is destroyed by
+proxying. In that case, a link that should look like this:</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;link&quot;</span><span class="p">:</span> <span class="s2">&quot;https://hyperledger.org/sawtooth/blocks?head=...&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Might instead look like this:</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;link&quot;</span><span class="p">:</span> <span class="s2">&quot;http://localhost:8008/blocks?head=...&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The solution to this problem is sending the destroyed information using HTTP
+request headers. The Sawtooth REST API will properly recognize and parse two
+sorts of headers.</p>
+<div class="section" id="x-forwarded-headers">
+<h3>&#8220;X-Forwarded&#8221; Headers<a class="headerlink" href="#x-forwarded-headers" title="Permalink to this headline">¶</a></h3>
+<p>Although they aren&#8217;t part of any standard, the various <em>X-Forwarded</em> headers
+are a very common way of communicating useful information about a proxy. There
+are three of these headers that the REST API may look for when building links.</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="25%" />
+<col width="55%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">header</th>
+<th class="head">description</th>
+<th class="head">example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>X-Forwarded-Host</strong></td>
+<td>The domain name of the proxy server.</td>
+<td><em>hyperledger.org</em></td>
+</tr>
+<tr class="row-odd"><td><strong>X-Forwarded-Proto</strong></td>
+<td>The protocol/scheme used to make request.</td>
+<td><em>https</em></td>
+</tr>
+<tr class="row-even"><td><strong>X-Forwarded-Path</strong></td>
+<td>An uncommon header implemented specially by the REST API to handle extra
+path information. Only necessary if the proxy endpoints do not map
+directly to the REST API endpoints (i.e.
+<em>&#8220;hyperledger.org/sawtooth/blocks&#8221;</em> -&gt; <em>&#8220;localhost:8008/blocks&#8221;</em>).</td>
+<td><em>/sawtooth</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="forwarded-header">
+<h3>&#8220;Forwarded&#8221; Header<a class="headerlink" href="#forwarded-header" title="Permalink to this headline">¶</a></h3>
+<p>Although less common, the same information can be sent using a single
+<em>Forwarded</em> header, standardized by
+<a class="reference external" href="https://tools.ietf.org/html/rfc7239#section-4">RFC7239</a>. The Forwarded
+header contains semi-colon-separated key value pairs. It might for example look
+like this:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>Forwarded: for=196.168.1.1; host=proxy1.com, host=proxy2.com; proto=&quot;https&quot;
+</pre></div>
+</div>
+<p>There are three keys in particular the REST API will look for when building
+response links:</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="10%" />
+<col width="65%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">key</th>
+<th class="head">description</th>
+<th class="head">example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>host</strong></td>
+<td>The domain name of the proxy server.</td>
+<td><em>host=hyperledger.org</em></td>
+</tr>
+<tr class="row-odd"><td><strong>proto</strong></td>
+<td>The protocol/scheme used to make request.</td>
+<td><em>proto=https</em></td>
+</tr>
+<tr class="row-even"><td><strong>path</strong></td>
+<td>An non-standard key header used to handle extra path information. Only
+necessary if the proxy endpoints do not map directly to the REST API
+endpoints (i.e. <em>&#8220;hyperledger.org/sawtooth/blocks&#8221;</em> -&gt;
+<em>&#8220;localhost:8008/blocks&#8221;</em>).</td>
+<td><em>path=&#8221;/sawtooth&#8221;</em></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Any key in a <em>Forwarded</em> header can be set multiple times, each instance
+comma-separated, allowing for a chain of proxy information to be traced.
+However, the REST API will always reference the leftmost of any particular
+key. It is only interested in producing an accurate link for the original
+client.</p>
+</div>
+</div>
+</div>
+<div class="section" id="apache-proxy-setup-guide">
+<h2>Apache Proxy Setup Guide<a class="headerlink" href="#apache-proxy-setup-guide" title="Permalink to this headline">¶</a></h2>
+<p>For further clarification, this section walks through the setup of a simple
+<a class="reference external" href="https://httpd.apache.org/">Apache 2</a> proxy server secured with Basic Auth
+and https, pointed at an instance of the <em>Sawtooth</em> REST API.</p>
+<div class="section" id="install-apache">
+<h3>Install Apache<a class="headerlink" href="#install-apache" title="Permalink to this headline">¶</a></h3>
+<p>We&#8217;ll begin by installing Apache and its components. These commands may require
+<code class="docutils literal"><span class="pre">sudo</span></code>.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apt-get update
+<span class="gp">$</span> apt-get install -y apache2
+<span class="gp">$</span> a2enmod ssl
+<span class="gp">$</span> a2enmod headers
+<span class="gp">$</span> a2enmod proxy_http
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-up-passwords-and-certificates">
+<h3>Set Up Passwords and Certificates<a class="headerlink" href="#set-up-passwords-and-certificates" title="Permalink to this headline">¶</a></h3>
+<p>First we&#8217;ll create a password file for the user <em>&#8220;sawtooth&#8221;</em>, with the password
+<em>&#8220;sawtooth&#8221;</em>. You can
+<a class="reference external" href="http://www.htaccesstools.com/htpasswd-generator/">generate other .htpasswd files</a>
+as well, just make sure to authorize those users in the config file below.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">echo</span> <span class="s2">&quot;sawtooth:\$apr1\$cyAIkitu\$Cv6M2hHJlNgnVvKbUdlFr.&quot;</span> &gt;/tmp/.password
+</pre></div>
+</div>
+<p>Then we&#8217;ll use <code class="docutils literal"><span class="pre">openssl</span></code> to build a self-signed SSL certificate. This
+certificate will not be good enough for most HTTP clients, but is suitable for
+testing purposes.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> openssl req -x509 -nodes -days <span class="m">7300</span> -newkey rsa:2048 <span class="se">\</span>
+    -subj /C<span class="o">=</span>US/ST<span class="o">=</span>MN/L<span class="o">=</span>Mpls/O<span class="o">=</span>Sawtooth/CN<span class="o">=</span>sawtooth <span class="se">\</span>
+    -keyout /tmp/.ssl.key <span class="se">\</span>
+    -out /tmp/.ssl.crt
+</pre></div>
+</div>
+</div>
+<div class="section" id="configure-proxy">
+<h3>Configure Proxy<a class="headerlink" href="#configure-proxy" title="Permalink to this headline">¶</a></h3>
+<p>Now we&#8217;ll set up the proxy by editing an Apache config files. This may require
+<code class="docutils literal"><span class="pre">sudo</span></code>.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> vi /etc/apache2/sites-enabled/000-default.conf
+</pre></div>
+</div>
+<p>Edit the file to look like this:</p>
+<div class="highlight-apache"><div class="highlight"><pre><span></span><span class="nt">&lt;VirtualHost</span> <span class="s">*:443</span><span class="nt">&gt;</span>
+    <span class="nb">ServerName</span> sawtooth
+    <span class="nb">ServerAdmin</span> sawtooth@sawtooth
+    <span class="nb">DocumentRoot</span> <span class="sx">/var/www/html</span>
+
+    <span class="nb">SSLEngine</span> <span class="k">on</span>
+    <span class="nb">SSLCertificateFile</span> <span class="sx">/tmp/.ssl.crt</span>
+    <span class="nb">SSLCertificateKeyFile</span> <span class="sx">/tmp/.ssl.key</span>
+    <span class="nb">RequestHeader</span> set X-Forwarded-Proto <span class="s2">&quot;https&quot;</span>
+
+    <span class="nt">&lt;Location</span> <span class="s">/</span><span class="nt">&gt;</span>
+        <span class="nb">Options</span> Indexes FollowSymLinks
+        <span class="nb">AllowOverride</span> <span class="k">None</span>
+        <span class="nb">AuthType</span> Basic
+        <span class="nb">AuthName</span> <span class="s2">&quot;Enter password&quot;</span>
+        <span class="nb">AuthUserFile</span> <span class="s2">&quot;/tmp/.password&quot;</span>
+        <span class="nb">Require</span> <span class="k">user</span> sawtooth
+        <span class="nb">Require</span> <span class="k">all</span> denied
+    <span class="nt">&lt;/Location&gt;</span>
+<span class="nt">&lt;/VirtualHost&gt;</span>
+
+<span class="nb">ProxyPass</span> <span class="sx">/sawtooth</span> http://localhost:8008
+<span class="nb">ProxyPassReverse</span> <span class="sx">/sawtooth</span> http://localhost:8008
+<span class="nb">RequestHeader</span> set X-Forwarded-Path <span class="s2">&quot;/sawtooth&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Apache will automatically set the <em>X-Forwarded-Host</em> header.</p>
+</div>
+</div>
+<div class="section" id="start-apache-a-validator-and-the-rest-api">
+<h3>Start Apache, a Validator, and the REST API<a class="headerlink" href="#start-apache-a-validator-and-the-rest-api" title="Permalink to this headline">¶</a></h3>
+<p>Start or restart Apache as appropriate. This may require <code class="docutils literal"><span class="pre">sudo</span></code>.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apachectl start
+</pre></div>
+</div>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> apachectl restart
+</pre></div>
+</div>
+<p>Start a validator, and the REST API.</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> sawadm keygen
+<span class="gp">$</span> sawadm genesis
+<span class="gp">$</span> sawtooth-validator -v --endpoint localhost:8800
+<span class="gp">$</span> sawtooth-rest-api -v
+</pre></div>
+</div>
+</div>
+<div class="section" id="send-test-requests">
+<h3>Send Test Requests<a class="headerlink" href="#send-test-requests" title="Permalink to this headline">¶</a></h3>
+<p>Finally, let&#8217;s use <code class="docutils literal"><span class="pre">curl</span></code> to make some requests and make sure everything
+worked. We&#8217;ll start by querying the REST API directly:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> curl http://localhost:8008/blocks
+</pre></div>
+</div>
+<p>The response link should look like this:</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;link&quot;</span><span class="p">:</span> <span class="s2">&quot;http://localhost:8008/blocks?head=...&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You should also be able to get back a <code class="docutils literal"><span class="pre">401</span></code> by querying the proxy without
+authorization:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> curl https://localhost/sawtooth/blocks --insecure
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal"><span class="pre">--insecure</span></code> flag just forces curl to complete the request even though
+there isn&#8217;t an official SSL Certificate. It does <em>not</em> bypass Basic Auth.</p>
+</div>
+<p>And finally, if we send a properly authorized request:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="gp">$</span> curl https://localhost/sawtooth/blocks --insecure -u sawtooth:sawtooth
+</pre></div>
+</div>
+<p>We should get back a response that looks very similar to querying the REST API
+directly, but with a new <em>link</em> that reflects the URL we sent the request to:</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;link&quot;</span><span class="p">:</span> <span class="s2">&quot;https://localhost/sawtooth/blocks?head=...&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="permissioning.html" class="btn btn-neutral float-right" title="Permissioning" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="log_configuration.html" class="btn btn-neutral" title="Log Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.0rc3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,525 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sawtooth.cli.monitor_lib.monitor_modules &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>sawtooth.cli.monitor_lib.monitor_modules</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sawtooth.cli.monitor_lib.monitor_modules</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright 2016 Intel Corporation</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">logging.config</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.stats_utils</span> <span class="k">import</span> <span class="n">StatsModule</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.platform_stats</span> <span class="k">import</span> <span class="n">PlatformStatsManager</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.validator_stats</span> <span class="k">import</span> <span class="n">ValidatorStatsManager</span>
+<span class="kn">from</span> <span class="nn">sawtooth.cli.stats_lib.validator_stats</span> <span class="k">import</span> <span class="n">SystemStatsManager</span>
+<span class="kn">from</span> <span class="nn">txnserver</span> <span class="k">import</span> <span class="n">log_setup</span>
+
+
+<div class="viewcode-block" id="EventScriptManager"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.EventScriptManager">[docs]</a><span class="k">class</span> <span class="nc">EventScriptManager</span><span class="p">(</span><span class="n">StatsModule</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Executes scripts based on events added to the event queue by</span>
+<span class="sd">    monitor modules. Always loaded by monitor.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epm</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EventScriptManager</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_queue</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">script</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;EventScript&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quit_after_exec</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;QuitAfterScriptRun&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mon</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;event&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;sev&#39;</span><span class="p">,</span> <span class="s1">&#39;event_desc&#39;</span><span class="p">])</span>
+
+<div class="viewcode-block" id="EventScriptManager.initialize"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.EventScriptManager.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_list</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_list</span> <span class="o">=</span> <span class="n">module_list</span>
+        <span class="c1"># self.mon = mon</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Monitor: finished initialization of EventScript&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EventScriptManager.pass_mon"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.EventScriptManager.pass_mon">[docs]</a>    <span class="k">def</span> <span class="nf">pass_mon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mon</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mon</span> <span class="o">=</span> <span class="n">mon</span></div>
+
+<div class="viewcode-block" id="EventScriptManager.run_script"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.EventScriptManager.run_script">[docs]</a>    <span class="k">def</span> <span class="nf">run_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sev</span><span class="p">):</span>
+        <span class="c1"># Run script with event type as argument</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running script </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Running script </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">script</span><span class="p">,</span> <span class="n">sev</span><span class="p">]</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Script output: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">output</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Script output </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">output</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">quit_after_exec</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Monitor quitting&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Monitor quitting&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mon</span><span class="o">.</span><span class="n">monitor_stop</span><span class="p">()</span>
+            <span class="n">quit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EventScriptManager.examine_queue"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.EventScriptManager.examine_queue">[docs]</a>    <span class="k">def</span> <span class="nf">examine_queue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+            <span class="s2">&quot;Monitor: examine queue with length </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event_queue</span><span class="p">)))</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event_queue</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_queue</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Monitor: processing </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">event</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run_script</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">sev</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EventScriptManager.report"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.EventScriptManager.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">examine_queue</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="LogManager"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.LogManager">[docs]</a><span class="k">class</span> <span class="nc">LogManager</span><span class="p">(</span><span class="n">StatsModule</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Handles logging for monitor. Loads config file, sets up logger config</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epm</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LogManager</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># self.config = config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_queue</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_configuration</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="n">log_setup</span><span class="o">.</span><span class="n">setup_loggers</span><span class="p">(</span>
+            <span class="n">verbose_level</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;Verbose&#39;</span><span class="p">],</span>
+            <span class="n">capture_std_output</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LogManager.initialize"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.LogManager.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_list</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_list</span> <span class="o">=</span> <span class="n">module_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Monitor: initialize method of LogManager complete&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogManager.report"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.LogManager.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Monitor: log manager report method running&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogManager.log_configuration"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.LogManager.log_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">log_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;LogConfigFile&#39;</span> <span class="ow">in</span> <span class="n">cfg</span> <span class="ow">and</span> \
+                <span class="nb">isinstance</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;LogConfigFile&#39;</span><span class="p">],</span> <span class="n">basestring</span><span class="p">)</span> <span class="ow">and</span> \
+                <span class="nb">len</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;LogConfigFile&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">log_config_file</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;LogConfigFile&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">log_config_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;js&quot;</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">log_config_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">log_config_fd</span><span class="p">:</span>
+                        <span class="n">log_dic</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">log_config_fd</span><span class="p">)</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dictConfig</span><span class="p">(</span><span class="n">log_dic</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">IOError</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not read log config: </span><span class="si">{}</span><span class="s2">&quot;</span>
+                          <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">log_config_file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;yaml&quot;</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">log_config_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">log_config_fd</span><span class="p">:</span>
+                        <span class="n">log_dic</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">log_config_fd</span><span class="p">)</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">dictConfig</span><span class="p">(</span><span class="n">log_dic</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">IOError</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not read log config: </span><span class="si">{}</span><span class="s2">&quot;</span>
+                          <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;LogConfigFile type not supported: </span><span class="si">{}</span><span class="s2">&quot;</span>
+                      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;LogConfigFile&#39;</span><span class="p">]),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cfg</span><span class="p">[</span><span class="s1">&#39;Verbose&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No log config file specified&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Use -v option to send logging to console&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ConnectionStatus"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.ConnectionStatus">[docs]</a><span class="k">class</span> <span class="nc">ConnectionStatus</span><span class="p">(</span><span class="n">StatsModule</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Obtains and displays connection status of monitor to validator network</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epm</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ConnectionStatus</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection_status</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ConnectionStatus.initialize"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.ConnectionStatus.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_list</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_list</span> <span class="o">=</span> <span class="n">module_list</span>
+        <span class="n">system_stats_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">SystemStatsManager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span> <span class="o">=</span> <span class="n">system_stats_manager</span><span class="o">.</span><span class="n">system_stats</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Monitor: finished initialization of ConnectionStatus module&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Waiting to connect...&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConnectionStatus.get_connection_status"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.ConnectionStatus.get_connection_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_connection_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">active_validators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_stats</span><span class="o">.</span><span class="n">sys_client</span><span class="o">.</span><span class="n">active_validators</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Monitor: Active validators: </span><span class="si">%i</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">active_validators</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">active_validators</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">),</span> <span class="n">active_validators</span></div>
+
+<div class="viewcode-block" id="ConnectionStatus.report"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.ConnectionStatus.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Monitor: connection status module running&quot;</span><span class="p">)</span>
+        <span class="n">connection_status</span><span class="p">,</span> <span class="n">active_validators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_connection_status</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">connection_status</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection_status</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connection_status</span> <span class="o">=</span> <span class="n">connection_status</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Connection status: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">connection_status</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Monitor connection status: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                             <span class="n">connection_status</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Number of active validators known: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                          <span class="nb">str</span><span class="p">(</span><span class="n">active_validators</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="PlatformCpu"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.PlatformCpu">[docs]</a><span class="k">class</span> <span class="nc">PlatformCpu</span><span class="p">(</span><span class="n">StatsModule</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Monitors the platform running the monitor command.</span>
+<span class="sd">    Triggers if CPU usage is above 2 percent.</span>
+<span class="sd">    Useful for testing.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epm</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PlatformCpu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform_stats_manager</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_script_mgr</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_queue</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cpu_threshold</span> <span class="o">=</span> <span class="mf">2.0</span>
+
+<div class="viewcode-block" id="PlatformCpu.initialize"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.PlatformCpu.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_list</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_list</span> <span class="o">=</span> <span class="n">module_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">platform_stats_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">PlatformStatsManager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_script_mgr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">EventScriptManager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_queue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_script_mgr</span><span class="o">.</span><span class="n">event_queue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_script_mgr</span><span class="o">.</span><span class="n">event</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Monitor: finished initialization of PlatformCpu module&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PlatformCpu.cpu_usage_trigger"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.PlatformCpu.cpu_usage_trigger">[docs]</a>    <span class="k">def</span> <span class="nf">cpu_usage_trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">p_stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">platform_stats_manager</span><span class="o">.</span><span class="n">get_data_as_dict</span><span class="p">()</span>
+        <span class="n">cpu_percent</span> <span class="o">=</span> <span class="n">p_stats</span><span class="p">[</span><span class="s2">&quot;scpu&quot;</span><span class="p">][</span><span class="s2">&quot;percent&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">cpu_percent</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">cpu_threshold</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Event detected: CPU threshold on platform&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="s2">&quot;Monitor event detected: CPU threshold on platform&quot;</span><span class="p">)</span>
+            <span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="p">(</span>
+                <span class="n">sev</span><span class="o">=</span><span class="s1">&#39;FAIL&#39;</span><span class="p">,</span> <span class="n">event_desc</span><span class="o">=</span><span class="s1">&#39;CPU usage high on monitor platform&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">event_queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PlatformCpu.report"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.PlatformCpu.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Monitor: platform stats module running&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cpu_usage_trigger</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="ValidatorFailure"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.ValidatorFailure">[docs]</a><span class="k">class</span> <span class="nc">ValidatorFailure</span><span class="p">(</span><span class="n">StatsModule</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Monitors the validator network for a node failure.</span>
+<span class="sd">    FAIL event added to event queue if a node does not</span>
+<span class="sd">    respond.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epm</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ValidatorFailure</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validator_stats_manager</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_script_mgr</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_queue</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ValidatorFailure.initialize"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.ValidatorFailure.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_list</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_list</span> <span class="o">=</span> <span class="n">module_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validator_stats_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">ValidatorStatsManager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_script_mgr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">EventScriptManager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_queue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_script_mgr</span><span class="o">.</span><span class="n">event_queue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_script_mgr</span><span class="o">.</span><span class="n">event</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Monitor: finished initialization of ValidatorFailure module&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ValidatorFailure.no_response_trigger"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.ValidatorFailure.no_response_trigger">[docs]</a>    <span class="k">def</span> <span class="nf">no_response_trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">stats_clients</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validator_stats_manager</span><span class="o">.</span><span class="n">clients</span>
+
+        <span class="k">for</span> <span class="n">client</span> <span class="ow">in</span> <span class="n">stats_clients</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">client</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;NO_RESP&quot;</span><span class="p">:</span>
+                <span class="n">flagged_validator</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">name</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Event detected: no response from </span><span class="si">{}</span><span class="s2">&quot;</span>
+                      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flagged_validator</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s2">&quot;Monitor event detected: no response from </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="nb">str</span><span class="p">(</span><span class="n">flagged_validator</span><span class="p">))</span>
+                <span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="p">(</span>
+                    <span class="n">sev</span><span class="o">=</span><span class="s1">&#39;FAIL&#39;</span><span class="p">,</span> <span class="n">event_desc</span><span class="o">=</span><span class="s1">&#39;No response from validator&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">event_queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ValidatorFailure.report"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.ValidatorFailure.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Monitor: ValidatorFailure module running&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">no_response_trigger</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="SigUsr1"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.SigUsr1">[docs]</a><span class="k">class</span> <span class="nc">SigUsr1</span><span class="p">(</span><span class="n">StatsModule</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Receives SIGUSR1 signal and adds event with severity SIGUSR1 to the</span>
+<span class="sd">    event queue.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epm</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SigUsr1</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_script_mgr</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_queue</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SigUsr1.initialize"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.SigUsr1.initialize">[docs]</a>    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_list</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">module_list</span> <span class="o">=</span> <span class="n">module_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_script_mgr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">EventScriptManager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_queue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_script_mgr</span><span class="o">.</span><span class="n">event_queue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_script_mgr</span><span class="o">.</span><span class="n">event</span>
+        <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGUSR1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigusr1_trigger</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;Monitor: finished initialization of SigUsr1 module&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SigUsr1.report"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.SigUsr1.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Monitor: SigUsr1 module running&quot;</span><span class="p">)</span></div>
+        <span class="c1"># self.no_response_trigger()</span>
+
+<div class="viewcode-block" id="SigUsr1.sigusr1_trigger"><a class="viewcode-back" href="../../../../sawtooth_api/sawtooth.cli.monitor_lib.monitor_modules.html#sawtooth.cli.monitor_lib.monitor_modules.SigUsr1.sigusr1_trigger">[docs]</a>    <span class="k">def</span> <span class="nf">sigusr1_trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signum</span><span class="p">,</span> <span class="n">stack</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SIGUSR1 received&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Monitor: SIGUSR1 received&quot;</span><span class="p">)</span>
+        <span class="n">event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="n">sev</span><span class="o">=</span><span class="s1">&#39;SIGUSR1&#39;</span><span class="p">,</span> <span class="n">event_desc</span><span class="o">=</span><span class="s1">&#39;SIGUSR1 received&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

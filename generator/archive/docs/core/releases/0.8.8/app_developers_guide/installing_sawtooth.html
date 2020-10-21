@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installing and Running Sawtooth &mdash; Sawtooth v0.8.8 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v0.8.8 documentation" href="../index.html"/>
+        <link rel="up" title="Application Developer’s Guide" href="../app_developers_guide.html"/>
+        <link rel="next" title="Using Sawtooth with Docker" href="docker.html"/>
+        <link rel="prev" title="Application Developer’s Guide" href="../app_developers_guide.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.8.8
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Installing and Running Sawtooth</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="docker.html">Using Sawtooth with Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ubuntu.html">Using Sawtooth on Ubuntu 16.04</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Introduction to the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="java_sdk.html">Java SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascript_sdk.html">JavaScript SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python_sdk.html">Python SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html">Testing a Transaction Processor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../core_developers_guide.html">Core Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rest_api.html">REST API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer&#8217;s Guide</a> &raquo;</li>
+        
+      <li>Installing and Running Sawtooth</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/installing_sawtooth.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installing-and-running-sawtooth">
+<h1>Installing and Running Sawtooth<a class="headerlink" href="#installing-and-running-sawtooth" title="Permalink to this headline">¶</a></h1>
+<p>Before you can start developing for the <em>Hyperledger Sawtooth</em> platform, you&#8217;ll
+need to set up and run a local validator to test your application against. Once
+running, you will be able to submit new transactions and fetch the resulting
+state and block data from the blockchain using HTTP and the Sawtooth
+<a class="reference internal" href="../architecture/rest_api.html"><span class="doc">REST API</span></a>. The methods detailed here will apply
+both to the included example transaction families, <em>IntKey</em> and <em>Xo</em>, as well
+as any transaction families you might write yourself.</p>
+<p>Sawtooth validators can be run either from prebuilt
+<a class="reference external" href="https://www.docker.com/">Docker</a> containers, or natively using
+<a class="reference external" href="https://www.ubuntu.com/">Ubuntu 16.04</a>. To get started, choose the platform
+appropriate to your use case and follow one of the the installation and usage
+guides below.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Using Sawtooth with Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#overview-of-sawtooth-components">Overview Of Sawtooth Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#install-docker-engine-and-docker-compose">Install Docker Engine And Docker Compose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#environment-setup">Environment Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#logging-into-the-client-container">Logging Into The Client Container</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#using-the-cli-commands">Using The CLI Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#connecting-to-the-rest-api">Connecting To The REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#container-overview">Container Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#viewing-log-files">Viewing Log Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="docker.html#settings-transaction-family-usage">Settings Transaction Family Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ubuntu.html">Using Sawtooth on Ubuntu 16.04</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu.html#overview-of-sawtooth-components">Overview of Sawtooth Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu.html#validator-start-up-process">Validator Start-up Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu.html#starting-the-rest-api">Starting the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu.html#running-a-transaction-processor">Running a Transaction Processor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu.html#multi-language-support-for-transaction-processors">Multi-language Support for Transaction Processors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu.html#settings-transaction-family-usage">Settings Transaction Family Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu.html#creating-and-submitting-transactions">Creating and Submitting Transactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ubuntu.html#viewing-blocks-and-state">Viewing Blocks and State</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="docker.html" class="btn btn-neutral float-right" title="Using Sawtooth with Docker" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../app_developers_guide.html" class="btn btn-neutral" title="Application Developer’s Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v0.8.8',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

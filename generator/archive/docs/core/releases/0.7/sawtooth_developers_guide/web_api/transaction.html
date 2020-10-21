@@ -1,0 +1,401 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>/transaction &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../index.html"/>
+        <link rel="up" title="Distributed Ledger Web API" href="index.html"/>
+        <link rel="next" title="/initiate" href="initiate.html"/>
+        <link rel="prev" title="/block" href="block.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../bond_family_guide.html">Bond Family Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../architecture_overview.html">Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sawtooth_vagrant.html">Vagrant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sawtooth_api/modules.html">Distributed Ledger Python API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Distributed Ledger Web API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="store.html">/store</a></li>
+<li class="toctree-l3"><a class="reference internal" href="block.html">/block</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">/transaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="initiate.html">/initiate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="forward.html">/forward</a></li>
+<li class="toctree-l3"><a class="reference internal" href="echo.html">/echo</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../validator_network_launcher.html">The Validator Network Launcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../workload_simulator.html">The Workload Simulator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../signing_transactions.html">Signing Transactions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a> &raquo;</li>
+        
+          <li><a href="index.html">Distributed Ledger Web API</a> &raquo;</li>
+        
+      <li>/transaction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/sawtooth_developers_guide/web_api/transaction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="transaction">
+<h1>/transaction<a class="headerlink" href="#transaction" title="Permalink to this headline">¶</a></h1>
+<p>Transaction IDs are always ordered from the newest committed transaction ID
+to the oldest.</p>
+<dl class="get">
+<dt id="get--transaction">
+<code class="descname">GET </code><code class="descname">/transaction</code><a class="headerlink" href="#get--transaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of the committed transaction IDs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first last simple">
+<li><strong>blockcount</strong> &#8211; Returns the transaction IDs from up to
+<cite>blockcount</cite> blocks.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--transaction-transaction_id">
+<code class="descname">GET </code><code class="descname">/transaction/{transaction_id}</code><a class="headerlink" href="#get--transaction-transaction_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the contents of transaction <cite>transaction_id</cite>.</p>
+</dd></dl>
+
+<dl class="head">
+<dt id="head--transaction-transaction_id">
+<code class="descname">HEAD </code><code class="descname">/transaction/{transaction_id}</code><a class="headerlink" href="#head--transaction-transaction_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>The HTTP response code indicates the status of transaction <cite>transaction_id</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> &#8211; The transaction exists and has been committed.</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.3">302 Found</a> &#8211; The transaction exists but has not been committed.</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> &#8211; The transaction does not exist.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--transaction-transaction_id-key">
+<code class="descname">GET </code><code class="descname">/transaction/{transaction_id}/{key}</code><a class="headerlink" href="#get--transaction-transaction_id-key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value associated with key <cite>key</cite> within transaction
+<cite>transaction_id</cite>.</p>
+</dd></dl>
+
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/transaction</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">localhost:8800</span>
+<span class="na">User-Agent</span><span class="o">:</span> <span class="l">curl/7.43.0</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">*/*</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Date</span><span class="o">:</span> <span class="l">Fri, 19 Feb 2016 19:29:29 GMT</span>
+<span class="na">Content-Length</span><span class="o">:</span> <span class="l">317</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+    <span class="s2">&quot;7d0cb57cdaa34ee0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;6f747d9cb173921f&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;87fdf8ee10bee691&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;9a403d328f2da810&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;74048866a4983941&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;01eee862b6a10ebc&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;1e79d167c62bbc44&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;d422d8793210714f&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;1f48c06a715c8e11&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;70931019ed499b2e&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;f74872b90cbf5e7f&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;92c5bdc786e90e1b&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;91e5e24562e45c33&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;6e6f0bc13ffb4b61&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;c6d2c9bd05fd648d&quot;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Example</strong>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">GET /transaction?blockcount=1</span>
+</pre></div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="s2">&quot;92c5bdc786e90e1b&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;91e5e24562e45c33&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;6e6f0bc13ffb4b61&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;c6d2c9bd05fd648d&quot;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Example</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="nf">HEAD</span> <span class="nn">/transaction/1e79d167c62bbc44</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">localhost:8800</span>
+<span class="na">User-Agent</span><span class="o">:</span> <span class="l">curl/7.43.0</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">*/*</span>
+</pre></div>
+</div>
+<div class="highlight-http"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Date</span><span class="o">:</span> <span class="l">Fri, 19 Feb 2016 19:34:37 GMT</span>
+</pre></div>
+</div>
+<p><strong>Example</strong>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">GET /transaction/1e79d167c62bbc44</span>
+</pre></div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;Dependencies&quot;</span><span class="o">:</span> <span class="p">[],</span>
+  <span class="s2">&quot;Identifier&quot;</span><span class="o">:</span> <span class="s2">&quot;1e79d167c62bbc44&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;InBlock&quot;</span><span class="o">:</span> <span class="s2">&quot;32ec280dab040d00&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Nonce&quot;</span><span class="o">:</span> <span class="mf">1455906424.223023</span><span class="p">,</span>
+  <span class="s2">&quot;Signature&quot;</span><span class="o">:</span> <span class="s2">&quot;HAHOQuBLeMy7tAKnOHfSepg2pPBSwDrJRKWTXj4Znuy3Hbgq1VcvA23odR1b2RU27ssTVLksCDcVOod+z8408yg=&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Status&quot;</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="s2">&quot;TransactionType&quot;</span><span class="o">:</span> <span class="s2">&quot;/IntegerKeyTransaction&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;Updates&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;Name&quot;</span><span class="o">:</span> <span class="s2">&quot;SYM1&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Value&quot;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;Verb&quot;</span><span class="o">:</span> <span class="s2">&quot;set&quot;</span>
+    <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example</strong>:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">GET /transaction/1e79d167c62bbc44/InBlock</span>
+</pre></div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s2">&quot;32ec280dab040d00&quot;</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="initiate.html" class="btn btn-neutral float-right" title="/initiate" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="block.html" class="btn btn-neutral" title="/block" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

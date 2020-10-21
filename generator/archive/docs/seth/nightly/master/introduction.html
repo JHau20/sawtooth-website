@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction &mdash; Sawtooth Seth latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'latest',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started" href="getting_started.html" />
+    <link rel="prev" title="Seth Developers Guide" href="contents.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth Seth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="permissions.html">Permissions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dapps.html">Developing DApps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seth_transaction_family_spec.html">Seth Transaction Family Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_reference.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">Sawtooth Seth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Introduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/introduction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>The primary goal of the Sawtooth-Ethereum integration project, affectionately
+dubbed &#8220;Seth&#8221;, is to add support for running Ethereum Virtual Machine smart
+contracts to the Hyperledger Sawtooth platform. In order to make this possible,
+the Hyperledger Sawtooth project worked with the <a class="reference external" href="https://github.com/hyperledger/burrow">Hyperledger Burrow</a> project
+to integrate their EVM implementation, the Burrow EVM, into with the Hyperledger
+Sawtooth platform.</p>
+<p>The secondary goal of Seth is to make it easy to port existing EVM smart
+contracts and DApps that depend on them to Sawtooth. This has been largely
+accomplished by replicating the <a class="reference external" href="https://github.com/ethereum/wiki/wiki/JSON-RPC">Ethereum JSON RPC API</a>.</p>
+<p>Seth is composed of three components:</p>
+<ol class="arabic simple">
+<li>The <a class="reference internal" href="cli_reference.html#seth-cli-reference-label"><span class="std std-ref">seth</span></a> client</li>
+<li>The <a class="reference internal" href="cli_reference.html#seth-tp-reference-label"><span class="std std-ref">seth-tp</span></a> transaction processor</li>
+<li>The <a class="reference internal" href="cli_reference.html#seth-rpc-reference-label"><span class="std std-ref">seth-rpc</span></a> server</li>
+</ol>
+<p>The <code class="docutils literal"><span class="pre">seth</span></code> client is the user-facing CLI tool for interacting with a Sawtooth
+network that has Seth deployed on it. The <code class="docutils literal"><span class="pre">seth-tp</span></code> transaction processor is
+the component that implements &#8220;Ethereum-like&#8221; functionality within the Sawtooth
+platform. Running Seth on a Sawtooth network is equivalent to connecting a
+<code class="docutils literal"><span class="pre">seth-tp</span></code> process to all validator nodes. The <code class="docutils literal"><span class="pre">seth-rpc</span></code> server is an HTTP
+server that acts as an adapter between the <a class="reference external" href="https://github.com/ethereum/wiki/wiki/JSON-RPC">Ethereum JSON RPC API</a> and the
+client interface provided by Sawtooth.</p>
+<p>It is important to note that Seth is not a complete Ethereum implementation. The
+Sawtooth platform has made fundamental design decisions that differ from those
+made by the Ethereum platform. While most EVM smart contracts can be run on the
+Sawtooth network, there are some differences to be aware of:</p>
+<ol class="arabic simple">
+<li>Blocks within Sawtooth are not identified by a 32-byte block hash. They are
+instead identified by a 64-byte header signature. When running smart
+contracts that use the BLOCKHASH instruction, the first 32 bytes of the
+header signature are used in place of a block hash.</li>
+<li>The public Ethereum network depends on economic incentives to limit execution
+resources. On the other hand, the Hyperledger Burrow project depends on
+permissions to control and limit execution resources. Seth currently only
+supports the permissioned-network model. As a consequence, &#8220;gas&#8221; is free but
+finite and permissions can be applied to all accounts.</li>
+<li>Transaction execution within Sawtooth is modularized so that transactions
+cannot have knowledge of being executed within the context of a block chain.
+This feature has useful implications from a design perspective, such as
+simplifying the Sawtooth state transaction function. However, it is in
+direct opposition to transaction execution within Ethereum, in which
+transactions can depend on the block numbers, hashes, and timestamps. By
+default, these instructions are not supported by Seth. However, if the Block
+Info Transaction Family is running on the same network as Seth, these
+instructions will attempt to read from state at the addresses defined by that
+family.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Code documentation can be <a class="reference external" href="../cargo/seth/index.html">found here</a>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="contents.html" class="btn btn-neutral float-left" title="Seth Developers Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2018, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

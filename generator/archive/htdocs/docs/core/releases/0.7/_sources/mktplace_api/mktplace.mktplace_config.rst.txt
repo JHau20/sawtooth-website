@@ -1,0 +1,7 @@
+mktplace\.mktplace\_config module
+=================================
+
+.. automodule:: mktplace.mktplace_config
+    :members:
+    :undoc-members:
+    :show-inheritance:

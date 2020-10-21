@@ -1,0 +1,7 @@
+mktintegration\.actor module
+============================
+
+.. automodule:: mktintegration.actor
+    :members:
+    :undoc-members:
+    :show-inheritance:

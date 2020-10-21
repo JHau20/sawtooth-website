@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Glossary &mdash; Sawtooth v1.2.3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Code of Conduct" href="community/code_of_conduct.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="/">Docs</a> &raquo;</li>
+<li><a href="contents.html">TOC</a> &raquo;</li>
+        
+      <li>Glossary</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/glossary.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="glossary">
+<h1>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h1>
+<p>This glossary defines Hyperledger Sawtooth terms and concepts.</p>
+<dl class="glossary">
+<dt id="term-batch">Batch</dt><dd><p>Group of related transactions.
+In Sawtooth, a batch is the atomic unit of state change for the blockchain.
+A batch can contain one or more transactions. For a batch with multiple
+transactions, if one transaction fails, all transactions in that batch fail.
+(The client application is responsible for handling failure appropriately.)
+For more information, see <a class="reference internal" href="architecture/transactions_and_batches.html"><span class="doc">Transactions and Batches</span></a>.</p>
+</dd>
+<dt id="term-blockchain">Blockchain</dt><dd><p>Distributed ledger that records transactions, in chronological order,
+shared by all participants in a Sawtooth network. Each block on the
+blockchain is linked by a cryptographic hash to the previous block.</p>
+</dd>
+<dt id="term-consensus">Consensus</dt><dd><p>Process of reaching agreement among a group of participants (nodes on a
+Sawtooth network), some of which could be faulty or malicious. Sawtooth
+supports many types of consensus algorithms with the <a class="reference internal" href="#term-dynamic-consensus"><span class="xref std std-term">Dynamic
+consensus</span></a> feature.</p>
+</dd>
+<dt id="term-consensus-api">Consensus API</dt><dd><p>Interface that allows a <cite>consensus engine</cite> to interact with the validator
+in order to handle consensus functionality in a separate process.</p>
+</dd>
+<dt id="term-consensus-engine">Consensus engine</dt><dd><p>Sawtooth component that provides consensus-specific functionality for a
+Sawtooth node. The consensus engine runs as a separate process on the node
+and communicates with the validator through the <em>consensus API</em>.</p>
+</dd>
+<dt id="term-core">Core</dt><dd><p>See <a class="reference internal" href="#term-sawtooth-core"><span class="xref std std-term">Sawtooth core</span></a>.</p>
+</dd>
+<dt id="term-devmode-consensus">Devmode consensus</dt><dd><p>(Formerly “dev mode consensus”.)
+Simple random-leader consensus algorithm that can be used to test a
+transaction processor on a single Sawtooth node. (Devmode is short for
+“developer mode”.) Devmode consensus is not recommended for a multiple-node
+network; it should not be used for production.</p>
+</dd>
+<dt id="term-distributed-ledger">Distributed ledger</dt><dd><p>See <a class="reference internal" href="#term-blockchain"><span class="xref std std-term">Blockchain</span></a>.</p>
+</dd>
+<dt id="term-dynamic-consensus">Dynamic consensus</dt><dd><p>Sawtooth feature that allows a variety of consensus algorithms (formerly
+called “pluggable consensus”). Dynamic consensus allows each Sawtooth
+network to choose the best consensus for its purposes, as specified by
+on-chain settings in the genesis block. Sawtooth supports the ability to
+change the consensus algorithm on a running network by submitting a
+transaction. For more information, see
+<a class="reference internal" href="introduction.html#dynamic-consensus-label"><span class="std std-ref">Dynamic Consensus</span></a>.</p>
+</dd>
+<dt id="term-genesis-block">Genesis block</dt><dd><p>First block on the blockchain. The genesis block initializes the
+Sawtooth network.</p>
+</dd>
+<dt id="term-global-state">Global state</dt><dd><p>Database that stores a local (validator-specific) record of transactions for
+the blockchain. Sawtooth represents state in a single instance of a
+Merkle-Radix tree on each Sawtooth node.  For more information, see
+<a class="reference internal" href="architecture/global_state.html"><span class="doc">Global State</span></a>.</p>
+</dd>
+<dt id="term-identity">Identity</dt><dd><p>Sample transaction family that handles on-chain permissions (settings
+stored on the blockchain) for transactor and validator keys. This
+transaction family demonstrates how to streamline managing identities
+for lists of public keys. For more information, see
+<a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html"><span class="doc">Identity Transaction Family</span></a>.</p>
+</dd>
+<dt id="term-integerkey">IntegerKey</dt><dd><p>Sample transaction family with only three operations (set, increment, and
+decrement) that can be used to test deployed ledgers. IntegerKey is called
+<em>intkey</em>. For more information, see
+<a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html"><span class="doc">IntegerKey Transaction Family</span></a>.</p>
+</dd>
+<dt id="term-journal">Journal</dt><dd><p>Group of Sawtooth core processes that are responsible for maintaining and
+extending the blockchain for the validator. For more information, see
+<a class="reference internal" href="architecture/journal.html"><span class="doc">Journal</span></a>.</p>
+</dd>
+<dt id="term-merkle-radix-tree">Merkle-Radix tree</dt><dd><p>Addressable data structure that stores state data. A Merkle-Radix tree
+combines the benefits of a Merkle tree (also called a “hash tree”), which
+stores successive node hashes from leaf-to-root upon any changes to the
+tree, and a Radix tree, which has addresses that uniquely identify the
+paths to leaf nodes where information is stored.  For more information, see
+<a class="reference internal" href="architecture/global_state.html#merkle-radix-overview-label"><span class="std std-ref">Merkle-Radix Tree Overview</span></a>.</p>
+</dd>
+<dt id="term-node">Node</dt><dd><p>Participant in Sawtooth network. Each node runs a single validator, a
+REST API, a consensus engine, and one or more transaction processors.</p>
+</dd>
+<dt id="term-off-chain-setting">Off-chain setting</dt><dd><p>Setting or value that is stored locally, rather than on the blockchain.</p>
+</dd>
+<dt id="term-on-chain-setting">On-chain setting</dt><dd><p>Setting or value that is stored on the blockchain (also referred to as
+“in state”) so that all participants on the network can access that
+information.</p>
+</dd>
+<dt id="term-pbft-consensus">PBFT consensus</dt><dd><p>Practical Byzantine Fault Tolerance, a voting-based consensus algorithm with
+<a class="reference external" href="https://en.wikipedia.org/wiki/Byzantine_fault_tolerance">Byzantine fault tolerance (BFT)</a>
+that has finality (does not fork). Sawtooth PBFT extends the
+<a class="reference external" href="https://www.usenix.org/legacy/events/osdi99/full_papers/castro/castro_html/castro.html">original PBFT algorithm</a>
+with features such as dynamic network membership, regular view changes,
+and a block catch-up procedure.</p>
+</dd>
+<dt id="term-permissioned-network">Permissioned network</dt><dd><p>Restricted network of Sawtooth nodes. A permissioned network
+typically includes multiple parties with a mutual interest but without
+the mutual trust found in a network controlled by a single company or
+entity.</p>
+<p>The blockchain stores the settings that specify permissions, such as roles
+and identities, so that all participants in the network can access this
+information.</p>
+</dd>
+<dt id="term-poet-consensus">PoET consensus</dt><dd><p>Proof of Elapsed Time, a Nakamoto-style consensus algorithm that is designed
+to support large networks. PoET does not have finality (can fork).</p>
+<p>Sawtooth offers two version of PoET consensus:</p>
+<ul class="simple">
+<li><p><em>PoET-SGX</em> relies on a Trusted Execution Environment (TEE), such as
+Intel® Software Guard Extensions (SGX), to implement a
+leader-election lottery system. PoET-SGX is sometimes called <em>PoET/BFT</em>
+because it is
+<a class="reference external" href="https://en.wikipedia.org/wiki/Byzantine_fault_tolerance">Byzantine fault tolerant</a>.</p></li>
+<li><p><em>PoET simulator</em> provides the same consensus algorithm on a system without
+a Trusted Execution Environment. PoET simulator is also called <em>PoET/CFT</em>
+because it is crash fault tolerant, not Byzantine fault tolerant.</p></li>
+</ul>
+</dd>
+<dt id="term-raft-consensus">Raft consensus</dt><dd><p>Leader-based consensus algorithm that is designed for small networks with
+a restricted membership. Raft is crash fault tolerant, not Byzantine fault
+tolerant, and has finality (does not fork). For more information, see
+<a class="reference external" href="https://en.wikipedia.org/wiki/Raft_(computer_science)">Raft (computer science) on Wikipedia</a>
+and the <a class="reference external" href="https://sawtooth.hyperledger.org/docs/raft/nightly/master/introduction.html">Sawtooth Raft documentation</a>.</p>
+</dd>
+<dt id="term-rest-api">REST API</dt><dd><p>In Sawtooth, a core component that adapts communication with a validator to
+HTTP/JSON standards. Sawtooth includes a REST API that is used by clients
+such as the Sawtooth CLI commands. Developers can use this REST API or
+develop custom APIs for client-validator communication.  For more
+information, see <a class="reference internal" href="architecture/rest_api.html"><span class="doc">REST API</span></a>.</p>
+</dd>
+<dt id="term-sawtooth-core">Sawtooth core</dt><dd><p>Central Sawtooth software that is responsible for message handling,
+block validation and publishing, consensus, and global state management.
+The Sawtooth architecture separates these core functions from
+application-specific business logic, which is is handled by
+transaction families.</p>
+</dd>
+<dt id="term-sawtooth-network">Sawtooth network</dt><dd><p>Peer-to-peer network of nodes running a validator (and associated
+components) that are working on the same blockchain.</p>
+</dd>
+<dt id="term-settings">Settings</dt><dd><p>Sample transaction family that provides a reference implementation for
+storing on-chain configuration settings. For more information, see
+<a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html"><span class="doc">Settings Transaction Family</span></a>.</p>
+</dd>
+<dt id="term-state">State</dt><dd><p>See <a class="reference internal" href="#term-global-state"><span class="xref std std-term">Global state</span></a>.</p>
+</dd>
+<dt id="term-state-delta">State delta</dt><dd><p>Result of a single change for a specific address in global state.</p>
+</dd>
+<dt id="term-state-delta-subscriber">State delta subscriber</dt><dd><p>Client framework that subscribes to a validator for state deltas (changes)
+for a specific set of transaction families. Usually, an application
+subscribes to state deltas for the purpose of off-chain storage or action,
+such as handling the failure of a transaction appropriately.</p>
+</dd>
+<dt id="term-transaction">Transaction</dt><dd><p>Function that changes the state of the blockchain. Each transaction is put
+into a Batch, either alone or with other related transactions, then sent to
+the validator for processing.  For more information, see
+<a class="reference internal" href="architecture/transactions_and_batches.html"><span class="doc">Transactions and Batches</span></a>.</p>
+</dd>
+<dt id="term-transaction-family">Transaction family</dt><dd><p>Application-specific business logic that defines a set of operations or
+transaction types that are allowed on the blockchain. Sawtooth transaction
+families separate the transaction rules and content from the Sawtooth core
+functionality.</p>
+<p>A transaction family implements a data model and transaction language for
+an application. Sawtooth includes example transaction families in several
+languages, such as Python, Go, and Java.  For more information, see
+<a class="reference internal" href="introduction.html#sample-transaction-families-label"><span class="std std-ref">Sample Transaction Families</span></a>.</p>
+</dd>
+<dt id="term-transaction-processor">Transaction processor</dt><dd><p>Validates transactions and updates state based on the rules defined by the
+associated transaction family. Sawtooth includes transaction processors for
+the sample transaction families, such as <code class="docutils literal notranslate"><span class="pre">identity-tp</span></code> for the Identity
+transaction family. For more information, see
+<a class="reference internal" href="transaction_family_specifications.html"><span class="doc">Transaction Family Specifications</span></a>.</p>
+</dd>
+<dt id="term-validator">Validator</dt><dd><p>Component responsible for validating batches of transactions, combining
+them into blocks, maintaining consensus with the Sawtooth network,
+and coordinating communication between clients, transaction processors, and
+other validators on the network.</p>
+</dd>
+<dt id="term-validator-node">Validator node</dt><dd><p>See <a class="reference internal" href="#term-node"><span class="xref std std-term">node</span></a>.</p>
+</dd>
+<dt id="term-xo">XO</dt><dd><p>Sample transaction family that demonstrates basic transactions by playing
+<a class="reference external" href="https://en.wikipedia.org/wiki/Tic-tac-toe">tic-tac-toe</a> on the
+blockchain. For more information, see
+<a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html"><span class="doc">XO Transaction Family</span></a>.</p>
+</dd>
+</dl>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="community/code_of_conduct.html" class="btn btn-neutral float-left" title="Code of Conduct" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

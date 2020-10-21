@@ -1,0 +1,374 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>object-type: order &mdash; Sawtooth Lake 0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Sawtooth Lake 0.7 documentation" href="../../../index.html"/>
+        <link rel="up" title="Object Model" href="../object_model.html"/>
+        <link rel="next" title="object-type: organization" href="organization.html"/>
+        <link rel="prev" title="object-type: holding" href="holding.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../contents.html" class="icon icon-home"> Sawtooth Lake
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../txn_family_tutorial.html">Transaction Family Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../bond_family_guide.html">Bond Family Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../users_guide.html">Sawtooth Lake Bond Family User&#8217;s Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../sysadmin_guide.html">Sawtooth Lake Bond Family System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../design.html">Sawtooth Lake Bond Family Design</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../updates.html">Transaction Updates</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../object_model.html">Object Model</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../object_model.html#objectstore">ObjectStore</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../object_model.html#common-attributes">Common Attributes</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../object_model.html#object-types">Object Types</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../libor.html">Sawtooth LIBOR</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../bond_workload_simulator.html">Sawtooth Lake Bond Family Workload Simulator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktnav_users_guide.html">Marketplace Navigator User&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sawtooth_developers_guide.html">Sawtooth Lake Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mktplace_developers_guide.html">MarketPlace Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../contents.html">Sawtooth Lake</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../bond_family_guide.html">Bond Family Guide</a> &raquo;</li>
+        
+          <li><a href="../../design.html">Sawtooth Lake Bond Family Design</a> &raquo;</li>
+        
+          <li><a href="../object_model.html">Object Model</a> &raquo;</li>
+        
+      <li>object-type: order</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/bond_family_guide/design/object_model/order.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="object-type-order">
+<span id="id1"></span><h1>object-type: order<a class="headerlink" href="#object-type-order" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><dl class="docutils">
+<dt>object-id</dt>
+<dd>See <a class="reference internal" href="../object_model.html#common-attributes"><span class="std std-ref">Common Attributes</span></a>.</dd>
+<dt>object-type</dt>
+<dd>The string &#8216;order&#8217;.</dd>
+<dt>creator-id</dt>
+<dd>See <a class="reference internal" href="../object_model.html#common-attributes"><span class="std std-ref">Common Attributes</span></a>.</dd>
+<dt>action</dt>
+<dd>Either &#8216;Buy&#8217; or &#8216;Sell&#8217;.</dd>
+<dt>order-type</dt>
+<dd>Either &#8216;Market&#8217; or &#8216;Limit&#8217;.</dd>
+<dt>firm-id</dt>
+<dd>The organization the order is on behalf of. This should be the
+organization the creator of the order belongs to.</dd>
+<dt>cusip</dt>
+<dd><p class="first">An identifier for the bond.</p>
+<p>See <a class="reference internal" href="bond.html#object-type-bond"><span class="std std-ref">object-type: bond</span></a>.</p>
+<p class="last">Optional (one of isin or cusip must be set)</p>
+</dd>
+<dt>isin</dt>
+<dd><p class="first">An identifier for the bond.</p>
+<p>See <a class="reference internal" href="bond.html#object-type-bond"><span class="std std-ref">object-type: bond</span></a>.</p>
+<p>See: <a class="reference external" href="https://en.wikipedia.org/wiki/International_Securities_Identification_Number">https://en.wikipedia.org/wiki/International_Securities_Identification_Number</a></p>
+<p class="last">Optional (one of isin or cusip must be set)</p>
+</dd>
+<dt>limit-price</dt>
+<dd><p class="first">The maximum price the ordering firm is willing to pay for
+a bond or the minimum price they are willing to sell,
+depending on whether this is a buy or sell order.</p>
+<p class="last">Optional (if order-type is &#8220;Limit&#8221;, one of limit-price or
+limit-yield must be set. if order-type is &#8220;Market&#8221;, this
+field should not be set)</p>
+</dd>
+<dt>limit-yield</dt>
+<dd><p class="first">The minumum yield at which the ordering firm is willing to
+buy a bond a bond or the maximum yield at which they are
+willing to sell, depending on whether this is a buy or sell order.</p>
+<p class="last">Optional (if order-type is &#8220;Limit&#8221;, one of limit-price or
+limit-yield must be set. if order-type is &#8220;Market&#8221;, this
+field should not be set)</p>
+</dd>
+<dt>quantity</dt>
+<dd>The quantity the firm wishes to buy or sell in USD as a multiple
+of the bond&#8217;s par value. A &#8216;round lot&#8217; for bonds is typically
+$100,000 against a par value of $1,000 per unit.</dd>
+<dt>quote-id</dt>
+<dd><p class="first">The quote which is matched to this order.</p>
+<p class="last">Optional (this is set on order quote matching as an update)</p>
+</dd>
+<dt>status</dt>
+<dd><p class="first">One of &#8216;Open&#8217;, &#8216;Matched&#8217;, or &#8216;Settled&#8217;.</p>
+<p>&#8216;Open&#8217; means that the order has been created in the system and
+is waiting to be matched to a quote.</p>
+<p>&#8216;Matched&#8217; means that the order has been matched up with a quote
+which represents the highest sell price or lowest buy price
+which matches the requested quantity.</p>
+<p class="last">&#8216;Settled&#8217; means that the counterparties had sufficient assets
+in their holdings to settle the trade and that asset transfer
+has occurred.</p>
+</dd>
+<dt>timestamp</dt>
+<dd>The time that the quote is created in relation to the current clock.</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="example-json">
+<h2>Example JSON<a class="headerlink" href="#example-json" title="Permalink to this headline">¶</a></h2>
+<p>Buy Market example:</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;object-id&quot;</span><span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;object-type&quot;</span><span class="p">:</span> <span class="s2">&quot;order&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;creator-id&quot;</span><span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;firm-id&quot;</span><span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;order-type&quot;</span><span class="p">:</span> <span class="s2">&quot;Market&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;Buy&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;isin&quot;</span><span class="p">:</span> <span class="s2">&quot;US00206RDA77&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;quantity&quot;</span><span class="p">:</span> <span class="mi">100000</span><span class="p">,</span>
+    <span class="nt">&quot;quote-id&quot;</span><span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;Matched&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;timestamp&quot;</span> <span class="p">:</span> <span class="mf">1469045984.965841</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Sell Limit Price example:</p>
+<div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;object-id&quot;</span><span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;object-type&quot;</span><span class="p">:</span> <span class="s2">&quot;order&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;creator-id&quot;</span><span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;firm-id&quot;</span><span class="p">:</span> <span class="s2">&quot;OBJECT_ID&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;order-type&quot;</span><span class="p">:</span> <span class="s2">&quot;Limit&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;Sell&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;isin&quot;</span><span class="p">:</span> <span class="s2">&quot;US00206RDA77&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;limit-price&quot;</span><span class="p">:</span> <span class="mf">100.859375</span><span class="p">,</span>
+    <span class="nt">&quot;quantity&quot;</span><span class="p">:</span> <span class="mi">100000</span><span class="p">,</span>
+    <span class="nt">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;Open&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;timestamp&quot;</span> <span class="p">:</span> <span class="mf">1469045984.965841</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="related-transaction-updates">
+<h2>Related Transaction Updates<a class="headerlink" href="#related-transaction-updates" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="../updates/create_order.html#update-create-order"><span class="std std-ref">CreateOrder</span></a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="organization.html" class="btn btn-neutral float-right" title="object-type: organization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="holding.html" class="btn btn-neutral" title="object-type: holding" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

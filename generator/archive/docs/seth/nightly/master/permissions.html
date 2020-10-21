@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Permissions &mdash; Sawtooth Seth latest documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'latest',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Developing DApps" href="dapps.html" />
+    <link rel="prev" title="Contracts" href="contracts.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth Seth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Contracts</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Permissions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#permission-inheritance">Permission Inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#managing-permissions">Managing Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#securing-the-network">Securing the Network</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dapps.html">Developing DApps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seth_transaction_family_spec.html">Seth Transaction Family Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_reference.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">Sawtooth Seth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Permissions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/permissions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="permissions">
+<h1>Permissions<a class="headerlink" href="#permissions" title="Permalink to this headline">¶</a></h1>
+<p>As mentioned in the <a class="reference internal" href="introduction.html"><span class="doc">introduction</span></a>, Seth supports a
+permissioned network model in which the set of actions allowed by individual
+accounts (contract or external) can be controlled. The supported permissions
+and the actions they correspond to are as follows:</p>
+<dl class="docutils">
+<dt>root</dt>
+<dd>Change permissions of other accounts</dd>
+<dt>send</dt>
+<dd>Transfer value from an owned account to another account (not currently used)</dd>
+<dt>call</dt>
+<dd>Execute a deployed contract</dd>
+<dt>contract</dt>
+<dd>Deploy new contracts from an owned account</dd>
+<dt>account</dt>
+<dd>Create new external accounts; this only has an effect when applied to global
+permissions and disabling it prevents new external accounts from being created</dd>
+<dt>all</dt>
+<dd>Shorthand for &#8220;all permissions&#8221;. This is not an actual permission, but can
+be used when setting permissions with <code class="docutils literal"><span class="pre">seth</span></code>.</dd>
+</dl>
+<p>Each permission can be set to either allow or deny the action for individual
+accounts. If a permission is not set, the permission defaults to the permission
+set at the global permissions address. If the permission is not set at the
+global permissions address, the permission is allowed.</p>
+<div class="section" id="permission-inheritance">
+<h2>Permission Inheritance<a class="headerlink" href="#permission-inheritance" title="Permalink to this headline">¶</a></h2>
+<p>When a new account is created, its permissions are inherited from the creating
+account according to the following rules:</p>
+<ul class="simple">
+<li>If the account is a new external account, its permissions are inherited from
+the global permissions address. If no permissions are set at the global
+permissions address, all permissions are enabled for the new account.</li>
+<li>If the account is a new contract account, its permissions are inherited from
+the creating account, with the exception of the &#8220;root&#8221; permission, which is
+set to deny.</li>
+</ul>
+</div>
+<div class="section" id="managing-permissions">
+<h2>Managing Permissions<a class="headerlink" href="#managing-permissions" title="Permalink to this headline">¶</a></h2>
+<p>If you have been following along with this guide, you should own two accounts at
+this point: an external account and a contract account. To inspect the
+permissions on one of these accounts, run:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ seth show account {account-address}
+</pre></div>
+</div>
+<p>If you inspect the permissions of your external account (the first account you
+created), you should see output similar to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Perms</span>  <span class="p">:</span> <span class="o">+</span><span class="n">root</span><span class="p">,</span><span class="o">+</span><span class="n">send</span><span class="p">,</span><span class="o">+</span><span class="n">call</span><span class="p">,</span><span class="o">+</span><span class="n">contract</span><span class="p">,</span><span class="o">+</span><span class="n">account</span>
+</pre></div>
+</div>
+<p>You should have all permissions enabled because this is a new network and no
+permissions have been set at the global permissions address.</p>
+<p>If you inspect the permissions of your contract account (created when you ran
+<code class="docutils literal"><span class="pre">seth</span> <span class="pre">contract</span> <span class="pre">create</span></code>), you should see output similar to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Perms</span>  <span class="p">:</span> <span class="o">-</span><span class="n">root</span><span class="p">,</span><span class="o">+</span><span class="n">send</span><span class="p">,</span><span class="o">+</span><span class="n">call</span><span class="p">,</span><span class="o">+</span><span class="n">contract</span><span class="p">,</span><span class="o">+</span><span class="n">account</span>
+</pre></div>
+</div>
+<p>This is because the contract inherited all permissions from the creating
+account, except for root.</p>
+<p>Permissions of individual accounts may be modified by any account that has the
+&#8220;root&#8221; permission. As such, it is important to limit the number of accounts
+that have &#8220;root&#8221;. You can control the permissions of other accounts with <code class="docutils literal"><span class="pre">seth</span>
+<span class="pre">permissions</span> <span class="pre">set</span></code>. For example, we can update the contract account&#8217;s
+permissions so that it cannot create new contracts with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ seth permissions set {alias} --address {contract-address} --permissions=&quot;-root,+send,+call,-contract,+account&quot;
+</pre></div>
+</div>
+<p>In place of <code class="docutils literal"><span class="pre">{alias}</span></code> you should insert the alias of the key you used to
+create your first account and in place of <code class="docutils literal"><span class="pre">{contract-address}</span></code> you should
+insert the address of the contract you created.</p>
+<p>When specifying permissions on the command line, use a comma-separated list of
+&#8220;prefixed&#8221; permissions from the list above. Permissions must be prefixed with a
+plus (&#8220;+&#8221;) or minus (&#8220;-&#8221;) to indicated allowed and denied respectively.
+Permissions that are omitted from the list will be left unset and default to
+those set at the global permissions address.</p>
+<p>&#8220;all&#8221; may be used as a special keyword to refer to all permissions. Duplicates
+are allowed and items that come later in the list override earlier items.</p>
+<p>Examples:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span><span class="nb">all</span><span class="p">,</span><span class="o">+</span><span class="n">contract</span><span class="p">,</span><span class="o">+</span><span class="n">call</span>      <span class="n">Disable</span> <span class="nb">all</span> <span class="n">permissions</span> <span class="k">except</span> <span class="n">contract</span> <span class="n">creation</span> <span class="ow">or</span> <span class="n">calling</span>
+<span class="o">+</span><span class="n">account</span><span class="p">,</span><span class="o">+</span><span class="n">send</span><span class="p">,</span><span class="o">-</span><span class="n">contract</span>  <span class="n">Enable</span> <span class="n">account</span> <span class="n">creation</span> <span class="ow">and</span> <span class="n">sending</span> <span class="n">value</span> <span class="ow">and</span> <span class="n">disable</span> <span class="n">contract</span> <span class="n">creation</span>
+<span class="o">+</span><span class="nb">all</span><span class="p">,</span><span class="o">-</span><span class="n">root</span>                <span class="n">Enable</span> <span class="nb">all</span> <span class="n">permissions</span> <span class="k">except</span> <span class="n">setting</span> <span class="n">permissions</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="securing-the-network">
+<h2>Securing the Network<a class="headerlink" href="#securing-the-network" title="Permalink to this headline">¶</a></h2>
+<p>When a new Sawtooth network running Seth is created, by default the network is
+open and all permissions are allowed by all accounts. This includes the &#8220;root&#8221;
+permission. In a new deployment, the first action should be to create a new
+external account with a well protected private key and then set the permissions
+at the global permissions address.</p>
+<p>If you have been following along with this guide, you can update the global
+permissions address of your development network to disable all permissions with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ seth permissions set {alias} --address global --permissions=&quot;-all&quot;
+</pre></div>
+</div>
+<p>When updating permissions with <code class="docutils literal"><span class="pre">seth</span></code> the string &#8220;global&#8221; is expanded to the
+global permissions address, which is usually all zeros.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dapps.html" class="btn btn-neutral float-right" title="Developing DApps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="contracts.html" class="btn btn-neutral float-left" title="Contracts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2018, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

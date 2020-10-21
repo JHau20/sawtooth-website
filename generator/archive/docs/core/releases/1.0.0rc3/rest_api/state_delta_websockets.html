@@ -1,0 +1,386 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>State Delta Subscriptions via Web Sockets &mdash; Sawtooth v1.0.0rc3 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Sawtooth v1.0.0rc3 documentation" href="../index.html"/>
+        <link rel="up" title="REST API Reference" href="../rest_api.html"/>
+        <link rel="next" title="Sawtooth SDK APIs" href="../sdks.html"/>
+        <link rel="prev" title="Error Responses" href="error_codes.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.0.0rc3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer&#8217;s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator&#8217;s Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../rest_api.html">REST API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="endpoint_specs.html">Endpoint Specifications</a></li>
+<li class="toctree-l2"><a class="reference internal" href="error_codes.html">Error Responses</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">State Delta Subscriptions via Web Sockets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#opening-a-web-socket">Opening a Web Socket</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#subscribing-to-state-changes">Subscribing to State Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#events">Events</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#missed-events">Missed Events</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#unsubscribing">Unsubscribing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#errors-and-warnings">Errors and Warnings</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sdks.html">Sawtooth SDK APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../rest_api.html">REST API Reference</a> &raquo;</li>
+        
+      <li>State Delta Subscriptions via Web Sockets</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/rest_api/state_delta_websockets.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="state-delta-subscriptions-via-web-sockets">
+<h1>State Delta Subscriptions via Web Sockets<a class="headerlink" href="#state-delta-subscriptions-via-web-sockets" title="Permalink to this headline">¶</a></h1>
+<p>As transactions are committed to the block chain, an app developer may be
+interested in receiving events related to the changes in state that result.
+These events, <cite>StateDeltaEvents</cite>, include information about the advance of the
+block chain, as well as state changes that can be limited to specific address
+spaces in the global state.</p>
+<p>An application can subscribe to receive these events via a web socket, provided
+by the REST API component.  For example, a single-page JavaScript application may
+open a web socket connection and subscribe to a particular transaction family&#8217;s
+state values, using the incoming events to re-render portions of the display.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All examples here are written in JavaScript, and assumes the Sawtooth REST
+API is reachable at <cite>localhost</cite>.</p>
+</div>
+<div class="section" id="opening-a-web-socket">
+<h2>Opening a Web Socket<a class="headerlink" href="#opening-a-web-socket" title="Permalink to this headline">¶</a></h2>
+<p>The application developer must first open a web socket. This is accomplished
+by using standard means.  In the case of in-browser JavaScript:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">let</span> <span class="nx">ws</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="s1">&#39;ws:localhost:8008/subscriptions&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the REST API is running, it should trigger an event on the web socket&#8217;s
+<cite>onopen</cite> handler.</p>
+</div>
+<div class="section" id="subscribing-to-state-changes">
+<h2>Subscribing to State Changes<a class="headerlink" href="#subscribing-to-state-changes" title="Permalink to this headline">¶</a></h2>
+<p>In order to subscribe to an address space in the global state, first a message
+needs to be sent on the socket with the list of prefixes. It is a best-practice
+to send this message as part of the web socket&#8217;s <cite>onopen</cite> handler.</p>
+<p>In the following example, we&#8217;ll subscribe to changes in the XO family:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">ws</span><span class="p">.</span><span class="nx">onopen</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+    <span class="s1">&#39;action&#39;</span><span class="o">:</span> <span class="s1">&#39;subscribe&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;address_prefixes&#39;</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;5b7349&#39;</span><span class="p">]</span>
+  <span class="p">}))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This message will begin the subscription of events as of the current block.  If
+you are interested in the state prior to the point of subscription, you should
+fetch the values of state via the REST API&#8217;s <cite>/state</cite> endpoint.</p>
+<p>Subscriptions may be changed by sending a subscribe message at later time while
+the websocket is open.  It is up to the client to maintain the list of address
+prefixes of interest.  Any subsequent subscriptions will overwrite this list.</p>
+</div>
+<div class="section" id="events">
+<h2>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h2>
+<p>Once subscribed, events will be received via the web socket&#8217;s <cite>onmessage</cite>
+handler. The event data is a JSON string, which looks like the following:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;block_num&quot;</span><span class="o">:</span> <span class="mi">8</span><span class="p">,</span>
+  <span class="s2">&quot;block_id&quot;</span><span class="o">:</span> <span class="s2">&quot;ab7cbc7a...&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;previous_block_id&quot;</span><span class="o">:</span> <span class="s2">&quot;d4b46c1c...&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;state_changes&quot;</span><span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;SET&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;value&quot;</span><span class="o">:</span> <span class="s2">&quot;oWZQdmxqcmsZU4w&quot;</span><span class="o">=</span><span class="p">,</span>
+      <span class="s2">&quot;address&quot;</span><span class="o">:</span> <span class="s2">&quot;1cf126613a...&quot;</span>
+    <span class="p">},</span>
+    <span class="p">...</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>There is an entry in the <cite>state_changes</cite> array for each address that matches the
+<cite>address_prefixes</cite> provided during the subscribe action.  The type is either
+&#8220;SET&#8221; or &#8220;DELETE&#8221;.  In the case of &#8220;SET&#8221; the value is base-64 encoded (like the
+<cite>/state</cite> endpoint&#8217;s response).  In the case of &#8220;DELETE&#8221;, only the address is
+provided. If you are using a transaction family that supports deletes, you&#8217;ll
+need to keep track of values via address, as well.</p>
+<div class="section" id="missed-events">
+<h3>Missed Events<a class="headerlink" href="#missed-events" title="Permalink to this headline">¶</a></h3>
+<p>In the case where you have missed an event, a request can be sent via the web
+socket for a particular block&#8217;s changes.  You can use the <cite>previous_block_id</cite>
+from the current event to request the previous block&#8217;s events, for example.
+Send the following message:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+  <span class="s1">&#39;action&#39;</span><span class="o">:</span> <span class="s1">&#39;get_block_deltas&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;block_id&#39;</span><span class="o">:</span> <span class="s1">&#39;d4b46c1c...&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;address_prefixes&#39;</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;5b7349&#39;</span><span class="p">]</span>
+<span class="p">}))</span>
+</pre></div>
+</div>
+<p>The event will be returned in the same manner as any other event, so it is
+recommended that you push the events on to a stack before processing them.</p>
+<p>If the block id does not exist, the following error will be returned:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;error&quot;</span><span class="o">:</span> <span class="s2">&quot;Must specify a block id&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="unsubscribing">
+<h2>Unsubscribing<a class="headerlink" href="#unsubscribing" title="Permalink to this headline">¶</a></h2>
+<p>To unsubscribe, you can either close the web socket, or if you want to
+unsubscribe temporarily, you can send an unsubscribe action:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+  <span class="s1">&#39;action&#39;</span><span class="o">:</span> <span class="s1">&#39;unsubscribe&#39;</span>
+<span class="p">}))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="errors-and-warnings">
+<h2>Errors and Warnings<a class="headerlink" href="#errors-and-warnings" title="Permalink to this headline">¶</a></h2>
+<p>An open, subscribed web socket may receive the following errors and warnings:</p>
+<ul class="simple">
+<li>the validator is unavailable</li>
+<li>an unknown action was requested</li>
+</ul>
+<p>If the validator is unavailable to the REST API process, a warning will be sent
+in lieu of a state delta event:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;warning&quot;</span><span class="o">:</span> <span class="s2">&quot;Validator unavailable&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If an unrecognized action is sent on to the server via the websocket, an error
+message will be sent back:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;error&quot;</span><span class="o">:</span> <span class="s2">&quot;Unknown action \&quot;bad_action\&quot;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../sdks.html" class="btn btn-neutral float-right" title="Sawtooth SDK APIs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="error_codes.html" class="btn btn-neutral" title="Error Responses" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'v1.0.0rc3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

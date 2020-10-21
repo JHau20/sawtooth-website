@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Transaction Family Specifications &mdash; Sawtooth v1.2.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Settings Transaction Family" href="transaction_family_specifications/settings_transaction_family.html" />
+    <link rel="prev" title="PoET 1.0 Specification" href="architecture/poet.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="contents.html" class="icon icon-home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Transaction Family Specifications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html">Settings Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html">Identity Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html">BlockInfo Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html">IntegerKey Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html">XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transaction_family_specifications/validator_registry_transaction_family.html">PoET Validator Registry Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transaction_family_specifications/smallbank_transaction_family.html">Smallbank Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/sabre/releases/v1.2.4/">Sawtooth Sabre Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/seth/nightly/master/">Sawtooth Seth Transaction Family</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="/">Docs</a> &raquo;</li>
+<li><a href="contents.html">TOC</a> &raquo;</li>
+        
+      <li>Transaction Family Specifications</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/transaction_family_specifications.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="transaction-family-specifications">
+<h1>Transaction Family Specifications<a class="headerlink" href="#transaction-family-specifications" title="Permalink to this headline">¶</a></h1>
+<p>Sawtooth includes several transaction families as examples for developing
+your own transaction family. These transaction families are available in the
+<code class="docutils literal notranslate"><span class="pre">sawtooth-core</span></code> repository unless noted below.</p>
+<ul>
+<li><p>The <a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html"><span class="doc">BlockInfo Transaction Family</span></a>
+provides a way to store information about a configurable number of historic
+blocks.
+The family name is <code class="docutils literal notranslate"><span class="pre">block_info</span></code>.
+The transaction processor is <code class="docutils literal notranslate"><span class="pre">block-info-tp</span></code>.</p></li>
+<li><p>The <a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html"><span class="doc">Identity Transaction Family</span></a>
+is an extensible role- and policy-based system for defining permissions in a
+way that can be used by other Sawtooth components.
+The family name is <code class="docutils literal notranslate"><span class="pre">sawtooth_identity</span></code>;
+the associated transaction processor is <code class="docutils literal notranslate"><span class="pre">identity-tp</span></code> (see
+<a class="reference internal" href="cli/identity-tp.html"><span class="doc">identity-tp</span></a>).</p></li>
+<li><p>The <a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html"><span class="doc">IntegerKey Transaction Family</span></a>
+(also called “intkey”) simply sets, increments, and decrements the value of
+entries stored in a state dictionary.
+The <a class="reference internal" href="cli/intkey.html"><span class="doc">intkey command</span></a> command provides an example CLI client.</p>
+<p>intkey is available in several languages, including Go, Java, and JavaScript
+(Node.js); see the <code class="docutils literal notranslate"><span class="pre">sawtooth-sdk-{language}</span></code> repositories under
+<code class="docutils literal notranslate"><span class="pre">examples</span></code>.</p>
+<p>The family name is <code class="docutils literal notranslate"><span class="pre">intkey</span></code>.
+The transaction processor is <code class="docutils literal notranslate"><span class="pre">intkey-tp-{language}</span></code>.</p>
+</li>
+<li><p>The <a class="reference internal" href="transaction_family_specifications/validator_registry_transaction_family.html"><span class="doc">PoET Validator Registry transaction
+family</span></a>
+provides a way to add new validators to the network. It is used by the PoET
+consensus algorithm implementation to keep track of other validators.</p>
+<p>This transaction family is in the
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-poet">sawtooth-poet</a> repository.</p>
+<p>The family name is <code class="docutils literal notranslate"><span class="pre">sawtooth_validator_registry</span></code>.
+The transaction processor is <code class="docutils literal notranslate"><span class="pre">poet-validator-registry-tp</span></code>.</p>
+</li>
+<li><p>The <a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html"><span class="doc">Settings Transaction Family</span></a>
+provides a methodology for storing on-chain configuration settings.
+The <a class="reference internal" href="cli/sawset.html"><span class="doc">sawset command</span></a> provides an example CLI client.</p>
+<p>The family name is <code class="docutils literal notranslate"><span class="pre">sawtooth_settings</span></code>.
+The transaction processor is <a class="reference internal" href="cli/settings-tp.html"><span class="doc">settings-tp</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In a production environment, you should always run a transaction processor
+that supports the Settings transaction family.</p>
+</div>
+</li>
+<li><p>The <a class="reference internal" href="transaction_family_specifications/smallbank_transaction_family.html"><span class="doc">Smallbank Transaction Family</span></a>
+provides a cross-platform workload for comparing the performance of
+blockchain systems.
+The family name is <code class="docutils literal notranslate"><span class="pre">smallbank</span></code>.
+The transaction processor is <code class="docutils literal notranslate"><span class="pre">smallbank-tp</span></code>.</p></li>
+<li><p>The <a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html"><span class="doc">XO Transaction Family</span></a>
+allows two users to play a simple game of tic-tac-toe (see
+<a class="reference internal" href="app_developers_guide/intro_xo_transaction_family.html"><span class="doc">Playing with the XO Transaction Family</span></a>).
+The <a class="reference internal" href="cli/xo.html"><span class="doc">xo command</span></a> provides an example CLI client.</p>
+<p>XO is available in several languages. The various implementations
+can be found in the <code class="docutils literal notranslate"><span class="pre">sawtooth-sdk-{language}</span></code> repositories under
+<code class="docutils literal notranslate"><span class="pre">examples</span></code>.</p>
+<p>The family name is <code class="docutils literal notranslate"><span class="pre">xo</span></code>.
+The transaction processor is <code class="docutils literal notranslate"><span class="pre">xo-tp-{language}</span></code>.</p>
+</li>
+</ul>
+<p>The following transaction families run on top of the Sawtooth platform:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://sawtooth.hyperledger.org/docs/sabre/releases/v1.2.4/">Sawtooth Sabre Transaction Family</a>:
+Implements on-chain smart contracts that are executed in a WebAssembly (WASM)
+virtual machine.
+This transaction family is in the
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-sabre">sawtooth-sabre</a> repository.</p></li>
+<li><p><a class="reference external" href="https://sawtooth.hyperledger.org/docs/seth/nightly/master/">Sawtooth Seth Transaction Family</a>:
+Supports running Ethereum Virtual Machine (EVM) smart contracts on Sawtooth.
+This transaction family is in the
+<a class="reference external" href="https://github.com/hyperledger/sawtooth-seth">sawtooth-seth</a> repository.</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications/settings_transaction_family.html">Settings Transaction Family</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications/identity_transaction_family.html">Identity Transaction Family</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications/blockinfo_transaction_family.html">BlockInfo Transaction Family</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications/integerkey_transaction_family.html">IntegerKey Transaction Family</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications/xo_transaction_family.html">XO Transaction Family</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications/validator_registry_transaction_family.html">PoET Validator Registry Transaction Family</a></li>
+<li class="toctree-l1"><a class="reference internal" href="transaction_family_specifications/smallbank_transaction_family.html">Smallbank Transaction Family</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/sabre/releases/v1.2.4/">Sawtooth Sabre Transaction Family</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://sawtooth.hyperledger.org/docs/seth/nightly/master/">Sawtooth Seth Transaction Family</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="transaction_family_specifications/settings_transaction_family.html" class="btn btn-neutral float-right" title="Settings Transaction Family" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="architecture/poet.html" class="btn btn-neutral float-left" title="PoET 1.0 Specification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

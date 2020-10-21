@@ -1,0 +1,7 @@
+sawtooth\.cli\.submit module
+============================
+
+.. automodule:: sawtooth.cli.submit
+    :members:
+    :undoc-members:
+    :show-inheritance:

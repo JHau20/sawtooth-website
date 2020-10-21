@@ -1,0 +1,7 @@
+sawtooth\.cli\.keygen module
+============================
+
+.. automodule:: sawtooth.cli.keygen
+    :members:
+    :undoc-members:
+    :show-inheritance:
