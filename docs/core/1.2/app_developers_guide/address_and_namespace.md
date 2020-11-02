@@ -32,7 +32,7 @@ The addressing schema can be as simple or as complex as necessary, based on the 
 
 For a description of the IntegerKey Transaction family, see [ :doc:`/transaction_family_specifications/integerkey_transaction_family`]().
 
-The transaction prefix is:
+The transaction family prefix is:
 
 ```python
 hashlib.sha512('intkey'.encode('utf-8')).hexdigest()[0:6]
@@ -40,7 +40,7 @@ hashlib.sha512('intkey'.encode('utf-8')).hexdigest()[0:6]
 
 This resolves to '1cf126'.
 
-To store a value in the entry Name, the address would be calculated like this:
+To store a value in the entry *Name*, the address would be calculated like this:
 
 ```python
 address = "1cf126" + hashlib.sha512('name'.encode('utf-8')).hexdigest()[-64:]
@@ -73,4 +73,4 @@ Since the addressing scheme is not mandated beyond the basic requirements, there
 
 ### **Settings Transaction Family Example** ###
 
-See the [:doc:`/transaction_family_specifications/setting_transaction_family`]()
+See the [:doc:`/transaction_family_specifications/setting_transaction_family`]() for another more complex addressing scheme.
