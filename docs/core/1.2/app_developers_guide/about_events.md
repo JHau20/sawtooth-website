@@ -10,7 +10,7 @@ An event has three parts:
 
 An attribute is a key-value pair that contains transparent metadata about the event. The key is the name of the attribute, and the value is the specific contents for that key. The same key can be used for multiple attributes in an event.
 
-It is important to define meaningful event attributes, so that the attributes can be used to filter event subscriptions. Note that although attributes are not required, an event filter cannot operate on an event without attributes. For more information, see [:doc:about_event_subscriptions]()
+It is important to define meaningful event attributes, so that the attributes can be used to filter event subscriptions. Note that although attributes are not required, an event filter cannot operate on an event without attributes. For more information, see [:doc:about_event_subscriptions](:doc:`about_event_subscriptions`)
 
 Events are represented with the following protobuf message:
 
@@ -34,7 +34,7 @@ message Event {
 
 The `event_type` field (the name of the event) is used to determine how opaque (application-specific) data has been serialized and what transparent event attributes to expect.
 
-For more information, see [:doc:/architecture/events_and_transaction_receipts]()
+For more information, see [:doc:/architecture/events_and_transaction_receipts](:doc:`/architecture/events_and_transaction_receipts`)
 
 ## **Event Namespace** ##
 
