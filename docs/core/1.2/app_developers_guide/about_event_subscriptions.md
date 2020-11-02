@@ -41,7 +41,7 @@ Event subscriptions are submitted and serviced over a ZMQ socket using the valid
 
 An event subscription is represented with the following protobuf messages, which are defined in `sawtooth-core/protos/events.proto`.
 
-```
+```python
 message EventSubscription {
   string event_type = 1;
   repeated EventFilter filters = 2;
@@ -64,7 +64,7 @@ message EventFilter {
 
 A `ClientEventsSubscribeRequest` envelope is used to submit subscription requests and receive the responses.
 
-```
+```protobuf
 message ClientEventsSubscribeRequest {
     repeated EventSubscription subscriptions = 1;
     // The block id (or ids, if trying to walk back a fork) the subscriber last
@@ -76,7 +76,7 @@ message ClientEventsSubscribeRequest {
 
 The validator responds with a `ClientEventsSubscribeResponse` message that specifies whether the subscription was successful.
 
-```
+```protobuf
 message ClientEventsSubscribeResponse {
     enum Status {
          OK = 0;
