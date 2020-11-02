@@ -83,20 +83,17 @@ The XO transaction family could define an `xo/create` event that is sent when a 
 
 Python Example:
 
->
-```python
+> ```python
 context.add_event(
     "xo/create", {
         'name': name,
         'creator': signer_public_key
 }) 
-```
->
+> ```
 
 Go Example:
 
->
-```go
+> ```go
 attributes := make([]processor.Attribute, 2)
 attributes = append(attributes, processor.Attribute{
   Key:   "name",
@@ -111,27 +108,22 @@ context.AddEvent(
   "xo/create",
   attributes,
   empty)
-```
->
+> ```
 
 JavaScript Example:
 
->
-```javascript
+> ```javascript
 context.addEvent(
   'xo/create',
   [['name', name], ['creator', signer_public_key]],
   null)
-```
->
+> ```
 
 Rust Example:
 
->
-```rust
+> ```rust
 context.add_event(
   "xo/create".to_string(),
   vec![("name".to_string(), name), ("creator".to_string(), signer_public_key)],
   vec![].as_slice())
-```
->
+> ```
