@@ -4,15 +4,13 @@ Sawtooth events occur when blocks are committed --- that is, the validator broad
 
 An event has three parts:
 
-- Event type (the name of the event) 
-
+- Event type (the name of the event)
 - Opaque payload whose structure is defined by the event type
-
 - List of attributes
 
 An attribute is a key-value pair that contains transparent metadata about the event. The key is the name of the attribute, and the value is the specific contents for that key. The same key can be used for multiple attributes in an event.
 
-It is important to define meaningful event attributes, so that the attributes can be used to filter event subscriptions. Note that although attributes are not required, an event filter cannot operate on an event without attributes. For more information, see [:doc:'`about_event_subscriptions`]()
+It is important to define meaningful event attributes, so that the attributes can be used to filter event subscriptions. Note that although attributes are not required, an event filter cannot operate on an event without attributes. For more information, see [:doc:about_event_subscriptions]()
 
 Events are represented with the following protobuf message:
 
@@ -36,7 +34,7 @@ message Event {
 
 The `event_type` field (the name of the event) is used to determine how opaque (application-specific) data has been serialized and what transparent event attributes to expect.
 
-For more information, see [:doc:`/architecture/events_and_transaction_receipts`]()
+For more information, see [:doc:/architecture/events_and_transaction_receipts]()
 
 ## **Event Namespace** ##
 
@@ -44,12 +42,12 @@ By convention, event names use the transaction family as a prefix, such as `xo/c
 
 Core Sawtooth events are prefixed with `sawtooth/`. The core events are:
 
-> - `sawtooth/block_commit`
-> - `sawtooth/state_delta`
+> - `sawtooth/block-commit`
+> - `sawtooth/state-delta`
 
-### **sawtooth/block_commit** ##
+### **sawtooth/block-commit** ##
 
-A `sawtooth/block_commit` event occurs when a block is committed. This event contains information about the block, such as the block ID, block number, state root hash, and previous block ID. It has the following structure:
+A `sawtooth/block-commit` event occurs when a block is committed. This event contains information about the block, such as the block ID, block number, state root hash, and previous block ID. It has the following structure:
 
 ```protobuf
 Event {
@@ -63,9 +61,9 @@ Event {
 }
 ```
 
-### **swatooth/state_delta** ###
+### **swatooth/state-delta** ###
 
-A `sawtooth/state_delta` occurs when a block is committed. This event contains all state changes that occurred at a given address for that block. This event has the following structure:
+A `sawtooth/state-delta` occurs when a block is committed. This event contains all state changes that occurred at a given address for that block. This event has the following structure:
 
 ```protobuf
 Event {
