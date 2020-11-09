@@ -52,15 +52,15 @@ The Docker Compose file for Sawtooth handles environment setup steps such as gen
 
 	* For PBFT:
 
-	```console
-	user@host$ docker-compose -f sawtooth-default-pbft.yaml up
-	```
+		```console
+		user@host$ docker-compose -f sawtooth-default-pbft.yaml up
+		```
 	
 	* For PoET:
 
-	```console
-	user@host$ docker-compose -f sawtooth-default-poet.yaml up
-	```
+		```console
+		user@host$ docker-compose -f sawtooth-default-poet.yaml up
+		```
 
 4. This Compose file creates five Sawtooth nodes named `validator-#` (numbered from 0 to 4). Note the container names for the Sawtooth components on each node:
 
@@ -260,7 +260,6 @@ Use this procedure to stop or reset the multiple-node Sawtooth environment.
 2. Enter CTRL-c in the window where you ran `docker-compose up`.
 
 3. After all containers have shut down, you can reset the environment (remove all containers and data) with the following command:
-	
 	* For PBFT:
 	
 		```console
