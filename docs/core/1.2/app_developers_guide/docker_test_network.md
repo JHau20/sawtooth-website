@@ -30,7 +30,8 @@ The first node creates the genesis block, which specifies the on-chain settings 
 	* Windows: Install the latest version of [Docker Engine for Windows](https://docs.docker.com/docker-for-windows/install/) (also installs Docker Compose).
 	* macOS: Install the latest version of [Docker Engine for macOS](https://docs.docker.com/docker-for-mac/install/) (also installs Docker Compose).
 	* Linux: Install the latest versions of [Docker Engine](https://docs.docker.com/engine/install/ubuntu/) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose). Then follow [Post-Install steps](https://docs.docker.com/engine/install/linux-postinstall/).
-* If you created a [single-node Docker environment <docker>](http://172.26.96.1:4000/docs/core/1.2/app_developers_guide/docker_test_network.html) that is still running, shut it down and delete the existing blockchain data and logs. For more information, see [Stop Sawtooth Docker Label](http://172.26.96.1:4000/docs/core/1.2/app_developers_guide/).
+* If you created a [single-node Docker environment <docker>](http://172.26.96.1:4000/docs/core/1.2/app_developers_guide/docker_test_network.html) that is still running 
+shut it down and delete the existing blockchain data and logs. For more information, see [Stop Sawtooth Docker Label](http://172.26.96.1:4000/docs/core/1.2/app_developers_guide/).
 
 ## **Step 1: Download the Docker Compose File** ##
 
@@ -42,7 +43,8 @@ Download the Docker Compose file for a multiple-node network.
 
 Note 
 
-The Docker Compose file for Sawtooth handles environment setup steps such as generating keys and creating a genesis block. To learn how the typical network startup process works, see [Ubuntu Test Network](http://172.26.96.1:4000/docs/core/1.2/app_developers_guide/ubuntu_test_network.html).
+The Docker Compose file for Sawtooth handles environment setup steps such as generating keys and creating a genesis block. To learn how the typical network startup 
+process works, see [Ubuntu Test Network](http://172.26.96.1:4000/docs/core/1.2/app_developers_guide/ubuntu_test_network.html).
 
 1. Open a terminal window.
 
@@ -117,13 +119,15 @@ Use these commands on one or more node to confirm that the REST API is running.
 	> root@0e0fdc1ab#
 	> ```
 
-2. To check whether peering has occurred on the network, submit a peers query to the REST API on the first node. This command specifies the container name and port for the first node's REST API.
+2. To check whether peering has occurred on the network, submit a peers query to the REST API on the first node. This command specifies the container name and port for
+   the first node's REST API.
 
 	> ```console
 	> root@0e0fdc1ab# curl http://sawtooth-rest-api-default-0:8008/peers
 	> ```
 
-	If this query returns a 503 error, the nodes have not yet peered with the Sawtooth network. Repeat the query until you see output that resembles the following example:
+	If this query returns a 503 error, the nodes have not yet peered with the Sawtooth network. Repeat the query until you see output that resembles the following 
+	example:
  
 	> ```console
  	> {
@@ -170,7 +174,7 @@ Use these commands on one or more node to confirm that the REST API is running.
  	> 
  	> ```console
  	> {
- 	>  "link": "http://sawtooth-rest-api-default-0:8008/batch_statuses?id=dacefc7c9fe2c8510803f8340...
+ 	> "link": "http://sawtooth-rest-api-default-0:8008/batch_statuses?id=dacefc7c9fe2c8510803f8340...
  	> }
 	> ```
 
@@ -191,13 +195,16 @@ You can run this command from the first node's shell container by specifying the
 
 By default, a validator accepts transactions from any transaction processor. However, Sawtooth allows you to limit the types of transactions that can be submitted.
 
-In this step, you will configure the Sawtooth network to accept transactions only from the transaction processors running in the example environment. Transaction-type restrictions are an on-chain setting, so this configuration change is made on one node, then applied to all other nodes.
+In this step, you will configure the Sawtooth network to accept transactions only from the transaction processors running in the example environment. Transaction-type 
+restrictions are an on-chain setting, so this configuration change is made on one node, then applied to all other nodes.
 
-The [Settings Transaction Family](http://172.26.96.1:4000/docs/core/1.2/transaction_family_specifications/settings_transaction_family.html) handles on-chain configuration settings. You will use the `sawset` command to create and submit a batch of transactions containing the configuration change.
+The [Settings Transaction Family](http://172.26.96.1:4000/docs/core/1.2/transaction_family_specifications/settings_transaction_family.html) handles on-chain 
+configuration settings. You will use the `sawset` command to create and submit a batch of transactions containing the configuration change.
 
 Important
 
-You **must** run this procedure from the first validator container, because the example Docker Compose file uses the first validator's key to create and sign the genesis block. (At this point, only the key used to create the genesis block can change on-chain settings.) For more information, see [Adding Authorized Users](http://172.26.96.1:4000/docs/core/1.2/sysadmin_guide/adding_authorized_users.html).
+You **must** run this procedure from the first validator container, because the example Docker Compose file uses the first validator's key to create and sign the 
+genesis block. (At this point, only the key used to create the genesis block can change on-chain settings.) For more information, see [Adding Authorized Users](http://172.26.96.1:4000/docs/core/1.2/sysadmin_guide/adding_authorized_users.html).
 
 1. Connect to the first validator container (`sawtooth-validator-default-0`). The next command requires the validator key that was generated in that container.
 
@@ -211,13 +218,15 @@ You **must** run this procedure from the first validator container, because the 
 
 		```console
 		root@c0c0ab33# sawset proposal create --url http://sawtooth-rest-api-default-0:8008 --key /etc/sawtooth/keys/validator.priv \
-	 	sawtooth.validator.transaction_families='[{"family": "intkey", "version": "1.0"}, {"family":"sawtooth_settings", "version":"1.0"}, {"family":"xo", "version":"1	 .0"}]'
+	 	sawtooth.validator.transaction_families='[{"family": "intkey", "version": "1.0"}, {"family":"sawtooth_settings", "version":"1.0"}, {"family":"xo", 
+		"version":"1.0"}]'
 	 	```
 	* For PoET:
 
 	 	```console
 	 	root@c0c0ab33# sawset proposal create --url http://sawtooth-rest-api-default-0:8008 --key /etc/sawtooth/keys/validator.priv \	
-	 	sawtooth.validator.transaction_families='[{"family": "intkey", "version": "1.0"}, {"family":"sawtooth_settings", "version":"1.0"}, {"family":"xo", "version":"1	 .0"}, {"family":"sawtooth_validator_registry", "version":"1.0"}]'
+	 	sawtooth.validator.transaction_families='[{"family": "intkey", "version": "1.0"}, {"family":"sawtooth_settings", "version":"1.0"}, {"family":"xo", 
+		"version":"1.0"}, {"family":"sawtooth_validator_registry", "version":"1.0"}]'
 	 	```
 
  	This command sets `sawtooth.validator.transaction_families` to a JSON array that specifies the family name and version of each allowed transaction processor (defined in the transaction header of each family's [Transaction Family Specifications](http://172.26.96.1:4000/docs/core/1.2/transaction_family_specifications).
@@ -228,8 +237,10 @@ You **must** run this procedure from the first validator container, because the 
  	.
  	.
  	.
- 	sawtooth-settings-tp-default-0  | INFO  | settings_tp::handler | Setting "sawtooth.validator.transaction_families" changed to "[{\"family\": \"intkey\", \"versi	 on\": \"1.0\"}, {\"family\":\"sawtooth_settings\", \"version\":\"1.0\"}, {\"family\":\"xo\", \"version\":\"1.0\"}, {\"family\":\"sawtooth_validator_registry\", 	 \"version\":\"1.0\"}]"
- 	sawtooth-settings-tp-default-0  | INFO  | sawtooth_sdk::proces | TP_PROCESS_REQUEST sending TpProcessResponse: OK
+ 	sawtooth-settings-tp-default-0  | INFO  | settings_tp::handler | Setting "sawtooth.validator.transaction_families" changed to "[{\"family\": \"intkey\", 
+	\"version\": \"1.0\"}, {\"family\":\"sawtooth_settings\", \"version\":\"1.0\"}, {\"family\":\"xo\", \"version\":\"1.0\"}, 
+	{\"family\":\"sawtooth_validator_registry\", \"version\":\"1.0\"}]" sawtooth-settings-tp-default-0  | INFO  | sawtooth_sdk::proces | TP_PROCESS_REQUEST sending 
+	TpProcessResponse: OK
  	```
 
 4. Run the following command to check the setting change on the shell container or any validator container. You can specify any REST API on the network; this example uses the REST API on the first node.
@@ -267,4 +278,3 @@ Use this procedure to stop or reset the multiple-node Sawtooth environment.
 	```console
 	 user@host$ docker-compose -f sawtooth-default-poet.yaml down
 	 ```
-	
