@@ -89,4 +89,4 @@ message ClientEventsSubscribeResponse {
 }
 ```
 
-When subscribing to events, an application can optionally request "event catch-up" by sending a list of block IDs along with the subscription. For more information, see [:ref:`event-catch-up-label`]().
+When subscribing to events, an application can optionally request "event catch-up" by sending a list of block IDs along with the subscription. For more information, see [Requesting Event Catch Up](http://172.26.96.1:4000/docs/core/1.2/app_developers_guide/zmq_event_subscription.html).

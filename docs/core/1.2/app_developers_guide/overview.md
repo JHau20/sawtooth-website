@@ -11,7 +11,7 @@ A transaction family includes these components:
 - A data model to record and store data
 - A client to handle the client logic for your application
 
-See [:doc:`../transaction_family_specifications`]() for a list of example
+See [Transaction Family Specifications](http://172.26.96.1:4000/docs/core/1.2/transaction_family_specifications) for a list of example
 transaction families. Sawtooth provides these examples to serve as models for
 low-level functions (such as maintaining chain-wide settings and storing
 on-chain permissions) and for specific applications such as performance analysis

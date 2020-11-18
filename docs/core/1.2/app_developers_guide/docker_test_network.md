@@ -4,7 +4,7 @@ This procedure describes how to use Docker to create a network of five Sawtooth 
 
 Note
 
-For a single-node environment, see [:doc:`docker`]().
+For a single-node environment, see [Using Docker for a Single Sawtooth Node](http://172.26.96.1:4000/docs/core/1.2/app_developers_guide/docker.html).
 
 This procedure guides you through the following tasks:
 
@@ -20,7 +20,7 @@ This procedure guides you through the following tasks:
 This test environment is a network of five Sawtooth nodes.
 
 [Docker: Sawtooth network with five nodes](https://github.com/JHau20/sawtooth-website/blob/refresh/docs/core/1.2/images/appdev-environment-multi-node.pdf)
-Like the [:doc:`single-node test environment <docker>`](), this environment uses parallel transaction processing and static peering. However, it uses a different consensus algorithm (Devmode consensus is not recommended for a network). You can choose either PBFT or PoET consensus.
+Like the [single-node test environment <docker>](http://172.26.96.1:4000/docs/core/1.2/app_developers_guide/docker_test_network.html), this environment uses parallel transaction processing and static peering. However, it uses a different consensus algorithm (Devmode consensus is not recommended for a network). You can choose either PBFT or PoET consensus.
 
 The first node creates the genesis block, which specifies the on-chain settings for the network configuration. The other nodes access those settings when they join the network.
 
@@ -30,19 +30,19 @@ The first node creates the genesis block, which specifies the on-chain settings 
 	* Windows: Install the latest version of [Docker Engine for Windows](https://docs.docker.com/docker-for-windows/install/) (also installs Docker Compose).
 	* macOS: Install the latest version of [Docker Engine for macOS](https://docs.docker.com/docker-for-mac/install/) (also installs Docker Compose).
 	* Linux: Install the latest versions of [Docker Engine](https://docs.docker.com/engine/install/ubuntu/) and [Docker Compose](https://docs.docker.com/compose/install/#install-compose). Then follow [Post-Install steps](https://docs.docker.com/engine/install/linux-postinstall/).
-* If you created a [:doc:`single-node Docker environment <docker>`]() that is still running, shut it down and delete the existing blockchain data and logs. For more information, see [:ref:`stop-sawtooth-docker-label`]().
+* If you created a [single-node Docker environment <docker>](http://172.26.96.1:4000/docs/core/1.2/app_developers_guide/docker_test_network.html) that is still running, shut it down and delete the existing blockchain data and logs. For more information, see [Stop Sawtooth Docker Label](http://172.26.96.1:4000/docs/core/1.2/app_developers_guide/).
 
 ## **Step 1: Download the Docker Compose File** ##
 
 Download the Docker Compose file for a multiple-node network.
-- For PBFT, download [sawtooth-default-pbft.yaml]()
-- For PoET, download [sawtooth-default-poet.yaml]()
+- For PBFT, download [sawtooth-default-pbft.yaml](sawtooth-default-pbft.yaml)
+- For PoET, download [sawtooth-default-poet.yaml](sawtooth-default-poet.yaml)
 
 ## **Step 2: Start the Sawtooth Network** ##
 
 Note 
 
-The Docker Compose file for Sawtooth handles environment setup steps such as generating keys and creating a genesis block. To learn how the typical network startup process works, see [:doc:`ubuntu_test_network`]().
+The Docker Compose file for Sawtooth handles environment setup steps such as generating keys and creating a genesis block. To learn how the typical network startup process works, see [Ubuntu Test Network](http://172.26.96.1:4000/docs/core/1.2/app_developers_guide/ubuntu_test_network.html).
 
 1. Open a terminal window.
 
@@ -193,11 +193,11 @@ By default, a validator accepts transactions from any transaction processor. How
 
 In this step, you will configure the Sawtooth network to accept transactions only from the transaction processors running in the example environment. Transaction-type restrictions are an on-chain setting, so this configuration change is made on one node, then applied to all other nodes.
 
-The [:doc:`Settings transaction processor <../transaction_family_specifications/settings_transaction_family>`]() handles on-chain configuration settings. You will use the `sawset` command to create and submit a batch of transactions containing the configuration change.
+The [Settings Transaction Family](http://172.26.96.1:4000/docs/core/1.2/transaction_family_specifications/settings_transaction_family.html) handles on-chain configuration settings. You will use the `sawset` command to create and submit a batch of transactions containing the configuration change.
 
 Important
 
-You **must** run this procedure from the first validator container, because the example Docker Compose file uses the first validator's key to create and sign the genesis block. (At this point, only the key used to create the genesis block can change on-chain settings.) For more information, see [:doc:`/sysadmin_guide/adding_authorized_users`]().
+You **must** run this procedure from the first validator container, because the example Docker Compose file uses the first validator's key to create and sign the genesis block. (At this point, only the key used to create the genesis block can change on-chain settings.) For more information, see [Adding Authorized Users](http://172.26.96.1:4000/docs/core/1.2/sysadmin_guide/adding_authorized_users.html).
 
 1. Connect to the first validator container (`sawtooth-validator-default-0`). The next command requires the validator key that was generated in that container.
 
@@ -220,7 +220,7 @@ You **must** run this procedure from the first validator container, because the 
 	 	sawtooth.validator.transaction_families='[{"family": "intkey", "version": "1.0"}, {"family":"sawtooth_settings", "version":"1.0"}, {"family":"xo", "version":"1	 .0"}, {"family":"sawtooth_validator_registry", "version":"1.0"}]'
 	 	```
 
- 	This command sets `sawtooth.validator.transaction_families` to a JSON array that specifies the family name and version of each allowed transaction processor (defined i n the transaction header of each family's [:doc:`transaction family specification <../transaction_family_specifications>`]().
+ 	This command sets `sawtooth.validator.transaction_families` to a JSON array that specifies the family name and version of each allowed transaction processor (defined in the transaction header of each family's [Transaction Family Specifications](http://172.26.96.1:4000/docs/core/1.2/transaction_family_specifications).
 
 3. After this command runs, a `TP_PROCESS_REQUEST` message appears in the docker-compose output.
 

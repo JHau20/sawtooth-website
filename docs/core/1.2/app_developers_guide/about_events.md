@@ -34,7 +34,7 @@ message Event {
 
 The `event_type` field (the name of the event) is used to determine how opaque (application-specific) data has been serialized and what transparent event attributes to expect.
 
-For more information, see [:doc:`/architecture/events_and_transaction_receipts`]()
+For more information, see [About Event Subscriptions](http://172.26.96.1:4000/docs/core/1.2/app_developers_guide/about_event_subscriptions.html)
 
 ## **Event Namespace** ##
 

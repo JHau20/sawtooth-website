@@ -30,7 +30,7 @@ The addressing schema can be as simple or as complex as necessary, based on the 
 
 ### **Simple Example - IntegerKey** ###
 
-For a description of the IntegerKey Transaction family, see [ :doc:`/transaction_family_specifications/integerkey_transaction_family`]().
+For a description of the IntegerKey Transaction family, see [IntegerKey Transaction Family](http://172.26.96.1:4000/docs/core/1.2/transaction_family_specifications/integerkey_transaction_family.html).
 
 The transaction family prefix is:
 
@@ -73,4 +73,4 @@ Since the addressing scheme is not mandated beyond the basic requirements, there
 
 ### **Settings Transaction Family Example** ###
 
-See the [:doc:`/transaction_family_specifications/setting_transaction_family`]() for another more complex addressing scheme.
+See the [Setting Transaction Family](http://172.26.96.1:4000/docs/core/1.2/transaction_family_specifications/settings_transaction_family.html) for another more complex addressing scheme.

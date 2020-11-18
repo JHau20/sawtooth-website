@@ -1,0 +1,371 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Log Configuration File &mdash; Sawtooth v1.2.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Path Configuration File" href="configuring_sawtooth/path_configuration_file.html" />
+    <link rel="prev" title="XO Transaction Processor Configuration File" href="configuring_sawtooth/xo_tp_configuration.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="setting_up_sawtooth_network.html">Setting Up a Sawtooth Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configure_sgx.html">Using Sawtooth with PoET-SGX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setting_allowed_txns.html">Setting the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_authorized_users.html">Adding Authorized Users for Settings Proposals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest_auth_proxy.html">Using a Proxy Server to Authorize the REST API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuring_permissions.html">Configuring Validator and Transactor Permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grafana_configuration.html">Using Grafana to Display Sawtooth Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="about_dynamic_consensus.html">About Dynamic Consensus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pbft_adding_removing_node.html">Adding or Removing a PBFT Node</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="configuring_sawtooth.html">About Sawtooth Configuration Files</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/validator_configuration_file.html">Validator Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/rest_api_configuration_file.html">REST API Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/cli_configuration.html">Sawtooth CLI Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/poet_sgx_enclave_configuration_file.html">PoET SGX Enclave Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/identity_tp_configuration.html">Identity Transaction Processor Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/settings_tp_configuration.html">Settings Transaction Processor Configuration File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/xo_tp_configuration.html">XO Transaction Processor Configuration File</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Log Configuration File</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#about-sawtooth-log-files">About Sawtooth Log Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#log-configuration">Log Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-configure-a-specific-logger">Example: Configure a Specific Logger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#example-create-a-rotating-file-handler">Example: Create a Rotating File Handler</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="configuring_sawtooth/path_configuration_file.html">Path Configuration File</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../sysadmin_guide.html">System Administrator’s Guide</a> &raquo;</li>
+        
+          <li><a href="configuring_sawtooth.html">About Sawtooth Configuration Files</a> &raquo;</li>
+        
+      <li>Log Configuration File</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/sysadmin_guide/log_configuration.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="log-configuration-file">
+<h1>Log Configuration File<a class="headerlink" href="#log-configuration-file" title="Permalink to this headline">¶</a></h1>
+<p>The validator and the Python SDK make it easy to customize Sawtooth
+logging output.  This is done by creating a log config file in
+<a class="reference external" href="https://github.com/toml-lang/toml">TOML</a> or <a class="reference external" href="http://yaml.org">YAML</a>
+format and passing it to the built-in Python logging module.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You must use YAML to configure a remote syslog service. Due to a limitation in
+the TOML spec, you cannot configure a remote syslog service using TOML.</p>
+</div>
+<div class="section" id="about-sawtooth-log-files">
+<h2>About Sawtooth Log Files<a class="headerlink" href="#about-sawtooth-log-files" title="Permalink to this headline">¶</a></h2>
+<p>If there is no log configuration file provided, Sawtooth creates an error log
+and a debug log by default. These files are stored in the log directory
+(<code class="docutils literal notranslate"><span class="pre">log_dir</span></code>), which is <code class="docutils literal notranslate"><span class="pre">/var/log/sawtooth</span></code> by default. However, the location
+<code class="docutils literal notranslate"><span class="pre">SAWTOOTH_HOME</span></code> environment variable, if set, can change the default location.
+For more information, see <a class="reference internal" href="configuring_sawtooth/path_configuration_file.html"><span class="doc">Path Configuration File</span></a>.</p>
+<p>For Sawtooth core components, such as the validator or REST API, the log file
+names are <code class="docutils literal notranslate"><span class="pre">{component}-debug.log</span></code> and <code class="docutils literal notranslate"><span class="pre">{component}-error.log</span></code>. For example,
+the validator log files are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">validator-debug.log</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">validator-error.log</span></code></p></li>
+</ul>
+<p>For Python transaction processors, the author determines the name of the log
+file. Because a Sawtooth node can run several instances of the same transaction
+processor, it is important to create unique log file names for each running
+transaction processor to avoid naming conflicts.</p>
+<p>The example transaction processors included in Sawtooth use the following
+naming convention:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{TPname}-{zmqID}-debug.log</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{TPname}-{zmqID}-error.log</span></code></p></li>
+</ul>
+<p>For example, an instance of the IntegerKey (<code class="docutils literal notranslate"><span class="pre">intkey</span></code>) transaction processor
+could have the following log files:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">intkey-18670799cbbe4367-debug.log</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">intkey-18670799cbbe4367-error.log</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="log-configuration">
+<h2>Log Configuration<a class="headerlink" href="#log-configuration" title="Permalink to this headline">¶</a></h2>
+<p>To change the default logging behavior of a Sawtooth component, such as the
+validator or REST API, put a log configuration file in the config directory
+(<code class="docutils literal notranslate"><span class="pre">/var/log/sawtooth</span></code> by default; see
+<a class="reference internal" href="configuring_sawtooth/path_configuration_file.html"><span class="doc">Path Configuration File</span></a>).</p>
+<p>Sawtooth provides an example log configuration file in
+<code class="docutils literal notranslate"><span class="pre">/etc/sawtooth/log_config.toml.example</span></code>. To create a log configuration file,
+copy the example file to the config directory and name it <code class="docutils literal notranslate"><span class="pre">log_config.toml</span></code>.
+Copy with <code class="docutils literal notranslate"><span class="pre">cp</span> <span class="pre">-a</span></code> to preserve the file’s ownership and permissions (or change
+after copying to owner <code class="docutils literal notranslate"><span class="pre">root</span></code>, group <code class="docutils literal notranslate"><span class="pre">sawtooth</span></code>, and permissions <code class="docutils literal notranslate"><span class="pre">640</span></code>).</p>
+<p>Each transaction processor can define its own config file. The name of
+this file is determined by the author. The transaction processors included in
+the Python SDK use the following naming convention:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">{TransactionFamilyName}_log_config.toml</span></code></p></li>
+</ul>
+</div></blockquote>
+<p>For example, the IntegerKey (<code class="docutils literal notranslate"><span class="pre">intkey</span></code>) log configuration file is
+<code class="docutils literal notranslate"><span class="pre">intkey_log_config.toml</span></code>.</p>
+</div>
+<div class="section" id="example-configure-a-specific-logger">
+<h2>Example: Configure a Specific Logger<a class="headerlink" href="#example-configure-a-specific-logger" title="Permalink to this headline">¶</a></h2>
+<p>If the default logs give too much information, you can configure a specific
+logger that will only report on the area of the code you are interested in.</p>
+<p>This example <code class="docutils literal notranslate"><span class="pre">log_config.toml</span></code> file creates a handler that only writes
+interconnect logs to the directory and file specified.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>version = 1
+disable_existing_loggers = false
+
+[formatters.simple]
+format = &quot;[%(asctime)s.%(msecs)03d [%(threadName)s] %(module)s %(levelname)s] %(message)s&quot;
+datefmt = &quot;%H:%M:%S&quot;
+
+[handlers.interconnect]
+level = &quot;DEBUG&quot;
+formatter = &quot;simple&quot;
+class = &quot;logging.FileHandler&quot;
+filename = &quot;path/filename.log&quot;
+
+[loggers.&quot;sawtooth_validator.networking.interconnect&quot;]
+level = &quot;DEBUG&quot;
+propagate = true
+handlers = [ &quot;interconnect&quot;]
+</pre></div>
+</div>
+<p>The formatter and log level can also be specified to provide the exact
+information you want in your logs.</p>
+</div>
+<div class="section" id="example-create-a-rotating-file-handler">
+<h2>Example: Create a Rotating File Handler<a class="headerlink" href="#example-create-a-rotating-file-handler" title="Permalink to this headline">¶</a></h2>
+<p>This example shows how to set up rotating logs. This is useful when the logs
+may grow very large, such as with a long-running network. For example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> [formatters.simple]
+ format = &quot;[%(asctime)s.%(msecs)03d [%(threadName)s] %(module)s %(levelname)s] %(message)s&quot;
+ datefmt = &quot;%H:%M:%S&quot;
+
+ [handlers.interconnect]
+ level = &quot;DEBUG&quot;
+ formatter = &quot;simple&quot;
+ class = &quot;logging.handlers.RotatingFileHandler&quot;
+ filename = &quot;example-interconnect.log&quot;
+ maxBytes = 50000000
+ backupCount=20
+
+[loggers.&quot;sawtooth_validator.networking.interconnect&quot;]
+ level = &quot;DEBUG&quot;
+ propagate = true
+ handlers = [ &quot;interconnect&quot;]
+</pre></div>
+</div>
+<p>If one file exceeds the <code class="docutils literal notranslate"><span class="pre">maxBytes</span></code> set in the config file, that file will be
+renamed to <code class="docutils literal notranslate"><span class="pre">filename.log.1</span></code> and logs will be written to a new
+<code class="docutils literal notranslate"><span class="pre">filename.log</span></code>.
+This process continues for the number of files plus one (the value set in
+<code class="docutils literal notranslate"><span class="pre">backupCount</span></code>). After that point, the file being written to is rotated.
+The current log file is always <code class="docutils literal notranslate"><span class="pre">filename.log</span></code>.</p>
+<p>For more Python configuration options, see the Python documentation at
+<a class="reference external" href="https://docs.python.org/3/library/logging.config.html">https://docs.python.org/3/library/logging.config.html</a>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="configuring_sawtooth/path_configuration_file.html" class="btn btn-neutral float-right" title="Path Configuration File" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="configuring_sawtooth/xo_tp_configuration.html" class="btn btn-neutral float-left" title="XO Transaction Processor Configuration File" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

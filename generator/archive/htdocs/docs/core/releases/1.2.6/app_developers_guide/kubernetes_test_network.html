@@ -1,0 +1,929 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using Kubernetes for a Sawtooth Test Network &mdash; Sawtooth v1.2.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using Ubuntu for a Sawtooth Test Network" href="ubuntu_test_network.html" />
+    <link rel="prev" title="Using Docker for a Sawtooth Test Network" href="docker_test_network.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Transaction Family Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing_sawtooth.html">Setting Up a Sawtooth Node for Testing</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="creating_sawtooth_network.html">Creating a Sawtooth Test Network</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="about_sawtooth_networks.html">About Sawtooth Networks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="docker_test_network.html">Using Docker for a Sawtooth Test Network</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Using Kubernetes for a Sawtooth Test Network</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#about-the-kubernetes-sawtooth-network-environment">About the Kubernetes Sawtooth Network Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-install-kubectl-and-minikube">Step 1: Install kubectl and minikube</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-start-minikube">Step 2: Start Minikube</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-download-the-sawtooth-configuration-file">Step 3: Download the Sawtooth Configuration File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-4-pbft-only-configure-keys-for-the-kubernetes-pods">Step 4: (PBFT Only) Configure Keys for the Kubernetes Pods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-5-start-the-sawtooth-cluster">Step 5: Start the Sawtooth Cluster</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-6-confirm-network-and-blockchain-functionality">Step 6: Confirm Network and Blockchain Functionality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-7-configure-the-allowed-transaction-types-optional">Step 7. Configure the Allowed Transaction Types (Optional)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-8-stop-the-sawtooth-kubernetes-cluster">Step 8: Stop the Sawtooth Kubernetes Cluster</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ubuntu_test_network.html">Using Ubuntu for a Sawtooth Test Network</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Playing with the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_the_sdks.html">Using the Sawtooth SDKs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_restriction.html">Namespace Restriction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_subscriptions.html">Subscribing to Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="creating_sawtooth_network.html">Creating a Sawtooth Test Network</a> &raquo;</li>
+        
+      <li>Using Kubernetes for a Sawtooth Test Network</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/kubernetes_test_network.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-kubernetes-for-a-sawtooth-test-network">
+<span id="proc-multi-kube-label"></span><h1>Using Kubernetes for a Sawtooth Test Network<a class="headerlink" href="#using-kubernetes-for-a-sawtooth-test-network" title="Permalink to this headline">¶</a></h1>
+<p>This procedure describes how to use <a class="reference external" href="https://kubernetes.io/">Kubernetes</a>
+to create a network of five Sawtooth nodes for an application development
+environment. Each node is a Kubernetes pod containing a set of containers for a
+validator and related Sawtooth components.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For a single-node environment, see <a class="reference internal" href="installing_sawtooth.html"><span class="doc">Setting Up a Sawtooth Node for Testing</span></a>.</p>
+</div>
+<p>This procedure guides you through the following tasks:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Installing <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> and <code class="docutils literal notranslate"><span class="pre">minikube</span></code></p></li>
+<li><p>Starting Minikube</p></li>
+<li><p>Downloading the Sawtooth configuration file</p></li>
+<li><p>Starting Sawtooth in a Kubernetes cluster</p></li>
+<li><p>Connecting to the Sawtooth shell containers</p></li>
+<li><p>Confirming network and blockchain functionality</p></li>
+<li><p>Configuring the allowed transaction types (optional)</p></li>
+<li><p>Stopping Sawtooth and deleting the Kubernetes cluster</p></li>
+</ul>
+</div></blockquote>
+<div class="section" id="about-the-kubernetes-sawtooth-network-environment">
+<h2>About the Kubernetes Sawtooth Network Environment<a class="headerlink" href="#about-the-kubernetes-sawtooth-network-environment" title="Permalink to this headline">¶</a></h2>
+<p>This test environment is a network of five Sawtooth nodes.
+This environment uses <a class="reference external" href="https://kubernetes.io/docs/setup/minikube/">Minikube</a>
+to deploy Sawtooth as a containerized application in a local Kubernetes cluster
+inside a virtual machine (VM) on your computer.</p>
+<p>The Kubernetes cluster has a pod for each Sawtooth node. On each pod, there are
+containers for each Sawtooth component. The Sawtooth nodes are connected in
+an all-to-all peering relationship.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/appdev-environment-multi-node-kube.svg"><img alt="Kubernetes: Sawtooth network with five nodes" src="../_images/appdev-environment-multi-node-kube.svg" width="100%" /></a>
+</div>
+<p>Each node in this Sawtooth network runs a <a class="reference internal" href="../glossary.html#term-validator"><span class="xref std std-term">validator</span></a>, a <a class="reference internal" href="../glossary.html#term-REST-API"><span class="xref std std-term">REST API</span></a>,
+a consensus engine, and the following
+<a class="reference internal" href="../glossary.html#term-transaction-processor"><span class="xref std std-term">transaction processors</span></a>:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../transaction_family_specifications/settings_transaction_family.html"><span class="doc">Settings</span></a>
+(<code class="docutils literal notranslate"><span class="pre">settings-tp</span></code>): Handles Sawtooth’s on-chain configuration settings. The
+Settings transaction processor (or an equivalent) is required for all Sawtooth
+networks.</p></li>
+<li><p><a class="reference internal" href="../transaction_family_specifications/integerkey_transaction_family.html"><span class="doc">IntegerKey</span></a>
+(<code class="docutils literal notranslate"><span class="pre">intkey-tp-python</span></code>): Demonstrates basic Sawtooth functionality. The
+associated <code class="docutils literal notranslate"><span class="pre">intkey</span></code> client includes shell commands to perform integer-based
+transactions.</p></li>
+<li><p><a class="reference internal" href="../transaction_family_specifications/xo_transaction_family.html"><span class="doc">XO</span></a>
+(<code class="docutils literal notranslate"><span class="pre">sawtooth-xo-tp-python</span></code>: Simple application for playing a game of
+tic-tac-toe on the blockchain. The assocated <code class="docutils literal notranslate"><span class="pre">xo</span></code> client provides shell
+commands to define players and play a game. XO is described in a later
+section, <a class="reference internal" href="intro_xo_transaction_family.html"><span class="doc">Playing with the XO Transaction Family</span></a>.</p></li>
+<li><p>(PoET only) <a class="reference internal" href="../transaction_family_specifications/validator_registry_transaction_family.html"><span class="doc">PoET Validator Registry</span></a>
+(<code class="docutils literal notranslate"><span class="pre">poet-validator-registry-tp</span></code>): Configures PoET consensus and handles a
+network with multiple nodes.</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Each node in a Sawtooth network must run the same set of transaction
+processors.</p>
+</div>
+<p>Like the <a class="reference internal" href="kubernetes.html"><span class="doc">single-node test environment</span></a>, this environment uses
+parallel transaction processing and static peering. However, it uses a different
+consensus algorithm (Devmode consensus is not recommended for a network). You
+can choose either PBFT or PoET consensus.</p>
+<ul>
+<li><p><a class="reference internal" href="../glossary.html#term-PBFT-consensus"><span class="xref std std-term">PBFT consensus</span></a> provides a voting-based consensus algorithm with
+Byzantine fault tolerance (BFT) that has finality (does not fork).</p></li>
+<li><p><a class="reference internal" href="../glossary.html#term-PoET-consensus"><span class="xref std std-term">PoET consensus</span></a> provides a leader-election lottery system that can
+fork.  This network uses PoET simulator consensus, which is also called <cite>PoET
+CFT</cite> because it is crash fault tolerant.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The other type of PoET consensus, PoET-SGX, relies on Intel Software Guard
+Extensions (SGX) that is Byzantine fault tolerant (BFT). PoET CFT provides
+the same consensus algorithm on an SGX simulator.</p>
+</div>
+</li>
+</ul>
+<p>The first node creates the genesis block, which specifies the initial on-chain
+settings for the network configuration. The other nodes access those settings
+when they join the network.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>This environment requires <a class="reference external" href="https://kubernetes.io/docs/concepts/">kubectl</a>
+and
+<a class="reference external" href="https://kubernetes.io/docs/setup/minikube/">minikube</a> with a supported VM
+hypervisor, such as <a class="reference external" href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a>.</p></li>
+<li><p>If you created a <a class="reference internal" href="kubernetes.html"><span class="doc">single-node Kubernetes environment</span></a> that
+is still running, shut it down and delete the Minikube cluster, VM, and
+associated files. For more information, see <a class="reference internal" href="kubernetes.html#stop-sawtooth-kube-label"><span class="std std-ref">Step 11: Stop the Sawtooth Kubernetes Cluster</span></a>.</p></li>
+</ul>
+</div>
+<div class="section" id="step-1-install-kubectl-and-minikube">
+<h2>Step 1: Install kubectl and minikube<a class="headerlink" href="#step-1-install-kubectl-and-minikube" title="Permalink to this headline">¶</a></h2>
+<p>This step summarizes the Kubernetes installation procedures. For more
+information, see the
+<a class="reference external" href="https://kubernetes.io/docs/tasks/">Kubernetes documentation</a>.</p>
+<ol class="arabic">
+<li><p>Install a virtual machine (VM) hypervisor such as VirtualBox, VMWare,
+KVM-QEMU, or Hyperkit. This procedure assumes that you’re using VirtualBox.</p></li>
+<li><p>Install the <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> command as described in the Kubernetes document
+<a class="reference external" href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">Install kubectl</a>.</p>
+<ul>
+<li><p>Linux quick reference:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
+&amp;&amp; chmod +x kubectl &amp;&amp; sudo cp kubectl /usr/local/bin/ &amp;&amp; rm kubectl
+</pre></div>
+</div>
+</li>
+<li><p>Mac quick reference:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl \
+&amp;&amp; chmod +x kubectl &amp;&amp; sudo cp kubectl /usr/local/bin/ &amp;&amp; rm kubectl
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>Install <code class="docutils literal notranslate"><span class="pre">minikube</span></code> as described in the Kubernetes document
+<a class="reference external" href="https://kubernetes.io/docs/tasks/tools/install-minikube/">Install Minikube</a>.</p>
+<ul>
+<li><p>Linux quick reference:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.2.6/minikube-linux-amd64 \
+&amp;&amp; chmod +x minikube &amp;&amp; sudo cp minikube /usr/local/bin/ &amp;&amp; rm minikube
+</pre></div>
+</div>
+</li>
+<li><p>Mac quick reference:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.2.6/minikube-darwin-amd64 \
+&amp;&amp; chmod +x minikube &amp;&amp; sudo mv minikube /usr/local/bin/
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="step-2-start-minikube">
+<h2>Step 2: Start Minikube<a class="headerlink" href="#step-2-start-minikube" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>Start Minikube.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> minikube start
+<span class="go">Starting local Kubernetes vX.X.X cluster...</span>
+<span class="go">...</span>
+<span class="go">Kubectl is now configured to use the cluster.</span>
+<span class="go">Loading cached images from config file.</span>
+</pre></div>
+</div>
+</li>
+<li><p>(Optional) Test basic Minikube functionality.</p>
+<p>If you have problems, see the Kubernetes document
+<a class="reference external" href="https://kubernetes.io/docs/setup/minikube/">Running Kubernetes Locally via Minikube</a>.</p>
+<ol class="loweralpha">
+<li><p>Start Minikube’s “Hello, World” test cluster, <code class="docutils literal notranslate"><span class="pre">hello-minikube</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl run hello-minikube --image<span class="o">=</span>k8s.gcr.io/echoserver:1.10 --port<span class="o">=</span><span class="m">8080</span>
+
+<span class="gp">$</span> kubectl expose deployment hello-minikube --type<span class="o">=</span>NodePort
+</pre></div>
+</div>
+</li>
+<li><p>Check the list of pods.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl get pods
+</pre></div>
+</div>
+<p>After the cluster is up and running, the output of this command should
+display a pod starting with <code class="docutils literal notranslate"><span class="pre">hello-minikube...</span></code>.</p>
+</li>
+<li><p>Run a <code class="docutils literal notranslate"><span class="pre">curl</span></code> test to the cluster.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl $(minikube service hello-minikube --url)
+</pre></div>
+</div>
+</li>
+<li><p>Remove the <code class="docutils literal notranslate"><span class="pre">hello-minikube</span></code> cluster.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl delete services hello-minikube
+
+<span class="gp">$</span> kubectl delete deployment hello-minikube
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section" id="step-3-download-the-sawtooth-configuration-file">
+<h2>Step 3: Download the Sawtooth Configuration File<a class="headerlink" href="#step-3-download-the-sawtooth-configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>Download the Kubernetes configuration (kubeconfig) file for a Sawtooth network.</p>
+<ul class="simple">
+<li><p>For PBFT, download
+<a class="reference external" href="./sawtooth-kubernetes-default-pbft.yaml">sawtooth-kubernetes-default-pbft.yaml</a></p></li>
+<li><p>For PoET, download
+<a class="reference external" href="./sawtooth-kubernetes-default-poet.yaml">sawtooth-kubernetes-default-poet.yaml</a></p></li>
+</ul>
+<p>The kubeconfig file creates a Sawtooth network with five pods, each running a
+Sawtooth node. It also specifies the container images to download (from
+DockerHub) and the network settings needed for the containers to communicate
+correctly.</p>
+</div>
+<div class="section" id="step-4-pbft-only-configure-keys-for-the-kubernetes-pods">
+<h2>Step 4: (PBFT Only) Configure Keys for the Kubernetes Pods<a class="headerlink" href="#step-4-pbft-only-configure-keys-for-the-kubernetes-pods" title="Permalink to this headline">¶</a></h2>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Skip this step if you are using PoET consensus.</p>
+</div>
+<p>For a network using PBFT consensus, the initial member list must be specified
+in the genesis block. This step generates public and private validator keys for
+each pod in the network, then creates a Kubernetes ConfigMap so that the
+Sawtooth network can use these keys when it starts.</p>
+<ol class="arabic">
+<li><p>Change your working directory to the same directory where you saved the
+configuration file.</p></li>
+<li><p>Download the following files:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/hyperledger/sawtooth-core/blob/master/docker/kubernetes/sawtooth-create-pbft-keys.yaml">sawtooth-create-pbft-keys.yaml</a></p></li>
+<li><p><a class="reference external" href="https://github.com/hyperledger/sawtooth-core/blob/master/docker/kubernetes/pbft-keys-configmap.yaml">pbft-keys-configmap.yaml</a></p></li>
+</ul>
+<p>Save these files in the same directory where you saved
+<code class="docutils literal notranslate"><span class="pre">sawtooth-kubernetes-default-pbft.yaml...</span></code> (in the previous step).</p>
+</li>
+<li><p>Use the following command to generate the required keys.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl apply -f sawtooth-create-pbft-keys.yaml
+<span class="go">job.batch/pbft-keys created</span>
+</pre></div>
+</div>
+</li>
+<li><p>Get the full name of the <code class="docutils literal notranslate"><span class="pre">pbft-keys</span></code> pod.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl get pods <span class="p">|</span>grep pbft-keys
+</pre></div>
+</div>
+</li>
+<li><p>Display the keys, then copy them for the next step. In the following command,
+replace <code class="docutils literal notranslate"><span class="pre">pbft-keys-xxxxx</span></code> with the name of this pod.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl logs pbft-keys-xxxxx
+</pre></div>
+</div>
+<p>The output will resemble this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pbft0priv: 028de9ced7ae7c58f1c4b8bb84a8cbf9378eb5943948d2dd6f493d0e7f3cadf3</span>
+<span class="go">pbft0pub: 036c14100c00188f0fe8e686d577f74f35032f97f10d78764f3ec910472f157c15</span>
+<span class="go">pbft1priv: c3e91eac9f8ccebc4d25977b69dc7137e4cf5fc6356a79c36802e712a49fd4b7</span>
+<span class="go">pbft1pub: 02554eddb36a2d0abcb7b51cd2316b213ebe030328cd949ebc105d061e8b6de5b5</span>
+<span class="go">pbft2priv: d34d4133fc830556beb8c642f31db4f082773c557b4108ec409871a10d60d2f4</span>
+<span class="go">pbft2pub: 03a86840dc802e19ea64b130d26f1ab7100f923396d3151ddedc76560bbdf2f778</span>
+<span class="go">pbft3priv: b8c8c79f7c8fe89eae18a805a836e23ad415b014822c60ac244a14c4df2e9429</span>
+<span class="go">pbft3pub: 02a87d1a87ed54cd467d1628a601e780ddc70a6718e4b98407f3d70bb88e8a1ee0</span>
+<span class="go">pbft4priv: 6499688038b519bfc99564978918ce31d74aa758380852608481c7cc1f779483</span>
+<span class="go">pbft4pub: 03186440394f4a447509874095a14550bc1b1821555560f0851a5f3549c8138ac2</span>
+</pre></div>
+</div>
+</li>
+<li><p>Edit <code class="docutils literal notranslate"><span class="pre">pbft-keys-configmap.yaml</span></code> to add the keys from the previous step.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> vim pbft-keys-configmap.yaml
+</pre></div>
+</div>
+<p>Locate the “blank” key lines under <code class="docutils literal notranslate"><span class="pre">data:</span></code> and replace them with the keys
+that you copied from in previous step.</p>
+<p>Make sure that the YAML format is correct. The result should look like this
+example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">...</span>
+
+<span class="go">apiVersion: v1</span>
+<span class="go">kind: ConfigMap</span>
+<span class="go">metadata:</span>
+<span class="go">  name: keys-config</span>
+<span class="go">data:</span>
+<span class="go">  pbft0priv: 028de9ced7ae7c58f1c4b8bb84a8cbf9378eb5943948d2dd6f493d0e7f3cadf3</span>
+<span class="go">  pbft0pub: 036c14100c00188f0fe8e686d577f74f35032f97f10d78764f3ec910472f157c15</span>
+<span class="go">  pbft1priv: c3e91eac9f8ccebc4d25977b69dc7137e4cf5fc6356a79c36802e712a49fd4b7</span>
+<span class="go">  pbft1pub: 02554eddb36a2d0abcb7b51cd2316b213ebe030328cd949ebc105d061e8b6de5b5</span>
+<span class="go">  pbft2priv: d34d4133fc830556beb8c642f31db4f082773c557b4108ec409871a10d60d2f4</span>
+<span class="go">  pbft2pub: 03a86840dc802e19ea64b130d26f1ab7100f923396d3151ddedc76560bbdf2f778</span>
+<span class="go">  pbft3priv: b8c8c79f7c8fe89eae18a805a836e23ad415b014822c60ac244a14c4df2e9429</span>
+<span class="go">  pbft3pub: 02a87d1a87ed54cd467d1628a601e780ddc70a6718e4b98407f3d70bb88e8a1ee0</span>
+<span class="go">  pbft4priv: 6499688038b519bfc99564978918ce31d74aa758380852608481c7cc1f779483</span>
+<span class="go">  pbft4pub: 03186440394f4a447509874095a14550bc1b1821555560f0851a5f3549c8138ac2</span>
+</pre></div>
+</div>
+</li>
+<li><p>Apply the ConfigMap so that the Sawtooth network can use these keys in the
+next step.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl apply -f pbft-keys-configmap.yaml
+<span class="go">configmap/keys-config created</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="step-5-start-the-sawtooth-cluster">
+<h2>Step 5: Start the Sawtooth Cluster<a class="headerlink" href="#step-5-start-the-sawtooth-cluster" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Kubernetes configuration file handles the Sawtooth startup steps such as
+generating keys and creating a genesis block. To learn about the full
+Sawtooth startup process, see <a class="reference internal" href="ubuntu.html"><span class="doc">Using Ubuntu for a Single Sawtooth Node</span></a>.</p>
+</div>
+<p>Use these steps to start the Sawtooth network.</p>
+<ol class="arabic">
+<li><p>Change your working directory to the same directory where you saved the
+<code class="docutils literal notranslate"><span class="pre">sawtooth-kubernetes-default-...</span></code> configuration file.</p></li>
+<li><p>Start Sawtooth as a local Kubernetes cluster.</p>
+<ul>
+<li><p>For PBFT:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl apply -f sawtooth-kubernetes-default-pbft.yaml
+<span class="go">deployment.extensions/pbft-0 created</span>
+<span class="go">service/sawtooth-0 created</span>
+<span class="go">deployment.extensions/pbft-1 created</span>
+<span class="go">service/sawtooth-1 created</span>
+<span class="go">deployment.extensions/pbft-2 created</span>
+<span class="go">service/sawtooth-2 created</span>
+<span class="go">deployment.extensions/pbft-3 created</span>
+<span class="go">service/sawtooth-3 created</span>
+<span class="go">deployment.extensions/pbft-4 created</span>
+<span class="go">service/sawtooth-4 created</span>
+</pre></div>
+</div>
+</li>
+<li><p>For PoET:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl apply -f sawtooth-kubernetes-default-poet.yaml
+<span class="go">deployment.extensions/sawtooth-0 created</span>
+<span class="go">service/sawtooth-0 created</span>
+<span class="go">deployment.extensions/sawtooth-1 created</span>
+<span class="go">service/sawtooth-1 created</span>
+<span class="go">deployment.extensions/sawtooth-2 created</span>
+<span class="go">service/sawtooth-2 created</span>
+<span class="go">deployment.extensions/sawtooth-3 created</span>
+<span class="go">service/sawtooth-3 created</span>
+<span class="go">deployment.extensions/sawtooth-4 created</span>
+<span class="go">service/sawtooth-4 created</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+<ol class="arabic" start="3">
+<li><p>This Sawtooth network has five pods, numbered from 0 to 4, each running a
+Sawtooth node. You can use the <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> command to list the pods and get
+information about each pod.</p>
+<ol class="arabic">
+<li><p>Display the list of pods.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl get pods
+<span class="go">NAME                     READY     STATUS             RESTARTS   AGE</span>
+<span class="go">pod-0-aaaaaaaaaa-vvvvv   5/8       ContainerCreating  0          21m</span>
+<span class="go">pod-1-bbbbbbbbbb-wwwww   5/8       ContainerCreating  0          21m</span>
+<span class="go">pod-2-ccccccccc-xxxxx    5/8       ContainerCreating  0          21m</span>
+<span class="go">pod-3-dddddddddd-yyyyy   5/8       Pending            0          21m</span>
+<span class="go">pod-4-eeeeeeeeee-zzzzz   5/8       Pending            0          21m</span>
+</pre></div>
+</div>
+<p>Wait until each pod is ready before continuing.</p>
+</li>
+<li><p>You can specify a pod name to display the containers (Sawtooth components)
+for that pod.</p>
+<p>In the following command, replace <code class="docutils literal notranslate"><span class="pre">pod-N-xxxxxxxxxx-yyyyy</span></code>  with a
+pod name.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl get pods pod-N-xxxxxxxxxx-yyyyy -o <span class="nv">jsonpath</span><span class="o">={</span>.spec.containers<span class="o">[</span>*<span class="o">]</span>.name<span class="o">}</span>
+<span class="go">sawtooth-intkey-tp-python sawtooth-pbft-engine sawtooth-rest-api sawtooth-settings-tp sawtooth-shell sawtooth-smallbank-tp-rust sawtooth-validator sawtooth-xo-tp-python</span>
+</pre></div>
+</div>
+<p>Note that each pod has a shell container named <code class="docutils literal notranslate"><span class="pre">sawtooth-shell</span></code>. You
+will connect to the shell containers in later steps.</p>
+</li>
+</ol>
+</li>
+<li><p>(Optional) Start the Minikube dashboard.</p>
+<blockquote>
+<div><p>$ minikube dashboard</p>
+</div></blockquote>
+<p>This command opens the dashboard in your default browser. The overview page
+includes workload status, deployments, pods, and Sawtooth services. The
+Logs viewer (on the Pods page) shows the Sawtooth log files. For more
+information, see
+<a class="reference external" href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/">Web UI (Dashboard)</a>
+in the Kubernetes documentation.</p>
+</li>
+</ol>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Any work done in this environment will be lost once you stop Minikube and
+delete the Sawtooth cluster. In order to use this environment for application
+development, or to start and stop Sawtooth nodes (and pods), you would need
+to take additional steps, such as defining volume storage. See the
+<a class="reference external" href="https://kubernetes.io/docs/home/">Kubernetes documentation</a> for more
+information.</p>
+</div>
+</div>
+<div class="section" id="step-6-confirm-network-and-blockchain-functionality">
+<span id="confirm-func-kube-label"></span><h2>Step 6: Confirm Network and Blockchain Functionality<a class="headerlink" href="#step-6-confirm-network-and-blockchain-functionality" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p>Connect to the shell container on the first pod.</p>
+<p>In the following command, replace <code class="docutils literal notranslate"><span class="pre">pod-0-xxxxxxxxxx-yyyyy</span></code> with the
+name of the first pod, as shown by <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ kubectl exec -it pod-0-xxxxxxxxxx-yyyyy --container sawtooth-shell -- bash
+
+root@sawtooth-0#
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this procedure, the prompt <code class="docutils literal notranslate"><span class="pre">root&#64;sawtooth-0#</span></code> marks the commands that should
+be run on the Sawtooth node in pod 0. The actual prompt is similar to
+<code class="docutils literal notranslate"><span class="pre">root&#64;pbft-0-dabbad0000-5w45k:/#</span></code> (for PBFT) or
+<code class="docutils literal notranslate"><span class="pre">root&#64;sawtooth-0-f0000dd00d-sw33t:/#</span></code> (for PoET).</p>
+</div>
+</li>
+<li><p>Display the list of blocks on the Sawtooth blockchain.</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root@sawtooth-0# sawtooth block list
+</pre></div>
+</div>
+</div></blockquote>
+<p>The output will be similar to this example:</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">NUM  BLOCK_ID                                                                                                                          BATS  TXNS  SIGNER</span>
+<span class="go">2    f40b90d06b4a9074af2ab09e0187223da7466be75ec0f472f2edd5f22960d76e402e6c07c90b7816374891d698310dd25d9b88dce7dbcba8219d9f7c9cae1861  3     3     02e56e...</span>
+<span class="go">1    4d7b3a2e6411e5462d94208a5bb83b6c7652fa6f4c2ada1aa98cabb0be34af9d28cf3da0f8ccf414aac2230179becade7cdabbd0976c4846990f29e1f96000d6  1     1     034aad...</span>
+<span class="go">0    0fb3ebf6fdc5eef8af600eccc8d1aeb3d2488992e17c124b03083f3202e3e6b9182e78fef696f5a368844da2a81845df7c3ba4ad940cee5ca328e38a0f0e7aa0  3     11    034aad...</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Block 0 is the <a class="reference internal" href="../glossary.html#term-genesis-block"><span class="xref std std-term">genesis block</span></a>. The other two blocks contain
+transactions for on-chain settings.</p>
+</li>
+<li><p>In a separate terminal window, connect to a different pod (such as pod 1) and
+verify that it has joined the Sawtooth network.</p>
+<p>In the following command, replace <code class="docutils literal notranslate"><span class="pre">pod-1-xxxxxxxxxx-yyyyy</span></code> with the
+name of the pod, as shown by <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span></code>.</p>
+<blockquote>
+<div><blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ kubectl exec -it pod-1-xxxxxxxxxx-yyyyy --container sawtooth-shell -- bash
+
+root@sawtooth-1#
+</pre></div>
+</div>
+</div></blockquote>
+<p>The prompt <code class="docutils literal notranslate"><span class="pre">root&#64;sawtooth-1#</span></code> marks the commands that should be run on
+the Sawtooth node in this pod.</p>
+</div></blockquote>
+</li>
+<li><p>Display the list of blocks on the pod.</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root@sawtooth-1# sawtooth block list
+</pre></div>
+</div>
+</div></blockquote>
+<p>You should see the same list of blocks with the same block IDs, as in this
+example:</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">NUM  BLOCK_ID                                                                                                                          BATS  TXNS  SIGNER</span>
+<span class="go">2    f40b90d06b4a9074af2ab09e0187223da7466be75ec0f472f2edd5f22960d76e402e6c07c90b7816374891d698310dd25d9b88dce7dbcba8219d9f7c9cae1861  3     3     02e56e...</span>
+<span class="go">1    4d7b3a2e6411e5462d94208a5bb83b6c7652fa6f4c2ada1aa98cabb0be34af9d28cf3da0f8ccf414aac2230179becade7cdabbd0976c4846990f29e1f96000d6  1     1     034aad...</span>
+<span class="go">0    0fb3ebf6fdc5eef8af600eccc8d1aeb3d2488992e17c124b03083f3202e3e6b9182e78fef696f5a368844da2a81845df7c3ba4ad940cee5ca328e38a0f0e7aa0  3     11    034aad...</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>(Optional) You can run the following Sawtooth commands from any shell
+container to show the other nodes on the network.</p>
+<p>In the following commands, replace <code class="docutils literal notranslate"><span class="pre">pod-N-xxxxxxxxxx-yyyyy</span></code> with the
+name of the pod, as shown by <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span></code>.</p>
+<ol class="loweralpha">
+<li><p>Connect to any shell container.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ kubectl exec -it pod-N-xxxxxxxxxx-yyyyy --container sawtooth-shell -- bash
+
+root@sawtooth-N#
+</pre></div>
+</div>
+</li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">peer</span> <span class="pre">list</span></code> to show the peers of a particular node.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-N#</span> sawtooth peer list
+</pre></div>
+</div>
+</li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">sawnet</span> <span class="pre">peers</span> <span class="pre">list</span></code> to display a complete graph of peers on the
+network (available in Sawtooth release 1.1 and later).</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-N#</span> sawnet peers list http://localhost:8008
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+<li><p>You can submit a transaction on one Sawtooth node, then look for the results
+of that transaction on another node.</p>
+<ol class="loweralpha">
+<li><p>From the shell container one pod (such as pod 0), use the <code class="docutils literal notranslate"><span class="pre">intkey</span> <span class="pre">set</span></code>
+command to submit a transaction on the first node. This example sets
+a key named <code class="docutils literal notranslate"><span class="pre">MyKey</span></code> to the value 999.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> intkey <span class="nb">set</span> MyKey <span class="m">999</span>
+<span class="go">{</span>
+<span class="go">  &quot;link&quot;:</span>
+<span class="go">  &quot;http://127.0.0.1:8008/batch_statuses?id=1b7f121a82e73ba0e7f73de3e8b46137a2e47b9a2d2e6566275b5ee45e00ee5a06395e11c8aef76ff0230cbac0c0f162bb7be626df38681b5b1064f9c18c76e5&quot;</span>
+<span class="go">  }</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>From the shell container on a different pod (such as pod 1), check that
+the value has been changed on that node.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-1#</span> intkey show MyKey
+<span class="go">MyKey: 999</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</li>
+<li><p>You can check whether a Sawtooth component is running by connecting to a
+different container, then running the <code class="docutils literal notranslate"><span class="pre">ps</span></code> command. The container names are
+available in the kubeconfig file or on a pod’s page on the Kubernetes
+dashboard.</p>
+<p>The following example connects to the Settings transaction processor
+container (<code class="docutils literal notranslate"><span class="pre">sawtooth-settings-tp</span></code>) on pod 3, then displays the list of
+running process. Replace <code class="docutils literal notranslate"><span class="pre">pod-3-xxxxxxxxxx-yyyyy</span></code> with the name of the
+pod, as shown by <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl <span class="nb">exec</span> -it pod-3-xxxxxxxxxx-yyyyy --container sawtooth-settings-tp -- bash
+
+<span class="gp">root@sawtooth-3#</span> ps --pid <span class="m">1</span> fw
+<span class="go">  PID TTY      STAT   TIME COMMAND</span>
+<span class="go">    1 ?        Ssl    0:02 settings-tp -vv -C tcp://sawtooth-3-5bd565ff45-2klm7:4004</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>At this point, your environment is ready for experimenting with Sawtooth.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>For more ways to test basic functionality, see <a class="reference internal" href="kubernetes.html"><span class="doc">Using Kubernetes for a Single Sawtooth Node</span></a>. For
+example:</p>
+<ul class="simple">
+<li><p>To use Sawtooth client commands to view block information and check state
+data, see <a class="reference internal" href="kubernetes.html#sawtooth-client-kube-label"><span class="std std-ref">Step 8: Use Sawtooth Commands as a Client</span></a>.</p></li>
+<li><p>For information on the Sawtooth logs, see <a class="reference internal" href="kubernetes.html#examine-logs-kube-label"><span class="std std-ref">Step 10: Examine Sawtooth Logs</span></a>.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="step-7-configure-the-allowed-transaction-types-optional">
+<span id="configure-txn-procs-kube-label"></span><h2>Step 7. Configure the Allowed Transaction Types (Optional)<a class="headerlink" href="#step-7-configure-the-allowed-transaction-types-optional" title="Permalink to this headline">¶</a></h2>
+<p>By default, a validator accepts transactions from any transaction processor.
+However, Sawtooth allows you to limit the types of transactions that can be
+submitted.</p>
+<p>In this step, you will configure the Sawtooth network to accept transactions
+only from the transaction processors running in the example environment.
+Transaction-type restrictions are an on-chain setting, so this configuration
+change is made on one node, then applied to all other nodes.</p>
+<p>The <a class="reference internal" href="../transaction_family_specifications/settings_transaction_family.html"><span class="doc">Settings transaction processor</span></a>
+handles on-chain configuration settings. You will use the <code class="docutils literal notranslate"><span class="pre">sawset</span></code> command to
+create and submit a batch of transactions containing the configuration change.</p>
+<ol class="arabic">
+<li><p>Connect to the validator container of the first node. The next command
+requires the user key that was generated in that container.</p>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">pod-0-xxxxxxxxxx-yyyyy</span></code> with the name of the first pod, as
+shown by <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">get</span> <span class="pre">pods</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl <span class="nb">exec</span> -it pod-0-xxxxxxxxxx-yyyyy --container sawtooth-validator -- bash
+<span class="gp">root@sawtooth-0#</span>
+</pre></div>
+</div>
+</li>
+<li><p>Run the following command from the validator container to specify the
+allowed transaction families.</p>
+<ul>
+<li><p>For PBFT:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> sawset proposal create --key /root/.sawtooth/keys/my_key.priv <span class="se">\</span>
+sawtooth.validator.transaction_families<span class="o">=</span><span class="s1">&#39;[{&quot;family&quot;: &quot;intkey&quot;, &quot;version&quot;: &quot;1.0&quot;}, {&quot;family&quot;:&quot;sawtooth_settings&quot;, &quot;version&quot;:&quot;1.0&quot;}, {&quot;family&quot;:&quot;xo&quot;, &quot;version&quot;:&quot;1.0&quot;}]&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><p>For PoET:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> sawset proposal create --key /root/.sawtooth/keys/my_key.priv <span class="se">\</span>
+sawtooth.validator.transaction_families<span class="o">=</span><span class="s1">&#39;[{&quot;family&quot;: &quot;intkey&quot;, &quot;version&quot;: &quot;1.0&quot;}, {&quot;family&quot;:&quot;sawtooth_settings&quot;, &quot;version&quot;:&quot;1.0&quot;}, {&quot;family&quot;:&quot;xo&quot;, &quot;version&quot;:&quot;1.0&quot;}, {&quot;family&quot;:&quot;sawtooth_validator_registry&quot;, &quot;version&quot;:&quot;1.0&quot;}]&#39;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>This command sets <code class="docutils literal notranslate"><span class="pre">sawtooth.validator.transaction_families</span></code> to a JSON array
+that specifies the family name and version of each allowed transaction
+processor (defined in the transaction header of each family’s
+<a class="reference internal" href="../transaction_family_specifications.html"><span class="doc">transaction family specification</span></a>).</p>
+</li>
+<li><p>After this command runs, a <code class="docutils literal notranslate"><span class="pre">TP_PROCESS_REQUEST</span></code> message appears in the log
+for the Settings transaction processor.</p>
+<ul>
+<li><p>You can use the Kubernetes dashboard to view this log message:</p>
+<ol class="loweralpha">
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">minikube</span> <span class="pre">dashboard</span></code> to start the Kubernetes dashboard, if
+necessary.</p></li>
+<li><p>From the Overview page, scroll to the list of pods and click on any pod
+name.</p></li>
+<li><p>On the pod page, click <span class="guilabel">LOGS</span> (in the top right).</p></li>
+<li><p>On the pod’s log page, select logs from <code class="docutils literal notranslate"><span class="pre">sawtooth-settings-tp</span></code>, then
+scroll to the bottom of the log. The message will resemble this example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[2018-09-05 20:07:41.903 DEBUG    core] received message of type: TP_PROCESS_REQUEST
+</pre></div>
+</div>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>Run the following command to check the setting change. You can use any
+container, such as a shell or another validator container.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-1#</span> sawtooth settings list
+</pre></div>
+</div>
+<p>The output should be similar to this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">sawtooth.consensus.algorithm.name: {name}</span>
+<span class="go">sawtooth.consensus.algorithm.version: {version}</span>
+<span class="go">...</span>
+<span class="go">sawtooth.publisher.max_batches_per_block: 200</span>
+<span class="go">sawtooth.settings.vote.authorized_keys: 03e27504580fa15da431...</span>
+<span class="go">sawtooth.validator.transaction_families: [{&quot;family&quot;: &quot;intkey...</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="step-8-stop-the-sawtooth-kubernetes-cluster">
+<span id="stop-sawtooth-kube2-label"></span><h2>Step 8: Stop the Sawtooth Kubernetes Cluster<a class="headerlink" href="#step-8-stop-the-sawtooth-kubernetes-cluster" title="Permalink to this headline">¶</a></h2>
+<p>Use the following commands to stop and reset the Sawtooth network.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Any work done in this environment will be lost once you delete the Sawtooth
+pods. To keep your work, you would need to take additional steps, such as
+defining volume storage.  See the
+<a class="reference external" href="https://kubernetes.io/docs/home/">Kubernetes documentation</a> for more
+information.</p>
+</div>
+<ol class="arabic">
+<li><p>Log out of all Sawtooth containers.</p></li>
+<li><p>Stop Sawtooth and delete the pods. Run the following command from the same
+directory where you saved the configuration file.</p>
+<ul>
+<li><p>For PBFT:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl delete -f sawtooth-kubernetes-default-pbft.yaml
+<span class="go">deployment.extensions &quot;pbft-0&quot; deleted</span>
+<span class="go">service &quot;sawtooth-0&quot; deleted</span>
+<span class="go">deployment.extensions &quot;pbft-1&quot; deleted</span>
+<span class="go">service &quot;sawtooth-1&quot; deleted</span>
+<span class="go">deployment.extensions &quot;pbft-2&quot; deleted</span>
+<span class="go">service &quot;sawtooth-2&quot; deleted</span>
+<span class="go">deployment.extensions &quot;pbft-3&quot; deleted</span>
+<span class="go">service &quot;sawtooth-3&quot; deleted</span>
+<span class="go">deployment.extensions &quot;pbft-4&quot; deleted</span>
+<span class="go">service &quot;sawtooth-4&quot; deleted</span>
+</pre></div>
+</div>
+</li>
+<li><p>For PoET:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl delete -f sawtooth-kubernetes-default-poet.yaml
+<span class="go">deployment.extensions &quot;sawtooth-0&quot; deleted</span>
+<span class="go">service &quot;sawtooth-0&quot; deleted</span>
+<span class="go">deployment.extensions &quot;sawtooth-1&quot; deleted</span>
+<span class="go">service &quot;sawtooth-1&quot; deleted</span>
+<span class="go">deployment.extensions &quot;sawtooth-2&quot; deleted</span>
+<span class="go">service &quot;sawtooth-2&quot; deleted</span>
+<span class="go">deployment.extensions &quot;sawtooth-3&quot; deleted</span>
+<span class="go">service &quot;sawtooth-3&quot; deleted</span>
+<span class="go">deployment.extensions &quot;sawtooth-4&quot; deleted</span>
+<span class="go">service &quot;sawtooth-4&quot; deleted</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>Stop the Minikube cluster.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> minikube stop
+<span class="go">Stopping local Kubernetes cluster...</span>
+<span class="go">Machine stopped.</span>
+</pre></div>
+</div>
+</li>
+<li><p>Delete the Minikube cluster, VM, and all associated files.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> minikube delete
+<span class="go">Deleting local Kubernetes cluster...</span>
+<span class="go">Machine deleted.</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ubuntu_test_network.html" class="btn btn-neutral float-right" title="Using Ubuntu for a Sawtooth Test Network" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="docker_test_network.html" class="btn btn-neutral float-left" title="Using Docker for a Sawtooth Test Network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

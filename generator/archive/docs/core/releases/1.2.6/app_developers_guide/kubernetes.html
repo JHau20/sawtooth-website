@@ -1,0 +1,884 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using Kubernetes for a Single Sawtooth Node &mdash; Sawtooth v1.2.6 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using Ubuntu for a Single Sawtooth Node" href="ubuntu.html" />
+    <link rel="prev" title="Using Docker for a Single Sawtooth Node" href="docker.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../contents.html" class="icon icon-home" alt="Documentation Home"> Sawtooth
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v1.2.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../app_developers_guide.html">Application Developer’s Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview.html">Transaction Family Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="installing_sawtooth.html">Setting Up a Sawtooth Node for Testing</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="docker.html">Using Docker for a Single Sawtooth Node</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Using Kubernetes for a Single Sawtooth Node</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#about-the-kubernetes-test-node-environment">About the Kubernetes Test Node Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-install-kubectl-and-minikube">Step 1: Install kubectl and Minikube</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-start-and-test-minikube">Step 2: Start and Test Minikube</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-download-the-sawtooth-configuration-file">Step 3: Download the Sawtooth Configuration File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-4-start-the-sawtooth-cluster">Step 4: Start the Sawtooth Cluster</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-5-connect-to-the-kubernetes-shell-container">Step 5: Connect to the Kubernetes Shell Container</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-6-confirm-connectivity-to-the-rest-api-for-kubernetes">Step 6: Confirm Connectivity to the REST API (for Kubernetes)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-7-test-basic-sawtooth-functionality">Step 7: Test Basic Sawtooth Functionality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-8-use-sawtooth-commands-as-a-client">Step 8: Use Sawtooth Commands as a Client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-9-verify-the-sawtooth-components">Step 9: Verify the Sawtooth Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-10-examine-sawtooth-logs">Step 10: Examine Sawtooth Logs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-11-stop-the-sawtooth-kubernetes-cluster">Step 11: Stop the Sawtooth Kubernetes Cluster</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="ubuntu.html">Using Ubuntu for a Single Sawtooth Node</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="creating_sawtooth_network.html">Creating a Sawtooth Test Network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro_xo_transaction_family.html">Playing with the XO Transaction Family</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_the_sdks.html">Using the Sawtooth SDKs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="no_sdk.html">Development Without an SDK</a></li>
+<li class="toctree-l2"><a class="reference internal" href="address_and_namespace.html">Address and Namespace Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_restriction.html">Namespace Restriction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event_subscriptions.html">Subscribing to Events</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Architecture Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../transaction_family_specifications.html">Transaction Family Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sysadmin_guide.html">System Administrator’s Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_references.html">SDK and API References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">CLI Command Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../contents.html">Sawtooth</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../contents.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../app_developers_guide.html">Application Developer’s Guide</a> &raquo;</li>
+        
+          <li><a href="installing_sawtooth.html">Setting Up a Sawtooth Node for Testing</a> &raquo;</li>
+        
+      <li>Using Kubernetes for a Single Sawtooth Node</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/app_developers_guide/kubernetes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-kubernetes-for-a-single-sawtooth-node">
+<h1>Using Kubernetes for a Single Sawtooth Node<a class="headerlink" href="#using-kubernetes-for-a-single-sawtooth-node" title="Permalink to this headline">¶</a></h1>
+<p>This procedure explains how to create a single Hyperledger Sawtooth validator
+node with
+<a class="reference external" href="https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/">Kubernetes</a>.
+This environment uses <a class="reference external" href="https://kubernetes.io/docs/setup/minikube/">Minikube</a>
+to deploy Sawtooth as a containerized application in a local Kubernetes cluster
+inside a virtual machine (VM) on your computer.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This environment has one Sawtooth node. For a
+multiple-node environment, see <a class="reference internal" href="creating_sawtooth_network.html"><span class="doc">Creating a Sawtooth Test Network</span></a>.</p>
+</div>
+<p>This procedure walks you through the following tasks:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Installing <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> and Minikube</p></li>
+<li><p>Starting Minikube</p></li>
+<li><p>Starting Sawtooth in a Kubernetes cluster</p></li>
+<li><p>Connecting to the Sawtooth shell container</p></li>
+<li><p>Using Sawtooth commands to submit transactions, display block data, and view
+global state</p></li>
+<li><p>Examining Sawtooth logs</p></li>
+<li><p>Stopping Sawtooth and deleting the Kubernetes cluster</p></li>
+</ul>
+</div></blockquote>
+<p>After completing this procedure, you will have the environment required for
+the other tutorials in this guide, <a class="reference internal" href="intro_xo_transaction_family.html"><span class="doc">Playing with the XO Transaction Family</span></a> and
+<a class="reference internal" href="using_the_sdks.html"><span class="doc">Using the Sawtooth SDKs</span></a>.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This application development environment requires
+<a class="reference external" href="https://kubernetes.io/docs/concepts/overview/object-management-kubectl/overview/">kubectl</a>
+and
+<a class="reference external" href="https://kubernetes.io/docs/setup/minikube/">Minikube</a> with a supported VM
+hypervisor, such as VirtualBox.</p>
+</div>
+<div class="section" id="about-the-kubernetes-test-node-environment">
+<h2>About the Kubernetes Test Node Environment<a class="headerlink" href="#about-the-kubernetes-test-node-environment" title="Permalink to this headline">¶</a></h2>
+<p>This Kubernetes environment is a single Sawtooth node that is running a
+validator, a REST API, the Devmode consensus engine, and three transaction
+processors. The environment uses
+<a class="reference internal" href="../introduction.html#dynamic-consensus-label"><span class="std std-ref">Devmode consensus</span></a> and
+<a class="reference internal" href="../architecture/scheduling.html"><span class="doc">parallel transaction processing</span></a>.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/appdev-environment-one-node-3TPs-kube.svg"><img alt="Docker application environment for Sawtooth" src="../_images/appdev-environment-one-node-3TPs-kube.svg" width="100%" /></a>
+</div>
+<p>The Kubernetes cluster has one pod with a container for each Sawtooth component.
+After the container is running, you can use the <a class="reference external" href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/">Kubernetes dashboard</a>
+to view pod status, container names, Sawtooth log files, and more.</p>
+<p>This example environment includes the following transaction processors:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../transaction_family_specifications/settings_transaction_family.html"><span class="doc">Settings</span></a>
+handles Sawtooth’s on-chain settings. The <code class="docutils literal notranslate"><span class="pre">sawtooth-settings-tp</span></code>
+transaction processor is required for this environment.</p></li>
+<li><p><a class="reference internal" href="../transaction_family_specifications/integerkey_transaction_family.html"><span class="doc">IntegerKey</span></a>
+is a basic application (also called transaction family) that introduces
+Sawtooth functionality. The <code class="docutils literal notranslate"><span class="pre">sawtooth-intkey-tp-python</span></code> transaction
+processor works with the <code class="docutils literal notranslate"><span class="pre">int-key</span></code> client, which has shell commands to
+perform integer-based transactions.</p></li>
+<li><p><a class="reference internal" href="../transaction_family_specifications/xo_transaction_family.html"><span class="doc">XO</span></a>
+is a simple application for playing a game of tic-tac-toe on the blockchain.
+The <code class="docutils literal notranslate"><span class="pre">sawtooth-xo-tp-python</span></code> transaction processor works with the <code class="docutils literal notranslate"><span class="pre">xo</span></code>
+client, which has shell commands to define players and play a game.
+XO is described in a later tutorial.</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Sawtooth provides the Settings transaction processor as a reference
+implementation. In a production environment, you must always run the
+Settings transaction processor or an equivalent that supports the
+<a class="reference internal" href="../transaction_family_specifications/settings_transaction_family.html"><span class="doc">Sawtooth methodology for storing on-chain configuration settings</span></a>.</p>
+</div>
+</div>
+<div class="section" id="step-1-install-kubectl-and-minikube">
+<h2>Step 1: Install kubectl and Minikube<a class="headerlink" href="#step-1-install-kubectl-and-minikube" title="Permalink to this headline">¶</a></h2>
+<p>This step summarizes the kubectl and Minikube installation procedures.
+For more information, see the
+<a class="reference external" href="https://kubernetes.io/docs/home/">Kubernetes documentation</a>.</p>
+<ol class="arabic">
+<li><p>Install a virtual machine (VM) hypervisor, such as VirtualBox, VMWare,
+KVM-QEMU, or Hyperkit. The steps in this procedure assume
+<a class="reference external" href="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a> (the default).</p></li>
+<li><p>Install the <code class="docutils literal notranslate"><span class="pre">kubectl</span></code> command as described in the Kubernetes document
+<a class="reference external" href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">Install kubectl</a>.</p>
+<ul>
+<li><p>Linux quick reference:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
+&amp;&amp; chmod +x kubectl &amp;&amp; sudo cp kubectl /usr/local/bin/ &amp;&amp; rm kubectl
+</pre></div>
+</div>
+</li>
+<li><p>Mac quick reference:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl \
+&amp;&amp; chmod +x kubectl &amp;&amp; sudo cp kubectl /usr/local/bin/ &amp;&amp; rm kubectl
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>Install <code class="docutils literal notranslate"><span class="pre">minikube</span></code> as described in the Kubernetes document
+<a class="reference external" href="https://kubernetes.io/docs/tasks/tools/install-minikube/">Install Minikube</a>.</p>
+<ul>
+<li><p>Linux quick reference:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.2.6/minikube-linux-amd64 \
+&amp;&amp; chmod +x minikube &amp;&amp; sudo cp minikube /usr/local/bin/ &amp;&amp; rm minikube
+</pre></div>
+</div>
+</li>
+<li><p>Mac quick reference:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.2.6/minikube-darwin-amd64 \
+&amp;&amp; chmod +x minikube &amp;&amp; sudo mv minikube /usr/local/bin/
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="step-2-start-and-test-minikube">
+<h2>Step 2: Start and Test Minikube<a class="headerlink" href="#step-2-start-and-test-minikube" title="Permalink to this headline">¶</a></h2>
+<p>This step summarizes the procedure to start Minikube and test basic
+functionality. If you have problems, see the Kubernetes document
+<a class="reference external" href="https://kubernetes.io/docs/setup/minikube/">Running Kubernetes Locally via Minikube</a>.</p>
+<ol class="arabic">
+<li><p>Start Minikube.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> minikube start
+</pre></div>
+</div>
+</li>
+<li><p>Start Minikube’s “Hello, World” test cluster, <code class="docutils literal notranslate"><span class="pre">hello-minikube</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl run hello-minikube --image<span class="o">=</span>k8s.gcr.io/echoserver:1.10 --port<span class="o">=</span><span class="m">8080</span>
+
+<span class="gp">$</span> kubectl expose deployment hello-minikube --type<span class="o">=</span>NodePort
+</pre></div>
+</div>
+</li>
+<li><p>Check the list of pods.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl get pods
+</pre></div>
+</div>
+<p>After the pod is up and running, the output of this command should display a
+pod starting with <code class="docutils literal notranslate"><span class="pre">hello-minikube...</span></code>.</p>
+</li>
+<li><p>Run a <code class="docutils literal notranslate"><span class="pre">curl</span></code> test to the cluster.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl $(minikube service hello-minikube --url)
+</pre></div>
+</div>
+</li>
+<li><p>Remove the <code class="docutils literal notranslate"><span class="pre">hello-minikube</span></code> cluster.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl delete services hello-minikube
+
+<span class="gp">$</span> kubectl delete deployment hello-minikube
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="step-3-download-the-sawtooth-configuration-file">
+<h2>Step 3: Download the Sawtooth Configuration File<a class="headerlink" href="#step-3-download-the-sawtooth-configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>Download the Kubernetes configuration file for a single-node environment:
+<a class="reference external" href="./sawtooth-kubernetes-default.yaml">sawtooth-kubernetes-default.yaml</a>.</p>
+<p>This file defines the process for constructing a one-node Sawtooth environment
+with following containers:</p>
+<ul class="simple">
+<li><p>A single validator using <a class="reference internal" href="../glossary.html#term-Devmode-consensus"><span class="xref std std-term">Devmode consensus</span></a></p></li>
+<li><p>A REST API connected to the validator</p></li>
+<li><p>The Settings transaction processor (<code class="docutils literal notranslate"><span class="pre">sawtooth-settings</span></code>)</p></li>
+<li><p>The IntegerKey transaction processor (<code class="docutils literal notranslate"><span class="pre">intkey-tp-python</span></code>)</p></li>
+<li><p>The XO transaction processor (<code class="docutils literal notranslate"><span class="pre">xo-tp-python</span></code>)</p></li>
+<li><p>A shell container for running Sawtooth commands (a command-line client)</p></li>
+</ul>
+<p>The configuration file also specifies the container images to download
+(from DockerHub) and the network settings needed for the containers to
+communicate correctly.</p>
+</div>
+<div class="section" id="step-4-start-the-sawtooth-cluster">
+<h2>Step 4: Start the Sawtooth Cluster<a class="headerlink" href="#step-4-start-the-sawtooth-cluster" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Kubernetes configuration file handles the Sawtooth startup steps such as
+generating keys and creating a genesis block. To learn about the full
+Sawtooth startup process, see <a class="reference internal" href="ubuntu.html"><span class="doc">Using Ubuntu for a Single Sawtooth Node</span></a>.</p>
+</div>
+<p>Use these steps to start Sawtooth:</p>
+<ol class="arabic">
+<li><p>Change your working directory to the same directory where you saved the
+configuration file.</p></li>
+<li><p>Make sure that Minikube is running.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> minikube status
+<span class="go">minikube: Running</span>
+<span class="go">cluster: Running</span>
+<span class="go">kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.100</span>
+</pre></div>
+</div>
+<p>If necessary, start it with <code class="docutils literal notranslate"><span class="pre">minikube</span> <span class="pre">start</span></code>.</p>
+</li>
+<li><p>Start Sawtooth in a local Kubernetes cluster.</p>
+<div class="highlight-console notranslate" id="restart-kube-label"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl apply -f sawtooth-kubernetes-default.yaml
+</pre></div>
+</div>
+</li>
+<li><p>(Optional) Start the Minikube dashboard.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> minikube dashboard
+</pre></div>
+</div>
+<p>This command opens the dashboard in your default browser.
+The overview page shows the Sawtooth deployment (<code class="docutils literal notranslate"><span class="pre">sawtooth-0</span></code>)
+and pod (<code class="samp docutils literal notranslate"><span class="pre">sawtooth-0-</span><em><span class="pre">POD-ID</span></em></code>).</p>
+</li>
+</ol>
+</div>
+<div class="section" id="step-5-connect-to-the-kubernetes-shell-container">
+<span id="connect-to-shell-container-k8s"></span><h2>Step 5: Connect to the Kubernetes Shell Container<a class="headerlink" href="#step-5-connect-to-the-kubernetes-shell-container" title="Permalink to this headline">¶</a></h2>
+<p>Connect to the shell container.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ kubectl exec -it $(kubectl get pods | awk &#39;/sawtooth-0/{print $1}&#39;) --container sawtooth-shell -- bash
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the rest of this procedure, the prompt <code class="docutils literal notranslate"><span class="pre">root&#64;sawtooth-0#</span></code> marks the
+commands that should be run in a Sawtooth container.
+(The actual prompt is similar to <code class="docutils literal notranslate"><span class="pre">root&#64;sawtooth-0-5ff6d9d578-5w45k:/#</span></code>.)</p>
+</div>
+</div>
+<div class="section" id="step-6-confirm-connectivity-to-the-rest-api-for-kubernetes">
+<span id="confirming-connectivity-k8s-label"></span><h2>Step 6: Confirm Connectivity to the REST API (for Kubernetes)<a class="headerlink" href="#step-6-confirm-connectivity-to-the-rest-api-for-kubernetes" title="Permalink to this headline">¶</a></h2>
+<p>To verify that you can reach the REST API, run this <code class="docutils literal notranslate"><span class="pre">curl</span></code> command from the
+shell container:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> curl http://localhost:8008/blocks
+</pre></div>
+</div>
+<p>If the validator and REST API are running and reachable, the output for each
+command should be similar to this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">{</span>
+<span class="go">  &quot;data&quot;: [</span>
+<span class="go">    {</span>
+<span class="go">      &quot;batches&quot;: [],</span>
+<span class="go">      &quot;header&quot;: {</span>
+<span class="go">        &quot;batch_ids&quot;: [],</span>
+<span class="go">        &quot;block_num&quot;: 0,</span>
+<span class="go">        &quot;mconsensus&quot;: &quot;R2VuZXNpcw==&quot;,</span>
+<span class="go">        &quot;previous_block_id&quot;: &quot;0000000000000000&quot;,</span>
+<span class="go">        &quot;signer_public_key&quot;: &quot;03061436bef428626d11c17782f9e9bd8bea55ce767eb7349f633d4bfea4dd4ae9&quot;,</span>
+<span class="go">        &quot;state_root_hash&quot;: &quot;708ca7fbb701799bb387f2e50deaca402e8502abe229f705693d2d4f350e1ad6&quot;</span>
+<span class="go">      },</span>
+<span class="go">      &quot;header_signature&quot;: &quot;119f076815af8b2c024b59998e2fab29b6ae6edf3e28b19de91302bd13662e6e43784263626b72b1c1ac120a491142ca25393d55ac7b9f3c3bf15d1fdeefeb3b&quot;</span>
+<span class="go">    }</span>
+<span class="go">  ],</span>
+<span class="go">  &quot;head&quot;: &quot;119f076815af8b2c024b59998e2fab29b6ae6edf3e28b19de91302bd13662e6e43784263626b72b1c1ac120a491142ca25393d55ac7b9f3c3bf15d1fdeefeb3b&quot;,</span>
+<span class="go">  &quot;link&quot;: &quot;http://localhost:8008/blocks?head=119f076815af8b2c024b59998e2fab29b6ae6edf3e28b19de91302bd13662e6e43784263626b72b1c1ac120a491142ca25393d55ac7b9f3c3bf15d1fdeefeb3b&quot;,</span>
+<span class="go">  &quot;paging&quot;: {</span>
+<span class="go">    &quot;start_index&quot;: 0,</span>
+<span class="go">    &quot;total_count&quot;: 1</span>
+<span class="go">  }</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>If the validator process or the validator container is not running, the
+<code class="docutils literal notranslate"><span class="pre">curl</span></code> command will time out or return nothing.</p>
+</div>
+<div class="section" id="step-7-test-basic-sawtooth-functionality">
+<h2>Step 7: Test Basic Sawtooth Functionality<a class="headerlink" href="#step-7-test-basic-sawtooth-functionality" title="Permalink to this headline">¶</a></h2>
+<p>Run these commands from the shell container.</p>
+<ol class="arabic">
+<li><p>Display the list of blocks on the Sawtooth blockchain.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> sawtooth block list
+</pre></div>
+</div>
+<p>Because this is a new blockchain, there is only one block. Block 0 is the
+<a class="reference internal" href="../glossary.html#term-genesis-block"><span class="xref std std-term">genesis block</span></a>. The output is similar to this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">NUM  BLOCK_ID                                                                                                                          BATS  TXNS  SIGNER</span>
+<span class="go">0    20d7b6657721758d1ad1a3392daadd57473d84e1e1c8c58c14ec862ff7fbf44a3bef4d82c40052dd8fc2808191f830447df59fe074aea02a000ff64bc458e256  1     1     025f80...</span>
+</pre></div>
+</div>
+</li>
+<li><p>Copy the block ID from the previous output, then use the following command to
+display more information about the block.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> sawtooth block show <span class="o">{</span>BLOCK-ID<span class="o">}</span>
+</pre></div>
+</div>
+<p>The output of this command is quite long, because it includes all data stored
+under that block.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">batches:</span>
+<span class="go">- header:</span>
+<span class="go">    signer_public_key: 03f257dee6f021b579cb59d34f2489603892d44bb2e181eaa444e1bb4f4b4b812d</span>
+<span class="go">    transaction_ids:</span>
+<span class="go">    - 3f6c2f60a66317f09d052757dba605d0c1c56caa38cdfdefbd7f4511a830a1fc22d8e13ff86201ac309344605b5df77a85e59799c16c3ba9e3cba950b709be04</span>
+<span class="go">  header_signature: 6e5446e99bae1fe2d7d4a7561880bd069cc404e099dd4380a7f491dd0588584b0b6b558d636eb42720d6c839c6755182d3004b905429088413df00f82ec0fd1e</span>
+<span class="go">   ...</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>At this point, your environment is ready for experimenting with Sawtooth.
+The rest of this section introduces you to Sawtooth functionality.</p>
+<ul class="simple">
+<li><p>To use Sawtooth client commands to create and submit transactions, view block
+information, and check state data, see <a class="reference internal" href="#sawtooth-client-kube-label"><span class="std std-ref">Step 8: Use Sawtooth Commands as a Client</span></a>.</p></li>
+<li><p>To check the Sawtooth components, see <a class="reference internal" href="#check-status-kube-label"><span class="std std-ref">Step 9: Verify the Sawtooth Components</span></a>.</p></li>
+<li><p>For information on the Sawtooth logs, see <a class="reference internal" href="#examine-logs-kube-label"><span class="std std-ref">Step 10: Examine Sawtooth Logs</span></a>.</p></li>
+<li><p>To stop the Sawtooth environment, see <a class="reference internal" href="#stop-sawtooth-kube-label"><span class="std std-ref">Step 11: Stop the Sawtooth Kubernetes Cluster</span></a>.</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Any work done in this environment will be lost once you stop Minikube and
+delete the Sawtooth cluster. In order to use this environment for application
+development, you would need to take additional steps, such as defining volume
+storage. See the
+<a class="reference external" href="https://kubernetes.io/docs/home/">Kubernetes documentation</a> for more
+information.</p>
+</div>
+</div>
+<div class="section" id="step-8-use-sawtooth-commands-as-a-client">
+<span id="sawtooth-client-kube-label"></span><h2>Step 8: Use Sawtooth Commands as a Client<a class="headerlink" href="#step-8-use-sawtooth-commands-as-a-client" title="Permalink to this headline">¶</a></h2>
+<p>Sawtooth includes commands that act as a client interface for an application.
+This step describes how to use the <code class="docutils literal notranslate"><span class="pre">intkey</span></code> and <code class="docutils literal notranslate"><span class="pre">sawtooth</span></code> commands to
+create and submit transactions, display blockchain and block data, and examine
+global state data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">--help</span></code> option with any Sawtooth command to display the available
+options and subcommands.</p>
+</div>
+<p>To run the commands in this step, connect to the shell container as described in
+an earlier step.</p>
+<div class="section" id="creating-and-submitting-transactions-with-intkey">
+<h3>Creating and Submitting Transactions with intkey<a class="headerlink" href="#creating-and-submitting-transactions-with-intkey" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">intkey</span></code> command creates and submits IntegerKey transactions for testing
+purposes.</p>
+<ol class="arabic">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">intkey</span> <span class="pre">create_batch</span></code> to prepare batches of transactions that set
+a few keys to random values, then randomly increment and decrement those
+values. These batches are saved locally in the file <code class="docutils literal notranslate"><span class="pre">batches.intkey</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> intkey create_batch --count <span class="m">10</span> --key-count <span class="m">5</span>
+<span class="go">Writing to batches.intkey...</span>
+</pre></div>
+</div>
+</li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">intkey</span> <span class="pre">load</span></code> to submit the batches to the validator, which commits
+these batches of transactions as new blocks on the blockchain.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> intkey load -f batches.intkey
+<span class="go">batches: 11 batch/sec: 141.7800162868952</span>
+</pre></div>
+</div>
+</li>
+<li><p>Display the list of blocks to verify that the new blocks appear on the
+blockchain.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> sawtooth block list
+<span class="go">NUM  BLOCK_ID                                                                                                                          BATS  TXNS  SIGNER</span>
+<span class="go">8    b46c58121d7bf04cf8489a8b937f1478e8699edd0cf023e2cac9b44827caadd441b8c013a4f6e976d799bb59ad602cfb2ea7a765d7abeb954f9013ded464e94c  1     8     025f80...</span>
+<span class="go">7    a0d0e594672c5ae45ff5dfaa9c2e26d148e80190dfe88bc9ac915ed6a9d7b33c27e24d1c891e6b24dcaf59e0e6a6128aab956010b100daf81e9307b66b04d519  1     2     025f80...</span>
+<span class="go">6    0a7739e9d778d65c0fa5ba21e18a8d375072907cec2ec3cbdd8dbcd20f81f2c42d30a4a65b2a63a7aa69d398677542fbf05efbd4a9b7f4aac1fb955b7913d7aa  1     8     025f80...</span>
+<span class="go">5    71efa1c3297e95b7ffb7014ab425e87ff8240a51fb30faf280038882c9bfb3a060fe3ecee12bb9b064195f13ace582c0ab0a3b25808bf87081e33987d8313472  1     3     025f80...</span>
+<span class="go">4    11f177a274d893c22d9bca763a88fdbf020922c68f2231ce0ca0aaa4d80559e52fa67fa059e23ceb0d006acf0b4f2bf315b77ced24959f4a556ac59bd9312356  2     3     025f80...</span>
+<span class="go">3    e3b7692bb070c3d51bf3d975e6cf974d763f893232d305d36bcdbbc2b2859ad425bb0f5aaf068114d05056133a6c8ca84cfdcda6ce7a888a6486090f1f188242  2     5     025f80...</span>
+<span class="go">2    06506f0599ad59b92c13bc2a96ca0c4ca59cdc8c8065df1dc27349c88566293f498c0e3dfe3f06be9b5e889beec0369dd9b94decc309aceb6f57e238e9037e04  1     3     025f80...</span>
+<span class="go">1    327aede38ab395bbdba711911414a9a68166b5378af4bdc15206089a2adf0cb62448f9fc4d749f0c8677849f7fe19c734f05f86687201666e8899437f903102d  2     8     025f80...</span>
+<span class="go">0    20d7b6657721758d1ad1a3392daadd57473d84e1e1c8c58c14ec862ff7fbf44a3bef4d82c40052dd8fc2808191f830447df59fe074aea02a000ff64bc458e256  1     1     025f80...</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="submitting-transactions-with-sawtooth-batch-submit">
+<h3>Submitting Transactions with sawtooth batch submit<a class="headerlink" href="#submitting-transactions-with-sawtooth-batch-submit" title="Permalink to this headline">¶</a></h3>
+<p>In the example above, the <code class="docutils literal notranslate"><span class="pre">intkey</span> <span class="pre">create_batch</span></code> command created the file
+<code class="docutils literal notranslate"><span class="pre">batches.intkey</span></code>.  Rather than using <code class="docutils literal notranslate"><span class="pre">intkey</span> <span class="pre">load</span></code> to submit these
+transactions, you could use <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">batch</span> <span class="pre">submit</span></code> to submit them.</p>
+<ol class="arabic">
+<li><p>As before, create a batch of transactions:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> intkey create_batch --count <span class="m">6</span> --key-count <span class="m">3</span>
+<span class="go">Writing to batches.intkey...</span>
+</pre></div>
+</div>
+</li>
+<li><p>Submit the batch file with <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">batch</span> <span class="pre">submit</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> sawtooth batch submit -f batches.intkey
+<span class="go">batches: 7,  batch/sec: 216.80369536716367</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="viewing-blockchain-and-block-data-with-sawtooth-block">
+<h3>Viewing Blockchain and Block Data with sawtooth block<a class="headerlink" href="#viewing-blockchain-and-block-data-with-sawtooth-block" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">block</span></code> command displays information about the blocks stored on
+the blockchain.</p>
+<ol class="arabic">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">block</span> <span class="pre">list</span></code> again to display the list of blocks stored
+in state.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> sawtooth block list
+</pre></div>
+</div>
+<p>The output shows the block number and block ID, as in this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">NUM  BLOCK_ID                                                                                                                          BATS  TXNS  SIGNER</span>
+<span class="go">8    b46c58121d7bf04cf8489a8b937f1478e8699edd0cf023e2cac9b44827caadd441b8c013a4f6e976d799bb59ad602cfb2ea7a765d7abeb954f9013ded464e94c  1     8     025f80...</span>
+<span class="go">7    a0d0e594672c5ae45ff5dfaa9c2e26d148e80190dfe88bc9ac915ed6a9d7b33c27e24d1c891e6b24dcaf59e0e6a6128aab956010b100daf81e9307b66b04d519  1     2     025f80...</span>
+<span class="go">6    0a7739e9d778d65c0fa5ba21e18a8d375072907cec2ec3cbdd8dbcd20f81f2c42d30a4a65b2a63a7aa69d398677542fbf05efbd4a9b7f4aac1fb955b7913d7aa  1     8     025f80...</span>
+<span class="go">5    71efa1c3297e95b7ffb7014ab425e87ff8240a51fb30faf280038882c9bfb3a060fe3ecee12bb9b064195f13ace582c0ab0a3b25808bf87081e33987d8313472  1     3     025f80...</span>
+<span class="go">4    11f177a274d893c22d9bca763a88fdbf020922c68f2231ce0ca0aaa4d80559e52fa67fa059e23ceb0d006acf0b4f2bf315b77ced24959f4a556ac59bd9312356  2     3     025f80...</span>
+<span class="go">3    e3b7692bb070c3d51bf3d975e6cf974d763f893232d305d36bcdbbc2b2859ad425bb0f5aaf068114d05056133a6c8ca84cfdcda6ce7a888a6486090f1f188242  2     5     025f80...</span>
+<span class="go">2    06506f0599ad59b92c13bc2a96ca0c4ca59cdc8c8065df1dc27349c88566293f498c0e3dfe3f06be9b5e889beec0369dd9b94decc309aceb6f57e238e9037e04  1     3     025f80...</span>
+<span class="go">1    327aede38ab395bbdba711911414a9a68166b5378af4bdc15206089a2adf0cb62448f9fc4d749f0c8677849f7fe19c734f05f86687201666e8899437f903102d  2     8     025f80...</span>
+<span class="go">0    20d7b6657721758d1ad1a3392daadd57473d84e1e1c8c58c14ec862ff7fbf44a3bef4d82c40052dd8fc2808191f830447df59fe074aea02a000ff64bc458e256  1     1     025f80...</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>From the output generated by <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">block</span> <span class="pre">list</span></code>, copy the ID of a block
+you want to view, then paste it in place of <code class="docutils literal notranslate"><span class="pre">{BLOCK_ID}</span></code> in the following
+command. In this example, block 1 shows the first <code class="docutils literal notranslate"><span class="pre">intkey</span></code> block (from
+the previous step) with 5 transactions</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> sawtooth block show 327aede38ab395bbdba711911414a9a68166b5378af4bdc15206089a2adf0cb62448f9fc4d749f0c8677849f7fe19c734f05f86687201666e8899437f903102d
+</pre></div>
+</div>
+<p>The output of this command can be quite long, because it includes all data
+stored under that block. This is a truncated example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">batches:</span>
+<span class="go">- header:</span>
+<span class="go">    signer_public_key: 0383b79f4ea95d8fcb409233703fb4c0606b403f485541b62e582600a35742642a</span>
+<span class="go">    transaction_ids:</span>
+<span class="go">    - b1626c1a9ab389556208b05bc3973e82177a152b19a061be53e351884cb506a241074f36eae62de2bfd85873bc916f803b1f3c53840f2ab6f03b21513dc1ac7a</span>
+<span class="go">    - 2e481fd71c30d3e39399f90654ccf9c0b64e6e67f54576a7e9004fe81bf3145023e9012ec89df898e1143126b3497c5e4acf2e21ec1d27938610c0bfc73ea8c8</span>
+<span class="go">    - 5b8a2ff9fafa2184640b3e917b993abc5dfd07b751145c328183670c499fdc9827711a52e927a233d62d4d22e55ed1b53b9cae4caa66d0f237f0968bbe676475</span>
+<span class="go">    - bea74bc920297a16294b915df1fcf267f3a6e701e769539d2e33f41aee01521e6301b734ef01edc74354ab77981eb1a4527da1f64d17d446b2b33d2d58e97051</span>
+<span class="go">    - 020732f598e9ff3bc0b41614ab043f3d425b7a655561da313965f0dab667c48940060a3e86d2feb7c7681efa24cdf3b1c1093ca19ee5eb6d87f555e50dde9194</span>
+<span class="go">  header_signature: 0362c4f928d4e39b1d13746a7023b1d8c2b5e798fc968dd36b2ea13e51f7a8d21d2865f71a4a6f00c11348699047d774eb4ebb3708c914558e81db0e04c4ff03</span>
+<span class="go">  trace: false</span>
+<span class="go">  transactions:</span>
+<span class="go">  - header:</span>
+<span class="go">      batcher_public_key: 0383b79f4ea95d8fcb409233703fb4c0606b403f485541b62e582600a35742642a</span>
+<span class="go">      dependencies: []</span>
+<span class="go">      family_name: intkey</span>
+<span class="go">      family_version: &#39;1.0&#39;</span>
+<span class="go">       .</span>
+<span class="go">       .</span>
+<span class="go">       .</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="viewing-state-data-with-sawtooth-state">
+<h3>Viewing State Data with sawtooth state<a class="headerlink" href="#viewing-state-data-with-sawtooth-state" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">state</span></code> command lets you display state data. Sawtooth stores
+state data in a <a class="reference internal" href="../glossary.html#term-Merkle-Radix-tree"><span class="xref std std-term">Merkle-Radix tree</span></a> (for more information, see
+<a class="reference internal" href="../architecture/global_state.html"><span class="doc">Global State</span></a>).</p>
+<ol class="arabic">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">state</span> <span class="pre">list</span></code> to display addresses in state with their size
+and associated data. The default output format truncates each line; use
+<code class="docutils literal notranslate"><span class="pre">--format</span></code> with <code class="docutils literal notranslate"><span class="pre">csv</span></code>, <code class="docutils literal notranslate"><span class="pre">json</span></code>, or <code class="docutils literal notranslate"><span class="pre">yaml</span></code> to display the entire line.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> sawtooth state list --format csv
+</pre></div>
+</div>
+<p>The output will be similar to this truncated example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">ADDRESS,SIZE,DATA</span>
+<span class="go">000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c12840f169a04216b7,110,b&#39;\nl\n&amp;sawtooth.settings.vote.authorized_keys\x12B03f257dee6f021b579cb59d34f2489603892d44bb2e181eaa444e1bb4f4b4b812d&#39;</span>
+<span class="go">1cf12601b514e0270939cf20cacf61ce341f68f383cd1839f0b0cbb363792ef26fb711,11,b&#39;\xa1fxAdnqS\x19N\xaf&#39;</span>
+<span class="go">1cf12604ff7d37163341d6002ff1d8fb07611bbb2bdac0d7ce181671bc728cf2c0d849,11,b&#39;\xa1fryxDcP\x19%\xd1&#39;</span>
+<span class="go">1cf1267f20354576067b5cd3cc53c30657a159d23a9a0bc02ee6693dae132004f73e90,13,b&#39;\xa1fFJcKOs\x1a\x00\x01B\xbb&#39;</span>
+<span class="go">1cf126a2ef5597d9095b6dd7b65d1fa0320ec8624c8c9ad1c2195f872ab83faee0ab90,13,b&#39;\xa1fRxmfbf\x1a\x00\x01S\x86&#39;</span>
+<span class="go">1cf126aa8fe078d07e4e1aad84d9b0c1ca192cfe4ed72cc93f2354bdecd7295c110f79,11,b&#39;\xa1fOqcdTQ\x19\xab-&#39;</span>
+<span class="go">1cf126ab6c1df0a237b170c783b4ec6c010c379159d942f67d812edac9969496a9ff88,11,b&#39;\xa1fvHgUhX\x19\x91\xaf&#39;</span>
+<span class="go">1cf126b3c1240bebf2a1d4ca3b3f6b83ce1ebee9764ac36f1076e6c7202bf73f0f5117,11,b&#39;\xa1fjKLuTS\x19\xe6_&#39;</span>
+<span class="go">1cf126d3d7b97e3e3c6bc2dd3b750c17f9c311aee81aee90cd2c5bf53ed4e5ec6d73b3,11,b&#39;\xa1fVVpUdq\x19\xd2\xc5&#39;</span>
+<span class="go">1cf126d4e2b632193b17b17ae0c9c1331f8e37915fe547568fab6322b516a57e108d88,11,b&#39;\xa1fRoYclW\x19\xc6\x1e&#39;</span>
+<span class="go">1cf126d7a0dbe68f8ac9d207843054b24e211c9821b851cb748f1f7f9c528a37fe0e4a,13,b&#39;\xa1fYhuGwm\x1a\x00\x01\x18\xa9&#39;</span>
+<span class="go">1cf126dbe0c0b5dc8aeaa176d4cd98046aef4d12a6921e357344a56c8520df9d04b61f,13,b&#39;\xa1fDWtxbO\x1a\x00\x01p\n&#39;</span>
+<span class="go">1cf126ef1db314433d0a887ec7f2d105600898b486e72b9eee02160dd93c7572c450b8,11,b&#39;\xa1fcOHrSu\x19\xd7\x92&#39;</span>
+<span class="go">1cf126f4fef1dcf6fa07442d004120f48129996b81480209252871dd51b7d851c4b216,13,b&#39;\xa1fXqhSBG\x1a\x00\x01 \xec&#39;</span>
+<span class="gp gp-VirtualEnv">(data for head block: &quot;100fae26d4cd15808dc59c1221a289ccefc4ac5643bd80b2d6c7e1c55e6c349b0a1082cd5e787c32233c5048279bf8aea5c9fe2f9e495aed2d7363d1918b3f90&quot;)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">state</span> <span class="pre">show</span></code> to view state data at a specific address (a node
+in the Merkle-Radix database). Copy the address from the output of
+<code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">state</span> <span class="pre">list</span></code>, then paste it in place of <code class="docutils literal notranslate"><span class="pre">{STATE_ADDRESS}</span></code> in
+the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">root@sawtooth-0#</span> sawtooth state show <span class="o">{</span>STATE_ADDRESS<span class="o">}</span>
+</pre></div>
+</div>
+<p>The output shows the bytes stored at that address and the block ID of the
+“chain head” that the current state is tied to, as in this example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">DATA: &quot;b&#39;\xa1fcCTdcH\x192B&#39;&quot;</span>
+<span class="go">HEAD: &quot;0c4364c6d5181282a1c7653038ec9515cb0530c6bfcb46f16e79b77cb524491676638339e8ff8e3cc57155c6d920e6a4d1f53947a31dc02908bcf68a91315ad5&quot;</span>
+</pre></div>
+</div>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">sawtooth</span> <span class="pre">block</span> <span class="pre">show</span></code> (as described above) with block number
+of the chain head to view more information about that block.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="step-9-verify-the-sawtooth-components">
+<span id="check-status-kube-label"></span><h2>Step 9: Verify the Sawtooth Components<a class="headerlink" href="#step-9-verify-the-sawtooth-components" title="Permalink to this headline">¶</a></h2>
+<p>To check whether a Sawtooth component is running, connect to the component’s
+container and run the <code class="docutils literal notranslate"><span class="pre">ps</span></code> command.</p>
+<ol class="arabic">
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">kubectl</span> <span class="pre">exec</span></code> command from your computer to connect to a Sawtooth
+container. On the Kubernetes dashboard, the Pods page displays the container
+names.</p>
+<p>For example, connect to the validator container with the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ kubectl exec -it $(kubectl get pods | awk &#39;/sawtooth-0/{print $1}&#39;) --container sawtooth-validator -- bash
+</pre></div>
+</div>
+</li>
+<li><p>After connecting to the container, you can use <code class="docutils literal notranslate"><span class="pre">ps</span></code> to verify that the
+Sawtooth component is running.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>root@sawtooth-0# ps -A fw
+</pre></div>
+</div>
+<p>In the <code class="docutils literal notranslate"><span class="pre">sawtooth-validator</span></code> container, the output resembles the following
+example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>PID TTY      STAT   TIME COMMAND
+ 77 pts/0    Ss     0:00 bash
+ 96 pts/0    R+     0:00  \_ ps -A fw
+  1 ?        Ss     0:00 bash -c sawadm keygen &amp;&amp; if [ ! -e config-genesis.batch ]; then sawset genesis -k /etc/sawtooth/keys/vali
+ 27 ?        Sl     0:17 /usr/bin/python3 /usr/bin/sawtooth-validator -vv --endpoint tcp://10.96.15.213:8800 --bind component:tcp:
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="step-10-examine-sawtooth-logs">
+<span id="examine-logs-kube-label"></span><h2>Step 10: Examine Sawtooth Logs<a class="headerlink" href="#step-10-examine-sawtooth-logs" title="Permalink to this headline">¶</a></h2>
+<p>The Sawtooth log files are available on the Kubernetes dashboard.</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p>From the dashboard’s overview page, click on the Sawtooth pod name.</p></li>
+<li><p>On the Sawtooth pod page, click on the LOGS button.</p></li>
+<li><p>On Logs page, select the Sawtooth component. For example, to view the
+validator log messages, select <code class="docutils literal notranslate"><span class="pre">sawtooth-validator</span></code>.</p>
+<p>The following extract shows the genesis block being processed and
+committed to the blockchain.</p>
+<blockquote>
+<div><div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">writing file: /etc/sawtooth/keys/validator.priv</span>
+<span class="go">writing file: /etc/sawtooth/keys/validator.pub</span>
+<span class="go">Generated config-genesis.batch</span>
+<span class="go"> .</span>
+<span class="go"> .</span>
+<span class="go"> .</span>
+<span class="go">[2018-08-16 19:12:51.106 INFO     genesis] Producing genesis block from /var/lib/sawtooth/genesis.batch</span>
+<span class="go">[2018-08-16 19:12:51.106 DEBUG    genesis] Adding 1 batches</span>
+<span class="go">[2018-08-16 19:12:51.107 DEBUG    executor] no transaction processors registered for processor type sawtooth_settings: 1.0</span>
+<span class="go">[2018-08-16 19:12:51.108 INFO     executor] Waiting for transaction processor (sawtooth_settings, 1.0)</span>
+<span class="go">[2018-08-16 19:12:51.120 INFO     processor_handlers] registered transaction processor: connection_id=57ec10822a6345a908533ea00c44dbdacbe029e6073b3b709bd144e7275aae6f5f1a01de529664861c7598eb4e87dcd229a474fb868958cbee72b0b307311a5e, family=xo, version=1.0, namespaces=[&#39;5b7349&#39;]</span>
+<span class="go">[2018-08-16 19:12:51.191 INFO     processor_handlers] registered transaction processor: connection_id=bdbf6d96c1b456a311e7a12842765d8061af1bbefb47f9923379ccdf9f07076da1b6a65028ebd31fe5f84cdb3adfdfa1cc9d98b1b46265b49e47250e04e08910, family=intkey, version=1.0, namespaces=[&#39;1cf126&#39;]</span>
+<span class="go">[2018-08-16 19:12:51.198 INFO     processor_handlers] registered transaction processor: connection_id=084ecc34848d7293821a3f2c58adc4f703572a368783afd901004bfd982e82ce5fe6e1f6e6e08de9fe6fc25c98ae20e55fa493f4f510824a2bb4a5fe00210c81, family=sawtooth_settings, version=1.0, namespaces=[&#39;000000&#39;]</span>
+<span class="go">[2018-08-16 19:12:51.235 DEBUG    genesis] Produced state hash 0e682c25c3390a718ec560bb45d5180924f255210d9d4521eaac019800603731 for genesis block.</span>
+<span class="go">[2018-08-16 19:12:51.238 INFO     genesis] Genesis block created: 20d7b6657721758d1ad1a3392daadd57473d84e1e1c8c58c14ec862ff7fbf44a3bef4d82c40052dd8fc2808191f830447df59fe074aea02a000ff64bc458e256 (block_num:0, state:0e682c25c3390a718ec560bb45d5180924f255210d9d4521eaac019800603731, previous_block_id:0000000000000000)</span>
+<span class="go">[2018-08-16 19:12:51.238 DEBUG    chain_id_manager] writing block chain id</span>
+<span class="go">[2018-08-16 19:12:51.239 DEBUG    genesis] Deleting genesis data.</span>
+<span class="go">[2018-08-16 19:12:51.239 DEBUG    selector_events] Using selector: ZMQSelector</span>
+<span class="go">[2018-08-16 19:12:51.240 INFO     interconnect] Listening on tcp://eth0:8800</span>
+<span class="go">[2018-08-16 19:12:51.241 DEBUG    dispatch] Added send_message function for connection ServerThread</span>
+<span class="go">[2018-08-16 19:12:51.241 DEBUG    dispatch] Added send_last_message function for connection ServerThread</span>
+<span class="go">[2018-08-16 19:12:51.243 DEBUG    gossip] Number of peers (0) below minimum peer threshold (3). Doing topology search.</span>
+<span class="go">[2018-08-16 19:12:51.244 INFO     chain] Chain controller initialized with chain head: 20d7b6657721758d1ad1a3392daadd57473d84e1e1c8c58c14ec862ff7fbf44a3bef4d82c40052dd8fc2808191f830447df59fe074aea02a000ff64bc458e256 (block_num:0, state:0e682c25c3390a718ec560bb45d5180924f255210d9d4521eaac019800603731, previous_block_id:0000000000000000)</span>
+<span class="go">[2018-08-16 19:12:51.244 INFO     publisher] Now building on top of block: 20d7b6657721758d1ad1a3392daadd57473d84e1e1c8c58c14ec862ff7fbf44a3bef4d82c40052dd8fc2808191f830447df59fe074aea02a000ff64bc458e256 (block_num:0, state:0e682c25c3390a718ec560bb45d5180924f255210d9d4521eaac019800603731, previous_block_id:0000000000000000)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+<p>You can also access a component’s log messages by connecting to the container
+and examining the local log files. In each container, the Sawtooth log files for
+that component are stored in the directory <code class="docutils literal notranslate"><span class="pre">/var/log/sawtooth</span></code>. Each component
+(validator, REST API, and transaction processors) has both a debug log and an
+error log.</p>
+<p>For example, you can connect to the validator container and display the contents
+of <code class="docutils literal notranslate"><span class="pre">/var/log/sawtooth</span></code>:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl <span class="nb">exec</span> -it <span class="k">$(</span>kubectl get pods <span class="p">|</span> awk <span class="s1">&#39;/sawtooth-0/{print $1}&#39;</span><span class="k">)</span> --container sawtooth-validator -- bash
+<span class="gp">root@sawtooth-0#</span> ls -1 /var/log/sawtooth
+<span class="go">validator-debug.log</span>
+<span class="go">validator-error.log</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By convention, the log files for the transaction processors use a random
+string to make the log file names unique. For example:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl <span class="nb">exec</span> -it <span class="k">$(</span>kubectl get pods <span class="p">|</span> awk <span class="s1">&#39;/sawtooth-0/{print $1}&#39;</span><span class="k">)</span> --container sawtooth-intkey-tp-python -- bash
+
+<span class="gp">root@sawtooth-0#</span> ls -1 /var/log/sawtooth
+<span class="go">intkey-ae98c3726f9743c4-debug.log</span>
+<span class="go">intkey-ae98c3726f9743c4-error.log</span>
+</pre></div>
+</div>
+</div>
+<p>For more information on log files, see
+<a class="reference internal" href="../sysadmin_guide/log_configuration.html"><span class="doc">Log Configuration File</span></a>.</p>
+</div>
+<div class="section" id="step-11-stop-the-sawtooth-kubernetes-cluster">
+<span id="stop-sawtooth-kube-label"></span><h2>Step 11: Stop the Sawtooth Kubernetes Cluster<a class="headerlink" href="#step-11-stop-the-sawtooth-kubernetes-cluster" title="Permalink to this headline">¶</a></h2>
+<p>Use the following commands to stop and reset the Sawtooth environment.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Any work done in this environment will be lost once you delete the Sawtooth
+cluster. To keep your work, you would need to take additional steps, such as
+defining volume storage.  See the
+<a class="reference external" href="https://kubernetes.io/docs/home/">Kubernetes documentation</a> for more
+information.</p>
+</div>
+<ol class="arabic">
+<li><p>Log out of all Sawtooth containers.</p></li>
+<li><p>Stop Sawtooth and delete the pod. Run the following command from the same
+directory where you saved the configuration file.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> kubectl delete -f sawtooth-kubernetes-default.yaml
+<span class="go">deployment.extensions &quot;sawtooth-0&quot; deleted</span>
+<span class="go">service &quot;sawtooth-0&quot; deleted</span>
+</pre></div>
+</div>
+</li>
+<li><p>Stop the Minikube cluster.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> minikube stop
+<span class="go">Stopping local Kubernetes cluster...</span>
+<span class="go">Machine stopped.</span>
+</pre></div>
+</div>
+</li>
+<li><p>Delete the Minikube cluster, VM, and all associated files.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> minikube delete
+<span class="go">Deleting local Kubernetes cluster...</span>
+<span class="go">Machine deleted.</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ubuntu.html" class="btn btn-neutral float-right" title="Using Ubuntu for a Single Sawtooth Node" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="docker.html" class="btn btn-neutral float-left" title="Using Docker for a Single Sawtooth Node" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2015-2017, Intel Corporation
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
