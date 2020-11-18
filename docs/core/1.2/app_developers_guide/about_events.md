@@ -10,7 +10,7 @@ An event has three parts:
 
 An attribute is a key-value pair that contains transparent metadata about the event. The key is the name of the attribute, and the value is the specific contents for that key. The same key can be used for multiple attributes in an event.
 
-It is important to define meaningful event attributes, so that the attributes can be used to filter event subscriptions. Note that although attributes are not required, an event filter cannot operate on an event without attributes. For more information, see [:doc:`about_event_subscriptions`]()
+It is important to define meaningful event attributes, so that the attributes can be used to filter event subscriptions. Note that although attributes are not required, an event filter cannot operate on an event without attributes. For more information, see [About Event Subscriptions](http://172.26.96.1:4000/docs/core/1.2/app_developers_guide/about_event_subscriptions.html)
 
 Events are represented with the following protobuf message:
 
